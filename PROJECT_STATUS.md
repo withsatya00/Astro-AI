@@ -79,3 +79,11 @@
 ### Phase 9: Documentation & Production Readiness
 - [x] `README.md`, `ARCHITECTURE.md`, `API_DOCUMENTATION.md`, `SECURITY.md`, `TEST_REPORT.md`, `docker-compose.yml`, `requirements.txt`.
 - [x] Verify complete end-to-end smoke test in browser and CLI (15/15 tests passing).
+
+### Phase 10: Live Gemini AI Model Activation
+- [x] Configured Google GenAI API key and connected live Google Gemini backend.
+- [x] Model set to `gemini-3.5-flash-lite` for conversational astrology interpretations and consultations.
+- [x] Embedding model set to `gemini-embedding-001` with fallback vector indexing.
+- [x] Verified `/api/v1/health` (`demo_mode: false`) and `/api/v1/readiness` (`status: live`).
+- [x] Verified end-to-end `/api/v1/chat` producing live generative astrological readings.
+
