@@ -82,6 +82,8 @@ class AgentOrchestrator:
         db: Session,
         user_message: str,
         chart_data: Optional[Dict[str, Any]] = None,
+        chart_record: Optional[Any] = None,
+        chart_context: Optional[Any] = None,
         history: Optional[List[Dict[str, str]]] = None,
         language: str = "en",
         force_demo_mode: bool = False
@@ -89,21 +91,53 @@ class AgentOrchestrator:
         """
         Orchestrates an end-to-end chat turn:
         1. Retrieves relevant classical references from knowledge base.
-        2. Gathers verified calculations from active chart.
+        2. Validates chart context provenance and astronomical boundaries.
         3. Formulates response using LLMService.
         """
-        # Step 1: Knowledge base retrieval
+        from backend.app.astrology.chart_context import validate_and_build_chart_context
+
+        # Resolve chart context safely
+        ctx = chart_context
+        if ctx is None:
+            if chart_record is not None:
+                ctx = validate_and_build_chart_context(chart_record)
+            elif chart_data is not None and isinstance(chart_data, dict):
+                ctx = validate_and_build_chart_context(type("TempRecord", (), {
+                    "id": chart_data.get("id", "temp"),
+                    "name": chart_data.get("name", "User"),
+                    "date_of_birth": chart_data.get("date_of_birth", ""),
+                    "time_of_birth": chart_data.get("time_of_birth", ""),
+                    "is_time_approximate": chart_data.get("is_time_approximate", False),
+                    "city": chart_data.get("city", ""),
+                    "country": chart_data.get("country", ""),
+                    "latitude": chart_data.get("latitude", 0.0),
+                    "longitude": chart_data.get("longitude", 0.0),
+                    "timezone_offset": chart_data.get("timezone_offset", 5.5),
+                    "system": chart_data.get("system", "Vedic"),
+                    "ayanamsa": chart_data.get("ayanamsa", "Lahiri"),
+                    "chart_data": chart_data
+                })())
+            else:
+                ctx = validate_and_build_chart_context(None)
+
+        # Step 1: Knowledge base retrieval (for non-greetings)
         from backend.app.rag.retrieval import RetrievalService
-        citations = RetrievalService.retrieve_relevant_chunks(
-            db=db,
-            query=user_message,
-            top_k=3
-        )
+        citations = []
+        # Only retrieve classical chunks if not a simple short greeting
+        clean_query = user_message.strip().lower()
+        is_simple_greet = clean_query in ("hi", "hello", "hii", "hey", "namaste", "pranam")
+        if not is_simple_greet:
+            citations = RetrievalService.retrieve_relevant_chunks(
+                db=db,
+                query=user_message,
+                top_k=2
+            )
 
         # Step 2: Synthesis through LLMService
         llm_output = LLMService.generate_chat_response(
             user_message=user_message,
             conversation_history=history or [],
+            chart_context=ctx,
             chart_data=chart_data,
             citations=citations,
             language=language,

@@ -43,7 +43,8 @@ def send_chat_message(
         db.add(session)
         db.commit()
         db.refresh(session)
-    elif payload.chart_id and not session.chart_id:
+    elif payload.chart_id != session.chart_id:
+        # Dynamically switch or update active birth chart profile on this session
         session.chart_id = payload.chart_id
         db.commit()
 
@@ -56,14 +57,15 @@ def send_chat_message(
     db.add(user_msg_record)
     db.commit()
 
-    # 3. Retrieve chart data if associated
+    # 3. Retrieve chart record if associated
+    chart_record = None
     chart_data = None
     if session.chart_id:
-        chart_obj = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
-        if chart_obj:
-            chart_data = chart_obj.chart_data
+        chart_record = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
+        if chart_record:
+            chart_data = chart_record.chart_data
 
-    # 4. Fetch past messages for history
+    # 4. Fetch past messages for history (excluding the one just inserted)
     past_messages = (
         db.query(ChatMessage)
         .filter(ChatMessage.session_id == session.id)
@@ -78,6 +80,7 @@ def send_chat_message(
         db=db,
         user_message=clean_msg,
         chart_data=chart_data,
+        chart_record=chart_record,
         history=history,
         language=payload.language,
         force_demo_mode=payload.force_demo_mode
@@ -176,3 +179,17 @@ def get_session_history(session_id: str, db: Session = Depends(get_db)):
         created_at=session.created_at,
         messages=messages_out
     )
+
+@router.delete("/sessions/{session_id}")
+def delete_session(session_id: str, db: Session = Depends(get_db)):
+    """Deletes or clears a consultation session and its history."""
+    session = db.query(ChatSession).filter(ChatSession.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found.")
+    
+    # Delete associated messages
+    db.query(ChatMessage).filter(ChatMessage.session_id == session.id).delete()
+    db.delete(session)
+    db.commit()
+    return {"status": "success", "message": f"Session {session_id} deleted."}
+

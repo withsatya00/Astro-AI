@@ -148,53 +148,38 @@
         <!-- Default Welcome Hero (Hidden once chat starts) -->
         <div class="welcome-screen" id="welcome-screen">
           <div class="welcome-zodiac-orb">✨</div>
-          <h1 class="welcome-title">Discover What the Stars Have to Say</h1>
+          <h1 class="welcome-title">Your Journey, Written in the Stars</h1>
           <p class="welcome-subtitle">
-            Ask about your career, relationships, compatibility, or kundli. Your cosmic journey begins with a conversation.
+            Ask a question, explore your kundli, or talk through what is on your mind.
           </p>
 
-          <button class="btn-add-birth" id="btn-welcome-add-birth">
-            <span>🔮</span>
-            <span>Add Birth Details for Personalized Reading</span>
+          <button class="btn-subtle-birth" id="btn-welcome-add-birth">
+            <span>✨</span>
+            <span>Add birth details for a personalized reading</span>
           </button>
 
-          <!-- Interactive Suggestion Cards -->
-          <div class="suggestions-grid">
-            <div class="suggestion-card" data-prompt="Analyze my career path, promotion timeline, and professional strengths based on my horoscope.">
-              <div class="suggestion-icon">💼</div>
-              <div class="suggestion-title">Career & Growth</div>
-              <div class="suggestion-desc">Promotions, ideal industries, and karmic work direction</div>
-            </div>
-
-            <div class="suggestion-card" data-prompt="What does my 7th house and Venus placement indicate about my love life and relationships?">
-              <div class="suggestion-icon">❤️</div>
-              <div class="suggestion-title">Love & Relationships</div>
-              <div class="suggestion-desc">Romantic tendencies, marital harmony, and timing</div>
-            </div>
-
-            <div class="suggestion-card" data-prompt="Evaluate marriage compatibility and Ashtakoota harmony principles between two charts.">
-              <div class="suggestion-icon">💍</div>
-              <div class="suggestion-title">Marriage & Compatibility</div>
-              <div class="suggestion-desc">Moon harmony, Nakshatra resonance, and dosha checks</div>
-            </div>
-
-            <div class="suggestion-card" data-prompt="Provide a detailed Kundli analysis including my Lagna lord, benefic planets, and core yogas.">
-              <div class="suggestion-icon">🪐</div>
-              <div class="suggestion-title">Kundli Analysis</div>
-              <div class="suggestion-desc">Ascendant, Moon sign, Bhavas, and planetary strengths</div>
-            </div>
-
-            <div class="suggestion-card" data-prompt="What planetary transits (Gochara) and daily influences are most significant for me today?">
-              <div class="suggestion-icon">🔮</div>
-              <div class="suggestion-title">Daily Horoscope & Transits</div>
-              <div class="suggestion-desc">Transit aspects, emotional balance, and focus areas</div>
-            </div>
-
-            <div class="suggestion-card" data-prompt="Explain my current Vimshottari Mahadasha and what this planetary period signifies.">
-              <div class="suggestion-icon">⏳</div>
-              <div class="suggestion-title">Dasha & Planetary Timing</div>
-              <div class="suggestion-desc">Active 120-year cycle, Antardashas, and life transitions</div>
-            </div>
+          <!-- Quick Action Buttons -->
+          <div class="quick-actions-row">
+            <button class="quick-action-pill" data-prompt="Mere love life aur relationships ke baare mein batao.">
+              <span>❤️</span>
+              <span>Love & Relationships</span>
+            </button>
+            <button class="quick-action-pill" data-prompt="Career kaisa rahega? Professional growth ke baare mein batao.">
+              <span>💼</span>
+              <span>Career</span>
+            </button>
+            <button class="quick-action-pill" data-prompt="Marriage aur relationship compatibility ke yog ke baare mein batao.">
+              <span>💍</span>
+              <span>Marriage</span>
+            </button>
+            <button class="quick-action-pill" data-prompt="Detail me kundli analysis do, Lagna aur planets ke sath.">
+              <span>🪐</span>
+              <span>Kundli Reading</span>
+            </button>
+            <button class="quick-action-pill" data-prompt="Aaj ka daily horoscope aur general astrological focus kya hai?">
+              <span>🔮</span>
+              <span>Daily Horoscope</span>
+            </button>
           </div>
         </div>
       </div>
@@ -310,14 +295,14 @@
         </div>
 
         <!-- PDF Report Generation Shortcut -->
-        <div class="kundli-card" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);">
+        <div class="kundli-card" style="border-color: var(--saffron-border); background: #FFFBEB;">
           <div class="kundli-card-header">
-            <h4 style="color: var(--gold-light);">📑 PDF Kundali Report</h4>
+            <h4 style="color: var(--text-saffron);">📑 PDF Kundali Report</h4>
           </div>
           <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
             Compile high-resolution PDF report with planetary tables, Bhavas, and interpretations.
           </p>
-          <button class="btn-new-chat" id="btn-quick-generate-report" style="width: 100%; padding: 0.55rem; font-size: 0.82rem; background: var(--gold-gradient); color: #080612; border: none;">
+          <button class="btn-new-chat" id="btn-quick-generate-report" style="width: 100%; padding: 0.55rem; font-size: 0.82rem; background: var(--primary-violet); color: #ffffff; border: none;">
             📥 Generate & Download Report
           </button>
           <div id="quick-report-status" style="margin-top: 0.5rem;"></div>
@@ -491,7 +476,7 @@
           <select id="modal-agent-tool-select" class="form-select"></select>
         </div>
 
-        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: rgba(15, 12, 28, 0.7); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #c4b5fd;">
+        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: var(--lavender-soft); border: 1px solid var(--lavender-border); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #4338ca;">
           Loading tool documentation...
         </div>
 
@@ -505,7 +490,7 @@
         <div style="margin-top: 1rem;">
           <div class="sidebar-section-title">Execution Result</div>
           <div id="modal-agent-tool-meta" style="margin-bottom: 0.4rem; display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
-          <pre id="modal-agent-tool-output" style="background: rgba(10, 7, 22, 0.9); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem; max-height: 220px; overflow: auto; font-family: monospace; font-size: 0.8rem; color: #a5f3fc;">
+          <pre id="modal-agent-tool-output" style="background: #F8FAFC; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem; max-height: 220px; overflow: auto; font-family: monospace; font-size: 0.8rem; color: #0F172A;">
 Execution output will appear here.
           </pre>
         </div>

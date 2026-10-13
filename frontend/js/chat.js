@@ -59,10 +59,10 @@ const ChatController = {
       });
     }
 
-    // Interactive suggestion cards
-    document.querySelectorAll('.suggestion-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const prompt = card.getAttribute('data-prompt');
+    // Interactive quick action pills
+    document.querySelectorAll('.quick-action-pill, .suggestion-card').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prompt = btn.getAttribute('data-prompt');
         if (prompt) {
           this.sendMessage(prompt);
         }
@@ -83,51 +83,41 @@ const ChatController = {
     const box = document.getElementById('chat-messages-container');
     if (!box) return;
 
-    // Restore welcome hero
+    // Restore refined welcome screen
     const welcomeHtml = `
       <div class="welcome-screen" id="welcome-screen">
         <div class="welcome-zodiac-orb">✨</div>
-        <h1 class="welcome-title">Discover What the Stars Have to Say</h1>
+        <h1 class="welcome-title">Your Journey, Written in the Stars</h1>
         <p class="welcome-subtitle">
-          Ask about your career, relationships, compatibility, or kundli. Your cosmic journey begins with a conversation.
+          Ask a question, explore your kundli, or talk through what is on your mind.
         </p>
 
-        <button class="btn-add-birth" onclick="App.openBirthModal()">
-          <span>🔮</span>
-          <span>Add Birth Details for Personalized Reading</span>
+        <button class="btn-subtle-birth" onclick="App.openBirthModal()">
+          <span>✨</span>
+          <span>Add birth details for a personalized reading</span>
         </button>
 
-        <div class="suggestions-grid">
-          <div class="suggestion-card" onclick="ChatController.sendMessage('Analyze my career path, promotion timeline, and professional strengths based on my horoscope.')">
-            <div class="suggestion-icon">💼</div>
-            <div class="suggestion-title">Career & Growth</div>
-            <div class="suggestion-desc">Promotions, ideal industries, and karmic work direction</div>
-          </div>
-          <div class="suggestion-card" onclick="ChatController.sendMessage('What does my 7th house and Venus placement indicate about my love life and relationships?')">
-            <div class="suggestion-icon">❤️</div>
-            <div class="suggestion-title">Love & Relationships</div>
-            <div class="suggestion-desc">Romantic tendencies, marital harmony, and timing</div>
-          </div>
-          <div class="suggestion-card" onclick="ChatController.sendMessage('Evaluate marriage compatibility and Ashtakoota harmony principles between two charts.')">
-            <div class="suggestion-icon">💍</div>
-            <div class="suggestion-title">Marriage & Compatibility</div>
-            <div class="suggestion-desc">Moon harmony, Nakshatra resonance, and dosha checks</div>
-          </div>
-          <div class="suggestion-card" onclick="ChatController.sendMessage('Provide a detailed Kundli analysis including my Lagna lord, benefic planets, and core yogas.')">
-            <div class="suggestion-icon">🪐</div>
-            <div class="suggestion-title">Kundli Analysis</div>
-            <div class="suggestion-desc">Ascendant, Moon sign, Bhavas, and planetary strengths</div>
-          </div>
-          <div class="suggestion-card" onclick="ChatController.sendMessage('What planetary transits (Gochara) and daily influences are most significant for me today?')">
-            <div class="suggestion-icon">🔮</div>
-            <div class="suggestion-title">Daily Horoscope & Transits</div>
-            <div class="suggestion-desc">Transit aspects, emotional balance, and focus areas</div>
-          </div>
-          <div class="suggestion-card" onclick="ChatController.sendMessage('Explain my current Vimshottari Mahadasha and what this planetary period signifies.')">
-            <div class="suggestion-icon">⏳</div>
-            <div class="suggestion-title">Dasha & Planetary Timing</div>
-            <div class="suggestion-desc">Active 120-year cycle, Antardashas, and life transitions</div>
-          </div>
+        <div class="quick-actions-row">
+          <button class="quick-action-pill" onclick="ChatController.sendMessage('Mere love life aur relationships ke baare mein batao.')">
+            <span>❤️</span>
+            <span>Love & Relationships</span>
+          </button>
+          <button class="quick-action-pill" onclick="ChatController.sendMessage('Career kaisa rahega? Professional growth ke baare mein batao.')">
+            <span>💼</span>
+            <span>Career</span>
+          </button>
+          <button class="quick-action-pill" onclick="ChatController.sendMessage('Marriage aur relationship compatibility ke yog ke baare mein batao.')">
+            <span>💍</span>
+            <span>Marriage</span>
+          </button>
+          <button class="quick-action-pill" onclick="ChatController.sendMessage('Detail me kundli analysis do, Lagna aur planets ke sath.')">
+            <span>🪐</span>
+            <span>Kundli Reading</span>
+          </button>
+          <button class="quick-action-pill" onclick="ChatController.sendMessage('Aaj ka daily horoscope aur general astrological focus kya hai?')">
+            <span>🔮</span>
+            <span>Daily Horoscope</span>
+          </button>
         </div>
       </div>
     `;
@@ -184,13 +174,13 @@ const ChatController = {
   formatMarkdown(text) {
     if (!text) return '';
     let html = text
-      .replace(/### (.*?)\n/g, '<h4>$1</h4>')
-      .replace(/## (.*?)\n/g, '<h3>$1</h3>')
-      .replace(/# (.*?)\n/g, '<h2>$1</h2>')
+      .replace(/### (.*?)\n/g, '<h4 style="margin: 0.5rem 0 0.25rem 0; font-size: 0.95rem; font-weight: 600; color: #1f2937;">$1</h4>')
+      .replace(/## (.*?)\n/g, '<h3 style="margin: 0.6rem 0 0.3rem 0; font-size: 1.02rem; font-weight: 700; color: #111827;">$1</h3>')
+      .replace(/# (.*?)\n/g, '<h2 style="margin: 0.75rem 0 0.4rem 0; font-size: 1.1rem; font-weight: 700; color: #111827;">$1</h2>')
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/> (.*?)\n/g, '<blockquote>$1</blockquote>')
-      .replace(/`([^`]+)`/g, '<code style="background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 4px;">$1</code>')
+      .replace(/> (.*?)\n/g, '<blockquote style="border-left: 3px solid #c4b5fd; padding-left: 0.75rem; color: #4b5563; margin: 0.5rem 0; background: #faf5ff; padding: 0.4rem 0.6rem; border-radius: 4px;">$1</blockquote>')
+      .replace(/`([^`]+)`/g, '<code style="background: #f1f5f9; color: #334155; padding: 0.15rem 0.35rem; border-radius: 4px; font-size: 0.85em;">$1</code>')
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n/g, '<br/>');
     return html;

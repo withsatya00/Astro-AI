@@ -56,22 +56,22 @@ const ChartViewer = {
       const items = housePlanets[h];
       const text = items.length > 0 ? items.join(' ') : '';
       planetTexts += `
-        <text x="${pt.x}" y="${pt.y - 10}" fill="#fbbf24" font-size="${hFontSize}" font-weight="700" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">H${h}</text>
-        <text x="${pt.x}" y="${pt.y + 6}" fill="#f8fafc" font-size="${pFontSize}" font-weight="600" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">${text}</text>
+        <text x="${pt.x}" y="${pt.y - 10}" fill="#d97706" font-size="${hFontSize}" font-weight="700" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">H${h}</text>
+        <text x="${pt.x}" y="${pt.y + 6}" fill="#1f2937" font-size="${pFontSize}" font-weight="600" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">${text}</text>
       `;
     }
 
     return `
       <svg class="${isCompact ? 'kundali-svg-compact' : 'kundali-svg'}" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <!-- Outer Box -->
-        <rect x="8" y="8" width="384" height="384" fill="rgba(15, 12, 28, 0.6)" stroke="#8b5cf6" stroke-width="2" rx="4" />
+        <rect x="8" y="8" width="384" height="384" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5" rx="6" />
         
         <!-- Diagonals -->
-        <line x1="8" y1="8" x2="392" y2="392" stroke="#6d28d9" stroke-width="1.5" />
-        <line x1="392" y1="8" x2="8" y2="392" stroke="#6d28d9" stroke-width="1.5" />
+        <line x1="8" y1="8" x2="392" y2="392" stroke="#ddd6fe" stroke-width="1.2" />
+        <line x1="392" y1="8" x2="8" y2="392" stroke="#ddd6fe" stroke-width="1.2" />
         
         <!-- Central Inner Diamond -->
-        <polygon points="200,8 392,200 200,392 8,200" fill="rgba(124, 58, 237, 0.08)" stroke="#8b5cf6" stroke-width="1.5" />
+        <polygon points="200,8 392,200 200,392 8,200" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5" />
         
         <!-- House and Planet Text Labels -->
         ${planetTexts}

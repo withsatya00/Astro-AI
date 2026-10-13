@@ -87,3 +87,12 @@
 - [x] Verified `/api/v1/health` (`demo_mode: false`) and `/api/v1/readiness` (`status: live`).
 - [x] Verified end-to-end `/api/v1/chat` producing live generative astrological readings.
 
+### Phase 11: Premium Light Theme Redesign & Natural Conversational Astrology (AstroTalk-Inspired)
+- [x] **Light-Theme Design System**: Replaced dark aesthetic with warm ivory (`#FAF9F6`), clean white conversation surfaces (`#FFFFFF`), soft lavender (`#EDE9FE`, `#F5F3FF`), and restrained saffron (`#D97706`).
+- [x] **Refined Welcome Experience**: Clean hero with "Your Journey, Written in the Stars", subtle birth details button, and 5 quick action pills (Love & Relationships, Career, Marriage, Kundli Reading, Daily Horoscope).
+- [x] **Conversational Personality Engine**: Refactored `llm_service.py` and created `prompts.py` (`ASTROAI_SYSTEM_PROMPT_V2`). Warm Indian consultant persona matching user language (Hinglish/Hindi/English) without formal jargon dumps, robotic introductions, or unprompted essay reports.
+- [x] **Chart Context & Grounding Guardrails**: Built `chart_context.py` with strict verification checks. Never hallucinates chart placements, Lagna, or dashas. Requests birth details for personalized readings while welcoming general discussion.
+- [x] **Conversation Memory & Profile Isolation**: Session history maintains context and follow-up turns; switching birth profiles updates context immediately without data leakage.
+- [x] **10 Quality Regression Tests**: Created `backend/tests/test_conversational_quality.py` validating greetings, love queries, career queries, moon sign requests, concise replies, detailed analysis, and provider failure fallbacks (25/25 total test suite passing).
+
+

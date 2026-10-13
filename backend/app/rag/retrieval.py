@@ -41,7 +41,14 @@ class RetrievalService:
             if not chunk.embedding:
                 continue
 
-            sim = EmbeddingService.cosine_similarity(query_vector, chunk.embedding)
+            # Compare embedding; handle dimension mismatch if chunk was indexed with different dimension
+            if len(query_vector) == len(chunk.embedding):
+                sim = EmbeddingService.cosine_similarity(query_vector, chunk.embedding)
+            else:
+                from backend.app.rag.embeddings import _generate_local_vector
+                local_query = _generate_local_vector(query, dim=len(chunk.embedding))
+                sim = EmbeddingService.cosine_similarity(local_query, chunk.embedding)
+
             if sim >= min_score:
                 safe_text = sanitize_retrieved_context(chunk.content)
                 scored_results.append({
