@@ -83,7 +83,8 @@ def send_chat_message(
         chart_record=chart_record,
         history=history,
         language=payload.language,
-        force_demo_mode=payload.force_demo_mode
+        force_demo_mode=payload.force_demo_mode,
+        image_base64=payload.image_base64
     )
 
     # 6. Save assistant message
@@ -95,7 +96,9 @@ def send_chat_message(
             "citations": turn_result["citations"],
             "calculated_data_used": turn_result["calculated_data_used"],
             "is_demo_mode": turn_result["is_demo_mode"],
-            "tool_trace": turn_result.get("tool_trace")
+            "tool_trace": turn_result.get("tool_trace"),
+            "chart_svg": turn_result.get("chart_svg"),
+            "is_palm_analysis": turn_result.get("is_palm_analysis", False)
         }
     )
     db.add(asst_msg_record)
@@ -122,6 +125,8 @@ def send_chat_message(
         calculated_data_used=turn_result["calculated_data_used"],
         is_demo_mode=turn_result["is_demo_mode"],
         tool_trace=turn_result.get("tool_trace"),
+        chart_svg=turn_result.get("chart_svg"),
+        is_palm_analysis=turn_result.get("is_palm_analysis", False),
         created_at=asst_msg_record.created_at
     )
 

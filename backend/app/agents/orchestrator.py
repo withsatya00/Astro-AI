@@ -86,13 +86,14 @@ class AgentOrchestrator:
         chart_context: Optional[Any] = None,
         history: Optional[List[Dict[str, str]]] = None,
         language: str = "en",
-        force_demo_mode: bool = False
+        force_demo_mode: bool = False,
+        image_base64: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Orchestrates an end-to-end chat turn:
         1. Retrieves relevant classical references from knowledge base.
         2. Validates chart context provenance and astronomical boundaries.
-        3. Formulates response using LLMService.
+        3. Formulates response using LLMService with guardrails & multimodal palmistry.
         """
         from backend.app.astrology.chart_context import validate_and_build_chart_context
 
@@ -123,7 +124,6 @@ class AgentOrchestrator:
         # Step 1: Knowledge base retrieval (for non-greetings)
         from backend.app.rag.retrieval import RetrievalService
         citations = []
-        # Only retrieve classical chunks if not a simple short greeting
         clean_query = user_message.strip().lower()
         is_simple_greet = clean_query in ("hi", "hello", "hii", "hey", "namaste", "pranam")
         if not is_simple_greet:
@@ -141,7 +141,8 @@ class AgentOrchestrator:
             chart_data=chart_data,
             citations=citations,
             language=language,
-            force_demo_mode=force_demo_mode
+            force_demo_mode=force_demo_mode,
+            image_base64=image_base64
         )
 
         return {
@@ -149,6 +150,8 @@ class AgentOrchestrator:
             "citations": citations,
             "calculated_data_used": llm_output["calculated_data_used"],
             "is_demo_mode": llm_output["is_demo_mode"],
+            "chart_svg": llm_output.get("chart_svg"),
+            "is_palm_analysis": llm_output.get("is_palm_analysis", False),
             "tool_trace": [
                 {
                     "tool": "retrieve_astrology_knowledge",

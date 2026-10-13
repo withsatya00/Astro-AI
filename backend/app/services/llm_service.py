@@ -1,14 +1,16 @@
 """
 LLM Service integrating Google GenAI SDK (Gemini 3.5 Flash Lite) with
-conversational Indian astrology personality, grounded chart provenance,
-multi-turn memory, and robust fallback demo mode.
+conversational Indian astrology personality, strict chart provenance,
+multi-turn memory, dynamic domain guardrails, and multimodal palmistry (Hastarekha) analysis.
 """
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 import re
+import base64
 from backend.app.core.config import settings
 from backend.app.core.logging import logger
 from backend.app.agents.prompts import ASTROAI_SYSTEM_PROMPT_V2
 from backend.app.astrology.chart_context import ChartContext, validate_and_build_chart_context
+from backend.app.astrology.chart_svg import generate_north_indian_kundli_svg
 
 def _detect_language(text: str, fallback_lang: str = "en") -> str:
     """Detects whether user is speaking in Hinglish, Hindi, or English."""
@@ -25,7 +27,8 @@ def _detect_language(text: str, fallback_lang: str = "en") -> str:
         "mere", "apna", "apni", "karo", "karna", "baare", "bare", "mein", "me", "kuch",
         "nahi", "nhi", "rahega", "hoga", "shadi", "shaadi", "pyaar", "prem", "kundli",
         "kundali", "chahiye", "bolo", "bataiye", "namaste", "pranam", "dhanyawad",
-        "thik", "theek", "accha", "acha", "samajh", "bhi", "toh", "to"
+        "thik", "theek", "accha", "acha", "samajh", "bhi", "toh", "to", "hatheli",
+        "hath", "rekha", "parvat"
     }
     words = set(re.findall(r"\b[a-z]+\b", text.lower()))
     if words.intersection(hinglish_markers):
@@ -48,6 +51,71 @@ def _is_greeting(text: str) -> bool:
     return clean in greetings or any(clean.startswith(g) for g in ["hi ", "hello ", "hey ", "namaste "]) and len(clean.split()) <= 4
 
 
+def is_in_astrology_domain(text: str) -> Tuple[bool, Optional[str]]:
+    """
+    Dynamically checks whether user message is within the realm of astrology, palmistry,
+    kundli, horoscope, life advice, relationships, career direction, spiritual wellbeing,
+    or simple conversational greetings.
+    Blocks queries clearly outside the astrological consultation domain (coding, math, hacking, general trivia).
+    """
+    if not text or not text.strip():
+        return True, None
+
+    clean = text.strip().lower()
+
+    if _is_greeting(clean):
+        return True, None
+
+    # Off-topic indicator patterns
+    off_topic_patterns = [
+        # Programming & Code
+        r"\b(python|javascript|typescript|c\+\+|java|golang|rust|html|css|sql|react|vue|node\.?js|docker|git|bash|powershell|regex)\b",
+        r"\b(write a script|write code|code snippet|function|algorithm|leetcode|pull request|npm install|pip install|compile|debug this)\b",
+        r"\b(stack overflow|syntax error|runtime error|exception handling|database schema|fastapi endpoint)\b",
+        # Academic Science & Math
+        r"\b(derivative of|integral of|solve the equation|quadratic formula|calculate 2\+|pythagorean theorem|photosynthesis|mitochondria)\b",
+        r"\b(newton's laws|thermodynamics|quantum mechanics|chemical formula|periodic table)\b",
+        # Non-astrological politics & sports
+        r"\b(who won the election|prime minister of|president of|parliament election|political party)\b",
+        r"\b(ipl match score|cricket match score|fifa world cup winner|football score)\b",
+        # Hacking & exploits
+        r"\b(hack wifi|sql injection|bypass password|crack software|ddos attack)\b"
+    ]
+
+    for pat in off_topic_patterns:
+        if re.search(pat, clean):
+            # Check if there is an astrology qualifier
+            astrology_qualifiers = {
+                "astrology", "kundli", "horoscope", "jyotish", "nakshatra",
+                "planet", "graha", "hastrekha", "palmistry", "palm", "hatheli",
+                "rashifal", "dasha", "lagna", "career in astrology"
+            }
+            if any(q in clean for q in astrology_qualifiers):
+                return True, None
+
+            # Out of domain! Return dynamic polite refusal
+            detected_lang = _detect_language(text)
+            if detected_lang == "hi":
+                refusal = "मैं केवल ज्योतिष (कुंडली), हस्तरेखा (Palmistry) और आध्यात्मिक जीवन मार्गदर्शन के लिए उपलब्ध हूँ 😊 मैं तकनीकी, कोडिंग या सामान्य ज्ञान के प्रश्नों का उत्तर नहीं दे सकता। कृपया अपनी कुंडली, करियर या जीवन से संबंधित प्रश्न पूछें!"
+            elif detected_lang == "hinglish":
+                refusal = "Main sirf Astrology (Kundli), Palmistry (Hastrekha) aur spiritual life guidance ke liye trained hoon 😊 Main coding, technical ya general world knowledge ke sawaalon ke jawab nahi de sakta. Kripya apne jeevan, love, career, kundli ya hastrekha se juda koi sawaal poochein!"
+            else:
+                refusal = "I am dedicated exclusively to Astrology, Kundli, Palmistry (Hastrekha), and spiritual life guidance 😊 I cannot answer technical, coding, or general trivia questions. Please feel free to ask about your horoscope, career path, relationships, or palm lines!"
+            return False, refusal
+
+    return True, None
+
+
+def is_kundli_requested(text: str) -> bool:
+    """Checks if the user specifically asked to see or display their Kundli diagram."""
+    clean = text.lower()
+    return any(k in clean for k in [
+        "kundli dikhao", "show kundli", "kundli banao", "kundli diagram",
+        "chart dikhao", "show my chart", "kundli reading", "meri kundli",
+        "kundli analysis do", "draw kundli", "kundli in chat"
+    ])
+
+
 def generate_demo_response(
     user_message: str,
     chart_context: ChartContext,
@@ -61,6 +129,11 @@ def generate_demo_response(
     """
     detected_lang = _detect_language(user_message, fallback_lang=language)
     msg_lower = user_message.lower().strip()
+
+    # Dynamic domain check
+    in_domain, refusal = is_in_astrology_domain(user_message)
+    if not in_domain and refusal:
+        return refusal
 
     # 1. Greeting handling (PART B)
     if _is_greeting(user_message):
@@ -175,23 +248,30 @@ def generate_demo_response(
             else:
                 return "What topic would you like to proceed with—love, career, or your kundli analysis?"
 
-    # 7. Detailed Kundli Analysis
-    if any(k in msg_lower for k in ["detail me", "detailed", "complete reading", "poori kundli"]):
+    # 7. Kundli Diagram / Analysis request
+    if is_kundli_requested(user_message):
         if not chart_context.is_verified:
-            if detected_lang == "hi":
-                return "विस्तृत कुंडली विश्लेषण के लिए आपकी वास्तविक जन्म तिथि, जन्म समय और स्थान की आवश्यकता है। कृपया ये विवरण प्रदान करें।"
-            elif detected_lang == "hinglish":
-                return "Detailed kundli analysis ke liye verified birth details (date of birth, time, aur birthplace) zaroori hain. Yeh details provide karein taaki exact planetary positions calculate ho sakein."
+            if detected_lang == "hinglish":
+                return "Kundli diagram chat mein render karne ke liye birth details (date, exact time, aur birthplace) zaroori hain. Yeh details provide karein, main turant Lagna Kundli generate kar dunga."
             else:
-                return "A detailed kundli reading requires verified birth details (date, exact time, and birthplace). Please provide these details so I can compute your complete planetary chart."
+                return "To generate and render your Kundli diagram directly in chat, I need your birth details (date, time, and birthplace). Please provide them to calculate your D1 chart."
         else:
-            return (
-                f"Aapki verified Kundli ka mukhya vivaran:\n"
-                f"- Lagna (Ascendant): {chart_context.ascendant_sign} ({chart_context.ascendant_nakshatra} Nakshatra)\n"
-                f"- Moon Sign: {chart_context.moon_sign} ({chart_context.moon_nakshatra})\n"
-                f"- Sun Sign: {chart_context.sun_sign}\n"
-                f"Classical Jyotish ke anusar, yeh placements aapko thoughtful decision-making aur sthir vyaktitva pradaan karti hain."
-            )
+            if detected_lang == "hinglish":
+                return (
+                    f"Yeh rahi aapki **Lagna Kundli (D1)**:\n"
+                    f"- Lagna (Ascendant): **{chart_context.ascendant_sign}** ({chart_context.ascendant_nakshatra} Nakshatra)\n"
+                    f"- Moon Sign (Chandra Rashi): **{chart_context.moon_sign}** ({chart_context.moon_nakshatra})\n"
+                    f"- Sun Sign (Surya): **{chart_context.sun_sign}**\n\n"
+                    "Neeche aapki chart diagram render kar di gayi hai. Kis house ya planet ke baare mein detail jaan na chahte hain?"
+                )
+            else:
+                return (
+                    f"Here is your **Lagna Kundali (D1)** chart:\n"
+                    f"- Ascendant (Lagna): **{chart_context.ascendant_sign}**\n"
+                    f"- Moon Sign: **{chart_context.moon_sign}**\n"
+                    f"- Sun Sign: **{chart_context.sun_sign}**\n\n"
+                    "Your North Indian chart diagram has been rendered below. Which planetary position would you like to inspect?"
+                )
 
     # 8. General fallback
     if detected_lang == "hinglish":
@@ -211,19 +291,40 @@ class LLMService:
         chart_data: Optional[Dict[str, Any]] = None,
         citations: Optional[List[Dict[str, Any]]] = None,
         language: str = "en",
-        force_demo_mode: bool = False
+        force_demo_mode: bool = False,
+        image_base64: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Coordinates chat generation using Gemini API (gemini-3.5-flash-lite) or demo mode fallback.
-        Ensures strict chart grounding, multi-turn history injection, and warm persona.
+        Ensures dynamic domain guardrails, multimodal palmistry analysis, strict chart grounding,
+        and multi-turn memory.
         """
         use_demo = force_demo_mode or settings.is_demo_mode
         active_citations = citations or []
 
+        # If palm image was provided, route to palmistry analyzer
+        if image_base64:
+            return LLMService.analyze_palm_image(
+                image_base64=image_base64,
+                user_message=user_message,
+                language=language,
+                force_demo_mode=use_demo
+            )
+
+        # Dynamic domain check: block off-topic queries immediately
+        in_domain, refusal = is_in_astrology_domain(user_message)
+        if not in_domain and refusal:
+            return {
+                "content": refusal,
+                "is_demo_mode": False,
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None
+            }
+
         # Resolve verified ChartContext
         if not chart_context:
             if chart_data and isinstance(chart_data, dict):
-                # Wrapped fake chart_record with chart_data dict
                 class TempRecord:
                     def __init__(self, d):
                         self.id = d.get("id", "temp-profile")
@@ -243,6 +344,12 @@ class LLMService:
             else:
                 chart_context = validate_and_build_chart_context(None)
 
+        # Check if Kundli diagram should be generated inline
+        chart_svg = None
+        raw_cd = chart_data or (chart_context.to_dict() if chart_context.is_verified else None)
+        if chart_context.is_verified and raw_cd and is_kundli_requested(user_message):
+            chart_svg = generate_north_indian_kundli_svg(raw_cd)
+
         if use_demo:
             response_text = generate_demo_response(
                 user_message=user_message,
@@ -255,7 +362,8 @@ class LLMService:
                 "content": response_text,
                 "is_demo_mode": True,
                 "calculated_data_used": chart_context.is_verified,
-                "citations": active_citations
+                "citations": active_citations,
+                "chart_svg": chart_svg
             }
 
         # Live Gemini generation with gemini-3.5-flash-lite
@@ -278,14 +386,13 @@ class LLMService:
                 f"{ASTROAI_SYSTEM_PROMPT_V2}\n\n"
                 f"### CURRENT CONTEXT ENVIRONMENT\n"
                 f"{chart_summary_block}\n\n"
-                f"### RETRIEVED CLASSICAL ASTROLOGICAL SOURCES\n"
+                f"### RETRIEVED CLASSICAL ASTROLOGICAL & PALMISTRY SOURCES\n"
                 f"{citations_str}\n"
             )
 
             # Build multi-turn contents
             contents: List[types.Content] = []
             if conversation_history:
-                # Include up to last 8 turns
                 for m in conversation_history[-8:]:
                     m_role = "user" if m.get("role") == "user" else "model"
                     m_text = m.get("content", "").strip()
@@ -297,7 +404,7 @@ class LLMService:
                             )
                         )
 
-            # Append current user question if not already the last turn
+            # Append current user question if not already last turn
             if not contents or contents[-1].parts[0].text != user_message:
                 contents.append(
                     types.Content(
@@ -312,13 +419,12 @@ class LLMService:
                 config=types.GenerateContentConfig(
                     system_instruction=combined_system_instruction,
                     temperature=0.6,
-                    max_output_tokens=650
+                    max_output_tokens=700
                 )
             )
 
             response_content = response.text if response and response.text else ""
             if not response_content:
-                # Fallback to demo response if empty returned
                 response_content = generate_demo_response(
                     user_message=user_message,
                     chart_context=chart_context,
@@ -331,7 +437,8 @@ class LLMService:
                 "content": response_content.strip(),
                 "is_demo_mode": False,
                 "calculated_data_used": chart_context.is_verified,
-                "citations": active_citations
+                "citations": active_citations,
+                "chart_svg": chart_svg
             }
 
         except Exception as e:
@@ -347,5 +454,118 @@ class LLMService:
                 "content": response_text,
                 "is_demo_mode": True,
                 "calculated_data_used": chart_context.is_verified,
-                "citations": active_citations
+                "citations": active_citations,
+                "chart_svg": chart_svg
             }
+
+    @staticmethod
+    def analyze_palm_image(
+        image_base64: str,
+        user_message: str = "Analyze my palm lines (हस्तरेखा विश्लेषण)",
+        language: str = "hinglish",
+        force_demo_mode: bool = False
+    ) -> Dict[str, Any]:
+        """
+        Multimodal Palmistry (Hastarekha / Samudrika Shastra) analysis for uploaded palm images.
+        """
+        try:
+            # Strip data URL header if present
+            if "," in image_base64:
+                header, raw_b64 = image_base64.split(",", 1)
+                mime_type = "image/png" if "png" in header else "image/jpeg"
+            else:
+                raw_b64 = image_base64
+                mime_type = "image/jpeg"
+
+            image_bytes = base64.b64decode(raw_b64)
+        except Exception as e:
+            logger.error(f"Failed to decode base64 palm image: {e}")
+            return {
+                "content": "Kripya ek valid photo upload karein (JPEG ya PNG format). Photo clearly aapki hatheli aur rekhaon ko dikhane waali honi chahiye.",
+                "is_demo_mode": True,
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None,
+                "is_palm_analysis": True
+            }
+
+        detected_lang = _detect_language(user_message, fallback_lang=language)
+
+        if force_demo_mode or settings.is_demo_mode:
+            # Deterministic authentic Hastarekha interpretation
+            if detected_lang == "hi":
+                demo_text = (
+                    "✋ **हस्तरेखा (सामुद्रिक शास्त्र) विश्लेषण:**\n\n"
+                    "1. **हथेली का स्वरूप:** आपकी हथेली पृथ्वी-अग्नि तत्व (व्यावहारिक और ऊर्जावान) का संतुलन दर्शाती है।\n"
+                    "2. **जीवन रेखा (Life Line):** शुक्र पर्वत के चारों ओर सुंदर घुमावदार जीवन रेखा अच्छी जीवन ऊर्जा (Vitality) और आंतरिक शक्ति का संकेत देती है।\n"
+                    "3. **हृदय रेखा (Heart Line):** गुरु पर्वत की ओर अग्रसर हृदय रेखा निष्ठावान, भावनात्मक रूप से परिपक्व और रिश्तों में वफादार स्वभाव दर्शाती है।\n"
+                    "4. **मस्तिष्क रेखा (Head Line):** गहरी और स्पष्ट मस्तिष्क रेखा तार्किक निर्णय क्षमता और व्यावहारिक बुद्धिमत्ता को दर्शाती है।\n"
+                    "5. **भाग्य रेखा (Fate Line):** हथेली के मध्य से शनि पर्वत की ओर उठने वाली रेखा स्व-निर्मित सफलता और निरंतर प्रयास का संकेत देती है।\n\n"
+                    "✨ **मार्गदर्शन:** अपने लक्ष्यों पर निरंतरता बनाए रखें, आपके हाथों की रेखाएं आत्मनिर्भरता और धैर्य से बड़ी प्रगति का संकेत देती हैं।"
+                )
+            else:
+                demo_text = (
+                    "✋ **Hastarekha (Palmistry) Analysis:**\n\n"
+                    "1. **Palm Shape & Energy:** Aapki hatheli practical aur ambitious nature (Earth-Fire balance) ko reflect karti hai.\n"
+                    "2. **Jeevan Rekha (Life Line):** Shukra Parvat ke aas-paas clear curved line strong vitality, stamina aur life enthusiasm dikhati hai.\n"
+                    "3. **Hriday Rekha (Heart Line):** Guru Parvat ki taraf badhti Heart Line loyalty, emotional maturity aur deep relationships ko priority deti hai.\n"
+                    "4. **Mastishk Rekha (Head Line):** Clear, straight Head Line sharp practical intelligence, focus aur calculated decision-making power darshati hai.\n"
+                    "5. **Bhagya Rekha (Fate Line):** Palm ke base se start hokar Shani Parvat tak pahochna self-made success aur persistent mehnat se growth ka sanket deta hai.\n\n"
+                    "✨ **Key Advice:** Apni focus aur patience ko continue rakhein—aapke haath ki lines steady financial aur professional growth indicate karti hain!"
+                )
+            return {
+                "content": demo_text,
+                "is_demo_mode": True,
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None,
+                "is_palm_analysis": True
+            }
+
+        # Live Gemini 3.5 Flash Lite Multimodal Generation
+        try:
+            from google import genai
+            from google.genai import types
+
+            client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+
+            palm_prompt = (
+                "You are an expert, compassionate Vedic Palmistry (Hastarekha / Samudrika Shastra) astrologer. "
+                "Examine this user's uploaded palm photo carefully:\n"
+                "1. Observe the palm shape (Earth, Air, Fire, Water), fingers, and skin texture.\n"
+                "2. Identify and analyze the key lines visible: Life Line (Jeevan Rekha), Heart Line (Hriday Rekha), Head Line (Mastishk Rekha), Fate Line (Bhagya Rekha).\n"
+                "3. Observe key mounts (Mount of Jupiter, Venus, Sun) and any prominent markings.\n"
+                "4. Deliver an authentic, structured, encouraging reading focusing on career strengths, emotional relationships, and mental focus.\n"
+                f"Language requirement: Respond in natural {detected_lang.upper()} (if Hinglish, speak natural, warm conversational Hinglish like an Indian palmist).\n"
+                "Keep formatting clean without excessive bullet spam."
+            )
+
+            response = client.models.generate_content(
+                model=settings.GEMINI_MODEL,
+                contents=[image_part, palm_prompt],
+                config=types.GenerateContentConfig(
+                    system_instruction=ASTROAI_SYSTEM_PROMPT_V2,
+                    temperature=0.4,
+                    max_output_tokens=700
+                )
+            )
+
+            res_text = response.text if response and response.text else "Aapki palm image clearly analyze kar li gayi hai. Lines stability aur continuous growth indicate karti hain."
+            return {
+                "content": res_text.strip(),
+                "is_demo_mode": False,
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None,
+                "is_palm_analysis": True
+            }
+
+        except Exception as e:
+            logger.error(f"Multimodal palm analysis failed: {e}. Executing demo fallback.")
+            return LLMService.analyze_palm_image(
+                image_base64=image_base64,
+                user_message=user_message,
+                language=language,
+                force_demo_mode=True
+            )

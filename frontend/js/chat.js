@@ -1,5 +1,7 @@
 /**
  * Consultation Chat Controller - AstroTalk-Inspired Conversational Engine.
+ * Supports natural chat, dynamic domain guardrails, inline Kundli diagram generation,
+ * and multimodal palmistry (Hastarekha) analysis.
  */
 
 const ChatController = {
@@ -64,6 +66,13 @@ const ChatController = {
       btn.addEventListener('click', () => {
         const prompt = btn.getAttribute('data-prompt');
         if (prompt) {
+          if (prompt.includes('kundli analysis') || prompt.includes('Kundli')) {
+            // If active chart exists, render inline Kundli
+            if (App.currentChart && App.currentChart.chart_data) {
+              this.renderKundliInChat();
+              return;
+            }
+          }
           this.sendMessage(prompt);
         }
       });
@@ -75,6 +84,58 @@ const ChatController = {
       welcomeAddBirth.addEventListener('click', () => {
         App.openBirthModal();
       });
+    }
+
+    // Palm photo upload button
+    const btnUploadPalm = document.getElementById('btn-upload-palm');
+    const palmFileInput = document.getElementById('palm-image-input');
+    if (btnUploadPalm && palmFileInput) {
+      btnUploadPalm.addEventListener('click', () => {
+        palmFileInput.click();
+      });
+      palmFileInput.addEventListener('change', (e) => this.handlePalmUpload(e));
+    }
+
+    // Inline Kundli in Chat button
+    const btnInlineKundli = document.getElementById('btn-inline-kundli');
+    if (btnInlineKundli) {
+      btnInlineKundli.addEventListener('click', () => {
+        this.renderKundliInChat();
+      });
+    }
+  },
+
+  handlePalmUpload(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      App.showToast('Please select a valid image file (JPEG/PNG)', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const base64Data = event.target.result;
+      this.sendMessage('Analyze my palm lines (हस्तरेखा विश्लेषण)', base64Data);
+    };
+    reader.readAsDataURL(file);
+
+    // Reset input so same file can be re-uploaded if needed
+    e.target.value = '';
+  },
+
+  renderKundliInChat() {
+    if (App.currentChart && App.currentChart.chart_data) {
+      const svg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
+      const name = App.currentChart.name || 'User';
+      const asc = App.currentChart.chart_data.ascendant_sign || '';
+      const moon = App.currentChart.chart_data.moon_sign || '';
+      const text = `Aapki **Lagna Kundali (D1)** for **${name}**:\n- **Lagna (Ascendant):** ${asc}\n- **Moon Sign:** ${moon}\n\nKundli diagram chat mein render kar diya gaya hai.`;
+      this.appendMessage('assistant', text, [], false, svg);
+      App.showToast('Kundli rendered directly in chat ✨', 'success');
+    } else {
+      this.sendMessage('Mere kundli ka Lagna D1 diagram dikhao.');
     }
   },
 
@@ -110,7 +171,7 @@ const ChatController = {
             <span>💍</span>
             <span>Marriage</span>
           </button>
-          <button class="quick-action-pill" onclick="ChatController.sendMessage('Detail me kundli analysis do, Lagna aur planets ke sath.')">
+          <button class="quick-action-pill" onclick="ChatController.renderKundliInChat()">
             <span>🪐</span>
             <span>Kundli Reading</span>
           </button>
@@ -163,7 +224,7 @@ const ChatController = {
         App.selectChart(data.chart_id, false);
       }
       data.messages.forEach(m => {
-        this.appendMessage(m.role, m.content, m.citations, m.is_demo_mode);
+        this.appendMessage(m.role, m.content, [], m.is_demo_mode, m.chart_svg);
       });
       this.loadSessions();
     } catch (err) {
@@ -186,7 +247,7 @@ const ChatController = {
     return html;
   },
 
-  appendMessage(role, text, citations = [], isDemo = false) {
+  appendMessage(role, text, citations = [], isDemo = false, chartSvg = null, imagePreview = null) {
     const box = document.getElementById('chat-messages-container');
     if (!box) return;
 
@@ -200,15 +261,15 @@ const ChatController = {
     const formattedContent = this.formatMarkdown(text);
     const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    let citationsHtml = '';
-    if (citations && citations.length > 0) {
-      const cards = citations.map(c => `
-        <div class="citation-card">
-          <strong>📜 ${c.source_title}</strong> (Page ${c.page_number || 1})<br/>
-          <em>"${c.excerpt.substring(0, 160)}..."</em>
+    // Inline Kundli SVG box if available
+    let chartHtml = '';
+    if (chartSvg) {
+      chartHtml = `
+        <div class="chat-inline-kundli-box">
+          <div class="inline-kundli-title">🪐 Lagna Kundali (D1) Diagram</div>
+          ${chartSvg}
         </div>
-      `).join('');
-      citationsHtml = `<div class="citations-box"><strong style="color: var(--gold-light);">Cited Classical References:</strong>${cards}</div>`;
+      `;
     }
 
     let actionsHtml = '';
@@ -234,19 +295,28 @@ const ChatController = {
     }
 
     if (role === 'user') {
+      let userInner = `<div>${formattedContent}</div>`;
+      if (imagePreview) {
+        userInner = `
+          <div class="chat-uploaded-palm-container">
+            <img src="${imagePreview}" class="chat-uploaded-palm-thumb" alt="Uploaded Palm Photo" />
+            <div class="palm-caption">${formattedContent}</div>
+          </div>
+        `;
+      }
       row.innerHTML = `
         <div class="message-bubble">
-          <div>${formattedContent}</div>
-          <div style="text-align: right; font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 0.35rem;">${timeStr}</div>
+          ${userInner}
+          <div style="text-align: right; font-size: 0.7rem; color: #6b7280; margin-top: 0.35rem;">${timeStr}</div>
         </div>
-        <div class="msg-avatar" style="background: rgba(124, 58, 237, 0.4); border: 1px solid rgba(124, 58, 237, 0.6);">👤</div>
+        <div class="msg-avatar" style="background: #F3F4F6; border: 1px solid #E5E7EB;">👤</div>
       `;
     } else {
       row.innerHTML = `
         <div class="msg-avatar">🔮</div>
         <div class="message-bubble">
           <div>${formattedContent}</div>
-          ${citationsHtml}
+          ${chartHtml}
           ${actionsHtml}
         </div>
       `;
@@ -282,18 +352,18 @@ const ChatController = {
     }
   },
 
-  async sendMessage(customText = null) {
+  async sendMessage(customText = null, imageBase64 = null) {
     const input = document.getElementById('chat-input');
     const msg = (customText || (input ? input.value : '')).trim();
-    if (!msg) return;
+    if (!msg && !imageBase64) return;
 
     if (input) {
       input.value = '';
       input.style.height = 'auto';
     }
 
-    this.lastUserMessage = msg;
-    this.appendMessage('user', msg);
+    this.lastUserMessage = msg || 'Analyze my palm lines';
+    this.appendMessage('user', msg || 'Analyze my palm lines (हस्तरेखा)', [], false, null, imageBase64);
 
     // Append typing indicator
     const box = document.getElementById('chat-messages-container');
@@ -306,7 +376,9 @@ const ChatController = {
         <div class="typing-dot"></div>
         <div class="typing-dot"></div>
         <div class="typing-dot"></div>
-        <span style="font-size: 0.78rem; color: var(--text-dim); margin-left: 0.4rem;">Consulting celestial alignments...</span>
+        <span style="font-size: 0.78rem; color: var(--text-dim); margin-left: 0.4rem;">
+          ${imageBase64 ? 'Analyzing palm lines & mounts...' : 'Consulting celestial alignments...'}
+        </span>
       </div>
     `;
     box.appendChild(typingRow);
@@ -320,9 +392,10 @@ const ChatController = {
       const res = await API.sendMessage({
         session_id: this.currentSessionId,
         chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
-        message: msg,
+        message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
         language: this.currentLanguage,
-        force_demo_mode: this.forceDemoMode
+        force_demo_mode: this.forceDemoMode,
+        image_base64: imageBase64
       });
 
       // Remove typing indicator
@@ -330,7 +403,20 @@ const ChatController = {
       if (ind) ind.remove();
 
       this.currentSessionId = res.session_id;
-      this.appendMessage('assistant', res.content, res.citations, res.is_demo_mode);
+
+      // Determine inline SVG chart if requested or provided
+      const isKundliRequested = (t) => {
+        if (!t) return false;
+        const low = t.toLowerCase();
+        return low.includes('kundli') || low.includes('chart') || low.includes('kundali');
+      };
+
+      let inlineSvg = res.chart_svg;
+      if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
+        inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
+      }
+
+      this.appendMessage('assistant', res.content, [], res.is_demo_mode, inlineSvg);
       this.loadSessions();
     } catch (err) {
       const ind = document.getElementById('typing-indicator-row');

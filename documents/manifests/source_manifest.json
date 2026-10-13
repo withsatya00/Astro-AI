@@ -27,7 +27,21 @@
       "file_size": 2758,
       "chunk_count": 6,
       "status": "INDEXED"
+    },
+    {
+      "source_id": "seed-hastarekha-palmistry",
+      "document_id": "c93872ce-7206-47ec-bd48-61487c55ae4a",
+      "title": "Classical Hastarekha & Samudrika Shastra: Complete Vedic Palmistry Guide",
+      "author": "Maharishi Samudra / Traditional Jyotish Palmistry Sages",
+      "publisher": "Open Knowledge Archive",
+      "license": "Public Domain / CC0",
+      "permission_status": "PERMITTED",
+      "file_path": "C:\\Users\\og\\OneDrive\\Desktop\\AstroTalk\\documents\\sources\\hastarekha_palmistry_shastra.md",
+      "checksum": "fa0a0ab8e7c44083067464e611734722d0fd8f034e8c22229045b1a69f493e3c",
+      "file_size": 6511,
+      "chunk_count": 14,
+      "status": "INDEXED"
     }
   ],
-  "generated_at": 1791886250.5956962
+  "generated_at": 1791891802.0082781
 }

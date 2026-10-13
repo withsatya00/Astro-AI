@@ -258,3 +258,76 @@ def test_case_10_provider_failure_graceful_handling(rohit_chart_context):
         )
         assert resp["is_demo_mode"] is True
         assert len(resp["content"]) > 10
+
+
+# ---------------- CASE 11: Dynamic Domain Guardrail (Off-Topic Blocking) ----------------
+def test_case_11_dynamic_domain_guardrail():
+    # 1. Technical / Programming queries
+    resp_coding = LLMService.generate_chat_response(
+        user_message="write a python script to scrape data",
+        conversation_history=[],
+        chart_context=None,
+        force_demo_mode=True
+    )
+    assert any(w in resp_coding["content"].lower() for w in ["astrology", "jyotish", "kundli", "palmistry", "technical", "coding"])
+    assert "def " not in resp_coding["content"]
+    assert "import " not in resp_coding["content"]
+
+    # 2. Math equation query
+    resp_math = LLMService.generate_chat_response(
+        user_message="solve the equation x^2 + 5x + 6 = 0",
+        conversation_history=[],
+        chart_context=None,
+        force_demo_mode=True
+    )
+    assert any(w in resp_math["content"].lower() for w in ["astrology", "jyotish", "kundli", "palmistry"])
+
+    # 3. Off-topic politics/sports query
+    resp_sports = LLMService.generate_chat_response(
+        user_message="who won the ipl match score yesterday?",
+        conversation_history=[],
+        chart_context=None,
+        force_demo_mode=True
+    )
+    assert any(w in resp_sports["content"].lower() for w in ["astrology", "jyotish", "kundli", "palmistry"])
+
+    # 4. In Hinglish
+    resp_hinglish = LLMService.generate_chat_response(
+        user_message="docker container run karne ka code snippet do",
+        conversation_history=[],
+        chart_context=None,
+        force_demo_mode=True
+    )
+    assert "Main sirf Astrology" in resp_hinglish["content"] or "Astrology" in resp_hinglish["content"]
+
+
+# ---------------- CASE 12: Inline Kundli SVG Generation ----------------
+def test_case_12_inline_kundli_rendering(rohit_chart_context):
+    resp = LLMService.generate_chat_response(
+        user_message="kundli dikhao chat mein",
+        conversation_history=[],
+        chart_context=rohit_chart_context,
+        chart_data=rohit_chart_context.to_dict(),
+        force_demo_mode=True
+    )
+    assert resp.get("chart_svg") is not None
+    assert "<svg" in resp["chart_svg"]
+    assert "</svg>" in resp["chart_svg"]
+    assert "Scorpio" in resp["content"] or "Lagna" in resp["content"]
+
+
+# ---------------- CASE 13: Multimodal Palm Photo Analysis ----------------
+def test_case_13_palm_photo_analysis():
+    # 1x1 transparent png in base64
+    fake_png_base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+    resp = LLMService.generate_chat_response(
+        user_message="Analyze my palm lines",
+        conversation_history=[],
+        chart_context=None,
+        force_demo_mode=True,
+        image_base64=fake_png_base64
+    )
+    assert resp.get("is_palm_analysis") is True
+    assert "Life Line" in resp["content"] or "Jeevan Rekha" in resp["content"]
+    assert "Heart Line" in resp["content"] or "Hriday Rekha" in resp["content"]
+    assert "Head Line" in resp["content"] or "Mastishk Rekha" in resp["content"]

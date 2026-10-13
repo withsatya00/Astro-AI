@@ -117,6 +117,7 @@ class ChatMessageRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=4000)
     language: str = Field("en", description="Language: 'en', 'hi', or 'hinglish'")
     force_demo_mode: bool = False
+    image_base64: Optional[str] = None  # Base64 encoded palm or hand photo for palmistry analysis
 
 class ChatMessageResponse(BaseModel):
     id: str
@@ -127,7 +128,16 @@ class ChatMessageResponse(BaseModel):
     calculated_data_used: bool = False
     is_demo_mode: bool = False
     tool_trace: Optional[List[Dict[str, Any]]] = None
+    chart_svg: Optional[str] = None  # Inline North Indian SVG diagram of birth chart
+    is_palm_analysis: bool = False
     created_at: datetime
+
+class PalmAnalysisRequest(BaseModel):
+    image_base64: str = Field(..., description="Base64 encoded JPEG/PNG palm photo")
+    query: Optional[str] = Field("Analyze my palm lines (हस्तरेखा विश्लेषण)", description="Specific palmistry inquiry")
+    language: str = Field("hinglish", description="Language: 'en', 'hi', or 'hinglish'")
+    session_id: Optional[str] = None
+
 
 class ChatSessionResponse(BaseModel):
     id: str

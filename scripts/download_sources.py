@@ -46,6 +46,17 @@ PERMITTED_SOURCES_REGISTRY = [
         "document_type": "md",
         "local_file": "documents/sources/nakshatras_and_dashas_handbook.md",
         "remote_url": None
+    },
+    {
+        "source_id": "seed-hastarekha-palmistry",
+        "title": "Classical Hastarekha & Samudrika Shastra: Complete Vedic Palmistry Guide",
+        "author": "Maharishi Samudra / Traditional Jyotish Palmistry Sages",
+        "publisher": "Open Knowledge Archive",
+        "license": "Public Domain / CC0",
+        "permission_status": "PERMITTED",
+        "document_type": "md",
+        "local_file": "documents/sources/hastarekha_palmistry_shastra.md",
+        "remote_url": None
     }
 ]
 

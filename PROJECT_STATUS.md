@@ -93,6 +93,16 @@
 - [x] **Conversational Personality Engine**: Refactored `llm_service.py` and created `prompts.py` (`ASTROAI_SYSTEM_PROMPT_V2`). Warm Indian consultant persona matching user language (Hinglish/Hindi/English) without formal jargon dumps, robotic introductions, or unprompted essay reports.
 - [x] **Chart Context & Grounding Guardrails**: Built `chart_context.py` with strict verification checks. Never hallucinates chart placements, Lagna, or dashas. Requests birth details for personalized readings while welcoming general discussion.
 - [x] **Conversation Memory & Profile Isolation**: Session history maintains context and follow-up turns; switching birth profiles updates context immediately without data leakage.
-- [x] **10 Quality Regression Tests**: Created `backend/tests/test_conversational_quality.py` validating greetings, love queries, career queries, moon sign requests, concise replies, detailed analysis, and provider failure fallbacks (25/25 total test suite passing).
+- [x] **10 Quality Regression Tests**: Created `backend/tests/test_conversational_quality.py` validating greetings, love queries, career queries, moon sign requests, concise replies, detailed analysis, and provider failure fallbacks.
+
+### Phase 12: Reference Removal, Dynamic Guardrails, Inline Kundli & Multimodal Palmistry Analysis
+- [x] **Removed References/Citations from Chat**: Suppressed classical citations box from the chat conversation stream and updated prompt instructions to ensure pure, seamless conversational dialogue.
+- [x] **Dynamic Domain Guardrail**: Implemented strict domain filtering in `is_in_astrology_domain()` and `ASTROAI_SYSTEM_PROMPT_V2`. Non-astrology/palmistry queries (coding, academic math, technical commands, general world trivia, politics, hacking) are blocked dynamically and politely redirected in the user's natural language.
+- [x] **Inline Kundli Chart Generation**: Created server-side and client-side SVG rendering (`backend/app/astrology/chart_svg.py` and `frontend/js/chart.js`). Users can view their Lagna Kundli (D1) diagram directly inside the chat conversation stream by asking conversationally or clicking the "✨ Kundli in Chat" tool button.
+- [x] **Multimodal Palmistry (Hastarekha / Samudrika Shastra) Analysis**:
+  - Ingested classical Hastarekha knowledge base document (`documents/sources/hastarekha_palmistry_shastra.md`) containing Life Line, Heart Line, Head Line, Fate Line, and 7 Mounts.
+  - Implemented multimodal vision processing in `LLMService.analyze_palm_image()` supporting JPEG/PNG upload with Gemini multimodal vision (`google.genai.types.Part.from_bytes`) and grounded Samudrika Shastra fallback.
+  - Added "✋ Palm Photo" upload button in frontend chat interface with instant image preview in user chat bubble.
+- [x] **Expanded Regression Test Suite**: Added Cases 11, 12, and 13 to `backend/tests/test_conversational_quality.py`. Total test suite passing at **28/28 (100% pass rate)**.
 
 
