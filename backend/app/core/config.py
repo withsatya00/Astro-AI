@@ -28,8 +28,8 @@ class Settings(BaseSettings):
 
     # AI Configuration
     GEMINI_API_KEY: Optional[str] = Field(default=None, validation_alias="GEMINI_API_KEY")
-    GEMINI_MODEL: str = "gemini-1.5-flash"
-    EMBEDDING_MODEL: str = "text-embedding-004"
+    GEMINI_MODEL: str = "gemini-3.5-flash-lite"
+    EMBEDDING_MODEL: str = "gemini-embedding-001"
 
     # Database & Storage
     DATABASE_URL: str = "sqlite:///./astro_ai.db"
