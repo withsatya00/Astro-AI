@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroAI Agent - Authentic AI Astrology Consultation & Kundali Platform</title>
+  <meta name="description" content="Precision AI astrology consultation inspired by AstroTalk. Powered by Swiss Ephemeris NASA JPL calculations and classical Vedic RAG.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    
+    <!-- ====================================================================
+         LEFT SIDEBAR: Navigation, Conversations & Saved Profiles
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Header -->
+      <div class="sidebar-header">
+        <a href="#" class="brand">
+          <div class="brand-icon">✨</div>
+          <span class="brand-title">AstroAI</span>
+        </a>
+        <button class="btn-icon" id="btn-close-sidebar" title="Collapse sidebar">✕</button>
+      </div>
+
+      <!-- Actions -->
+      <div class="sidebar-actions">
+        <button class="btn-new-chat" id="btn-new-chat">
+          <span>✨</span>
+          <span>New Consultation</span>
+        </button>
+
+        <div class="sidebar-search">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-sessions-input" placeholder="Search conversations...">
+        </div>
+      </div>
+
+      <!-- Scrollable Content -->
+      <div class="sidebar-content">
+        <!-- Recent Consultations -->
+        <div>
+          <div class="sidebar-section-title">
+            <span>Recent Consultations</span>
+            <span id="session-count-badge" class="shortcut-badge">0</span>
+          </div>
+          <ul class="sidebar-list" id="sessions-list">
+            <li class="sidebar-item active">
+              <span class="item-title">Current Consultation</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Saved Birth Profiles -->
+        <div>
+          <div class="sidebar-section-title">
+            <span>Saved Kundli Profiles</span>
+            <button class="btn-icon" id="btn-quick-add-profile" title="Add New Profile" style="width: 20px; height: 20px; font-size: 0.75rem;">+</button>
+          </div>
+          <ul class="sidebar-list" id="profiles-list">
+            <li class="sidebar-item" onclick="App.openBirthModal()">
+              <span class="item-title">+ Add Birth Profile</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Astrology Shortcuts -->
+        <div>
+          <div class="sidebar-section-title">Astrology Tools</div>
+          <ul class="sidebar-list">
+            <li class="sidebar-item" id="nav-shortcut-kundli">
+              <span class="item-title">🪐 Kundli Diagram & Bhavas</span>
+              <span class="shortcut-badge">SVG</span>
+            </li>
+            <li class="sidebar-item" id="nav-shortcut-reports">
+              <span class="item-title">📑 PDF Kundali Reports</span>
+              <span class="shortcut-badge">PDF</span>
+            </li>
+            <li class="sidebar-item" id="nav-shortcut-docs">
+              <span class="item-title">📚 Classical Knowledge Base</span>
+              <span class="shortcut-badge">RAG</span>
+            </li>
+            <li class="sidebar-item" id="nav-shortcut-agent">
+              <span class="item-title">⚡ AI Agent Console</span>
+              <span class="shortcut-badge">7 Tools</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="sidebar-footer">
+        <div class="status-pill" id="telemetry-pill">
+          <div class="status-dot" id="telemetry-dot"></div>
+          <span id="telemetry-text">Checking System...</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         CENTRAL MAIN CHAT REGION
+         ==================================================================== -->
+    <main class="chat-main">
+      <!-- Topbar -->
+      <header class="chat-topbar">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button class="btn-icon" id="btn-toggle-sidebar" title="Toggle Sidebar">☰</button>
+          
+          <div class="astrologer-badge">
+            <div class="astrologer-avatar">🔮</div>
+            <div class="astrologer-info">
+              <h3>AstroAI Astrologer <span style="font-size: 0.7rem; color: var(--gold-accent);">✦</span></h3>
+              <p>Vedic & Western • Swiss Ephemeris NASA Engine</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Active Profile Pill -->
+          <div class="profile-tag" id="topbar-profile-tag" title="Click to view or edit birth profile">
+            <span>👤</span>
+            <span id="topbar-profile-name">No Profile Selected</span>
+          </div>
+
+          <!-- Language Selector -->
+          <select id="chat-lang-select" class="select-tool" title="Language selection">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="hinglish">Hinglish</option>
+          </select>
+
+          <!-- Force Demo Mode -->
+          <label style="font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.3rem; cursor: pointer;">
+            <input type="checkbox" id="toggle-demo-mode"> Demo
+          </label>
+
+          <!-- Clear Chat -->
+          <button class="btn-icon" id="btn-clear-chat" title="Clear conversation">🗑️</button>
+
+          <!-- Toggle Right Context Panel -->
+          <button class="btn-icon" id="btn-toggle-context" title="Toggle Kundli & Highlights">🪐</button>
+        </div>
+      </header>
+
+      <!-- Scrollable Conversation Area -->
+      <div class="chat-scroll-area" id="chat-messages-container">
+        <!-- Default Welcome Hero (Hidden once chat starts) -->
+        <div class="welcome-screen" id="welcome-screen">
+          <div class="welcome-zodiac-orb">✨</div>
+          <h1 class="welcome-title">Discover What the Stars Have to Say</h1>
+          <p class="welcome-subtitle">
+            Ask about your career, relationships, compatibility, or kundli. Your cosmic journey begins with a conversation.
+          </p>
+
+          <button class="btn-add-birth" id="btn-welcome-add-birth">
+            <span>🔮</span>
+            <span>Add Birth Details for Personalized Reading</span>
+          </button>
+
+          <!-- Interactive Suggestion Cards -->
+          <div class="suggestions-grid">
+            <div class="suggestion-card" data-prompt="Analyze my career path, promotion timeline, and professional strengths based on my horoscope.">
+              <div class="suggestion-icon">💼</div>
+              <div class="suggestion-title">Career & Growth</div>
+              <div class="suggestion-desc">Promotions, ideal industries, and karmic work direction</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="What does my 7th house and Venus placement indicate about my love life and relationships?">
+              <div class="suggestion-icon">❤️</div>
+              <div class="suggestion-title">Love & Relationships</div>
+              <div class="suggestion-desc">Romantic tendencies, marital harmony, and timing</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Evaluate marriage compatibility and Ashtakoota harmony principles between two charts.">
+              <div class="suggestion-icon">💍</div>
+              <div class="suggestion-title">Marriage & Compatibility</div>
+              <div class="suggestion-desc">Moon harmony, Nakshatra resonance, and dosha checks</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Provide a detailed Kundli analysis including my Lagna lord, benefic planets, and core yogas.">
+              <div class="suggestion-icon">🪐</div>
+              <div class="suggestion-title">Kundli Analysis</div>
+              <div class="suggestion-desc">Ascendant, Moon sign, Bhavas, and planetary strengths</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="What planetary transits (Gochara) and daily influences are most significant for me today?">
+              <div class="suggestion-icon">🔮</div>
+              <div class="suggestion-title">Daily Horoscope & Transits</div>
+              <div class="suggestion-desc">Transit aspects, emotional balance, and focus areas</div>
+            </div>
+
+            <div class="suggestion-card" data-prompt="Explain my current Vimshottari Mahadasha and what this planetary period signifies.">
+              <div class="suggestion-icon">⏳</div>
+              <div class="suggestion-title">Dasha & Planetary Timing</div>
+              <div class="suggestion-desc">Active 120-year cycle, Antardashas, and life transitions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Anchored Composer -->
+      <footer class="composer-wrapper">
+        <div class="composer-card">
+          <div class="composer-input-row">
+            <textarea 
+              id="chat-input" 
+              class="composer-textarea" 
+              placeholder="Ask your astrologer anything..." 
+              rows="1"
+            ></textarea>
+            <button class="btn-send" id="btn-send-chat" title="Send message">➔</button>
+          </div>
+
+          <div class="composer-actions-row">
+            <div class="composer-tools-left">
+              <button class="btn-tool" id="btn-open-birth-modal" title="Manage birth details">
+                <span>🪐</span>
+                <span id="composer-profile-btn-text">Birth Details</span>
+              </button>
+              <button class="btn-tool" id="btn-open-upload-modal" title="Upload reference document to knowledge base">
+                <span>📎</span>
+                <span>Attach Doc</span>
+              </button>
+              <button class="btn-tool" id="btn-open-agent-modal" title="Open AI Agent console">
+                <span>⚡</span>
+                <span>Agent Tools</span>
+              </button>
+            </div>
+
+            <span style="font-size: 0.72rem; color: var(--text-dim);">
+              Press <kbd style="background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 4px;">Enter</kbd> to send, <kbd style="background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 4px;">Shift+Enter</kbd> for newline
+            </span>
+          </div>
+        </div>
+
+        <div class="composer-hint">
+          AstroAI provides guidance grounded in Swiss Ephemeris NASA astronomical calculations and classical Jyotish tenets.
+        </div>
+      </footer>
+    </main>
+
+    <!-- ====================================================================
+         RIGHT CONTEXTUAL PANEL: Kundli Highlights & Reports
+         ==================================================================== -->
+    <aside class="context-panel" id="context-panel">
+      <div class="context-header">
+        <h3><span>🪐</span> Cosmic Highlights</h3>
+        <button class="btn-icon" id="btn-close-context" title="Collapse Panel">✕</button>
+      </div>
+
+      <div class="context-content">
+        <!-- Active Profile Summary Card -->
+        <div class="kundli-card" id="context-profile-card">
+          <div class="kundli-card-header">
+            <h4>Active Birth Profile</h4>
+            <button class="btn-tool" id="btn-context-edit-profile" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Edit</button>
+          </div>
+          <div id="context-profile-summary">
+            <p class="text-muted" style="font-size: 0.82rem;">No birth profile active. Enter birth details to unlock personalized Kundli insights.</p>
+          </div>
+        </div>
+
+        <!-- Kundali SVG Diagram Card -->
+        <div class="kundli-card">
+          <div class="kundli-card-header">
+            <h4>Lagna Kundli (D1)</h4>
+            <span class="shortcut-badge" id="context-ayanamsa-badge">Lahiri</span>
+          </div>
+          <div id="context-kundali-svg">
+            <p class="text-muted" style="font-size: 0.8rem; text-align: center; padding: 1.5rem 0;">
+              Kundli diagram will render here after calculating your birth chart.
+            </p>
+          </div>
+        </div>
+
+        <!-- Core Planetary Placements Card -->
+        <div class="kundli-card">
+          <div class="kundli-card-header">
+            <h4>Key Astrological Placements</h4>
+          </div>
+          <div class="highlight-grid" id="context-placements-grid">
+            <div class="highlight-item">
+              <div class="highlight-label">Ascendant (Lagna)</div>
+              <div class="highlight-val" id="val-lagna">-</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-label">Moon Sign (Rashi)</div>
+              <div class="highlight-val" id="val-moon">-</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-label">Sun Sign (Surya)</div>
+              <div class="highlight-val" id="val-sun">-</div>
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-label">Moon Nakshatra</div>
+              <div class="highlight-val" id="val-nakshatra">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vimshottari Mahadasha Card -->
+        <div class="kundli-card">
+          <div class="kundli-card-header">
+            <h4>Active Mahadasha</h4>
+          </div>
+          <div id="context-dasha-summary" style="font-size: 0.82rem; color: var(--text-muted);">
+            Calculate birth chart to inspect running planetary cycle.
+          </div>
+        </div>
+
+        <!-- PDF Report Generation Shortcut -->
+        <div class="kundli-card" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);">
+          <div class="kundli-card-header">
+            <h4 style="color: var(--gold-light);">📑 PDF Kundali Report</h4>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Compile high-resolution PDF report with planetary tables, Bhavas, and interpretations.
+          </p>
+          <button class="btn-new-chat" id="btn-quick-generate-report" style="width: 100%; padding: 0.55rem; font-size: 0.82rem; background: var(--gold-gradient); color: #080612; border: none;">
+            📥 Generate & Download Report
+          </button>
+          <div id="quick-report-status" style="margin-top: 0.5rem;"></div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ====================================================================
+       MODAL 1: BIRTH DETAILS MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-birth-details">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><span>🪐</span> Birth Details & Kundli Calculator</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <form id="form-birth-details">
+        <div class="modal-body">
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1.25rem;">
+            Calculations are performed by Swiss Ephemeris (NASA JPL data) with exact planetary longitudes.
+          </p>
+
+          <!-- Quick City Presets -->
+          <div style="margin-bottom: 1rem;">
+            <span class="form-label">Quick City Presets:</span>
+            <div class="quick-cities">
+              <span class="city-chip" data-city="New Delhi" data-country="India" data-lat="28.6139" data-lon="77.2090" data-tz="5.5">New Delhi</span>
+              <span class="city-chip" data-city="Mumbai" data-country="India" data-lat="19.0760" data-lon="72.8777" data-tz="5.5">Mumbai</span>
+              <span class="city-chip" data-city="Bengaluru" data-country="India" data-lat="12.9716" data-lon="77.5946" data-tz="5.5">Bengaluru</span>
+              <span class="city-chip" data-city="New York" data-country="USA" data-lat="40.7128" data-lon="-74.0060" data-tz="-5.0">New York</span>
+              <span class="city-chip" data-city="London" data-country="UK" data-lat="51.5074" data-lon="-0.1278" data-tz="0.0">London</span>
+              <span class="city-chip" data-city="Dubai" data-country="UAE" data-lat="25.2048" data-lon="55.2708" data-tz="4.0">Dubai</span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label" for="modal-name">Full Name</label>
+              <input type="text" id="modal-name" class="form-control" value="Rohit Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-dob">Date of Birth</label>
+              <input type="date" id="modal-dob" class="form-control" value="1990-10-24" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-tob">Exact Birth Time</label>
+              <input type="time" id="modal-tob" class="form-control" value="07:30" step="1">
+            </div>
+
+            <div class="form-group full" style="margin-top: -0.5rem;">
+              <label style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                <input type="checkbox" id="modal-approx-time"> Approximate birth time (exact minute unknown)
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-city">City / Birthplace</label>
+              <input type="text" id="modal-city" class="form-control" value="New Delhi" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-country">Country</label>
+              <input type="text" id="modal-country" class="form-control" value="India">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-lat">Latitude (-90 to +90)</label>
+              <input type="number" step="0.0001" id="modal-lat" class="form-control" value="28.6139" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-lon">Longitude (-180 to +180)</label>
+              <input type="number" step="0.0001" id="modal-lon" class="form-control" value="77.2090" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-tz">Timezone Offset (Hours)</label>
+              <input type="number" step="0.1" id="modal-tz" class="form-control" value="5.5" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-system">Zodiac System</label>
+              <select id="modal-system" class="form-select">
+                <option value="Vedic">Vedic (Sidereal Zodiac)</option>
+                <option value="Western">Western (Tropical Zodiac)</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label" for="modal-ayanamsa">Ayanamsa (Vedic)</label>
+              <select id="modal-ayanamsa" class="form-select">
+                <option value="Lahiri">Lahiri (Chitra Paksha - Standard)</option>
+                <option value="Raman">B.V. Raman</option>
+                <option value="Krishnamurti">KP (Krishnamurti)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-tool modal-close">Cancel</button>
+          <button type="submit" class="btn-new-chat" id="btn-modal-calc-chart">
+            ✨ Calculate & Set Active Kundli
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 2: DOCUMENT UPLOAD MODAL (Knowledge Base Attachment)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-document-upload">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><span>📚</span> Attach Reference Document to Knowledge Base</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <form id="form-modal-upload-doc">
+        <div class="modal-body">
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+            Upload classical astrology treatises, birth records, or reference texts (PDF, DOCX, TXT, MD up to 25MB).
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-file">Select File</label>
+            <input type="file" id="modal-doc-file" class="form-control" accept=".pdf,.txt,.md,.docx" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-title">Document Title</label>
+            <input type="text" id="modal-doc-title" class="form-control" placeholder="e.g. Classical Brihat Jataka Notes">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-author">Author / Sage</label>
+            <input type="text" id="modal-doc-author" class="form-control" placeholder="e.g. Varahamihira">
+          </div>
+
+          <div id="modal-upload-status" style="margin-top: 0.5rem;"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-tool modal-close">Cancel</button>
+          <button type="submit" class="btn-new-chat">Index Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 3: AI AGENT TOOLS TESTING CONSOLE
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-agent-tools">
+    <div class="modal-card" style="max-width: 780px;">
+      <div class="modal-header">
+        <h3><span>⚡</span> AI Agent Controlled Tools Console</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          Execute registered agent tools directly through the controlled orchestrator with bounded security boundaries.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-agent-tool-select">Select Tool</label>
+          <select id="modal-agent-tool-select" class="form-select"></select>
+        </div>
+
+        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: rgba(15, 12, 28, 0.7); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #c4b5fd;">
+          Loading tool documentation...
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-agent-tool-payload">Arguments (JSON Payload)</label>
+          <textarea id="modal-agent-tool-payload" class="form-control" rows="6" style="font-family: monospace; font-size: 0.82rem;"></textarea>
+        </div>
+
+        <button class="btn-new-chat" id="btn-modal-exec-tool" style="width: 100%;">Execute Tool ⚡</button>
+
+        <div style="margin-top: 1rem;">
+          <div class="sidebar-section-title">Execution Result</div>
+          <div id="modal-agent-tool-meta" style="margin-bottom: 0.4rem; display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+          <pre id="modal-agent-tool-output" style="background: rgba(10, 7, 22, 0.9); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem; max-height: 220px; overflow: auto; font-family: monospace; font-size: 0.8rem; color: #a5f3fc;">
+Execution output will appear here.
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/reports.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

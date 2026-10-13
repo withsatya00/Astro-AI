@@ -1,0 +1,178 @@
+"""
+Chat consultation endpoints supporting multi-lingual conversation, chart awareness,
+knowledge retrieval, and session history tracking.
+"""
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from datetime import datetime, timezone
+from backend.app.db.session import get_db
+from backend.app.schemas.schemas import (
+    ChatMessageRequest, ChatMessageResponse, ChatSessionResponse, Citation
+)
+from backend.app.models.models import ChatSession, ChatMessage, BirthChart
+from backend.app.agents.orchestrator import AgentOrchestrator
+from backend.app.core.security import sanitize_user_input
+
+router = APIRouter(prefix="/chat", tags=["Consultation Chat"])
+
+@router.post("", response_model=ChatMessageResponse)
+def send_chat_message(
+    payload: ChatMessageRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    Submits a user question to AstroAI Agent.
+    Retrieves grounded chart data and classical references, then produces an authentic response.
+    """
+    clean_msg = sanitize_user_input(payload.message)
+    if not clean_msg:
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+
+    # 1. Resolve or create ChatSession
+    session = None
+    if payload.session_id:
+        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id).first()
+
+    if not session:
+        session = ChatSession(
+            title=clean_msg[:40] + ("..." if len(clean_msg) > 40 else ""),
+            language=payload.language,
+            chart_id=payload.chart_id
+        )
+        db.add(session)
+        db.commit()
+        db.refresh(session)
+    elif payload.chart_id and not session.chart_id:
+        session.chart_id = payload.chart_id
+        db.commit()
+
+    # 2. Record user message
+    user_msg_record = ChatMessage(
+        session_id=session.id,
+        role="user",
+        content=clean_msg
+    )
+    db.add(user_msg_record)
+    db.commit()
+
+    # 3. Retrieve chart data if associated
+    chart_data = None
+    if session.chart_id:
+        chart_obj = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
+        if chart_obj:
+            chart_data = chart_obj.chart_data
+
+    # 4. Fetch past messages for history
+    past_messages = (
+        db.query(ChatMessage)
+        .filter(ChatMessage.session_id == session.id)
+        .order_by(ChatMessage.created_at.asc())
+        .limit(10)
+        .all()
+    )
+    history = [{"role": m.role, "content": m.content} for m in past_messages]
+
+    # 5. Process turn with Agent Orchestrator
+    turn_result = AgentOrchestrator.process_consultation_turn(
+        db=db,
+        user_message=clean_msg,
+        chart_data=chart_data,
+        history=history,
+        language=payload.language,
+        force_demo_mode=payload.force_demo_mode
+    )
+
+    # 6. Save assistant message
+    asst_msg_record = ChatMessage(
+        session_id=session.id,
+        role="assistant",
+        content=turn_result["content"],
+        msg_metadata={
+            "citations": turn_result["citations"],
+            "calculated_data_used": turn_result["calculated_data_used"],
+            "is_demo_mode": turn_result["is_demo_mode"],
+            "tool_trace": turn_result.get("tool_trace")
+        }
+    )
+    db.add(asst_msg_record)
+    db.commit()
+    db.refresh(asst_msg_record)
+
+    # Format citations
+    citations_output = [
+        Citation(
+            source_title=c["source_title"],
+            author=c.get("author"),
+            page_number=c.get("page_number"),
+            excerpt=c["excerpt"]
+        )
+        for c in turn_result["citations"]
+    ]
+
+    return ChatMessageResponse(
+        id=asst_msg_record.id,
+        session_id=session.id,
+        role="assistant",
+        content=asst_msg_record.content,
+        citations=citations_output,
+        calculated_data_used=turn_result["calculated_data_used"],
+        is_demo_mode=turn_result["is_demo_mode"],
+        tool_trace=turn_result.get("tool_trace"),
+        created_at=asst_msg_record.created_at
+    )
+
+@router.get("/sessions", response_model=List[ChatSessionResponse])
+def list_sessions(db: Session = Depends(get_db)):
+    """Lists recent consultation sessions."""
+    sessions = db.query(ChatSession).order_by(ChatSession.updated_at.desc()).limit(20).all()
+    return [
+        ChatSessionResponse(
+            id=s.id,
+            title=s.title,
+            language=s.language,
+            chart_id=s.chart_id,
+            created_at=s.created_at,
+            messages=[]
+        )
+        for s in sessions
+    ]
+
+@router.get("/sessions/{session_id}", response_model=ChatSessionResponse)
+def get_session_history(session_id: str, db: Session = Depends(get_db)):
+    """Retrieves full conversation history for a consultation session."""
+    session = db.query(ChatSession).filter(ChatSession.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found.")
+
+    messages_out = []
+    for m in session.messages:
+        c_list = []
+        if m.msg_metadata and "citations" in m.msg_metadata:
+            for c in m.msg_metadata["citations"]:
+                c_list.append(Citation(
+                    source_title=c["source_title"],
+                    author=c.get("author"),
+                    page_number=c.get("page_number"),
+                    excerpt=c["excerpt"]
+                ))
+        messages_out.append(ChatMessageResponse(
+            id=m.id,
+            session_id=session.id,
+            role=m.role,
+            content=m.content,
+            citations=c_list,
+            calculated_data_used=m.msg_metadata.get("calculated_data_used", False) if m.msg_metadata else False,
+            is_demo_mode=m.msg_metadata.get("is_demo_mode", False) if m.msg_metadata else False,
+            tool_trace=m.msg_metadata.get("tool_trace") if m.msg_metadata else None,
+            created_at=m.created_at
+        ))
+
+    return ChatSessionResponse(
+        id=session.id,
+        title=session.title,
+        language=session.language,
+        chart_id=session.chart_id,
+        created_at=session.created_at,
+        messages=messages_out
+    )

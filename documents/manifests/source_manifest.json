@@ -1,0 +1,33 @@
+{
+  "manifest": [
+    {
+      "source_id": "seed-vedic-foundations",
+      "document_id": "4874d3db-bcdf-4dbe-ad22-16b46fd175f9",
+      "title": "Classical Vedic Astrology: Foundations, Planets, and Houses",
+      "author": "Vedic Tradition Compendium",
+      "publisher": "Open Astrology Heritage",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "C:\\Users\\og\\OneDrive\\Desktop\\AstroTalk\\documents\\sources\\vedic_astrology_foundations.md",
+      "checksum": "9d2f57c8a36ac2d2feac1601d14d62cb566440d93559df8f12dcb5a2b039a1ff",
+      "file_size": 3609,
+      "chunk_count": 9,
+      "status": "INDEXED"
+    },
+    {
+      "source_id": "seed-nakshatras-dashas",
+      "document_id": "ccb3d1b8-3583-4525-8419-dbf74c894997",
+      "title": "The Classical Handbook of Nakshatras and Vimshottari Dasha",
+      "author": "Maharishi Parashara Tradition",
+      "publisher": "Open Knowledge Archive",
+      "license": "Public Domain / CC0",
+      "permission_status": "PERMITTED",
+      "file_path": "C:\\Users\\og\\OneDrive\\Desktop\\AstroTalk\\documents\\sources\\nakshatras_and_dashas_handbook.md",
+      "checksum": "3ef4495d48f16eeb5a92183063528a9e30c3242e5aa10e97ee7b7567a43462b8",
+      "file_size": 2758,
+      "chunk_count": 6,
+      "status": "INDEXED"
+    }
+  ],
+  "generated_at": 1791886250.5956962
+}
