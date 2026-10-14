@@ -173,9 +173,11 @@ def generate_demo_response(
             venus_p = next((p for p in chart_context.planets if p.get("name") == "Venus"), None)
             v_sign = venus_p.get("sign") if venus_p else "Taurus"
             v_house = venus_p.get("house") if venus_p else 7
+            first_name = chart_context.profile_name.split()[0] if (chart_context.profile_name and chart_context.profile_name != "Guest User") else ""
+            salutation = f"Pranam {first_name} ji! 🙏 " if (first_name and (not conversation_history or len(conversation_history) <= 2)) else ""
             if detected_lang == "hinglish":
                 return (
-                    f"Tumhari kundli mein Lagna {chart_context.ascendant_sign} hai aur Venus {v_sign} (House {v_house}) mein sthit hai. "
+                    f"{salutation}Tumhari kundli mein Lagna {chart_context.ascendant_sign} hai aur Venus {v_sign} (House {v_house}) mein sthit hai. "
                     "Traditional Vedic astrology mein Venus affection, partnership aur understanding ka prateek maana jaata hai. "
                     "Yeh placement darshati hai ki rishton mein mutual communication aur mutual respect par dhyaan dena bohot faydemand rahega. "
                     "Kya tum relationship timing ya compatibility ke baare mein aur gehrayi se jaan na chahte ho?"
@@ -207,9 +209,11 @@ def generate_demo_response(
         else:
             jup_p = next((p for p in chart_context.planets if p.get("name") == "Jupiter"), None)
             j_sign = jup_p.get("sign") if jup_p else "Sagittarius"
+            first_name = chart_context.profile_name.split()[0] if (chart_context.profile_name and chart_context.profile_name != "Guest User") else ""
+            salutation = f"Pranam {first_name} ji! 🙏 " if (first_name and (not conversation_history or len(conversation_history) <= 2)) else ""
             if detected_lang == "hinglish":
                 return (
-                    f"Aapke chart mein 10th house aur Jupiter ki placement ({j_sign}) professional growth aur wisdom ko support karti hai. "
+                    f"{salutation}Aapke chart mein 10th house aur Jupiter ki placement ({j_sign}) professional growth aur wisdom ko support karti hai. "
                     "Classical Jyotish ke anusar, patience aur domain mastery aapko long-term stability degi. "
                     "Kya aap specific role change ya aane wale time period ke baare mein sochna chahte hain?"
                 )

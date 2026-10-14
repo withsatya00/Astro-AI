@@ -145,41 +145,129 @@
 
       <!-- Scrollable Conversation Area -->
       <div class="chat-scroll-area" id="chat-messages-container">
-        <!-- Default Welcome Hero (Hidden once chat starts) -->
+        <!-- Default Welcome Hero / AstroTalk Consultation Intake Card -->
         <div class="welcome-screen" id="welcome-screen">
-          <div class="welcome-zodiac-orb">✨</div>
-          <h1 class="welcome-title">Your Journey, Written in the Stars</h1>
-          <p class="welcome-subtitle">
-            Ask a question, explore your kundli, or talk through what is on your mind.
-          </p>
+          <div class="astrotalk-intake-card" id="astrotalk-intake-card">
+            <div class="intake-header">
+              <div class="intake-icon">🔮</div>
+              <div>
+                <h2 class="intake-title">AstroTalk Consultation Intake (परामर्श विवरण)</h2>
+                <p class="intake-subtitle">
+                  Vedic Jyotish ke anusaar accurate bhavishyavani aur guidance ke liye kripya apne janam vivaran darj karein.
+                </p>
+              </div>
+            </div>
 
-          <button class="btn-subtle-birth" id="btn-welcome-add-birth">
-            <span>✨</span>
-            <span>Add birth details for a personalized reading</span>
-          </button>
+            <!-- Quick Profile Selector (if saved profiles exist) -->
+            <div id="intake-saved-profiles-bar" class="intake-saved-bar" style="display: none;">
+              <span class="saved-label">⚡ Quick select saved profile:</span>
+              <div class="saved-chips-list" id="intake-saved-chips"></div>
+            </div>
 
-          <!-- Quick Action Buttons -->
-          <div class="quick-actions-row">
-            <button class="quick-action-pill" data-prompt="Mere love life aur relationships ke baare mein batao.">
-              <span>❤️</span>
-              <span>Love & Relationships</span>
-            </button>
-            <button class="quick-action-pill" data-prompt="Career kaisa rahega? Professional growth ke baare mein batao.">
-              <span>💼</span>
-              <span>Career</span>
-            </button>
-            <button class="quick-action-pill" data-prompt="Marriage aur relationship compatibility ke yog ke baare mein batao.">
-              <span>💍</span>
-              <span>Marriage</span>
-            </button>
-            <button class="quick-action-pill" data-prompt="Detail me kundli analysis do, Lagna aur planets ke sath.">
-              <span>🪐</span>
-              <span>Kundli Reading</span>
-            </button>
-            <button class="quick-action-pill" data-prompt="Aaj ka daily horoscope aur general astrological focus kya hai?">
-              <span>🔮</span>
-              <span>Daily Horoscope</span>
-            </button>
+            <form id="chat-intake-form" onsubmit="ChatController.submitIntakeForm(event)">
+              <div class="intake-form-grid">
+                <!-- Name -->
+                <div class="form-group">
+                  <label class="intake-label" for="intake-name">Full Name / आपका नाम <span class="req">*</span></label>
+                  <input type="text" id="intake-name" class="intake-input" placeholder="e.g. Rohit Sharma" value="Rohit Sharma" required />
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                  <label class="intake-label">Gender / लिंग <span class="req">*</span></label>
+                  <div class="gender-toggle-group">
+                    <label class="gender-radio-label active" id="gender-label-male">
+                      <input type="radio" name="intake-gender" value="Male" checked onchange="ChatController.onGenderChange(this)" />
+                      <span>♂ Male</span>
+                    </label>
+                    <label class="gender-radio-label" id="gender-label-female">
+                      <input type="radio" name="intake-gender" value="Female" onchange="ChatController.onGenderChange(this)" />
+                      <span>♀ Female</span>
+                    </label>
+                    <label class="gender-radio-label" id="gender-label-other">
+                      <input type="radio" name="intake-gender" value="Other" onchange="ChatController.onGenderChange(this)" />
+                      <span>Other</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-group">
+                  <label class="intake-label" for="intake-dob">Date of Birth / जन्म तिथि <span class="req">*</span></label>
+                  <input type="date" id="intake-dob" class="intake-input" value="1990-10-24" required />
+                </div>
+
+                <!-- Time of Birth -->
+                <div class="form-group">
+                  <label class="intake-label" for="intake-tob">Time of Birth / जन्म समय</label>
+                  <input type="time" id="intake-tob" class="intake-input" value="07:30" />
+                  <label class="approx-checkbox">
+                    <input type="checkbox" id="intake-approx-time" />
+                    <span>Don't know exact time (लगभग समय)</span>
+                  </label>
+                </div>
+
+                <!-- Birth Place -->
+                <div class="form-group full-col">
+                  <label class="intake-label" for="intake-city">Birth Place (City) / जन्म स्थान <span class="req">*</span></label>
+                  <input type="text" id="intake-city" class="intake-input" placeholder="e.g. New Delhi, India" value="New Delhi" required />
+                  <div class="intake-city-chips">
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('New Delhi', 'India', 28.6139, 77.2090, 5.5)">New Delhi</span>
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('Mumbai', 'India', 19.0760, 72.8777, 5.5)">Mumbai</span>
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('Bengaluru', 'India', 12.9716, 77.5946, 5.5)">Bengaluru</span>
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('Lucknow', 'India', 26.8467, 80.9462, 5.5)">Lucknow</span>
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('Jaipur', 'India', 26.9124, 75.7873, 5.5)">Jaipur</span>
+                    <span class="city-tag" onclick="ChatController.setIntakeCity('Kolkata', 'India', 22.5726, 88.3639, 5.5)">Kolkata</span>
+                  </div>
+                </div>
+
+                <!-- Primary Topic of Concern -->
+                <div class="form-group full-col">
+                  <label class="intake-label">Consultation Topic / परामर्श का मुख्य विषय <span class="req">*</span></label>
+                  <div class="topics-radio-grid">
+                    <label class="topic-chip active">
+                      <input type="radio" name="intake-topic" value="love" checked onchange="ChatController.onTopicChange(this)" />
+                      <span>❤️ Love & Relationships</span>
+                    </label>
+                    <label class="topic-chip">
+                      <input type="radio" name="intake-topic" value="career" onchange="ChatController.onTopicChange(this)" />
+                      <span>💼 Career & Job</span>
+                    </label>
+                    <label class="topic-chip">
+                      <input type="radio" name="intake-topic" value="marriage" onchange="ChatController.onTopicChange(this)" />
+                      <span>💍 Marriage & Compatibility</span>
+                    </label>
+                    <label class="topic-chip">
+                      <input type="radio" name="intake-topic" value="wealth" onchange="ChatController.onTopicChange(this)" />
+                      <span>💰 Wealth & Business</span>
+                    </label>
+                    <label class="topic-chip">
+                      <input type="radio" name="intake-topic" value="health" onchange="ChatController.onTopicChange(this)" />
+                      <span>🩺 Health & Vitality</span>
+                    </label>
+                    <label class="topic-chip">
+                      <input type="radio" name="intake-topic" value="kundli" onchange="ChatController.onTopicChange(this)" />
+                      <span>🪐 Complete Kundli Reading</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Optional Question -->
+                <div class="form-group full-col">
+                  <label class="intake-label" for="intake-custom-question">Your Specific Question / आपका विशिष्ट प्रश्न (Optional)</label>
+                  <input type="text" id="intake-custom-question" class="intake-input" placeholder="e.g. Mere career mein kab growth hogi? (or leave blank for general guidance)" />
+                </div>
+              </div>
+
+              <!-- Submit CTA Button -->
+              <div class="intake-actions">
+                <button type="submit" id="btn-submit-intake" class="btn-start-consultation">
+                  <span>🟢</span>
+                  <span>Start Chat with Astrologer (परामर्श शुरू करें)</span>
+                  <span>→</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

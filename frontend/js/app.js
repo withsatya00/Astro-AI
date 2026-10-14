@@ -351,9 +351,9 @@ const App = {
         </li>
       `;
 
-      // Set the first chart as active if none set
-      if (!this.currentChart && charts.length > 0) {
-        this.selectChart(charts[0].id, false);
+      // Also refresh intake chips if form is visible
+      if (typeof ChatController !== 'undefined' && ChatController.renderIntakeSavedChips) {
+        ChatController.renderIntakeSavedChips();
       }
     } catch (err) {
       console.warn('Could not load profiles:', err);
@@ -366,6 +366,12 @@ const App = {
       this.currentChart = chart;
       this.updateActiveProfileUI(chart);
       this.loadSavedProfiles();
+
+      // If intake form is on screen, populate it
+      if (document.getElementById('chat-intake-form') && typeof ChatController !== 'undefined' && ChatController.fillIntakeFromProfile) {
+        ChatController.fillIntakeFromProfile(chartId);
+      }
+
       if (notify) {
         this.showToast(`Selected profile: ${chart.name}`, 'info');
       }

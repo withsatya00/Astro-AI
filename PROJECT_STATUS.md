@@ -105,4 +105,18 @@
   - Added "✋ Palm Photo" upload button in frontend chat interface with instant image preview in user chat bubble.
 - [x] **Expanded Regression Test Suite**: Added Cases 11, 12, and 13 to `backend/tests/test_conversational_quality.py`. Total test suite passing at **28/28 (100% pass rate)**.
 
+### Phase 13: AstroTalk Consultation Intake Flow & Profile Integration
+- [x] **Mandatory Consultation Intake Card**: Built an authentic AstroTalk intake card directly in the consultation stream that collects:
+  - Full Name (आपका नाम)
+  - Gender (♂ Male / ♀ Female / Other)
+  - Date of Birth (जन्म तिथि)
+  - Time of Birth (जन्म समय) with "Don't know exact time" toggle
+  - Birth Place (City) with quick preset chips (New Delhi, Mumbai, Bengaluru, Lucknow, Jaipur, Kolkata)
+  - Consultation Focus Topic (❤️ Love, 💼 Career, 💍 Marriage, 💰 Wealth, 🩺 Health, 🪐 Kundli Reading)
+  - Optional custom initial inquiry
+- [x] **Quick Saved Profile Selector**: Bar above the form enabling 1-click loading of previously calculated birth profiles.
+- [x] **Automatic Chart Calculation & Connected Banner**: On submission, Swiss Ephemeris calculates astronomical longitudes and Lagna/Rashi, updates the active session, renders an authentic "Astrologer Connected" live banner, and immediately sends a personalized consultation greeting addressing the user by their name.
+- [x] **Seamless Session Reset**: Clicking "+ New Consultation" resets the conversation and restores the intake form with remembered details for quick consultation startup.
+- [x] **Verified via Test Suite & Browser Automation**: Full test suite passing 28/28 (100%), verified live in browser and recorded session artifact.
+
 

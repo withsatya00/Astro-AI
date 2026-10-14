@@ -14,6 +14,7 @@ const ChatController = {
   init() {
     this.bindEvents();
     this.loadSessions();
+    this.renderIntakeSavedChips();
   },
 
   bindEvents() {
@@ -139,51 +140,357 @@ const ChatController = {
     }
   },
 
+  intakeCoordinates: { lat: 28.6139, lon: 77.2090, tz: 5.5, country: 'India' },
+  lastIntakeData: {
+    name: 'Rohit Sharma',
+    gender: 'Male',
+    dob: '1990-10-24',
+    tob: '07:30',
+    isApprox: false,
+    city: 'New Delhi',
+    topic: 'love'
+  },
+
+  onGenderChange(radio) {
+    document.querySelectorAll('.gender-radio-label').forEach(el => el.classList.remove('active'));
+    if (radio && radio.parentElement) {
+      radio.parentElement.classList.add('active');
+    }
+  },
+
+  onTopicChange(radio) {
+    document.querySelectorAll('.topic-chip').forEach(el => el.classList.remove('active'));
+    if (radio && radio.parentElement) {
+      radio.parentElement.classList.add('active');
+    }
+  },
+
+  setIntakeCity(city, country, lat, lon, tz) {
+    const cityInput = document.getElementById('intake-city');
+    if (cityInput) cityInput.value = city;
+    this.intakeCoordinates = {
+      lat: parseFloat(lat),
+      lon: parseFloat(lon),
+      tz: parseFloat(tz),
+      country: country || 'India'
+    };
+    App.showToast(`Selected city: ${city}`, 'info');
+  },
+
+  async renderIntakeSavedChips() {
+    const bar = document.getElementById('intake-saved-profiles-bar');
+    const container = document.getElementById('intake-saved-chips');
+    if (!bar || !container) return;
+
+    try {
+      const charts = await API.getRecentCharts();
+      if (!charts || !charts.length) {
+        bar.style.display = 'none';
+        return;
+      }
+
+      bar.style.display = 'flex';
+      container.innerHTML = charts.slice(0, 5).map(c => `
+        <span class="saved-profile-chip" onclick="ChatController.fillIntakeFromProfile('${c.id}')">
+          👤 ${c.name} (${c.chart_data?.ascendant_sign || 'Kundli'})
+        </span>
+      `).join('');
+    } catch (err) {
+      console.warn('Could not load saved profile chips:', err);
+    }
+  },
+
+  async fillIntakeFromProfile(chartId) {
+    try {
+      const chart = await API.getChartById(chartId);
+      if (!chart) return;
+
+      const nameInput = document.getElementById('intake-name');
+      const dobInput = document.getElementById('intake-dob');
+      const tobInput = document.getElementById('intake-tob');
+      const cityInput = document.getElementById('intake-city');
+      const approxCheck = document.getElementById('intake-approx-time');
+
+      if (nameInput) nameInput.value = chart.name || '';
+      if (dobInput) dobInput.value = chart.date_of_birth || '';
+      if (tobInput && chart.time_of_birth) tobInput.value = chart.time_of_birth.slice(0, 5);
+      if (cityInput) cityInput.value = chart.city || '';
+      if (approxCheck) approxCheck.checked = Boolean(chart.is_time_approximate);
+
+      this.intakeCoordinates = {
+        lat: chart.latitude || 28.6139,
+        lon: chart.longitude || 77.2090,
+        tz: chart.timezone_offset || 5.5,
+        country: chart.country || 'India'
+      };
+
+      App.showToast(`Loaded details for ${chart.name} ✨`, 'info');
+    } catch (err) {
+      console.warn('Could not load profile details into intake form:', err);
+    }
+  },
+
+  getIntakeTemplateHtml() {
+    const d = this.lastIntakeData;
+    return `
+      <div class="welcome-screen" id="welcome-screen">
+        <div class="astrotalk-intake-card" id="astrotalk-intake-card">
+          <div class="intake-header">
+            <div class="intake-icon">🔮</div>
+            <div>
+              <h2 class="intake-title">AstroTalk Consultation Intake (परामर्श विवरण)</h2>
+              <p class="intake-subtitle">
+                Vedic Jyotish ke anusaar accurate bhavishyavani aur guidance ke liye kripya apne janam vivaran darj karein.
+              </p>
+            </div>
+          </div>
+
+          <div id="intake-saved-profiles-bar" class="intake-saved-bar" style="display: none;">
+            <span class="saved-label">⚡ Quick select saved profile:</span>
+            <div class="saved-chips-list" id="intake-saved-chips"></div>
+          </div>
+
+          <form id="chat-intake-form" onsubmit="ChatController.submitIntakeForm(event)">
+            <div class="intake-form-grid">
+              <div class="form-group">
+                <label class="intake-label" for="intake-name">Full Name / आपका नाम <span class="req">*</span></label>
+                <input type="text" id="intake-name" class="intake-input" placeholder="e.g. Rohit Sharma" value="${d.name || ''}" required />
+              </div>
+
+              <div class="form-group">
+                <label class="intake-label">Gender / लिंग <span class="req">*</span></label>
+                <div class="gender-toggle-group">
+                  <label class="gender-radio-label ${d.gender === 'Male' ? 'active' : ''}" id="gender-label-male">
+                    <input type="radio" name="intake-gender" value="Male" ${d.gender === 'Male' ? 'checked' : ''} onchange="ChatController.onGenderChange(this)" />
+                    <span>♂ Male</span>
+                  </label>
+                  <label class="gender-radio-label ${d.gender === 'Female' ? 'active' : ''}" id="gender-label-female">
+                    <input type="radio" name="intake-gender" value="Female" ${d.gender === 'Female' ? 'checked' : ''} onchange="ChatController.onGenderChange(this)" />
+                    <span>♀ Female</span>
+                  </label>
+                  <label class="gender-radio-label ${d.gender === 'Other' ? 'active' : ''}" id="gender-label-other">
+                    <input type="radio" name="intake-gender" value="Other" ${d.gender === 'Other' ? 'checked' : ''} onchange="ChatController.onGenderChange(this)" />
+                    <span>Other</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="intake-label" for="intake-dob">Date of Birth / जन्म तिथि <span class="req">*</span></label>
+                <input type="date" id="intake-dob" class="intake-input" value="${d.dob || '1990-10-24'}" required />
+              </div>
+
+              <div class="form-group">
+                <label class="intake-label" for="intake-tob">Time of Birth / जन्म समय</label>
+                <input type="time" id="intake-tob" class="intake-input" value="${d.tob || '07:30'}" />
+                <label class="approx-checkbox">
+                  <input type="checkbox" id="intake-approx-time" ${d.isApprox ? 'checked' : ''} />
+                  <span>Don't know exact time (लगभग समय)</span>
+                </label>
+              </div>
+
+              <div class="form-group full-col">
+                <label class="intake-label" for="intake-city">Birth Place (City) / जन्म स्थान <span class="req">*</span></label>
+                <input type="text" id="intake-city" class="intake-input" placeholder="e.g. New Delhi, India" value="${d.city || 'New Delhi'}" required />
+                <div class="intake-city-chips">
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('New Delhi', 'India', 28.6139, 77.2090, 5.5)">New Delhi</span>
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('Mumbai', 'India', 19.0760, 72.8777, 5.5)">Mumbai</span>
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('Bengaluru', 'India', 12.9716, 77.5946, 5.5)">Bengaluru</span>
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('Lucknow', 'India', 26.8467, 80.9462, 5.5)">Lucknow</span>
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('Jaipur', 'India', 26.9124, 75.7873, 5.5)">Jaipur</span>
+                  <span class="city-tag" onclick="ChatController.setIntakeCity('Kolkata', 'India', 22.5726, 88.3639, 5.5)">Kolkata</span>
+                </div>
+              </div>
+
+              <div class="form-group full-col">
+                <label class="intake-label">Consultation Topic / परामर्श का मुख्य विषय <span class="req">*</span></label>
+                <div class="topics-radio-grid">
+                  <label class="topic-chip ${d.topic === 'love' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="love" ${d.topic === 'love' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>❤️ Love & Relationships</span>
+                  </label>
+                  <label class="topic-chip ${d.topic === 'career' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="career" ${d.topic === 'career' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>💼 Career & Job</span>
+                  </label>
+                  <label class="topic-chip ${d.topic === 'marriage' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="marriage" ${d.topic === 'marriage' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>💍 Marriage & Compatibility</span>
+                  </label>
+                  <label class="topic-chip ${d.topic === 'wealth' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="wealth" ${d.topic === 'wealth' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>💰 Wealth & Business</span>
+                  </label>
+                  <label class="topic-chip ${d.topic === 'health' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="health" ${d.topic === 'health' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>🩺 Health & Vitality</span>
+                  </label>
+                  <label class="topic-chip ${d.topic === 'kundli' ? 'active' : ''}">
+                    <input type="radio" name="intake-topic" value="kundli" ${d.topic === 'kundli' ? 'checked' : ''} onchange="ChatController.onTopicChange(this)" />
+                    <span>🪐 Complete Kundli Reading</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group full-col">
+                <label class="intake-label" for="intake-custom-question">Your Specific Question / आपका विशिष्ट प्रश्न (Optional)</label>
+                <input type="text" id="intake-custom-question" class="intake-input" placeholder="e.g. Mere career mein kab growth hogi? (or leave blank for general guidance)" />
+              </div>
+            </div>
+
+            <div class="intake-actions">
+              <button type="submit" id="btn-submit-intake" class="btn-start-consultation">
+                <span>🟢</span>
+                <span>Start Chat with Astrologer (परामर्श शुरू करें)</span>
+                <span>→</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+  },
+
   startNewChat() {
     this.currentSessionId = null;
     const box = document.getElementById('chat-messages-container');
     if (!box) return;
 
-    // Restore refined welcome screen
-    const welcomeHtml = `
-      <div class="welcome-screen" id="welcome-screen">
-        <div class="welcome-zodiac-orb">✨</div>
-        <h1 class="welcome-title">Your Journey, Written in the Stars</h1>
-        <p class="welcome-subtitle">
-          Ask a question, explore your kundli, or talk through what is on your mind.
-        </p>
+    box.innerHTML = this.getIntakeTemplateHtml();
+    this.renderIntakeSavedChips();
+    App.showToast('Started new consultation intake', 'info');
+  },
 
-        <button class="btn-subtle-birth" onclick="App.openBirthModal()">
-          <span>✨</span>
-          <span>Add birth details for a personalized reading</span>
-        </button>
+  async submitIntakeForm(e) {
+    if (e && e.preventDefault) e.preventDefault();
 
-        <div class="quick-actions-row">
-          <button class="quick-action-pill" onclick="ChatController.sendMessage('Mere love life aur relationships ke baare mein batao.')">
-            <span>❤️</span>
-            <span>Love & Relationships</span>
-          </button>
-          <button class="quick-action-pill" onclick="ChatController.sendMessage('Career kaisa rahega? Professional growth ke baare mein batao.')">
-            <span>💼</span>
-            <span>Career</span>
-          </button>
-          <button class="quick-action-pill" onclick="ChatController.sendMessage('Marriage aur relationship compatibility ke yog ke baare mein batao.')">
-            <span>💍</span>
-            <span>Marriage</span>
-          </button>
-          <button class="quick-action-pill" onclick="ChatController.renderKundliInChat()">
-            <span>🪐</span>
-            <span>Kundli Reading</span>
-          </button>
-          <button class="quick-action-pill" onclick="ChatController.sendMessage('Aaj ka daily horoscope aur general astrological focus kya hai?')">
-            <span>🔮</span>
-            <span>Daily Horoscope</span>
-          </button>
+    const nameInput = document.getElementById('intake-name');
+    const dobInput = document.getElementById('intake-dob');
+    const tobInput = document.getElementById('intake-tob');
+    const cityInput = document.getElementById('intake-city');
+    const approxCheck = document.getElementById('intake-approx-time');
+    const questionInput = document.getElementById('intake-custom-question');
+    const submitBtn = document.getElementById('btn-submit-intake');
+
+    if (!nameInput || !nameInput.value.trim()) {
+      App.showToast('Please enter your full name / आपका नाम आवश्यक है', 'warning');
+      if (nameInput) nameInput.focus();
+      return;
+    }
+    if (!dobInput || !dobInput.value) {
+      App.showToast('Please select your date of birth / जन्म तिथि आवश्यक है', 'warning');
+      if (dobInput) dobInput.focus();
+      return;
+    }
+    if (!cityInput || !cityInput.value.trim()) {
+      App.showToast('Please enter your birth city / जन्म स्थान आवश्यक है', 'warning');
+      if (cityInput) cityInput.focus();
+      return;
+    }
+
+    const name = nameInput.value.trim();
+    const dob = dobInput.value;
+    const tob = tobInput && tobInput.value ? (tobInput.value.length === 5 ? tobInput.value + ':00' : tobInput.value) : '12:00:00';
+    const isApprox = approxCheck ? approxCheck.checked : false;
+    const city = cityInput.value.trim();
+    const genderElem = document.querySelector('input[name="intake-gender"]:checked');
+    const gender = genderElem ? genderElem.value : 'Male';
+    const topicElem = document.querySelector('input[name="intake-topic"]:checked');
+    const topic = topicElem ? topicElem.value : 'love';
+    const customQ = questionInput ? questionInput.value.trim() : '';
+
+    const coords = this.intakeCoordinates || { lat: 28.6139, lon: 77.2090, tz: 5.5, country: 'India' };
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳</span> <span>Calculating Janam Kundli with Swiss Ephemeris...</span>';
+    }
+
+    try {
+      const chartPayload = {
+        name: name,
+        date_of_birth: dob,
+        time_of_birth: tob,
+        is_time_approximate: isApprox,
+        latitude: coords.lat,
+        longitude: coords.lon,
+        timezone_offset: coords.tz,
+        city: city,
+        country: coords.country || 'India',
+        system: 'Vedic',
+        ayanamsa: 'Lahiri'
+      };
+
+      const chart = await API.calculateChart(chartPayload);
+      App.currentChart = chart;
+      this.activeChartId = chart.id;
+      App.updateActiveProfileUI(chart);
+      App.loadSavedProfiles();
+
+      // Store intake data
+      this.lastIntakeData = { name, gender, dob, tob, isApprox, city, coords, topic };
+
+      // Clear intake form from chat stream
+      const box = document.getElementById('chat-messages-container');
+      if (box) box.innerHTML = '';
+
+      const topicLabels = {
+        love: '❤️ Love & Relationships (प्रेम एवं संबंध)',
+        career: '💼 Career & Job Growth (करियर एवं नौकरी)',
+        marriage: '💍 Marriage & Compatibility (विवाह एवं कुंडली मिलान)',
+        wealth: '💰 Wealth & Business (धन एवं व्यापार)',
+        health: '🩺 Health & Vitality (स्वास्थ्य)',
+        kundli: '🪐 Complete Janam Kundli Reading (संपूर्ण कुंडली पठन)'
+      };
+      const topicLabel = topicLabels[topic] || 'Astrological Consultation';
+
+      // Append AstroTalk Connected Banner
+      const cd = chart.chart_data || {};
+      const bannerHtml = `
+        <div class="astrotalk-connected-banner">
+          <div class="banner-live-head">
+            <div class="live-badge">
+              <span class="live-pulse-dot"></span>
+              <span>Astrologer Connected (लाइव ज्योतिषी परामर्श)</span>
+            </div>
+            <div class="banner-session-id">Consultation Session #${chart.id.slice(-6)}</div>
+          </div>
+          <div class="banner-client-grid">
+            <div class="client-detail-pill">👤 <strong>${chart.name}</strong> (${gender})</div>
+            <div class="client-detail-pill">📅 <strong>${chart.date_of_birth}</strong> at <strong>${chart.time_of_birth || '12:00'}</strong></div>
+            <div class="client-detail-pill">📍 <strong>${chart.city || 'Birthplace'}, ${chart.country || 'India'}</strong></div>
+            <div class="client-detail-pill highlight-gold">🪐 <strong>${cd.ascendant_sign || 'Lagna'} Lagna</strong> • 🌙 <strong>${cd.moon_sign || 'Moon'} Rashi</strong> (${cd.moon_nakshatra || ''})</div>
+            <div class="client-detail-pill topic-pill">🎯 <strong>Focus:</strong> ${topicLabel}</div>
+          </div>
         </div>
-      </div>
-    `;
-    box.innerHTML = welcomeHtml;
-    App.showToast('Started new consultation session', 'info');
+      `;
+      box.insertAdjacentHTML('beforeend', bannerHtml);
+
+      // Determine initial user prompt
+      let promptToSend = customQ;
+      if (!promptToSend) {
+        const topicPrompts = {
+          love: 'Mere love life aur relationship ke baare mein guidance chahiye.',
+          career: 'Mere career aur job growth ke baare mein guidance chahiye.',
+          marriage: 'Meri marriage aur relationship compatibility ke yog ke baare mein guidance chahiye.',
+          wealth: 'Mere financial stability aur wealth prospects ke baare mein guidance chahiye.',
+          health: 'Mere health aur physical wellbeing ke baare mein guidance chahiye.',
+          kundli: 'Meri Janam Kundli ka detailed Lagna D1 analysis batayein.'
+        };
+        promptToSend = topicPrompts[topic] || 'Mere kundli ke anusaar general guidance de.';
+      }
+
+      App.showToast(`Connected to Astrologer for ${chart.name}! 🔮`, 'success');
+      await this.sendMessage(promptToSend);
+
+    } catch (err) {
+      console.error('Intake submission error:', err);
+      App.showToast(`Failed to initialize consultation: ${err.message}`, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>🟢</span> <span>Start Chat with Astrologer (परामर्श शुरू करें)</span> <span>→</span>';
+      }
+    }
   },
 
   async loadSessions() {
@@ -355,6 +662,29 @@ const ChatController = {
   async sendMessage(customText = null, imageBase64 = null) {
     const input = document.getElementById('chat-input');
     const msg = (customText || (input ? input.value : '')).trim();
+
+    // Check if AstroTalk Intake Form is active
+    const intakeForm = document.getElementById('chat-intake-form');
+    if (intakeForm && !imageBase64) {
+      const nameInput = document.getElementById('intake-name');
+      const dobInput = document.getElementById('intake-dob');
+      if (nameInput && nameInput.value.trim() && dobInput && dobInput.value) {
+        if (input) {
+          input.value = '';
+          input.style.height = 'auto';
+        }
+        const customQ = document.getElementById('intake-custom-question');
+        if (customQ && msg) customQ.value = msg;
+        await this.submitIntakeForm();
+        return;
+      } else {
+        App.showToast('AstroTalk consultation shuru karne ke liye pehle apna naam aur janam tithi enter karein! 😊', 'warning');
+        if (nameInput && !nameInput.value.trim()) nameInput.focus();
+        else if (dobInput) dobInput.focus();
+        return;
+      }
+    }
+
     if (!msg && !imageBase64) return;
 
     if (input) {
