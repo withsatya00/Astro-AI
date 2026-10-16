@@ -184,8 +184,14 @@ const ChatController = {
     const questionInput = document.getElementById('intake-custom-question');
 
     if (nameInput) nameInput.value = '';
-    if (dobInput) dobInput.value = '';
-    if (tobInput) tobInput.value = '';
+    if (dobInput) {
+      if (dobInput._flatpickr) dobInput._flatpickr.clear();
+      else dobInput.value = '';
+    }
+    if (tobInput) {
+      if (tobInput._flatpickr) tobInput._flatpickr.clear();
+      else tobInput.value = '';
+    }
     if (cityInput) cityInput.value = '';
     if (approxCheck) approxCheck.checked = false;
     if (questionInput) questionInput.value = '';
@@ -238,6 +244,31 @@ const ChatController = {
     if (bar) bar.style.display = 'none';
   },
 
+  setIntakeTime(timeStr, label) {
+    const tobInput = document.getElementById('intake-tob');
+    const approxCheck = document.getElementById('intake-approx-time');
+    if (approxCheck) approxCheck.checked = false;
+    if (tobInput) {
+      if (tobInput._flatpickr) {
+        tobInput._flatpickr.setDate(timeStr, true);
+      } else {
+        tobInput.value = timeStr;
+      }
+    }
+    App.showToast(`Birth time set: ${timeStr} (${label}) ✨`, 'info');
+  },
+
+  onApproxTimeToggle(checkbox) {
+    const tobInput = document.getElementById('intake-tob');
+    if (checkbox.checked) {
+      if (tobInput) {
+        if (tobInput._flatpickr) tobInput._flatpickr.setDate('12:00', true);
+        else tobInput.value = '12:00';
+      }
+      App.showToast('Time set to 12:00 PM (Approximate / मध्याह्न समय) ☀️', 'info');
+    }
+  },
+
   async fillIntakeFromProfile(chartId) {
     try {
       const chart = await API.getChartById(chartId);
@@ -250,8 +281,15 @@ const ChatController = {
       const approxCheck = document.getElementById('intake-approx-time');
 
       if (nameInput) nameInput.value = chart.name || '';
-      if (dobInput) dobInput.value = chart.date_of_birth || '';
-      if (tobInput && chart.time_of_birth) tobInput.value = chart.time_of_birth.slice(0, 5);
+      if (dobInput) {
+        if (dobInput._flatpickr) dobInput._flatpickr.setDate(chart.date_of_birth || '', true);
+        else dobInput.value = chart.date_of_birth || '';
+      }
+      if (tobInput && chart.time_of_birth) {
+        const timeVal = chart.time_of_birth.slice(0, 5);
+        if (tobInput._flatpickr) tobInput._flatpickr.setDate(timeVal, true);
+        else tobInput.value = timeVal;
+      }
       if (cityInput) cityInput.value = chart.city || '';
       if (approxCheck) approxCheck.checked = Boolean(chart.is_time_approximate);
 
@@ -274,11 +312,11 @@ const ChatController = {
       <div class="welcome-screen" id="welcome-screen">
         <div class="astrotalk-intake-card" id="astrotalk-intake-card">
           <div class="intake-header">
-            <div class="intake-icon">🔮</div>
+            <div class="intake-icon">🕉️</div>
             <div>
-              <h2 class="intake-title">AstroTalk Consultation Intake (परामर्श विवरण)</h2>
+              <h2 class="intake-title">🕉️ पंडित जी से परामर्श (Janam Kundli & Consultation)</h2>
               <p class="intake-subtitle">
-                Vedic Jyotish ke anusaar accurate bhavishyavani aur guidance ke liye kripya apne janam vivaran darj karein.
+                सटीक वैदिक फलकथन एवं सरल कल्याणकारी उपाय के लिए कृपया अपना जन्म विवरण दर्ज करें।
               </p>
             </div>
           </div>
@@ -310,16 +348,30 @@ const ChatController = {
 
               <div class="form-group">
                 <label class="intake-label" for="intake-dob">Date of Birth / जन्म तिथि <span class="req">*</span></label>
-                <input type="date" id="intake-dob" class="intake-input" value="${d.dob || ''}" required />
+                <div class="picker-input-wrapper">
+                  <span class="picker-prefix-icon">📅</span>
+                  <input type="text" id="intake-dob" class="intake-input modern-date-picker" placeholder="Select Date / जन्म तिथि चुनें" value="${d.dob || ''}" required readonly />
+                </div>
               </div>
 
               <div class="form-group">
-                <label class="intake-label" for="intake-tob">Time of Birth / जन्म समय</label>
-                <input type="time" id="intake-tob" class="intake-input" value="${d.tob || ''}" />
-                <label class="approx-checkbox">
-                  <input type="checkbox" id="intake-approx-time" ${d.isApprox ? 'checked' : ''} />
-                  <span>Don't know exact time (लगभग समय)</span>
-                </label>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label class="intake-label" for="intake-tob" style="margin-bottom:0;">Time of Birth / जन्म समय</label>
+                  <label class="approx-checkbox" style="margin-top:0;">
+                    <input type="checkbox" id="intake-approx-time" ${d.isApprox ? 'checked' : ''} onchange="ChatController.onApproxTimeToggle(this)" />
+                    <span>Approx (अनुमानित)</span>
+                  </label>
+                </div>
+                <div class="picker-input-wrapper" style="margin-top:0.2rem;">
+                  <span class="picker-prefix-icon">⏰</span>
+                  <input type="text" id="intake-tob" class="intake-input modern-time-picker" placeholder="Select Time / जन्म समय चुनें" value="${d.tob || ''}" readonly />
+                </div>
+                <div class="quick-time-chips">
+                  <span class="time-tag" onclick="ChatController.setIntakeTime('08:00', 'Morning')">🌅 08:00 AM (सुबह)</span>
+                  <span class="time-tag" onclick="ChatController.setIntakeTime('12:00', 'Noon')">☀️ 12:00 PM (दोपहर)</span>
+                  <span class="time-tag" onclick="ChatController.setIntakeTime('18:30', 'Evening')">🌇 06:30 PM (शाम)</span>
+                  <span class="time-tag" onclick="ChatController.setIntakeTime('21:00', 'Night')">🌙 09:00 PM (रात)</span>
+                </div>
               </div>
 
               <div class="form-group full-col">
@@ -377,8 +429,8 @@ const ChatController = {
                 <span>Reset Form (खाली करें)</span>
               </button>
               <button type="submit" id="btn-submit-intake" class="btn-start-consultation">
-                <span>🟢</span>
-                <span>Start Chat with Astrologer (परामर्श शुरू करें)</span>
+                <span>🙏</span>
+                <span>पंडित जी से परामर्श शुरू करें (Start Consultation)</span>
                 <span>→</span>
               </button>
             </div>
@@ -551,7 +603,7 @@ const ChatController = {
       App.showToast(`Failed to initialize consultation: ${err.message}`, 'error');
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>🟢</span> <span>Start Chat with Astrologer (परामर्श शुरू करें)</span> <span>→</span>';
+        submitBtn.innerHTML = '<span>🙏</span> <span>पंडित जी से परामर्श शुरू करें (Start Consultation)</span> <span>→</span>';
       }
     }
   },
@@ -660,20 +712,24 @@ const ChatController = {
 
   formatMarkdown(text) {
     if (!text) return '';
+    // Strip bold markers and format clean, gentle Pandit Ji text
     let html = text
-      .replace(/### (.*?)\n/g, '<h4 style="margin: 0.65rem 0 0.3rem 0; font-size: 0.98rem; font-weight: 700; color: #4338CA;">$1</h4>')
-      .replace(/## (.*?)\n/g, '<h3 style="margin: 0.75rem 0 0.35rem 0; font-size: 1.08rem; font-weight: 700; color: #312E81;">$1</h3>')
-      .replace(/# (.*?)\n/g, '<h2 style="margin: 0.85rem 0 0.45rem 0; font-size: 1.18rem; font-weight: 700; color: #1E1B4B; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.35rem;">$1</h2>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #0F172A; font-weight: 700;">$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em style="color: #334155;">$1</em>')
-      .replace(/> (.*?)\n/g, '<blockquote style="border-left: 3.5px solid #F59E0B; padding: 0.6rem 0.95rem; margin: 0.65rem 0; background: #FFFDF5; border: 1px solid #FDE68A; border-left-width: 3.5px; border-radius: 6px; color: #78350F; font-size: 0.92rem; line-height: 1.6;">$1</blockquote>')
-      .replace(/`([^`]+)`/g, '<code style="background: #F1F5F9; color: #4338CA; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88em; font-weight: 600;">$1</code>')
-      .replace(/^[\*\-] (.*?)$/gm, '<li style="margin-bottom: 0.35rem; color: #334155;">$1</li>')
-      .replace(/^\d+\.\s+(.*?)$/gm, '<li style="margin-bottom: 0.35rem; color: #334155;">$1</li>')
+      .replace(/### (.*?)\n/g, '<div style="margin: 0.5rem 0 0.2rem 0; font-size: 0.95rem; font-weight: 600; color: #92400E;">$1</div>')
+      .replace(/## (.*?)\n/g, '<div style="margin: 0.55rem 0 0.25rem 0; font-size: 1rem; font-weight: 600; color: #92400E;">$1</div>')
+      .replace(/# (.*?)\n/g, '<div style="margin: 0.6rem 0 0.3rem 0; font-size: 1.05rem; font-weight: 600; color: #78350F;">$1</div>')
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Completely unbold **text** per user request
+      .replace(/\*\*/g, '')           // Strip any trailing unclosed ** from streaming
+      .replace(/\*(.*?)\*/g, '$1')     // Clean single asterisk formatting
+      .replace(/> (.*?)\n/g, '<blockquote style="border-left: 3px solid #F59E0B; padding: 0.4rem 0.75rem; margin: 0.5rem 0; background: #FFFDF5; border-radius: 4px; color: #78350F; font-size: 0.9rem; line-height: 1.5;">$1</blockquote>')
+      .replace(/`([^`]+)`/g, '$1')
+      .replace(/\bUser ji\b/gi, 'बेटा')
+      .replace(/\bUser\b/g, '')
+      .replace(/^[\*\-] (.*?)$/gm, '<li style="margin-bottom: 0.25rem; color: #334155;">• $1</li>')
+      .replace(/^\d+\.\s+(.*?)$/gm, '<li style="margin-bottom: 0.25rem; color: #334155;">$1</li>')
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n/g, '<br/>');
 
-    html = html.replace(/(<li style="[^"]*">.*?<\/li>)+/g, '<ul style="margin: 0.5rem 0 0.75rem 1.25rem; padding-left: 0.5rem;">$&</ul>');
+    html = html.replace(/(<li style="[^"]*">.*?<\/li>)+/g, '<ul style="margin: 0.4rem 0 0.5rem 0.5rem; padding-left: 0; list-style: none;">$&</ul>');
     return html;
   },
 
@@ -766,7 +822,10 @@ const ChatController = {
     }
 
     box.appendChild(row);
-    box.scrollTop = box.scrollHeight;
+    if (role === 'user') {
+      row.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return row;
   },
 
   copyMessage(escapedText) {
@@ -782,11 +841,11 @@ const ChatController = {
     const raw = decodeURIComponent(escapedText);
     const persona = this.astrologers.find(a => a.id === this.selectedAstrologer) || { name: 'Acharya Shastri' };
     const text = 
-`🔮 *AstroAI Consultation by ${persona.name}* 🔮
+`🕉️ *दैवीय वैदिक ज्योतिष परामर्श - ${persona.name}* 🕉️
 ━━━━━━━━━━━━━━━━━━
 ${raw}
 ━━━━━━━━━━━━━━━━━━
-✨ Consult verified AI Astrologers on AstroAI:
+✨ AstroTalk प्रामाणिक वैदिक ज्योतिष परामर्श:
 https://astrotalk.ai`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   },
@@ -821,7 +880,7 @@ https://astrotalk.ai`;
     const current = this.astrologers.find(a => a.id === this.selectedAstrologer) || this.astrologers[0] || {
       id: 'acharya_shastri',
       name: 'Acharya Shastri',
-      title: 'Vedic & Vastu Specialist',
+      title: 'Senior Vedic Astrologer',
       avatar: '🕉️',
       experience: '24+ Yrs Exp'
     };
@@ -831,9 +890,9 @@ https://astrotalk.ai`;
     const avatarEl = document.querySelector('.astrologer-avatar');
     const nameEl = document.querySelector('.astrologer-info h3');
     const titleEl = document.querySelector('.astrologer-info p');
-    if (avatarEl) avatarEl.innerText = current.avatar || '🔮';
+    if (avatarEl) avatarEl.innerText = current.avatar || '🕉️';
     if (nameEl) nameEl.innerHTML = `${current.name} <span style="font-size: 0.7rem; color: var(--gold-accent);">✦</span>`;
-    if (titleEl) titleEl.innerText = `${current.title} • ${current.experience || 'Vedic NASA Engine'}`;
+    if (titleEl) titleEl.innerText = `${current.title} • ${current.experience || '24+ वर्ष अनुभव'} • 🟢 ऑनलाइन`;
 
     if (badge && !badge.hasAttribute('data-has-click')) {
       badge.setAttribute('data-has-click', 'true');
@@ -931,7 +990,10 @@ https://astrotalk.ai`;
     }
 
     this.lastUserMessage = msg || 'Analyze my palm lines';
-    this.appendMessage('user', msg || 'Analyze my palm lines (हस्तरेखा)', [], false, null, imageBase64);
+    const userRow = this.appendMessage('user', msg || 'Analyze my palm lines (हस्तरेखा)', [], false, null, imageBase64);
+    if (userRow) {
+      userRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     const box = document.getElementById('chat-messages-container');
     const sendBtn = document.getElementById('btn-send-chat');
@@ -948,7 +1010,7 @@ https://astrotalk.ai`;
           <span style="font-size: 1rem;">${currentAstrologer.avatar || '🕉️'}</span>
           <span class="msg-speaker-name">${currentAstrologer.name}</span>
           <span class="msg-speaker-title">${currentAstrologer.title || 'Vedic Astrologer'}</span>
-          <span style="margin-left: auto; font-size: 0.72rem; color: #94A3B8;">typing...</span>
+          <span style="margin-left: auto; font-size: 0.74rem; color: #D97706; font-weight: 600;">🕉️ पंडित जी विचार कर रहे हैं...</span>
         </div>
         <div class="streaming-content-wrapper" id="active-streaming-text">
           <span class="streaming-cursor">▋</span>
@@ -956,7 +1018,7 @@ https://astrotalk.ai`;
       </div>
     `;
     box.appendChild(streamRow);
-    box.scrollTop = box.scrollHeight;
+    // Keep viewport anchored on user's question - do not force scroll down
 
     const streamingTextElem = streamRow.querySelector('#active-streaming-text');
     let accumulatedText = '';
@@ -968,11 +1030,15 @@ https://astrotalk.ai`;
       return low.includes('kundli') || low.includes('chart') || low.includes('kundali');
     };
 
+    const activeChartObj = App.currentChart || (this.activeChartId ? (App.savedCharts || []).find(c => c.id === this.activeChartId) : null);
+    const seekerName = (activeChartObj && activeChartObj.name) || (App.currentUser && App.currentUser.full_name) || '';
+
     try {
       await API.streamConsultation(
         {
           session_id: this.currentSessionId,
           chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
+          user_name: seekerName,
           message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
           language: this.currentLanguage,
           astrologer_id: this.selectedAstrologer,
@@ -986,12 +1052,13 @@ https://astrotalk.ai`;
           accumulatedText += deltaText;
           if (streamingTextElem) {
             streamingTextElem.innerHTML = this.formatMarkdown(accumulatedText) + '<span class="streaming-cursor">▋</span>';
-            box.scrollTop = box.scrollHeight;
+            // Do NOT scroll to bottom - user reads downwards starting from the question!
           }
         },
         (doneData) => {
           isStreamDone = true;
           this.currentSessionId = doneData.session_id;
+          const finalContent = doneData.content || accumulatedText;
           if (streamingTextElem) {
             streamingTextElem.innerHTML = this.formatMarkdown(finalContent);
           }
@@ -1033,7 +1100,7 @@ https://astrotalk.ai`;
           `;
           streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
           this.loadSessions();
-          box.scrollTop = box.scrollHeight;
+          // Maintain reading focus at user's question and top of response
         },
         async (streamErr) => {
           console.warn('Streaming failed, fallback to standard API call:', streamErr);
@@ -1043,6 +1110,7 @@ https://astrotalk.ai`;
             const res = await API.sendMessage({
               session_id: this.currentSessionId,
               chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
+              user_name: seekerName,
               message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
               language: this.currentLanguage,
               astrologer_id: this.selectedAstrologer,

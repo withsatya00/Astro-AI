@@ -63,7 +63,18 @@ def send_chat_message(
     if session.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
         if chart_record:
-            chart_data = chart_record.chart_data
+            chart_data = dict(chart_record.chart_data or {})
+            chart_data["name"] = chart_record.name
+            chart_data["id"] = chart_record.id
+            chart_data["city"] = chart_record.city
+            chart_data["date_of_birth"] = chart_record.date_of_birth
+            chart_data["time_of_birth"] = chart_record.time_of_birth
+
+    if getattr(payload, "user_name", None):
+        if chart_data is None:
+            chart_data = {"name": payload.user_name}
+        else:
+            chart_data["name"] = payload.user_name
 
     # 4. Fetch past messages for history (excluding the one just inserted)
     past_messages = (
@@ -189,7 +200,18 @@ async def stream_chat_message(
     if session.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
         if chart_record:
-            chart_data = chart_record.chart_data
+            chart_data = dict(chart_record.chart_data or {})
+            chart_data["name"] = chart_record.name
+            chart_data["id"] = chart_record.id
+            chart_data["city"] = chart_record.city
+            chart_data["date_of_birth"] = chart_record.date_of_birth
+            chart_data["time_of_birth"] = chart_record.time_of_birth
+
+    if getattr(payload, "user_name", None):
+        if chart_data is None:
+            chart_data = {"name": payload.user_name}
+        else:
+            chart_data["name"] = payload.user_name
 
     # 4. Fetch past messages for history
     past_messages = (

@@ -114,6 +114,7 @@ class Citation(BaseModel):
 class ChatMessageRequest(BaseModel):
     session_id: Optional[str] = None
     chart_id: Optional[str] = None
+    user_name: Optional[str] = Field(None, description="Direct name of the seeker/user")
     message: str = Field(..., min_length=1, max_length=4000)
     language: str = Field("en", description="Language: 'en', 'hi', or 'hinglish'")
     astrologer_id: Optional[str] = Field("acharya_shastri", description="Astrologer persona: acharya_shastri, dr_sunita, pandit_maharaj")

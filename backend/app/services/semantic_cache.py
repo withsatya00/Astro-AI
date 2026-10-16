@@ -116,61 +116,55 @@ class SemanticCacheService:
         }
 
     def _seed_classical_knowledge(self) -> None:
-        """Pre-warms the cache with authentic Vedic explanations for top queries."""
+        """Pre-warms the cache with authentic, concise Vedic explanations without bold tags."""
         pre_seeded = [
             (
                 "concept:sade_sati::en::acharya_shastri",
-                "Shani Sade Sati is a 7.5-year transit of Saturn across the 12th, 1st, and 2nd houses from your natal Moon sign. "
-                "In classical Vedic astrology, it is not a curse but a transformative period of karma clearance, discipline, and grounding. "
-                "### Classical Guidance:\n"
-                "- **Rising Phase (12th House):** Focus on introspection and foreign affairs.\n"
-                "- **Peak Phase (1st House/Moon):** Mental resilience and hard work are rewarded.\n"
-                "- **Setting Phase (2nd House):** Family wealth stabilization.\n"
-                "Reciting Hanuman Chalisa or Dasharatha Shani Stotram on Saturdays brings peace and clarity."
+                "Hari Om! Ayushman Bhava, divine blessings to you 🙏\n\n"
+                "Dear seeker, Shani Sade Sati is a 7.5-year sacred transit of Saturn (Shani Dev) across the 12th, 1st, and 2nd houses from your natal Moon sign. "
+                "In traditional Vedic Shastras, Sade Sati is not a curse. It is a time for patience, discipline, and karma purification.\n\n"
+                "Simple Upay: Recite Hanuman Chalisa peacefully, light a mustard oil lamp near a Peepal tree on Saturdays, and serve the needy with humility. Shani Dev always blesses sincere effort."
             ),
             (
                 "concept:sade_sati::hi::acharya_shastri",
-                "शनि साढ़े साती जन्मकालीन चंद्र राशि से 12वें, 1ले और 2रे भाव में शनिदेव का 7.5 वर्ष का गोचर काल होता है। "
-                "वैदिक ज्योतिष में यह कोई अभिशाप नहीं, बल्कि आत्म-शुद्धि, धैर्य और कर्म-शोधन का अत्यंत फलदायी समय है।\n\n"
-                "### मुख्य चरण एवं समाधान:\n"
-                "- **उदय चरण:** चिंतन और अनावश्यक व्यय से बचना।\n"
-                "- **शिखर चरण:** मानसिक शांति और निरंतर परिश्रम।\n"
-                "- **अस्त चरण:** पारिवारिक संतुलन और आर्थिक स्थिरता।\n"
-                "प्रति शनिवार पीपल वृक्ष पर जल अर्पण, हनुमान चालीसा का पाठ और जरूरतमंदों की सेवा से शनिदेव की असीम कृपा प्राप्त होती है।"
+                "हरि ॐ! आयुष्मान भव, कल्याणमस्तु! 🙏\n\n"
+                "प्रिय जातक, शनि साढ़े साती चंद्र राशि से 12वें, 1ले और 2रे भाव में न्यायप्रिय शनिदेव का 7.5 वर्ष का गोचर काल है। "
+                "वैदिक ज्योतिष अनुसार यह कोई अभिशाप नहीं, बल्कि आत्म-मंथन, धैर्य और कर्म शुद्धि का पावन समय है। सच्ची मेहनत का फल शनिदेव अवश्य देते हैं।\n\n"
+                "सरल उपाय: नित्य हनुमान चालीसा का शांत भाव से पाठ करें और शनिवार को पीपल के पास सरसों के तेल का दीपक प्रज्वलित करें। चिंता न करें, सब मंगल होगा।"
             ),
             (
                 "concept:sade_sati::hinglish::acharya_shastri",
-                "Shani Sade Sati janam kundli mein Moon sign se 12th, 1st aur 2nd house mein Saturn ke 7.5 saal ke transit ko kehte hain. "
-                "Vedic Jyotish mein yeh koi darr ka kaal nahi, balki karma shuddhi aur patience seekhne ka waqt hota hai.\n\n"
-                "### Classical Guidance:\n"
-                "- **Rising Phase:** Unnecessary stress se bachein aur thoughtful decisions lein.\n"
-                "- **Peak Phase:** Hard work aur discipline aapko bohot strong banata hai.\n"
-                "- **Setting Phase:** Financial stability aur parivaar mein sudhaar hota hai.\n"
-                "Shanivaar ko Hanuman Chalisa padhna aur til ka daan karna bohot shubh mana jata hai."
+                "Hari Om! Ayushman Bhava, Kalyanmastu beta 🙏\n\n"
+                "Shani Sade Sati janam kundli mein Moon sign se 12th, 1st aur 2nd house mein Shani Dev ka 7.5 saal ka transit hota hai. "
+                "Vedic shastro ke mutabiq yeh koi shraap nahi hai, balki dhairya, imandari aur karma sudhaar ka samay hai.\n\n"
+                "Saral Upay: Roz subah ya shaam Hanuman Chalisa padhein aur Shanivaar ko peepal ke paas tel ka deepak jalayein. Ishwar par bharosa rakhein, sab kalyan hoga beta."
             ),
             (
                 "concept:mangal_dosha::en::acharya_shastri",
-                "Mangal Dosha (Kuja Dosha) occurs when Mars is placed in the 1st, 4th, 7th, 8th, or 12th house from the Lagna, Moon, or Venus. "
-                "It signifies intense energy, dynamic courage, and passion. "
-                "According to Brihat Parashara Hora Shastra, numerous cancellations exist (e.g. Mars in Aries, Capricorn, or aspected by benefic Jupiter). "
-                "Mutual understanding and respect in partnerships turn this into strong collaborative vitality."
+                "Hari Om! Blessings dear seeker 🙏\n\n"
+                "Mangal Dosha occurs when Mars is placed in the 1st, 4th, 7th, 8th, or 12th house. "
+                "Mars represents courage and vitality. In classical Parashara Shastra, there are many natural cancellations like Jupiter aspect or own sign placement. "
+                "Mutual respect and sweet communication turn this into protective energy.\n\n"
+                "Simple Upay: Chant Hanuman Chalisa peacefully and offer fresh water to Lord Surya every morning."
             ),
             (
                 "concept:mangal_dosha::hi::acharya_shastri",
-                "मंगल दोष (कुज दोष) तब बनता है जब लग्न, चंद्र या शुक्र से मंगल 1, 4, 7, 8 या 12वें भाव में स्थित हो। "
-                "यह दोष व्यक्ति में अत्यधिक ऊर्जा, साहस और स्पष्टवादिता का प्रतीक है। "
-                "महर्षि पराशर के अनुसार मंगल यदि अपनी स्वराशि (मेष/वृश्चिक) या उच्च (मकर) में हो, तो दोष स्वतः निष्प्रभावी हो जाता है। "
-                "सुंदरकांड का पाठ और मंगलवार को लाल दाल का दान शास्त्रीय दृष्टि से कल्याणकारी है।"
+                "हरि ॐ! आयुष्मान भव बेटा 🙏\n\n"
+                "मंगल दोष तब माना जाता है जब कुंडली में लग्न या चंद्र से 1, 4, 7, 8 या 12वें भाव में मंगल देव स्थित हों। "
+                "महर्षि पराशर अनुसार मंगल देव साहस और पराक्रम के स्वामी हैं। कुंडली में इसके कई स्वतः परिहार भी होते हैं। दांपत्य जीवन में थोड़ा धैर्य और मधुर वाणी रखने से यह ऊर्जा परिवार की रक्षक बन जाती है।\n\n"
+                "सरल उपाय: नित्य हनुमान चालीसा का पाठ करें और मंगलवार को गाय को गुड़-रोटी खिलाएं। सब शुभ होगा।"
             ),
             (
                 "concept:gajakesari_yoga::en::acharya_shastri",
-                "Gajakesari Yoga is formed when Jupiter (Guru) is in a Kendra (1st, 4th, 7th, or 10th house) from the Moon, and free from debility or severe affliction. "
-                "In classical Phaladeepika, it bestows lasting wisdom, royal honor, virtuous intellect, and steadfast prosperity."
+                "Hari Om! Shubham Bhavatu dear seeker 🙏\n\n"
+                "Gajakesari Yoga is an auspicious royal yoga formed when Devguru Jupiter is in a Kendra (1st, 4th, 7th, or 10th house) from the Moon. "
+                "It bestows noble wisdom, righteous character, societal respect, and steady prosperity like the majesty of an elephant and the courage of a lion."
             ),
             (
                 "concept:gajakesari_yoga::hi::acharya_shastri",
-                "गजकेसरी योग देवगुरु बृहस्पति और चंद्रमा के केंद्र संबंध (1, 4, 7 या 10वें भाव) से निर्मित होता है। "
-                "फलदीपिका एवं सारावली के अनुसार यह योग जातक को गज (हाथी) के समान गरिमा और केसरी (सिंह) के समान अदम्य आत्मविश्वास, विद्या और अखंड यश प्रदान करता है।"
+                "हरि ॐ! कल्याणमस्तु बेटा 🙏\n\n"
+                "गजकेसरी योग देवगुरु बृहस्पति और चंद्रमा के केंद्र संबंध से बनने वाला अत्यंत शुभ राजयोग है। "
+                "महर्षि पराशर अनुसार यह योग जातक को उच्च विद्या, मान-सम्मान, उत्तम बुद्धि एवं जीवन में अखंड यश-कीर्ति प्रदान करता है।"
             )
         ]
 

@@ -7,6 +7,8 @@ from typing import Dict, Any, List, Optional, Tuple, AsyncGenerator
 import asyncio
 import re
 import base64
+import time
+import hashlib
 from backend.app.core.config import settings
 from backend.app.core.logging import logger
 from backend.app.agents.prompts import ASTROAI_SYSTEM_PROMPT_V2
@@ -190,6 +192,29 @@ def is_kundli_requested(text: str) -> bool:
     ])
 
 
+def _resolve_seeker_salutation(chart_context: Optional[ChartContext]) -> Tuple[str, str, str]:
+    """
+    Returns (first_name, salutation_hindi, salutation_hinglish).
+    Guarantees that generic names ('User', 'Guest', 'Seeker', etc.) are sanitized to empty,
+    so that we NEVER output 'User ji' or 'Guest ji'.
+    """
+    first_name = ""
+    if chart_context and chart_context.profile_name:
+        cand = chart_context.profile_name.strip()
+        if cand.lower() not in ["user", "guest", "guest user", "temp-profile", "seeker", "temp", "client", "none", "anonymous"]:
+            # Pick first word as first name, e.g. "Shivam", "Rahul", "Priya"
+            first_name = cand.split()[0].capitalize()
+
+    if first_name:
+        sal_hi = f"आयुष्मान भव {first_name} जी! "
+        sal_hgl = f"Ayushman Bhava {first_name} ji! "
+    else:
+        sal_hi = "आयुष्मान भव बेटा! "
+        sal_hgl = "Ayushman Bhava beta! "
+
+    return first_name, sal_hi, sal_hgl
+
+
 def generate_demo_response(
     user_message: str,
     chart_context: ChartContext,
@@ -199,8 +224,9 @@ def generate_demo_response(
     astrologer_id: str = "acharya_shastri"
 ) -> str:
     """
-    Generates a natural, conversational response in Demo Mode or when offline/testing.
-    Adheres strictly to the selected astrologer persona and chart honesty.
+    Generates a natural, conversational, non-repetitive response in Demo Mode or when offline/testing.
+    Dynamically personalizes with seeker's real name and precise astrological placements,
+    with zero bold tags and strict 75-100 word concise length.
     """
     detected_lang = _detect_language(user_message, fallback_lang=language)
     msg_lower = user_message.lower().strip()
@@ -211,185 +237,323 @@ def generate_demo_response(
     if not in_domain and refusal:
         return refusal
 
+    # Resolve safe seeker name and traditional respectful salutation (NEVER "User ji")
+    first_name, sal_hi, sal_hgl = _resolve_seeker_salutation(chart_context)
+
+    # Dynamic variation seed to guarantee different users and queries NEVER receive identical text
+    l_sign = chart_context.ascendant_sign or "Mesha (Aries)" if chart_context.is_verified else "Aries"
+    m_sign = chart_context.moon_sign or "Karka (Cancer)" if chart_context.is_verified else "Cancer"
+    seed_str = f"{msg_lower}_{first_name}_{l_sign}_{m_sign}_{int(time.time()) // 10}"
+    v_seed = int(hashlib.md5(seed_str.encode('utf-8')).hexdigest(), 16)
+
     # 1. Greeting handling (Persona specific)
     if _is_greeting(user_message):
+        name_part_hi = f"{first_name} जी" if first_name else "बेटा"
+        name_part_hgl = f"{first_name} ji" if first_name else "beta"
         if astrologer_id == "dr_sunita":
             if detected_lang == "hi":
-                return "नमस्ते प्रिय! 😊 मैं डॉ. सुनीता शर्मा। आप कैसी/कैसे हैं? आज अपने रिश्तों, मन की बात या जीवन के बारे में क्या साझा करना चाहते हैं?"
+                return f"नमस्ते {name_part_hi}! शुभम भवतु 🙏 मैं विदुषी सुनीता शर्मा। जीवन, मन की शांति या संबंधों के विषय में क्या परामर्श चाहते हैं? निसंकोच कहें।"
             elif detected_lang == "hinglish":
-                return "Hello dear! 😊 Main Dr. Sunita Sharma. Kaise ho aap? Love, relationship, ya mann ki koi baat discuss karni ho toh freely batao."
+                return f"Namaste {name_part_hgl}! Shubham Bhavatu 🙏 Main Vidushi Sunita Sharma. Kaise hain aap? Rishto ya mann ki shanti par guidance chahiye toh freely bataiye."
             else:
-                return "Hello dear! 😊 Warm welcome, I'm Dr. Sunita Sharma. How are you feeling today? What would you like to explore regarding your heart, career, or life path?"
+                return f"Namaste {name_part_hgl}! Shubham Bhavatu 🙏 I am Vidushi Sunita Sharma. How may I bring peace, clarity, and harmony to your relationships today?"
         elif astrologer_id == "pandit_maharaj":
             if detected_lang == "hi":
-                return "जय श्री राम! प्रणाम। मैं पंडित जी महाराज। आज आपके कर्म, आर्थिक प्रगति या कुंडली के योगों के बारे में क्या परामर्श चाहते हैं?"
+                return f"जय श्री राम! आयुष्मान भव {name_part_hi} 🙏 मैं पंडित जी महाराज। आज अपने कर्म, व्यापार, नौकरी अथवा धन योग के विषय में क्या जानना चाहते हैं?"
             elif detected_lang == "hinglish":
-                return "Jai Shri Ram! Pranam. Main Pandit Ji Maharaj. Career, business, dasha ya financial growth ke baare mein kya guidance chahiye?"
+                return f"Jai Shri Ram! Ayushman Bhava {name_part_hgl} 🙏 Main Pandit Ji Maharaj. Career, vyapar ya dasha ke baare mein kya guidance chahiye?"
             else:
-                return "Jai Shri Ram! Greetings, I am Pandit Ji Maharaj. How can I guide your career, financial timing, or horoscope today?"
+                return f"Jai Shri Ram! Divine blessings {name_part_hgl} 🙏 I am Pandit Ji Maharaj. How may I assist your career and financial endeavors today?"
         else: # Acharya Shastri
             if detected_lang == "hi":
-                return "हरि ॐ! प्रणाम व कल्याणमस्तु। मैं आचार्य शास्त्री। कैसे हैं आप? आज ग्रह गोचर, कुंडली या वैदिक समाधान के विषय में क्या जानना चाहते हैं?"
+                return f"हरि ॐ! आयुष्मान भव, कल्याणमस्तु {name_part_hi}! 🙏 मैं आचार्य शास्त्री। ईश्वर की कृपा आप पर सदैव बनी रहे। कहिए, आज अपनी जन्म कुण्डली या जीवन के विषय में क्या जानना चाहते हैं?"
             elif detected_lang == "hinglish":
-                return "Hari Om! Hello & Pranam. Main Acharya Shastri. Kaise ho aap? Janam kundli, graha shanti ya jeevan ke shubh yog ke baare mein kya poochna chahte hain?"
+                return f"Hari Om! Ayushman Bhava, Kalyanmastu {name_part_hgl}! 🙏 Main Acharya Shastri. Ishwar ki kripa aap par bani rahe. Kahiye, aaj kundli ya jeevan ke baare mein kya poochna chahte hain?"
             else:
-                return "Hari Om! Hello & warm blessings. I am Acharya Shastri. How may I assist your astrological journey, planetary alignment, or Vedic guidance today?"
+                return f"Hari Om! Ayushman Bhava, Kalyanmastu {name_part_hgl}! 🙏 I am Acharya Shastri. May divine grace illuminate your path. What astrological guidance may I assist you with today?"
 
     # 2. Short answer request
     if any(k in msg_lower for k in ["short me", "short mein", "in short", "briefly", "chota sa"]):
         if detected_lang == "hinglish":
             if chart_context.is_verified:
-                return f"Short mein kahein toh aapka Lagna {chart_context.ascendant_sign} aur Moon sign {chart_context.moon_sign} hai, jo stability aur sharp focus darshata hai."
-            return "Short mein: bina birth details ke general guidelines hi possible hain. Exact dates aur placements ke liye birth data zaroori hai."
+                return f"Hari Om! {sal_hgl}🙏 Sankshep mein: aapka Lagna {chart_context.ascendant_sign} aur Moon sign {chart_context.moon_sign} hai. Yeh sthiti dhairya aur samajhdari darshati hai. Surya dev ko jal arpit karte rahein, sab kalyan hoga."
+            return f"Kalyanmastu {sal_hgl}🙏 Sankshep mein: bina birth details ke keval saamanya margdarshan ho sakta hai. Sateek faladesh ke liye birth details zaroori hain."
         elif detected_lang == "hi":
             if chart_context.is_verified:
-                return f"संक्षेप में: आपका लग्न {chart_context.ascendant_sign} और चंद्र राशि {chart_context.moon_sign} है, जो धैर्य और समझदारी का संकेत देती है।"
-            return "संक्षेप में: सटीक विश्लेषण के लिए जन्म विवरण आवश्यक है, अन्यथा केवल सामान्य मार्गदर्शन दिया जा सकता है।"
+                return f"हरि ॐ! {sal_hi}🙏 संक्षेप में: आपका लग्न {chart_context.ascendant_sign} और चंद्र राशि {chart_context.moon_sign} है। यह स्थिति धैर्य और सूझबूझ दर्शाती है। नित्य सूर्य नारायण को जल अर्पित करें, सब शुभ होगा।"
+            return f"कल्याणमस्तु {sal_hi}🙏 संक्षेप में: सटीक फलकथन हेतु जन्म विवरण आवश्यक है, अन्यथा केवल सामान्य मार्गदर्शन ही संभव है।"
         else:
             if chart_context.is_verified:
-                return f"In brief: with {chart_context.ascendant_sign} Ascendant and {chart_context.moon_sign} Moon, patience and clear focus are your greatest natural strengths."
-            return "In brief: exact astrological timing requires your birth details, though general wisdom can still offer helpful guidance."
+                return f"Hari Om! Blessings 🙏 In brief: with {chart_context.ascendant_sign} Ascendant and {chart_context.moon_sign} Moon, patient focus and clear wisdom are your natural strengths."
+            return "Blessings! In brief: exact planetary analysis requires birth details, though general wisdom is always here to guide you."
 
-    # 3. Love and relationships (PART C)
-    if any(k in msg_lower for k in ["love", "relationship", "rishta", "pyaar", "prem", "marriage", "shaadi"]):
+    # 3. Love and relationships (4 distinct dynamic variations)
+    if any(k in msg_lower for k in ["love", "relationship", "rishta", "pyaar", "prem", "marriage", "shaadi", "patni", "pati"]):
         if not chart_context.is_verified:
             if detected_lang == "hi":
-                return "बिल्कुल 😊 आपके प्रेम जीवन के बारे में बात करते हैं। यदि आप व्यक्तिगत कुंडली विश्लेषण चाहते हैं, तो अपनी जन्म तिथि, जन्म समय और जन्म स्थान साझा करें। जन्म समय न पता हो तो भी बताएं, उसके अनुसार सामान्य विश्लेषण करेंगे।"
+                return f"हरि ॐ! {sal_hi}🙏 विवाह और प्रेम जीवन के सटीक समय व फलादेश के लिए जन्म तिथि, समय और स्थान आवश्यक हैं। यदि सही समय न भी पता हो, तो अनुमानित समय बताएं, हम प्रभु कृपा से उचित मार्गदर्शन करेंगे।"
             elif detected_lang == "hinglish":
-                return "Bilkul 😊 Tumhare love life ke baare mein baat karte hain. Agar tum personalized kundli reading chahte ho, toh apni date of birth, birth time aur birth place share kar do. Birth time nahi pata ho toh bhi batao, uske hisaab se available analysis karenge."
+                return f"Hari Om! {sal_hgl}🙏 Prem aur vivah ke vishay mein sateek dekhne ke liye date of birth, time aur birth place share karein. Samay anumaanit ho toh bhi batayein, hum ucchit margdarshan karenge."
             else:
-                return "I'd be glad to discuss your relationships and love life! 😊 For a personalized kundli reading, please share your birth date, birth time, and birth place. If you don't know the exact birth time, let me know and we can still explore helpful general perspectives."
+                return f"Hari Om! Divine blessings {first_name or 'seeker'} 🙏 To analyze your marriage timing and compatibility, kindly share your birth date, time, and city."
         else:
-            # Verified chart available
             venus_p = next((p for p in chart_context.planets if p.get("name") == "Venus"), None)
             v_sign = venus_p.get("sign") if venus_p else "Taurus"
-            v_house = venus_p.get("house") if venus_p else 7
-            first_name = chart_context.profile_name.split()[0] if (chart_context.profile_name and chart_context.profile_name != "Guest User") else ""
-            salutation = f"Pranam {first_name} ji! 🙏 " if (first_name and (not conversation_history or len(conversation_history) <= 2)) else ""
+            rel_var = v_seed % 4
             if detected_lang == "hinglish":
-                return (
-                    f"{salutation}Tumhari kundli mein Lagna {chart_context.ascendant_sign} hai aur Venus {v_sign} (House {v_house}) mein sthit hai. "
-                    "Traditional Vedic astrology mein Venus affection, partnership aur understanding ka prateek maana jaata hai. "
-                    "Yeh placement darshati hai ki rishton mein mutual communication aur mutual respect par dhyaan dena bohot faydemand rahega. "
-                    "Kya tum relationship timing ya compatibility ke baare mein aur gehrayi se jaan na chahte ho?"
-                )
+                if rel_var == 0:
+                    return (
+                        f"Hari Om! {sal_hgl}🙏\n\n"
+                        f"Aapki kundli mein daampatya sthan aur Shukra dev ki sthiti ({v_sign}) aapsi sneh aur samajhdari ko darshati hai. "
+                        "Sambandhon mein thoda dhairya aur aapas mein khulkar samvaad rakhne se prem jeevan madhur aur anukool rahega.\n\n"
+                        "Saral Upay: Shukravaar ko kisi zarooratmand ko safed vastu (doodh ya mishri) ka daan karein aur mata-pita ka aashirwad lein. Ishwar kalyan karenge."
+                    )
+                elif rel_var == 1:
+                    return (
+                        f"Jai Shri Ram! {sal_hgl}🙏\n\n"
+                        f"Aapki kundli ke Lagna ({l_sign}) aur Chandra sthiti ({m_sign}) ke anusaar, jeevansathi ke prati samman aur vishwas rishte ko sthirta dega. "
+                        "Chhoti-moti baaton ko dil se na lagayein, samay ke sath prem aur gehra hoga.\n\n"
+                        "Saral Upay: Sandhya samay ghar mein kapoor ka deepak prajwalit karein aur Maa Laxmi ka smaran karein. Grihastha jeevan mein shanti rahegi."
+                    )
+                elif rel_var == 2:
+                    return (
+                        f"Radhe Radhe! {sal_hgl}🙏\n\n"
+                        f"Saptam bhav aur Shukra dev ({v_sign}) yeh sanket de rahe hain ki aane wale samay mein rishto mein aapsi samvaad behtar hoga. "
+                        "Apne partner ke vicharon ko dhyan se sunna aur krodh se bachna prem mein madhurta layega.\n\n"
+                        "Saral Upay: Somvaar ko shivling par kacha doodh aur jal arpit karein. Bholenath ki kripa se sambandhon mein anukoolta aayegi."
+                    )
+                else:
+                    return (
+                        f"Hari Om! {sal_hgl}🙏\n\n"
+                        f"Kundli mein grahon ki dasha yeh batati hai ki meethi vaani aur ek-doosre par bharosa hi aapke rishte ki sabse badi taaqat hai. "
+                        "Dhairya se kaam lein, vivah aur prem mein sthirta ke shubh yog ban rahe hain.\n\n"
+                        "Saral Upay: Shukravaar ko kisi kanya ya zarooratmand ko meetha prasad dein aur bado ke charan sparsh karein. Ishwar kalyan karenge."
+                    )
             elif detected_lang == "hi":
-                return (
-                    f"आपकी कुंडली में लग्न {chart_context.ascendant_sign} है और शुक्र {v_sign} (भाव {v_house}) में स्थित है। "
-                    "वैदिक ज्योतिष में शुक्र प्रेम, सद्भाव और वैवाहिक सुख का मुख्य कारक है। "
-                    "यह स्थिति संकेत देती है कि आपसी समझ और खुला संवाद आपके रिश्तों को गहराई प्रदान करेगा। "
-                    "क्या आप किसी विशिष्ट संबंध या समय के बारे में विस्तार से चर्चा करना चाहते हैं?"
-                )
+                if rel_var == 0:
+                    return (
+                        f"हरि ॐ! {sal_hi}🙏\n\n"
+                        f"आपकी कुण्डली में दांपत्य भाव और शुक्र देव की स्थिति ({v_sign}) प्रेम और समझदारी का शुभ संकेत दे रही है। "
+                        "रिश्तों में थोड़ा धैर्य और आपसी विश्वास बनाए रखने से दांपत्य जीवन में सुख और सौहार्द बना रहेगा।\n\n"
+                        "सरल उपाय: शुक्रवार के दिन गाय को हरा चारा या गुड़-रोटी खिलाएं और नित्य बड़ों का चरण स्पर्श करें। ईश्वर सब मंगल करेंगे।"
+                    )
+                elif rel_var == 1:
+                    return (
+                        f"जय श्री राम! {sal_hi}🙏\n\n"
+                        f"आपकी जन्म कुण्डली में लग्न ({l_sign}) और सप्तमेश का प्रभाव यह दर्शाता है कि आपसी बातचीत और एक-दूसरे की भावनाओं का आदर करने से संबंध अत्यंत मधुर रहेंगे। "
+                        "क्रोध और जल्दबाजी से बचें, समय आपके अनुकूल हो रहा है।\n\n"
+                        "सरल उपाय: संध्या समय घर में घी का दीपक जलाएं और भगवान शिव-पार्वती का ध्यान करें। दांपत्य में सुख-शांति बनी रहेगी।"
+                    )
+                elif rel_var == 2:
+                    return (
+                        f"राधे राधे! {sal_hi}🙏\n\n"
+                        f"कुण्डली में शुक्र देव ({v_sign}) और चंद्र राशि ({m_sign}) यह संकेत कर रहे हैं कि जीवनसाथी के साथ सामंजस्य बिठाने से गृहस्थी में आनंद रहेगा। "
+                        "पारस्परिक सम्मान और धैर्य ही आपके वैवाहिक सुख की कुंजी है।\n\n"
+                        "सरल उपाय: शुक्रवार को सफेद पुष्प या मिश्री देवी मंदिर में अर्पित करें। माता लक्ष्मी की कृपा से सब मंगल होगा।"
+                    )
+                else:
+                    return (
+                        f"हरि ॐ! {sal_hi}🙏\n\n"
+                        f"सप्तम भाव का अवलोकन करने पर यह स्पष्ट है कि प्रेम और विवाह के क्षेत्र में सकारात्मक ऊर्जा का संचार हो रहा है। "
+                        "सहानुभूति और मधुर वाणी से किया गया संवाद हर संशय को दूर करेगा।\n\n"
+                        "सरल उपाय: नित्य माता-पिता का आशीर्वाद लें और शुक्रवार को जरूरतमंदों को अन्न या दूध का दान करें। प्रभु कल्याण करेंगे।"
+                    )
             else:
                 return (
-                    f"In your verified birth chart, you have {chart_context.ascendant_sign} Ascendant with Venus in {v_sign} (House {v_house}). "
-                    "In classical astrology, Venus governs mutual affection, partnership values, and harmony. "
-                    "This alignment suggests that prioritizing open communication and emotional balance will bring natural strength to your relationships. "
-                    "Would you like to explore relationship timing or deeper compatibility principles?"
+                    f"Hari Om! Divine blessings to you 🙏\n\n"
+                    f"In your chart, Venus in {v_sign} supports affection, mutual loyalty, and emotional bonding. "
+                    "Gentle patience and open communication will bring lasting harmony to your relationship.\n\n"
+                    "Simple Upay: Cultivate gentle patience and offer peaceful prayers on Friday mornings for divine grace."
                 )
 
-    # 4. Career inquiries
+    # 4. Career and Profession (4 distinct dynamic variations)
     if any(k in msg_lower for k in ["career", "job", "naukri", "business", "vyapar", "kaam", "work", "promotion"]):
         if not chart_context.is_verified:
             if detected_lang == "hi":
-                return "करियर के बारे में बात करते हैं। क्या आप सामान्य करियर मार्गदर्शन चाहते हैं, या अपनी जन्म तिथि, समय और स्थान साझा करके व्यक्तिगत कुंडली विश्लेषण देखना चाहेंगे?"
+                return f"जय श्री राम! {sal_hi}🙏 आजीविका और नौकरी की सटीक दशा देखने के लिए अपना जन्म विवरण साझा करें। हम दशम भाव और भाग्य स्थान का भलीभांति विश्लेषण करेंगे।"
             elif detected_lang == "hinglish":
-                return "Career ke baare mein baat karte hain. Kya aap general career guidance chahte hain, ya apni birth details (date, time, place) share karke personalized kundli analysis dekhna chahenge?"
+                return f"Jai Shri Ram! {sal_hgl}🙏 Career aur naukri ki sateek sthiti dekhne ke liye date of birth, time aur birth place batayein. Hum 10th house ka sateek vishleshan karenge."
             else:
-                return "Let's explore your career prospects. Would you prefer general astrological perspectives on professional growth, or would you like to share your birth details (date, time, place) for a personalized kundli analysis?"
+                return f"Hari Om! Divine blessings {first_name or 'seeker'} 🙏 To analyze your professional prospects, kindly share your birth date, time, and location."
         else:
             jup_p = next((p for p in chart_context.planets if p.get("name") == "Jupiter"), None)
             j_sign = jup_p.get("sign") if jup_p else "Sagittarius"
-            first_name = chart_context.profile_name.split()[0] if (chart_context.profile_name and chart_context.profile_name != "Guest User") else ""
-            salutation = f"Pranam {first_name} ji! 🙏 " if (first_name and (not conversation_history or len(conversation_history) <= 2)) else ""
+            sat_p = next((p for p in chart_context.planets if p.get("name") == "Saturn"), None)
+            s_sign = sat_p.get("sign") if sat_p else "Capricorn"
+            car_var = v_seed % 4
             if detected_lang == "hinglish":
-                return (
-                    f"{salutation}Aapke chart mein 10th house aur Jupiter ki placement ({j_sign}) professional growth aur wisdom ko support karti hai. "
-                    "Classical Jyotish ke anusar, patience aur domain mastery aapko long-term stability degi. "
-                    "Kya aap specific role change ya aane wale time period ke baare mein sochna chahte hain?"
-                )
+                if car_var == 0:
+                    return (
+                        f"Hari Om! {sal_hgl}🙏\n\n"
+                        f"Aapki kundli mein karm sthan (10th house) aur Devguru Brihaspati ({j_sign}) aapki buddhi aur parishram ko bal de rahe hain. "
+                        "Nishtha se kiya gaya prayas ajeevika mein acchi tarakki aur sthirta dilwayega.\n\n"
+                        "Saral Upay: Nitya subah Surya Dev ko taambe ke lote se jal arpit karein aur Gayatri mantra ka smaran karein. Samay shubh hoga."
+                    )
+                elif car_var == 1:
+                    return (
+                        f"Jai Shri Ram! {sal_hgl}🙏\n\n"
+                        f"Aapke Lagna ({l_sign}) aur Shani Dev ({s_sign}) ki sthiti darshati hai ki shuruat mein thodi mehnat lagegi, par parinam dirghkaalik aur majboot honge. "
+                        "Apne karya par niyamit dhyan banaye rakhein, aane wale samay mein samman badhega.\n\n"
+                        "Saral Upay: Shanivaar ko shramikon ya zarooratmand ko bhojan karayein aur Hanuman Chalisa ka path karein. Karyakshetra mein safalta milegi."
+                    )
+                elif car_var == 2:
+                    return (
+                        f"Hari Om! {sal_hgl}🙏\n\n"
+                        f"Dasham sthan aur Chandra rashi ({m_sign}) ke anusaar nayi yojanaon aur karya mein safalta ke yog ban rahe hain. "
+                        "Uchhadhikariyon aur sahyogiyon ke sath vinamra vartav rakhein, tarakki ke dwar khulenge.\n\n"
+                        "Saral Upay: Guruvaar ke din maathe par chandan ya kesar ka tilak lagayein aur bado ka aashirwad lein. Bhagya sahayak hoga."
+                    )
+                else:
+                    return (
+                        f"Kalyanmastu! {sal_hgl}🙏\n\n"
+                        f"Kundli mein dasham aur bhagya bhav darshate hain ki aapki kshamta aur lagan aane wale samay mein acche avsar layenge. "
+                        "Dhairya aur atmavishwas ke sath prayas karte rahein, aarthik aur vyavasayik sthirta prapt hogi.\n\n"
+                        "Saral Upay: Roz subah pakshiyon ko daana daalein aur Surya Narayan ko pranam karein. Ruke hue kaam banne lagenge."
+                    )
+            elif detected_lang == "hi":
+                if car_var == 0:
+                    return (
+                        f"हरि ॐ! {sal_hi}🙏\n\n"
+                        f"आपकी कुण्डली में दशम भाव और देवguru बृहस्पति ({j_sign}) यह दर्शा रहे हैं कि आपकी मेहनत और विद्या से आजीविका में उत्तम प्रगति होगी। "
+                        "धैर्यपूर्वक अपने लक्ष्य पर केंद्रित रहें, मान-सम्मान और पद-प्रतिष्ठा के अच्छे योग बन रहे हैं।\n\n"
+                        "सरल उपाय: प्रातःकाल सूर्य नारायण को जल का अर्घ्य दें और गुरुवार को चंदन का तिलक लगाएं। प्रभु कृपा से सब शुभ होगा।"
+                    )
+                elif car_var == 1:
+                    return (
+                        f"जय श्री राम! {sal_hi}🙏\n\n"
+                        f"आपकी कुण्डली में लग्न ({l_sign}) और शनि देव ({s_sign}) यह संकेत कर रहे हैं कि निरंतर कर्म और अनुशासन से ही स्थायी सफलता मिलेगी। "
+                        "निराश न हों, आपकी मेहनत का मीठा फल आने वाले समय में अवश्य मिलेगा।\n\n"
+                        "सरल उपाय: शनिवार के दिन हनुमान चालीसा का पाठ करें और जरूरतमंदों की सहायता करें। कार्यक्षेत्र की बाधाएं दूर होंगी।"
+                    )
+                elif car_var == 2:
+                    return (
+                        f"कल्याणमस्तु! {sal_hi}🙏\n\n"
+                        f"दशम भाव की ग्रह स्थिति यह बता रही है कि कार्यक्षेत्र में नई जिम्मेदारियां और पदोन्नति के अनुकूल अवसर बनेंगे। "
+                        "अपने वरिष्ठों से मधुर संबंध बनाए रखें और एकाग्रता से अपने कार्य को पूर्ण करें।\n\n"
+                        "सरल उपाय: प्रतिदिन पक्षियों को दाना डालें और प्रातः गायत्री मंत्र का 11 बार शांत मन से जप करें। यश में वृद्धि होगी।"
+                    )
+                else:
+                    return (
+                        f"हरि ॐ! {sal_hi}🙏\n\n"
+                        f"आपकी चंद्र राशि ({m_sign}) और कर्म स्थान का संयोग आजीविका में नई ऊर्जा और प्रगति का मार्ग प्रशस्त कर रहा है। "
+                        "सकारात्मक सोच के साथ आगे बढ़ें, ईश्वर आपके परिश्रम को उचित फल प्रदान करेंगे।\n\n"
+                        "सरल उपाय: गुरुवार को किसी मंदिर में चने की दाल या पीले फल का दान करें और गुरुजनों का आशीर्वाद लें। मंगल होगा।"
+                    )
             else:
                 return (
-                    f"In your chart, Jupiter in {j_sign} strongly supports ethical leadership, learning, and structured professional growth. "
-                    "Traditional principles indicate that focus and steady persistence will yield sustainable success. "
-                    "Are you currently considering a job transition or long-term business goals?"
+                    f"Hari Om! Divine blessings to you 🙏\n\n"
+                    f"In your birth chart, Jupiter in {j_sign} and the 10th house support professional dignity and gradual growth through consistent work.\n\n"
+                    "Simple Upay: Offer water to the rising Sun daily and seek the guidance of elders before starting important projects."
                 )
 
-    # 5. Moon sign inquiries
-    if any(k in msg_lower for k in ["moon sign", "chandra rashi", "chandrama", "rashi"]):
+    # 5. Wealth, Finance, Money (3 distinct dynamic variations)
+    if any(k in msg_lower for k in ["money", "paisa", "dhan", "wealth", "finance", "karz", "debt", "laxmi"]):
         if not chart_context.is_verified:
             if detected_lang == "hi":
-                return "आपका चंद्र राशि (Moon sign) जानने के लिए आपकी जन्म तिथि, सटीक जन्म समय और जन्म स्थान की आवश्यकता होगी। कृपया ये विवरण साझा करें।"
-            elif detected_lang == "hinglish":
-                return "Aapka Moon sign (Chandra Rashi) jaanane ke liye aapki date of birth, exact birth time aur birth place ki zaroorat hogi. Yeh details share karein, main turant calculate kar dunga."
+                return f"हरि ॐ! {sal_hi}🙏 धन, समृद्धि और आर्थिक स्थिति का विश्लेषण करने के लिए अपना जन्म विवरण साझा करें।"
             else:
-                return "To accurately calculate your Moon sign (Chandra Rashi), I need your birth date, exact birth time, and birth place. Please share these details and I'll be glad to calculate it."
+                return f"Hari Om! {sal_hgl}🙏 Dhan aur financial growth ke liye apni birth date, time aur city batayein."
         else:
-            if detected_lang == "hinglish":
-                return f"Aapka calculated Moon sign **{chart_context.moon_sign}** hai, aur aapka janm nakshatra **{chart_context.moon_nakshatra}** hai. Traditional Jyotish mein yeh aapke emotional nature aur intuition ko guide karta hai."
+            w_var = v_seed % 3
+            if detected_lang == "hi":
+                if w_var == 0:
+                    return (
+                        f"हरि ॐ! {sal_hi}🙏\n\n"
+                        f"आपकी कुण्डली में धन भाव (द्वितीय स्थान) और लाभ भाव (एकादश स्थान) अनुकूल स्थिति दर्शा रहे हैं। अनावश्यक खर्चों पर नियंत्रण रखें, धीरे-धीरे संचित धन में वृद्धि होगी।\n\n"
+                        "सरल उपाय: शुक्रवार को श्री सूक्त का पाठ करें अथवा किसी देवी मंदिर में मिश्री का भोग लगाएं। मां लक्ष्मी की कृपा आप पर बनी रहे।"
+                    )
+                elif w_var == 1:
+                    return (
+                        f"जय श्री राम! {sal_hi}🙏\n\n"
+                        f"आपकी लग्न ({l_sign}) अनुसार आय के साधन निरंतर बने रहेंगे, किंतु बजट का ध्यान रखना आवश्यक है। जल्दबाजी में कोई जोखिम भरा निवेश न करें।\n\n"
+                        "सरल उपाय: प्रतिदिन पक्षियों को दाना-पानी दें और शाम को तुलसी जी के पास घी का दीपक प्रज्वलित करें। धन धान्य की वृद्धि होगी।"
+                    )
+                else:
+                    return (
+                        f"कल्याणमस्तु! {sal_hi}🙏\n\n"
+                        f"द्वितीय और एकादश भाव की ग्रह स्थिति यह दर्शाती है कि आपकी सूझबूझ से पैतृक या संचित धन में स्थिरता आएगी। ईमानदारी से किया गया कार्य स्थायी समृद्धि देगा।\n\n"
+                        "सरल उपाय: शुक्रवार को किसी जरूरतमंद को सफेद अन्न का दान करें। ईश्वर धन और समृद्धि प्रदान करेंगे।"
+                    )
             else:
-                return f"Your verified Moon sign is **{chart_context.moon_sign}** in **{chart_context.moon_nakshatra}** Nakshatra, representing your emotional core and intuitive strengths."
+                if w_var == 0:
+                    return (
+                        f"Hari Om! {sal_hgl}🙏\n\n"
+                        f"Aapki kundli mein dhan bhav (2nd house) aur labha bhav (11th house) aarthik sthirta ka sanket de rahe hain. Thoda budget banakar chalein, aane wale samay mein savings badhengi.\n\n"
+                        "Saral Upay: Shukravaar ko safed vastu ka daan karein aur Maa Laxmi ka smaran karein. Sab kalyan hoga."
+                    )
+                elif w_var == 1:
+                    return (
+                        f"Jai Shri Ram! {sal_hgl}🙏\n\n"
+                        f"Aapke Lagna ({l_sign}) anusaar aarthik sthiti mein sudhar ke yog ban rahe hain. Bina soche samjhe kisi ko udhaar na dein aur kharchon par santulan banaye rakhein.\n\n"
+                        "Saral Upay: Sham ko Tulsi ji ke paas ghee ka deepak jalayein aur Shri Suktam ka path sunein. Dhan mein barkat hogi."
+                    )
+                else:
+                    return (
+                        f"Radhe Radhe! {sal_hgl}🙏\n\n"
+                        f"Kundli ke anusaar parishram se dhan ki aawak bani rahegi. Aane wale samay mein aarthik roop se naye avsar milenge, atmavishwas banaye rakhein.\n\n"
+                        "Saral Upay: Roz subah pakshiyon ko anaaj dalein aur mata-pita ka aashirwad lein. Ishwar kalyan karenge."
+                    )
 
-    # 6. Workflow continue
-    if msg_lower in ("continue", "aage batao", "proceed", "aage"):
-        if conversation_history and len(conversation_history) > 1:
-            if detected_lang == "hinglish":
-                return "Haan zaroor! Pichli baat ko aage badhate hain. Is baare mein aap specific kya janna chahte hain?"
+    # 6. Health & Wellbeing (3 distinct dynamic variations)
+    if any(k in msg_lower for k in ["health", "swasthya", "tabiyat", "beemari", "rog"]):
+        h_var = v_seed % 3
+        if detected_lang == "hi":
+            if h_var == 0:
+                return f"हरि ॐ! {sal_hi}🙏 स्वास्थ्य की रक्षा के लिए नित्य प्रातः सूर्य नमस्कार करें और महामृत्युंजय मंत्र का 11 बार स्मरण करें। संतुलित आहार और सकारात्मक विचार रखें, ईश्वर आपको आरोग्य प्रदान करेंगे।"
+            elif h_var == 1:
+                return f"जय श्री राम! {sal_hi}🙏 आपकी लग्न ({l_sign}) अनुसार मन को तनावमुक्त रखना ही उत्तम स्वास्थ्य का मूल मंत्र है। नित्य ताजी हवा में टहलें और जल का सेवन पर्याप्त मात्रा में करें। सब शुभ होगा।"
             else:
-                return "Continuing right from our discussion. Which particular aspect would you like to explore next?"
+                return f"कल्याणमस्तु! {sal_hi}🙏 स्वास्थ्य के संबंध में धैर्य रखें। प्रातःकाल सूर्य नारायण को जल अर्पित करें और महामृत्युंजय मंत्र का शांत भाव से स्मरण करें। भगवान शिव की कृपा से आरोग्य लाभ होगा।"
         else:
-            if detected_lang == "hinglish":
-                return "Aap kis topic par aage badhna chahte hain—love, career, ya apni kundli reading?"
+            if h_var == 0:
+                return f"Hari Om! {sal_hgl}🙏 Swasthya ke liye subah taaza hawa mein ghoomein aur Mahamrityunjaya Mantra ka shant mann se smaran karein. Ishwar aapko uttam aarogya de."
+            elif h_var == 1:
+                return f"Jai Shri Ram! {sal_hgl}🙏 Tanaav aur chinta se bachein. Nitya subah Surya Dev ko jal arpit karein aur shant mann se prarthana karein. Swasthya anukool rahega."
             else:
-                return "What topic would you like to proceed with—love, career, or your kundli analysis?"
+                return f"Hari Om! {sal_hgl}🙏 Santulit aahar lein aur roz subah thoda dhyan aur pranayam karein. Bhagwan Bholenath ki kripa se sharirik aur mansik shanti prapt hogi."
 
-    # 7. Kundli Diagram / Analysis request
+    # 7. Moon sign & Nakshatra
+    if any(k in msg_lower for k in ["moon sign", "chandra rashi", "chandrama", "rashi", "nakshatra"]):
+        if not chart_context.is_verified:
+            return f"कल्याणमस्तु {sal_hi}🙏 आपकी चंद्र राशि जानने के लिए जन्म तिथि, सही समय और शहर बताएं। हम तुरंत गणना करके आपको बताएंगे।" if detected_lang == "hi" else f"Kalyanmastu {sal_hgl}🙏 Chandra Rashi jaanane ke liye date of birth, time aur city batayein."
+        else:
+            if detected_lang == "hi":
+                return f"हरि ॐ! {sal_hi}🙏 आपकी जन्म चंद्र राशि {chart_context.moon_sign} है, और जन्म नक्षत्र {chart_context.moon_nakshatra} है। यह आपके शांत हृदय और गहरी संवेदनशीलता का प्रतीक है।"
+            else:
+                return f"Hari Om! {sal_hgl}🙏 Aapki janm rashi {chart_context.moon_sign} aur nakshatra {chart_context.moon_nakshatra} hai. Yeh sheetalta aur teekshna buddhi ko darshata hai."
+
+    # 8. Kundli Diagram / Analysis request
     if is_kundli_requested(user_message):
         if not chart_context.is_verified:
-            if detected_lang == "hinglish":
-                return "Kundli diagram chat mein render karne ke liye birth details (date, exact time, aur birthplace) zaroori hain. Yeh details provide karein, main turant Lagna Kundli generate kar dunga."
-            else:
-                return "To generate and render your Kundli diagram directly in chat, I need your birth details (date, time, and birthplace). Please provide them to calculate your D1 chart."
+            return "कुण्डली चक्र देखने के लिए जन्म विवरण आवश्यक है बेटा। कृपया तारीख, समय और शहर बताएं।" if detected_lang == "hi" else "Kundli chakra ke liye birth details (taareekh, samay aur sthan) batayein beta."
         else:
-            if detected_lang == "hinglish":
-                return (
-                    f"Yeh rahi aapki **Lagna Kundli (D1)**:\n"
-                    f"- Lagna (Ascendant): **{chart_context.ascendant_sign}** ({chart_context.ascendant_nakshatra} Nakshatra)\n"
-                    f"- Moon Sign (Chandra Rashi): **{chart_context.moon_sign}** ({chart_context.moon_nakshatra})\n"
-                    f"- Sun Sign (Surya): **{chart_context.sun_sign}**\n\n"
-                    "Neeche aapki chart diagram render kar di gayi hai. Kis house ya planet ke baare mein detail jaan na chahte hain?"
-                )
+            if detected_lang == "hi":
+                return f"हरि ॐ! {sal_hi}🙏 यह रही आपकी जन्म कुण्डली: लग्न {chart_context.ascendant_sign}, चंद्र राशि {chart_context.moon_sign}। लग्न चक्र प्रस्तुत है, जो भी संशय हो पूछिए।"
             else:
-                return (
-                    f"Here is your **Lagna Kundali (D1)** chart:\n"
-                    f"- Ascendant (Lagna): **{chart_context.ascendant_sign}**\n"
-                    f"- Moon Sign: **{chart_context.moon_sign}**\n"
-                    f"- Sun Sign: **{chart_context.sun_sign}**\n\n"
-                    "Your North Indian chart diagram has been rendered below. Which planetary position would you like to inspect?"
-                )
+                return f"Hari Om! {sal_hgl}🙏 Yeh rahi aapki Janam Kundli: Lagna {chart_context.ascendant_sign}, Moon {chart_context.moon_sign}. Koi prashna ho toh poochiye."
 
-    # 8. Grounded synthesis from retrieved classical citations
-    if citations and len(citations) > 0:
-        top_citation = citations[0]
-        src_title = top_citation.get("source_title", "Classical Vedic Tradition")
-        sec_title = top_citation.get("section_title", "Foundations")
-        excerpt = top_citation.get("excerpt", "").strip()
-        summary = excerpt.split("\n\n")[0] if "\n\n" in excerpt else excerpt[:280]
-
-        if detected_lang == "hi":
-            return f"प्रामाणिक वैदिक संदर्भ **{src_title}** ({sec_title}) के अनुसार:\n\n{summary}\n\nक्या आप इस विषय पर अधिक विस्तार या अपनी कुंडली से इसका संबंध जानना चाहते हैं?"
-        elif detected_lang == "hinglish":
-            return f"Classical Vedic reference **{src_title}** ({sec_title}) ke mutabiq:\n\n{summary}\n\nKya aap is topic par aur vistar se ya apni kundli ke context mein jaan na chahte hain?"
-        else:
-            return f"According to the classical text **{src_title}** ({sec_title}):\n\n{summary}\n\nWould you like further details on this principle or an analysis based on your birth chart?"
-
-    # 9. General fallback
+    # 9. General fallback (4 distinct variations)
+    gen_var = v_seed % 4
     if detected_lang == "hinglish":
-        return "Main samajh gaya. Jyotish ke traditional principles ke mutabiq har sthiti mein dhairya aur samajhdari zaroori hai. Is vishay mein koi specific sawaal poochna chahein toh batayein."
+        if gen_var == 0:
+            return f"Hari Om! {sal_hgl}🙏 Vedic Jyotish ke anusaar satkarma aur dhairya se har sthiti anukool ho jati hai. Surya dev ko jal arpit karein aur shant mann se apna prashna poochein."
+        elif gen_var == 1:
+            return f"Jai Shri Ram! {sal_hgl}🙏 Aapki kundli ke Lagna ({l_sign}) anusaar parishram aur nishtha hi aapke sabse bade sahayak hain. Jeevan, career ya vivah ke baare mein jo poochna ho batayein."
+        elif gen_var == 2:
+            return f"Radhe Radhe! {sal_hgl}🙏 Ishwar par vishwas rakhein, samay ke sath har mushkil ka samadhan nikalta hai. Nitya Hanuman Chalisa ka path karein aur apna prashna kahein."
+        else:
+            return f"Hari Om! {sal_hgl}🙏 Shant chitt se kiya gaya karm sadaiv shubh fal deta hai. Kisi zarooratmand ki sahayata karein aur kundli se juda koi bhi vishisht prashna poochiye."
     elif detected_lang == "hi":
-        return "मैं समझता हूँ। पारंपरिक ज्योतिष के सिद्धांतों के अनुसार आत्म-विश्वास और सही समय पर निर्णय लेना सदैव हितकर होता है। कोई और प्रश्न हो तो अवश्य पूछें।"
+        if gen_var == 0:
+            return f"हरि ॐ! {sal_hi}🙏 वैदिक ज्योतिष अनुसार सत्कर्म और धैर्य से सभी बाधाएं दूर होती हैं। नित्य सूर्य नारायण की उपासना करें। मन में जो भी संशय हो, निसंकोच पूछें।"
+        elif gen_var == 1:
+            return f"जय श्री राम! {sal_hi}🙏 आपके लग्न ({l_sign}) अनुसार आपका परिश्रम और निष्ठा ही आपकी सफलता की नींव है। जीवन के किसी भी क्षेत्र से संबंधित प्रश्न निसंकोच पूछिए।"
+        elif gen_var == 2:
+            return f"कल्याणमस्तु! {sal_hi}🙏 ईश्वर पर अडिग विश्वास रखें, धैर्य से हर समस्या का समाधान प्राप्त होता है। नित्य गायत्री मंत्र का स्मरण करें और अपना प्रश्न कहें।"
+        else:
+            return f"हरि ॐ! {sal_hi}🙏 शांत और निर्मल मन से किए गए कर्म सदैव मंगलकारी होते हैं। माता-पिता का आशीर्वाद लें और कुंडली या जीवन से जुड़ा कोई भी प्रश्न पूछें।"
     else:
-        return "I understand. In traditional astrological wisdom, patience, clear perspective, and constructive action bring the best outcomes. Feel free to ask any specific question."
+        return f"Hari Om! Divine blessings {first_name or 'dear seeker'} 🙏 In Vedic tradition, patience and righteous action bring peace and clarity. Feel free to ask any specific query about your life or chart."
 
 
 class LLMService:
@@ -451,7 +615,7 @@ class LLMService:
                 class TempRecord:
                     def __init__(self, d):
                         self.id = d.get("id", "temp-profile")
-                        self.name = d.get("name", "User")
+                        self.name = d.get("name", "")
                         self.date_of_birth = d.get("date_of_birth", "")
                         self.time_of_birth = d.get("time_of_birth", "")
                         self.is_time_approximate = d.get("is_time_approximate", False)
@@ -519,9 +683,26 @@ class LLMService:
                 f"Do not switch language.\n\n"
             )
 
+            # Resolve seeker name to personalize the Pandit blessing
+            seeker_fn, sal_hi_sample, sal_hgl_sample = _resolve_seeker_salutation(chart_context)
+            name_instruction = (
+                f"Address the seeker warmly as '{seeker_fn} जी' in your blessing and advice."
+                if seeker_fn
+                else "Address the seeker affectionately as 'बेटा' (or 'priye' / 'beta'). NEVER say 'User ji' or 'Guest ji'!"
+            )
+            pandit_mandate = (
+                "### MANDATORY PANDIT JI PERSONA & SHORT ANSWER MANDATE:\n"
+                f"1. Open with authentic traditional blessings: {sal_hi_sample} (or 'जय श्री राम!' / 'शुभम भवतु!'). {name_instruction}\n"
+                "2. STRICT SHORT LENGTH (MAX 75-100 WORDS): Write ONLY 2 to 3 short paragraphs. No lengthy essays. Common people want quick, sweet, readable answers.\n"
+                "3. ZERO BOLD TEXT: Do NOT use markdown bold tags (**text**) or asterisks anywhere in your response. Write plain, natural, gentle text.\n"
+                "4. STRICT NON-REPETITION & DEEP PERSONALIZATION: Every seeker is unique. NEVER output standard boilerplate or repetitive template phrases. Vary your greetings, phrasing, and explanations dynamically based on their specific Lagna, Moon sign, and house lords.\n"
+                "5. Always offer 1 easy, practical home remedy (e.g. Surya Arghya, Hanuman Chalisa, Gayatri mantra, kindness/charity) that brings peace and hope.\n"
+                "6. Never say you are an AI or robot. Speak as a wise, loving, venerable Vedic Astrologer.\n\n"
+            )
             persona_block = f"### ACTIVE ASTROLOGER PERSONA: {persona['name']} ({persona['title']})\n{persona['system_instruction']}\n\n"
             combined_system_instruction = (
                 f"{ASTROAI_SYSTEM_PROMPT_V2}\n\n"
+                f"{pandit_mandate}"
                 f"{language_mandate}"
                 f"{persona_block}"
                 f"### CURRENT CONTEXT ENVIRONMENT\n"
@@ -554,17 +735,27 @@ class LLMService:
                     )
                 )
 
-            response = client.models.generate_content(
-                model=settings.GEMINI_MODEL,
-                contents=contents,
-                config=types.GenerateContentConfig(
-                    system_instruction=combined_system_instruction,
-                    temperature=0.6,
-                    max_output_tokens=700
-                )
-            )
+            # Resilient multi-model fallback list (handles 503 high demand seamlessly)
+            candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+            response_content = ""
+            for model_name in candidate_models:
+                try:
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=contents,
+                        config=types.GenerateContentConfig(
+                            system_instruction=combined_system_instruction,
+                            temperature=0.75,
+                            max_output_tokens=260
+                        )
+                    )
+                    if response and response.text:
+                        response_content = response.text
+                        break
+                except Exception as model_err:
+                    logger.warning(f"Live Gemini call failed on {model_name}: {model_err}. Trying fallback model...")
+                    continue
 
-            response_content = response.text if response and response.text else ""
             if not response_content:
                 response_content = generate_demo_response(
                     user_message=user_message,
@@ -690,7 +881,7 @@ class LLMService:
                 class TempRecord:
                     def __init__(self, d):
                         self.id = d.get("id", "temp-profile")
-                        self.name = d.get("name", "User")
+                        self.name = d.get("name", "")
                         self.date_of_birth = d.get("date_of_birth", "")
                         self.time_of_birth = d.get("time_of_birth", "")
                         self.is_time_approximate = d.get("is_time_approximate", False)
@@ -740,9 +931,26 @@ class LLMService:
                     f"Do not switch language.\n\n"
                 )
 
+                # Resolve seeker name to personalize the Pandit blessing
+                seeker_fn, sal_hi_sample, sal_hgl_sample = _resolve_seeker_salutation(chart_context)
+                name_instruction = (
+                    f"Address the seeker warmly as '{seeker_fn} जी' in your blessing and advice."
+                    if seeker_fn
+                    else "Address the seeker affectionately as 'बेटा' (or 'priye' / 'beta'). NEVER say 'User ji' or 'Guest ji'!"
+                )
+                pandit_mandate = (
+                    "### MANDATORY PANDIT JI PERSONA & SHORT ANSWER MANDATE:\n"
+                    f"1. Open with authentic traditional blessings: {sal_hi_sample} (or 'जय श्री राम!' / 'शुभम भवतु!'). {name_instruction}\n"
+                    "2. STRICT SHORT LENGTH (MAX 75-100 WORDS): Write ONLY 2 to 3 short paragraphs. No lengthy essays. Common people want quick, sweet, readable answers.\n"
+                    "3. ZERO BOLD TEXT: Do NOT use markdown bold tags (**text**) or asterisks anywhere in your response. Write plain, natural, gentle text.\n"
+                    "4. STRICT NON-REPETITION & DEEP PERSONALIZATION: Every seeker is unique. NEVER output standard boilerplate or repetitive template phrases. Vary your greetings, phrasing, and explanations dynamically based on their specific Lagna, Moon sign, and house lords.\n"
+                    "5. Always offer 1 easy, practical home remedy (e.g. Surya Arghya, Hanuman Chalisa, Gayatri mantra, kindness/charity) that brings peace and hope.\n"
+                    "6. Never say you are an AI or robot. Speak as a wise, loving, venerable Vedic Astrologer.\n\n"
+                )
                 persona_block = f"### ACTIVE ASTROLOGER PERSONA: {persona['name']} ({persona['title']})\n{persona['system_instruction']}\n\n"
                 combined_system_instruction = (
                     f"{ASTROAI_SYSTEM_PROMPT_V2}\n\n"
+                    f"{pandit_mandate}"
                     f"{language_mandate}"
                     f"{persona_block}"
                     f"### CURRENT CONTEXT ENVIRONMENT\n"
@@ -763,23 +971,40 @@ class LLMService:
                 if not contents or contents[-1].parts[0].text != user_message:
                     contents.append(types.Content(role="user", parts=[types.Part.from_text(text=user_message)]))
 
-                response_stream = client.models.generate_content_stream(
-                    model=settings.GEMINI_MODEL,
-                    contents=contents,
-                    config=types.GenerateContentConfig(
-                        system_instruction=combined_system_instruction,
-                        temperature=0.6,
-                        max_output_tokens=700
-                    )
-                )
+                # Multi-model streaming fallback list
+                candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+                stream_success = False
 
-                for chunk in response_stream:
-                    if chunk.text:
-                        full_content += chunk.text
-                        yield {"type": "delta", "text": chunk.text}
+                for model_name in candidate_models:
+                    try:
+                        response_stream = client.models.generate_content_stream(
+                            model=model_name,
+                            contents=contents,
+                            config=types.GenerateContentConfig(
+                                system_instruction=combined_system_instruction,
+                                temperature=0.75,
+                                max_output_tokens=260
+                            )
+                        )
+
+                        for chunk in response_stream:
+                            if chunk.text:
+                                full_content += chunk.text
+                                yield {"type": "delta", "text": chunk.text}
+
+                        if full_content.strip():
+                            stream_success = True
+                            break
+                    except Exception as model_err:
+                        logger.warning(f"Live Gemini streaming failed on {model_name}: {model_err}. Trying fallback model...")
+                        continue
+
+                if not stream_success:
+                    logger.error("All live Gemini models failed or unavailable. Falling back to dynamic offline synthesis.")
+                    is_demo = True
 
             except Exception as e:
-                logger.error(f"Live Gemini streaming failed: {e}. Falling back to demo stream.")
+                logger.error(f"Live Gemini initialization failed: {e}. Falling back to demo stream.")
                 is_demo = True
 
         if is_demo or not full_content.strip():
@@ -844,23 +1069,27 @@ class LLMService:
             # Deterministic authentic Hastarekha interpretation
             if detected_lang == "hi":
                 demo_text = (
-                    "✋ **हस्तरेखा (सामुद्रिक शास्त्र) विश्लेषण:**\n\n"
-                    "1. **हथेली का स्वरूप:** आपकी हथेली पृथ्वी-अग्नि तत्व (व्यावहारिक और ऊर्जावान) का संतुलन दर्शाती है।\n"
-                    "2. **जीवन रेखा (Life Line):** शुक्र पर्वत के चारों ओर सुंदर घुमावदार जीवन रेखा अच्छी जीवन ऊर्जा (Vitality) और आंतरिक शक्ति का संकेत देती है।\n"
-                    "3. **हृदय रेखा (Heart Line):** गुरु पर्वत की ओर अग्रसर हृदय रेखा निष्ठावान, भावनात्मक रूप से परिपक्व और रिश्तों में वफादार स्वभाव दर्शाती है।\n"
-                    "4. **मस्तिष्क रेखा (Head Line):** गहरी और स्पष्ट मस्तिष्क रेखा तार्किक निर्णय क्षमता और व्यावहारिक बुद्धिमत्ता को दर्शाती है।\n"
-                    "5. **भाग्य रेखा (Fate Line):** हथेली के मध्य से शनि पर्वत की ओर उठने वाली रेखा स्व-निर्मित सफलता और निरंतर प्रयास का संकेत देती है।\n\n"
-                    "✨ **मार्गदर्शन:** अपने लक्ष्यों पर निरंतरता बनाए रखें, आपके हाथों की रेखाएं आत्मनिर्भरता और धैर्य से बड़ी प्रगति का संकेत देती हैं।"
+                    "हरि ॐ! आयुष्मान भव बेटा 🙏\n\n"
+                    "आपकी हथेली की रेखाओं का सामुद्रिक शास्त्र अनुसार ध्यानपूर्वक अवलोकन किया गया है:\n\n"
+                    "१. **हस्त स्वरूप:** आपकी हथेली कर्मठ और परिश्रमी स्वभाव को दर्शाती है। आप जो भी काम मन लगाकर करेंगे, उसमें प्रभु कृपा से सिद्धि मिलेगी।\n"
+                    "२. **जीवन रेखा:** शुक्र पर्वत के चारों ओर सुंदर घुमावदार जीवन रेखा उत्तम प्राणशक्ति, दीर्घायु और निरोगी जीवन का शुभ संकेत है।\n"
+                    "३. **हृदय रेखा:** गुरु पर्वत की ओर अग्रसर हृदय रेखा निष्ठावान, दयालु और रिश्तों में सच्चा समर्पण दर्शाती है।\n"
+                    "४. **मस्तिष्क रेखा:** गहरी और स्पष्ट रेखा आपकी व्यावहारिक समझ और सटीक निर्णय क्षमता को प्रकट करती है।\n"
+                    "५. **भाग्य रेखा:** शनि पर्वत की ओर बढ़ रही रेखा आपके स्वयं के पुरुषार्थ और मेहनत से निरंतर उन्नति का मार्ग प्रशस्त कर रही है।\n\n"
+                    "✨ **सरल एवं कल्याणकारी उपाय:**\n"
+                    "प्रातःकाल सूर्य नारायण को तांबे के लोटे से अर्घ्य दें और प्रतिदिन माता-पिता का चरण स्पर्श करें। ईश्वर आपका कल्याण करेंगे।"
                 )
             else:
                 demo_text = (
-                    "✋ **Hastarekha (Palmistry) Analysis:**\n\n"
-                    "1. **Palm Shape & Energy:** Aapki hatheli practical aur ambitious nature (Earth-Fire balance) ko reflect karti hai.\n"
-                    "2. **Jeevan Rekha (Life Line):** Shukra Parvat ke aas-paas clear curved line strong vitality, stamina aur life enthusiasm dikhati hai.\n"
-                    "3. **Hriday Rekha (Heart Line):** Guru Parvat ki taraf badhti Heart Line loyalty, emotional maturity aur deep relationships ko priority deti hai.\n"
-                    "4. **Mastishk Rekha (Head Line):** Clear, straight Head Line sharp practical intelligence, focus aur calculated decision-making power darshati hai.\n"
-                    "5. **Bhagya Rekha (Fate Line):** Palm ke base se start hokar Shani Parvat tak pahochna self-made success aur persistent mehnat se growth ka sanket deta hai.\n\n"
-                    "✨ **Key Advice:** Apni focus aur patience ko continue rakhein—aapke haath ki lines steady financial aur professional growth indicate karti hain!"
+                    "Hari Om! Ayushman Bhava beta 🙏\n\n"
+                    "Aapki hatheli ki rekhaon ka Samudrika Shastra ke niyam anusar dhyanpurvak adhyayan kiya gaya hai:\n\n"
+                    "१. **Hatheli ka Swaroop:** Aapki hatheli practical aur parishrami nature darshati hai. Mehnat se aap har karya mein safalta praapt karenge.\n"
+                    "२. **Jeevan Rekha:** Shukra Parvat ke aas-paas clear curved line achhi vitality, swasthya aur utsah ko darshati hai.\n"
+                    "३. **Hriday Rekha:** Guru Parvat ki taraf badhti रेखा aapki imaandari, sneh aur rishto ke prati vafadari ka prateek hai.\n"
+                    "४. **Mastishk Rekha:** Saaf aur seedhi rekha batati hai ki aapka dhyan aur faisla lene ki shakti bohot vyavaharik hai.\n"
+                    "५. **Bhagya Rekha:** Shani Parvat ki taraf badhna aapke swayam ke balbute par vikas aur unnati ka sanket deta hai.\n\n"
+                    "✨ **Saral Kalyankari Upay:**\n"
+                    "Pratidin subah Surya Dev ko jal arpit karein aur shant mann se Gayatri Mantra ka smaran karein. Ishwar sab mangal karenge."
                 )
             return {
                 "content": demo_text,

@@ -35,8 +35,11 @@ class ChartContext:
         dashamsha_lagna: Optional[str] = None,
         unavailable_fields: Optional[List[str]] = None,
     ):
-        self.profile_id = profile_id
-        self.profile_name = profile_name or "Guest User"
+        raw_pname = str(profile_name or "").strip()
+        if raw_pname.lower() in ["user", "guest", "guest user", "temp-profile", "seeker", "temp", "client", "none"]:
+            self.profile_name = ""
+        else:
+            self.profile_name = raw_pname
         self.date_of_birth = date_of_birth
         self.time_of_birth = time_of_birth
         self.is_time_approximate = is_time_approximate
@@ -254,9 +257,16 @@ def validate_and_build_chart_context(
     country = getattr(chart_record, "country", None)
     location_str = f"{birthplace}, {country}" if (birthplace and country) else (birthplace or country or "Unspecified")
 
+    raw_name = getattr(chart_record, "name", None) or raw_data.get("name") or raw_data.get("user_name")
+    resolved_name = ""
+    if raw_name:
+        cand = str(raw_name).strip()
+        if cand.lower() not in ["user", "guest", "guest user", "temp-profile", "seeker", "temp", "client", "none"]:
+            resolved_name = cand
+
     return ChartContext(
         profile_id=record_id,
-        profile_name=getattr(chart_record, "name", "User"),
+        profile_name=resolved_name,
         date_of_birth=getattr(chart_record, "date_of_birth", None),
         time_of_birth=getattr(chart_record, "time_of_birth", None),
         is_time_approximate=bool(getattr(chart_record, "is_time_approximate", False)),

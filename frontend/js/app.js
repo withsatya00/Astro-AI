@@ -28,6 +28,7 @@ const App = {
     }
     ChatController.init();
     ReportsController.init();
+    this.initModernPickers();
 
 
     // Initial data fetch
@@ -209,7 +210,7 @@ const App = {
         if (window.ChartViewer && window.ChartViewer.currentGroundedReport) {
           const r = window.ChartViewer.currentGroundedReport;
           const yogasStr = (r.detected_yogas_summary?.yogas || []).map(y => y.yoga_name).join(', ') || 'Foundational Formations';
-          const text = `📜 *AstroAI - Shastriya Grounded Report* 📜\n👑 *Yogas:* ${yogasStr}\n⭐ *Summary:* ${r.executive_summary}\n✨ Check on AstroAI: https://astrotalk.ai`;
+          const text = `📜 *शास्त्रोक्त वैदिक ज्योतिष रिपोर्ट* 📜\n👑 *शुभ योग:* ${yogasStr}\n⭐ *सार:* ${r.executive_summary}\n✨ पूज्य ज्योतिषाचार्य से परामर्श लें • AstroTalk Jyotish: https://astrotalk.ai`;
           window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
       });
@@ -272,10 +273,10 @@ const App = {
       if (dot && text) {
         if (health.demo_mode) {
           dot.className = 'status-dot demo';
-          text.innerText = 'Demo Mode (Offline)';
+          text.innerText = (window.I18n && window.I18n.currentLang !== 'en') ? 'पंडित जी उपलब्ध हैं' : 'Astrologer Available';
         } else {
           dot.className = 'status-dot';
-          text.innerText = 'Live Gemini AI';
+          text.innerText = (window.I18n && window.I18n.currentLang !== 'en') ? '🟢 ज्योतिषाचार्य ऑनलाइन हैं' : '🟢 Astrologer Online';
         }
       }
     } catch (err) {
@@ -528,6 +529,54 @@ const App = {
       }
     } catch (err) {
       console.warn('Could not select chart:', err);
+    }
+  },
+
+  // =========================================================================
+  // Modern Date & Time Picker Initialization (Flatpickr)
+  // =========================================================================
+  initModernPickers(root = document) {
+    if (typeof flatpickr === 'undefined') {
+      console.warn('Flatpickr library not yet loaded, native pickers remain active');
+      return;
+    }
+
+    try {
+      // Modern Date Pickers
+      root.querySelectorAll('.modern-date-picker, #intake-dob, #modal-dob, #milan-boy-dob, #milan-girl-dob, #panchang-input-date').forEach(el => {
+        if (el._flatpickr) return;
+        const isPanchang = el.id === 'panchang-input-date';
+        flatpickr(el, {
+          dateFormat: "Y-m-d",
+          altInput: true,
+          altFormat: "d M Y",
+          altInputClass: (el.className || '') + ' flatpickr-custom-alt',
+          maxDate: isPanchang ? undefined : "today",
+          defaultDate: el.value || (isPanchang ? new Date() : undefined),
+          allowInput: true,
+          monthSelectorType: "dropdown",
+          prevArrow: "‹",
+          nextArrow: "›"
+        });
+      });
+
+      // Modern Time Pickers
+      root.querySelectorAll('.modern-time-picker, #intake-tob, #modal-tob, #milan-boy-tob, #milan-girl-tob').forEach(el => {
+        if (el._flatpickr) return;
+        flatpickr(el, {
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: "H:i",
+          altInput: true,
+          altFormat: "h:i K",
+          altInputClass: (el.className || '') + ' flatpickr-custom-alt',
+          time_24hr: false,
+          defaultDate: el.value || undefined,
+          allowInput: true
+        });
+      });
+    } catch (err) {
+      console.warn('Could not initialize modern pickers:', err);
     }
   },
 

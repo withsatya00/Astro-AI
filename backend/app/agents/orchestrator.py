@@ -107,7 +107,7 @@ class AgentOrchestrator:
                 class TempRecord:
                     def __init__(self, d):
                         self.id = d.get("id", "temp")
-                        self.name = d.get("name", "User")
+                        self.name = d.get("name", "")
                         self.date_of_birth = d.get("date_of_birth", "")
                         self.time_of_birth = d.get("time_of_birth", "")
                         self.is_time_approximate = d.get("is_time_approximate", False)

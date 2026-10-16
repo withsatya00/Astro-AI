@@ -167,9 +167,9 @@ const ChartViewer = {
 
       // Card Header
       ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 32px "Plus Jakarta Sans", sans-serif';
+      ctx.font = 'bold 30px "Plus Jakarta Sans", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('✨ AstroAI - Lagna Kundali (D1) ✨', size / 2, 70);
+      ctx.fillText('🕉️ श्री वैदिक जन्म कुण्डली (Lagna Kundali - D1)', size / 2, 70);
 
       const activeName = (window.App && window.App.currentChart && window.App.currentChart.name) || profileName;
       const cd = (window.App && window.App.currentChart && window.App.currentChart.chart_data) || {};
@@ -198,7 +198,7 @@ const ChartViewer = {
         ctx.fillStyle = '#94a3b8';
         ctx.font = '16px "Plus Jakarta Sans", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Computed via Swiss Ephemeris NASA JPL Astronomical Calculations • AstroAI Platform', size / 2, canvas.height - 35);
+        ctx.fillText('प्रामाणिक वैदिक गणना • महर्षि पराशर ज्योतिष शास्त्र • AstroTalk Jyotish', size / 2, canvas.height - 35);
 
         URL.revokeObjectURL(blobURL);
 
@@ -236,17 +236,17 @@ const ChartViewer = {
 
     const cd = c.chart_data || {};
     const text = 
-`🔮 *AstroAI - Authentic Janam Kundli Summary* 🔮
-👤 *Name:* ${c.name}
-📅 *Date of Birth:* ${c.date_of_birth} (${c.time_of_birth || '12:00'})
-📍 *Birthplace:* ${c.city || 'Birth City'}, ${c.country || 'India'}
+`🕉️ *श्री वैदिक जन्म कुण्डली विवरण* 🕉️
+👤 *नाम:* ${c.name}
+📅 *जन्म तिथि:* ${c.date_of_birth} (${c.time_of_birth || '12:00'})
+📍 *जन्म स्थान:* ${c.city || 'Birth City'}, ${c.country || 'India'}
 ━━━━━━━━━━━━━━━━━━
-🪐 *Lagna (Ascendant):* ${cd.ascendant_sign || '-'} (${cd.ascendant_nakshatra || ''})
-🌙 *Chandra Rashi (Moon):* ${cd.moon_sign || '-'} (${cd.moon_nakshatra || ''})
-☀️ *Surya Rashi (Sun):* ${cd.sun_sign || '-'}
-⚡ *Ayanamsa:* ${cd.ayanamsa || 'Lahiri'} (NASA Swiss Ephemeris)
+🪐 *लग्न (Lagna):* ${cd.ascendant_sign || '-'} (${cd.ascendant_nakshatra || ''})
+🌙 *चन्द्र राशि (Moon):* ${cd.moon_sign || '-'} (${cd.moon_nakshatra || ''})
+☀️ *सूर्य राशि (Sun):* ${cd.sun_sign || '-'}
+⚡ *अयनांश:* ${cd.ayanamsa || 'Lahiri'} (महर्षि पराशर गणना)
 ━━━━━━━━━━━━━━━━━━
-✨ Consult personal AI Astrologer on AstroAI:
+✨ पूज्य ज्योतिषाचार्य से परामर्श लें • AstroTalk Jyotish:
 https://astrotalk.ai`;
 
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
@@ -257,16 +257,16 @@ https://astrotalk.ai`;
   shareMilanWhatsApp(milanData) {
     if (!milanData) return;
     const text = 
-`💍 *AstroAI - Authentic Kundali Milan Report* 💍
-🤵 *Groom (वर):* ${milanData.boy_name}
-👰 *Bride (वधू):* ${milanData.girl_name}
+`💍 *प्रामाणिक अष्टकूट कुण्डली मिलान विवरण* 💍
+🤵 *वर:* ${milanData.boy_name}
+👰 *वधू:* ${milanData.girl_name}
 ━━━━━━━━━━━━━━━━━━
-⭐ *Gun Milan Score:* ${milanData.total_score} / 36.0 Gunas (${milanData.percentage}%)
-✅ *Verdict:* ${milanData.verdict}
-🛡️ *Manglik Status:* ${milanData.manglik_compatibility?.note || 'Checked'}
-💬 *Recommendation:* ${milanData.recommendation}
+⭐ *गुण मिलान अंक:* ${milanData.total_score} / 36.0 गुण (${milanData.percentage}%)
+✅ *निर्णय:* ${milanData.verdict}
+🛡️ *मांगलिक स्थिति:* ${milanData.manglik_compatibility?.note || 'जांची गई'}
+💬 *ज्योतिषीय परामर्श:* ${milanData.recommendation}
 ━━━━━━━━━━━━━━━━━━
-✨ Check complete 8 Kootas & Kundali Milan on AstroAI:
+✨ पूज्य ज्योतिषाचार्य से परामर्श लें • AstroTalk Jyotish:
 https://astrotalk.ai`;
 
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;

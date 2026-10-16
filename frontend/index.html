@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AstroAI Agent - Authentic AI Astrology Consultation & Kundali Platform</title>
+  <title>AstroTalk - प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श (Vedic Astrologer Consultation)</title>
   <meta name="theme-color" content="#0B0F19">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
-  <meta property="og:title" content="AstroAI Agent - Authentic AI Astrology Consultation & Kundali Platform">
-  <meta property="og:description" content="Precision Vedic AI astrology consultation inspired by AstroTalk. Powered by Swiss Ephemeris calculations and classical Vedic RAG.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+  <meta property="og:title" content="AstroTalk - प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श">
+  <meta property="og:description" content="प्रामाणिक वैदिक ज्योतिष एवं जन्म कुण्डली परामर्श। वरिष्ठ ज्योतिषाचार्यों द्वारा जीवन, करियर एवं विवाह का सटीक मार्गदर्शन।">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,8 +22,8 @@
       <!-- Header -->
       <div class="sidebar-header">
         <a href="#" class="brand">
-          <div class="brand-icon">✨</div>
-          <span class="brand-title">AstroAI</span>
+          <div class="brand-icon">🕉️</div>
+          <span class="brand-title">AstroTalk Jyotish</span>
         </a>
         <button class="btn-icon" id="btn-close-sidebar" title="Collapse sidebar">✕</button>
       </div>
@@ -98,15 +99,15 @@
             </li>
             <li class="sidebar-item" id="nav-shortcut-docs">
               <span class="item-title" data-i18n="tool_docs">📚 Classical Knowledge Base</span>
-              <span class="shortcut-badge">RAG</span>
+              <span class="shortcut-badge">वेदग्रंथ</span>
             </li>
             <li class="sidebar-item" id="nav-shortcut-grounded-report">
               <span class="item-title" data-i18n="tool_grounded">📜 Shastriya Grounded Report</span>
-              <span class="shortcut-badge">AI+RAG</span>
+              <span class="shortcut-badge">शास्त्रोक्त</span>
             </li>
             <li class="sidebar-item" id="nav-shortcut-agent">
-              <span class="item-title" data-i18n="tool_agent">⚡ AI Agent Console</span>
-              <span class="shortcut-badge">7 Tools</span>
+              <span class="item-title" data-i18n="tool_agent">🔮 शास्त्रीय ज्योतिष गणना (Vedic Tools)</span>
+              <span class="shortcut-badge">पंचांग व योग</span>
             </li>
           </ul>
         </div>
@@ -115,9 +116,9 @@
 
       <!-- Footer -->
       <div class="sidebar-footer">
-        <div class="status-pill" id="telemetry-pill">
-          <div class="status-dot" id="telemetry-dot"></div>
-          <span id="telemetry-text">Checking System...</span>
+        <div class="status-pill" id="telemetry-pill" style="color: #15803d; background: #DCFCE7; border: 1px solid #86EFAC;">
+          <div class="status-dot" id="telemetry-dot" style="background: #16A34A;"></div>
+          <span id="telemetry-text">🟢 ज्योतिषाचार्य ऑनलाइन उपलब्ध हैं</span>
         </div>
       </div>
     </aside>
@@ -135,9 +136,9 @@
             <div class="astrologer-avatar">🕉️</div>
             <div class="astrologer-info">
               <h3>Acharya Shastri <span style="font-size: 0.7rem; color: var(--gold-accent);">✦</span></h3>
-              <p>Vedic & Vastu Specialist • 24+ Yrs Exp</p>
+              <p>वरिष्ठ वैदिक ज्योतिषाचार्य • 24+ वर्ष अनुभव • 🟢 ऑनलाइन</p>
             </div>
-            <span class="badge-switch-pill" style="font-size: 0.68rem; color: var(--primary-violet); background: var(--lavender-soft); padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 0.25rem; font-weight: 600;" data-i18n="switch_astrologer">Switch ▾</span>
+            <span class="badge-switch-pill" style="font-size: 0.68rem; color: var(--primary-violet); background: var(--lavender-soft); padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 0.25rem; font-weight: 600;" data-i18n="switch_astrologer">बदलें ▾</span>
           </div>
         </div>
 
@@ -195,11 +196,11 @@
         <div class="welcome-screen" id="welcome-screen">
           <div class="astrotalk-intake-card" id="astrotalk-intake-card">
             <div class="intake-header">
-              <div class="intake-icon">🔮</div>
+              <div class="intake-icon">🕉️</div>
               <div style="flex: 1;">
-                <h2 class="intake-title" data-i18n="intake_title">AstroTalk Consultation Intake (परामर्श विवरण)</h2>
+                <h2 class="intake-title" data-i18n="intake_title">🕉️ पंडित जी से परामर्श (Janam Kundli & Consultation)</h2>
                 <p class="intake-subtitle" data-i18n="intake_subtitle">
-                  Vedic Jyotish ke anusaar accurate predictions ke liye birth details darj karein.
+                  सटीक वैदिक फलकथन एवं सरल कल्याणकारी उपाय के लिए कृपया अपना जन्म विवरण दर्ज करें।
                 </p>
               </div>
             </div>
@@ -234,7 +235,10 @@
                 <!-- Date of Birth -->
                 <div class="form-group col-2">
                   <label class="intake-label" for="intake-dob"><span data-i18n="label_dob">Date of Birth</span> <span class="req">*</span></label>
-                  <input type="date" id="intake-dob" class="intake-input" value="" required />
+                  <div class="picker-input-wrapper">
+                    <span class="picker-prefix-icon">📅</span>
+                    <input type="text" id="intake-dob" class="intake-input modern-date-picker" placeholder="Select Date / जन्म तिथि चुनें" required readonly />
+                  </div>
                 </div>
 
                 <!-- Time of Birth -->
@@ -242,11 +246,20 @@
                   <div style="display: flex; justify-content: space-between; align-items: center;">
                     <label class="intake-label" for="intake-tob" style="margin-bottom: 0;" data-i18n="label_tob">Time of Birth</label>
                     <label class="approx-checkbox" style="margin-top: 0;">
-                      <input type="checkbox" id="intake-approx-time" />
-                      <span>Approx time</span>
+                      <input type="checkbox" id="intake-approx-time" onchange="ChatController.onApproxTimeToggle(this)" />
+                      <span>Approx time (अनुमानित)</span>
                     </label>
                   </div>
-                  <input type="time" id="intake-tob" class="intake-input" value="" style="margin-top: 0.2rem;" />
+                  <div class="picker-input-wrapper" style="margin-top: 0.2rem;">
+                    <span class="picker-prefix-icon">⏰</span>
+                    <input type="text" id="intake-tob" class="intake-input modern-time-picker" placeholder="Select Time / जन्म समय चुनें" readonly />
+                  </div>
+                  <div class="quick-time-chips">
+                    <span class="time-tag" onclick="ChatController.setIntakeTime('08:00', 'Morning')">🌅 08:00 AM (सुबह)</span>
+                    <span class="time-tag" onclick="ChatController.setIntakeTime('12:00', 'Noon')">☀️ 12:00 PM (दोपहर)</span>
+                    <span class="time-tag" onclick="ChatController.setIntakeTime('18:30', 'Evening')">🌇 06:30 PM (शाम)</span>
+                    <span class="time-tag" onclick="ChatController.setIntakeTime('21:00', 'Night')">🌙 09:00 PM (रात)</span>
+                  </div>
                 </div>
 
                 <!-- Birth Place -->
@@ -304,8 +317,8 @@
                       <span>🔄</span>
                     </button>
                     <button type="submit" id="btn-submit-intake" class="btn-start-consultation" style="white-space: nowrap; padding: 0.42rem 1.15rem; height: 34px;">
-                      <span>🟢</span>
-                      <span data-i18n="btn_start_consultation">Start Live AI Consultation ➔</span>
+                      <span>🙏</span>
+                      <span data-i18n="btn_start_consultation">पंडित जी से परामर्श शुरू करें ➔</span>
                     </button>
                   </div>
                 </div>
@@ -323,7 +336,7 @@
               id="chat-input" 
               class="composer-textarea" 
               data-i18n-placeholder="ask_placeholder"
-              placeholder="Ask your astrologer anything..." 
+              placeholder="पूछिए पंडित जी से अपना प्रश्न... (उदा. मेरी शादी कब होगी? करियर में तरक्की कब मिलेगी?)" 
               rows="1"
             ></textarea>
             <button class="btn-send" id="btn-send-chat" title="Send message">➔</button>
@@ -348,9 +361,9 @@
                 <span>📎</span>
                 <span data-i18n="btn_attach">Attach Doc</span>
               </button>
-              <button class="btn-tool" id="btn-open-agent-modal" title="Open AI Agent console">
-                <span>⚡</span>
-                <span data-i18n="btn_tools">Agent Tools</span>
+              <button class="btn-tool" id="btn-open-agent-modal" title="शास्त्रीय ज्योतिषीय उपकरण एवं पंचांग">
+                <span>🔮</span>
+                <span data-i18n="btn_tools">Vedic Tools</span>
               </button>
             </div>
 
@@ -361,7 +374,7 @@
         </div>
 
         <div class="composer-hint">
-          AstroAI provides guidance grounded in Swiss Ephemeris NASA astronomical calculations and classical Jyotish tenets.
+          🕉️ प्रामाणिक वैदिक जन्म कुण्डली एवं पराशर ज्योतिष शास्त्र पर आधारित व्यक्तिगत परामर्श।
         </div>
       </footer>
     </main>
@@ -387,7 +400,24 @@
           </div>
         </div>
 
-        <!-- Kundali SVG Diagram Card (At the Top) -->
+        <!-- Prominent PDF Kundali Report Card (Directly at the Top - No Scrolling Needed) -->
+        <div class="kundli-card" id="context-pdf-card" style="padding: 0.65rem 0.75rem; border: 1.5px solid #F59E0B; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); box-shadow: 0 3px 10px rgba(245, 158, 11, 0.18);">
+          <div class="kundli-card-header" style="margin-bottom: 0.3rem;">
+            <h4 style="color: #92400E; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.35rem;">
+              <span>📑</span> <span>संपूर्ण जन्म कुण्डली PDF</span>
+            </h4>
+            <span style="font-size: 0.68rem; background: #D97706; color: #ffffff; padding: 0.12rem 0.45rem; border-radius: 999px; font-weight: 700;">सटीक पत्रिका</span>
+          </div>
+          <p style="font-size: 0.74rem; color: #78350F; margin-bottom: 0.5rem; line-height: 1.35;">
+            लग्न चक्र (D1), नवग्रह स्थिति, विंशोत्तरी महादशा, योग एवं प्रामाणिक वैदिक उपाय सहित विस्तृत PDF।
+          </p>
+          <button class="btn-new-chat" id="btn-quick-generate-report" onclick="ReportsController.generateQuickReport()" style="width: 100%; padding: 0.52rem 0.75rem; font-size: 0.82rem; font-weight: 700; background: linear-gradient(135deg, #F59E0B, #D97706, #B45309); color: #ffffff; border: none; border-radius: 8px; box-shadow: 0 2px 8px rgba(180, 83, 9, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.45rem; cursor: pointer;">
+            <span>📥</span> <span>Download Kundli PDF (कुण्डली डाउनलोड)</span>
+          </button>
+          <div id="quick-report-status" style="margin-top: 0.35rem;"></div>
+        </div>
+
+        <!-- Kundali SVG Diagram Card -->
         <div class="kundli-card" style="padding: 0.6rem;">
           <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
             <h4 data-i18n="lagna_kundli">Lagna Kundli (D1)</h4>
@@ -414,7 +444,7 @@
           </div>
         </div>
 
-        <!-- Core Planetary Placements Card (Directly Below Kundli) -->
+        <!-- Core Planetary Placements Card -->
         <div class="kundli-card" style="padding: 0.6rem;">
           <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
             <h4 data-i18n="key_placements">Key Placements</h4>
@@ -439,28 +469,6 @@
           </div>
         </div>
 
-
-        <!-- Quick Astrology Tools Card -->
-        <div class="kundli-card" style="padding: 0.6rem;">
-          <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
-            <h4>Quick Astrology Tools</h4>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 0.35rem;">
-            <button class="btn-tool" id="btn-context-milan" style="justify-content: flex-start; padding: 0.38rem 0.6rem; font-size: 0.76rem; background: #FEF3C7; color: #92400E; border-color: #FDE68A;">
-              <span>💍</span> <strong>Kundali Milan (36 Gunas)</strong>
-            </button>
-            <button class="btn-tool" id="btn-context-panchang" style="justify-content: flex-start; padding: 0.38rem 0.6rem; font-size: 0.76rem; background: #EFF6FF; color: #1E40AF; border-color: #BFDBFE;">
-              <span>📅</span> <strong>Aaj Ka Panchang</strong>
-            </button>
-            <button class="btn-tool" id="btn-context-sadesati" style="justify-content: flex-start; padding: 0.38rem 0.6rem; font-size: 0.76rem; background: #F3E8FF; color: #6B21A8; border-color: #E9D5FF;">
-              <span>🪐</span> <strong>Shani Sade Sati Tracker</strong>
-            </button>
-            <button class="btn-tool" id="btn-context-grounded-report" style="justify-content: flex-start; padding: 0.38rem 0.6rem; font-size: 0.76rem; background: #FFFBEB; color: #B45309; border-color: #FCD34D;">
-              <span>📜</span> <strong>Classical Grounded Report</strong>
-            </button>
-          </div>
-        </div>
-
         <!-- Vimshottari Mahadasha Card -->
         <div class="kundli-card" style="padding: 0.6rem;">
           <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
@@ -469,20 +477,6 @@
           <div id="context-dasha-summary" style="font-size: 0.78rem; color: var(--text-muted);">
             Calculate birth chart to inspect running planetary cycle.
           </div>
-        </div>
-
-        <!-- PDF Report Generation Shortcut -->
-        <div class="kundli-card" style="padding: 0.6rem; border-color: var(--saffron-border); background: #FFFBEB;">
-          <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
-            <h4 style="color: var(--text-saffron); font-size: 0.8rem;">📑 PDF Kundali Report</h4>
-          </div>
-          <p style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.3;">
-            Comprehensive PDF with D1 chart, yogas, Sade Sati & authentic remedies.
-          </p>
-          <button class="btn-new-chat" id="btn-quick-generate-report" style="width: 100%; padding: 0.42rem; font-size: 0.78rem; background: var(--primary-violet); color: #ffffff; border: none;">
-            📥 Download Kundli PDF
-          </button>
-          <div id="quick-report-status" style="margin-top: 0.35rem;"></div>
         </div>
       </div>
     </aside>
@@ -525,12 +519,18 @@
 
             <div class="form-group">
               <label class="form-label" for="modal-dob">Date of Birth</label>
-              <input type="date" id="modal-dob" class="form-control" value="" required>
+              <div class="picker-input-wrapper">
+                <span class="picker-prefix-icon">📅</span>
+                <input type="text" id="modal-dob" class="form-control modern-date-picker" placeholder="Select Date of Birth" required readonly>
+              </div>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="modal-tob">Exact Birth Time</label>
-              <input type="time" id="modal-tob" class="form-control" value="" step="1">
+              <div class="picker-input-wrapper">
+                <span class="picker-prefix-icon">⏰</span>
+                <input type="text" id="modal-tob" class="form-control modern-time-picker" placeholder="Select Birth Time" readonly>
+              </div>
             </div>
 
             <div class="form-group full" style="margin-top: -0.5rem;">
@@ -640,12 +640,12 @@
   <div class="modal-overlay" id="modal-agent-tools">
     <div class="modal-card" style="max-width: 780px;">
       <div class="modal-header">
-        <h3><span>⚡</span> AI Agent Controlled Tools Console</h3>
+        <h3><span>🔮</span> वैदिक ज्योतिषीय उपकरण व गणना कंसोल (Vedic Tools)</h3>
         <button class="btn-icon modal-close">✕</button>
       </div>
       <div class="modal-body">
         <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
-          Execute registered agent tools directly through the controlled orchestrator with bounded security boundaries.
+          कुण्डली मिलान, पंचांग, गोचर एवं वैदिक दशाओं की शास्त्रीय गणनाएं।
         </p>
 
         <div class="form-group">
@@ -662,7 +662,7 @@
           <textarea id="modal-agent-tool-payload" class="form-control" rows="6" style="font-family: monospace; font-size: 0.82rem;"></textarea>
         </div>
 
-        <button class="btn-new-chat" id="btn-modal-exec-tool" style="width: 100%;">Execute Tool ⚡</button>
+        <button class="btn-new-chat" id="btn-modal-exec-tool" style="width: 100%;">शास्त्रोक्त गणना करें ⚡</button>
 
         <div style="margin-top: 1rem;">
           <div class="sidebar-section-title">Execution Result</div>
@@ -1070,13 +1070,16 @@ Execution output will appear here.
   <!-- Toast Notifications Container -->
   <div class="toast-container" id="toast-container"></div>
 
+  <!-- Third-party Modern Calendar & Time Picker -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
   <!-- Scripts -->
-  <script src="js/i18n.js?v=20261016_v3"></script>
-  <script src="js/api.js?v=20261016_v3"></script>
-  <script src="js/chart.js?v=20261016_v3"></script>
-  <script src="js/chat.js?v=20261016_v3"></script>
-  <script src="js/reports.js?v=20261016_v3"></script>
-  <script src="js/app.js?v=20261016_v3"></script>
+  <script src="js/i18n.js?v=20261016_v5"></script>
+  <script src="js/api.js?v=20261016_v5"></script>
+  <script src="js/chart.js?v=20261016_v5"></script>
+  <script src="js/chat.js?v=20261016_v5"></script>
+  <script src="js/reports.js?v=20261016_v5"></script>
+  <script src="js/app.js?v=20261016_v5"></script>
 </body>
 </html>
 

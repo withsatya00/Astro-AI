@@ -98,7 +98,7 @@ const ReportsController = {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>AstroAI Consultation Record - ${clientName}</title>
+        <title>वैदिक ज्योतिष परामर्श विवरण (Jyotish Patrika) - ${clientName}</title>
         <meta charset="utf-8">
         <style>
           body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; padding: 2rem; color: #0F172A; max-width: 800px; margin: 0 auto; }
@@ -116,12 +116,12 @@ const ReportsController = {
       <body>
         <div class="no-print" style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
           <button onclick="window.print()" style="padding: 0.5rem 1rem; background: #4F46E5; color: #FFF; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">🖨️ Print / Save as PDF</button>
-          <span style="font-size: 0.8rem; color: #64748B;">AstroAI Authenticated Consultation Dossier</span>
+          <span style="font-size: 0.8rem; color: #64748B;">🕉️ प्रामाणिक पराशर वैदिक ज्योतिष पीठ</span>
         </div>
         <div class="header">
-          <span class="badge">✨ AstroAI Certified Consultation Record</span>
+          <span class="badge">🕉️ प्रामाणिक वैदिक ज्योतिष परामर्श पत्रिका</span>
           <h1 style="margin: 0.5rem 0 0.25rem; font-size: 1.5rem; color: #1E1B4B;">वैदिक ज्योतिष परामर्श विवरण (Consultation Patrika)</h1>
-          <p style="margin: 0; font-size: 0.85rem; color: #64748B;">Consulting Astrologer: <strong>${astrologer.name}</strong> • Engine: Swiss Ephemeris NASA JPL</p>
+          <p style="margin: 0; font-size: 0.85rem; color: #64748B;">परामर्शदाता ज्योतिषाचार्य: <strong>${astrologer.name}</strong> • महर्षि पराशर वैदिक पद्धति</p>
         </div>
 
         <table class="details-table">
@@ -149,7 +149,7 @@ const ReportsController = {
         ${chatHtml}
 
         <div style="margin-top: 2rem; border-top: 1px dashed #CBD5E1; padding-top: 1rem; text-align: center; font-size: 0.75rem; color: #94A3B8;">
-          This astrological consultation is generated using AstroAI Swiss Ephemeris NASA planetary models & Brihat Parashara Hora Shastra tenets.
+          यह ज्योतिषीय परामर्श महर्षि पराशर होरा शास्त्र एवं प्रामाणिक वैदिक पंचांग गणना पर आधारित है • AstroTalk Jyotish
         </div>
       </body>
       </html>
