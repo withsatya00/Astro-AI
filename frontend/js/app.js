@@ -494,14 +494,31 @@ const App = {
     }
   },
 
-  async selectChart(chartId, notify = true) {
+  async selectChart(chartId, notify = true, skipHistoryLookup = false) {
     try {
       const chart = await API.getChartById(chartId);
       this.currentChart = chart;
       this.updateActiveProfileUI(chart);
       this.loadSavedProfiles();
 
-      // If intake form is on screen, populate it
+      // Auto-collapse sidebar on mobile/tablet so user sees the consultation area
+      if (window.innerWidth <= 900) {
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('drawer-backdrop');
+        if (sidebar) sidebar.classList.add('collapsed');
+        if (backdrop) backdrop.classList.remove('active');
+      }
+
+      // If clicked from saved profiles and has existing chat session, load their consultation history!
+      if (!skipHistoryLookup && typeof ChatController !== 'undefined' && ChatController.openSessionForChart) {
+        const opened = await ChatController.openSessionForChart(chartId);
+        if (opened) {
+          if (notify) this.showToast(`Opened consultation for ${chart.name} ✨`, 'info');
+          return;
+        }
+      }
+
+      // If intake form is on screen, populate it with this profile
       if (document.getElementById('chat-intake-form') && typeof ChatController !== 'undefined' && ChatController.fillIntakeFromProfile) {
         ChatController.fillIntakeFromProfile(chartId);
       }

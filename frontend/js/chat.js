@@ -233,26 +233,9 @@ const ChatController = {
   },
 
   async renderIntakeSavedChips() {
+    // Quick select chips removed from chat intake per user request
     const bar = document.getElementById('intake-saved-profiles-bar');
-    const container = document.getElementById('intake-saved-chips');
-    if (!bar || !container) return;
-
-    try {
-      const charts = await API.getRecentCharts();
-      if (!charts || !charts.length) {
-        bar.style.display = 'none';
-        return;
-      }
-
-      bar.style.display = 'flex';
-      container.innerHTML = charts.slice(0, 5).map(c => `
-        <span class="saved-profile-chip" onclick="ChatController.fillIntakeFromProfile('${c.id}')">
-          👤 ${c.name} (${c.chart_data?.ascendant_sign || 'Kundli'})
-        </span>
-      `).join('');
-    } catch (err) {
-      console.warn('Could not load saved profile chips:', err);
-    }
+    if (bar) bar.style.display = 'none';
   },
 
   async fillIntakeFromProfile(chartId) {
@@ -298,11 +281,6 @@ const ChatController = {
                 Vedic Jyotish ke anusaar accurate bhavishyavani aur guidance ke liye kripya apne janam vivaran darj karein.
               </p>
             </div>
-          </div>
-
-          <div id="intake-saved-profiles-bar" class="intake-saved-bar" style="display: none;">
-            <span class="saved-label">⚡ Quick select saved profile:</span>
-            <div class="saved-chips-list" id="intake-saved-chips"></div>
           </div>
 
           <form id="chat-intake-form" onsubmit="ChatController.submitIntakeForm(event)">
@@ -603,24 +581,80 @@ const ChatController = {
     }
   },
 
+  async openSessionForChart(chartId) {
+    if (!chartId) return false;
+    try {
+      const sessions = await API.getChatSessions();
+      const match = sessions.find(s => s.chart_id === chartId);
+      if (match) {
+        await this.loadSessionHistory(match.id);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.warn('Could not find session for chart:', e);
+      return false;
+    }
+  },
+
   async loadSessionHistory(sessionId) {
+    if (!sessionId) return;
     this.currentSessionId = sessionId;
+
+    // Highlight active session item in sidebar immediately
+    document.querySelectorAll('#sessions-list .sidebar-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    // Auto-close sidebar on mobile/tablet so user sees the loaded chat immediately
+    if (window.innerWidth <= 900) {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('drawer-backdrop');
+      if (sidebar) sidebar.classList.add('collapsed');
+      if (backdrop) backdrop.classList.remove('active');
+    }
+
     const box = document.getElementById('chat-messages-container');
     if (!box) return;
 
-    box.innerHTML = '';
+    // Display smooth loading placeholder
+    box.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; color: var(--text-dim); gap: 0.75rem;">
+        <div style="font-size: 2rem;">⏳</div>
+        <div style="font-size: 0.92rem; font-weight: 500; color: var(--text-secondary);">Loading consultation history... (परामर्श लोड हो रहा है)</div>
+      </div>
+    `;
+
     try {
       const data = await API.getSessionHistory(sessionId);
+      box.innerHTML = '';
+
+      if (data.title) {
+        const topbarName = document.getElementById('topbar-profile-name');
+        if (topbarName) topbarName.innerText = data.title;
+      }
+
       if (data.chart_id) {
         this.activeChartId = data.chart_id;
-        App.selectChart(data.chart_id, false);
+        if (window.App && window.App.selectChart) {
+          window.App.selectChart(data.chart_id, false, true);
+        }
       }
-      data.messages.forEach(m => {
-        this.appendMessage(m.role, m.content, [], m.is_demo_mode, m.chart_svg);
-      });
+
+      if (data.messages && data.messages.length > 0) {
+        data.messages.forEach(m => {
+          this.appendMessage(m.role, m.content, m.citations || [], m.is_demo_mode, m.chart_svg);
+        });
+      } else {
+        this.appendMessage('assistant', 'Welcome back! This consultation session is active. How can I assist you with your Kundali today? (यह परामर्श सत्र सक्रिय है। आप क्या मार्गदर्शन चाहते हैं?)');
+      }
+
+      box.scrollTop = box.scrollHeight;
       this.loadSessions();
     } catch (err) {
-      this.appendMessage('assistant', `Failed to load conversation history: ${err.message}`);
+      console.error('Error loading session history:', err);
+      box.innerHTML = '';
+      this.appendMessage('assistant', `⚠️ Could not load conversation history: ${err.message}`);
     }
   },
 
@@ -1037,3 +1071,8 @@ https://astrotalk.ai`;
   }
 };
 
+// Expose ChatController globally for HTML onclick handlers and cross-module access
+window.ChatController = ChatController;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ChatController;
+}
