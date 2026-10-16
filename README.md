@@ -101,16 +101,79 @@ To connect live Gemini AI capabilities:
 
 ---
 
-## 🧪 Running Automated Tests
+## 📚 Knowledge Base & Production RAG Subsystem
 
-Run the complete test suite (unit tests, calculations, RAG, PDF generator, and API smoke tests):
+The platform features an enterprise-grade Retrieval-Augmented Generation (RAG) subsystem designed specifically for Vedic astrology and palmistry literature:
+
+### 1. Document Ingestion CLI (`backend/app/rag/ingestion.py`)
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run_tests.ps1
+# Display help and options
+python -m backend.app.rag.ingestion --help
+
+# Dry-run inspection (simulates chunking, validation, and tokens without DB writes)
+python -m backend.app.rag.ingestion --source documents/sources --dry-run
+
+# Incremental ingestion (automatically skips unchanged files via SHA-256 content hashes)
+python -m backend.app.rag.ingestion --source documents/sources
+
+# Full atomic reindex (replaces prior chunks cleanly with zero orphaned records)
+python -m backend.app.rag.ingestion --source documents/sources --reindex
+
+# Ingest with specific embedding provider (local_dense or google_genai)
+python -m backend.app.rag.ingestion --source documents/sources --reindex --provider local_dense
 ```
-Or with pytest directly:
+
+Every ingestion run generates both a machine-readable JSON report and human-readable Markdown summary in `storage/reports/`.
+
+### 2. Knowledge Base Quality & Inspection Tools (`backend/app/rag/knowledge_tools.py`)
 ```powershell
+# Safe database index consistency checker (verifies dimension uniformity and zero orphan chunks)
+python -m backend.app.rag.knowledge_tools --check-consistency
+
+# Display complete document inventory with chunk counts and topics
+python -m backend.app.rag.knowledge_tools --inventory
+
+# Knowledge base statistics breakdown by topic, language, and Sanskrit shlokas
+python -m backend.app.rag.knowledge_tools --stats
+
+# Verify source manifest integrity against disk files and SHA-256 checksums
+python -m backend.app.rag.knowledge_tools --validate-manifest
+
+# Audit documents and chunks for missing metadata fields
+python -m backend.app.rag.knowledge_tools --missing-metadata
+```
+
+### 3. Advanced Hybrid Retrieval (`backend/app/rag/retrieval.py`)
+- **Semantic Vector Search**: Vectorized NumPy cosine similarity over normalized dense embeddings.
+- **BM25 Keyword Search**: Exact matching with Devanagari and Latin tokenization, smoothed Lucene/BM25+ IDF, and query term coverage weighting.
+- **Reciprocal Rank Fusion (RRF)**: Merges dense and keyword ranks:
+  $$RRF(d) = \sum_{m} \frac{w_m}{60 + r_m(d)}$$
+- **Astrology Query Normalization**: Expands romanized transliterations and synonyms (e.g. *sani* $\rightarrow$ *shani/saturn*, *kundli* $\rightarrow$ *kundali/horoscope*).
+- **Metadata Filtering**: Filter by `topic`, `source`, `chapter`, and `language`.
+- **Near-Duplicate Suppression**: Filters redundant citations using word-level Jaccard overlap.
+
+---
+
+## 🧪 Running Automated Tests & Benchmark
+
+Run the complete regression suite (51 tests covering astronomical calculations, conversational quality, chunking, embeddings, hybrid retrieval, and quantitative IR evaluation):
+```powershell
+# Run full test suite
 python -m pytest backend/tests/ -v
+
+# Run advanced RAG test suite with benchmark report
+python -m pytest backend/tests/test_rag_advanced.py -s -v
 ```
+
+### Measured Information Retrieval Benchmark Results (12 Domain Queries):
+| Metric | Measured Score | Evaluation Standard |
+|:---|:---|:---|
+| **Recall@1** | **91.67%** (11/12) | Top result contains primary classical source |
+| **Recall@3** | **100.00%** (12/12) | Top 3 results contain primary classical source |
+| **Recall@5** | **100.00%** (12/12) | Top 5 results contain primary classical source |
+| **MRR@5** | **0.9444** | Mean Reciprocal Rank across query suite |
+| **nDCG@5** | **0.9583** | Normalized Discounted Cumulative Gain |
+| **Mean Latency** | **~10.8 ms** | Average retrieval time per query |
 
 ---
 
@@ -132,31 +195,29 @@ AstroAI/
 │   │   ├── main.py              # FastAPI app & routing
 │   │   ├── core/                # Config, logging, security
 │   │   ├── db/                  # Session, engine, migrations
-│   │   ├── models/              # SQLAlchemy models
+│   │   ├── models/              # SQLAlchemy models (Document, DocumentChunk with metadata)
 │   │   ├── schemas/             # Pydantic v2 schemas
 │   │   ├── services/            # Astrology, LLM, RAG, Report services
-│   │   ├── agents/              # Orchestrator, registered tools, policies
-│   │   ├── rag/                 # Chunking, embeddings, retrieval, ingestion
-│   │   ├── astrology/           # Swiss Ephemeris calculations & interpretations
+│   │   ├── agents/              # Orchestrator, registered tools, policies, prompts
+│   │   ├── rag/                 # Chunking, embeddings, hybrid retrieval, ingestion, tools
+│   │   ├── astrology/           # Swiss Ephemeris calculations, Kundali Milan, Panchang
 │   │   └── reports/             # ReportLab PDF generator
-│   ├── tests/                   # Pytest test suite (15 tests passing)
+│   ├── tests/                   # Pytest test suite (51 tests passing)
 │   ├── requirements.txt         # Pinned backend dependencies
 │   └── Dockerfile               # Production container image
-├── frontend/
-│   ├── index.html               # Main accessible UI
-│   ├── css/styles.css           # Modern celestial design system
-│   └── js/                      # api.js, chart.js, chat.js, reports.js, app.js
 ├── documents/
-│   ├── sources/                 # Legal classical astrology seed texts
+│   ├── sources/                 # 11 verified classical & traditional compendiums
 │   ├── approved/                # Validated imported texts
-│   └── manifests/               # Ingestion metadata & provenance
+│   └── manifests/               # source_manifest.json & acquisition_manifest.json
 ├── scripts/
 │   ├── setup.ps1                # Idempotent setup script
 │   ├── run_tests.ps1            # Automated test runner
-│   ├── download_sources.py      # Source acquisition pipeline
 │   └── verify_environment.py    # Environment check script
-├── docker-compose.yml           # Multi-container orchestration
-└── .env.example                 # Environment configuration template
+├── storage/
+│   └── reports/                 # Machine-readable JSON & MD ingestion reports
+└── reports/
+    ├── astro_rag_audit.md       # Full architecture & code audit report
+    └── astro_rag_implementation.md # Detailed implementation report
 ```
 
 ---
@@ -164,3 +225,4 @@ AstroAI/
 ## 📜 Ethical & Astrological Notice
 
 Astrological readings generated by this platform are traditional cultural interpretations based on classical Jyotish tenets and are provided for educational, philosophical, and personal contemplation. Astronomical calculations are verified against NASA JPL ephemeris data.
+

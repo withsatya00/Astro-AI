@@ -83,6 +83,7 @@ def send_chat_message(
         chart_record=chart_record,
         history=history,
         language=payload.language,
+        astrologer_id=payload.astrologer_id or "acharya_shastri",
         force_demo_mode=payload.force_demo_mode,
         image_base64=payload.image_base64
     )
@@ -98,7 +99,8 @@ def send_chat_message(
             "is_demo_mode": turn_result["is_demo_mode"],
             "tool_trace": turn_result.get("tool_trace"),
             "chart_svg": turn_result.get("chart_svg"),
-            "is_palm_analysis": turn_result.get("is_palm_analysis", False)
+            "is_palm_analysis": turn_result.get("is_palm_analysis", False),
+            "astrologer_id": turn_result.get("astrologer_id", payload.astrologer_id or "acharya_shastri")
         }
     )
     db.add(asst_msg_record)
@@ -121,6 +123,7 @@ def send_chat_message(
         session_id=session.id,
         role="assistant",
         content=asst_msg_record.content,
+        astrologer_id=turn_result.get("astrologer_id", payload.astrologer_id or "acharya_shastri"),
         citations=citations_output,
         calculated_data_used=turn_result["calculated_data_used"],
         is_demo_mode=turn_result["is_demo_mode"],
@@ -129,6 +132,157 @@ def send_chat_message(
         is_palm_analysis=turn_result.get("is_palm_analysis", False),
         created_at=asst_msg_record.created_at
     )
+
+@router.get("/astrologers")
+def list_astrologer_personas():
+    """Returns available expert astrologer personas with bios, specialties, and tones."""
+    from backend.app.agents.personas import get_all_personas
+    return get_all_personas()
+
+@router.post("/stream")
+async def stream_chat_message(
+    payload: ChatMessageRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    Streams consultation chat response word-by-word via Server-Sent Events (SSE).
+    Provides zero-waiting live typing experience with full persona and chart grounding.
+    """
+    import json
+    from fastapi.responses import StreamingResponse
+    from backend.app.services.llm_service import LLMService
+
+    clean_msg = sanitize_user_input(payload.message)
+    if not clean_msg:
+        raise HTTPException(status_code=400, detail="Message cannot be empty.")
+
+    # 1. Resolve or create ChatSession
+    session = None
+    if payload.session_id:
+        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id).first()
+
+    if not session:
+        session = ChatSession(
+            title=clean_msg[:40] + ("..." if len(clean_msg) > 40 else ""),
+            language=payload.language,
+            chart_id=payload.chart_id
+        )
+        db.add(session)
+        db.commit()
+        db.refresh(session)
+    elif payload.chart_id != session.chart_id:
+        session.chart_id = payload.chart_id
+        db.commit()
+
+    # 2. Record user message
+    user_msg_record = ChatMessage(
+        session_id=session.id,
+        role="user",
+        content=clean_msg
+    )
+    db.add(user_msg_record)
+    db.commit()
+
+    # 3. Retrieve chart record if associated
+    chart_record = None
+    chart_data = None
+    if session.chart_id:
+        chart_record = db.query(BirthChart).filter(BirthChart.id == session.chart_id).first()
+        if chart_record:
+            chart_data = chart_record.chart_data
+
+    # 4. Fetch past messages for history
+    past_messages = (
+        db.query(ChatMessage)
+        .filter(ChatMessage.session_id == session.id)
+        .order_by(ChatMessage.created_at.asc())
+        .limit(10)
+        .all()
+    )
+    history = [{"role": m.role, "content": m.content} for m in past_messages if m.id != user_msg_record.id]
+
+    # Step 1: Knowledge retrieval for citations
+    from backend.app.rag.retrieval import RetrievalService
+    citations = []
+    clean_query = clean_msg.strip().lower()
+    skip_retrieval_set = {
+        "hi", "hello", "hii", "hiii", "hey", "namaste", "pranam", "kese ho", "kaise ho",
+        "ok", "okay", "theek hai", "thik hai", "achha", "acha", "shukriya", "thanks", "thank you", "dhanyawad"
+    }
+    if clean_query not in skip_retrieval_set:
+        citations = RetrievalService.retrieve_relevant_chunks(
+            db=db,
+            query=clean_msg,
+            top_k=2
+        )
+
+    session_id_val = session.id
+    astrologer_choice = payload.astrologer_id or "acharya_shastri"
+
+    async def sse_event_generator():
+        # Yield metadata start event
+        yield f"data: {json.dumps({'event': 'session', 'session_id': session_id_val, 'astrologer_id': astrologer_choice})}\n\n"
+
+        full_collected = ""
+        final_meta = {}
+
+        async for chunk in LLMService.stream_chat_response(
+            user_message=clean_msg,
+            conversation_history=history,
+            chart_data=chart_data,
+            citations=citations,
+            language=payload.language,
+            astrologer_id=astrologer_choice,
+            force_demo_mode=payload.force_demo_mode,
+            image_base64=payload.image_base64
+        ):
+            if chunk["type"] == "delta":
+                full_collected += chunk["text"]
+                yield f"data: {json.dumps({'event': 'delta', 'text': chunk['text']})}\n\n"
+            elif chunk["type"] == "done":
+                final_meta = chunk
+
+        # Persist assistant response to DB
+        asst_msg_record = ChatMessage(
+            session_id=session_id_val,
+            role="assistant",
+            content=full_collected.strip(),
+            msg_metadata={
+                "citations": citations,
+                "calculated_data_used": final_meta.get("calculated_data_used", False),
+                "is_demo_mode": final_meta.get("is_demo_mode", False),
+                "chart_svg": final_meta.get("chart_svg"),
+                "astrologer_id": astrologer_choice
+            }
+        )
+        db.add(asst_msg_record)
+        db.commit()
+        db.refresh(asst_msg_record)
+
+        # Final done event
+        done_payload = {
+            "event": "done",
+            "message_id": asst_msg_record.id,
+            "session_id": session_id_val,
+            "content": full_collected.strip(),
+            "chart_svg": final_meta.get("chart_svg"),
+            "citations": citations,
+            "is_demo_mode": final_meta.get("is_demo_mode", False),
+            "calculated_data_used": final_meta.get("calculated_data_used", False),
+            "astrologer_id": astrologer_choice
+        }
+        yield f"data: {json.dumps(done_payload)}\n\n"
+
+    return StreamingResponse(
+        sse_event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
 
 @router.get("/sessions", response_model=List[ChatSessionResponse])
 def list_sessions(db: Session = Depends(get_db)):

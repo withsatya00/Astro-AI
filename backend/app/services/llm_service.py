@@ -3,41 +3,91 @@ LLM Service integrating Google GenAI SDK (Gemini 3.5 Flash Lite) with
 conversational Indian astrology personality, strict chart provenance,
 multi-turn memory, dynamic domain guardrails, and multimodal palmistry (Hastarekha) analysis.
 """
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Dict, Any, List, Optional, Tuple, AsyncGenerator
+import asyncio
 import re
 import base64
 from backend.app.core.config import settings
 from backend.app.core.logging import logger
 from backend.app.agents.prompts import ASTROAI_SYSTEM_PROMPT_V2
+from backend.app.agents.personas import get_persona, ASTROLOGER_PERSONAS
 from backend.app.astrology.chart_context import ChartContext, validate_and_build_chart_context
 from backend.app.astrology.chart_svg import generate_north_indian_kundli_svg
 
+_client_singleton = None
+
+def _get_gemini_client():
+    global _client_singleton
+    if _client_singleton is None:
+        try:
+            from google import genai
+            _client_singleton = genai.Client(api_key=settings.GEMINI_API_KEY)
+        except Exception as e:
+            logger.warning(f"Could not initialize GenAI client singleton: {e}")
+            return None
+    return _client_singleton
+
 def _detect_language(text: str, fallback_lang: str = "en") -> str:
-    """Detects whether user is speaking in Hinglish, Hindi, or English."""
+    """
+    Detects user's input language and script:
+    - 'hi': Hindi (Devanagari script)
+    - 'hinglish': Conversational Hindi in Latin/English alphabet
+    - 'bn': Bengali script
+    - 'gu': Gujarati script
+    - 'ta': Tamil script
+    - 'te': Telugu script
+    - 'pa': Punjabi Gurmukhi script
+    - 'en': English (default)
+    """
     if not text:
         return fallback_lang
 
-    # Hindi script (Devanagari range: \u0900-\u097F)
+    # Indian scripts check
+    if re.search(r"[\u0980-\u09FF]", text):
+        return "bn"
+    if re.search(r"[\u0A80-\u0AFF]", text):
+        return "gu"
+    if re.search(r"[\u0B80-\u0BFF]", text):
+        return "ta"
+    if re.search(r"[\u0C00-\u0C7F]", text):
+        return "te"
+    if re.search(r"[\u0A00-\u0A7F]", text):
+        return "pa"
     if re.search(r"[\u0900-\u097F]", text):
+        if fallback_lang in ("sa", "mr"):
+            return fallback_lang
+        # Sanskrit markers
+        if any(w in text for w in ["अस्ति", "भवति", "कल्याणमस्तु", "नमः", "कुण्डली", "पश्यतु", "वदतु"]):
+            return "sa"
+        # Marathi markers
+        if any(w in text for w in ["आहे", "नाही", "सांगा", "कसे", "करा", "बघा"]):
+            return "mr"
         return "hi"
 
-    # Hinglish common words
+    # Extensive Hinglish conversational vocabulary markers (grammar particles, verbs, pronouns)
+    # Strictly avoid English words like 'to' or 'me' which would falsely trigger on English queries
     hinglish_markers = {
-        "kya", "kaise", "kese", "hai", "hain", "btao", "batao", "mujhe", "mera", "meri",
-        "mere", "apna", "apni", "karo", "karna", "baare", "bare", "mein", "me", "kuch",
-        "nahi", "nhi", "rahega", "hoga", "shadi", "shaadi", "pyaar", "prem", "kundli",
-        "kundali", "chahiye", "bolo", "bataiye", "namaste", "pranam", "dhanyawad",
-        "thik", "theek", "accha", "acha", "samajh", "bhi", "toh", "to", "hatheli",
-        "hath", "rekha", "parvat"
+        "kya", "kaise", "kese", "kaisi", "kaisa", "hai", "hain", "btao", "batao",
+        "bataiye", "mujhe", "mera", "meri", "mere", "apna", "apni", "apne", "karo", "karna",
+        "kariye", "karein", "baare", "bare", "mein", "kuch", "nahi", "nhi",
+        "rahega", "rahegi", "rahenge", "hoga", "hogi", "honge", "shadi", "shaadi", "vivah",
+        "pyaar", "prem", "chahiye", "bolo", "thik", "theek", "accha", "acha", "samajh",
+        "bhi", "toh", "hatheli", "hath", "kab", "kaun", "kon", "kyu", "kyun",
+        "bhai", "yaar", "dost", "aaj", "kal", "parso", "saal", "mahina", "din",
+        "upay", "daan", "dekh", "dekho", "banao", "dikhao", "pata", "pta", "ab",
+        "jab", "tab", "yaha", "waha", "idhar", "udhar", "aap", "aapko", "tum", "tumhe",
+        "tera", "teri", "tere", "uski", "uska", "bahut", "bohot", "zyada", "jyada", "kam",
+        "liye", "hona", "lagegi", "lagega", "milega", "milegi"
     }
     words = set(re.findall(r"\b[a-z]+\b", text.lower()))
     if words.intersection(hinglish_markers):
         return "hinglish"
 
-    if fallback_lang in ("hi", "hinglish"):
+    if fallback_lang in ("hi", "hinglish", "bn", "gu", "ta", "te", "pa", "mr", "sa"):
         return fallback_lang
 
     return "en"
+
 
 
 def _is_greeting(text: str) -> bool:
@@ -46,17 +96,18 @@ def _is_greeting(text: str) -> bool:
     greetings = {
         "hi", "hello", "hii", "hiii", "hey", "heya", "namaste", "namaskar",
         "pranam", "kaise ho", "kese ho", "hello ji", "hey there", "hola",
-        "good morning", "good afternoon", "good evening"
+        "good morning", "good afternoon", "good evening", "shukriya", "thank you", "thanks"
     }
     return clean in greetings or any(clean.startswith(g) for g in ["hi ", "hello ", "hey ", "namaste "]) and len(clean.split()) <= 4
 
 
 def is_in_astrology_domain(text: str) -> Tuple[bool, Optional[str]]:
     """
-    Dynamically checks whether user message is within the realm of astrology, palmistry,
-    kundli, horoscope, life advice, relationships, career direction, spiritual wellbeing,
-    or simple conversational greetings.
-    Blocks queries clearly outside the astrological consultation domain (coding, math, hacking, general trivia).
+    Dynamically checks whether user message is strictly within the astrology, palmistry,
+    kundli, horoscope, panchang, muhurat, gemstones, remedies, and personal life guidance
+    (love, career, marriage, health, finances in astrological context).
+    Blocks ANY query clearly outside the astrological consultation domain (coding, general knowledge trivia,
+    math, science, cooking recipes, mobile/cars, non-astrological politics, sports scores, jokes, translation).
     """
     if not text or not text.strip():
         return True, None
@@ -66,41 +117,64 @@ def is_in_astrology_domain(text: str) -> Tuple[bool, Optional[str]]:
     if _is_greeting(clean):
         return True, None
 
-    # Off-topic indicator patterns
+    # Off-topic indicator patterns (Multilingual: English, Hinglish, Devanagari Hindi, Regional)
     off_topic_patterns = [
-        # Programming & Code
-        r"\b(python|javascript|typescript|c\+\+|java|golang|rust|html|css|sql|react|vue|node\.?js|docker|git|bash|powershell|regex)\b",
-        r"\b(write a script|write code|code snippet|function|algorithm|leetcode|pull request|npm install|pip install|compile|debug this)\b",
-        r"\b(stack overflow|syntax error|runtime error|exception handling|database schema|fastapi endpoint)\b",
+        # Programming & Code & IT
+        r"\b(python|javascript|typescript|c\+\+|java|golang|rust|html|css|sql|react|vue|node\.?js|docker|git|bash|powershell|regex|github|api|backend|frontend)\b",
+        r"\b(write a script|write code|code snippet|function|algorithm|leetcode|pull request|npm install|pip install|compile|debug this|programming|source code)\b",
+        r"\b(stack overflow|syntax error|runtime error|exception handling|database schema|fastapi endpoint|software developer|software engineering)\b",
+        r"(पायथन|जावा|कोडिंग|कोड|प्रोग्रामिंग|सॉफ्टवेयर|अल्गोरिदम|फ़ंक्शन|कंप्यूटर|वेबसाइट|পায়থন|কোড)",
         # Academic Science & Math
-        r"\b(derivative of|integral of|solve the equation|quadratic formula|calculate 2\+|pythagorean theorem|photosynthesis|mitochondria)\b",
-        r"\b(newton's laws|thermodynamics|quantum mechanics|chemical formula|periodic table)\b",
-        # Non-astrological politics & sports
-        r"\b(who won the election|prime minister of|president of|parliament election|political party)\b",
-        r"\b(ipl match score|cricket match score|fifa world cup winner|football score)\b",
+        r"\b(derivative of|integral of|solve the equation|quadratic formula|calculate \d+|pythagorean theorem|photosynthesis|mitochondria)\b",
+        r"\b(newton's laws|thermodynamics|quantum mechanics|chemical formula|periodic table|gravity formula|speed of light|mathematics|calculus|algebra)\b",
+        r"\b(biology homework|chemistry reaction|physics problem|solve math|essay on|write an essay)\b",
+        # General Geography & World Knowledge & Trivia
+        r"\b(capital of|largest country|population of|currency of|who discovered|who invented|president of|prime minister of|chief minister of)\b",
+        r"\b(who is the ceo of|founder of|parliament of|history of world war|united nations)\b",
+        r"\b(weather in|temperature in|how far is|distance between|geography of)\b",
+        r"(राजधानी|प्रधानमंत्री|राष्ट्रपति|मुख्यमंत्री|चुनाव|पार्टी|इलेक्शन|भूगोल|इतिहास|রাজধানী)",
+        # Non-astrological politics & sports & entertainment
+        r"\b(who won the election|parliament election|political party|bjp|congress|democrat|republican)\b",
+        r"\b(ipl match score|cricket match score|fifa world cup|football score|olympics winner|messi|ronaldo|virat kohli|dhoni)\b",
+        r"\b(movie review|box office collection|bollywood gossip|hollywood actor|actor of|actress of|netflix show|spotify song|lyrics of)\b",
+        r"(क्रिकेट|मैच|स्कोर|फुटबॉल|वर्ल्ड कप|ओलंपिक|खिलाड़ी)",
+        # Cooking, Recipes & Food
+        r"\b(recipe for|how to cook|how to make biryani|how to bake|ingredients for|recipe of|paneer recipe|pasta recipe|biryani)\b",
+        r"(रेसिपी|खाना बनाना|बिरयानी|पनीर|सब्जी बनाना|व्यंजन)",
+        # Hardware, Gadgets, Automobiles
+        r"\b(best phone under|best laptop|iphone price|samsung galaxy|car mileage|bike price|how to repair)\b",
+        r"(मोबाइल|फोन की कीमत|लैपटॉप|गाड़ी|कार की कीमत|मरम्मत)",
+        # Generic Non-Astrological Tasks
+        r"\b(joke|jokes|riddle|riddles|write .* poem|write .* story|tell .* story|tell .* joke|translate .* to)\b",
+        r"(चुटकुला|मजाकिया|कविता|कहानी|अनुवाद)",
         # Hacking & exploits
-        r"\b(hack wifi|sql injection|bypass password|crack software|ddos attack)\b"
+        r"\b(hack wifi|sql injection|bypass password|crack software|ddos attack|phishing|cheat code)\b"
     ]
 
     for pat in off_topic_patterns:
         if re.search(pat, clean):
             # Check if there is an astrology qualifier
             astrology_qualifiers = {
-                "astrology", "kundli", "horoscope", "jyotish", "nakshatra",
+                "astrology", "kundli", "kundali", "horoscope", "jyotish", "nakshatra",
                 "planet", "graha", "hastrekha", "palmistry", "palm", "hatheli",
-                "rashifal", "dasha", "lagna", "career in astrology"
+                "rashifal", "dasha", "lagna", "career in astrology", "shani", "mangal",
+                "rahu", "ketu", "guru", "shukra", "budh", "surya", "chandra", "zodiac"
             }
             if any(q in clean for q in astrology_qualifiers):
                 return True, None
 
-            # Out of domain! Return dynamic polite refusal
+            # Out of domain! Return dynamic polite refusal matching user language
             detected_lang = _detect_language(text)
             if detected_lang == "hi":
-                refusal = "मैं केवल ज्योतिष (कुंडली), हस्तरेखा (Palmistry) और आध्यात्मिक जीवन मार्गदर्शन के लिए उपलब्ध हूँ 😊 मैं तकनीकी, कोडिंग या सामान्य ज्ञान के प्रश्नों का उत्तर नहीं दे सकता। कृपया अपनी कुंडली, करियर या जीवन से संबंधित प्रश्न पूछें!"
+                refusal = "क्षमा करें, मैं केवल वैदिक ज्योतिष (कुंडली), हस्तरेखा (Palmistry) और आध्यात्मिक जीवन मार्गदर्शन के लिए उपलब्ध हूँ 😊 मैं तकनीकी, कोडिंग, सामान्य ज्ञान या अन्य विषयों के प्रश्नों का उत्तर नहीं दे सकता। कृपया अपनी कुंडली, करियर, विवाह या हस्तरेखा से संबंधित प्रश्न पूछें!"
             elif detected_lang == "hinglish":
-                refusal = "Main sirf Astrology (Kundli), Palmistry (Hastrekha) aur spiritual life guidance ke liye trained hoon 😊 Main coding, technical ya general world knowledge ke sawaalon ke jawab nahi de sakta. Kripya apne jeevan, love, career, kundli ya hastrekha se juda koi sawaal poochein!"
+                refusal = "Kshama karein, main sirf Vedic Astrology (Kundli), Palmistry (Hastrekha) aur spiritual life guidance ke liye trained hoon 😊 Main coding, general knowledge, trivia ya astrology ke bahar kisi bhi topic ka jawab nahi de sakta. Kripya apne jeevan, love, career, kundli ya hastrekha se juda koi sawaal poochein!"
+            elif detected_lang == "bn":
+                refusal = "আমি কেবল বৈদিক জ্যোতিষ (কোষ্ঠী), হস্তরেখা এবং আধ্যাত্মিক জীবন নির্দেশনার জন্য উপলব্ধ 😊 আমি সাধারণ জ্ঞান, কোডিং বা অন্যান্য বিষয়ের উত্তর দিতে পারি না। অনুগ্রহ করে আপনার কোষ্ঠী বা জীবন সম্পর্কিত প্রশ্ন জিজ্ঞাসা করুন!"
+            elif detected_lang == "gu":
+                refusal = "હું માત્ર વૈદિક જ્યોતિષ (કુંડળી), હસ્તરેખા અને આધ્યાત્મિક જીવન માર્ગદર્શન માટે સમર્પિત છું 😊 કૃપા કરીને તમારી કુંડળી, કારકિર્દી અથવા હસ્તરેખા સંબંધિત પ્રશ્ન પૂછો!"
             else:
-                refusal = "I am dedicated exclusively to Astrology, Kundli, Palmistry (Hastrekha), and spiritual life guidance 😊 I cannot answer technical, coding, or general trivia questions. Please feel free to ask about your horoscope, career path, relationships, or palm lines!"
+                refusal = "I specialize exclusively in Vedic Astrology, Kundli analysis, Palmistry (Hastrekha), and spiritual life guidance 😊 I cannot answer queries outside astrology (such as coding, general knowledge trivia, or technical topics). Please feel free to ask about your horoscope, career path, relationships, or palm lines!"
             return False, refusal
 
     return True, None
@@ -121,28 +195,45 @@ def generate_demo_response(
     chart_context: ChartContext,
     citations: List[Dict[str, Any]],
     conversation_history: Optional[List[Dict[str, str]]] = None,
-    language: str = "en"
+    language: str = "en",
+    astrologer_id: str = "acharya_shastri"
 ) -> str:
     """
     Generates a natural, conversational response in Demo Mode or when offline/testing.
-    Adheres strictly to the warm Indian astrology consultant persona and chart honesty.
+    Adheres strictly to the selected astrologer persona and chart honesty.
     """
     detected_lang = _detect_language(user_message, fallback_lang=language)
     msg_lower = user_message.lower().strip()
+    persona = get_persona(astrologer_id)
 
     # Dynamic domain check
     in_domain, refusal = is_in_astrology_domain(user_message)
     if not in_domain and refusal:
         return refusal
 
-    # 1. Greeting handling (PART B)
+    # 1. Greeting handling (Persona specific)
     if _is_greeting(user_message):
-        if detected_lang == "hi":
-            return "नमस्ते! 😊 आप कैसे हैं? आज प्रेम, करियर या कुंडली के बारे में क्या जानना चाहते हैं?"
-        elif detected_lang == "hinglish":
-            return "Hey! 😊 Kaise ho? Love, career, ya kundli ke baare mein kuch poochna hai?"
-        else:
-            return "Hello! 😊 How are you today? What's on your mind—love, career, or your birth chart?"
+        if astrologer_id == "dr_sunita":
+            if detected_lang == "hi":
+                return "नमस्ते प्रिय! 😊 मैं डॉ. सुनीता शर्मा। आप कैसी/कैसे हैं? आज अपने रिश्तों, मन की बात या जीवन के बारे में क्या साझा करना चाहते हैं?"
+            elif detected_lang == "hinglish":
+                return "Hello dear! 😊 Main Dr. Sunita Sharma. Kaise ho aap? Love, relationship, ya mann ki koi baat discuss karni ho toh freely batao."
+            else:
+                return "Hello dear! 😊 Warm welcome, I'm Dr. Sunita Sharma. How are you feeling today? What would you like to explore regarding your heart, career, or life path?"
+        elif astrologer_id == "pandit_maharaj":
+            if detected_lang == "hi":
+                return "जय श्री राम! प्रणाम। मैं पंडित जी महाराज। आज आपके कर्म, आर्थिक प्रगति या कुंडली के योगों के बारे में क्या परामर्श चाहते हैं?"
+            elif detected_lang == "hinglish":
+                return "Jai Shri Ram! Pranam. Main Pandit Ji Maharaj. Career, business, dasha ya financial growth ke baare mein kya guidance chahiye?"
+            else:
+                return "Jai Shri Ram! Greetings, I am Pandit Ji Maharaj. How can I guide your career, financial timing, or horoscope today?"
+        else: # Acharya Shastri
+            if detected_lang == "hi":
+                return "हरि ॐ! प्रणाम व कल्याणमस्तु। मैं आचार्य शास्त्री। कैसे हैं आप? आज ग्रह गोचर, कुंडली या वैदिक समाधान के विषय में क्या जानना चाहते हैं?"
+            elif detected_lang == "hinglish":
+                return "Hari Om! Hello & Pranam. Main Acharya Shastri. Kaise ho aap? Janam kundli, graha shanti ya jeevan ke shubh yog ke baare mein kya poochna chahte hain?"
+            else:
+                return "Hari Om! Hello & warm blessings. I am Acharya Shastri. How may I assist your astrological journey, planetary alignment, or Vedic guidance today?"
 
     # 2. Short answer request
     if any(k in msg_lower for k in ["short me", "short mein", "in short", "briefly", "chota sa"]):
@@ -277,7 +368,22 @@ def generate_demo_response(
                     "Your North Indian chart diagram has been rendered below. Which planetary position would you like to inspect?"
                 )
 
-    # 8. General fallback
+    # 8. Grounded synthesis from retrieved classical citations
+    if citations and len(citations) > 0:
+        top_citation = citations[0]
+        src_title = top_citation.get("source_title", "Classical Vedic Tradition")
+        sec_title = top_citation.get("section_title", "Foundations")
+        excerpt = top_citation.get("excerpt", "").strip()
+        summary = excerpt.split("\n\n")[0] if "\n\n" in excerpt else excerpt[:280]
+
+        if detected_lang == "hi":
+            return f"प्रामाणिक वैदिक संदर्भ **{src_title}** ({sec_title}) के अनुसार:\n\n{summary}\n\nक्या आप इस विषय पर अधिक विस्तार या अपनी कुंडली से इसका संबंध जानना चाहते हैं?"
+        elif detected_lang == "hinglish":
+            return f"Classical Vedic reference **{src_title}** ({sec_title}) ke mutabiq:\n\n{summary}\n\nKya aap is topic par aur vistar se ya apni kundli ke context mein jaan na chahte hain?"
+        else:
+            return f"According to the classical text **{src_title}** ({sec_title}):\n\n{summary}\n\nWould you like further details on this principle or an analysis based on your birth chart?"
+
+    # 9. General fallback
     if detected_lang == "hinglish":
         return "Main samajh gaya. Jyotish ke traditional principles ke mutabiq har sthiti mein dhairya aur samajhdari zaroori hai. Is vishay mein koi specific sawaal poochna chahein toh batayein."
     elif detected_lang == "hi":
@@ -295,25 +401,29 @@ class LLMService:
         chart_data: Optional[Dict[str, Any]] = None,
         citations: Optional[List[Dict[str, Any]]] = None,
         language: str = "en",
+        astrologer_id: str = "acharya_shastri",
         force_demo_mode: bool = False,
         image_base64: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Coordinates chat generation using Gemini API (gemini-3.5-flash-lite) or demo mode fallback.
         Ensures dynamic domain guardrails, multimodal palmistry analysis, strict chart grounding,
-        and multi-turn memory.
+        and astrologer persona voice.
         """
         use_demo = force_demo_mode or settings.is_demo_mode
         active_citations = citations or []
+        persona = get_persona(astrologer_id)
 
         # If palm image was provided, route to palmistry analyzer
         if image_base64:
-            return LLMService.analyze_palm_image(
+            res = LLMService.analyze_palm_image(
                 image_base64=image_base64,
                 user_message=user_message,
                 language=language,
                 force_demo_mode=use_demo
             )
+            res["astrologer_id"] = astrologer_id
+            return res
 
         # Dynamic domain check: block off-topic queries immediately
         in_domain, refusal = is_in_astrology_domain(user_message)
@@ -323,8 +433,17 @@ class LLMService:
                 "is_demo_mode": False,
                 "calculated_data_used": False,
                 "citations": [],
-                "chart_svg": None
+                "chart_svg": None,
+                "astrologer_id": astrologer_id
             }
+
+        # Sub-15ms Semantic Cache Fast-Path for generalized astrological knowledge/remedies
+        if not chart_data and not image_base64:
+            from backend.app.services.semantic_cache import semantic_cache
+            cached = semantic_cache.get(user_message, language, astrologer_id)
+            if cached:
+                cached["astrologer_id"] = astrologer_id
+                return cached
 
         # Resolve verified ChartContext
         if not chart_context:
@@ -360,14 +479,16 @@ class LLMService:
                 chart_context=chart_context,
                 citations=active_citations,
                 conversation_history=conversation_history,
-                language=language
+                language=language,
+                astrologer_id=astrologer_id
             )
             return {
                 "content": response_text,
                 "is_demo_mode": True,
                 "calculated_data_used": chart_context.is_verified,
                 "citations": active_citations,
-                "chart_svg": chart_svg
+                "chart_svg": chart_svg,
+                "astrologer_id": astrologer_id
             }
 
         # Live Gemini generation with gemini-3.5-flash-lite
@@ -375,36 +496,52 @@ class LLMService:
             from google import genai
             from google.genai import types
 
-            client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            client = _get_gemini_client() or genai.Client(api_key=settings.GEMINI_API_KEY)
 
-            # Build grounded system context
+            # Build grounded system context with active persona
             chart_summary_block = chart_context.format_for_prompt()
 
             citation_blocks = []
             if active_citations:
-                for c in active_citations[:3]:
-                    citation_blocks.append(f"[{c.get('source_title', 'Classical Text')} - P.{c.get('page_number', 1)}]: {c.get('excerpt', '')}")
-            citations_str = "\n\n".join(citation_blocks) if citation_blocks else "None retrieved."
+                for c in active_citations[:2]:
+                    raw_excerpt = c.get('excerpt', '')
+                    trimmed_excerpt = raw_excerpt[:220] + ("..." if len(raw_excerpt) > 220 else "")
+                    citation_blocks.append(f"[{c.get('source_title', 'Classical Text')}]: {trimmed_excerpt}")
+            citations_str = "\n".join(citation_blocks) if citation_blocks else "None retrieved."
 
+            detected_lang = _detect_language(user_message, fallback_lang=language)
+            lang_label = "Devanagari Hindi" if detected_lang == "hi" else "Conversational Hinglish (Roman script)" if detected_lang == "hinglish" else "English" if detected_lang == "en" else detected_lang
+            language_mandate = (
+                f"### MANDATORY USER LANGUAGE REQUIREMENT: {detected_lang.upper()} ({lang_label})\n"
+                f"CRITICAL: The user asked in {detected_lang.upper()} ({lang_label}). "
+                f"You MUST formulate your response in this EXACT SAME language and script. "
+                f"If the user asks in Hinglish, respond in natural Hinglish. If in Hindi, respond in Hindi. If in English, respond in English. "
+                f"Do not switch language.\n\n"
+            )
+
+            persona_block = f"### ACTIVE ASTROLOGER PERSONA: {persona['name']} ({persona['title']})\n{persona['system_instruction']}\n\n"
             combined_system_instruction = (
                 f"{ASTROAI_SYSTEM_PROMPT_V2}\n\n"
+                f"{language_mandate}"
+                f"{persona_block}"
                 f"### CURRENT CONTEXT ENVIRONMENT\n"
                 f"{chart_summary_block}\n\n"
                 f"### RETRIEVED CLASSICAL ASTROLOGICAL & PALMISTRY SOURCES\n"
                 f"{citations_str}\n"
             )
 
-            # Build multi-turn contents
+            # Build compact multi-turn contents (latest 4 turns, compact)
             contents: List[types.Content] = []
             if conversation_history:
-                for m in conversation_history[-8:]:
+                for m in conversation_history[-4:]:
                     m_role = "user" if m.get("role") == "user" else "model"
                     m_text = m.get("content", "").strip()
                     if m_text:
+                        compact_text = m_text[:280] + ("..." if len(m_text) > 280 else "")
                         contents.append(
                             types.Content(
                                 role=m_role,
-                                parts=[types.Part.from_text(text=m_text)]
+                                parts=[types.Part.from_text(text=compact_text)]
                             )
                         )
 
@@ -434,7 +571,8 @@ class LLMService:
                     chart_context=chart_context,
                     citations=active_citations,
                     conversation_history=conversation_history,
-                    language=language
+                    language=language,
+                    astrologer_id=astrologer_id
                 )
 
             return {
@@ -442,7 +580,8 @@ class LLMService:
                 "is_demo_mode": False,
                 "calculated_data_used": chart_context.is_verified,
                 "citations": active_citations,
-                "chart_svg": chart_svg
+                "chart_svg": chart_svg,
+                "astrologer_id": astrologer_id
             }
 
         except Exception as e:
@@ -452,15 +591,221 @@ class LLMService:
                 chart_context=chart_context,
                 citations=active_citations,
                 conversation_history=conversation_history,
-                language=language
+                language=language,
+                astrologer_id=astrologer_id
             )
             return {
                 "content": response_text,
                 "is_demo_mode": True,
                 "calculated_data_used": chart_context.is_verified,
                 "citations": active_citations,
-                "chart_svg": chart_svg
+                "chart_svg": chart_svg,
+                "astrologer_id": astrologer_id
             }
+
+    @staticmethod
+    async def stream_chat_response(
+        user_message: str,
+        conversation_history: List[Dict[str, str]],
+        chart_context: Optional[ChartContext] = None,
+        chart_data: Optional[Dict[str, Any]] = None,
+        citations: Optional[List[Dict[str, Any]]] = None,
+        language: str = "en",
+        astrologer_id: str = "acharya_shastri",
+        force_demo_mode: bool = False,
+        image_base64: Optional[str] = None
+    ) -> AsyncGenerator[Dict[str, Any], None]:
+        """
+        Streams chat tokens via SSE generator for live word-by-word zero-wait typing experience.
+        Yields chunk dictionaries:
+        - {"type": "start", "astrologer_id": ...}
+        - {"type": "delta", "text": "..."}
+        - {"type": "done", "content": ..., "chart_svg": ...}
+        """
+        use_demo = force_demo_mode or settings.is_demo_mode
+        active_citations = citations or []
+        persona = get_persona(astrologer_id)
+
+        yield {
+            "type": "start",
+            "astrologer_id": astrologer_id,
+            "astrologer_name": persona["name"],
+            "avatar": persona["avatar"]
+        }
+
+        # Handle palm image
+        if image_base64:
+            palm_res = LLMService.analyze_palm_image(
+                image_base64=image_base64,
+                user_message=user_message,
+                language=language,
+                force_demo_mode=use_demo
+            )
+            full_text = palm_res["content"]
+            words = re.findall(r'\S+\s*', full_text)
+            for i in range(0, len(words), 2):
+                yield {"type": "delta", "text": "".join(words[i:i+2])}
+                await asyncio.sleep(0.005)
+            yield {
+                "type": "done",
+                "content": full_text,
+                "is_demo_mode": palm_res.get("is_demo_mode", False),
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None,
+                "astrologer_id": astrologer_id
+            }
+            return
+
+        # Dynamic domain check
+        in_domain, refusal = is_in_astrology_domain(user_message)
+        if not in_domain and refusal:
+            words = re.findall(r'\S+\s*', refusal)
+            for i in range(0, len(words), 2):
+                yield {"type": "delta", "text": "".join(words[i:i+2])}
+                await asyncio.sleep(0.005)
+            yield {
+                "type": "done",
+                "content": refusal,
+                "is_demo_mode": False,
+                "calculated_data_used": False,
+                "citations": [],
+                "chart_svg": None,
+                "astrologer_id": astrologer_id
+            }
+            return
+
+        # Sub-15ms Semantic Cache Fast-Path for streaming general astrology queries
+        if not chart_data and not image_base64:
+            from backend.app.services.semantic_cache import semantic_cache
+            cached = semantic_cache.get(user_message, language, astrologer_id)
+            if cached:
+                async for chunk in semantic_cache.stream_cached(cached):
+                    yield chunk
+                return
+
+        # Resolve chart context
+        if not chart_context:
+            if chart_data and isinstance(chart_data, dict):
+                class TempRecord:
+                    def __init__(self, d):
+                        self.id = d.get("id", "temp-profile")
+                        self.name = d.get("name", "User")
+                        self.date_of_birth = d.get("date_of_birth", "")
+                        self.time_of_birth = d.get("time_of_birth", "")
+                        self.is_time_approximate = d.get("is_time_approximate", False)
+                        self.city = d.get("city", "New Delhi")
+                        self.country = d.get("country", "India")
+                        self.latitude = d.get("latitude", 28.6)
+                        self.longitude = d.get("longitude", 77.2)
+                        self.timezone_offset = d.get("timezone_offset", 5.5)
+                        self.system = d.get("system", "Vedic")
+                        self.ayanamsa = d.get("ayanamsa", "Lahiri")
+                        self.chart_data = d
+                chart_context = validate_and_build_chart_context(TempRecord(chart_data))
+            else:
+                chart_context = validate_and_build_chart_context(None)
+
+        # Check inline Kundli SVG
+        chart_svg = None
+        raw_cd = chart_data or (chart_context.to_dict() if chart_context.is_verified else None)
+        if chart_context.is_verified and raw_cd and is_kundli_requested(user_message):
+            chart_svg = generate_north_indian_kundli_svg(raw_cd)
+
+        full_content = ""
+        is_demo = use_demo
+
+        if not use_demo:
+            try:
+                from google import genai
+                from google.genai import types
+
+                client = _get_gemini_client() or genai.Client(api_key=settings.GEMINI_API_KEY)
+                chart_summary_block = chart_context.format_for_prompt()
+                citation_blocks = []
+                if active_citations:
+                    for c in active_citations[:2]:
+                        raw_excerpt = c.get('excerpt', '')
+                        trimmed_excerpt = raw_excerpt[:220] + ("..." if len(raw_excerpt) > 220 else "")
+                        citation_blocks.append(f"[{c.get('source_title', 'Classical Text')}]: {trimmed_excerpt}")
+                citations_str = "\n".join(citation_blocks) if citation_blocks else "None retrieved."
+
+                detected_lang = _detect_language(user_message, fallback_lang=language)
+                lang_label = "Devanagari Hindi" if detected_lang == "hi" else "Conversational Hinglish (Roman script)" if detected_lang == "hinglish" else "English" if detected_lang == "en" else detected_lang
+                language_mandate = (
+                    f"### MANDATORY USER LANGUAGE REQUIREMENT: {detected_lang.upper()} ({lang_label})\n"
+                    f"CRITICAL: The user asked in {detected_lang.upper()} ({lang_label}). "
+                    f"You MUST formulate your response in this EXACT SAME language and script. "
+                    f"If the user asks in Hinglish, respond in natural Hinglish. If in Hindi, respond in Hindi. If in English, respond in English. "
+                    f"Do not switch language.\n\n"
+                )
+
+                persona_block = f"### ACTIVE ASTROLOGER PERSONA: {persona['name']} ({persona['title']})\n{persona['system_instruction']}\n\n"
+                combined_system_instruction = (
+                    f"{ASTROAI_SYSTEM_PROMPT_V2}\n\n"
+                    f"{language_mandate}"
+                    f"{persona_block}"
+                    f"### CURRENT CONTEXT ENVIRONMENT\n"
+                    f"{chart_summary_block}\n\n"
+                    f"### RETRIEVED CLASSICAL ASTROLOGICAL & PALMISTRY SOURCES\n"
+                    f"{citations_str}\n"
+                )
+
+                contents: List[types.Content] = []
+                if conversation_history:
+                    for m in conversation_history[-4:]:
+                        m_role = "user" if m.get("role") == "user" else "model"
+                        m_text = m.get("content", "").strip()
+                        if m_text:
+                            compact_text = m_text[:280] + ("..." if len(m_text) > 280 else "")
+                            contents.append(types.Content(role=m_role, parts=[types.Part.from_text(text=compact_text)]))
+
+                if not contents or contents[-1].parts[0].text != user_message:
+                    contents.append(types.Content(role="user", parts=[types.Part.from_text(text=user_message)]))
+
+                response_stream = client.models.generate_content_stream(
+                    model=settings.GEMINI_MODEL,
+                    contents=contents,
+                    config=types.GenerateContentConfig(
+                        system_instruction=combined_system_instruction,
+                        temperature=0.6,
+                        max_output_tokens=700
+                    )
+                )
+
+                for chunk in response_stream:
+                    if chunk.text:
+                        full_content += chunk.text
+                        yield {"type": "delta", "text": chunk.text}
+
+            except Exception as e:
+                logger.error(f"Live Gemini streaming failed: {e}. Falling back to demo stream.")
+                is_demo = True
+
+        if is_demo or not full_content.strip():
+            demo_text = generate_demo_response(
+                user_message=user_message,
+                chart_context=chart_context,
+                citations=active_citations,
+                conversation_history=conversation_history,
+                language=language,
+                astrologer_id=astrologer_id
+            )
+            full_content = demo_text
+            words = re.findall(r'\S+\s*', demo_text)
+            for i in range(0, len(words), 2):
+                yield {"type": "delta", "text": "".join(words[i:i+2])}
+                await asyncio.sleep(0.005)
+
+        yield {
+            "type": "done",
+            "content": full_content.strip(),
+            "is_demo_mode": is_demo,
+            "calculated_data_used": chart_context.is_verified,
+            "citations": active_citations,
+            "chart_svg": chart_svg,
+            "astrologer_id": astrologer_id
+        }
 
     @staticmethod
     def analyze_palm_image(

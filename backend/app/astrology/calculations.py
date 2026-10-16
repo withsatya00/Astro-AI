@@ -151,7 +151,7 @@ def calculate_navamsha(degree: float) -> str:
     norm = degree % 360.0
     sign_idx = int(norm // 30)
     deg_in_sign = norm % 30.0
-    nav_idx = int(deg_in_sign // (30.0 / 9.0)) # 0 to 8
+    nav_idx = min(int(deg_in_sign // (30.0 / 9.0)), 8) # 0 to 8
 
     # Sign nature
     if sign_idx in (0, 3, 6, 9):       # Movable
@@ -163,6 +163,33 @@ def calculate_navamsha(degree: float) -> str:
 
     d9_sign_idx = (start_sign + nav_idx) % 12
     return ZODIAC_SIGNS[d9_sign_idx]["name"]
+
+def calculate_dashamsha(degree: float) -> str:
+    """
+    Calculates Dashamsha (D10) sign from longitude.
+    Brihat Parashara Hora Shastra (BPHS Ch. 6, Shodashavarga):
+    Each sign (30°) has 10 divisions of 3° each.
+    - Odd signs (Aries, Gemini, Leo, Libra, Sagittarius, Aquarius):
+      Counting starts from the sign itself.
+    - Even signs (Taurus, Cancer, Virgo, Scorpio, Capricorn, Pisces):
+      Counting starts from the 9th sign from it.
+    """
+    norm = degree % 360.0
+    sign_idx = int(norm // 30)
+    deg_in_sign = norm % 30.0
+    dash_idx = min(int(deg_in_sign // 3.0), 9)  # 0 to 9
+
+    # Odd signs: Aries(0), Gemini(2), Leo(4), Libra(6), Sagittarius(8), Aquarius(10)
+    if sign_idx % 2 == 0:
+        start_sign = sign_idx
+    else:
+        # Even signs: Taurus(1), Cancer(3), Virgo(5), Scorpio(7), Capricorn(9), Pisces(11)
+        # 9th sign from sign_idx: (sign_idx + 8) % 12
+        start_sign = (sign_idx + 8) % 12
+
+    d10_sign_idx = (start_sign + dash_idx) % 12
+    return ZODIAC_SIGNS[d10_sign_idx]["name"]
+
 
 def calculate_vimshottari_dashas(
     moon_degree: float,
@@ -302,6 +329,10 @@ def calculate_chart(
         if name == "Moon":
             moon_lon = lon
 
+        nav_sign = calculate_navamsha(lon)
+        dash_sign = calculate_dashamsha(lon)
+        is_vargottama = (sign_info["name"] == nav_sign)
+
         planets_result.append({
             "name": name,
             "longitude": round(lon, 4),
@@ -312,6 +343,9 @@ def calculate_chart(
             "nakshatra": nak_name,
             "nakshatra_lord": nak_lord,
             "pada": pada,
+            "navamsha_sign": nav_sign,
+            "dashamsha_sign": dash_sign,
+            "is_vargottama": is_vargottama,
             "is_retrograde": is_retro
         })
 
@@ -321,6 +355,9 @@ def calculate_chart(
     ketu_sign, ketu_deg_in_sign = get_zodiac_sign(ketu_lon)
     ketu_nak, ketu_nak_lord, ketu_pada = get_nakshatra_info(ketu_lon)
     ketu_house = ((ketu_sign["index"] - lagna_sign_idx) % 12) + 1 if is_vedic else 1
+    ketu_nav_sign = calculate_navamsha(ketu_lon)
+    ketu_dash_sign = calculate_dashamsha(ketu_lon)
+    ketu_vargottama = (ketu_sign["name"] == ketu_nav_sign)
 
     planets_result.append({
         "name": "Ketu",
@@ -332,6 +369,9 @@ def calculate_chart(
         "nakshatra": ketu_nak,
         "nakshatra_lord": ketu_nak_lord,
         "pada": ketu_pada,
+        "navamsha_sign": ketu_nav_sign,
+        "dashamsha_sign": ketu_dash_sign,
+        "is_vargottama": ketu_vargottama,
         "is_retrograde": True  # Ketu always moves retrograde in Vedic astrology
     })
 
@@ -355,9 +395,11 @@ def calculate_chart(
         "houses": houses_result,
         "dashas": dashas,
         "navamsha_lagna": navamsha_lagna,
+        "dashamsha_lagna": calculate_dashamsha(asc_deg),
         "system": system,
         "ayanamsa": ayanamsa if is_vedic else "None (Tropical)",
         "julian_day": round(jd, 6),
         "calculation_engine": f"Swiss Ephemeris v{swe.version}",
         "is_time_approximate": is_time_approximate
     }
+

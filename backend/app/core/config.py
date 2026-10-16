@@ -1,6 +1,7 @@
 """
 Application configuration for AstroAI Agent using Pydantic Settings.
 """
+import os
 from pathlib import Path
 from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -30,14 +31,15 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = Field(default=None, validation_alias="GEMINI_API_KEY")
     GEMINI_MODEL: str = "gemini-3.5-flash-lite"
     EMBEDDING_MODEL: str = "gemini-embedding-001"
+    EMBEDDING_PROVIDER: str = Field(default="local_dense", validation_alias="EMBEDDING_PROVIDER")  # local_dense, google_genai, sentence_transformers
 
     # Database & Storage
     DATABASE_URL: str = "sqlite:///./astro_ai.db"
     REDIS_URL: str = "redis://localhost:6379/0"
 
-    STORAGE_DIR: str = str(BASE_DIR / "storage")
+    STORAGE_DIR: str = "/tmp/storage" if (os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME")) else str(BASE_DIR / "storage")
     DOCUMENTS_DIR: str = str(BASE_DIR / "documents")
-    REPORTS_DIR: str = str(BASE_DIR / "storage" / "reports")
+    REPORTS_DIR: str = "/tmp/storage/reports" if (os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME")) else str(BASE_DIR / "storage" / "reports")
     EPHEMERIS_PATH: str = str(BASE_DIR / "ephemeris")
 
     @property

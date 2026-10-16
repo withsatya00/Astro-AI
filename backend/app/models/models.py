@@ -97,6 +97,7 @@ class Document(Base):
     status = Column(String(50), default="PENDING")     # PENDING, PROCESSING, INDEXED, FAILED
     error_details = Column(Text, nullable=True)
     chunk_count = Column(Integer, default=0)
+    doc_metadata = Column(JSON, nullable=True)         # Structured provenance, chapter, topic, language
     created_at = Column(DateTime(timezone=True), default=utc_now)
 
     chunks = relationship("DocumentChunk", back_populates="document", cascade="all, delete-orphan")
@@ -111,6 +112,7 @@ class DocumentChunk(Base):
     page_number = Column(Integer, nullable=True)
     section_title = Column(String(255), nullable=True)
     embedding = Column(JSON, nullable=True)            # List of floats (embedding vector)
+    chunk_metadata = Column(JSON, nullable=True)       # Topic, language, verse_id, shloka, hierarchy
     created_at = Column(DateTime(timezone=True), default=utc_now)
 
     document = relationship("Document", back_populates="chunks")

@@ -248,7 +248,107 @@ def generate_astrology_pdf_report(
             elements.append(Paragraph(f"<b>Planetary Period Focus:</b> {dasha_summary}", body_style))
             elements.append(Spacer(1, 6))
 
-    # Disclaimer
+    # Classical Yoga & Astrological Pattern Detection
+    try:
+        from backend.app.astrology.yoga_detection import analyze_all_chart_yogas
+        yoga_analysis = analyze_all_chart_yogas(chart_data)
+        detected_yogas = yoga_analysis.get("detected_yogas", [])
+        kuja_info = yoga_analysis.get("kuja_dosha", {})
+        sade_sati_info = yoga_analysis.get("sade_sati", {})
+
+        if detected_yogas:
+            elements.append(Spacer(1, 10))
+            elements.append(Paragraph("Detected Classical Yogas (शास्त्रीय योग)", h2_style))
+            yoga_rows = [[
+                Paragraph("<b>Yoga Name</b>", body_style),
+                Paragraph("<b>Category</b>", body_style),
+                Paragraph("<b>Planets Involved</b>", body_style),
+                Paragraph("<b>Classical Influence & Strength</b>", body_style)
+            ]]
+            for y in detected_yogas[:6]:
+                yoga_rows.append([
+                    Paragraph(f"<b>{y.get('yoga_name', '')}</b>", body_style),
+                    Paragraph(y.get("category", "Classical Yoga"), body_style),
+                    Paragraph(str(y.get("planet", "")), body_style),
+                    Paragraph(f"{y.get('description', '')} ({y.get('strength', 'High')} Strength)", body_style)
+                ])
+
+            t_yogas = Table(yoga_rows, colWidths=[120, 110, 100, 210])
+            t_yogas.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#78350f")),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#fde68a")),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.HexColor("#fffbeb"), colors.white]),
+                ('TOPPADDING', (0, 0), (-1, -1), 4),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+            ]))
+            elements.append(t_yogas)
+            elements.append(Spacer(1, 10))
+
+        # Kuja Dosha & Shani Sade Sati Status Box
+        special_rows = []
+        if kuja_info.get("has_kuja_dosha"):
+            cancellation_note = f" (Cancellations: {'; '.join(kuja_info.get('cancellations', []))})" if kuja_info.get("cancellations") else ""
+            special_rows.append([
+                Paragraph("<b>Kuja Dosha (Manglik Status):</b>", body_style),
+                Paragraph(f"Mars in House {kuja_info.get('mars_house')} ({kuja_info.get('mars_sign')}). Status: <b>{kuja_info.get('affliction_level')}</b>{cancellation_note}", body_style)
+            ])
+        else:
+            special_rows.append([
+                Paragraph("<b>Kuja Dosha Status:</b>", body_style),
+                Paragraph("No significant Kuja Dosha affliction detected from Lagna or Moon.", body_style)
+            ])
+
+        if sade_sati_info.get("is_active"):
+            special_rows.append([
+                Paragraph("<b>Shani Sade Sati Status:</b>", body_style),
+                Paragraph(f"<b>{sade_sati_info.get('phase')}</b> - {sade_sati_info.get('description')}", body_style)
+            ])
+        else:
+            special_rows.append([
+                Paragraph("<b>Shani Sade Sati Status:</b>", body_style),
+                Paragraph("Saturn is currently in a neutral or favorable transit position relative to your Moon.", body_style)
+            ])
+
+        t_special = Table(special_rows, colWidths=[160, 380])
+        t_special.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
+            ('BOX', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
+            ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ]))
+        elements.append(t_special)
+        elements.append(Spacer(1, 12))
+
+        # Authentic Classical Remedial Guidance Box
+        elements.append(Paragraph("Authentic Classical Remedial Guidance (शास्त्रीय उपाय)", h2_style))
+        remedy_rows = [
+            [
+                Paragraph("<b>Anukul Ratna (Gemstone) Shastra:</b>", body_style),
+                Paragraph("Wear gemstones ONLY for functional benefics (Lords of 1, 5, or 9). Never wear stones for Maraka (2, 7) or Dusthana (6, 8, 12) lords to avoid amplifying obstacles.", body_style)
+            ],
+            [
+                Paragraph("<b>Vedic Stotra & Mantra Japa:</b>", body_style),
+                Paragraph("Chant Aditya Hridaya Stotram for vitality and father; Mahamrityunjaya Mantra for longevity and Saturn pacification; Vishnu Sahasranama for overall intellectual and spiritual harmony.", body_style)
+            ],
+            [
+                Paragraph("<b>Satvik Daan (Charity):</b>", body_style),
+                Paragraph("Offer appropriate grains and charity directly to genuinely needy recipients with humility and without public ostentation on days corresponding to afflicted planets.", body_style)
+            ]
+        ]
+        t_remedy = Table(remedy_rows, colWidths=[160, 380])
+        t_remedy.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#fffdf5")),
+            ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#f59e0b")),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#fde68a")),
+            ('TOPPADDING', (0, 0), (-1, -1), 5),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
+        ]))
+        elements.append(t_remedy)
+
+    except Exception as ex:
+        logger.warning(f"Could not append advanced yoga section to PDF: {ex}")
     elements.append(Spacer(1, 10))
     elements.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#cbd5e1"), spaceAfter=8))
     elements.append(Paragraph(

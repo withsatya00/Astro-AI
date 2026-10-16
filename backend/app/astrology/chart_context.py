@@ -31,6 +31,8 @@ class ChartContext:
         moon_nakshatra: Optional[str] = None,
         planets: Optional[List[Dict[str, Any]]] = None,
         dashas: Optional[List[Dict[str, Any]]] = None,
+        navamsha_lagna: Optional[str] = None,
+        dashamsha_lagna: Optional[str] = None,
         unavailable_fields: Optional[List[str]] = None,
     ):
         self.profile_id = profile_id
@@ -52,6 +54,8 @@ class ChartContext:
         self.sun_sign = sun_sign
         self.moon_sign = moon_sign
         self.moon_nakshatra = moon_nakshatra
+        self.navamsha_lagna = navamsha_lagna
+        self.dashamsha_lagna = dashamsha_lagna
         self.planets = planets or []
         self.dashas = dashas or []
         self.unavailable_fields = unavailable_fields or []
@@ -72,6 +76,8 @@ class ChartContext:
             "calculation_engine": self.calculation_engine,
             "ascendant_sign": self.ascendant_sign,
             "ascendant_nakshatra": self.ascendant_nakshatra,
+            "navamsha_lagna": self.navamsha_lagna,
+            "dashamsha_lagna": self.dashamsha_lagna,
             "sun_sign": self.sun_sign,
             "moon_sign": self.moon_sign,
             "moon_nakshatra": self.moon_nakshatra,
@@ -101,20 +107,54 @@ class ChartContext:
         # Verified chart summary
         approx_note = " (Approximate time - house cusps may vary)" if self.is_time_approximate else " (Exact birth time)"
         planet_lines = []
+        vargottama_planets = []
         for p in self.planets:
             p_name = p.get("name")
             p_sign = p.get("sign")
             p_house = p.get("house")
             p_nak = p.get("nakshatra")
             p_retro = " [Retrograde]" if p.get("is_retrograde") else ""
-            planet_lines.append(f"  * {p_name}: {p_sign} in House {p_house} ({p_nak} Nakshatra){p_retro}")
+            p_d9 = p.get("navamsha_sign")
+            p_d10 = p.get("dashamsha_sign")
+            is_varg = p.get("is_vargottama")
+
+            varga_details = []
+            if p_d9:
+                varga_details.append(f"D9: {p_d9}")
+            if p_d10:
+                varga_details.append(f"D10: {p_d10}")
+            varga_str = f" [{', '.join(varga_details)}]" if varga_details else ""
+
+            if is_varg:
+                vargottama_planets.append(f"{p_name} in {p_sign}")
+                p_varg_str = " [VARGOTTAMA - High Classical Strength]"
+            else:
+                p_varg_str = ""
+
+            planet_lines.append(f"  * {p_name}: {p_sign} in House {p_house} ({p_nak} Nakshatra){p_retro}{varga_str}{p_varg_str}")
 
         planets_str = "\n".join(planet_lines) if planet_lines else "  * None recorded"
+        vargottama_summary = ", ".join(vargottama_planets) if vargottama_planets else "None"
+
+        # Calculate exact Graha Drishti (aspects)
+        aspect_lines = []
+        try:
+            from backend.app.astrology.aspects import calculate_planetary_aspects
+            raw_aspects = calculate_planetary_aspects(self.planets)
+            sorted_aspects = sorted(raw_aspects, key=lambda a: a.get("strength_pct", 0), reverse=True)[:5]
+            for a in sorted_aspects:
+                aspect_lines.append(f"  * {a.get('description')}")
+        except Exception:
+            pass
+        aspects_str = "\n".join(aspect_lines) if aspect_lines else "  * None within strong classical orbs"
 
         dasha_lines = []
         for d in self.dashas[:3]:
             dasha_lines.append(f"  * {d.get('planet')} Dasha: {d.get('start_date')} to {d.get('end_date')}")
         dashas_str = "\n".join(dasha_lines) if dasha_lines else "  * Not calculated"
+
+        d9_lagna_str = f" | D9 Navamsha Lagna: {self.navamsha_lagna}" if self.navamsha_lagna else ""
+        d10_lagna_str = f" | D10 Dashamsha Lagna: {self.dashamsha_lagna}" if self.dashamsha_lagna else ""
 
         return (
             f"### CHART DATA STATUS: VERIFIED ASTRONOMICAL CALCULATIONS (Swiss Ephemeris NASA JPL)\n"
@@ -122,13 +162,16 @@ class ChartContext:
             f"- Birth Date: {self.date_of_birth}, Time: {self.time_of_birth}{approx_note}\n"
             f"- Birthplace: {self.birthplace} (TZ: {self.timezone_offset})\n"
             f"- Astrology System: {self.system} ({self.ayanamsa} Ayanamsa)\n"
-            f"- Ascendant (Lagna): {self.ascendant_sign} ({self.ascendant_nakshatra} Nakshatra)\n"
+            f"- Ascendant (Lagna): {self.ascendant_sign} ({self.ascendant_nakshatra} Nakshatra){d9_lagna_str}{d10_lagna_str}\n"
             f"- Sun Sign (Surya): {self.sun_sign}\n"
             f"- Moon Sign (Chandra Rashi): {self.moon_sign} ({self.moon_nakshatra} Nakshatra)\n"
-            f"- Verified Planetary Placements:\n{planets_str}\n"
+            f"- Vargottama Planets (Supreme Strength): {vargottama_summary}\n"
+            f"- Verified Planetary Placements & Varga Signs:\n{planets_str}\n"
+            f"- Classical Graha Drishti (Aspects & Inter-planetary Dynamics):\n{aspects_str}\n"
             f"- Current/Upcoming Vimshottari Dashas:\n{dashas_str}\n"
             f"- MANDATORY RULE: Use ONLY these verified placements. Do not invent any additional planets, degrees, or divisional charts."
         )
+
 
 
 def validate_and_build_chart_context(
@@ -189,7 +232,11 @@ def validate_and_build_chart_context(
                 "sign": p.get("sign"),
                 "house": p.get("house", 1),
                 "nakshatra": p.get("nakshatra", ""),
-                "is_retrograde": bool(p.get("is_retrograde", False))
+                "is_retrograde": bool(p.get("is_retrograde", False)),
+                "navamsha_sign": p.get("navamsha_sign"),
+                "dashamsha_sign": p.get("dashamsha_sign"),
+                "is_vargottama": bool(p.get("is_vargottama", False)),
+                "longitude": float(p.get("longitude", 0.0))
             })
 
     # Extract dashas
@@ -224,6 +271,8 @@ def validate_and_build_chart_context(
         calculation_engine=raw_data.get("calculation_engine", "Swiss Ephemeris (pyswisseph)"),
         ascendant_sign=raw_data.get("ascendant_sign"),
         ascendant_nakshatra=raw_data.get("ascendant_nakshatra"),
+        navamsha_lagna=raw_data.get("navamsha_lagna"),
+        dashamsha_lagna=raw_data.get("dashamsha_lagna"),
         sun_sign=raw_data.get("sun_sign"),
         moon_sign=raw_data.get("moon_sign"),
         moon_nakshatra=raw_data.get("moon_nakshatra"),

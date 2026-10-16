@@ -1,0 +1,159 @@
+{
+  "acquisition_registry_version": "1.0.0",
+  "project": "AstroAI Agent Knowledge Systems",
+  "policy": "Legitimate Public Domain / Open Access / Preservation Archives Only",
+  "description": "Formal acquisition manifest tracking primary classical Sanskrit treatises, verified translations, archival URLs, and licensing status.",
+  "sources": [
+    {
+      "source_id": "classical-bphs",
+      "canonical_title": "Brihat Parashara Hora Shastra (बृहत्पाराशरहोराशास्त्रम्)",
+      "author": "Maharishi Parashara",
+      "traditional_period": "Vedic / Classical Antiquity",
+      "verified_editions": [
+        {
+          "editor_translator": "Pandit Devachandra Jha / Chaukhamba Sanskrit Sansthan",
+          "language": "Sanskrit with Hindi Commentary",
+          "publication_year": 1973,
+          "copyright_status": "Public Domain (Classical Sanskrit Root Text)",
+          "archive_url": "https://archive.org/details/BrihatParasharaHoraShastra",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        },
+        {
+          "editor_translator": "R. Santhanam (Ranjan Publications)",
+          "language": "English Translation with Notes",
+          "publication_year": 1984,
+          "copyright_status": "Educational Research & Reference Only",
+          "archive_url": "https://archive.org/details/brihat-parashara-hora-shastra-vol-1-r-santhanam",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Vedic Foundations", "Planetary Dignities", "Bhavas", "Shodashavargas", "Vimshottari Dasha", "Raja Yogas"]
+    },
+    {
+      "source_id": "classical-brihat-jataka",
+      "canonical_title": "Brihat Jataka (बृहज्जातकम्)",
+      "author": "Acharya Varahamihira",
+      "traditional_period": "6th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "Prof. B. Suryanarain Rao",
+          "language": "Sanskrit & English Commentary",
+          "publication_year": 1919,
+          "copyright_status": "Public Domain Worldwide (Published prior to 1928)",
+          "archive_url": "https://archive.org/details/brihatjataka00varauoft",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Grahas", "Rashis", "Ayurdaya (Longevity)", "Pravrajya Yogas", "Ashtakavarga"]
+    },
+    {
+      "source_id": "classical-phaladeepika",
+      "canonical_title": "Phaladeepika (फलदीपिका)",
+      "author": "Mantreswara",
+      "traditional_period": "13th-16th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "V. Subrahmanya Sastri",
+          "language": "Sanskrit text with English Translation and Notes",
+          "publication_year": 1937,
+          "copyright_status": "Public Domain (Classical Text & Early Translation)",
+          "archive_url": "https://archive.org/details/PhaladeepikaVSubrahmanyaSastri",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Yogas", "Bhavaphala", "Gochar (Transits)", "Upachaya Bhavas", "Kalatra Bhava"]
+    },
+    {
+      "source_id": "classical-saravali",
+      "canonical_title": "Saravali (सारावली)",
+      "author": "Kalyana Varma",
+      "traditional_period": "8th-10th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "R. Santhanam",
+          "language": "English Translation & Commentary",
+          "publication_year": 1983,
+          "copyright_status": "Classical Root Text Public Domain",
+          "archive_url": "https://archive.org/details/saravali-kalyanavarma",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Planetary Conjunctions", "Nabhasa Yogas", "Rashi Characteristics", "Royal Yogas"]
+    },
+    {
+      "source_id": "classical-jataka-parijata",
+      "canonical_title": "Jataka Parijata (जातकपारिजातः)",
+      "author": "Vaidyanatha Dikshita",
+      "traditional_period": "15th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "V. Subrahmanya Sastri",
+          "language": "Sanskrit with English Translation",
+          "publication_year": 1932,
+          "copyright_status": "Public Domain Worldwide",
+          "archive_url": "https://archive.org/details/JatakaParijataVol1",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Yogas", "Dasha Timing", "Longevity Calculations", "Planetary Strengths"]
+    },
+    {
+      "source_id": "classical-laghu-parashari",
+      "canonical_title": "Laghu Parashari / Jataka Chandrika (लघुपाराशरी)",
+      "author": "Sage Parashara Tradition / Classical Commentators",
+      "traditional_period": "Classical Period",
+      "verified_editions": [
+        {
+          "editor_translator": "Pandit Vinayak Shastri Vetala",
+          "language": "Sanskrit & Hindi Commentary",
+          "publication_year": 1924,
+          "copyright_status": "Public Domain Worldwide",
+          "archive_url": "https://archive.org/details/LaghuParashariSanskritHindi",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Functional Benefics & Malefics", "Kendra-Trikona Lord Rules", "Maraka Lords", "Vimshottari Dasha Principles"]
+    },
+    {
+      "source_id": "classical-muhurta-chintamani",
+      "canonical_title": "Muhurta Chintamani (मुहूर्तचिन्तामणिः)",
+      "author": "Daivajna Ramadayalu",
+      "traditional_period": "16th-17th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "Khemraj Shrikrishnadas Edition / Venkateshwar Press",
+          "language": "Sanskrit with Subodhini Commentary",
+          "publication_year": 1907,
+          "copyright_status": "Public Domain Worldwide",
+          "archive_url": "https://archive.org/details/MuhurtaChintamani1907",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Panchang Elements", "Vivaha Muhurta (Marriage)", "Griha Pravesha", "Abhijit Muhurta", "Rahu Kaal"]
+    },
+    {
+      "source_id": "classical-brihat-samhita",
+      "canonical_title": "Brihat Samhita (बृहत्संहिता)",
+      "author": "Acharya Varahamihira",
+      "traditional_period": "6th Century CE",
+      "verified_editions": [
+        {
+          "editor_translator": "M. Ramakrishna Bhat (Motilal Banarsidass)",
+          "language": "Sanskrit & English Translation",
+          "publication_year": 1981,
+          "copyright_status": "Classical Root Text Public Domain",
+          "archive_url": "https://archive.org/details/brihat-samhita-m-ramakrishna-bhat",
+          "status": "CATALOGUED_FOR_ACQUISITION"
+        }
+      ],
+      "primary_subjects": ["Samudrika Shastra (Hastarekha)", "Meteorology", "Planetary Cycles", "Mundane Astrology"]
+    }
+  ],
+  "verification_policy": {
+    "authenticity_rules": [
+      "No fabricated verses or fake editions.",
+      "Translations must have documented provenance.",
+      "Secondary summaries must be explicitly labeled as educational compendiums."
+    ]
+  }
+}

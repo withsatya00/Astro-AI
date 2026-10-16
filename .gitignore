@@ -37,6 +37,7 @@ htmlcov/
 
 # Database & local data
 *.db
+!astro_ai.db
 *.sqlite3
 storage/
 documents/sources/*

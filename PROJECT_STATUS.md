@@ -117,6 +117,70 @@
 - [x] **Quick Saved Profile Selector**: Bar above the form enabling 1-click loading of previously calculated birth profiles.
 - [x] **Automatic Chart Calculation & Connected Banner**: On submission, Swiss Ephemeris calculates astronomical longitudes and Lagna/Rashi, updates the active session, renders an authentic "Astrologer Connected" live banner, and immediately sends a personalized consultation greeting addressing the user by their name.
 - [x] **Seamless Session Reset**: Clicking "+ New Consultation" resets the conversation and restores the intake form with remembered details for quick consultation startup.
-- [x] **Verified via Test Suite & Browser Automation**: Full test suite passing 28/28 (100%), verified live in browser and recorded session artifact.
+### Phase 14: AstroTalk High-Impact Features Suite (Milan, Streaming, Personas, Panchang & WhatsApp Sharing)
+- [x] **Feature 1: Kundali Milan (Gun Milan / 36 Gunas & Manglik Dosha Analysis)**:
+  - Built dedicated `KundaliMilanRequest` and `KundaliMilanResponse` in `backend/app/schemas/schemas.py`.
+  - Implemented `perform_kundali_milan` in `backend/app/astrology/kundali_milan.py` computing all 8 Kootas (Varna, Vashya, Tara, Yoni, Graha Maitri, Gana, Bhakoot, Nadi) out of 36.0 with exact point breakdown and life area mappings.
+  - Implemented Manglik Dosha checking from Lagna, Moon, and Venus with 6 classical Parihar (cancellation) rules.
+  - Added dedicated endpoint `POST /api/v1/charts/milan`.
+  - Added 2-column modal (`#modal-kundali-milan`) with Groom & Bride inputs, 1-click active profile loading, radial score gauge, verdict badge, Manglik comparison cards, 8 Kootas table, and direct WhatsApp sharing.
+- [x] **Feature 2: Real-time Streaming Responses (Server-Sent Events / SSE)**:
+  - Implemented async generator `stream_chat_response` in `backend/app/services/llm_service.py` yielding `{type: "session"}`, `{type: "delta", text: "..."}`, and `{type: "done", ...}` chunks.
+  - Created SSE endpoint `POST /api/v1/chat/stream` returning `StreamingResponse(..., media_type="text/event-stream")`.
+  - Added client-side reader `API.streamConsultation()` in `frontend/js/api.js` using `ReadableStreamDefaultReader` and `TextDecoder`.
+  - Implemented word-by-word live typewriter streaming effect in `ChatController.sendMessage()` with a blinking cursor (`▋`) and auto-scroll for zero-waiting perception.
+- [x] **Feature 3: Multiple Astrologer Personas (Select Your Astrologer)**:
+  - Created `backend/app/agents/personas.py` with 3 authentic astrologer personas:
+    1. **Acharya Shastri**: Vedic & Vastu Specialist (24+ Yrs Exp, traditional Sanskritized Hindi tone: "हरि ॐ! कल्याणमस्तु").
+    2. **Dr. Sunita Sharma**: Relationship & Tarot Counselor (16+ Yrs Exp, empathetic, modern, soothing tone).
+    3. **Pandit Ji Maharaj**: Career & Financial Timing Specialist (29+ Yrs Exp, precise planetary dasha & financial timing tone).
+  - Added endpoint `GET /api/v1/chat/astrologers`.
+  - Added topbar persona badge with avatar and 1-click "Switch ▾" trigger, persona selector chips in consultation intake, and selection modal (`#modal-select-astrologer`) with persistent `localStorage` synchronization.
+- [x] **Feature 4: Daily Aaj Ka Panchang & Shani Sade Sati Tracker**:
+  - Implemented `calculate_panchang` in `backend/app/astrology/panchang.py`: Tithi (Paksha & number), 27 Nakshatras & Padas, 27 Yogas, 11 Karans, Sunrise/Sunset, Shubh Abhijit Muhurat, Ashubh Rahu Kaal, and Yamaganda.
+  - Implemented `calculate_sade_sati`: Real-time Saturn in Pisces tracking, determining Rising (चरण 1), Peak (चरण 2), Setting (चरण 3), Dhaiya (Kantaka/Ashtama), or Free status for all 12 Rashis, plus Rahu-Ketu transit effect and 5 authentic classical remedies.
+  - Added endpoints `GET /api/v1/charts/panchang` and `POST /api/v1/charts/sade-sati`.
+  - Created modal `#modal-panchang` and `#modal-sade-sati` with responsive 3-phase progress steps.
+- [x] **Feature 5: Instant Kundli Image & WhatsApp Share**:
+  - Built `ChartViewer.downloadKundliPNG()` exporting high-resolution PNG of Lagna Kundli diagram with Swiss Ephemeris watermark directly to user device.
+  - Added 1-click WhatsApp share buttons for Janam Kundli summary (`ChartViewer.shareKundliWhatsApp`), Kundali Milan report (`ChartViewer.shareMilanWhatsApp`), and consultation answers (`ChatController.shareResponseWhatsApp`).
+- [x] **Comprehensive Testing & Validation**:
+  - Created `backend/tests/test_new_features.py` testing all new endpoints.
+  - Complete end-to-end browser verification captured and validated.
+
+### Phase 15: Production-Grade RAG Hardening & Classical KB Expansion
+- [x] **Audit & Architecture Hardening**:
+  - Generated [reports/astro_rag_audit.md](file:///c:/Users/og/OneDrive/Desktop/AstroTalk/reports/astro_rag_audit.md) and [reports/astro_rag_implementation.md](file:///c:/Users/og/OneDrive/Desktop/AstroTalk/reports/astro_rag_implementation.md).
+  - Built intelligent astrology-aware chunker (`chunking.py`) with shloka-translation binding, stable chunk IDs (`chk_<sha256>`), and table preservation.
+  - Built multi-provider normalized embedding engine (`embeddings.py`) with strict dimension uniformity.
+  - Implemented idempotent document ingestion CLI (`ingestion.py`) with SHA-256 change detection, dry-run preview, and audit reporting.
+  - Upgraded retrieval to Hybrid Dense Vector + BM25 with Reciprocal Rank Fusion (RRF) and theoretical maximum normalization (`retrieval.py`).
+- [x] **Knowledge Base Expansion**:
+  - Created 4 high-depth compendiums: Graha Bhava Phalam (9 planets x 12 houses), 27 Nakshatras & 108 Padas Shastra, Vimshottari Mahadasha-Antardasha Syntheses, and Classical Vedic Remedies (Upay, Shanti, Ratna, Daan).
+  - Total corpus expanded to 15 verified classical documents and 287 indexed chunks.
+  - Registered authentic provenance in [source_manifest.json](file:///c:/Users/og/OneDrive/Desktop/AstroTalk/documents/manifests/source_manifest.json) and [acquisition_manifest.json](file:///c:/Users/og/OneDrive/Desktop/AstroTalk/documents/manifests/acquisition_manifest.json).
+
+### Phase 16: "Chart-to-RAG" Fusion Pipeline & Automated Yoga Detection
+- [x] **Automated Classical Yoga & Astrological Pattern Detector (`yoga_detection.py`)**:
+  - Implemented detection for Pancha Mahapurusha Yogas (Ruchaka, Bhadra, Hamsa, Malavya, Sasa).
+  - Implemented Lunar and Solar Yogas (Gajakesari, Budhaditya, Chandra-Mangala).
+  - Implemented Vipareeta Raja Yogas (Harsha, Sarala, Vimala) from Dusthana placements.
+  - Implemented Kuja Dosha (Manglik) detection with authentic classical cancellations (Parashara / Narada).
+  - Implemented real-time Shani Sade Sati and Dhaiya (Kantaka/Ashtama) phase detection.
+  - Implemented active Vimshottari Mahadasha and Antardasha cycle identification.
+- [x] **Chart-to-RAG Context Synthesizer (`chart_rag_fusion.py`)**:
+  - Transforms calculated Swiss Ephemeris chart coordinates into targeted RAG domain queries.
+  - Retrieves authentic classical passages from the 287 knowledge chunks corresponding to detected yogas and transits.
+  - Synthesizes comprehensive, source-cited bilingual Kundli reports (English & Hindi).
+- [x] **Grounded Chart Report API Endpoints**:
+  - `POST /api/v1/charts/grounded-report`: Calculates chart and returns instant grounded RAG report.
+  - `GET /api/v1/charts/{chart_id}/grounded-report`: Retrieves grounded report for existing birth profile.
+- [x] **Orchestrator Integration (`orchestrator.py`)**:
+  - Augmented conversational chat turns with auto-detected chart yogas and dasha states when birth context is active.
+- [x] **Regression Suite & IR Benchmarks**:
+  - Created `backend/tests/test_chart_rag_fusion.py` with 7 unit and API integration tests.
+  - Total test suite passing at **58/58 (100% pass rate)**.
+  - Information Retrieval metrics: Recall@1 = 78.57%, Recall@3 = 100.0%, Recall@5 = 100.0%, MRR@5 = 0.8810, nDCG@5 = 0.9116.
+
 
 

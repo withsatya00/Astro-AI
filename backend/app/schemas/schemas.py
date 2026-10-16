@@ -116,6 +116,7 @@ class ChatMessageRequest(BaseModel):
     chart_id: Optional[str] = None
     message: str = Field(..., min_length=1, max_length=4000)
     language: str = Field("en", description="Language: 'en', 'hi', or 'hinglish'")
+    astrologer_id: Optional[str] = Field("acharya_shastri", description="Astrologer persona: acharya_shastri, dr_sunita, pandit_maharaj")
     force_demo_mode: bool = False
     image_base64: Optional[str] = None  # Base64 encoded palm or hand photo for palmistry analysis
 
@@ -124,6 +125,7 @@ class ChatMessageResponse(BaseModel):
     session_id: str
     role: str
     content: str
+    astrologer_id: Optional[str] = "acharya_shastri"
     citations: List[Citation] = []
     calculated_data_used: bool = False
     is_demo_mode: bool = False
@@ -213,3 +215,49 @@ class AgentExecuteResponse(BaseModel):
     duration_ms: float
     result: Any
     safety_notes: Optional[str] = None
+
+# ----------------- Kundali Milan Schemas -----------------
+class MilanPartnerInput(BaseModel):
+    chart_id: Optional[str] = None
+    name: str = Field("Person", description="Full name")
+    date_of_birth: Optional[str] = None
+    time_of_birth: Optional[str] = "12:00:00"
+    is_time_approximate: bool = False
+    latitude: float = 28.6139
+    longitude: float = 77.2090
+    timezone_offset: float = 5.5
+    city: Optional[str] = "New Delhi"
+    country: Optional[str] = "India"
+
+class KundaliMilanRequest(BaseModel):
+    boy: MilanPartnerInput
+    girl: MilanPartnerInput
+
+class KootaScore(BaseModel):
+    koota: str
+    max_points: float
+    obtained_points: float
+    boy_value: Any
+    girl_value: Any
+    description: str
+    verdict: str
+
+class KundaliMilanResponse(BaseModel):
+    boy_name: str
+    girl_name: str
+    total_score: float
+    max_score: float = 36.0
+    percentage: float
+    verdict: str
+    recommendation: str
+    category: str
+    kootas: List[KootaScore]
+    boy_summary: Dict[str, Any]
+    girl_summary: Dict[str, Any]
+    manglik_compatibility: Dict[str, Any]
+
+# ----------------- Panchang & Sade Sati Schemas -----------------
+class SadeSatiRequest(BaseModel):
+    moon_sign: Optional[str] = None
+    chart_id: Optional[str] = None
+

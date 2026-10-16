@@ -10,11 +10,14 @@ const ChatController = {
   currentLanguage: 'en',
   forceDemoMode: false,
   lastUserMessage: '',
+  selectedAstrologer: localStorage.getItem('astroai_astrologer') || 'acharya_shastri',
+  astrologers: [],
 
   init() {
     this.bindEvents();
     this.loadSessions();
     this.renderIntakeSavedChips();
+    this.loadAstrologers();
   },
 
   bindEvents() {
@@ -47,8 +50,12 @@ const ChatController = {
     if (langSelect) {
       langSelect.addEventListener('change', (e) => {
         this.currentLanguage = e.target.value;
+        if (window.I18n) {
+          window.I18n.setLanguage(e.target.value, true);
+        }
       });
     }
+
 
     if (demoToggle) {
       demoToggle.addEventListener('change', (e) => {
@@ -140,15 +147,63 @@ const ChatController = {
     }
   },
 
+  getEmptyIntakeData() {
+    return {
+      name: '',
+      gender: 'Male',
+      dob: '',
+      tob: '',
+      isApprox: false,
+      city: '',
+      topic: 'love',
+      customQuestion: ''
+    };
+  },
+
   intakeCoordinates: { lat: 28.6139, lon: 77.2090, tz: 5.5, country: 'India' },
   lastIntakeData: {
-    name: 'Rohit Sharma',
+    name: '',
     gender: 'Male',
-    dob: '1990-10-24',
-    tob: '07:30',
+    dob: '',
+    tob: '',
     isApprox: false,
-    city: 'New Delhi',
-    topic: 'love'
+    city: '',
+    topic: 'love',
+    customQuestion: ''
+  },
+
+  clearIntakeForm() {
+    this.lastIntakeData = this.getEmptyIntakeData();
+    this.intakeCoordinates = { lat: 28.6139, lon: 77.2090, tz: 5.5, country: 'India' };
+
+    const nameInput = document.getElementById('intake-name');
+    const dobInput = document.getElementById('intake-dob');
+    const tobInput = document.getElementById('intake-tob');
+    const cityInput = document.getElementById('intake-city');
+    const approxCheck = document.getElementById('intake-approx-time');
+    const questionInput = document.getElementById('intake-custom-question');
+
+    if (nameInput) nameInput.value = '';
+    if (dobInput) dobInput.value = '';
+    if (tobInput) tobInput.value = '';
+    if (cityInput) cityInput.value = '';
+    if (approxCheck) approxCheck.checked = false;
+    if (questionInput) questionInput.value = '';
+
+    const maleRadio = document.querySelector('input[name="intake-gender"][value="Male"]');
+    if (maleRadio) {
+      maleRadio.checked = true;
+      this.onGenderChange(maleRadio);
+    }
+
+    const loveRadio = document.querySelector('input[name="intake-topic"][value="love"]');
+    if (loveRadio) {
+      loveRadio.checked = true;
+      this.onTopicChange(loveRadio);
+    }
+
+    if (nameInput) nameInput.focus();
+    App.showToast('Intake form reset (फॉर्म खाली कर दिया गया)', 'info');
   },
 
   onGenderChange(radio) {
@@ -231,7 +286,7 @@ const ChatController = {
   },
 
   getIntakeTemplateHtml() {
-    const d = this.lastIntakeData;
+    const d = this.lastIntakeData || this.getEmptyIntakeData();
     return `
       <div class="welcome-screen" id="welcome-screen">
         <div class="astrotalk-intake-card" id="astrotalk-intake-card">
@@ -254,7 +309,7 @@ const ChatController = {
             <div class="intake-form-grid">
               <div class="form-group">
                 <label class="intake-label" for="intake-name">Full Name / आपका नाम <span class="req">*</span></label>
-                <input type="text" id="intake-name" class="intake-input" placeholder="e.g. Rohit Sharma" value="${d.name || ''}" required />
+                <input type="text" id="intake-name" class="intake-input" placeholder="e.g. Rahul Sharma / आपका पूरा नाम" value="${d.name || ''}" required />
               </div>
 
               <div class="form-group">
@@ -277,12 +332,12 @@ const ChatController = {
 
               <div class="form-group">
                 <label class="intake-label" for="intake-dob">Date of Birth / जन्म तिथि <span class="req">*</span></label>
-                <input type="date" id="intake-dob" class="intake-input" value="${d.dob || '1990-10-24'}" required />
+                <input type="date" id="intake-dob" class="intake-input" value="${d.dob || ''}" required />
               </div>
 
               <div class="form-group">
                 <label class="intake-label" for="intake-tob">Time of Birth / जन्म समय</label>
-                <input type="time" id="intake-tob" class="intake-input" value="${d.tob || '07:30'}" />
+                <input type="time" id="intake-tob" class="intake-input" value="${d.tob || ''}" />
                 <label class="approx-checkbox">
                   <input type="checkbox" id="intake-approx-time" ${d.isApprox ? 'checked' : ''} />
                   <span>Don't know exact time (लगभग समय)</span>
@@ -291,7 +346,7 @@ const ChatController = {
 
               <div class="form-group full-col">
                 <label class="intake-label" for="intake-city">Birth Place (City) / जन्म स्थान <span class="req">*</span></label>
-                <input type="text" id="intake-city" class="intake-input" placeholder="e.g. New Delhi, India" value="${d.city || 'New Delhi'}" required />
+                <input type="text" id="intake-city" class="intake-input" placeholder="e.g. New Delhi, Mumbai, Lucknow..." value="${d.city || ''}" required />
                 <div class="intake-city-chips">
                   <span class="city-tag" onclick="ChatController.setIntakeCity('New Delhi', 'India', 28.6139, 77.2090, 5.5)">New Delhi</span>
                   <span class="city-tag" onclick="ChatController.setIntakeCity('Mumbai', 'India', 19.0760, 72.8777, 5.5)">Mumbai</span>
@@ -334,11 +389,15 @@ const ChatController = {
 
               <div class="form-group full-col">
                 <label class="intake-label" for="intake-custom-question">Your Specific Question / आपका विशिष्ट प्रश्न (Optional)</label>
-                <input type="text" id="intake-custom-question" class="intake-input" placeholder="e.g. Mere career mein kab growth hogi? (or leave blank for general guidance)" />
+                <input type="text" id="intake-custom-question" class="intake-input" placeholder="e.g. Mere career mein kab growth hogi? (or leave blank for general guidance)" value="${d.customQuestion || ''}" />
               </div>
             </div>
 
             <div class="intake-actions">
+              <button type="button" class="btn-reset-intake" onclick="ChatController.clearIntakeForm()">
+                <span>🔄</span>
+                <span>Reset Form (खाली करें)</span>
+              </button>
               <button type="submit" id="btn-submit-intake" class="btn-start-consultation">
                 <span>🟢</span>
                 <span>Start Chat with Astrologer (परामर्श शुरू करें)</span>
@@ -353,12 +412,38 @@ const ChatController = {
 
   startNewChat() {
     this.currentSessionId = null;
+    this.lastIntakeData = this.getEmptyIntakeData();
+    this.intakeCoordinates = { lat: 28.6139, lon: 77.2090, tz: 5.5, country: 'India' };
+
+    // Deselect any active session in the sidebar
+    document.querySelectorAll('#sessions-list .sidebar-item').forEach(item => item.classList.remove('active'));
+
     const box = document.getElementById('chat-messages-container');
     if (!box) return;
 
     box.innerHTML = this.getIntakeTemplateHtml();
     this.renderIntakeSavedChips();
-    App.showToast('Started new consultation intake', 'info');
+
+    // Reset bottom chat input
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput) {
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+    }
+
+    // Reset topbar profile tag if starting new consultation
+    const topbarName = document.getElementById('topbar-profile-name');
+    if (topbarName) {
+      topbarName.innerText = 'New Consultation';
+    }
+
+    // Auto-focus on name field
+    setTimeout(() => {
+      const nameInput = document.getElementById('intake-name');
+      if (nameInput) nameInput.focus();
+    }, 50);
+
+    App.showToast('Started new consultation intake (नया परामर्श फॉर्म तैयार है) ✨', 'info');
   },
 
   async submitIntakeForm(e) {
@@ -506,8 +591,8 @@ const ChatController = {
         return;
       }
 
-      list.innerHTML = sessions.map((s, idx) => `
-        <li class="sidebar-item ${idx === 0 && !this.currentSessionId ? 'active' : (s.id === this.currentSessionId ? 'active' : '')}" 
+      list.innerHTML = sessions.map((s) => `
+        <li class="sidebar-item ${this.currentSessionId && s.id === this.currentSessionId ? 'active' : ''}" 
             onclick="ChatController.loadSessionHistory('${s.id}')">
           <span class="item-title">${s.title}</span>
           <span style="font-size: 0.7rem; color: var(--text-dim);">${new Date(s.created_at).toLocaleDateString([], {month:'short', day:'numeric'})}</span>
@@ -542,15 +627,19 @@ const ChatController = {
   formatMarkdown(text) {
     if (!text) return '';
     let html = text
-      .replace(/### (.*?)\n/g, '<h4 style="margin: 0.5rem 0 0.25rem 0; font-size: 0.95rem; font-weight: 600; color: #1f2937;">$1</h4>')
-      .replace(/## (.*?)\n/g, '<h3 style="margin: 0.6rem 0 0.3rem 0; font-size: 1.02rem; font-weight: 700; color: #111827;">$1</h3>')
-      .replace(/# (.*?)\n/g, '<h2 style="margin: 0.75rem 0 0.4rem 0; font-size: 1.1rem; font-weight: 700; color: #111827;">$1</h2>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/> (.*?)\n/g, '<blockquote style="border-left: 3px solid #c4b5fd; padding-left: 0.75rem; color: #4b5563; margin: 0.5rem 0; background: #faf5ff; padding: 0.4rem 0.6rem; border-radius: 4px;">$1</blockquote>')
-      .replace(/`([^`]+)`/g, '<code style="background: #f1f5f9; color: #334155; padding: 0.15rem 0.35rem; border-radius: 4px; font-size: 0.85em;">$1</code>')
+      .replace(/### (.*?)\n/g, '<h4 style="margin: 0.65rem 0 0.3rem 0; font-size: 0.98rem; font-weight: 700; color: #4338CA;">$1</h4>')
+      .replace(/## (.*?)\n/g, '<h3 style="margin: 0.75rem 0 0.35rem 0; font-size: 1.08rem; font-weight: 700; color: #312E81;">$1</h3>')
+      .replace(/# (.*?)\n/g, '<h2 style="margin: 0.85rem 0 0.45rem 0; font-size: 1.18rem; font-weight: 700; color: #1E1B4B; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.35rem;">$1</h2>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong style="color: #0F172A; font-weight: 700;">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em style="color: #334155;">$1</em>')
+      .replace(/> (.*?)\n/g, '<blockquote style="border-left: 3.5px solid #F59E0B; padding: 0.6rem 0.95rem; margin: 0.65rem 0; background: #FFFDF5; border: 1px solid #FDE68A; border-left-width: 3.5px; border-radius: 6px; color: #78350F; font-size: 0.92rem; line-height: 1.6;">$1</blockquote>')
+      .replace(/`([^`]+)`/g, '<code style="background: #F1F5F9; color: #4338CA; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88em; font-weight: 600;">$1</code>')
+      .replace(/^[\*\-] (.*?)$/gm, '<li style="margin-bottom: 0.35rem; color: #334155;">$1</li>')
+      .replace(/^\d+\.\s+(.*?)$/gm, '<li style="margin-bottom: 0.35rem; color: #334155;">$1</li>')
       .replace(/\n\n/g, '<br/><br/>')
       .replace(/\n/g, '<br/>');
+
+    html = html.replace(/(<li style="[^"]*">.*?<\/li>)+/g, '<ul style="margin: 0.5rem 0 0.75rem 1.25rem; padding-left: 0.5rem;">$&</ul>');
     return html;
   },
 
@@ -572,8 +661,10 @@ const ChatController = {
     let chartHtml = '';
     if (chartSvg) {
       chartHtml = `
-        <div class="chat-inline-kundli-box">
-          <div class="inline-kundli-title">🪐 Lagna Kundali (D1) Diagram</div>
+        <div class="chat-inline-kundli-box" style="max-width: 280px; margin: 0.75rem auto; background: #FFFDF8; border: 1.5px solid #FDE68A; border-radius: 10px; padding: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+          <div class="inline-kundli-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.82rem; font-weight: 700; color: #92400E;">
+            <span>🪐 Lagna Kundali (D1)</span>
+          </div>
           ${chartSvg}
         </div>
       `;
@@ -586,6 +677,9 @@ const ChatController = {
         <div class="msg-actions">
           <button class="btn-msg-action" onclick="ChatController.copyMessage('${escapedRaw}')">
             📋 Copy
+          </button>
+          <button class="btn-msg-action" onclick="ChatController.shareResponseWhatsApp('${escapedRaw}')">
+            📲 WhatsApp
           </button>
           <button class="btn-msg-action" onclick="ChatController.regenerateLast()">
             🔄 Regenerate
@@ -600,6 +694,8 @@ const ChatController = {
         </div>
       `;
     }
+
+    const currentAstrologer = this.astrologers.find(a => a.id === this.selectedAstrologer) || { avatar: '🔮', name: 'Astrologer' };
 
     if (role === 'user') {
       let userInner = `<div>${formattedContent}</div>`;
@@ -616,12 +712,18 @@ const ChatController = {
           ${userInner}
           <div style="text-align: right; font-size: 0.7rem; color: #6b7280; margin-top: 0.35rem;">${timeStr}</div>
         </div>
-        <div class="msg-avatar" style="background: #F3F4F6; border: 1px solid #E5E7EB;">👤</div>
+        <div class="msg-avatar" style="background: #EEF2FF; border: 1px solid #C7D2FE;">👤</div>
       `;
     } else {
       row.innerHTML = `
-        <div class="msg-avatar">🔮</div>
+        <div class="msg-avatar" title="${currentAstrologer.name}">${currentAstrologer.avatar || '🔮'}</div>
         <div class="message-bubble">
+          <div class="msg-speaker-badge">
+            <span style="font-size: 1rem;">${currentAstrologer.avatar || '🕉️'}</span>
+            <span class="msg-speaker-name">${currentAstrologer.name}</span>
+            <span class="msg-speaker-title">${currentAstrologer.title || 'Vedic Astrologer'}</span>
+            <span style="margin-left: auto; font-size: 0.72rem; color: #94A3B8;">${timeStr}</span>
+          </div>
           <div>${formattedContent}</div>
           ${chartHtml}
           ${actionsHtml}
@@ -642,6 +744,19 @@ const ChatController = {
     });
   },
 
+  shareResponseWhatsApp(escapedText) {
+    const raw = decodeURIComponent(escapedText);
+    const persona = this.astrologers.find(a => a.id === this.selectedAstrologer) || { name: 'Acharya Shastri' };
+    const text = 
+`🔮 *AstroAI Consultation by ${persona.name}* 🔮
+━━━━━━━━━━━━━━━━━━
+${raw}
+━━━━━━━━━━━━━━━━━━
+✨ Consult verified AI Astrologers on AstroAI:
+https://astrotalk.ai`;
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+  },
+
   regenerateLast() {
     if (this.lastUserMessage) {
       this.sendMessage(this.lastUserMessage);
@@ -657,6 +772,95 @@ const ChatController = {
         if (b.innerText.includes('👍') || b.innerText.includes('👎')) b.disabled = true;
       });
     }
+  },
+
+  async loadAstrologers() {
+    try {
+      this.astrologers = await API.getAstrologers();
+      this.updateAstrologerUI();
+    } catch (err) {
+      console.warn('Could not load astrologers:', err);
+    }
+  },
+
+  updateAstrologerUI() {
+    const current = this.astrologers.find(a => a.id === this.selectedAstrologer) || this.astrologers[0] || {
+      id: 'acharya_shastri',
+      name: 'Acharya Shastri',
+      title: 'Vedic & Vastu Specialist',
+      avatar: '🕉️',
+      experience: '24+ Yrs Exp'
+    };
+
+    // Update topbar astrologer badge
+    const badge = document.querySelector('.astrologer-badge');
+    const avatarEl = document.querySelector('.astrologer-avatar');
+    const nameEl = document.querySelector('.astrologer-info h3');
+    const titleEl = document.querySelector('.astrologer-info p');
+    if (avatarEl) avatarEl.innerText = current.avatar || '🔮';
+    if (nameEl) nameEl.innerHTML = `${current.name} <span style="font-size: 0.7rem; color: var(--gold-accent);">✦</span>`;
+    if (titleEl) titleEl.innerText = `${current.title} • ${current.experience || 'Vedic NASA Engine'}`;
+
+    if (badge && !badge.hasAttribute('data-has-click')) {
+      badge.setAttribute('data-has-click', 'true');
+      badge.style.cursor = 'pointer';
+      badge.title = 'Click to switch astrologer persona';
+      badge.addEventListener('click', () => this.openAstrologerModal());
+    }
+
+    // Update intake form chips if present
+    const intakeContainer = document.getElementById('intake-astrologer-chips');
+    if (intakeContainer && this.astrologers.length) {
+      intakeContainer.innerHTML = this.astrologers.map(a => `
+        <div class="astrologer-select-chip ${a.id === this.selectedAstrologer ? 'active' : ''}" 
+             onclick="ChatController.selectAstrologer('${a.id}')">
+          <span class="chip-avatar">${a.avatar}</span>
+          <div class="chip-info">
+            <div class="chip-name">${a.name} <span class="chip-rating">⭐ ${a.rating}</span></div>
+            <div class="chip-title">${a.title}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+  },
+
+  selectAstrologer(id) {
+    this.selectedAstrologer = id;
+    localStorage.setItem('astroai_astrologer', id);
+    this.updateAstrologerUI();
+    const current = this.astrologers.find(a => a.id === id);
+    if (current && window.App && window.App.showToast) {
+      window.App.showToast(`Connected with ${current.name} (${current.title}) ✨`, 'success');
+    }
+    const modal = document.getElementById('modal-select-astrologer');
+    if (modal) modal.classList.remove('active');
+  },
+
+  openAstrologerModal() {
+    const modal = document.getElementById('modal-select-astrologer');
+    if (!modal) return;
+    const listContainer = document.getElementById('astrologers-modal-list');
+    if (listContainer) {
+      listContainer.innerHTML = this.astrologers.map(a => `
+        <div class="astrologer-modal-card ${a.id === this.selectedAstrologer ? 'active' : ''}" 
+             onclick="ChatController.selectAstrologer('${a.id}')">
+          <div class="modal-card-top">
+            <div class="modal-card-avatar">${a.avatar}</div>
+            <div class="modal-card-info">
+              <div class="modal-card-name">${a.name} <span class="star-pill">⭐ ${a.rating}</span></div>
+              <div class="modal-card-title">${a.title} • <strong>${a.experience}</strong></div>
+              <div class="modal-card-consultations">📊 ${a.consultations} Consultations completed</div>
+            </div>
+            <div class="select-check">${a.id === this.selectedAstrologer ? '✓ Active' : 'Select'}</div>
+          </div>
+          <div class="modal-card-tone">🗣️ <strong>Tone:</strong> ${a.tone_badge}</div>
+          <div class="modal-card-specialties">
+            ${(a.specialties || []).map(s => `<span class="specialty-tag">${s}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+    modal.classList.add('active');
   },
 
   async sendMessage(customText = null, imageBase64 = null) {
@@ -695,65 +899,142 @@ const ChatController = {
     this.lastUserMessage = msg || 'Analyze my palm lines';
     this.appendMessage('user', msg || 'Analyze my palm lines (हस्तरेखा)', [], false, null, imageBase64);
 
-    // Append typing indicator
     const box = document.getElementById('chat-messages-container');
-    const typingRow = document.createElement('div');
-    typingRow.className = 'message-row assistant';
-    typingRow.id = 'typing-indicator-row';
-    typingRow.innerHTML = `
-      <div class="msg-avatar">🔮</div>
-      <div class="typing-bubble">
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <div class="typing-dot"></div>
-        <span style="font-size: 0.78rem; color: var(--text-dim); margin-left: 0.4rem;">
-          ${imageBase64 ? 'Analyzing palm lines & mounts...' : 'Consulting celestial alignments...'}
-        </span>
-      </div>
-    `;
-    box.appendChild(typingRow);
-    box.scrollTop = box.scrollHeight;
-
-    // Send button disabled state
     const sendBtn = document.getElementById('btn-send-chat');
     if (sendBtn) sendBtn.disabled = true;
 
+    // Create live streaming assistant message bubble immediately
+    const currentAstrologer = this.astrologers.find(a => a.id === this.selectedAstrologer) || { avatar: '🔮', name: 'Astrologer' };
+    const streamRow = document.createElement('div');
+    streamRow.className = 'message-row assistant';
+    streamRow.innerHTML = `
+      <div class="msg-avatar" title="${currentAstrologer.name}">${currentAstrologer.avatar || '🔮'}</div>
+      <div class="message-bubble" id="active-streaming-bubble">
+        <div class="msg-speaker-badge">
+          <span style="font-size: 1rem;">${currentAstrologer.avatar || '🕉️'}</span>
+          <span class="msg-speaker-name">${currentAstrologer.name}</span>
+          <span class="msg-speaker-title">${currentAstrologer.title || 'Vedic Astrologer'}</span>
+          <span style="margin-left: auto; font-size: 0.72rem; color: #94A3B8;">typing...</span>
+        </div>
+        <div class="streaming-content-wrapper" id="active-streaming-text">
+          <span class="streaming-cursor">▋</span>
+        </div>
+      </div>
+    `;
+    box.appendChild(streamRow);
+    box.scrollTop = box.scrollHeight;
+
+    const streamingTextElem = streamRow.querySelector('#active-streaming-text');
+    let accumulatedText = '';
+    let isStreamDone = false;
+
+    const isKundliRequested = (t) => {
+      if (!t) return false;
+      const low = t.toLowerCase();
+      return low.includes('kundli') || low.includes('chart') || low.includes('kundali');
+    };
+
     try {
-      const res = await API.sendMessage({
-        session_id: this.currentSessionId,
-        chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
-        message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
-        language: this.currentLanguage,
-        force_demo_mode: this.forceDemoMode,
-        image_base64: imageBase64
-      });
+      await API.streamConsultation(
+        {
+          session_id: this.currentSessionId,
+          chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
+          message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
+          language: this.currentLanguage,
+          astrologer_id: this.selectedAstrologer,
+          force_demo_mode: this.forceDemoMode,
+          image_base64: imageBase64
+        },
+        (sessionData) => {
+          this.currentSessionId = sessionData.session_id;
+        },
+        (deltaText) => {
+          accumulatedText += deltaText;
+          if (streamingTextElem) {
+            streamingTextElem.innerHTML = this.formatMarkdown(accumulatedText) + '<span class="streaming-cursor">▋</span>';
+            box.scrollTop = box.scrollHeight;
+          }
+        },
+        (doneData) => {
+          isStreamDone = true;
+          this.currentSessionId = doneData.session_id;
+          if (streamingTextElem) {
+            streamingTextElem.innerHTML = this.formatMarkdown(finalContent);
+          }
+          const speakerBadgeTime = streamRow.querySelector('.msg-speaker-badge span:last-child');
+          const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          if (speakerBadgeTime) {
+            speakerBadgeTime.textContent = timeStr;
+          }
 
-      // Remove typing indicator
-      const ind = document.getElementById('typing-indicator-row');
-      if (ind) ind.remove();
+          // Inline Kundli SVG diagram if requested or provided
+          let inlineSvg = doneData.chart_svg;
+          if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
+            inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
+          }
+          if (inlineSvg) {
+            const chartBox = document.createElement('div');
+            chartBox.className = 'chat-inline-kundli-box';
+            chartBox.innerHTML = `
+              <div class="inline-kundli-title" style="display:flex; justify-content:space-between; align-items:center;">
+                <span>🪐 Lagna Kundali (D1) Diagram</span>
+                <button class="btn-msg-action" onclick="ChartViewer.downloadKundliPNG(this.parentElement.nextElementSibling)" style="font-size:0.72rem; padding:0.2rem 0.5rem;">📥 Download PNG</button>
+              </div>
+              ${inlineSvg}
+            `;
+            streamRow.querySelector('.message-bubble').appendChild(chartBox);
+          }
 
-      this.currentSessionId = res.session_id;
-
-      // Determine inline SVG chart if requested or provided
-      const isKundliRequested = (t) => {
-        if (!t) return false;
-        const low = t.toLowerCase();
-        return low.includes('kundli') || low.includes('chart') || low.includes('kundali');
-      };
-
-      let inlineSvg = res.chart_svg;
-      if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
-        inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
-      }
-
-      this.appendMessage('assistant', res.content, [], res.is_demo_mode, inlineSvg);
-      this.loadSessions();
+          // Action buttons
+          const actionsDiv = document.createElement('div');
+          actionsDiv.className = 'msg-actions';
+          const escapedRaw = encodeURIComponent(finalContent);
+          const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          actionsDiv.innerHTML = `
+            <button class="btn-msg-action" onclick="ChatController.copyMessage('${escapedRaw}')">📋 Copy</button>
+            <button class="btn-msg-action" onclick="ChatController.shareResponseWhatsApp('${escapedRaw}')">📲 WhatsApp</button>
+            <button class="btn-msg-action" onclick="ChatController.regenerateLast()">🔄 Regenerate</button>
+            <button class="btn-msg-action" onclick="ChatController.submitFeedback('up', this)">👍 Helpful</button>
+            <button class="btn-msg-action" onclick="ChatController.submitFeedback('down', this)">👎</button>
+            <span style="margin-left: auto; font-size: 0.72rem; color: var(--text-dim);">${timeStr}</span>
+          `;
+          streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
+          this.loadSessions();
+          box.scrollTop = box.scrollHeight;
+        },
+        async (streamErr) => {
+          console.warn('Streaming failed, fallback to standard API call:', streamErr);
+          if (!accumulatedText) {
+            streamRow.remove();
+            // Fallback to standard request
+            const res = await API.sendMessage({
+              session_id: this.currentSessionId,
+              chart_id: this.activeChartId || (App.currentChart ? App.currentChart.id : null),
+              message: msg || 'Analyze my palm lines (हस्तरेखा विश्लेषण)',
+              language: this.currentLanguage,
+              astrologer_id: this.selectedAstrologer,
+              force_demo_mode: this.forceDemoMode,
+              image_base64: imageBase64
+            });
+            this.currentSessionId = res.session_id;
+            let inlineSvg = res.chart_svg;
+            if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
+              inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
+            }
+            this.appendMessage('assistant', res.content, [], res.is_demo_mode, inlineSvg);
+            this.loadSessions();
+          }
+        }
+      );
     } catch (err) {
-      const ind = document.getElementById('typing-indicator-row');
-      if (ind) ind.remove();
-      this.appendMessage('assistant', `⚠️ Could not complete astrological consultation: ${err.message}`);
+      console.error('Consultation chat error:', err);
+      if (!accumulatedText) {
+        streamRow.remove();
+        this.appendMessage('assistant', `⚠️ Could not complete astrological consultation: ${err.message}`);
+      }
     } finally {
       if (sendBtn) sendBtn.disabled = false;
     }
   }
 };
+
