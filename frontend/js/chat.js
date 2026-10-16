@@ -989,7 +989,6 @@ https://astrotalk.ai`;
           const actionsDiv = document.createElement('div');
           actionsDiv.className = 'msg-actions';
           const escapedRaw = encodeURIComponent(finalContent);
-          const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           actionsDiv.innerHTML = `
             <button class="btn-msg-action" onclick="ChatController.copyMessage('${escapedRaw}')">📋 Copy</button>
             <button class="btn-msg-action" onclick="ChatController.shareResponseWhatsApp('${escapedRaw}')">📲 WhatsApp</button>
