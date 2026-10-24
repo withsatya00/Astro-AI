@@ -2090,6 +2090,7 @@ https://astrojyotish.ai`;
       input.style.height = 'auto';
     }
 
+    document.querySelectorAll('#chat-messages-container .message-row.assistant').forEach(row => { row.style.minHeight = ''; });
     this.lastUserMessage = msg || 'Analyze my palm lines';
     const userRow = this.appendMessage('user', msg || 'Analyze my palm lines (हस्तरेखा)', [], false, null, imageBase64, { status: 'sending' });
 
@@ -2183,8 +2184,10 @@ https://astrojyotish.ai`;
       box.appendChild(streamRow);
     }
 
-    streamRow.style.minHeight = Math.max(0, box.clientHeight - 24) + 'px';
-    this.anchorAnswerStart(streamRow);
+    // Establish the reading position once, in response to Send. Tokens never move it.
+    const questionHeight = userRow ? userRow.getBoundingClientRect().height : 0;
+    streamRow.style.minHeight = Math.max(0, box.clientHeight - questionHeight - 48) + 'px';
+    this.anchorAnswerStart(userRow || streamRow);
 
     const streamingTextElem = streamRow.querySelector('#active-streaming-text');
     let accumulatedText = '';
@@ -2308,7 +2311,7 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            streamRow.style.minHeight = '';
+            // Keep short replies anchored too; release this space on the next Send.
             this.updateFloatingBtn();
           },
           async (streamErr) => {
@@ -2418,7 +2421,7 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            streamRow.style.minHeight = '';
+            // Keep short replies anchored too; release this space on the next Send.
             this.updateFloatingBtn();
           },
           async (streamErr) => {

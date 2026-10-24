@@ -436,9 +436,7 @@ body.in-consult .top-promo-bar,
 body.in-consult .ephemeris-ticker-bar { display: none !important; }
 body.in-consult #view-consultation { height: 100vh; height: 100dvh; }
 @media (min-width: 1024px) {
-  /* keep the conversation a readable column on laptops */
-  #chat-messages-container .message-row,
-  #chat-messages-container .chat-date-pill,
+  /* Intro content can be centred; messages use the full conversation width. */
   #chat-messages-container .welcome-screen {
     width: 100%; max-width: 980px; margin-left: auto; margin-right: auto;
   }

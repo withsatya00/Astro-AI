@@ -52,8 +52,10 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:8015';
       document.querySelector('.toast-container').innerHTML='';
     });
     await page.waitForTimeout(500);
-    for(const useSession of [true,false]) {
-      await page.evaluate(useSession=>{
+    for(const scenario of [{width:390,useSession:true,short:false},{width:1440,useSession:false,short:false},
+                           {width:390,useSession:false,short:true},{width:1440,useSession:true,short:true}]) {
+      await page.setViewportSize({width:scenario.width,height:844});
+      await page.evaluate(({useSession,short})=>{
         const simulate=async (...args)=>{
           const [, ,session,delta,done]=useSession?args:[null,...args];
           session({session_id:'test-session',consultation_id:'test-session'});
@@ -62,9 +64,10 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:8015';
         };
         if(useSession) API.streamConsultationSession=simulate;
         else {API.streamConsultationSession=null;API.streamConsultation=simulate;}
-        window.testContent='The answer starts here.\n\n'+('This is a long response for reading. '.repeat(150));
+        window.testContent=short ? 'Your career question has been answered. Keep reading at your own pace.'
+          : 'The answer starts here.\n\n'+('This is a long response for reading. '.repeat(150));
         void ChatController.sendMessage('Kya videsh jane ka yog hai?');
-      },useSession);
+      },scenario);
       await page.waitForFunction(()=>!!window.testDelta);
       const before=await page.locator('#chat-messages-container').evaluate(e=>e.scrollTop);
       await page.evaluate(()=>testDelta(testContent));
@@ -73,7 +76,9 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:8015';
       assert.ok(Math.abs(before-after)<3,`stream moved viewport ${before} -> ${after}`);
       const start=await page.locator('#active-streaming-bubble').evaluate(e=>e.getBoundingClientRect().top);
       const viewport=await page.locator('#chat-messages-container').evaluate(e=>e.getBoundingClientRect().top);
-      assert.ok(Math.abs(start-viewport)<25,'Answer start must remain visible');
+      const question=await page.locator('.message-row.user').last().evaluate(e=>e.getBoundingClientRect().top);
+      assert.ok(Math.abs(question-viewport)<25,'Sent question must remain at the reading anchor');
+      assert.ok(start>question && start-viewport<180,'Answer start must remain visible below the question');
       await page.locator('#chat-messages-container').evaluate(e=>e.scrollTop+=100);
       const manual=await page.locator('#chat-messages-container').evaluate(e=>e.scrollTop);
       await page.evaluate(()=>testDone());await page.waitForTimeout(100);
@@ -81,18 +86,31 @@ const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:8015';
       assert.equal(await page.locator('.vedic-remedy-card,.muhurat-timeline-bar').count(),0);
       await page.evaluate(()=>{document.querySelectorAll('[id^="active-streaming-"]').forEach(e=>e.removeAttribute('id'));window.testDelta=null});
     }
-    console.log('PASS both streaming routes: answer starts visible, no token/completion scroll, manual reading preserved, no invented cards.');
-    for(const width of [360,390,430,1280]) {
+    console.log('PASS desktop/mobile, short/long replies on both streaming routes: no token/completion scroll; manual reading preserved.');
+    for(const width of [360,390,430,768,1280,1920]) {
       await page.setViewportSize({width,height:844});await page.waitForTimeout(100);
       const geometry=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,header:document.querySelector('#consultation-unified-header').getBoundingClientRect().top,composer:document.querySelector('.composer-wrapper').getBoundingClientRect().bottom}));
       assert.equal(geometry.overflow,false,`horizontal page overflow at ${width}`);
       assert.ok(Math.abs(geometry.header)<2,`header moved at ${width}`);
       assert.ok(geometry.composer<=845,`composer outside viewport at ${width}`);
+      const edges=await page.evaluate(()=>{
+        const assistant=[...document.querySelectorAll('.message-row.assistant')].at(-1);
+        const user=[...document.querySelectorAll('.message-row.user')].at(-1);
+        return {assistantLeft:assistant.getBoundingClientRect().left,
+          userRight:innerWidth-user.querySelector('.user-bubble').getBoundingClientRect().right,
+          dateWidth:document.querySelector('.chat-date-pill')?.getBoundingClientRect().width || 0};
+      });
+      assert.ok(edges.assistantLeft<=28,`assistant row is centred instead of left-aligned at ${width}`);
+      assert.ok(edges.userRight<=40,`user bubble is centred instead of right-aligned at ${width}`);
+      assert.ok(edges.dateWidth<200,`date pill stretches across the page at ${width}`);
     }
+    await page.setViewportSize({width:1440,height:900});
+    await page.evaluate(()=>ChatController.anchorAnswerStart([...document.querySelectorAll('.message-row.user')].at(-1)));
+    await page.screenshot({path:'scratch/consultation-desktop-verified.png'});
     await page.setViewportSize({width:390,height:844});
-    await page.evaluate(()=>ChatController.anchorAnswerStart([...document.querySelectorAll('.message-row.assistant')].at(-1)));
+    await page.evaluate(()=>ChatController.anchorAnswerStart([...document.querySelectorAll('.message-row.user')].at(-1)));
     await page.screenshot({path:'scratch/consultation-mobile-verified.png'});
     assert.deepEqual(errors,[]);
-    console.log('PASS 360/390/430/1280px layout: no page overflow, header and composer remain visible; no browser errors.');
+    console.log('PASS 360/390/430/768/1280/1920px: messages connect to opposite screen edges, compact date pill, fixed header/composer, no page overflow.');
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
