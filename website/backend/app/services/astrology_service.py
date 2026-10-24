@@ -15,7 +15,8 @@ class AstrologyService:
     def calculate_and_save_chart(
         db: Session,
         request: BirthChartRequest,
-        user_id: Optional[str] = None
+        user_id: Optional[str] = None,
+        owner_key: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Validates input, computes planetary and house positions using Swiss Ephemeris,
@@ -50,6 +51,7 @@ class AstrologyService:
         # Persist to database
         db_chart = BirthChart(
             user_id=user_id,
+            owner_key=owner_key,
             name=request.name,
             date_of_birth=request.date_of_birth,
             time_of_birth=request.time_of_birth,
@@ -82,6 +84,12 @@ class AstrologyService:
         }
 
     @staticmethod
-    def get_chart_by_id(db: Session, chart_id: str) -> Optional[BirthChart]:
-        """Fetches a saved chart by primary key ID."""
-        return db.query(BirthChart).filter(BirthChart.id == chart_id).first()
+    def get_chart_by_id(db: Session, chart_id: str, owner_key: Optional[str]) -> Optional[BirthChart]:
+        """Fetches a saved chart by id, but only for the owner it belongs to.
+
+        `owner_key` is required on purpose: a chart holds someone's birth details, so there is no
+        way to look one up without saying whose it must be. No owner (or someone else's chart) -> None.
+        """
+        if not owner_key or not chart_id:
+            return None
+        return db.query(BirthChart).filter(BirthChart.id == chart_id, BirthChart.owner_key == owner_key).first()

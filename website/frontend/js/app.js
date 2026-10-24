@@ -757,7 +757,7 @@ var App = {
             <strong>${nameOf(r.chart_id)}</strong>
             <span class="my-report-meta">${r.title || r.report_type} · ${new Date(r.created_at).toLocaleDateString()}</span>
           </div>
-          <a href="${r.download_url}" target="_blank" class="btn-tool" style="padding: 0.4rem 0.75rem; font-size: 0.78rem;">📥 Download</a>
+          <a href="#" onclick="API.openPrivateFile('${r.download_url}'); return false;" class="btn-tool" style="padding: 0.4rem 0.75rem; font-size: 0.78rem;">📥 Download</a>
         </div>
       `).join('');
     } catch (err) {
@@ -3007,6 +3007,8 @@ var App = {
     this.updateAuthUI();
     this.showToast('You have been logged out.', 'info');
     this.renderUserAccountModal();
+    // Fresh start for the next person on this device: nothing of this account stays in memory.
+    setTimeout(() => window.location.assign('/'), 700);
   },
 
   filterCalculatorsGrid(category) {

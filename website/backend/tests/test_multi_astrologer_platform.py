@@ -13,7 +13,7 @@ from packages.database.models import Astrologer, Consultation, User, BirthChart
 @pytest.fixture(scope="module")
 def client():
     init_db()
-    with TestClient(app) as c:
+    with TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"}) as c:
         yield c
 
 def test_astrologer_directory_list_and_filter(client):
@@ -174,30 +174,7 @@ def test_user_auth_and_profiles(client):
     assert res_me.status_code == 200
     assert res_me.json()["email"] == unique_email
 
-def test_cross_user_consultation_isolation(client):
-    """Verifies that private consultations are isolated and cannot be snooped across users."""
-    # User 1 registers and creates consultation
-    email1 = f"user1_{str(uuid.uuid4())[:8]}@astroai.com"
-    res1 = client.post("/api/v1/auth/register", json={"email": email1, "password": "Password123!", "full_name": "User One"})
-    user1_id = res1.json()["user"]["id"]
-
-    res_c1 = client.post("/api/v1/consultations", json={
-        "astrologer_id": "acharya-shastri",
-        "user_id": user1_id,
-        "initial_message": "Confidential question from user 1"
-    })
-    c1_id = res_c1.json()["id"]
-
-    # User 2 registers
-    email2 = f"user2_{str(uuid.uuid4())[:8]}@astroai.com"
-    res2 = client.post("/api/v1/auth/register", json={"email": email2, "password": "Password123!", "full_name": "User Two"})
-    user2_id = res2.json()["user"]["id"]
-
-    # Listing user 2 consultations must NOT contain user 1's consultation
-    res_list2 = client.get(f"/api/v1/consultations?user_id={user2_id}")
-    assert res_list2.status_code == 200
-    user2_consultation_ids = [c["id"] for c in res_list2.json()]
-    assert c1_id not in user2_consultation_ids
+# Cross-user isolation is covered in depth by ai/backend/tests/test_user_isolation.py
 
 def test_astrologer_reviews_and_availability_update(client):
     """Verifies adding a verified review and toggling astrologer availability."""

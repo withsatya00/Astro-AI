@@ -95,6 +95,19 @@ def init_db():
                     conn.execute(text("ALTER TABLE birth_charts ADD COLUMN is_default BOOLEAN DEFAULT 0"))
                     conn.commit()
 
+            # Per-owner data isolation: every private table carries the owner it belongs to.
+            for table in ("consultations", "chat_sessions", "birth_charts", "bookings"):
+                if table in table_names:
+                    cols = [c["name"] for c in insp.get_columns(table)]
+                    if "owner_key" not in cols:
+                        conn.execute(text(f"ALTER TABLE {table} ADD COLUMN owner_key VARCHAR(80)"))
+                        conn.commit()
+                    conn.execute(text(f"CREATE INDEX IF NOT EXISTS ix_{table}_owner_key ON {table} (owner_key)"))
+                    # Signed-in users keep their history; rows with no user were shared between all visitors
+                    # and cannot be attributed to anyone, so they stay unowned (and therefore invisible).
+                    conn.execute(text(f"UPDATE {table} SET owner_key = 'u:' || user_id WHERE owner_key IS NULL AND user_id IS NOT NULL"))
+                    conn.commit()
+
             if "users" in table_names:
                 user_cols = [c["name"] for c in insp.get_columns("users")]
                 if "phone" not in user_cols:

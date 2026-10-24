@@ -30,7 +30,64 @@ const getApiBase = () => {
   return '/api/v1';
 };
 
+// ---------------------------------------------------------------------------------------------
+// Request identity. The server keeps every chat, chart and report private to one owner: the signed-in
+// account (Bearer token) or, before sign-in, this browser's random client id. Every API call carries
+// both, so two people never see each other's data.
+// ---------------------------------------------------------------------------------------------
+(function () {
+  if (window.__astroIdentityInstalled) return;
+  window.__astroIdentityInstalled = true;
+  const ID_RE = /^[A-Za-z0-9_-]{16,64}$/;
+  const read = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  let clientId = read('astro_client_id');
+  if (!clientId || !ID_RE.test(clientId)) {
+    const rand = (window.crypto && crypto.randomUUID) ? crypto.randomUUID().replace(/-/g, '')
+      : Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2);
+    clientId = ('c' + rand).slice(0, 40);
+    try { localStorage.setItem('astro_client_id', clientId); } catch (e) { /* storage blocked: per-tab id */ }
+  }
+  window.ASTRO_CLIENT_ID = clientId;
+  const nativeFetch = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    const url = typeof input === 'string' ? input : (input && input.url) || '';
+    if (!url.includes('/api/v1/')) return nativeFetch(input, init);
+    const headers = new Headers((init && init.headers) || (typeof input !== 'string' && input.headers) || undefined);
+    if (!headers.has('X-Client-Id')) headers.set('X-Client-Id', clientId);
+    const token = read('astro_access_token');
+    if (token && !headers.has('Authorization')) headers.set('Authorization', 'Bearer ' + token);
+    const request = typeof input === 'string' ? nativeFetch(input, Object.assign({}, init, { headers }))
+      : nativeFetch(new Request(input, { headers }), init);
+    return request.then(res => {
+      // Token expired or invalid: drop it once and reload as a guest instead of failing every call.
+      if (res.status === 401 && token && !/\/auth\/(login|register)/.test(url)) {
+        try {
+          localStorage.removeItem('astro_access_token');
+          localStorage.removeItem('astro_user');
+          if (!sessionStorage.getItem('astro_session_expired')) {
+            sessionStorage.setItem('astro_session_expired', '1');
+            location.reload();
+          }
+        } catch (e) { /* ignore */ }
+      }
+      return res;
+    });
+  };
+})();
+
 const API_BASE = getApiBase();
+
+// Browser-side leftovers of the previous person (draft, open conversation, remembered charts) must not
+// carry over to whoever signs in or out next on this device.
+const USER_SCOPED_KEYS = ['astroai_active_consultation', 'astroai_chat_draft', 'astroai_user_remedies', 'astro_my_chart_ids', 'astroai_astrologer_slug'];
+function clearUserScopedState() {
+  try { USER_SCOPED_KEYS.forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem('astro_session_expired'); } catch (e) { /* ignore */ }
+}
+
+// After sign-in, what this browser did as a guest (charts, chats) moves into the account.
+async function claimGuestData() {
+  try { await fetch(`${API_BASE}/auth/claim-guest`, { method: 'POST' }); } catch (e) { /* best effort */ }
+}
 
 var API = {
   async synthesizeSpeech(payload, signal) {
@@ -591,6 +648,8 @@ var API = {
     if (data.access_token) {
       localStorage.setItem('astro_access_token', data.access_token);
       localStorage.setItem('astro_user', JSON.stringify(data.user));
+      sessionStorage.removeItem('astro_session_expired');
+      await claimGuestData();
     }
     return data;
   },
@@ -609,8 +668,36 @@ var API = {
     if (data.access_token) {
       localStorage.setItem('astro_access_token', data.access_token);
       localStorage.setItem('astro_user', JSON.stringify(data.user));
+      sessionStorage.removeItem('astro_session_expired');
+      await claimGuestData();
     }
     return data;
+  },
+
+  // Private files (report PDFs) cannot be opened with a plain link: the browser would not send the identity
+  // headers. Fetch with them, then show the result from a temporary blob URL.
+  async openPrivateFile(url, newTab = true) {
+    const popup = newTab ? window.open('', '_blank') : null;   // opened synchronously so it is not popup-blocked
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('File not available');
+      const blobUrl = URL.createObjectURL(await res.blob());
+      if (popup) popup.location.href = blobUrl; else window.open(blobUrl, '_blank');
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 120000);
+    } catch (e) {
+      if (popup) popup.close();
+      if (window.App && App.showToast) App.showToast('Could not open the file. Please try again.', 'error');
+    }
+  },
+
+  // Sign out: forget the account on this device. The caller reloads the page so no in-memory chat or chart
+  // of the previous person survives for whoever signs in next.
+  logout() {
+    try {
+      localStorage.removeItem('astro_access_token');
+      localStorage.removeItem('astro_user');
+    } catch (e) { /* ignore */ }
+    clearUserScopedState();
   },
 
   async getMe() {

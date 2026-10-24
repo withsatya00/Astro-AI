@@ -5,7 +5,7 @@ from packages.database.models import Consultation
 from packages.database.session import SessionLocal
 from website.backend.app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 
 def _chart_id():

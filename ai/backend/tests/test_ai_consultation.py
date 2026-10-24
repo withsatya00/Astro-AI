@@ -6,7 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 from ai.backend.app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 def test_ai_backend_health():
     res = client.get("/api/v1/health")

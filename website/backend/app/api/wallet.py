@@ -14,6 +14,7 @@ from packages.database.models import (
     User, Astrologer, WalletTransaction, Booking, generate_uuid, utc_now
 )
 from website.backend.app.api.auth import get_current_user_optional
+from packages.core.identity import Owner, optional_owner
 
 router = APIRouter(prefix="/wallet", tags=["Wallet & Bookings"])
 
@@ -51,9 +52,7 @@ def get_wallet_status(
         ).order_by(WalletTransaction.created_at.desc()).limit(20).all()
     else:
         balance = 250.0  # Initial complementary test credits for guests
-        txs = db.query(WalletTransaction).order_by(
-            WalletTransaction.created_at.desc()
-        ).limit(5).all()
+        txs = []  # a guest has no ledger; never show other people's transactions
 
     return {
         "currency": "INR",
@@ -116,7 +115,8 @@ def recharge_wallet(
 def create_booking(
     payload: BookingCreateRequest,
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional)
+    current_user: Optional[User] = Depends(get_current_user_optional),
+    owner: Optional[Owner] = Depends(optional_owner)
 ):
     """
     Creates an appointment booking with a certified astrologer.
@@ -157,6 +157,7 @@ def create_booking(
     booking = Booking(
         id=generate_uuid(),
         user_id=current_user.id if current_user else None,
+        owner_key=owner.key if owner else None,
         astrologer_id=astro.id,
         user_name=payload.user_name,
         user_phone=payload.user_phone,
@@ -186,13 +187,13 @@ def create_booking(
 @router.get("/bookings")
 def list_bookings(
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional)
+    owner: Optional[Owner] = Depends(optional_owner)
 ):
-    """Lists bookings for current user or recent platform bookings."""
-    query = db.query(Booking).order_by(Booking.created_at.desc())
-    if current_user:
-        query = query.filter(Booking.user_id == current_user.id)
-    bookings = query.limit(15).all()
+    """Lists the caller's own bookings (a signed-in user's, or this visitor's)."""
+    if not owner:
+        return []
+    bookings = (db.query(Booking).filter(Booking.owner_key == owner.key)
+                .order_by(Booking.created_at.desc()).limit(15).all())
 
     results = []
     for b in bookings:
@@ -215,12 +216,14 @@ def list_bookings(
 def cancel_booking(
     booking_id: str,
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional)
+    current_user: Optional[User] = Depends(get_current_user_optional),
+    owner: Optional[Owner] = Depends(optional_owner)
 ):
     """Cancels an existing booking and refunds the amount to the user's wallet."""
-    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+    booking = (db.query(Booking).filter(Booking.id == booking_id, Booking.owner_key == owner.key).first()
+               if owner else None)
     if not booking:
-        raise HTTPException(status_code=404, detail="Booking not found")
+        raise HTTPException(status_code=404, detail="Booking not found")   # missing, or someone else's
 
     if booking.status == "cancelled":
         return {"status": "already_cancelled", "message": "Booking is already cancelled."}

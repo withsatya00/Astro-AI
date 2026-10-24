@@ -10,7 +10,7 @@ import pytest
 from fastapi.testclient import TestClient
 from website.backend.app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 def test_astrologer_personas_api():
     res = client.get("/api/v1/chat/astrologers")

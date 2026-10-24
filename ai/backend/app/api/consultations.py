@@ -21,6 +21,7 @@ from packages.core.schemas import (
     ConsultationFeedbackRequest, ConsultationSummaryResponse, AstrologerResponse
 )
 from packages.core.security import sanitize_user_input
+from packages.core.identity import Owner, require_owner
 from ai.backend.app.agents.orchestrator import AgentOrchestrator
 from ai.backend.app.services.llm_service import LLMService
 
@@ -53,18 +54,61 @@ def _format_astrologer_response(a: Astrologer) -> AstrologerResponse:
         created_at=a.created_at
     )
 
-def _attach_payload_chart(consultation, payload: dict, db: Session) -> None:
+def _find_astrologer(db: Session, ident: str):
+    return db.query(Astrologer).filter(
+        (Astrologer.id == ident) | (Astrologer.slug == ident) | (Astrologer.ai_persona_id == ident)
+    ).first()
+
+
+def _owned_consultation(db: Session, ident: str, owner: Owner, create: bool = False, mode: str = "chat"):
+    """The caller's own consultation for `ident` (a consultation id, or an astrologer id/slug).
+
+    Never returns another owner's conversation: a consultation id that belongs to someone else is
+    indistinguishable from one that does not exist. An astrologer slug resolves to the caller's own
+    latest active consultation with that astrologer (created on demand when `create` is set).
+    """
+    c = db.query(Consultation).filter(Consultation.id == ident, Consultation.owner_key == owner.key).first()
+    if c:
+        return c
+    astro = _find_astrologer(db, ident)
+    if not astro:
+        return None
+    c = (db.query(Consultation)
+         .filter(Consultation.astrologer_id == astro.id, Consultation.status == "active",
+                 Consultation.owner_key == owner.key)
+         .order_by(Consultation.created_at.desc()).first())
+    if c or not create:
+        return c
+    c = Consultation(
+        id=generate_uuid(), owner_key=owner.key, user_id=owner.user_id, astrologer_id=astro.id,
+        astrologer_type="ai" if astro.is_ai else "human", status="active", mode=mode,
+        title=f"Consultation with {astro.name}", price_per_minute=astro.price_per_minute, created_at=utc_now()
+    )
+    db.add(c)
+    db.commit()
+    db.refresh(c)
+    return c
+
+
+def _owned_chart(db: Session, chart_id, owner: Owner):
+    """A birth chart, only when it belongs to the caller."""
+    if not chart_id:
+        return None
+    return db.query(BirthChart).filter(BirthChart.id == chart_id, BirthChart.owner_key == owner.key).first()
+
+
+def _attach_payload_chart(consultation, payload: dict, db: Session, owner: Owner) -> None:
     """Keeps the consultation's chart in sync with the chart the client says is active.
 
     A chart is often created mid-conversation (the calling agent builds one from what the caller said,
     or the user fills the birth form after the first message). The consultation row was created earlier
-    without it, and only that row was consulted, so every later question was answered as if no birth
-    details existed and the astrologer asked for them again.
+    without it, so every later question was answered as if no birth details existed. Only the caller's
+    own charts can be attached.
     """
     chart_id = (payload or {}).get("chart_id")
     if not chart_id or consultation.chart_id == chart_id:
         return
-    if db.query(BirthChart.id).filter(BirthChart.id == chart_id).first():
+    if _owned_chart(db, chart_id, owner):
         consultation.chart_id = chart_id
         db.commit()
 
@@ -72,7 +116,8 @@ def _attach_payload_chart(consultation, payload: dict, db: Session) -> None:
 @router.post("", response_model=ConsultationResponse, status_code=status.HTTP_201_CREATED)
 def create_or_resume_consultation(
     payload: ConsultationCreateRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Creates or retrieves an active consultation session with the selected astrologer.
@@ -97,10 +142,8 @@ def create_or_resume_consultation(
         Consultation.astrologer_id == astro.id,
         Consultation.status == "active"
     )
-    if payload.user_id:
-        query = query.filter(Consultation.user_id == payload.user_id)
-    else:
-        query = query.filter(Consultation.user_id.is_(None))
+    # Ownership comes from the verified identity, never from a user_id in the request body.
+    query = query.filter(Consultation.owner_key == owner.key)
 
     existing_consultation = query.order_by(Consultation.created_at.desc()).first()
 
@@ -109,28 +152,29 @@ def create_or_resume_consultation(
         if payload.language:
             existing_consultation.language = payload.language
             db.commit()
-        if payload.chart_id and existing_consultation.chart_id != payload.chart_id:
+        if payload.chart_id and existing_consultation.chart_id != payload.chart_id and _owned_chart(db, payload.chart_id, owner):
             existing_consultation.chart_id = payload.chart_id
             db.commit()
         if payload.initial_message:
             send_consultation_message(
                 consultation_id=existing_consultation.id,
                 payload={"message": payload.initial_message, "user_name": payload.user_name},
-                db=db
+                db=db, owner=owner
             )
-        return get_consultation_details(existing_consultation.id, db)
+        return _consultation_details(existing_consultation, db)
 
     # 3. Create fresh Consultation
     new_consultation = Consultation(
         id=generate_uuid(),
-        user_id=payload.user_id,
+        owner_key=owner.key,
+        user_id=owner.user_id,
         astrologer_id=astro.id,
         astrologer_type="ai" if astro.is_ai else "human",
         status="active",
         mode=payload.mode or "chat",
         title=f"Consultation with {astro.name}",
         language=payload.language or "en",
-        chart_id=payload.chart_id,
+        chart_id=payload.chart_id if _owned_chart(db, payload.chart_id, owner) else None,
         price_per_minute=astro.price_per_minute,
         started_at=utc_now()
     )
@@ -143,63 +187,37 @@ def create_or_resume_consultation(
         send_consultation_message(
             consultation_id=new_consultation.id,
             payload={"message": payload.initial_message, "user_name": payload.user_name},
-            db=db
+            db=db, owner=owner
         )
 
-    return get_consultation_details(new_consultation.id, db)
+    return _consultation_details(new_consultation, db)
 
 @router.get("", response_model=List[ConsultationResponse])
 def list_consultations(
-    user_id: Optional[str] = Query(None, description="Filter by user account"),
     limit: int = Query(20, ge=1, le=50),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
-    """Lists consultations, ordered by most recently active."""
-    query = db.query(Consultation)
-    if user_id:
-        query = query.filter(Consultation.user_id == user_id)
+    """Lists the caller's own consultations, ordered by most recently active."""
+    query = db.query(Consultation).filter(Consultation.owner_key == owner.key)
 
     consultations = query.order_by(Consultation.updated_at.desc()).limit(limit).all()
 
     results = []
     for c in consultations:
-        results.append(get_consultation_details(c.id, db))
+        results.append(_consultation_details(c, db))
     return results
 
 @router.get("/{consultation_id}", response_model=ConsultationResponse)
-def get_consultation_details(consultation_id: str, db: Session = Depends(get_db)):
-    """Retrieves full conversation history and metadata for a consultation session."""
-    c = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+def get_consultation_details(consultation_id: str, db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
+    """Retrieves full conversation history and metadata for one of the caller's consultation sessions."""
+    c = _owned_consultation(db, consultation_id, owner, create=True)
     if not c:
-        # Check if consultation_id is an astrologer slug or ID (e.g. pt-rameshwar-dwivedi)
-        astro = db.query(Astrologer).filter(
-            (Astrologer.id == consultation_id) |
-            (Astrologer.slug == consultation_id) |
-            (Astrologer.ai_persona_id == consultation_id)
-        ).first()
-        if astro:
-            c = db.query(Consultation).filter(
-                Consultation.astrologer_id == astro.id,
-                Consultation.status == "active"
-            ).order_by(Consultation.created_at.desc()).first()
-            if not c:
-                c = Consultation(
-                    id=generate_uuid(),
-                    astrologer_id=astro.id,
-                    user_id=None,
-                    astrologer_type="human" if astro.is_ai is False else "ai",
-                    status="active",
-                    mode="chat",
-                    title=f"Consultation with {astro.name}",
-                    price_per_minute=astro.price_per_minute,
-                    created_at=utc_now()
-                )
-                db.add(c)
-                db.commit()
-                db.refresh(c)
-        else:
-            raise HTTPException(status_code=404, detail=f"Consultation or Astrologer '{consultation_id}' not found.")
+        raise HTTPException(status_code=404, detail=f"Consultation or Astrologer '{consultation_id}' not found.")
+    return _consultation_details(c, db)
 
+
+def _consultation_details(c, db: Session) -> ConsultationResponse:
     astro = db.query(Astrologer).filter(Astrologer.id == c.astrologer_id).first()
     if not astro:
         raise HTTPException(status_code=404, detail="Associated astrologer not found.")
@@ -251,30 +269,20 @@ def get_consultation_messages(
     consultation_id: str,
     before_id: Optional[str] = Query(None, description="Cursor message ID to fetch older messages before"),
     limit: int = Query(25, ge=1, le=100),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Retrieves paginated messages for a consultation session with cursor-based pagination.
     """
-    consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+    consultation = _owned_consultation(db, consultation_id, owner, create=False)
     if not consultation:
-        astro = db.query(Astrologer).filter(
-            (Astrologer.id == consultation_id) |
-            (Astrologer.slug == consultation_id) |
-            (Astrologer.ai_persona_id == consultation_id)
-        ).first()
-        if astro:
-            consultation = db.query(Consultation).filter(
-                Consultation.astrologer_id == astro.id,
-                Consultation.status == "active"
-            ).order_by(Consultation.created_at.desc()).first()
-        if not consultation:
-            raise HTTPException(status_code=404, detail="Consultation not found.")
-        consultation_id = consultation.id
+        raise HTTPException(status_code=404, detail="Consultation not found.")
+    consultation_id = consultation.id
 
     query = db.query(ChatMessage).filter(ChatMessage.consultation_id == consultation_id)
     if before_id:
-        target_msg = db.query(ChatMessage).filter(ChatMessage.id == before_id).first()
+        target_msg = db.query(ChatMessage).filter(ChatMessage.id == before_id, ChatMessage.consultation_id == consultation_id).first()
         if target_msg:
             query = query.filter(ChatMessage.created_at < target_msg.created_at)
 
@@ -306,7 +314,8 @@ def get_consultation_messages(
 def send_consultation_message(
     consultation_id: str,
     payload: Dict[str, Any],
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Sends a message within a persistent consultation session.
@@ -317,34 +326,10 @@ def send_consultation_message(
     if not clean_msg:
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
 
-    consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+    consultation = _owned_consultation(db, consultation_id, owner, create=True)
     if not consultation:
-        astro = db.query(Astrologer).filter(
-            (Astrologer.id == consultation_id) |
-            (Astrologer.slug == consultation_id) |
-            (Astrologer.ai_persona_id == consultation_id)
-        ).first()
-        if astro:
-            consultation = db.query(Consultation).filter(
-                Consultation.astrologer_id == astro.id,
-                Consultation.status == "active"
-            ).order_by(Consultation.created_at.desc()).first()
-            if not consultation:
-                consultation = Consultation(
-                    id=generate_uuid(),
-                    astrologer_id=astro.id,
-                    status="active",
-                    mode="chat",
-                    title=f"Consultation with {astro.name}",
-                    price_per_minute=astro.price_per_minute,
-                    created_at=utc_now()
-                )
-                db.add(consultation)
-                db.commit()
-                db.refresh(consultation)
-        if not consultation:
-            raise HTTPException(status_code=404, detail="Consultation not found.")
-        consultation_id = consultation.id
+        raise HTTPException(status_code=404, detail="Consultation not found.")
+    consultation_id = consultation.id
 
     if consultation.status != "active":
         raise HTTPException(
@@ -422,7 +407,7 @@ def send_consultation_message(
     # Retrieve birth chart if attached
     chart_record = None
     chart_data = None
-    _attach_payload_chart(consultation, payload, db)
+    _attach_payload_chart(consultation, payload, db, owner)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:
@@ -496,7 +481,7 @@ def send_consultation_message(
     }
 
 @router.post("/{consultation_id}/extract-birth-details")
-async def extract_birth_details_from_call(consultation_id: str, payload: Dict[str, Any] = None, db: Session = Depends(get_db)):
+async def extract_birth_details_from_call(consultation_id: str, payload: Dict[str, Any] = None, db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
     """
     Pulls out date/time/place of birth that the caller has already stated, possibly across several
     turns - used by the live calling agent so it can build a real Kundli instead of repeatedly asking
@@ -509,9 +494,12 @@ async def extract_birth_details_from_call(consultation_id: str, payload: Dict[st
 
     transcript = (payload or {}).get("transcript") if payload else None
     if not transcript:
+        owned = _owned_consultation(db, consultation_id, owner)
+        if not owned:
+            return empty
         messages = (
             db.query(ChatMessage)
-            .filter(ChatMessage.consultation_id == consultation_id)
+            .filter(ChatMessage.consultation_id == owned.id)
             .order_by(ChatMessage.created_at.asc())
             .limit(20)
             .all()
@@ -528,7 +516,8 @@ async def extract_birth_details_from_call(consultation_id: str, payload: Dict[st
 async def stream_consultation_message(
     consultation_id: str,
     payload: Dict[str, Any],
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Streams consultation chat response word-by-word via Server-Sent Events (SSE).
@@ -539,34 +528,10 @@ async def stream_consultation_message(
     if not clean_msg:
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
 
-    consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+    consultation = _owned_consultation(db, consultation_id, owner, create=True)
     if not consultation:
-        astro = db.query(Astrologer).filter(
-            (Astrologer.id == consultation_id) |
-            (Astrologer.slug == consultation_id) |
-            (Astrologer.ai_persona_id == consultation_id)
-        ).first()
-        if astro:
-            consultation = db.query(Consultation).filter(
-                Consultation.astrologer_id == astro.id,
-                Consultation.status == "active"
-            ).order_by(Consultation.created_at.desc()).first()
-            if not consultation:
-                consultation = Consultation(
-                    id=generate_uuid(),
-                    astrologer_id=astro.id,
-                    status="active",
-                    mode="chat",
-                    title=f"Consultation with {astro.name}",
-                    price_per_minute=astro.price_per_minute,
-                    created_at=utc_now()
-                )
-                db.add(consultation)
-                db.commit()
-                db.refresh(consultation)
-        if not consultation:
-            raise HTTPException(status_code=404, detail="Consultation not found.")
-        consultation_id = consultation.id
+        raise HTTPException(status_code=404, detail="Consultation not found.")
+    consultation_id = consultation.id
 
     if consultation.status != "active":
         raise HTTPException(
@@ -593,7 +558,7 @@ async def stream_consultation_message(
     # Retrieve chart record if associated
     chart_record = None
     chart_data = None
-    _attach_payload_chart(consultation, payload, db)
+    _attach_payload_chart(consultation, payload, db, owner)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:
@@ -744,13 +709,14 @@ async def stream_consultation_message(
 def end_consultation(
     consultation_id: str,
     payload: ConsultationEndRequest = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Concludes an active consultation session, computes elapsed duration,
     and automatically generates a comprehensive astrological consultation summary.
     """
-    consultation = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+    consultation = db.query(Consultation).filter(Consultation.id == consultation_id, Consultation.owner_key == owner.key).first()
     if not consultation:
         raise HTTPException(status_code=404, detail="Consultation not found.")
 
@@ -825,14 +791,16 @@ def end_consultation(
     )
 
 @router.get("/{consultation_id}/summary", response_model=ConsultationSummaryResponse)
-def get_consultation_summary(consultation_id: str, db: Session = Depends(get_db)):
-    """Retrieves generated summary for a consultation session."""
+def get_consultation_summary(consultation_id: str, db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
+    """Retrieves generated summary for one of the caller's consultation sessions."""
+    if not db.query(Consultation.id).filter(Consultation.id == consultation_id, Consultation.owner_key == owner.key).first():
+        raise HTTPException(status_code=404, detail="Consultation not found.")
     summary = db.query(ConsultationSummary).filter(
         ConsultationSummary.consultation_id == consultation_id
     ).first()
     if not summary:
         # Trigger end_consultation to auto-create summary if not already completed
-        return end_consultation(consultation_id=consultation_id, db=db)
+        return end_consultation(consultation_id=consultation_id, db=db, owner=owner)
 
     return ConsultationSummaryResponse(
         consultation_id=summary.consultation_id,
@@ -848,10 +816,11 @@ def get_consultation_summary(consultation_id: str, db: Session = Depends(get_db)
 def submit_consultation_feedback(
     consultation_id: str,
     payload: ConsultationFeedbackRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
-    """Submits rating and feedback for a consultation session."""
-    c = db.query(Consultation).filter(Consultation.id == consultation_id).first()
+    """Submits rating and feedback for one of the caller's consultation sessions."""
+    c = db.query(Consultation).filter(Consultation.id == consultation_id, Consultation.owner_key == owner.key).first()
     if not c:
         raise HTTPException(status_code=404, detail="Consultation not found.")
 

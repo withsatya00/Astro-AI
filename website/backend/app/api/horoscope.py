@@ -10,6 +10,7 @@ from typing import Optional, Dict, Any
 from packages.astrology.horoscope import get_horoscope, RASHI_METADATA
 from packages.database.session import get_db
 from website.backend.app.services.astrology_service import AstrologyService
+from packages.core.identity import Owner, require_owner
 
 router = APIRouter(prefix="/horoscope", tags=["Horoscope (Rashifal)"])
 
@@ -46,13 +47,14 @@ def list_all_rashis():
 @router.get("/personalized/{chart_id}")
 def get_personalized_horoscope(
     chart_id: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Returns personalized horoscope synthesized against user's actual birth chart,
     Lagna (Ascendant), Moon sign, and active Vimshottari Mahadasha.
     """
-    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id)
+    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id, owner_key=owner.key)
     if not chart:
         raise HTTPException(status_code=404, detail="Birth chart not found")
 

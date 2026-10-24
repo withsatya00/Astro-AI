@@ -12,20 +12,22 @@ from packages.core.schemas import (
 )
 from website.backend.app.services.astrology_service import AstrologyService
 from packages.database.models import BirthChart
+from packages.core.identity import Owner, optional_owner, require_owner
 
 router = APIRouter(prefix="/charts", tags=["Birth Charts"])
 
 @router.post("/calculate", response_model=BirthChartResponse)
 def calculate_and_create_chart(
     payload: BirthChartRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Calculates full astronomical chart using Swiss Ephemeris, synthesizes
     interpretations, and stores the chart record.
     """
     try:
-        chart_result = AstrologyService.calculate_and_save_chart(db=db, request=payload)
+        chart_result = AstrologyService.calculate_and_save_chart(db=db, request=payload, user_id=owner.user_id, owner_key=owner.key)
         return chart_result
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -35,10 +37,13 @@ def calculate_and_create_chart(
 @router.get("", response_model=List[BirthChartResponse])
 def list_recent_charts(
     limit: int = 10,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
-    """Lists recent calculated birth charts."""
-    charts = db.query(BirthChart).order_by(BirthChart.created_at.desc()).limit(limit).all()
+    """Lists the caller's own recently calculated birth charts."""
+    limit = max(1, min(limit, 50))
+    charts = (db.query(BirthChart).filter(BirthChart.owner_key == owner.key)
+              .order_by(BirthChart.created_at.desc()).limit(limit).all())
     return [
         {
             "id": c.id,
@@ -57,7 +62,8 @@ def list_recent_charts(
 @router.post("/milan", response_model=KundaliMilanResponse)
 def compute_kundali_milan(
     payload: KundaliMilanRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Optional[Owner] = Depends(optional_owner)
 ):
     """
     Computes authentic Vedic Kundali Milan (36 Gunas Ashtakoota)
@@ -69,7 +75,7 @@ def compute_kundali_milan(
     # 1. Resolve Boy chart
     boy_chart_data = None
     if payload.boy.chart_id:
-        c_record = AstrologyService.get_chart_by_id(db, payload.boy.chart_id)
+        c_record = AstrologyService.get_chart_by_id(db, payload.boy.chart_id, owner.key if owner else None)
         if c_record:
             boy_chart_data = c_record.chart_data
 
@@ -90,7 +96,7 @@ def compute_kundali_milan(
     # 2. Resolve Girl chart
     girl_chart_data = None
     if payload.girl.chart_id:
-        c_record = AstrologyService.get_chart_by_id(db, payload.girl.chart_id)
+        c_record = AstrologyService.get_chart_by_id(db, payload.girl.chart_id, owner.key if owner else None)
         if c_record:
             girl_chart_data = c_record.chart_data
 
@@ -139,7 +145,8 @@ def get_daily_panchang(
 @router.post("/sade-sati")
 def get_shani_sade_sati(
     payload: SadeSatiRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Optional[Owner] = Depends(optional_owner)
 ):
     """
     Computes Shani Sade Sati phase (Rising, Peak, Setting, Dhaiya, Free)
@@ -149,7 +156,7 @@ def get_shani_sade_sati(
 
     moon_sign = payload.moon_sign
     if not moon_sign and payload.chart_id:
-        chart = AstrologyService.get_chart_by_id(db, payload.chart_id)
+        chart = AstrologyService.get_chart_by_id(db, payload.chart_id, owner.key if owner else None)
         if chart and chart.chart_data:
             moon_sign = chart.chart_data.get("moon_sign")
 
@@ -161,10 +168,11 @@ def get_shani_sade_sati(
 @router.get("/{chart_id}", response_model=BirthChartResponse)
 def get_chart(
     chart_id: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """Retrieves a previously calculated birth chart by ID."""
-    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id)
+    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id, owner_key=owner.key)
     if not chart:
         raise HTTPException(status_code=404, detail="Birth chart not found.")
     return {
@@ -184,7 +192,8 @@ def get_chart(
 def get_chart_grounded_report(
     chart_id: str,
     language: str = "en",
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Generates a full Chart-to-RAG grounded analysis report for an existing birth chart.
@@ -194,7 +203,7 @@ def get_chart_grounded_report(
     """
     from packages.astrology.chart_rag_fusion import ChartRAGFusion
 
-    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id)
+    chart = AstrologyService.get_chart_by_id(db=db, chart_id=chart_id, owner_key=owner.key)
     if not chart:
         raise HTTPException(status_code=404, detail="Birth chart not found.")
 
@@ -212,7 +221,8 @@ def get_chart_grounded_report(
 def calculate_and_generate_grounded_report(
     payload: BirthChartRequest,
     language: str = "en",
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Calculates a new birth chart using Swiss Ephemeris and immediately
@@ -221,7 +231,7 @@ def calculate_and_generate_grounded_report(
     from packages.astrology.chart_rag_fusion import ChartRAGFusion
 
     try:
-        chart_record = AstrologyService.calculate_and_save_chart(db=db, request=payload)
+        chart_record = AstrologyService.calculate_and_save_chart(db=db, request=payload, user_id=owner.user_id, owner_key=owner.key)
         report = ChartRAGFusion.generate_grounded_chart_report(
             db=db,
             chart_data=chart_record["chart_data"],

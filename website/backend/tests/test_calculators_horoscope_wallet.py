@@ -10,7 +10,7 @@ from packages.database.session import init_db
 @pytest.fixture(scope="module")
 def client():
     init_db()
-    with TestClient(app) as c:
+    with TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"}) as c:
         yield c
 
 # ----------------- Calculator Tests -----------------

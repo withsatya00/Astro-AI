@@ -15,10 +15,12 @@ class ReportService:
     def generate_report(
         db: Session,
         request: ReportGenerateRequest,
-        user_id: Optional[str] = None
+        user_id: Optional[str] = None,
+        owner_key: Optional[str] = None
     ) -> Report:
-        """Generates a PDF report for a birth chart and persists the record."""
-        chart = db.query(BirthChart).filter(BirthChart.id == request.chart_id).first()
+        """Generates a PDF report for a birth chart and persists the record. The chart must belong to `owner_key`."""
+        chart = (db.query(BirthChart).filter(BirthChart.id == request.chart_id, BirthChart.owner_key == owner_key).first()
+                 if owner_key else None)
         if not chart:
             raise ValueError(f"Birth chart with ID '{request.chart_id}' not found.")
 

@@ -4,7 +4,7 @@ Tests for PDF report generation and download endpoint.
 from fastapi.testclient import TestClient
 from website.backend.app.main import app
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 def test_report_generation_and_download():
     # 1. Create a chart

@@ -4,6 +4,7 @@ Implements Bcrypt hashing, signed JWT sessions, and multiple saved birth charts.
 """
 from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict, Any
 import re
@@ -19,6 +20,8 @@ from packages.core.security import (
     decode_access_token, sanitize_user_input
 )
 from packages.core.config import settings
+from packages.core.identity import Owner, optional_owner, CLIENT_ID_RE
+from packages.database.models import ChatSession
 
 router = APIRouter(prefix="/auth", tags=["Authentication & Profiles"])
 
@@ -142,20 +145,14 @@ def get_current_user_profile(
 
 @router.get("/profiles", response_model=List[Dict[str, Any]])
 def list_saved_birth_profiles(
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    owner: Optional[Owner] = Depends(optional_owner),
     db: Session = Depends(get_db)
 ):
-    """
-    Lists saved birth chart profiles.
-    Returns authenticated user's profiles if logged in, or recent active profiles.
-    """
-    query = db.query(BirthChart)
-    if current_user:
-        query = query.filter(BirthChart.user_id == current_user.id)
-    else:
-        query = query.limit(10)
-
-    charts = query.order_by(desc(BirthChart.is_default), desc(BirthChart.created_at)).all()
+    """Lists the caller's own saved birth chart profiles (a signed-in user's, or this visitor's)."""
+    if not owner:
+        return []
+    charts = (db.query(BirthChart).filter(BirthChart.owner_key == owner.key)
+              .order_by(desc(BirthChart.is_default), desc(BirthChart.created_at)).limit(50).all())
     out = []
     for c in charts:
         out.append({
@@ -175,19 +172,16 @@ def list_saved_birth_profiles(
 @router.patch("/profiles/{profile_id}/default")
 def set_default_birth_profile(
     profile_id: str,
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    owner: Optional[Owner] = Depends(optional_owner),
     db: Session = Depends(get_db)
 ):
-    """Sets a birth profile as the primary/default profile."""
-    target = db.query(BirthChart).filter(BirthChart.id == profile_id).first()
+    """Sets one of the caller's birth profiles as the primary/default profile."""
+    target = db.query(BirthChart).filter(BirthChart.id == profile_id, BirthChart.owner_key == owner.key).first() if owner else None
     if not target:
         raise HTTPException(status_code=404, detail="Birth profile not found.")
 
-    # Unset other defaults for this user
-    if current_user:
-        db.query(BirthChart).filter(BirthChart.user_id == current_user.id).update({"is_default": False})
-    else:
-        db.query(BirthChart).update({"is_default": False})
+    # Unset the caller's other defaults (never anyone else's)
+    db.query(BirthChart).filter(BirthChart.owner_key == owner.key).update({"is_default": False})
 
     target.is_default = True
     db.commit()
@@ -196,17 +190,36 @@ def set_default_birth_profile(
 @router.delete("/profiles/{profile_id}")
 def delete_saved_birth_profile(
     profile_id: str,
-    current_user: Optional[User] = Depends(get_current_user_optional),
+    owner: Optional[Owner] = Depends(optional_owner),
     db: Session = Depends(get_db)
 ):
-    """Deletes a saved birth chart profile."""
-    target = db.query(BirthChart).filter(BirthChart.id == profile_id).first()
+    """Deletes one of the caller's saved birth chart profiles."""
+    target = db.query(BirthChart).filter(BirthChart.id == profile_id, BirthChart.owner_key == owner.key).first() if owner else None
     if not target:
         raise HTTPException(status_code=404, detail="Birth profile not found.")
-
-    if current_user and target.user_id and target.user_id != current_user.id:
-        raise HTTPException(status_code=403, detail="Unauthorized to delete this profile.")
 
     db.delete(target)
     db.commit()
     return {"status": "success", "message": "Birth profile deleted."}
+
+
+@router.post("/claim-guest")
+def claim_guest_data(
+    x_client_id: Optional[str] = Header(None),
+    current_user: User = Depends(get_current_user_required),
+    db: Session = Depends(get_db)
+):
+    """After signing in, moves what this browser did as a guest (charts, chats) into the account.
+
+    Only data created under this browser's own client id moves, and only into the account that is
+    signed in right now. Nothing belonging to another user or another browser is touched.
+    """
+    if not x_client_id or not CLIENT_ID_RE.match(x_client_id.strip()):
+        return {"claimed": {}}
+    guest_key, user_key = f"g:{x_client_id.strip()}", f"u:{current_user.id}"
+    claimed = {}
+    for label, model in (("charts", BirthChart), ("consultations", Consultation), ("sessions", ChatSession)):
+        claimed[label] = db.query(model).filter(model.owner_key == guest_key).update(
+            {"owner_key": user_key, "user_id": current_user.id}, synchronize_session=False)
+    db.commit()
+    return {"claimed": claimed}

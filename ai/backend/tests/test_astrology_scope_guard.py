@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 from ai.backend.app.main import app
 from ai.backend.app.services.scope_guard import AstrologyScopeGuard
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 # -----------------------------------------------------------------------------
 # Unit Tests for Scope Classifier

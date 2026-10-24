@@ -41,6 +41,7 @@ class BirthChart(Base):
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
     user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)  # "u:<user id>" or "g:<client id>"; see packages/core/identity.py
     name = Column(String(255), nullable=False)
     date_of_birth = Column(String(10), nullable=False)  # YYYY-MM-DD
     time_of_birth = Column(String(8), nullable=True)   # HH:MM:SS or HH:MM
@@ -112,6 +113,7 @@ class Consultation(Base):
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
     user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)  # "u:<user id>" or "g:<client id>"; see packages/core/identity.py
     astrologer_id = Column(String(36), ForeignKey("astrologers.id"), nullable=False, index=True)
     astrologer_type = Column(String(20), default="ai")  # "ai" or "human"
     status = Column(String(50), default="active")       # active, completed, cancelled
@@ -165,6 +167,7 @@ class ChatSession(Base):
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
     user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)  # "u:<user id>" or "g:<client id>"; see packages/core/identity.py
     chart_id = Column(String(36), ForeignKey("birth_charts.id"), nullable=True, index=True)
     astrologer_id = Column(String(36), ForeignKey("astrologers.id"), nullable=True, index=True)
     consultation_id = Column(String(36), ForeignKey("consultations.id"), nullable=True, index=True)
@@ -261,6 +264,7 @@ class Booking(Base):
 
     id = Column(String(36), primary_key=True, default=generate_uuid)
     user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)  # "u:<user id>" or "g:<client id>"
     astrologer_id = Column(String(36), ForeignKey("astrologers.id"), nullable=False, index=True)
     user_name = Column(String(255), nullable=False)
     user_phone = Column(String(50), nullable=True)

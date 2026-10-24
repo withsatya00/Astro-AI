@@ -21,7 +21,7 @@ from packages.database.models import Astrologer, Consultation, ChatMessage, User
 
 @pytest.fixture
 def client():
-    return TestClient(app)
+    return TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 @pytest.fixture
 def db():
@@ -100,6 +100,7 @@ def test_cursor_based_pagination_api(client, db):
     consultation = Consultation(
         astrologer_id=astrologer.id,
         user_id="test-pagination-user",
+        owner_key="g:test-client-0123456789abcdef",
         astrologer_type="ai",
         status="active"
     )
@@ -153,6 +154,7 @@ def test_inactive_consultation_rejects_new_messages(client, db):
     consultation = Consultation(
         astrologer_id=astrologer.id,
         user_id="test-ended-session-user",
+        owner_key="g:test-client-0123456789abcdef",
         astrologer_type="ai",
         status="completed"  # inactive
     )

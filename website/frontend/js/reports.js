@@ -37,7 +37,7 @@ const ReportsController = {
 
       if (statusDiv) {
         statusDiv.innerHTML = `
-          <a href="${res.download_url}" target="_blank" class="btn-tool active-profile" style="width: 100%; justify-content: center; margin-top: 0.35rem;">
+          <a href="#" onclick="API.openPrivateFile('${res.download_url}'); return false;" class="btn-tool active-profile" style="width: 100%; justify-content: center; margin-top: 0.35rem;">
             📥 Click to Download PDF (${chart.name})
           </a>
         `;
@@ -45,7 +45,7 @@ const ReportsController = {
 
       App.showToast('Kundali PDF Report compiled successfully! 📑', 'success');
       // Automatically open in new tab
-      window.open(res.download_url, '_blank');
+      API.openPrivateFile(res.download_url);
     } catch (err) {
       if (statusDiv) {
         statusDiv.innerHTML = `<span style="font-size: 0.72rem; color: var(--danger);">Failed: ${err.message}</span>`;

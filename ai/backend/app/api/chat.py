@@ -15,13 +15,24 @@ from ai.backend.app.agents.orchestrator import AgentOrchestrator
 import re
 import json
 from packages.core.security import sanitize_user_input
+from packages.core.identity import Owner, require_owner
 
 router = APIRouter(prefix="/chat", tags=["Consultation Chat"])
+
+
+def _owned_chart_id(db: Session, chart_id, owner: Owner):
+    """The chart id when that chart belongs to the caller, otherwise None."""
+    if not chart_id:
+        return None
+    hit = db.query(BirthChart.id).filter(BirthChart.id == chart_id, BirthChart.owner_key == owner.key).first()
+    return chart_id if hit else None
+
 
 @router.post("", response_model=ChatMessageResponse)
 def send_chat_message(
     payload: ChatMessageRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Submits a user question to AstroAI Agent.
@@ -34,18 +45,20 @@ def send_chat_message(
     # 1. Resolve or create ChatSession
     session = None
     if payload.session_id:
-        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id).first()
+        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id, ChatSession.owner_key == owner.key).first()
 
     if not session:
         session = ChatSession(
             title=clean_msg[:40] + ("..." if len(clean_msg) > 40 else ""),
             language=payload.language,
-            chart_id=payload.chart_id
+            chart_id=_owned_chart_id(db, payload.chart_id, owner),
+            owner_key=owner.key,
+            user_id=owner.user_id
         )
         db.add(session)
         db.commit()
         db.refresh(session)
-    elif payload.chart_id != session.chart_id:
+    elif payload.chart_id != session.chart_id and _owned_chart_id(db, payload.chart_id, owner):
         # Dynamically switch or update active birth chart profile on this session
         session.chart_id = payload.chart_id
         db.commit()
@@ -155,7 +168,8 @@ def list_astrologer_personas():
 @router.post("/stream")
 async def stream_chat_message(
     payload: ChatMessageRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
 ):
     """
     Streams consultation chat response word-by-word via Server-Sent Events (SSE).
@@ -172,18 +186,20 @@ async def stream_chat_message(
     # 1. Resolve or create ChatSession
     session = None
     if payload.session_id:
-        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id).first()
+        session = db.query(ChatSession).filter(ChatSession.id == payload.session_id, ChatSession.owner_key == owner.key).first()
 
     if not session:
         session = ChatSession(
             title=clean_msg[:40] + ("..." if len(clean_msg) > 40 else ""),
             language=payload.language,
-            chart_id=payload.chart_id
+            chart_id=_owned_chart_id(db, payload.chart_id, owner),
+            owner_key=owner.key,
+            user_id=owner.user_id
         )
         db.add(session)
         db.commit()
         db.refresh(session)
-    elif payload.chart_id != session.chart_id:
+    elif payload.chart_id != session.chart_id and _owned_chart_id(db, payload.chart_id, owner):
         session.chart_id = payload.chart_id
         db.commit()
 
@@ -338,9 +354,10 @@ async def stream_chat_message(
 
 
 @router.get("/sessions", response_model=List[ChatSessionResponse])
-def list_sessions(db: Session = Depends(get_db)):
-    """Lists recent consultation sessions."""
-    sessions = db.query(ChatSession).order_by(ChatSession.updated_at.desc()).limit(20).all()
+def list_sessions(db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
+    """Lists the caller's own recent consultation sessions."""
+    sessions = (db.query(ChatSession).filter(ChatSession.owner_key == owner.key)
+                .order_by(ChatSession.updated_at.desc()).limit(20).all())
     return [
         ChatSessionResponse(
             id=s.id,
@@ -354,9 +371,9 @@ def list_sessions(db: Session = Depends(get_db)):
     ]
 
 @router.get("/sessions/{session_id}", response_model=ChatSessionResponse)
-def get_session_history(session_id: str, db: Session = Depends(get_db)):
-    """Retrieves full conversation history for a consultation session."""
-    session = db.query(ChatSession).filter(ChatSession.id == session_id).first()
+def get_session_history(session_id: str, db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
+    """Retrieves full conversation history for one of the caller's consultation sessions."""
+    session = db.query(ChatSession).filter(ChatSession.id == session_id, ChatSession.owner_key == owner.key).first()
     if not session:
         raise HTTPException(status_code=404, detail="Session not found.")
 
@@ -393,9 +410,9 @@ def get_session_history(session_id: str, db: Session = Depends(get_db)):
     )
 
 @router.delete("/sessions/{session_id}")
-def delete_session(session_id: str, db: Session = Depends(get_db)):
-    """Deletes or clears a consultation session and its history."""
-    session = db.query(ChatSession).filter(ChatSession.id == session_id).first()
+def delete_session(session_id: str, db: Session = Depends(get_db), owner: Owner = Depends(require_owner)):
+    """Deletes or clears one of the caller's consultation sessions and its history."""
+    session = db.query(ChatSession).filter(ChatSession.id == session_id, ChatSession.owner_key == owner.key).first()
     if not session:
         raise HTTPException(status_code=404, detail="Session not found.")
     

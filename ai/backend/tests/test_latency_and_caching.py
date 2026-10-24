@@ -8,7 +8,7 @@ from packages.database.session import SessionLocal
 from ai.backend.app.services.semantic_cache import semantic_cache, SemanticCacheService
 from ai.backend.app.rag.retrieval import RetrievalService
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 def test_semantic_cache_pre_seeded_queries():
     # Test English pre-seeded query

@@ -7,7 +7,7 @@ from fastapi.testclient import TestClient
 from ai.backend.app.main import app
 from ai.backend.app.services.llm_service import is_in_astrology_domain, _detect_language
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 def test_language_detection():
     """Verifies that Hindi, Hinglish, English and regional scripts are detected accurately."""

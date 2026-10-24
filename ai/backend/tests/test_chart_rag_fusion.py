@@ -22,7 +22,7 @@ from packages.astrology.yoga_detection import (
 from packages.astrology.chart_rag_fusion import ChartRAGFusion
 
 
-client = TestClient(app)
+client = TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"})
 
 
 def test_pancha_mahapurusha_detection():
