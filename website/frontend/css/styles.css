@@ -4,35 +4,8 @@
  */
 
 /* 1. Design System Foundation */
-@import url('/src/styles/tokens.css');
-@import url('/src/styles/reset.css');
-@import url('/src/styles/typography.css');
-@import url('/src/styles/global.css');
-@import url('/src/styles/utilities.css');
 
 /* 2. Component-Scoped Stylesheets */
-@import url('/src/components/Navbar/Navbar.css');
-@import url('/src/components/Hero/Hero.css');
-@import url('/src/components/TrustStats/TrustStats.css');
-@import url('/src/components/CategoryCard/CategoryCard.css');
-@import url('/src/components/FeaturedAstrologers/FeaturedAstrologers.css');
-@import url('/src/components/AstrologerCard/AstrologerCard.css');
-@import url('/src/components/AstrologerSearch/AstrologerSearch.css');
-@import url('/src/components/FeatureShortcuts/FeatureShortcuts.css');
-@import url('/src/components/DailyHoroscope/DailyHoroscope.css');
-@import url('/src/components/PanchangPreview/PanchangPreview.css');
-@import url('/src/components/Calculators/Calculators.css');
-@import url('/src/components/Calculators/CalculatorsModal.css');
-@import url('/src/components/WhyChoose/WhyChoose.css');
-@import url('/src/components/Testimonials/Testimonials.css');
-@import url('/src/components/BlogCards/BlogCards.css');
-@import url('/src/components/FAQAccordion/FAQAccordion.css');
-@import url('/src/components/AppPromo/AppPromo.css');
-@import url('/src/components/GlobalLoader/GlobalLoader.css');
-@import url('/src/components/Toast/Toast.css');
-@import url('/src/components/Modal/Modal.css');
-@import url('/src/components/GlobalFooter/GlobalFooter.css');
-@import url('/src/layouts/Layout.css');
 
 /* 3. Page Containers & Global Overlay Modals */
 /* ==========================================================================

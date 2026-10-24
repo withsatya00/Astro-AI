@@ -95,18 +95,29 @@
 }
 
 @media (max-width: 640px) {
+  /* Collage is designed on a 460x400 canvas; scale it as a whole so no card is clipped. */
+  .hero-right-col,
+  .hero-collage-wrapper {
+    overflow: visible !important;
+  }
   .hero-collage-wrapper {
     align-items: center !important;
     max-width: 100% !important;
-    overflow: hidden !important;
   }
   .hero-collage-container {
-    width: 320px !important;
-    max-width: 90vw !important;
-    height: 285px !important;
-    transform: scale(0.72) !important;
+    width: 460px !important;
+    max-width: none !important;
+    height: 400px !important;
+    flex: none;
+    transform: scale(0.76) !important;
     transform-origin: center top !important;
-    margin: 0 auto !important;
+    margin: 0 0 -96px 0 !important;
+    align-self: center;
+    overflow: visible !important;
+  }
+  .hero-astrologer-centerpiece img,
+  .hero-astrologer-card img {
+    object-position: 50% 18%;
   }
   .hero-motto-wrapper {
     text-align: center !important;
@@ -115,14 +126,18 @@
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 400px) {
   .hero-collage-container {
-    width: 290px !important;
-    max-width: 90vw !important;
-    height: 255px !important;
-    transform: scale(0.64) !important;
-    transform-origin: center top !important;
-    margin: 0 auto !important;
+    transform: scale(0.7) !important;
+    margin: 0 0 -120px 0 !important;
+    align-self: center;
   }
 }
 
+@media (max-width: 350px) {
+  .hero-collage-container {
+    transform: scale(0.62) !important;
+    margin: 0 0 -152px 0 !important;
+    align-self: center;
+  }
+}
