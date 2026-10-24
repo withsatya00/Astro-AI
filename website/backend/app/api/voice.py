@@ -105,10 +105,14 @@ async def generate_speech_post(payload: TTSRequest):
         voice_override=payload.voice,
         rate=payload.rate or "-4%",
         pitch=payload.pitch or "-2Hz",
-        language=payload.language
+        language=payload.language,
+        cacheable=False
     )
 
-async def _process_tts(text: str, gender: str, voice_override: Optional[str], rate: str, pitch: str, language: str = "hi"):
+async def _process_tts(text: str, gender: str, voice_override: Optional[str], rate: str, pitch: str, language: str = "hi", cacheable: bool = True):
+    # POST bodies are not part of a CDN cache key, so a public max-age on a POST response made the edge
+    # replay one phrase's audio for every later sentence. Only GET (text in the URL) may be cached publicly.
+    cache_control = "public, max-age=604800" if cacheable else "no-store"
     cleaned = clean_speech_text(text)
     if not cleaned or len(cleaned) < 2:
         raise HTTPException(status_code=400, detail="Text payload too short or empty after sanitization")
@@ -131,7 +135,7 @@ async def _process_tts(text: str, gender: str, voice_override: Optional[str], ra
             path=str(cache_file),
             media_type="audio/mpeg",
             headers={
-                "Cache-Control": "public, max-age=604800",
+                "Cache-Control": cache_control,
                 "Accept-Ranges": "bytes",
                 "X-Speech-Voice": voice_name
             }
@@ -154,7 +158,7 @@ async def _process_tts(text: str, gender: str, voice_override: Optional[str], ra
                     path=str(cache_file),
                     media_type="audio/mpeg",
                     headers={
-                        "Cache-Control": "public, max-age=604800",
+                        "Cache-Control": cache_control,
                         "Accept-Ranges": "bytes",
                         "X-Speech-Voice": voice_name
                     }

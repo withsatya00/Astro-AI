@@ -40,7 +40,7 @@
     if (await probeIndividual(m[1])) {
       // A slow manifest request must not overwrite a different profile's newer image.
       const current = PORTRAIT.exec(img.getAttribute('src') || '');
-      if (current && current[1] === m[1]) img.src = `/assets/portraits/individual/${m[1]}.webp`;
+      if (current && current[1] === m[1]) img.src = `/assets/portraits/individual/${img.closest('.astrologer-card') ? 'sm/' : ''}${m[1]}.webp`;
     }
   }
 

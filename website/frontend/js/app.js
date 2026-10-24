@@ -1868,6 +1868,7 @@ var App = {
               src="${portraitUrl}" 
               alt="${a.name}" 
               class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+              loading="lazy" decoding="async"
               onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';"
             />
             <!-- Honor Badge -->

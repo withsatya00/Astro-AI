@@ -237,6 +237,9 @@
           <button type="button" class="chat-quick-chip" onclick="ChatController.askQuickPrompt('मेरे भाग्योदय, स्वास्थ्य और सफलता के लिए कौन सा रत्न (Gemstone) धारण करना चाहिए?')">
             <span>💎</span> <span>भाग्यशाली रत्न?</span>
           </button>
+          <button type="button" class="chat-quick-chip" onclick="document.getElementById('palm-image-input').click()">
+            <span>🖐️</span> <span>Palm reading</span>
+          </button>
         </div>
 
         <div class="composer-card">
@@ -254,7 +257,7 @@
           </div>
 
           <div class="composer-input-row">
-            <button type="button" class="btn-composer-attach" id="btn-composer-paperclip" title="Attach birth details or Kundli" onclick="App.openBirthModal()">
+            <button type="button" class="btn-composer-attach" id="btn-composer-paperclip" title="Attach palm photo or birth details" onclick="ChatController.openAttachMenu(this)">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#53627A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
               </svg>
@@ -284,7 +287,7 @@
               <button type="button" class="composer-chip" onclick="ChatController.askQuickPrompt('शनि साढ़ेसाती और ढैय्या के वैदिक उपाय बताएं')"><span>🪐</span> <span>शनि शांति</span></button>
 
               <!-- Preserved elements for handlers -->
-              <input type="file" id="palm-image-input" accept="image/*" style="display: none;">
+              <input type="file" id="palm-image-input" accept="image/*" style="position:absolute;width:0;height:0;opacity:0;pointer-events:none;" tabindex="-1">
               <button class="btn-tool" id="btn-upload-palm" style="display: none;"></button>
               <button class="btn-tool" id="btn-open-upload-modal" style="display: none;"></button>
               <button class="btn-tool" id="btn-open-agent-modal" style="display: none;"></button>

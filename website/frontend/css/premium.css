@@ -447,3 +447,34 @@ body.in-consult #view-consultation { height: 100vh; height: 100dvh; }
 @media (min-width: 1024px) { .site-navbar .brand-mark { width: 50px; height: 50px; } }
 .brand-mark { background: #1A1240; box-shadow: 0 0 0 1px rgba(221, 188, 124, 0.55), var(--sh-card); }
 .footer-logo-full { width: 240px; max-width: 100%; height: auto; border-radius: var(--r-md); display: block; }
+
+/* ---- Scroll performance -------------------------------------------------- */
+/* Blurred layers (sticky navbar + a blurred badge on every card) are re-rendered every scroll
+   frame on laptops; their backgrounds are already near-opaque, so the blur is dropped. */
+*, *::before, *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* Off-screen cards skip layout/paint until they approach the viewport. */
+.astrologer-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 540px;
+}
+@media (max-width: 640px) { .astrologer-card { contain-intrinsic-size: auto 210px; } }
+
+/* ---- Composer attach menu ------------------------------------------------- */
+.composer-card { position: relative; }
+.attach-menu {
+  position: absolute; left: 8px; bottom: calc(100% + 8px); z-index: 60;
+  background: var(--pm-surface); border: 1px solid var(--pm-line); border-radius: var(--r-md);
+  box-shadow: var(--sh-modal); padding: 0.35rem; display: grid; gap: 0.15rem; min-width: 220px;
+  animation: pmPageIn 0.18s ease both;
+}
+.attach-menu button {
+  display: flex; align-items: center; gap: 0.7rem; text-align: left; background: none; border: 0;
+  padding: 0.6rem 0.7rem; border-radius: var(--r-sm); cursor: pointer; color: #1E1B4B;
+}
+.attach-menu button:hover { background: #F5F0FF; }
+.attach-menu small { display: block; font-size: 0.72rem; color: #64748B; }
+html[data-theme="dark"] .attach-menu button { color: #F3EEE8; }
+html[data-theme="dark"] .attach-menu button:hover { background: #2A2438; }

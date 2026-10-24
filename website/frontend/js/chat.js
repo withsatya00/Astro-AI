@@ -478,15 +478,58 @@ var ChatController = {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const base64Data = event.target.result;
-      this.sendMessage('Analyze my palm lines (हस्तरेखा विश्लेषण)', base64Data);
-    };
-    reader.readAsDataURL(file);
+    // Phone photos are several MB; the API gateway rejects large bodies, so shrink before sending.
+    this.compressImage(file).then(dataUrl => {
+      this.sendMessage('Analyze my palm lines (हस्तरेखा विश्लेषण)', dataUrl);
+    }).catch(() => {
+      App.showToast('Could not read that photo. Please try another image.', 'error');
+    });
 
     // Reset input so same file can be re-uploaded if needed
     e.target.value = '';
+  },
+
+  compressImage(file, maxDim = 1280, quality = 0.82) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode failed')); };
+      img.src = url;
+    });
+  },
+
+  // Paperclip menu: palm photo or birth details (the paperclip used to open only the birth form,
+  // and the real palm upload button lives in a hidden row, so palm photos could not be sent).
+  openAttachMenu(anchor) {
+    const existing = document.getElementById('attach-menu');
+    if (existing) { existing.remove(); return; }
+    const menu = document.createElement('div');
+    menu.id = 'attach-menu';
+    menu.className = 'attach-menu';
+    menu.innerHTML = `
+      <button type="button" data-act="palm"><span>🖐️</span><span><b>Palm photo</b><small>Get your palm read</small></span></button>
+      <button type="button" data-act="birth"><span>🪐</span><span><b>Birth details</b><small>Date, time &amp; place of birth</small></span></button>`;
+    const card = anchor.closest('.composer-card') || anchor.parentElement;
+    card.appendChild(menu);
+    const close = () => { menu.remove(); document.removeEventListener('click', outside, true); };
+    const outside = (ev) => { if (!menu.contains(ev.target) && ev.target !== anchor && !anchor.contains(ev.target)) close(); };
+    menu.addEventListener('click', (ev) => {
+      const act = ev.target.closest('button')?.dataset.act;
+      if (!act) return;
+      close();
+      if (act === 'palm') document.getElementById('palm-image-input')?.click();
+      else App.openBirthModal();
+    });
+    setTimeout(() => document.addEventListener('click', outside, true), 0);
   },
 
   renderKundliInChat() {

@@ -110,7 +110,7 @@ export class AstrologerCardComponent {
             src="${portraitUrl}" 
             alt="${astrologer.name}" 
             class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105" 
-            loading="eager" 
+            loading="lazy" decoding="async" 
             onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';" 
           />
           <!-- Honor Badge (Top Left) -->

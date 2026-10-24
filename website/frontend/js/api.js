@@ -34,9 +34,14 @@ const API_BASE = getApiBase();
 
 var API = {
   async synthesizeSpeech(payload, signal) {
-    const response = await fetch(`${API_BASE}/voice/tts`, {
+    // The CDN keys cached responses by URL only (not the POST body). Without a per-request key,
+    // every sentence got the first cached audio, so the caller kept hearing the same "ji".
+    const body = JSON.stringify(payload);
+    let h = 5381;
+    for (let i = 0; i < body.length; i++) h = ((h << 5) + h + body.charCodeAt(i)) | 0;
+    const response = await fetch(`${API_BASE}/voice/tts?k=${(h >>> 0).toString(36)}${body.length}`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload), signal
+      body, signal, cache: 'no-store'
     });
     if (!response.ok) throw new Error('Indian voice service is unavailable');
     return response.blob();
