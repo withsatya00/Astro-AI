@@ -46,6 +46,15 @@ var API = {
     if (!response.ok) throw new Error('Indian voice service is unavailable');
     return response.blob();
   },
+  // Server-side speech-to-text (fallback when the browser recogniser is missing or deaf)
+  async transcribeSpeech(blob, language = '') {
+    const res = await fetch(`${API_BASE}/voice/stt?language=${encodeURIComponent(language)}`, {
+      method: 'POST', headers: { 'Content-Type': blob.type || 'audio/webm' }, body: blob, cache: 'no-store'
+    });
+    if (!res.ok) throw new Error('Speech transcription unavailable');
+    const data = await res.json();
+    return (data.text || '').trim();
+  },
   // Health & Readiness
   async getHealth() {
     const res = await fetch(`${API_BASE}/health`);

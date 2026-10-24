@@ -3146,13 +3146,14 @@ const CallingAgentService = {
     return langs.find(l => l !== 'en') || langs[0] || null;
   },
 
-  // The pandit answers in his own language; he switches only when the caller speaks another language he knows.
+  // The answer comes back in the language the caller used: Hindi (Devanagari) -> Hindi, Hinglish -> Hinglish,
+  // English -> English, other Indian scripts -> that language. A one- or two-word reply with no script clue
+  // ("yes", "ok") keeps the language of the conversation so far instead of flipping to English.
   replyLanguage(userText) {
-    const own = this.astrologerLanguage(this.activeAstrologer);
     const spoken = this.inferQuestionLanguage(userText);
-    if (!own) return spoken;
-    if (spoken !== 'en' && spoken !== 'hinglish' && this.astrologerLanguages(this.activeAstrologer).includes(spoken)) return spoken;
-    return own;
+    const words = String(userText || '').trim().split(/\s+/).filter(Boolean).length;
+    if (spoken === 'en' && words < 3 && this.responseLanguage) return this.responseLanguage;
+    return spoken;
   },
 
   inferQuestionLanguage(text) {
@@ -3206,6 +3207,10 @@ const CallingAgentService = {
     const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!window.isSecureContext) {
       this.updateStatus('muted', this.callText('Microphone requires HTTPS or localhost.', 'माइक के लिए सुरक्षित कनेक्शन या स्थानीय वेबसाइट खोलें।'));
+      return;
+    }
+    if (!Recognition && window.MediaRecorder && navigator.mediaDevices?.getUserMedia) {
+      this.updateStatus('listening', this.callText('Listening — speak your question.', 'सुन रहे हैं — अपना प्रश्न बोलें।'));
       return;
     }
     if (!Recognition) {
@@ -3288,6 +3293,12 @@ const CallingAgentService = {
         'audio-capture': this.callText('No microphone detected. Connect a microphone, then tap Speak.', 'माइक नहीं मिला। माइक जोड़ें, फिर बोलने वाला बटन दबाएँ।'),
         'network': this.callText('Speech recognition needs an internet connection. Check your connection, then tap Speak.', 'आवाज़ पहचान के लिए इंटरनेट चाहिए। कनेक्शन जाँचें, फिर बोलने वाला बटन दबाएँ।')
       };
+      const hasFallback = !!(window.MediaRecorder && this.bargeIn && this.bargeIn.stream);
+      if (hasFallback && ['network', 'service-not-allowed', 'no-speech', 'language-not-supported'].includes(event.error)) {
+        // Browser speech service unavailable: the server transcription fallback keeps the call working.
+        this.updateStatus('listening', this.callText('Listening — speak your question.', 'सुन रहे हैं — अपना प्रश्न बोलें।'));
+        return;
+      }
       if (event.error === 'network' && this.isCalling) {
         this.scheduleReconnect();
         return;
@@ -3638,6 +3649,7 @@ const CallingAgentService = {
         const baseline = [...recent].sort((x, y) => x - y)[Math.floor(recent.length * 0.25)] || 0;
         const threshold = Math.max(0.018, baseline * 2.6 + 0.008);
         this.bargeDebug = { level: smooth, baseline, threshold };
+        this.fallbackListenTick(monitor, smooth, threshold);
         // Only while the astrologer is audibly talking; noise during "thinking" must never cancel a pending answer.
         const busy = this.isSpeaking || this.isProcessingQueue || this.speechQueue.length;
         if (!this.isCalling || this.isMuted || !busy) { loudSamples = 0; return; }
@@ -3652,6 +3664,81 @@ const CallingAgentService = {
     }
   },
 
+  // ---- Server-side hearing fallback -------------------------------------------------------------
+  // The browser recogniser can be missing (iOS Safari, Brave) or silently deaf (another open mic stream on
+  // Android, blocked speech service). While the call is listening we also watch the mic level; if the caller
+  // clearly spoke but the recogniser produced no words, the recorded clip is transcribed on the server.
+  fallbackListenTick(monitor, level, threshold) {
+    const fb = monitor.fb || (monitor.fb = { rec: null, chunks: [], heard: false, loud: 0, quiet: 0, sending: false, startedAt: 0, disabled: false });
+    const listening = this.isCalling && !this.isMuted && !this.isSpeaking && !this.isResponding &&
+      !this.isProcessingQueue && !this.speechQueue.length && !fb.sending && !fb.disabled;
+    if (!listening) { if (fb.rec) this.fallbackReset(fb); return; }
+    if (!fb.rec) this.fallbackStart(monitor, fb);
+    if (!fb.rec) return;
+    if (level > threshold) { fb.loud++; fb.quiet = 0; if (fb.loud >= 6) fb.heard = true; }
+    else { fb.loud = 0; if (fb.heard) fb.quiet++; }
+    // Do not let a clip grow without speech (also keeps the first, header-carrying chunk valid).
+    if (!fb.heard && Date.now() - fb.startedAt > 8000) { this.fallbackReset(fb); return; }
+    if (fb.heard && fb.quiet >= 36) this.fallbackFinish(fb);   // ~1.4s of quiet after speech
+  },
+
+  fallbackStart(monitor, fb) {
+    if (!window.MediaRecorder || !monitor.stream) { fb.disabled = true; return; }
+    try {
+      const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus']
+        .find(t => MediaRecorder.isTypeSupported(t));
+      const rec = new MediaRecorder(monitor.stream, mime ? { mimeType: mime } : undefined);
+      fb.chunks = []; fb.heard = false; fb.loud = 0; fb.quiet = 0; fb.startedAt = Date.now();
+      rec.ondataavailable = e => { if (e.data && e.data.size) fb.chunks.push(e.data); };
+      rec.start(250);
+      fb.rec = rec;
+    } catch (e) { fb.rec = null; fb.disabled = true; }
+  },
+
+  fallbackReset(fb) {
+    const rec = fb.rec;
+    fb.rec = null; fb.heard = false; fb.loud = 0; fb.quiet = 0; fb.chunks = [];
+    if (rec) { rec.ondataavailable = null; rec.onstop = null; try { if (rec.state !== 'inactive') rec.stop(); } catch (e) {} }
+  },
+
+  fallbackFinish(fb) {
+    // The browser recogniser is working: it will submit on its own, nothing to do.
+    if ((this.accumulatedSpeech + ' ' + (this.interimSpeech || '')).trim()) { this.fallbackReset(fb); return; }
+    const rec = fb.rec;
+    if (!rec) return;
+    fb.sending = true;
+    rec.onstop = async () => {
+      const type = (rec.mimeType || 'audio/webm').split(';')[0];
+      const blob = new Blob(fb.chunks, { type });
+      this.fallbackReset(fb);
+      const turn = this.turnId;
+      try {
+        this.updateStatus('analyzing', this.callText('Got it — one moment…', 'सुन लिया — एक क्षण…'));
+        const text = await API.transcribeSpeech(blob, this.locale());
+        // The recogniser may have caught up, the call may have ended, or the astrologer may already be talking.
+        const caught = (this.accumulatedSpeech + ' ' + (this.interimSpeech || '')).trim();
+        if (!text || caught || !this.isCalling || this.isMuted || this.isResponding || this.isSpeaking || turn !== this.turnId) {
+          if (this.isCalling && !caught && !this.isResponding && !this.isSpeaking) {
+            this.updateStatus('listening', this.callText('Listening — speak your question.', 'सुन रहे हैं — अपना प्रश्न बोलें।'));
+          }
+          return;
+        }
+        this.stopRecognition();
+        this.isManualMicActive = false;
+        this.updateMicButton();
+        this.setUserCaption(text);
+        this.handleUserVoiceInput(text);
+      } catch (e) {
+        if (this.isCalling && !this.isResponding && !this.isSpeaking) {
+          this.updateStatus('listening', this.callText('Listening — speak your question.', 'सुन रहे हैं — अपना प्रश्न बोलें।'));
+        }
+      } finally {
+        fb.sending = false;
+      }
+    };
+    try { rec.stop(); } catch (e) { fb.sending = false; this.fallbackReset(fb); }
+  },
+
   stopBargeInMonitor() {
     clearTimeout(this.bargeRetryTimer);
     const monitor = this.bargeIn;
@@ -3659,6 +3746,7 @@ const CallingAgentService = {
     if (!monitor) return;
     monitor.stopped = true;
     clearInterval(monitor.timer);
+    if (monitor.fb) this.fallbackReset(monitor.fb);
     monitor.stream?.getTracks().forEach(t => t.stop());
     try { monitor.ctx?.close(); } catch (e) {}
   },

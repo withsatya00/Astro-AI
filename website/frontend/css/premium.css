@@ -478,3 +478,7 @@ body.in-consult #view-consultation { height: 100vh; height: 100dvh; }
 .attach-menu small { display: block; font-size: 0.72rem; color: #64748B; }
 html[data-theme="dark"] .attach-menu button { color: #F3EEE8; }
 html[data-theme="dark"] .attach-menu button:hover { background: #2A2438; }
+
+/* the supplied logo is a finished app-icon tile (own gold frame and depth), so no extra chrome */
+.brand-mark { background: none !important; box-shadow: none !important; overflow: visible; }
+.brand-mark-img { object-fit: contain; filter: drop-shadow(0 2px 5px rgba(60, 28, 120, 0.28)); }
