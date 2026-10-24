@@ -415,3 +415,33 @@ html[data-theme="dark"] .composer-wrapper { background: #13111D !important; }
 html[data-theme="dark"] .transit-strip-inner,
 html[data-theme="dark"] .transit-strip-inner * { color: #D9D2E6 !important; }
 html[data-theme="dark"] .msg-time, html[data-theme="dark"] .composer-subtext { color: #8F88A0 !important; }
+
+/* ---- Brand mark (logo image replaces the purple emoji tile) -------------- */
+.brand-mark {
+  width: 44px; height: 44px; flex: none; border-radius: var(--r-md); overflow: hidden;
+  background: #F6EEDC; box-shadow: 0 0 0 1px rgba(179, 140, 67, 0.35), var(--sh-card);
+  display: inline-flex;
+}
+.brand-mark-sm { width: 32px; height: 32px; border-radius: 10px; }
+.brand-mark-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- Consultation room: fixed full-height shell ----------------------------
+   The room is a full-screen app. Its overflow was `hidden`, which browsers still let
+   scrollIntoView() scroll, so after a reply the whole room (header, composer) slid
+   up and left a blank page below. `clip` cannot be scrolled programmatically. */
+#view-consultation#view-consultation,
+#view-consultation#view-consultation .chat-main,
+#view-consultation#view-consultation .chat-main.chat-main { overflow: clip !important; }
+body.in-consult .top-promo-bar,
+body.in-consult .ephemeris-ticker-bar { display: none !important; }
+body.in-consult #view-consultation { height: 100vh; height: 100dvh; }
+@media (min-width: 1024px) {
+  /* keep the conversation a readable column on laptops */
+  #chat-messages-container .message-row,
+  #chat-messages-container .chat-date-pill,
+  #chat-messages-container .welcome-screen {
+    width: 100%; max-width: 980px; margin-left: auto; margin-right: auto;
+  }
+  .composer-card { max-width: 980px !important; }
+}
+@media (min-width: 1024px) { .site-navbar .brand-mark { width: 50px; height: 50px; } }

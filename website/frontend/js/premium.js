@@ -132,9 +132,10 @@
     return '';
   }
   function updateTabbar() {
-    if (!tabbar) return;
     const path = currentPath();
     const inChat = path.startsWith('/consultation');
+    document.body.classList.toggle('in-consult', inChat);
+    if (!tabbar) return;
     tabbar.classList.toggle('hidden', inChat);
     document.body.classList.toggle('pm-has-tabbar', !inChat);
     const active = tabFor(path);
