@@ -1,0 +1,417 @@
+/* ==========================================================================
+   Astro Jyotish - premium polish layer
+   Additive only: it does not change the existing colour theme or the hero
+   section (#hero-section is excluded from every rule that restyles elements).
+   Loaded last, after responsive.css.
+   ========================================================================== */
+
+/* ---- Design tokens: elevation + radius scales ---------------------------- */
+:root {
+  --sh-card: 0 1px 2px rgba(30, 27, 75, 0.04), 0 4px 14px rgba(30, 27, 75, 0.06);
+  --sh-hover: 0 2px 4px rgba(30, 27, 75, 0.05), 0 12px 28px rgba(116, 57, 234, 0.14);
+  --sh-modal: 0 24px 70px rgba(22, 13, 56, 0.28);
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --gold: #B45309;
+  --gold-soft: #FEF3C7;
+  --pm-surface: #FFFFFF;
+  --pm-line: #E7E2D8;
+}
+
+/* 3-level shadow scale used everywhere instead of per-card hardcoded shadows */
+.astrologer-card,
+.directory-toolbar,
+.composer-card,
+.testimonial-card,
+.why-choose-card,
+.service-category-card,
+.faq-item,
+.blog-card,
+.sk-card {
+  box-shadow: var(--sh-card) !important;
+}
+.astrologer-card:hover,
+.testimonial-card:hover,
+.why-choose-card:hover,
+.service-category-card:hover,
+.blog-card:hover {
+  box-shadow: var(--sh-hover) !important;
+}
+.app-modal-card,
+.modal-content,
+.kundli-bottom-sheet {
+  box-shadow: var(--sh-modal) !important;
+}
+
+/* radius scale: 8 (chips/inputs) / 12 (buttons, selects) / 20 (cards, modals) */
+.astrologer-card,
+.directory-toolbar,
+.app-modal-card,
+.sk-card { border-radius: var(--r-lg) !important; }
+.dir-filter-select,
+.dir-search-box,
+.btn-clear-filters { border-radius: var(--r-md) !important; }
+.chat-quick-chip,
+.dyn-chip { border-radius: 9999px !important; }
+
+/* ---- Numerals: precise, aligned figures for prices and stats ------------- */
+.price-amount,
+#nav-wallet-balance,
+.btn-nav-wallet,
+.stat-number,
+.astrologer-card,
+.premium-num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ---- Breathing room (non-hero sections only) ----------------------------- */
+@media (min-width: 768px) {
+  .featured-astrologers-section,
+  .why-choose-section,
+  .testimonials-section,
+  .faq-section {
+    padding-top: 4.25rem !important;
+    padding-bottom: 4.25rem !important;
+  }
+}
+.astrologers-grid-container,
+.featured-astrologers-grid { gap: 1.5rem !important; }
+
+/* ---- Inline SVG line icons (replace emoji) ------------------------------- */
+.pi {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  flex: none;
+  color: inherit;
+}
+.pi svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+}
+.pi-gold { color: var(--gold); }
+.pi[data-ic="star"] svg { fill: currentColor; }
+.pi[data-ic="star"] { color: #F59E0B; }
+.pm-trust .pm-long { display: none; }
+@media (min-width: 641px) { .pm-trust .pm-long { display: inline; } }
+
+/* ---- Micro-interactions -------------------------------------------------- */
+button:not(#hero-section button),
+.btn-hero-primary:not(#hero-section *),
+.chat-quick-chip,
+.dyn-chip,
+.site-nav-link,
+.astrologer-card {
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+@media (hover: hover) {
+  button:not(#hero-section button):not(:disabled):hover,
+  .chat-quick-chip:hover,
+  .dyn-chip:hover { transform: translateY(-1px); }
+  .astrologer-card:hover { transform: translateY(-3px); }
+}
+button:not(#hero-section button):not(:disabled):active,
+.chat-quick-chip:active,
+.dyn-chip:active,
+.pm-tab:active { transform: scale(0.97) !important; }
+:focus-visible { outline: 2px solid #B38C43; outline-offset: 2px; }
+
+/* page transition when the SPA switches view */
+.app-page-view.active { animation: pmPageIn 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes pmPageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Skeleton loaders ---------------------------------------------------- */
+.sk {
+  display: block;
+  background: linear-gradient(100deg, #EEE9DE 30%, #F8F5EE 50%, #EEE9DE 70%);
+  background-size: 220% 100%;
+  animation: pmShimmer 1.3s linear infinite;
+  border-radius: var(--r-sm);
+}
+@keyframes pmShimmer { to { background-position: -220% 0; } }
+.sk-card {
+  background: var(--pm-surface);
+  border: 1px solid var(--pm-line);
+  overflow: hidden;
+  min-width: 0;
+}
+.sk-img { aspect-ratio: 1 / 1; width: 100%; border-radius: 0; }
+.sk-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.sk-line { height: 12px; }
+.sk-line.w40 { width: 40%; } .sk-line.w60 { width: 60%; } .sk-line.w80 { width: 80%; }
+.sk-row { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
+.sk-btn { flex: 1; height: 34px; border-radius: 9999px; }
+@media (max-width: 640px) {
+  .sk-card { display: grid; grid-template-columns: 88px 1fr; align-items: center; padding: 0.7rem; gap: 0.75rem; }
+  .sk-img { width: 88px; border-radius: var(--r-md); }
+  .sk-body { padding: 0; }
+}
+.sk-chat { display: flex; flex-direction: column; gap: 0.9rem; padding: 1.25rem 1rem; }
+.sk-bubble { height: 64px; width: 68%; border-radius: 18px; }
+.sk-bubble.tall { height: 110px; }
+.sk-bubble.r { align-self: flex-end; width: 52%; }
+
+/* ---- Typing indicator ---------------------------------------------------- */
+.typing-dots { display: inline-flex; gap: 4px; align-items: center; padding: 2px 4px; }
+.typing-dots i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #7439EA; opacity: 0.35;
+  animation: pmDot 1.1s ease-in-out infinite;
+}
+.typing-dots i:nth-child(2) { animation-delay: 0.16s; }
+.typing-dots i:nth-child(3) { animation-delay: 0.32s; }
+@keyframes pmDot {
+  0%, 70%, 100% { transform: translateY(0); opacity: 0.35; }
+  35% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* ---- Kundli wheel: draw + fade in when a chart renders ------------------- */
+.kundali-svg, .kundali-svg-compact { animation: pmWheelIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-origin: 50% 50%; }
+.kundali-svg path, .kundali-svg line, .kundali-svg polygon, .kundali-svg rect,
+.kundali-svg-compact path, .kundali-svg-compact line, .kundali-svg-compact polygon, .kundali-svg-compact rect {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: pmDraw 1.1s ease-out 0.05s forwards;
+}
+.kundali-svg text, .kundali-svg-compact text { opacity: 0; animation: pmFade 0.5s ease-out forwards; }
+.kundali-svg text:nth-of-type(-n+6), .kundali-svg-compact text:nth-of-type(-n+6) { animation-delay: 0.55s; }
+.kundali-svg text:nth-of-type(n+7), .kundali-svg-compact text:nth-of-type(n+7) { animation-delay: 0.85s; }
+.kundali-svg text:nth-of-type(n+14), .kundali-svg-compact text:nth-of-type(n+14) { animation-delay: 1.1s; }
+@keyframes pmWheelIn { from { opacity: 0; transform: rotate(-12deg) scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes pmDraw { to { stroke-dashoffset: 0; } }
+@keyframes pmFade { to { opacity: 1; } }
+
+/* ---- Trust signals on cards ---------------------------------------------- */
+.pm-trust {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.6rem;
+  font-size: 0.68rem; font-weight: 700; color: #0F766E; margin: 0.15rem 0 0.35rem;
+}
+.pm-trust span { display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
+.pm-trust .muted { color: #64748B; font-weight: 600; }
+.pm-plus {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #6B4A12; background: linear-gradient(135deg, #F6E3B0, #E8B94E);
+  border: 1px solid #D9A93E; border-radius: 9999px; padding: 0.12rem 0.5rem;
+  cursor: pointer;
+}
+.pm-plus .pi { width: 0.95em; height: 0.95em; }
+
+/* ---- Live strip (home) --------------------------------------------------- */
+.pm-live-strip {
+  background: #FFFDF7; border-bottom: 1px solid var(--pm-line);
+  padding: 0.7rem 1rem; text-align: center; overflow: hidden;
+}
+.pm-live-strip-inner {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.82rem; font-weight: 600; color: #53627A; min-height: 1.4rem;
+}
+.pm-live-dot { width: 8px; height: 8px; border-radius: 50%; background: #10B981; box-shadow: 0 0 0 0 #10B98180; animation: pmPing 1.8s infinite; }
+@keyframes pmPing { 70% { box-shadow: 0 0 0 8px #10B98100; } 100% { box-shadow: 0 0 0 0 #10B98100; } }
+.pm-live-text { transition: opacity 0.35s ease, transform 0.35s ease; }
+.pm-live-text.out { opacity: 0; transform: translateY(-4px); }
+
+/* ---- Plus modal ---------------------------------------------------------- */
+.pm-overlay {
+  position: fixed; inset: 0; z-index: 10000; display: none; align-items: center; justify-content: center;
+  background: rgba(15, 23, 42, 0.6); padding: 1.25rem;
+}
+.pm-overlay.open { display: flex; animation: pmPageIn 0.25s ease both; }
+.pm-sheet {
+  width: 100%; max-width: 420px; background: var(--pm-surface); border-radius: var(--r-lg);
+  box-shadow: var(--sh-modal); padding: 1.5rem; color: #1E1B4B;
+}
+.pm-sheet h3 { font-family: 'Cinzel', 'Playfair Display', serif; font-size: 1.3rem; margin: 0.4rem 0 0.25rem; }
+.pm-sheet p { color: #53627A; font-size: 0.88rem; margin: 0 0 0.9rem; }
+.pm-sheet ul { list-style: none; padding: 0; margin: 0 0 1.1rem; display: grid; gap: 0.55rem; }
+.pm-sheet li { display: flex; gap: 0.55rem; align-items: center; font-size: 0.88rem; font-weight: 600; }
+.pm-sheet li .pi { color: var(--gold); }
+.pm-badge-soon { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; color: #6B4A12; background: var(--gold-soft); border-radius: 9999px; padding: 0.15rem 0.6rem; }
+.pm-actions { display: flex; gap: 0.6rem; }
+.pm-btn {
+  flex: 1; padding: 0.7rem 1rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+  border: 1px solid var(--pm-line); background: var(--pm-surface); color: #1E1B4B;
+}
+.pm-btn.primary { background: linear-gradient(90deg, #7439EA, #5B21B6); color: #fff; border-color: transparent; }
+
+/* ---- Theme toggle button ------------------------------------------------- */
+.pm-theme-toggle {
+  width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--pm-line); background: var(--pm-surface); color: #1E1B4B; cursor: pointer; flex: none;
+}
+.pm-theme-toggle .pi { width: 1.1rem; height: 1.1rem; }
+
+/* ---- Mobile bottom tab bar ---------------------------------------------- */
+.pm-tabbar { display: none; }
+@media (max-width: 768px) {
+  .pm-tabbar {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 400;
+    background: rgba(255, 253, 247, 0.98);
+    border-top: 1px solid var(--pm-line);
+    padding: 0.3rem 0.4rem calc(0.3rem + env(safe-area-inset-bottom));
+    box-shadow: 0 -6px 24px rgba(30, 27, 75, 0.07);
+    transition: transform 0.25s ease;
+  }
+  .pm-tabbar.hidden { transform: translateY(110%); }
+  .pm-tab {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: none; border: 0; padding: 0.35rem 0.2rem; color: #64748B; font-size: 0.66rem; font-weight: 700; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; border-radius: var(--r-md);
+  }
+  .pm-tab .pi { width: 1.35rem; height: 1.35rem; }
+  .pm-tab.active { color: #7439EA; }
+  .pm-tab.active .pi { color: #7439EA; }
+  body.pm-has-tabbar #app-root { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .toast-container { bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
+}
+
+/* ---- Pull to refresh ----------------------------------------------------- */
+.pm-ptr {
+  position: fixed; top: 0; left: 50%; z-index: 9000; transform: translate(-50%, -64px);
+  width: 40px; height: 40px; border-radius: 50%; background: var(--pm-surface); color: #7439EA;
+  box-shadow: var(--sh-hover); display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s ease; pointer-events: none;
+}
+.pm-ptr.spin .pi { animation: pmSpin 0.8s linear infinite; }
+@keyframes pmSpin { to { transform: rotate(360deg); } }
+
+/* ---- Reduced motion ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .app-page-view.active, .kundali-svg, .kundali-svg-compact, .kundali-svg text, .kundali-svg path,
+  .sk, .typing-dots i, .pm-live-dot { animation: none !important; }
+  .kundali-svg text, .kundali-svg-compact text { opacity: 1; }
+  .kundali-svg path, .kundali-svg line, .kundali-svg polygon, .kundali-svg rect,
+  .kundali-svg-compact path, .kundali-svg-compact line, .kundali-svg-compact polygon, .kundali-svg-compact rect { stroke-dashoffset: 0; }
+}
+
+/* ==========================================================================
+   Optional dark mode (opt-in through the toggle; light stays the default)
+   ========================================================================== */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --pm-surface: #1C1928;
+  --pm-line: #353041;
+  --gold: #DDBC7C;
+  --gold-soft: #302819;
+  --sh-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.28);
+  --sh-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 30px rgba(0, 0, 0, 0.45);
+  --sh-modal: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site-layout-shell,
+html[data-theme="dark"] .site-layout-outlet { background: #13111D !important; color: #F3EEE8; }
+
+/* light surfaces -> dark surfaces (tailwind arbitrary classes + component classes) */
+html[data-theme="dark"] [class*="bg-white"],
+html[data-theme="dark"] [class*="bg-[#FFFDF7"],
+html[data-theme="dark"] [class*="bg-[#FFFDF5"],
+html[data-theme="dark"] [class*="bg-[#FAF8F2"],
+html[data-theme="dark"] [class*="bg-[#FFFBEB"],
+html[data-theme="dark"] [class*="bg-slate-50"],
+html[data-theme="dark"] .astrologer-card,
+html[data-theme="dark"] .directory-toolbar,
+html[data-theme="dark"] .dir-search-box,
+html[data-theme="dark"] .dir-filter-select,
+html[data-theme="dark"] .btn-clear-filters,
+html[data-theme="dark"] .app-modal-card,
+html[data-theme="dark"] .composer-card,
+html[data-theme="dark"] .composer-wrapper,
+html[data-theme="dark"] .site-navbar,
+html[data-theme="dark"] .trust-stats-bar,
+html[data-theme="dark"] .pm-live-strip,
+html[data-theme="dark"] .pm-tabbar,
+html[data-theme="dark"] .sk-card,
+html[data-theme="dark"] .pm-sheet,
+html[data-theme="dark"] .pm-theme-toggle,
+html[data-theme="dark"] .pm-ptr,
+html[data-theme="dark"] .kundli-bottom-sheet {
+  background-color: #1C1928 !important;
+  background-image: none !important;
+}
+html[data-theme="dark"] .hero-section,
+html[data-theme="dark"] #hero-section { background: linear-gradient(180deg, #181526, #13111D) !important; }
+html[data-theme="dark"] [class*="from-[#FFFDF7"],
+html[data-theme="dark"] [class*="via-[#FFFDF5"],
+html[data-theme="dark"] [class*="to-[#FAF8F2"] { background-image: none !important; background-color: #13111D !important; }
+html[data-theme="dark"] .message-bubble { background: #242030 !important; color: #F3EEE8 !important; border-color: #353041 !important; }
+html[data-theme="dark"] .message-bubble.user-bubble { background: #4C2D8A !important; }
+
+/* text */
+html[data-theme="dark"] [class*="text-[#1E1B4B"],
+html[data-theme="dark"] [class*="text-slate-800"],
+html[data-theme="dark"] [class*="text-slate-700"],
+html[data-theme="dark"] [class*="text-[#211D50"],
+html[data-theme="dark"] .brand-title,
+html[data-theme="dark"] .directory-title,
+html[data-theme="dark"] .hero-title,
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3 { color: #F3EEE8 !important; }
+html[data-theme="dark"] [class*="text-[#53627A"],
+html[data-theme="dark"] [class*="text-[#64748B"],
+html[data-theme="dark"] [class*="text-slate-600"],
+html[data-theme="dark"] [class*="text-slate-500"],
+html[data-theme="dark"] [class*="text-slate-400"],
+html[data-theme="dark"] [class*="text-gray-"] { color: #ADA6BA !important; }
+html[data-theme="dark"] .hero-title span { color: inherit; }
+html[data-theme="dark"] .site-nav-link { color: #C9C2D6; }
+html[data-theme="dark"] .site-nav-link.active { color: #C0A0F0 !important; }
+
+/* borders and inputs */
+html[data-theme="dark"] [class*="border-[#E7E2D8"],
+html[data-theme="dark"] [class*="border-slate-"],
+html[data-theme="dark"] .astrologer-card,
+html[data-theme="dark"] .directory-toolbar,
+html[data-theme="dark"] .site-navbar,
+html[data-theme="dark"] .pm-tabbar { border-color: #353041 !important; }
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea { background-color: transparent; color: #F3EEE8; }
+html[data-theme="dark"] select option { background: #1C1928; color: #F3EEE8; }
+html[data-theme="dark"] .sk {
+  background: linear-gradient(100deg, #262235 30%, #302B42 50%, #262235 70%);
+  background-size: 220% 100%;
+}
+html[data-theme="dark"] .pm-sheet { color: #F3EEE8; }
+html[data-theme="dark"] .pm-sheet p { color: #ADA6BA; }
+html[data-theme="dark"] .pm-btn { background: #242030; color: #F3EEE8; }
+html[data-theme="dark"] .pm-btn.primary { background: linear-gradient(90deg, #7439EA, #5B21B6); }
+html[data-theme="dark"] .pm-live-strip-inner { color: #ADA6BA; }
+html[data-theme="dark"] .pm-trust { color: #7AC9AB; }
+html[data-theme="dark"] .pm-tab { color: #ADA6BA; }
+html[data-theme="dark"] .pm-tab.active, html[data-theme="dark"] .pm-tab.active .pi { color: #C0A0F0; }
+html[data-theme="dark"] .pm-theme-toggle { color: #F3EEE8; }
+html[data-theme="dark"] .typing-dots i { background: #C0A0F0; }
+html[data-theme="dark"] .chat-quick-chip,
+html[data-theme="dark"] .dyn-chip { background: #242030 !important; color: #D9C8F7 !important; border-color: #353041 !important; }
+
+/* dark: consultation room surfaces */
+html[data-theme="dark"] #view-consultation,
+html[data-theme="dark"] #view-consultation .app-shell,
+html[data-theme="dark"] #view-consultation main,
+html[data-theme="dark"] #view-consultation .chat-main,
+html[data-theme="dark"] #chat-messages-container,
+html[data-theme="dark"] .chat-messages-container,
+html[data-theme="dark"] .chat-topbar,
+html[data-theme="dark"] .chat-transit-strip,
+html[data-theme="dark"] .consultation-header,
+html[data-theme="dark"] .app-shell {
+  background: #13111D !important;
+  background-image: none !important;
+  color: #F3EEE8;
+  border-color: #353041 !important;
+}
+html[data-theme="dark"] .composer-wrapper { background: #13111D !important; }
+html[data-theme="dark"] .transit-strip-inner,
+html[data-theme="dark"] .transit-strip-inner * { color: #D9D2E6 !important; }
+html[data-theme="dark"] .msg-time, html[data-theme="dark"] .composer-subtext { color: #8F88A0 !important; }

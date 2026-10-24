@@ -1010,10 +1010,7 @@ var ChatController = {
 
     // Display smooth loading placeholder
     box.innerHTML = `
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 220px; color: var(--text-dim); gap: 0.75rem;">
-        <div style="font-size: 2rem;">⏳</div>
-        <div style="font-size: 0.92rem; font-weight: 500; color: var(--text-secondary);">Loading consultation history... (परामर्श लोड हो रहा है)</div>
-      </div>
+      <div class="sk-chat" aria-label="Loading consultation history"><i class="sk sk-bubble l"></i><i class="sk sk-bubble r"></i><i class="sk sk-bubble l tall"></i></div>
     `;
 
     try {
@@ -2259,7 +2256,7 @@ https://astrojyotish.ai`;
         ${speakerNameHeader}
         <div class="streaming-content-wrapper" id="active-streaming-text">
           <div class="astrologer-analyzing-box">
-            <span class="chakra-spinner">☸️</span>
+            <span class="typing-dots" aria-label="typing"><i></i><i></i><i></i></span>
             <span>पंडित जी जन्म पत्रिका व ग्रह स्थिति का सूक्ष्म अध्ययन कर रहे हैं...</span>
           </div>
         </div>
