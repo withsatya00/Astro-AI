@@ -9,11 +9,12 @@ import ipaddress
 import urllib.parse
 import re
 from jose import jwt, JWTError
-from passlib.context import CryptContext
+import bcrypt
 from packages.core.config import settings
 
-# Password hashing context (bcrypt)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Passwords are hashed with the bcrypt library directly. passlib 1.7.x is unmaintained and
+# crashes on bcrypt>=5 (its backend self-test raises), which made register/login return 500.
+# Hashes stay in the standard $2b$ format, so accounts created earlier keep working.
 
 # Prompt injection risk signatures to flag or neutralize
 PROMPT_INJECTION_PATTERNS = [
@@ -24,13 +25,20 @@ PROMPT_INJECTION_PATTERNS = [
     re.compile(r"(?i)disregard\s+the\s+above"),
 ]
 
+def _bcrypt_input(password: str) -> bytes:
+    """bcrypt only uses the first 72 bytes (newer releases raise instead of truncating)."""
+    return (password or "").encode("utf-8")[:72]
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verifies a plain password against the stored bcrypt hash."""
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return bcrypt.checkpw(_bcrypt_input(plain_password), hashed_password.encode("utf-8"))
+    except (ValueError, TypeError, AttributeError):
+        return False
 
 def get_password_hash(password: str) -> str:
     """Computes a bcrypt hash for a plain password."""
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(_bcrypt_input(password), bcrypt.gensalt()).decode("utf-8")
 
 def create_access_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
     """Creates a signed JWT access token."""
