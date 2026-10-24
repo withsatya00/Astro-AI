@@ -141,3 +141,33 @@ pre, code { overflow-wrap: anywhere; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .ephemeris-marquee { animation: none !important; }
 }
+
+/* ==========================================================================
+   Mobile scroll stability (fixes full-screen white flashes while scrolling)
+   - overflow-x:hidden on html + body + shell made nested scroll containers;
+     `clip` hides the overflow without creating one.
+   - backdrop-filter on full-screen fixed overlays (present even when hidden)
+     forces huge GPU layers on phones, so it is disabled on small screens.
+   ========================================================================== */
+@supports (overflow: clip) {
+  html,
+  body,
+  .site-layout-shell {
+    overflow-x: clip !important;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .hero-collage-wrapper {
+    perspective: none;
+  }
+}
