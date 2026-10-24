@@ -312,3 +312,63 @@ pre, code { overflow-wrap: anywhere; }
     gap: 0.5rem !important;
   }
 }
+
+/* ==========================================================================
+   Astrologer directory header + filters on phones: compact
+   - search and a small "Clear" share one row
+   - the four selects sit in a 2x2 grid instead of four full-width rows
+   ========================================================================== */
+@media (max-width: 640px) {
+  .directory-page-header {
+    padding-top: 1.25rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  .directory-page-header .directory-title {
+    font-size: 1.5rem !important;
+    line-height: 1.2;
+  }
+  .directory-title-row {
+    gap: 0.5rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .directory-page-header .directory-subtitle {
+    font-size: 0.82rem !important;
+    line-height: 1.45 !important;
+  }
+  .directory-toolbar {
+    padding: 0.65rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 14px !important;
+    gap: 0.5rem !important;
+  }
+  .dir-search-row {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+  .dir-search-box {
+    min-width: 0;
+    padding: 0.45rem 0.7rem !important;
+  }
+  .dir-search-box input {
+    min-width: 0;
+    font-size: 0.85rem !important;
+  }
+  .btn-clear-filters {
+    padding: 0.5rem 0.65rem !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap;
+  }
+  .dir-filters-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.45rem !important;
+  }
+  .dir-filter-select {
+    width: 100%;
+    min-width: 0;
+    padding: 0.45rem 1.4rem 0.45rem 0.6rem !important;
+    font-size: 0.74rem !important;
+    text-overflow: ellipsis;
+  }
+}
