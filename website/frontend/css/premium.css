@@ -445,3 +445,5 @@ body.in-consult #view-consultation { height: 100vh; height: 100dvh; }
   .composer-card { max-width: 980px !important; }
 }
 @media (min-width: 1024px) { .site-navbar .brand-mark { width: 50px; height: 50px; } }
+.brand-mark { background: #1A1240; box-shadow: 0 0 0 1px rgba(221, 188, 124, 0.55), var(--sh-card); }
+.footer-logo-full { width: 240px; max-width: 100%; height: auto; border-radius: var(--r-md); display: block; }
