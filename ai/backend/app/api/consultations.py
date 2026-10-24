@@ -53,6 +53,22 @@ def _format_astrologer_response(a: Astrologer) -> AstrologerResponse:
         created_at=a.created_at
     )
 
+def _attach_payload_chart(consultation, payload: dict, db: Session) -> None:
+    """Keeps the consultation's chart in sync with the chart the client says is active.
+
+    A chart is often created mid-conversation (the calling agent builds one from what the caller said,
+    or the user fills the birth form after the first message). The consultation row was created earlier
+    without it, and only that row was consulted, so every later question was answered as if no birth
+    details existed and the astrologer asked for them again.
+    """
+    chart_id = (payload or {}).get("chart_id")
+    if not chart_id or consultation.chart_id == chart_id:
+        return
+    if db.query(BirthChart.id).filter(BirthChart.id == chart_id).first():
+        consultation.chart_id = chart_id
+        db.commit()
+
+
 @router.post("", response_model=ConsultationResponse, status_code=status.HTTP_201_CREATED)
 def create_or_resume_consultation(
     payload: ConsultationCreateRequest,
@@ -406,6 +422,7 @@ def send_consultation_message(
     # Retrieve birth chart if attached
     chart_record = None
     chart_data = None
+    _attach_payload_chart(consultation, payload, db)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:
@@ -576,6 +593,7 @@ async def stream_consultation_message(
     # Retrieve chart record if associated
     chart_record = None
     chart_data = None
+    _attach_payload_chart(consultation, payload, db)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:

@@ -1520,7 +1520,7 @@ https://astrojyotish.ai`;
         astrologer = { id: astrologerId, name: 'Astrologer' };
       }
       const userId = (window.App && window.App.getUserId) ? window.App.getUserId() : (localStorage.getItem('astroai_user_id') || 'guest_user');
-      const chartId = (window.App && window.App.currentChart) ? window.App.currentChart.id : null;
+      const chartId = (window.App && window.App.currentChart) ? window.App.currentChart.id : (ChatController.activeChartId || null);
 
       // Call backend API to create or resume persistent consultation
       const consultation = await API.createOrResumeConsultation({
@@ -4090,7 +4090,7 @@ const CallingAgentService = {
 
       const targetConsId = (this.activeAstrologer && (this.activeAstrologer.id || this.activeAstrologer.slug)) || 'pt-rameshwar-dwivedi';
       const consultationId = ChatController.activeConsultation?.id || ChatController.currentSessionId || targetConsId;
-      const chartId = (window.App && window.App.currentChart) ? window.App.currentChart.id : null;
+      const chartId = (window.App && window.App.currentChart) ? window.App.currentChart.id : (ChatController.activeChartId || null);
       const userName = (window.App && window.App.currentUser && window.App.currentUser.full_name) || 'Seeker';
 
       let accumulatedAnswer = '';
