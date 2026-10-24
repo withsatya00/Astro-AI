@@ -594,6 +594,16 @@ var App = {
   updateActiveProfileUI(chart) {
     if (!chart || !chart.chart_data) return;
     const cd = chart.chart_data;
+    const now = Date.now();
+    const currentDasha = (cd.dashas || []).find(d => Date.parse(d.start_date) <= now && now < Date.parse(d.end_date));
+    for (const [id, value] of Object.entries({
+      'strip-lagna': cd.ascendant_sign,
+      'strip-nakshatra': cd.moon_nakshatra,
+      'strip-dasha': currentDasha?.planet
+    })) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value || '\u2014';
+    }
 
     // Topbar Pill
     const topbarName = document.getElementById('topbar-profile-name');
@@ -636,8 +646,8 @@ var App = {
 
     // Mahadasha
     const dashaBox = document.getElementById('context-dasha-summary');
-    if (dashaBox && cd.dashas && cd.dashas.length > 0) {
-      const d = cd.dashas[0];
+    if (dashaBox && currentDasha) {
+      const d = currentDasha;
       dashaBox.innerHTML = `
         <strong style="color: var(--gold-light);">${d.planet} Mahadasha</strong><br/>
         <span style="font-size: 0.75rem;">Active until ${d.end_date} (${d.duration_years} Years)</span>
@@ -2496,14 +2506,14 @@ var App = {
 
         <!-- Login Form -->
         <div id="auth-panel-login">
-          <form onsubmit="App.handleLogin(event)">
+          <form autocomplete="off" onsubmit="App.handleLogin(event)">
             <div class="form-group" style="margin-bottom: 0.75rem;">
               <label class="form-label" style="font-size: 0.78rem;">Email Address</label>
-              <input type="email" id="login-email" class="form-control" placeholder="e.g. rahul@example.com" required value="demo.user@astrojyotish.ai">
+              <input type="email" id="login-email" class="form-control" placeholder="Enter your email address" required autocomplete="off" value="">
             </div>
             <div class="form-group" style="margin-bottom: 1rem;">
               <label class="form-label" style="font-size: 0.78rem;">Password</label>
-              <input type="password" id="login-password" class="form-control" placeholder="••••••••" required value="VedicSecure2026!">
+              <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required autocomplete="off" value="">
             </div>
             <button type="submit" class="btn-new-chat" style="width: 100%; padding: 0.65rem; justify-content: center; font-size: 0.85rem;">
               Login to Astro Jyotish ➔
@@ -2653,6 +2663,10 @@ var App = {
     const regPanel = document.getElementById('auth-panel-register');
 
     if (tab === 'login') {
+      for (const id of ['login-email', 'login-password']) {
+        const field = document.getElementById(id);
+        if (field) field.value = '';
+      }
       if (loginBtn) loginBtn.classList.add('active');
       if (regBtn) regBtn.classList.remove('active');
       if (loginPanel) loginPanel.style.display = 'block';
@@ -2665,11 +2679,29 @@ var App = {
     }
   },
 
+  setAuthError(form, message) {
+    if (!form) return;
+    let error = form.querySelector('.auth-error');
+    if (!error) {
+      error = document.createElement('p');
+      error.className = 'auth-error';
+      error.setAttribute('role', 'alert');
+      form.prepend(error);
+    }
+    error.textContent = message;
+    error.hidden = !message;
+  },
+
   async handleLogin(e) {
     if (e) e.preventDefault();
     const email = document.getElementById('login-email')?.value.trim();
     const password = document.getElementById('login-password')?.value;
 
+    if (this.authSubmitting) return;
+    this.authSubmitting = true;
+    const button = e?.target?.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    this.setAuthError(e?.target, '');
     try {
       const res = await API.login({ email, password });
       this.currentUser = res.user;
@@ -2678,7 +2710,11 @@ var App = {
       this.renderUserAccountModal();
       await this.loadSavedProfiles();
     } catch (err) {
+      this.setAuthError(e?.target, err.message);
       this.showToast(`Login failed: ${err.message}`, 'error');
+    } finally {
+      this.authSubmitting = false;
+      if (button) button.disabled = false;
     }
   },
 
@@ -2689,12 +2725,17 @@ var App = {
     const password = document.getElementById('reg-password')?.value;
     const phone = document.getElementById('reg-phone')?.value.trim();
 
+    if (this.authSubmitting) return;
+    this.authSubmitting = true;
+    const button = e?.target?.querySelector('button[type="submit"]');
+    if (button) button.disabled = true;
+    this.setAuthError(e?.target, '');
     try {
       const res = await API.register({
         full_name: fullName,
         email,
         password,
-        phone_number: phone
+        phone: phone
       });
       this.currentUser = res.user;
       this.updateAuthUI();
@@ -2702,7 +2743,11 @@ var App = {
       this.renderUserAccountModal();
       await this.loadSavedProfiles();
     } catch (err) {
+      this.setAuthError(e?.target, err.message);
       this.showToast(`Registration failed: ${err.message}`, 'error');
+    } finally {
+      this.authSubmitting = false;
+      if (button) button.disabled = false;
     }
   },
 

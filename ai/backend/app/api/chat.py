@@ -12,6 +12,7 @@ from packages.core.schemas import (
 )
 from packages.database.models import ChatSession, ChatMessage, BirthChart
 from ai.backend.app.agents.orchestrator import AgentOrchestrator
+from ai.backend.app.services.chat_birth_intake import prepare_birth_turn, stream_birth_turn
 import re
 import json
 from packages.core.security import sanitize_user_input
@@ -73,6 +74,9 @@ def send_chat_message(
     db.commit()
 
     # 3. Retrieve chart record if associated
+    clean_msg, intake_result = prepare_birth_turn(
+        db, session, owner, user_msg_record, language=payload.language, user_name=getattr(payload, "user_name", None), image_base64=payload.image_base64
+    )
     chart_record = None
     chart_data = None
     if session.chart_id:
@@ -95,14 +99,14 @@ def send_chat_message(
     past_messages = (
         db.query(ChatMessage)
         .filter(ChatMessage.session_id == session.id)
-        .order_by(ChatMessage.created_at.asc())
+        .order_by(ChatMessage.created_at.desc())
         .limit(10)
         .all()
     )
-    history = [{"role": m.role, "content": m.content} for m in past_messages]
+    history = [{"role": m.role, "content": m.content} for m in reversed(past_messages) if m.id != user_msg_record.id]
 
     # 5. Process turn with Agent Orchestrator
-    turn_result = AgentOrchestrator.process_consultation_turn(
+    turn_result = intake_result or AgentOrchestrator.process_consultation_turn(
         db=db,
         user_message=clean_msg,
         chart_data=chart_data,
@@ -147,6 +151,7 @@ def send_chat_message(
     return ChatMessageResponse(
         id=asst_msg_record.id,
         session_id=session.id,
+        chart_id=session.chart_id,
         role="assistant",
         content=asst_msg_record.content,
         astrologer_id=turn_result.get("astrologer_id", payload.astrologer_id or "acharya_shastri"),
@@ -213,6 +218,9 @@ async def stream_chat_message(
     db.commit()
 
     # 3. Retrieve chart record if associated
+    clean_msg, intake_result = prepare_birth_turn(
+        db, session, owner, user_msg_record, language=payload.language, user_name=getattr(payload, "user_name", None), image_base64=payload.image_base64
+    )
     chart_record = None
     chart_data = None
     if session.chart_id:
@@ -235,11 +243,11 @@ async def stream_chat_message(
     past_messages = (
         db.query(ChatMessage)
         .filter(ChatMessage.session_id == session.id)
-        .order_by(ChatMessage.created_at.asc())
+        .order_by(ChatMessage.created_at.desc())
         .limit(10)
         .all()
     )
-    history = [{"role": m.role, "content": m.content} for m in past_messages if m.id != user_msg_record.id]
+    history = [{"role": m.role, "content": m.content} for m in reversed(past_messages) if m.id != user_msg_record.id]
 
     # Step 1: Knowledge retrieval for citations
     from ai.backend.app.rag.retrieval import RetrievalService
@@ -262,9 +270,9 @@ async def stream_chat_message(
     # Step 0: Scope enforcement before streaming
     from ai.backend.app.services.scope_guard import AstrologyScopeGuard
     in_scope, refusal_text, refusal_reason = AstrologyScopeGuard.check_scope(clean_msg, history)
-    if not in_scope and refusal_text:
+    if not in_scope and refusal_text and not intake_result:
         async def refusal_stream():
-            yield f"data: {json.dumps({'event': 'session', 'session_id': session_id_val, 'astrologer_id': astrologer_choice})}\n\n"
+            yield f"data: {json.dumps({'event': 'session', 'session_id': session_id_val, 'chart_id': session.chart_id, 'astrologer_id': astrologer_choice})}\n\n"
             words = re.findall(r'\S+\s*', refusal_text)
             for i in range(0, len(words), 2):
                 yield f"data: {json.dumps({'event': 'delta', 'text': ''.join(words[i:i+2])})}\n\n"
@@ -290,12 +298,12 @@ async def stream_chat_message(
 
     async def sse_event_generator():
         # Yield metadata start event
-        yield f"data: {json.dumps({'event': 'session', 'session_id': session_id_val, 'astrologer_id': astrologer_choice})}\n\n"
+        yield f"data: {json.dumps({'event': 'session', 'session_id': session_id_val, 'chart_id': session.chart_id, 'astrologer_id': astrologer_choice})}\n\n"
 
         full_collected = ""
         final_meta = {}
 
-        async for chunk in LLMService.stream_chat_response(
+        async for chunk in stream_birth_turn(intake_result,
             user_message=clean_msg,
             conversation_history=history,
             chart_data=chart_data,
@@ -333,6 +341,7 @@ async def stream_chat_message(
             "event": "done",
             "message_id": asst_msg_record.id,
             "session_id": session_id_val,
+            "chart_id": session.chart_id,
             "content": full_collected.strip(),
             "chart_svg": final_meta.get("chart_svg"),
             "citations": citations,

@@ -31,6 +31,16 @@ const getApiBase = () => {
 };
 
 const API_BASE = getApiBase();
+async function authResponse(res, fallback) {
+  const data = await res.json().catch(() => null);
+  if (!res.ok) {
+    const detail = data?.detail;
+    const message = Array.isArray(detail) ? detail.map(item => item.msg).join('; ') : detail;
+    throw new Error(message || (res.status >= 500 ? 'Sign-in service is temporarily unavailable. Please try again shortly.' : fallback));
+  }
+  if (!data?.access_token || !data?.user) throw new Error('Invalid sign-in response. Please try again.');
+  return data;
+}
 
 var API = {
   // Health & Readiness
@@ -524,14 +534,12 @@ var API = {
   async register(payload) {
     const res = await fetch(`${API_BASE}/auth/register`, {
       method: 'POST',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(30000),
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.detail || 'Registration failed');
-    }
-    const data = await res.json();
+    const data = await authResponse(res, 'Registration failed');
     if (data.access_token) {
       localStorage.setItem('astro_access_token', data.access_token);
       localStorage.setItem('astro_user', JSON.stringify(data.user));
@@ -542,14 +550,12 @@ var API = {
   async login(payload) {
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
+      cache: 'no-store',
+      signal: AbortSignal.timeout(30000),
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.detail || 'Invalid email or password');
-    }
-    const data = await res.json();
+    const data = await authResponse(res, 'Invalid email or password');
     if (data.access_token) {
       localStorage.setItem('astro_access_token', data.access_token);
       localStorage.setItem('astro_user', JSON.stringify(data.user));

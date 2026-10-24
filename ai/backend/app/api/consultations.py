@@ -23,6 +23,7 @@ from packages.core.schemas import (
 from packages.core.security import sanitize_user_input
 from packages.core.identity import Owner, require_owner
 from ai.backend.app.agents.orchestrator import AgentOrchestrator
+from ai.backend.app.services.chat_birth_intake import prepare_birth_turn, stream_birth_turn
 from ai.backend.app.services.llm_service import LLMService
 
 router = APIRouter(prefix="/consultations", tags=["Consultations"])
@@ -405,9 +406,12 @@ def send_consultation_message(
 
     # 3. Handle MODE 2: AI Astrologer Persona
     # Retrieve birth chart if attached
+    _attach_payload_chart(consultation, payload, db, owner)
+    clean_msg, intake_result = prepare_birth_turn(
+        db, consultation, owner, user_msg, language=payload.get("language") or consultation.language or "en", user_name=payload.get("user_name"), image_base64=payload.get("image_base64")
+    )
     chart_record = None
     chart_data = None
-    _attach_payload_chart(consultation, payload, db, owner)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:
@@ -428,14 +432,14 @@ def send_consultation_message(
     past_messages = (
         db.query(ChatMessage)
         .filter(ChatMessage.consultation_id == consultation.id)
-        .order_by(ChatMessage.created_at.asc())
+        .order_by(ChatMessage.created_at.desc())
         .limit(10)
         .all()
     )
-    history = [{"role": m.role, "content": m.content} for m in past_messages if m.id != user_msg.id]
+    history = [{"role": m.role, "content": m.content} for m in reversed(past_messages) if m.id != user_msg.id]
 
     persona_key = astro.ai_persona_id or "acharya_shastri"
-    turn_result = AgentOrchestrator.process_consultation_turn(
+    turn_result = intake_result or AgentOrchestrator.process_consultation_turn(
         db=db,
         user_message=clean_msg,
         chart_data=chart_data,
@@ -470,6 +474,7 @@ def send_consultation_message(
     return {
         "id": asst_msg.id,
         "consultation_id": consultation.id,
+        "chart_id": consultation.chart_id,
         "role": "assistant",
         "content": asst_msg.content,
         "astrologer_id": astro.id,
@@ -556,9 +561,12 @@ async def stream_consultation_message(
     db.commit()
 
     # Retrieve chart record if associated
+    _attach_payload_chart(consultation, payload, db, owner)
+    clean_msg, intake_result = prepare_birth_turn(
+        db, consultation, owner, user_msg, language=payload.get("language") or consultation.language or "en", user_name=payload.get("user_name"), image_base64=payload.get("image_base64")
+    )
     chart_record = None
     chart_data = None
-    _attach_payload_chart(consultation, payload, db, owner)
     if consultation.chart_id:
         chart_record = db.query(BirthChart).filter(BirthChart.id == consultation.chart_id).first()
         if chart_record:
@@ -579,11 +587,11 @@ async def stream_consultation_message(
     past_messages = (
         db.query(ChatMessage)
         .filter(ChatMessage.consultation_id == consultation.id)
-        .order_by(ChatMessage.created_at.asc())
+        .order_by(ChatMessage.created_at.desc())
         .limit(10)
         .all()
     )
-    history = [{"role": m.role, "content": m.content} for m in past_messages if m.id != user_msg.id]
+    history = [{"role": m.role, "content": m.content} for m in reversed(past_messages) if m.id != user_msg.id]
 
     # RAG citations
     from ai.backend.app.rag.retrieval import RetrievalService
@@ -607,7 +615,7 @@ async def stream_consultation_message(
     # Step 0: Scope enforcement before streaming
     from ai.backend.app.services.scope_guard import AstrologyScopeGuard
     in_scope, refusal_text, refusal_reason = AstrologyScopeGuard.check_scope(clean_msg, history)
-    if not in_scope and refusal_text:
+    if not in_scope and refusal_text and not intake_result:
         if payload.get("call_mode"):
             # Spoken on a live call: one short line in the call language instead of the long chat refusal.
             refusal_text = {
@@ -615,7 +623,7 @@ async def stream_consultation_message(
                 "hinglish": "Ji, yeh vishay mere kshetra se bahar hai. Kripya jyotish se juda koi prashn poochhiye.",
             }.get(payload.get("language"), "Sorry, that is outside what I can help with. Please ask me something about your chart or life guidance.")
         async def refusal_stream():
-            yield f"data: {json.dumps({'event': 'session', 'consultation_id': c_id, 'astrologer_id': a_id, 'astrologer_name': astro.name})}\n\n"
+            yield f"data: {json.dumps({'event': 'session', 'consultation_id': c_id, 'chart_id': consultation.chart_id, 'astrologer_id': a_id, 'astrologer_name': astro.name})}\n\n"
             words = re.findall(r'\S+\s*', refusal_text)
             for i in range(0, len(words), 2):
                 yield f"data: {json.dumps({'event': 'delta', 'text': ''.join(words[i:i+2])})}\n\n"
@@ -641,12 +649,12 @@ async def stream_consultation_message(
         )
 
     async def sse_event_generator():
-        yield f"data: {json.dumps({'event': 'session', 'consultation_id': c_id, 'astrologer_id': a_id, 'astrologer_name': astro.name})}\n\n"
+        yield f"data: {json.dumps({'event': 'session', 'consultation_id': c_id, 'chart_id': consultation.chart_id, 'astrologer_id': a_id, 'astrologer_name': astro.name})}\n\n"
 
         full_collected = ""
         final_meta = {}
 
-        async for chunk in LLMService.stream_chat_response(
+        async for chunk in stream_birth_turn(intake_result,
             user_message=clean_msg,
             conversation_history=history,
             chart_data=chart_data,
@@ -686,6 +694,7 @@ async def stream_consultation_message(
             "event": "done",
             "message_id": asst_msg.id,
             "consultation_id": c_id,
+            "chart_id": consultation.chart_id,
             "content": full_collected.strip(),
             "chart_svg": final_meta.get("chart_svg"),
             "citations": citations,

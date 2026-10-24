@@ -182,7 +182,7 @@ var ChatController = {
 
     if (floatBtn) {
       floatBtn.addEventListener('click', () => {
-        this.scrollToBottom(true);
+        this.scrollToBottom(false);
       });
     }
 
@@ -236,17 +236,19 @@ var ChatController = {
   },
 
   scrollToBottom(smooth = false) {
-    const sentinel = document.getElementById('chat-bottom-sentinel');
     const container = document.getElementById('chat-messages-container');
-    if (sentinel) {
-      sentinel.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'end' });
-    } else if (container) {
-      container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
-    }
+    if (container) container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
     this.isNearBottom = true;
     this.unreadCountWhileScrolled = 0;
-    const floatBtn = document.getElementById('btn-new-messages-floating');
-    if (floatBtn) floatBtn.style.display = 'none';
+    const button = document.getElementById('btn-new-messages-floating');
+    if (button) button.style.display = 'none';
+  },
+
+  anchorAnswerStart(row) {
+    const container = document.getElementById('chat-messages-container');
+    if (!container || !row) return;
+    const top = container.scrollTop + row.getBoundingClientRect().top - container.getBoundingClientRect().top - 12;
+    container.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
   },
 
   confirmEndConsultation() {
@@ -1233,10 +1235,10 @@ var ChatController = {
 
     // Scroll management: User message always scrolls to bottom; Assistant message anchors to its start so user can read from beginning!
     if (role === 'user') {
-      this.scrollToBottom(true);
+      this.scrollToBottom(false);
     } else {
       // User requested: When Pandit Ji answers, show the screen starting from where the answer begins, not jumped to bottom
-      row.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.anchorAnswerStart(row);
     }
 
     return row;
@@ -1489,7 +1491,7 @@ https://astrojyotish.ai`;
 
     const nameEl = document.getElementById('topbar-astrologer-name');
     if (nameEl) {
-      nameEl.innerHTML = `${astro.name} <span class="card-type-tag tag-specialty" style="font-size:0.65rem; margin-left:0.35rem; background: #FAF5FF; border: 1px solid #DDD6FE; color: #7C3AED; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">Vedic Consultation</span> <span style="font-size: 0.72rem; color: #F59E0B;">✦</span>`;
+      nameEl.textContent = astro.name;
     }
     const metaEl = document.getElementById('topbar-astrologer-meta');
     if (metaEl) {
@@ -2180,6 +2182,26 @@ https://astrojyotish.ai`;
     if (modal) modal.classList.add('active');
   },
 
+  async adoptChatChart(chartId) {
+    if (!chartId || (window.App?.currentChart?.id === chartId && this.activeChartId === chartId)) return;
+    this.activeChartId = chartId;
+    try {
+      const chart = await API.getChartById(chartId);
+      if (this.activeChartId !== chartId) return;
+      App.currentChart = chart;
+      App.rememberMyChartId?.(chart.id);
+      App.updateActiveProfileUI?.(chart);
+      const saved = App.savedCharts || [];
+      if (!saved.some(item => item.id === chart.id)) saved.push(chart);
+      App.savedCharts = saved;
+      App.renderProfileSwitcherChips?.();
+      const intake = document.getElementById('chat-intake-form');
+      if (intake) intake.remove();
+    } catch (error) {
+      console.warn('Could not refresh the linked chat chart:', error);
+    }
+  },
+
   async sendMessage(customText = null, imageBase64 = null) {
     if (this.isSubmitting) return;
 
@@ -2313,8 +2335,8 @@ https://astrojyotish.ai`;
       box.appendChild(streamRow);
     }
 
-    // Anchor screen at the start of Pandit Ji's newly incoming answer
-    streamRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    streamRow.style.minHeight = Math.max(0, box.clientHeight - 24) + 'px';
+    this.anchorAnswerStart(streamRow);
 
     const streamingTextElem = streamRow.querySelector('#active-streaming-text');
     let accumulatedText = '';
@@ -2356,7 +2378,7 @@ https://astrojyotish.ai`;
             image_base64: imageBase64
           },
           (sessionData) => {
-            if (!this.isCalling || generation !== this.callGeneration) return;
+            void this.adoptChatChart(sessionData.chart_id);
             if (sessionData.consultation_id) {
               this.currentSessionId = sessionData.consultation_id;
               if (this.activeConsultation) this.activeConsultation.id = sessionData.consultation_id;
@@ -2373,6 +2395,7 @@ https://astrojyotish.ai`;
             // Do not force bottom scroll so user comfortably reads from the start of the response
           },
           (doneData) => {
+            void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             if (doneData.consultation_id) {
               this.currentSessionId = doneData.consultation_id;
@@ -2424,44 +2447,7 @@ https://astrojyotish.ai`;
               streamRow.querySelector('.message-bubble').appendChild(chartBox);
             }
 
-            // Interactive Vedic Remedy Card
-            if (lowContent.includes('उपाय') || lowContent.includes('मंत्र') || lowContent.includes('दान') || lowContent.includes('विष्णु') || lowContent.includes('remedy') || lowContent.includes('शांति')) {
-              const remedyCard = document.createElement('div');
-              remedyCard.className = 'vedic-remedy-card';
-              remedyCard.innerHTML = `
-                <div class="remedy-card-header">
-                  <span class="remedy-card-badge">✨ शास्त्रीय वैदिक उपाय</span>
-                  <h4 class="remedy-card-title">बृहस्पति व ग्रह कृपा संवर्धन</h4>
-                </div>
-                <div class="remedy-mantra-box">
-                  ॥ ॐ बृं बृहस्पतये नमः ॥
-                </div>
-                <p class="remedy-details-text">
-                  प्रत्येक गुरुवार को भगवान विष्णु अथवा देवगुरु बृहस्पति का ध्यान करें। पीले वस्त्र या चने की दाल का दान करें। 108 बार तुलसी माला पर जप करें।
-                </p>
-                <div class="remedy-actions-row">
-                  <button type="button" class="btn-remedy-action" onclick="ChatController.saveRemedyToDaily('बृहस्पति शांति उपाय', 'ॐ बृं बृहस्पतये नमः', 'गुरुवार को पीले वस्त्र व चने की दाल का दान करें')">
-                    <span>✨</span> <span>Add to Daily Upay</span>
-                  </button>
-                  <button type="button" class="btn-remedy-secondary" onclick="ChatController.setRemedyReminder('गुरुवार')">
-                    <span>⏰</span> <span>Set Reminder (गुरुवार)</span>
-                  </button>
-                </div>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(remedyCard);
-            }
-
-            // Astrological Muhurat Timeline Bar
-            if (window.App?.currentChart && (lowContent.includes('2026') || lowContent.includes('2027') || lowContent.includes('शुभ समय') || lowContent.includes('विवाह') || lowContent.includes('योग') || lowContent.includes('marriage'))) {
-              const timeline = document.createElement('div');
-              timeline.className = 'muhurat-timeline-bar';
-              const hindiBar = (window.I18n && I18n.currentLang) === 'hi';
-              timeline.innerHTML = `
-                <span class="timeline-icon">⏳</span>
-                <span class="timeline-text">${hindiBar ? 'अनुकूल शुभ मुहूर्त अवधि' : 'Favorable auspicious window'}: <strong>${hindiBar ? 'नवंबर 2026 – मार्च 2027' : 'Nov 2026 – Mar 2027'}</strong> (${hindiBar ? 'विशेष अनुकूल विवाह योग' : 'especially favorable for marriage'})</span>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(timeline);
-            }
+            // Display only remedies and dates contained in the actual response.
 
             // Action metadata
             const actionsDiv = document.createElement('div');
@@ -2474,7 +2460,8 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            streamRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            streamRow.style.minHeight = '';
+            this.updateFloatingBtn();
           },
           async (streamErr) => {
             console.warn('Streaming failed, fallback to standard API call:', streamErr);
@@ -2494,6 +2481,7 @@ https://astrojyotish.ai`;
                 if (tick) tick.innerHTML = '<span class="msg-status-delivered" title="Delivered">✓✓</span>';
               }
               localStorage.removeItem('astroai_chat_draft');
+              void this.adoptChatChart(res.chart_id);
               this.appendMessage('assistant', res.content || (res.response && res.response.content), [], res.is_demo_mode, res.chart_svg);
               this.loadSessions();
             }
@@ -2512,7 +2500,7 @@ https://astrojyotish.ai`;
             image_base64: imageBase64
           },
           (sessionData) => {
-            if (!this.isCalling || generation !== this.callGeneration) return;
+            void this.adoptChatChart(sessionData.chart_id);
             this.currentSessionId = sessionData.session_id;
           },
           (deltaText) => {
@@ -2523,6 +2511,7 @@ https://astrojyotish.ai`;
             // Do not force bottom scroll so user comfortably reads from the start of the response
           },
           (doneData) => {
+            void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             this.currentSessionId = doneData.session_id;
             const finalContent = doneData.content || accumulatedText;
@@ -2568,44 +2557,7 @@ https://astrojyotish.ai`;
               streamRow.querySelector('.message-bubble').appendChild(chartBox);
             }
 
-            // Interactive Vedic Remedy Card
-            if (lowContent.includes('उपाय') || lowContent.includes('मंत्र') || lowContent.includes('दान') || lowContent.includes('विष्णु') || lowContent.includes('remedy') || lowContent.includes('शांति')) {
-              const remedyCard = document.createElement('div');
-              remedyCard.className = 'vedic-remedy-card';
-              remedyCard.innerHTML = `
-                <div class="remedy-card-header">
-                  <span class="remedy-card-badge">✨ शास्त्रीय वैदिक उपाय</span>
-                  <h4 class="remedy-card-title">बृहस्पति व ग्रह कृपा संवर्धन</h4>
-                </div>
-                <div class="remedy-mantra-box">
-                  ॥ ॐ बृं बृहस्पतये नमः ॥
-                </div>
-                <p class="remedy-details-text">
-                  प्रत्येक गुरुवार को भगवान विष्णु अथवा देवगुरु बृहस्पति का ध्यान करें। पीले वस्त्र या चने की दाल का दान करें। 108 बार तुलसी माला पर जप करें।
-                </p>
-                <div class="remedy-actions-row">
-                  <button type="button" class="btn-remedy-action" onclick="ChatController.saveRemedyToDaily('बृहस्पति शांति उपाय', 'ॐ बृं बृहस्पतये नमः', 'गुरुवार को पीले वस्त्र व चने की दाल का दान करें')">
-                    <span>✨</span> <span>Add to Daily Upay</span>
-                  </button>
-                  <button type="button" class="btn-remedy-secondary" onclick="ChatController.setRemedyReminder('गुरुवार')">
-                    <span>⏰</span> <span>Set Reminder (गुरुवार)</span>
-                  </button>
-                </div>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(remedyCard);
-            }
-
-            // Astrological Muhurat Timeline Bar
-            if (window.App?.currentChart && (lowContent.includes('2026') || lowContent.includes('2027') || lowContent.includes('शुभ समय') || lowContent.includes('विवाह') || lowContent.includes('योग') || lowContent.includes('marriage'))) {
-              const timeline = document.createElement('div');
-              timeline.className = 'muhurat-timeline-bar';
-              const hindiBar = (window.I18n && I18n.currentLang) === 'hi';
-              timeline.innerHTML = `
-                <span class="timeline-icon">⏳</span>
-                <span class="timeline-text">${hindiBar ? 'अनुकूल शुभ मुहूर्त अवधि' : 'Favorable auspicious window'}: <strong>${hindiBar ? 'नवंबर 2026 – मार्च 2027' : 'Nov 2026 – Mar 2027'}</strong> (${hindiBar ? 'विशेष अनुकूल विवाह योग' : 'especially favorable for marriage'})</span>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(timeline);
-            }
+            // Display only remedies and dates contained in the actual response.
 
             // Action metadata
             const actionsDiv = document.createElement('div');
@@ -2618,7 +2570,8 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            streamRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            streamRow.style.minHeight = '';
+            this.updateFloatingBtn();
           },
           async (streamErr) => {
             console.warn('Streaming failed, fallback to standard API call:', streamErr);
@@ -2648,6 +2601,7 @@ https://astrojyotish.ai`;
               if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
                 inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
               }
+              void this.adoptChatChart(res.chart_id);
               this.appendMessage('assistant', res.content, [], res.is_demo_mode, inlineSvg);
               this.loadSessions();
             }
@@ -4113,6 +4067,7 @@ const CallingAgentService = {
           },
           (sessionData) => {
             if (stale()) return;
+            void ChatController.adoptChatChart(sessionData.chart_id);
             if (sessionData.consultation_id) ChatController.currentSessionId = sessionData.consultation_id;
           },
           (delta) => {
@@ -4144,6 +4099,7 @@ const CallingAgentService = {
           },
           (doneData) => {
             if (stale()) return;
+            void ChatController.adoptChatChart(doneData.chart_id);
             const finalFullText = doneData.content || accumulatedAnswer;
             this.logCallTurn(text, finalFullText);
             ChatController.appendMessage('assistant', finalFullText);

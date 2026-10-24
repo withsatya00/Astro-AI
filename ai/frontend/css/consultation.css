@@ -1,0 +1,69 @@
+﻿/* Consultation: one scrolling message list, stable controls and readable mobile replies. */
+#chat-messages-container { overflow-anchor: none; overscroll-behavior-y: contain; scroll-behavior: auto !important; }
+:is(#view-consultation, .consultation-shell) .chat-main { min-height: 0; }
+:is(#view-consultation, .consultation-shell) .chat-topbar { flex-shrink: 0; }
+:is(#view-consultation, .consultation-shell) .message-row { align-items: flex-start; }
+:is(#view-consultation, .consultation-shell) .message-bubble { min-width: 0; overflow-wrap: anywhere; }
+:is(#view-consultation, .consultation-shell) .assistant-bubble { line-height: 1.7; }
+:is(#view-consultation, .consultation-shell) .assistant-bubble p { margin: 0 0 1em; }
+:is(#view-consultation, .consultation-shell) .assistant-bubble p:last-child { margin-bottom: 0; }
+:is(#view-consultation, .consultation-shell) .msg-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+:is(#view-consultation, .consultation-shell) .msg-avatar { font-size: 0; overflow: hidden; flex-shrink: 0; }
+:is(#view-consultation, .consultation-shell) .msg-speaker-compact-name { display: flex; gap: 6px; font-size: 12px; font-weight: 650; margin-bottom: 8px; }
+:is(#view-consultation, .consultation-shell) .composer-wrapper { flex-shrink: 0; }
+:is(#view-consultation, .consultation-shell) .composer-input-row { display: flex; align-items: flex-end; gap: 8px; }
+:is(#view-consultation, .consultation-shell) .composer-textarea { min-width: 0; flex: 1; resize: none; }
+:is(#view-consultation, .consultation-shell) .chat-transit-strip { overflow-x: auto; scrollbar-width: none; }
+:is(#view-consultation, .consultation-shell) .transit-strip-inner { display: flex; gap: 10px; align-items: center; width: max-content; min-width: 100%; }
+:is(#view-consultation, .consultation-shell) .transit-item { white-space: nowrap; }
+.auth-error { color: #b91c1c; background: #fff1f2; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 14px; }
+.auth-form-card button:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 640px) {
+  :is(#view-consultation, .consultation-shell) .consultation-compact-header {
+    display: grid !important; grid-template-columns: minmax(0,1fr) auto;
+    gap: 8px !important; padding: 10px 12px !important; height: auto !important; min-height: 70px;
+  }
+  :is(#view-consultation, .consultation-shell) .consultation-header-left { display: flex; gap: 8px !important; min-width: 0; }
+  :is(#view-consultation, .consultation-shell) .consultation-header-astrologer { display: flex; gap: 8px; min-width: 0; flex: 1; }
+  :is(#view-consultation, .consultation-shell) .astrologer-header-meta { min-width: 0; flex: 1; }
+  :is(#view-consultation, .consultation-shell) .astrologer-title-row { display: flex; min-width: 0; gap: 4px; }
+  :is(#view-consultation, .consultation-shell) .astrologer-name { font-size: 13px !important; line-height: 1.35 !important; white-space: normal !important; margin: 0 !important; }
+  :is(#view-consultation, .consultation-shell) .astrologer-specialty-status { display: none !important; }
+  :is(#view-consultation, .consultation-shell) .astrologer-avatar-container, :is(#view-consultation, .consultation-shell) .astrologer-avatar { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+  :is(#view-consultation, .consultation-shell) .linked-profile-chip { max-width: 100%; padding: 2px 6px !important; font-size: 10px !important; line-height: 1.4; height: auto !important; min-height: 0 !important; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 4px; }
+  :is(#view-consultation, .consultation-shell) .consultation-header-right { display: flex; gap: 5px !important; align-items: center; flex-wrap: nowrap; }
+  :is(#view-consultation, .consultation-shell) .btn-chat-exit, :is(#view-consultation, .consultation-shell) .btn-topbar-call, :is(#view-consultation, .consultation-shell) .btn-header-overflow { width: 32px !important; height: 36px !important; min-width: 32px !important; padding: 4px !important; border-radius: 10px !important; }
+  :is(#view-consultation, .consultation-shell) .call-label, :is(#view-consultation, .consultation-shell) .btn-header-bell { display: none !important; }
+  :is(#view-consultation, .consultation-shell) .session-live-timer { font-size: 10px !important; padding: 5px 6px !important; min-width: 0 !important; white-space: nowrap; }
+  :is(#view-consultation, .consultation-shell) .btn-compact-end { font-size: 11px !important; padding: 5px 7px !important; height: 32px !important; min-width: 0 !important; }
+  :is(#view-consultation, .consultation-shell) .chat-transit-strip { padding: 8px 12px !important; font-size: 11px !important; flex-shrink: 0; }
+  :is(#view-consultation, .consultation-shell) #chat-messages-container { padding: 16px 12px !important; min-height: 0; }
+  :is(#view-consultation, .consultation-shell) .message-row { gap: 6px !important; margin-bottom: 16px !important; }
+  :is(#view-consultation, .consultation-shell) .msg-avatar, :is(#view-consultation, .consultation-shell) .msg-avatar-spacer { display: none !important; }
+  :is(#view-consultation, .consultation-shell) .assistant-bubble { width: 100%; max-width: 100% !important; padding: 14px !important; border-radius: 14px !important; font-size: 15px !important; }
+  :is(#view-consultation, .consultation-shell) .user-bubble { max-width: 88% !important; padding: 10px 14px !important; font-size: 15px !important; }
+  :is(#view-consultation, .consultation-shell) .composer-wrapper { padding: 8px 10px max(10px,env(safe-area-inset-bottom)) !important; background: #fffdf9; }
+  :is(#view-consultation, .consultation-shell) .composer-card { padding: 8px !important; border-radius: 18px !important; }
+  :is(#view-consultation, .consultation-shell) .chat-quick-suggestions-bar, :is(#view-consultation, .consultation-shell) #dynamic-context-chips { gap: 6px !important; padding: 0 0 8px !important; overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: none; }
+  :is(#view-consultation, .consultation-shell) .chat-quick-chip, :is(#view-consultation, .consultation-shell) .dyn-chip { flex-shrink: 0; padding: 6px 10px !important; font-size: 11px !important; min-height: 30px !important; }
+  :is(#view-consultation, .consultation-shell) .composer-textarea { font-size: 16px !important; line-height: 1.45 !important; padding: 9px 2px !important; max-height: 110px; }
+  :is(#view-consultation, .consultation-shell) .btn-send { width: 40px !important; height: 40px !important; min-width: 40px !important; border-radius: 13px !important; font-size: 24px !important; }
+  :is(#view-consultation, .consultation-shell) .btn-composer-attach, :is(#view-consultation, .consultation-shell) .btn-composer-mic { width: 30px !important; height: 40px !important; min-width: 30px !important; padding: 4px !important; }
+  :is(#view-consultation, .consultation-shell) .composer-subtext { display: none; }
+  :is(#view-consultation, .consultation-shell) .btn-new-messages-floating { position: absolute; right: 16px; bottom: 145px; z-index: 25; border: 1px solid #e7e2d8; border-radius: 20px; background: white; padding: 6px 10px; box-shadow: 0 2px 12px #211d5012; font-size: 11px; }
+}
+@media (max-width: 640px) {
+  :is(#view-consultation, .consultation-shell) .consultation-compact-header { grid-template-columns: minmax(0, 1fr) !important; min-height: 102px !important; gap: 8px !important; }
+  :is(#view-consultation, .consultation-shell) .consultation-header-left { width: 100%; }
+  :is(#view-consultation, .consultation-shell) .astrologer-header-meta { flex: 1 1 auto !important; width: auto !important; max-width: none !important; }
+  :is(#view-consultation, .consultation-shell) .astrologer-name { font-size: 14px !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+  :is(#view-consultation, .consultation-shell) .consultation-header-right { width: 100%; justify-content: flex-end; }
+  :is(#view-consultation, .consultation-shell) .session-live-timer { order: -1; margin-right: auto; }
+  :is(#view-consultation, .consultation-shell) .composer-textarea { min-height: 40px !important; height: 40px; }
+  :is(#view-consultation, .consultation-shell) .composer-textarea::placeholder { font-size: 14px; }
+}
+@media (max-width: 640px) {
+  :is(#view-consultation, .consultation-shell) .consultation-header-astrologer { max-width: none !important; width: 100%; }
+  :is(#view-consultation, .consultation-shell) .astrologer-title-row { width: 100%; }
+  :is(#view-consultation, .consultation-shell) .astrologer-name { max-width: none !important; width: auto !important; }
+}

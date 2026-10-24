@@ -101,7 +101,7 @@ window.ASTRO_UI_LOCALES = {
       "calc_hub_subtext": "Instant, rigorous mathematical calculations for planetary placements, doshas, karakas, and numerology.",
       "key_placements": "Key Placements",
       "trend_marriage": "Marriage & Love",
-      "ask_placeholder": "Ask your astrological question (Enter to send, Shift+Enter for newline)...",
+      "ask_placeholder": "Ask your question...",
       "footer_about": "Astro Jyotish is India's premier authentic Vedic astrology platform, combining classical Parashari principles with precision Swiss Ephemeris calculations.",
       "btn_panchang_details": "View Choghadiya & Muhurat ➔",
       "service_calculators": "17 Calculators",
@@ -277,7 +277,7 @@ window.ASTRO_UI_LOCALES = {
       "calc_hub_subtext": "ग्रहीय स्थितियों, दोषों, कारकों और अंक ज्योतिष के लिए त्वरित, कठोर गणितीय गणनाएं।",
       "key_placements": "प्रमुख स्थितियां",
       "trend_marriage": "विवाह और प्रेम",
-      "ask_placeholder": "अपना ज्योतिषीय प्रश्न पूछें (भेजने के लिए Enter दबाएं, नई लाइन के लिए Shift+Enter)...",
+      "ask_placeholder": "अपना प्रश्न पूछें...",
       "footer_about": "एस्ट्रो ज्योतिष भारत का प्रमुख प्रामाणिक वैदिक ज्योतिष मंच है, जो शास्त्रीय पराशर सिद्धांतों को सटीक स्विस एफhemeris गणनाओं के साथ जोड़ता है।",
       "btn_panchang_details": "चौघड़िया और मुहूर्त देखें ➔",
       "service_calculators": "17 कैलकुलेटर",
@@ -355,6 +355,7 @@ window.ASTRO_UI_LOCALES = {
     }
   },
   "phrases": {
+    "Palm reading": {"en": "Palm reading", "hi": "हस्तरेखा विश्लेषण"},
     "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">": {
       "en": "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">",
       "hi": "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">"

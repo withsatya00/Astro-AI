@@ -1,0 +1,69 @@
+﻿/* Consultation: one scrolling message list, stable controls and readable mobile replies. */
+#chat-messages-container { overflow-anchor: none; overscroll-behavior-y: contain; scroll-behavior: auto !important; }
+#view-consultation .chat-main { min-height: 0; }
+#view-consultation .chat-topbar { flex-shrink: 0; }
+#view-consultation .message-row { align-items: flex-start; }
+#view-consultation .message-bubble { min-width: 0; overflow-wrap: anywhere; }
+#view-consultation .assistant-bubble { line-height: 1.7; }
+#view-consultation .assistant-bubble p { margin: 0 0 1em; }
+#view-consultation .assistant-bubble p:last-child { margin-bottom: 0; }
+#view-consultation .msg-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+#view-consultation .msg-avatar { font-size: 0; overflow: hidden; flex-shrink: 0; }
+#view-consultation .msg-speaker-compact-name { display: flex; gap: 6px; font-size: 12px; font-weight: 650; margin-bottom: 8px; }
+#view-consultation .composer-wrapper { flex-shrink: 0; }
+#view-consultation .composer-input-row { display: flex; align-items: flex-end; gap: 8px; }
+#view-consultation .composer-textarea { min-width: 0; flex: 1; resize: none; }
+#view-consultation .chat-transit-strip { overflow-x: auto; scrollbar-width: none; }
+#view-consultation .transit-strip-inner { display: flex; gap: 10px; align-items: center; width: max-content; min-width: 100%; }
+#view-consultation .transit-item { white-space: nowrap; }
+.auth-error { color: #b91c1c; background: #fff1f2; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 14px; }
+.auth-form-card button:disabled { opacity: .6; cursor: wait; }
+@media (max-width: 640px) {
+  #view-consultation .consultation-compact-header {
+    display: grid !important; grid-template-columns: minmax(0,1fr) auto;
+    gap: 8px !important; padding: 10px 12px !important; height: auto !important; min-height: 70px;
+  }
+  #view-consultation .consultation-header-left { display: flex; gap: 8px !important; min-width: 0; }
+  #view-consultation .consultation-header-astrologer { display: flex; gap: 8px; min-width: 0; flex: 1; }
+  #view-consultation .astrologer-header-meta { min-width: 0; flex: 1; }
+  #view-consultation .astrologer-title-row { display: flex; min-width: 0; gap: 4px; }
+  #view-consultation .astrologer-name { font-size: 13px !important; line-height: 1.35 !important; white-space: normal !important; margin: 0 !important; }
+  #view-consultation .astrologer-specialty-status { display: none !important; }
+  #view-consultation .astrologer-avatar-container, #view-consultation .astrologer-avatar { width: 36px !important; height: 36px !important; min-width: 36px !important; }
+  #view-consultation .linked-profile-chip { max-width: 100%; padding: 2px 6px !important; font-size: 10px !important; line-height: 1.4; height: auto !important; min-height: 0 !important; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; margin-top: 4px; }
+  #view-consultation .consultation-header-right { display: flex; gap: 5px !important; align-items: center; flex-wrap: nowrap; }
+  #view-consultation .btn-chat-exit, #view-consultation .btn-topbar-call, #view-consultation .btn-header-overflow { width: 32px !important; height: 36px !important; min-width: 32px !important; padding: 4px !important; border-radius: 10px !important; }
+  #view-consultation .call-label, #view-consultation .btn-header-bell { display: none !important; }
+  #view-consultation .session-live-timer { font-size: 10px !important; padding: 5px 6px !important; min-width: 0 !important; white-space: nowrap; }
+  #view-consultation .btn-compact-end { font-size: 11px !important; padding: 5px 7px !important; height: 32px !important; min-width: 0 !important; }
+  #view-consultation .chat-transit-strip { padding: 8px 12px !important; font-size: 11px !important; flex-shrink: 0; }
+  #view-consultation #chat-messages-container { padding: 16px 12px !important; min-height: 0; }
+  #view-consultation .message-row { gap: 6px !important; margin-bottom: 16px !important; }
+  #view-consultation .msg-avatar, #view-consultation .msg-avatar-spacer { display: none !important; }
+  #view-consultation .assistant-bubble { width: 100%; max-width: 100% !important; padding: 14px !important; border-radius: 14px !important; font-size: 15px !important; }
+  #view-consultation .user-bubble { max-width: 88% !important; padding: 10px 14px !important; font-size: 15px !important; }
+  #view-consultation .composer-wrapper { padding: 8px 10px max(10px,env(safe-area-inset-bottom)) !important; background: #fffdf9; }
+  #view-consultation .composer-card { padding: 8px !important; border-radius: 18px !important; }
+  #view-consultation .chat-quick-suggestions-bar, #view-consultation #dynamic-context-chips { gap: 6px !important; padding: 0 0 8px !important; overflow-x: auto; flex-wrap: nowrap !important; scrollbar-width: none; }
+  #view-consultation .chat-quick-chip, #view-consultation .dyn-chip { flex-shrink: 0; padding: 6px 10px !important; font-size: 11px !important; min-height: 30px !important; }
+  #view-consultation .composer-textarea { font-size: 16px !important; line-height: 1.45 !important; padding: 9px 2px !important; max-height: 110px; }
+  #view-consultation .btn-send { width: 40px !important; height: 40px !important; min-width: 40px !important; border-radius: 13px !important; font-size: 24px !important; }
+  #view-consultation .btn-composer-attach, #view-consultation .btn-composer-mic { width: 30px !important; height: 40px !important; min-width: 30px !important; padding: 4px !important; }
+  #view-consultation .composer-subtext { display: none; }
+  #view-consultation .btn-new-messages-floating { position: absolute; right: 16px; bottom: 145px; z-index: 25; border: 1px solid #e7e2d8; border-radius: 20px; background: white; padding: 6px 10px; box-shadow: 0 2px 12px #211d5012; font-size: 11px; }
+}
+@media (max-width: 640px) {
+  #view-consultation .consultation-compact-header { grid-template-columns: minmax(0, 1fr) !important; min-height: 102px !important; gap: 8px !important; }
+  #view-consultation .consultation-header-left { width: 100%; }
+  #view-consultation .astrologer-header-meta { flex: 1 1 auto !important; width: auto !important; max-width: none !important; }
+  #view-consultation .astrologer-name { font-size: 14px !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+  #view-consultation .consultation-header-right { width: 100%; justify-content: flex-end; }
+  #view-consultation .session-live-timer { order: -1; margin-right: auto; }
+  #view-consultation .composer-textarea { min-height: 40px !important; height: 40px; }
+  #view-consultation .composer-textarea::placeholder { font-size: 14px; }
+}
+@media (max-width: 640px) {
+  #view-consultation .consultation-header-astrologer { max-width: none !important; width: 100%; }
+  #view-consultation .astrologer-title-row { width: 100%; }
+  #view-consultation .astrologer-name { max-width: none !important; width: auto !important; }
+}

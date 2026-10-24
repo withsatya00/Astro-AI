@@ -153,9 +153,21 @@ class ChartContext:
         aspects_str = "\n".join(aspect_lines) if aspect_lines else "  * None within strong classical orbs"
 
         dasha_lines = []
-        for d in self.dashas[:3]:
+        now = datetime.now(timezone.utc)
+        dated_dashas = []
+        for d in self.dashas:
+            try:
+                end = datetime.fromisoformat(str(d.get("end_date", "")).replace("Z", "+00:00"))
+                if end.tzinfo is None:
+                    end = end.replace(tzinfo=timezone.utc)
+                if end > now:
+                    dated_dashas.append(d)
+            except (ValueError, TypeError):
+                continue
+        dated_dashas.sort(key=lambda d: str(d.get("start_date", "")))
+        for d in dated_dashas[:3]:
             dasha_lines.append(f"  * {d.get('planet')} Dasha: {d.get('start_date')} to {d.get('end_date')}")
-        dashas_str = "\n".join(dasha_lines) if dasha_lines else "  * Not calculated"
+        dashas_str = "\n".join(dasha_lines) if dasha_lines else "  * No valid current/upcoming dasha dates available; do not infer timing"
 
         d9_lagna_str = f" | D9 Navamsha Lagna: {self.navamsha_lagna}" if self.navamsha_lagna else ""
         d10_lagna_str = f" | D10 Dashamsha Lagna: {self.dashamsha_lagna}" if self.dashamsha_lagna else ""

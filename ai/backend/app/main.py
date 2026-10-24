@@ -12,6 +12,7 @@ import time
 from packages.core.logging import logger
 from packages.database.session import init_db
 from ai.backend.app.api import health, chat, consultations, documents, agent
+from website.backend.app.api import auth
 
 app = FastAPI(
     title="Astro Jyotish AI Backend",
@@ -42,6 +43,7 @@ async def add_timing_and_security(request: Request, call_next):
 
 API_V1_PREFIX = "/api/v1"
 app.include_router(health.router, prefix=API_V1_PREFIX)
+app.include_router(auth.router, prefix=API_V1_PREFIX)
 app.include_router(chat.router, prefix=API_V1_PREFIX)
 app.include_router(consultations.router, prefix=API_V1_PREFIX)
 app.include_router(documents.router, prefix=API_V1_PREFIX)

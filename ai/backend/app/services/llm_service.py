@@ -492,7 +492,7 @@ def generate_demo_response(
             return "In brief: exact planetary analysis requires birth details, though general wisdom is always here to guide you."
 
     # 3. Love and relationships (Direct astrological analysis, no repetitive blessings)
-    if any(k in msg_lower for k in ["love", "relationship", "rishta", "pyaar", "prem", "marriage", "shaadi", "patni", "pati"]):
+    if re.search(r"\b(?:love|relationship|rishta|pyaar|prem|marriage|shaadi|shadi|patni|pati)\b|शादी|विवाह", msg_lower):
         if not chart_context.is_verified:
             if detected_lang == "hi":
                 return f"{sal_hi}विवाह और प्रेम जीवन के सटीक समय व फलादेश के लिए जन्म तिथि, समय और स्थान आवश्यक हैं। यदि सही समय न भी पता हो, तो अनुमानित समय बताएं, हम उचित मार्गदर्शन करेंगे।"
@@ -565,7 +565,7 @@ def generate_demo_response(
                 )
 
     # 4. Career and Profession (Direct astrological analysis, no repetitive blessings)
-    if any(k in msg_lower for k in ["career", "job", "naukri", "business", "vyapar", "kaam", "work", "promotion"]):
+    if any(k in msg_lower for k in ["career", "carrier", "job", "naukri", "business", "vyapar", "kaam", "work", "promotion", "करियर", "कैरियर", "नौकरी", "व्यापार"]):
         if not chart_context.is_verified:
             if detected_lang == "hi":
                 return f"{sal_hi}आजीविका और नौकरी की सटीक दशा देखने के लिए अपना जन्म विवरण (तारीख, समय, स्थान) साझा करें। हम दशम भाव और भाग्य स्थान का भलीभांति विश्लेषण करेंगे।"

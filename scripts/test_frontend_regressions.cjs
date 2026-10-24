@@ -147,19 +147,26 @@ async function main() {
   call.stopRecognition(); call.isSpeakerMuted=false; call.isManualMicActive=false;
   call.handleUserVoiceInput=realHandle;
   const messages=[]; window.ChatController.appendMessage=(role,text)=>messages.push({role,text});
+  const adoptedCharts=[];
+  window.ChatController.adoptChatChart=id=>{if(id) adoptedCharts.push(id);};
   window.I18n.currentLang='en';
+  window.App = {currentChart:{id:'voice-chart',city:'Lucknow'}};
   window.ChatController.activeConsultation = {id:'test-consultation'};
   context.API={synthesizeSpeech, streamConsultationSession: async (id,payload,onSession,onDelta,onDone) => {
     assert.equal(id,'test-consultation');
     assert.equal(payload.language,'en');
     assert.equal(call.recognition,null); assert.equal(call.isResponding,true);
+    onSession({consultation_id:'test-consultation',chart_id:'voice-chart'});
     onDelta('Your career prospects are improving. ');
-    onDone({content:'Your career prospects are improving.'});
+    onDone({content:'Your career prospects are improving.',chart_id:'voice-chart'});
   }};
   await call.handleUserVoiceInput('When will my career improve?');
   assert.equal(call.isResponding,false);
+  assert.deepEqual(adoptedCharts,['voice-chart','voice-chart']);
   while (call.isSpeaking) {await flush(); speaking.at(-1).onended();}
-  assert.ok(call.recognition); assert.equal(messages.length,2);
+  assert.ok(call.recognition);
+  assert.equal(messages[0].role,'user');
+  assert.equal(messages.at(-1).text,'Your career prospects are improving.');
   call.activeAstrologer.gender='female';
   call.speakPanditVoice('आप अपना प्रश्न पूछिए।',()=>call.initSpeechRecognition()); await flush();
   assert.equal(neuralRequests.at(-1).gender,'female');

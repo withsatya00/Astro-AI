@@ -60,7 +60,7 @@ var ChatController = {
 
     if (floatBtn) {
       floatBtn.addEventListener('click', () => {
-        this.scrollToBottom(true);
+        this.scrollToBottom(false);
       });
     }
 
@@ -114,17 +114,19 @@ var ChatController = {
   },
 
   scrollToBottom(smooth = false) {
-    const sentinel = document.getElementById('chat-bottom-sentinel');
     const container = document.getElementById('chat-messages-container');
-    if (sentinel) {
-      sentinel.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'end' });
-    } else if (container) {
-      container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
-    }
+    if (container) container.scrollTo({ top: container.scrollHeight, behavior: smooth ? 'smooth' : 'auto' });
     this.isNearBottom = true;
     this.unreadCountWhileScrolled = 0;
-    const floatBtn = document.getElementById('btn-new-messages-floating');
-    if (floatBtn) floatBtn.style.display = 'none';
+    const button = document.getElementById('btn-new-messages-floating');
+    if (button) button.style.display = 'none';
+  },
+
+  anchorAnswerStart(row) {
+    const container = document.getElementById('chat-messages-container');
+    if (!container || !row) return;
+    const top = container.scrollTop + row.getBoundingClientRect().top - container.getBoundingClientRect().top - 12;
+    container.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
   },
 
   confirmEndConsultation() {
@@ -1071,14 +1073,9 @@ var ChatController = {
 
     // Scroll management: User message always scrolls to bottom; Assistant message scrolls only if near bottom
     if (role === 'user') {
-      this.scrollToBottom(true);
+      this.scrollToBottom(false);
     } else {
-      if (this.isNearBottom) {
-        this.scrollToBottom(true);
-      } else {
-        this.unreadCountWhileScrolled++;
-        this.updateFloatingBtn();
-      }
+      this.anchorAnswerStart(row);
     }
 
     return row;
@@ -2034,6 +2031,26 @@ https://astrojyotish.ai`;
     if (modal) modal.classList.add('active');
   },
 
+  async adoptChatChart(chartId) {
+    if (!chartId || (window.App?.currentChart?.id === chartId && this.activeChartId === chartId)) return;
+    this.activeChartId = chartId;
+    try {
+      const chart = await API.getChartById(chartId);
+      if (this.activeChartId !== chartId) return;
+      App.currentChart = chart;
+      App.rememberMyChartId?.(chart.id);
+      App.updateActiveProfileUI?.(chart);
+      const saved = App.savedCharts || [];
+      if (!saved.some(item => item.id === chart.id)) saved.push(chart);
+      App.savedCharts = saved;
+      App.renderProfileSwitcherChips?.();
+      const intake = document.getElementById('chat-intake-form');
+      if (intake) intake.remove();
+    } catch (error) {
+      console.warn('Could not refresh the linked chat chart:', error);
+    }
+  },
+
   async sendMessage(customText = null, imageBase64 = null) {
     if (this.isSubmitting) return;
 
@@ -2166,9 +2183,8 @@ https://astrojyotish.ai`;
       box.appendChild(streamRow);
     }
 
-    if (this.isNearBottom) {
-      this.scrollToBottom(true);
-    }
+    streamRow.style.minHeight = Math.max(0, box.clientHeight - 24) + 'px';
+    this.anchorAnswerStart(streamRow);
 
     const streamingTextElem = streamRow.querySelector('#active-streaming-text');
     let accumulatedText = '';
@@ -2210,6 +2226,7 @@ https://astrojyotish.ai`;
             image_base64: imageBase64
           },
           (sessionData) => {
+            void this.adoptChatChart(sessionData.chart_id);
             if (sessionData.consultation_id) {
               this.currentSessionId = sessionData.consultation_id;
               if (this.activeConsultation) this.activeConsultation.id = sessionData.consultation_id;
@@ -2223,11 +2240,10 @@ https://astrojyotish.ai`;
             if (streamingTextElem) {
               streamingTextElem.innerHTML = this.formatMarkdown(accumulatedText) + '<span class="streaming-cursor">▋</span>';
             }
-            if (this.isNearBottom) {
-              this.scrollToBottom(false);
-            }
+            this.updateFloatingBtn();
           },
           (doneData) => {
+            void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             if (doneData.consultation_id) {
               this.currentSessionId = doneData.consultation_id;
@@ -2279,43 +2295,7 @@ https://astrojyotish.ai`;
               streamRow.querySelector('.message-bubble').appendChild(chartBox);
             }
 
-            // Interactive Vedic Remedy Card
-            if (lowContent.includes('उपाय') || lowContent.includes('मंत्र') || lowContent.includes('दान') || lowContent.includes('विष्णु') || lowContent.includes('remedy') || lowContent.includes('शांति')) {
-              const remedyCard = document.createElement('div');
-              remedyCard.className = 'vedic-remedy-card';
-              remedyCard.innerHTML = `
-                <div class="remedy-card-header">
-                  <span class="remedy-card-badge">✨ शास्त्रीय वैदिक उपाय</span>
-                  <h4 class="remedy-card-title">बृहस्पति व ग्रह कृपा संवर्धन</h4>
-                </div>
-                <div class="remedy-mantra-box">
-                  ॥ ॐ बृं बृहस्पतये नमः ॥
-                </div>
-                <p class="remedy-details-text">
-                  प्रत्येक गुरुवार को भगवान विष्णु अथवा देवगुरु बृहस्पति का ध्यान करें। पीले वस्त्र या चने की दाल का दान करें। 108 बार तुलसी माला पर जप करें।
-                </p>
-                <div class="remedy-actions-row">
-                  <button type="button" class="btn-remedy-action" onclick="ChatController.saveRemedyToDaily('बृहस्पति शांति उपाय', 'ॐ बृं बृहस्पतये नमः', 'गुरुवार को पीले वस्त्र व चने की दाल का दान करें')">
-                    <span>✨</span> <span>Add to Daily Upay</span>
-                  </button>
-                  <button type="button" class="btn-remedy-secondary" onclick="ChatController.setRemedyReminder('गुरुवार')">
-                    <span>⏰</span> <span>Set Reminder (गुरुवार)</span>
-                  </button>
-                </div>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(remedyCard);
-            }
-
-            // Astrological Muhurat Timeline Bar
-            if (lowContent.includes('2026') || lowContent.includes('2027') || lowContent.includes('शुभ समय') || lowContent.includes('विवाह') || lowContent.includes('योग')) {
-              const timeline = document.createElement('div');
-              timeline.className = 'muhurat-timeline-bar';
-              timeline.innerHTML = `
-                <span class="timeline-icon">⏳</span>
-                <span class="timeline-text">Favorable Shubh Muhurat Window: <strong>नवंबर 2026 – मार्च 2027</strong> (विशेष अनुकूल विवाह योग)</span>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(timeline);
-            }
+            // Display only remedies and dates contained in the actual response.
 
             // Action metadata
             const actionsDiv = document.createElement('div');
@@ -2328,9 +2308,8 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            if (this.isNearBottom) {
-              this.scrollToBottom(true);
-            }
+            streamRow.style.minHeight = '';
+            this.updateFloatingBtn();
           },
           async (streamErr) => {
             console.warn('Streaming failed, fallback to standard API call:', streamErr);
@@ -2350,6 +2329,7 @@ https://astrojyotish.ai`;
                 if (tick) tick.innerHTML = '<span class="msg-status-delivered" title="Delivered">✓✓</span>';
               }
               localStorage.removeItem('astroai_chat_draft');
+              void this.adoptChatChart(res.chart_id);
               this.appendMessage('assistant', res.content || (res.response && res.response.content), [], res.is_demo_mode, res.chart_svg);
               this.loadSessions();
             }
@@ -2368,6 +2348,7 @@ https://astrojyotish.ai`;
             image_base64: imageBase64
           },
           (sessionData) => {
+            void this.adoptChatChart(sessionData.chart_id);
             this.currentSessionId = sessionData.session_id;
           },
           (deltaText) => {
@@ -2375,11 +2356,10 @@ https://astrojyotish.ai`;
             if (streamingTextElem) {
               streamingTextElem.innerHTML = this.formatMarkdown(accumulatedText) + '<span class="streaming-cursor">▋</span>';
             }
-            if (this.isNearBottom) {
-              this.scrollToBottom(false);
-            }
+            this.updateFloatingBtn();
           },
           (doneData) => {
+            void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             this.currentSessionId = doneData.session_id;
             const finalContent = doneData.content || accumulatedText;
@@ -2425,43 +2405,7 @@ https://astrojyotish.ai`;
               streamRow.querySelector('.message-bubble').appendChild(chartBox);
             }
 
-            // Interactive Vedic Remedy Card
-            if (lowContent.includes('उपाय') || lowContent.includes('मंत्र') || lowContent.includes('दान') || lowContent.includes('विष्णु') || lowContent.includes('remedy') || lowContent.includes('शांति')) {
-              const remedyCard = document.createElement('div');
-              remedyCard.className = 'vedic-remedy-card';
-              remedyCard.innerHTML = `
-                <div class="remedy-card-header">
-                  <span class="remedy-card-badge">✨ शास्त्रीय वैदिक उपाय</span>
-                  <h4 class="remedy-card-title">बृहस्पति व ग्रह कृपा संवर्धन</h4>
-                </div>
-                <div class="remedy-mantra-box">
-                  ॥ ॐ बृं बृहस्पतये नमः ॥
-                </div>
-                <p class="remedy-details-text">
-                  प्रत्येक गुरुवार को भगवान विष्णु अथवा देवguru बृहस्पति का ध्यान करें। पीले वस्त्र या चने की दाल का दान करें। 108 बार तुलसी माला पर जप करें।
-                </p>
-                <div class="remedy-actions-row">
-                  <button type="button" class="btn-remedy-action" onclick="ChatController.saveRemedyToDaily('बृहस्पति शांति उपाय', 'ॐ बृं बृहस्पतये नमः', 'गुरुवार को पीले वस्त्र व चने की दाल का दान करें')">
-                    <span>✨</span> <span>Add to Daily Upay</span>
-                  </button>
-                  <button type="button" class="btn-remedy-secondary" onclick="ChatController.setRemedyReminder('गुरुवार')">
-                    <span>⏰</span> <span>Set Reminder (गुरुवार)</span>
-                  </button>
-                </div>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(remedyCard);
-            }
-
-            // Astrological Muhurat Timeline Bar
-            if (lowContent.includes('2026') || lowContent.includes('2027') || lowContent.includes('शुभ समय') || lowContent.includes('विवाह') || lowContent.includes('योग')) {
-              const timeline = document.createElement('div');
-              timeline.className = 'muhurat-timeline-bar';
-              timeline.innerHTML = `
-                <span class="timeline-icon">⏳</span>
-                <span class="timeline-text">Favorable Shubh Muhurat Window: <strong>नवंबर 2026 – मार्च 2027</strong> (विशेष अनुकूल विवाह योग)</span>
-              `;
-              streamRow.querySelector('.message-bubble').appendChild(timeline);
-            }
+            // Display only remedies and dates contained in the actual response.
 
             // Action metadata
             const actionsDiv = document.createElement('div');
@@ -2474,9 +2418,8 @@ https://astrojyotish.ai`;
             streamRow.querySelector('.message-bubble').appendChild(actionsDiv);
             this.loadSessions();
 
-            if (this.isNearBottom) {
-              this.scrollToBottom(true);
-            }
+            streamRow.style.minHeight = '';
+            this.updateFloatingBtn();
           },
           async (streamErr) => {
             console.warn('Streaming failed, fallback to standard API call:', streamErr);
@@ -2506,6 +2449,7 @@ https://astrojyotish.ai`;
               if (!inlineSvg && isKundliRequested(msg) && App.currentChart && App.currentChart.chart_data) {
                 inlineSvg = ChartViewer.renderNorthIndianSVG(App.currentChart.chart_data, true);
               }
+              void this.adoptChatChart(res.chart_id);
               this.appendMessage('assistant', res.content, [], res.is_demo_mode, inlineSvg);
               this.loadSessions();
             }

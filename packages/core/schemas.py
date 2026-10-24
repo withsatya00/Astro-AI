@@ -122,6 +122,7 @@ class ChatMessageRequest(BaseModel):
     image_base64: Optional[str] = None  # Base64 encoded palm or hand photo for palmistry analysis
 
 class ChatMessageResponse(BaseModel):
+    chart_id: Optional[str] = None
     id: str
     session_id: str
     role: str
