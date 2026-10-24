@@ -1,0 +1,3005 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "../components/Calculators/CalculatorsModal.css";
+
+/* Astro Jyotish Design System - Critical Layout Foundations */
+@layer base {
+  body {
+    background-color: #FFFDF7;
+    color: #211D50;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Astrologer Avatar & Image Boundary Protections */
+  .astrologer-avatar-img,
+  .card-portrait-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 9999px !important;
+    display: block !important;
+  }
+
+  .card-avatar-wrap,
+  .card-portrait-wrap {
+    position: relative !important;
+    width: 4.5rem !important;
+    height: 4.5rem !important;
+    min-width: 4.5rem !important;
+    min-height: 4.5rem !important;
+    max-width: 4.5rem !important;
+    max-height: 4.5rem !important;
+    border-radius: 9999px !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Astrologer Card Component */
+  .astrologer-card {
+    background: #FFFFFF;
+    border: 1px solid #E7E2D8;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 6px rgba(33, 29, 80, 0.05);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .astrologer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(116, 57, 234, 0.12);
+    border-color: #DDD6FE;
+  }
+
+  .card-top-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-status-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 9999px;
+    border: 2px solid #FFFFFF;
+    z-index: 2;
+  }
+
+  .status-online { background-color: #10B981; }
+  .status-busy { background-color: #F59E0B; }
+  .status-offline { background-color: #94A3B8; }
+
+  .card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .card-name {
+    font-family: 'Cinzel', 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1E1B4B;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-name:hover {
+    color: #7439EA;
+  }
+
+  .card-verified-badge {
+    color: #059669;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+
+  .card-type-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+
+  .tag-human {
+    background: #FFFBEB;
+    color: #B45309;
+    border: 1px solid #FCD34D;
+  }
+
+  .tag-specialty {
+    background: #F5F3FF;
+    color: #7439EA;
+    border: 1px solid #DDD6FE;
+  }
+
+  .card-title {
+    font-size: 0.8rem;
+    color: #64748B;
+    margin-bottom: 0.45rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-meta-line {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    color: #64748B;
+    flex-wrap: wrap;
+  }
+
+  .card-rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    color: #B45309;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 9999px;
+  }
+
+  .card-specialties-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .specialty-pill {
+    background: #FAF8F2;
+    border: 1px solid #E7E2D8;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border-radius: 0.375rem;
+  }
+
+  .card-languages-text {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: #64748B;
+    margin-bottom: 0.85rem;
+  }
+
+  .card-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid #F1ECE1;
+    gap: 0.5rem;
+  }
+
+  .card-price-display {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .price-val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1E1B4B;
+    line-height: 1.2;
+  }
+
+  .price-sub {
+    font-size: 0.7rem;
+    color: #94A3B8;
+  }
+
+  .card-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .btn-card-profile {
+    background: #FFFFFF;
+    border: 1px solid #E7E2D8;
+    color: #1E1B4B;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-card-profile:hover {
+    border-color: #7439EA;
+    color: #7439EA;
+    background: #F5F3FF;
+  }
+
+  .btn-card-chat {
+    background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%);
+    color: #FFFFFF;
+    border: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.45rem 1.05rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: 0 2px 8px rgba(116, 57, 234, 0.28);
+    transition: all 0.15s ease;
+  }
+
+  .btn-card-chat:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(116, 57, 234, 0.4);
+  }
+
+  .btn-card-chat.btn-offline {
+    background: #94A3B8;
+    box-shadow: none;
+  }
+
+  /* Responsive Grids for Astrologers */
+  .featured-astrologers-grid,
+  .astrologers-grid-container {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+  }
+
+  @media (min-width: 640px) {
+    .featured-astrologers-grid,
+    .astrologers-grid-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-astrologers-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      gap: 1.25rem !important;
+    }
+    .astrologers-grid-container {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .featured-astrologers-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+      gap: 1.25rem !important;
+    }
+    .astrologers-grid-container {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+  }
+
+  /* Responsive Calculators Grid */
+  .calculators-grid {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+  }
+  @media (min-width: 640px) {
+    .calculators-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .calculators-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  .calculator-card {
+    background: #FFFFFF;
+    border: 1px solid #E7E2D8;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(33, 29, 80, 0.05);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .calculator-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(116, 57, 234, 0.12);
+    border-color: #DDD6FE;
+  }
+
+  /* Responsive Panchang Grids */
+  .panchang-cards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    margin-bottom: 2rem;
+  }
+  @media (min-width: 640px) {
+    .panchang-cards-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .panchang-cards-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  .panchang-feature-card {
+    background: #FFFFFF;
+    border: 1px solid #E7E2D8;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 6px rgba(33, 29, 80, 0.04);
+  }
+
+  .panchang-muhurat-container {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .panchang-muhurat-container {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  /* =========================================================================
+     WHATSAPP-INSPIRED CONSULTATION CHAT ROOM (Wide, Responsive, Premium)
+     ========================================================================= */
+
+  /* Astrologer Compact Header (Ultra-Premium Vedic Glassmorphism) */
+  .chat-topbar,
+  .consultation-compact-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.55rem 1.5rem !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(231, 226, 216, 0.85) !important;
+    min-height: 64px !important;
+    max-height: 68px !important;
+    height: 64px !important;
+    z-index: 30 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 4px 20px rgba(33, 29, 80, 0.04) !important;
+  }
+
+  .consultation-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    min-width: 0 !important;
+  }
+
+  .consultation-header-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .consultation-header-astrologer {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    min-width: 0 !important;
+  }
+
+  .astrologer-avatar-container {
+    position: relative !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border-radius: 9999px !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+  }
+
+  .astrologer-avatar {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
+    border: 2px solid #F59E0B !important;
+    box-shadow: 0 0 0 2px rgba(253, 230, 138, 0.8), 0 4px 12px rgba(245, 158, 11, 0.25) !important;
+    background: #FAF8F2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.15rem !important;
+  }
+
+  .astrologer-avatar img,
+  .astrologer-avatar .astrologer-avatar-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    object-fit: cover !important;
+    border-radius: 9999px !important;
+    display: block !important;
+  }
+
+  .online-status-dot {
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 9999px !important;
+    background-color: #10B981 !important;
+    border: 2.5px solid #FFFFFF !important;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6) !important;
+    z-index: 2 !important;
+  }
+
+  .astrologer-header-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+  }
+
+  .astrologer-title-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+  }
+
+  .astrologer-name {
+    font-family: 'Cinzel', 'Playfair Display', serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #1E1B4B !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  .astrologer-badge-verified {
+    color: #059669 !important;
+    font-weight: 800 !important;
+    font-size: 0.85rem !important;
+    background: #ECFDF5 !important;
+    border-radius: 50% !important;
+    padding: 1px 4px !important;
+  }
+
+  .astrologer-specialty-status {
+    font-size: 0.72rem !important;
+    color: #64748B !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+  }
+
+  .btn-topbar-call {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    background: #FAF5FF !important;
+    border: 1.5px solid #DDD6FE !important;
+    border-radius: 9999px !important;
+    padding: 0.35rem 0.85rem !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #6D28D9 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    white-space: nowrap !important;
+  }
+
+  .btn-topbar-call:hover {
+    background: #F3E8FF !important;
+    border-color: #C4B5FD !important;
+    color: #5B21B6 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .btn-header-bell {
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 50% !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.95rem !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+
+  .btn-header-bell:hover {
+    background: #FEF3C7 !important;
+    color: #B45309 !important;
+    border-color: #FDE68A !important;
+  }
+
+  /* Sub-header: Planetary & Transit Strip (Image 3 reference) */
+  .chat-transit-strip {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.45rem 1rem !important;
+    background: #FFFDF9 !important;
+    border-bottom: 1px solid #EFEAE2 !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    z-index: 25 !important;
+    box-shadow: 0 1px 3px rgba(33, 29, 80, 0.02) !important;
+  }
+
+  .transit-strip-inner {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    font-size: 0.78rem !important;
+    color: #475569 !important;
+  }
+
+  .transit-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+  }
+
+  .transit-item strong {
+    color: #78350F !important;
+    font-weight: 700 !important;
+  }
+
+  .transit-sep {
+    color: #CBD5E1 !important;
+    font-size: 0.65rem !important;
+  }
+
+  .btn-transit-kundli {
+    background: #FEF3C7 !important;
+    border: 1px solid #FDE68A !important;
+    color: #92400E !important;
+    font-size: 0.74rem !important;
+    font-weight: 700 !important;
+    padding: 0.2rem 0.65rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    margin-left: 0.35rem !important;
+  }
+
+  .btn-transit-kundli:hover {
+    background: #FDE68A !important;
+    color: #78350F !important;
+    transform: scale(1.02) !important;
+  }
+
+  /* Visible Quick Suggestion Chips (Image 3 reference) */
+  .chat-quick-suggestions-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.65rem !important;
+    padding: 0.45rem 1rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    background: transparent !important;
+    z-index: 10 !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .chat-quick-chip {
+    background: #FFFFFF !important;
+    border: 1px solid #E7E2D8 !important;
+    color: #6D28D9 !important;
+    padding: 0.38rem 0.95rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    cursor: pointer !important;
+    box-shadow: 0 1px 4px rgba(33, 29, 80, 0.05) !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+
+  .chat-quick-chip:hover {
+    background: #FAF5FF !important;
+    border-color: #7439EA !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 3px 8px rgba(116, 57, 234, 0.15) !important;
+  }
+
+  .btn-topbar-kundli {
+    background: #FAF5FF !important;
+    border: 1.5px solid #DDD6FE !important;
+    color: #6D28D9 !important;
+    font-weight: 700 !important;
+  }
+  .btn-topbar-kundli:hover {
+    background: #EDE9FE !important;
+    border-color: #7C3AED !important;
+    color: #5B21B6 !important;
+  }
+
+  .session-live-timer {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    background: #DCFCE7 !important;
+    border: 1px solid #86EFAC !important;
+    color: #15803D !important;
+    padding: 0.3rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+  }
+  .live-pulse-dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 9999px !important;
+    background-color: #10B981 !important;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.8) !important;
+    animation: pulse 1.8s infinite !important;
+  }
+
+  .btn-compact-end {
+    background: #FEF2F2 !important;
+    border: 1px solid #FECACA !important;
+    color: #DC2626 !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    padding: 0.3rem 0.75rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+
+  .btn-compact-end:hover {
+    background: #DC2626 !important;
+    color: #FFFFFF !important;
+  }
+
+  .btn-chat-exit {
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.15rem !important;
+    color: #1E1B4B !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+
+  .btn-chat-exit:hover {
+    background: #F5F3FF !important;
+    border-color: #7439EA !important;
+    color: #7439EA !important;
+  }
+
+  /* Overflow Dropdown in Consultation Header */
+  .consultation-overflow-wrap {
+    position: relative !important;
+    display: inline-flex !important;
+  }
+  .btn-header-overflow {
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 50% !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.15rem !important;
+    color: #475569 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+  }
+  .btn-header-overflow:hover {
+    background: #F1F5F9 !important;
+    color: #1E1B4B !important;
+  }
+  .consultation-overflow-dropdown {
+    display: none !important;
+    position: absolute !important;
+    top: calc(100% + 6px) !important;
+    right: 0 !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 12px 30px rgba(33, 29, 80, 0.14) !important;
+    padding: 0.5rem !important;
+    min-width: 250px !important;
+    z-index: 100 !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+  }
+  .consultation-overflow-dropdown.active {
+    display: flex !important;
+  }
+  .consultation-overflow-dropdown .dropdown-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    padding: 0.55rem 0.75rem !important;
+    border-radius: 8px !important;
+    border: none !important;
+    background: transparent !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+  .consultation-overflow-dropdown .dropdown-item:hover {
+    background: #FAF5FF !important;
+    color: #6D28D9 !important;
+  }
+
+  /* Kundli Sliding Bottom Sheet - Fixed Floating Overlay */
+  .kundli-sheet-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(15, 23, 42, 0.45) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    z-index: 1000 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease !important;
+  }
+  .kundli-sheet-backdrop.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .kundli-bottom-sheet {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 0 !important;
+    transform: translate(-50%, calc(100% + 100px)) !important;
+    visibility: hidden !important;
+    width: 100% !important;
+    max-width: 680px !important;
+    max-height: 85vh !important;
+    background: #FFFDF9 !important;
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+    box-shadow: 0 -8px 32px rgba(33, 29, 80, 0.2) !important;
+    border: 1px solid #E7E2D8 !important;
+    border-bottom: none !important;
+    z-index: 1001 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s ease !important;
+  }
+  .kundli-bottom-sheet.active {
+    transform: translate(-50%, 0) !important;
+    visibility: visible !important;
+  }
+
+  #view-consultation {
+    display: none !important;
+  }
+
+  #view-consultation.active {
+    height: 100vh;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden;
+    background-color: #FAF9F6;
+    position: relative;
+    width: 100vw;
+  }
+
+  /* User Mandate: Remove Left Sidebar entirely from consultation room */
+  .sidebar,
+  .sidebar.collapsed {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .context-panel {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border-left: 1px solid #E7E2D8;
+    z-index: 40;
+    overflow-y: auto;
+    transition: transform 0.25s ease, width 0.25s ease;
+  }
+
+  .context-panel.collapsed {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  @media (max-width: 900px) {
+    .sidebar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      height: 100vh !important;
+      z-index: 1000 !important;
+      transform: translateX(0) !important;
+      box-shadow: 12px 0 35px rgba(0, 0, 0, 0.25) !important;
+    }
+    .sidebar.collapsed {
+      transform: translateX(-100%) !important;
+      display: flex !important;
+      visibility: hidden !important;
+    }
+    .context-panel {
+      position: fixed !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: 100vh !important;
+      z-index: 950 !important;
+      transform: translateX(0) !important;
+      box-shadow: -12px 0 35px rgba(0, 0, 0, 0.25) !important;
+    }
+    .context-panel.collapsed {
+      transform: translateX(100%) !important;
+      display: flex !important;
+      visibility: hidden !important;
+    }
+  }
+
+  /* Full-Screen Edge-to-Edge Consultation Room */
+  #view-consultation.active,
+  .app-shell.active {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    z-index: 999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: #FFFDF7 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .chat-main {
+    flex: 1 1 0% !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: radial-gradient(circle at 50% 12%, #FFFFFF 0%, #FDFBF7 45%, #F6F1E5 100%) !important;
+  }
+
+  /* Full-Screen Edge-to-Edge Sacred Vedic Janam Kundli & Yantra Watermark
+     Seamlessly touches top navbar, bottom edge behind composer, left and right */
+  .chat-main::before,
+  .chat-scroll-area::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(254, 243, 199, 0.45) 0%, rgba(245, 243, 255, 0.25) 50%, rgba(246, 241, 229, 0.6) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect x='8' y='8' width='184' height='184' fill='none' stroke='%23d97706' stroke-width='0.9' opacity='0.85'/%3E%3Cline x1='8' y1='8' x2='192' y2='192' stroke='%23d97706' stroke-width='0.8' opacity='0.8'/%3E%3Cline x1='192' y1='8' x2='8' y2='192' stroke='%23d97706' stroke-width='0.8' opacity='0.8'/%3E%3Cpolygon points='100,8 192,100 100,192 8,100' fill='none' stroke='%237439ea' stroke-width='0.9' opacity='0.85'/%3E%3Ccircle cx='100' cy='100' r='92' fill='none' stroke='%23d97706' stroke-width='0.5' stroke-dasharray='4,3' opacity='0.6'/%3E%3Ccircle cx='100' cy='100' r='62' fill='none' stroke='%237439ea' stroke-width='0.45' opacity='0.65'/%3E%3Ccircle cx='100' cy='100' r='26' fill='none' stroke='%23d97706' stroke-width='0.65' opacity='0.75'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: min(960px, 96vw);
+    opacity: 0.095;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Wide, comfortable conversation reading area eliminating excessive margins */
+  .chat-scroll-area {
+    flex: 1 1 0%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    background: transparent !important;
+    scroll-behavior: smooth;
+    width: 100% !important;
+    max-width: 100% !important;
+    z-index: 1;
+  }
+
+  /* Full Screen Comfortable Reading Width */
+  #chat-messages-container,
+  .chat-messages-container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (max-width: 768px) {
+    #chat-messages-container,
+    .chat-messages-container {
+      width: 100%;
+      padding: 0.25rem 0.15rem;
+      gap: 0.95rem;
+    }
+    .chat-scroll-area {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+
+  /* Date Divider */
+  .chat-date-pill {
+    align-self: center;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #E7E2D8;
+    color: #64748B;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.28rem 0.95rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(33, 29, 80, 0.04);
+    margin: 0.5rem auto 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Message Rows */
+  .message-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 0.35rem;
+    position: relative;
+  }
+
+  .message-row.user {
+    justify-content: flex-end;
+  }
+
+  .message-row.assistant {
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 0.65rem;
+  }
+
+  /* Message Avatar */
+  .msg-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FAF8F2;
+    border: 1.5px solid #F59E0B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+    margin-bottom: 2px;
+  }
+  .msg-avatar-spacer {
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  /* Message Bubbles - State of the Art Vedic Luxury Design */
+  .message-bubble {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    word-break: break-word;
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+
+  /* User Message Bubble: Soft Lavender / Purple Pill matching Image 3 Reference */
+  .message-bubble.user-bubble {
+    background: #F3E8FF !important;
+    color: #1E1B4B !important;
+    border: 1px solid #E9D5FF !important;
+    border-radius: 18px 18px 4px 18px !important;
+    padding: 0.85rem 1.25rem 0.65rem !important;
+    max-width: min(720px, 78%) !important;
+    box-shadow: 0 2px 10px rgba(116, 57, 234, 0.06) !important;
+    font-weight: 500 !important;
+  }
+
+  /* Astrologer Message Bubble: Pristine white card, subtle warm border, Left-aligned */
+  .message-bubble.assistant-bubble {
+    background: #FFFFFF !important;
+    color: #1E1B4B !important;
+    border: 1px solid #EFEAE2 !important;
+    border-radius: 18px 18px 18px 4px !important;
+    padding: 1rem 1.35rem 0.75rem !important;
+    max-width: min(840px, 85%) !important;
+    box-shadow: 0 2px 12px rgba(33, 29, 80, 0.04) !important;
+  }
+
+  @media (max-width: 768px) {
+    .message-bubble.user-bubble {
+      max-width: 88% !important;
+      padding: 0.75rem 0.95rem 0.55rem !important;
+      font-size: 0.92rem !important;
+    }
+    .message-bubble.assistant-bubble {
+      max-width: 90% !important;
+      padding: 0.85rem 1.05rem 0.6rem !important;
+      font-size: 0.92rem !important;
+    }
+  }
+
+  /* Astrologer Speaker Badge Inside Bubble */
+  .msg-speaker-compact-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #6D28D9;
+    margin-bottom: 0.45rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  /* Message Meta Row (Timestamp & Delivery checkmarks) */
+  .msg-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+    font-size: 0.72rem;
+    user-select: none;
+  }
+
+  .user-meta .msg-time {
+    color: #64748B !important;
+    font-size: 0.7rem;
+  }
+
+  .user-meta .msg-status-tick {
+    color: #2563EB !important; /* WhatsApp blue ticks matching Image 3 */
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+  }
+
+  .assistant-meta .msg-time {
+    color: #94A3B8;
+    font-size: 0.7rem;
+  }
+
+  /* Dasha Quick Strip (Subheader below Topbar) */
+  .chat-dasha-quick-strip {
+    background: linear-gradient(90deg, #FFFBEB 0%, #FEF3C7 50%, #FFFBEB 100%) !important;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.25) !important;
+    padding: 0.45rem 1.25rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.78rem !important;
+    color: #92400E !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.05) !important;
+  }
+  .chat-dasha-quick-strip:hover {
+    background: linear-gradient(90deg, #FEF3C7 0%, #FDE68A 50%, #FEF3C7 100%) !important;
+  }
+  .dasha-strip-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: 600;
+  }
+  .dasha-badge {
+    background: #F59E0B;
+    border: none;
+    padding: 0.15rem 0.65rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(245, 158, 11, 0.3);
+  }
+
+  /* -------------------------------------------------------------
+     ULTRA-PREMIUM CONSULTATION ROOM COMPONENTS
+     ------------------------------------------------------------- */
+  /* 1. Floating Gold Janam Kundli Mini Summary Card */
+  .chat-kundli-summary-card {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 60%, #FFFBEB 100%) !important;
+    border: 1.5px solid #FCD34D !important;
+    border-radius: 18px !important;
+    padding: 0.85rem 1.15rem !important;
+    margin: 0.5rem 0 1rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 1rem !important;
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+  .kundli-summary-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    min-width: 0 !important;
+  }
+  .kundli-summary-seal {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 12px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #FDE68A !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.35rem !important;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15) !important;
+  }
+  .kundli-summary-text-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+    min-width: 0 !important;
+  }
+  .kundli-summary-head {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+  .head-title {
+    font-size: 0.82rem !important;
+    font-weight: 800 !important;
+    color: #92400E !important;
+    letter-spacing: -0.01em !important;
+  }
+  .head-badge {
+    background: #FEF9C3 !important;
+    border: 1px solid #FDE047 !important;
+    color: #854D0E !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    padding: 0.1rem 0.45rem !important;
+    border-radius: 9999px !important;
+  }
+  .kundli-summary-chips {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    flex-wrap: wrap !important;
+    font-size: 0.75rem !important;
+    color: #78350F !important;
+  }
+  .k-chip {
+    background: rgba(255, 255, 255, 0.75) !important;
+    border: 1px solid #FDE68A !important;
+    padding: 0.15rem 0.5rem !important;
+    border-radius: 6px !important;
+  }
+  .btn-chat-view-kundli {
+    background: #FFFFFF !important;
+    border: 1.5px solid #F59E0B !important;
+    color: #B45309 !important;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    padding: 0.4rem 0.85rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15) !important;
+    transition: all 0.2s ease !important;
+  }
+  .btn-chat-view-kundli:hover {
+    background: #F59E0B !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* 2. Astrologer Audio Voice Note Widget */
+  .voice-note-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    background: #F5F3FF !important;
+    border: 1px solid #DDD6FE !important;
+    border-radius: 18px !important;
+    padding: 0.75rem 1rem !important;
+    margin: 0.5rem 0 0.85rem 0 !important;
+    max-width: 440px !important;
+    box-shadow: 0 2px 8px rgba(116, 57, 234, 0.08) !important;
+  }
+  .btn-voice-play {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #7439EA, #5B21B6) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    font-size: 0.95rem !important;
+    box-shadow: 0 3px 8px rgba(116, 57, 234, 0.3) !important;
+    transition: transform 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-voice-play:hover {
+    transform: scale(1.06) !important;
+  }
+  .voice-waveform-wrap {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+    min-width: 0 !important;
+  }
+  .voice-bars {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    height: 18px !important;
+  }
+  .vbar {
+    width: 3.5px !important;
+    height: 6px !important;
+    background-color: #A78BFA !important;
+    border-radius: 2px !important;
+    transition: height 0.15s ease, background-color 0.15s ease !important;
+  }
+  .vbar.playing {
+    background-color: #7439EA !important;
+    animation: voiceWave 0.6s infinite ease-in-out alternate !important;
+  }
+  .vbar:nth-child(2) { animation-delay: 0.1s !important; }
+  .vbar:nth-child(3) { animation-delay: 0.25s !important; }
+  .vbar:nth-child(4) { animation-delay: 0.08s !important; }
+  .vbar:nth-child(5) { animation-delay: 0.35s !important; }
+  .vbar:nth-child(6) { animation-delay: 0.18s !important; }
+  .vbar:nth-child(7) { animation-delay: 0.28s !important; }
+  .vbar:nth-child(8) { animation-delay: 0.12s !important; }
+  .vbar:nth-child(9) { animation-delay: 0.22s !important; }
+  .vbar:nth-child(10) { animation-delay: 0.05s !important; }
+  .vbar:nth-child(11) { animation-delay: 0.32s !important; }
+  .vbar:nth-child(12) { animation-delay: 0.15s !important; }
+  @keyframes voiceWave {
+    0% { height: 4px; }
+    100% { height: 18px; }
+  }
+  .voice-meta {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-size: 0.72rem !important;
+    color: #6D28D9 !important;
+    font-weight: 600 !important;
+  }
+
+  /* 3. Digital Vedic Remedy Prescription Card */
+  .remedy-prescription-card {
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2DACB !important;
+    border-radius: 20px !important;
+    padding: 1.15rem 1.35rem !important;
+    margin: 0.75rem 0 !important;
+    max-width: 620px !important;
+    box-shadow: 0 4px 20px rgba(33, 29, 80, 0.06) !important;
+    border-top: 4px solid #7439EA !important;
+  }
+  .prescription-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    margin-bottom: 0.85rem !important;
+    padding-bottom: 0.65rem !important;
+    border-bottom: 1px dashed #E2DACB !important;
+  }
+  .prescription-seal {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 10px !important;
+    background: #FAF5FF !important;
+    border: 1px solid #DDD6FE !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.2rem !important;
+  }
+  .prescription-title {
+    font-size: 0.92rem !important;
+    font-weight: 800 !important;
+    color: #1E1B4B !important;
+    line-height: 1.2 !important;
+  }
+  .prescription-subtitle {
+    font-size: 0.7rem !important;
+    color: #64748B !important;
+  }
+  .prescription-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    margin-bottom: 0.95rem !important;
+  }
+  .prescription-item {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    background: #FAF8F2 !important;
+    border: 1px solid #E7E2D8 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+  .p-item-badge {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    color: #92400E !important;
+  }
+  .p-item-content {
+    font-size: 0.82rem !important;
+    color: #1E1B4B !important;
+    line-height: 1.4 !important;
+  }
+  .prescription-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.6rem !important;
+    flex-wrap: wrap !important;
+  }
+  .btn-prescription-action {
+    background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    padding: 0.45rem 1rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    box-shadow: 0 2px 8px rgba(116, 57, 234, 0.25) !important;
+    transition: all 0.15s ease !important;
+  }
+  .btn-prescription-action:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(116, 57, 234, 0.35) !important;
+  }
+  .btn-prescription-secondary {
+    background: #FFFFFF !important;
+    border: 1px solid #E7E2D8 !important;
+    color: #1E1B4B !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    padding: 0.45rem 0.85rem !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+  }
+  .btn-prescription-secondary:hover {
+    background: #FAF8F2 !important;
+    border-color: #7439EA !important;
+    color: #7439EA !important;
+  }
+
+  /* Bottom Floating Composer Bar */
+  .composer-wrapper {
+    background: transparent !important;
+    border-top: none !important;
+    padding: 0.5rem 1.5rem 1.25rem !important;
+    position: relative !important;
+    z-index: 20 !important;
+  }
+  .composer-card {
+    max-width: 1200px !important;
+    width: 95% !important;
+    margin: 0 auto !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #DDD6FE !important;
+    border-radius: 28px !important;
+    box-shadow: 0 10px 30px rgba(116, 57, 234, 0.1), 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+    padding: 0.45rem 0.85rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  }
+  .composer-card:focus-within {
+    border-color: #7439EA !important;
+    box-shadow: 0 12px 35px rgba(116, 57, 234, 0.18) !important;
+  }
+  @media (max-width: 768px) {
+    .composer-wrapper {
+      padding: 0.35rem 0.5rem 0.75rem !important;
+    }
+    .composer-card {
+      width: 100% !important;
+      border-radius: 20px !important;
+      padding: 0.35rem 0.6rem !important;
+    }
+  }
+
+  /* Quick Prompts Chips Bar */
+  .dynamic-context-chips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-bottom: 0.35rem;
+    flex-wrap: wrap;
+    border-bottom: 1px dashed #EDE9FE;
+  }
+  .dyn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: #FAF8F2;
+    border: 1px solid #DDD6FE;
+    color: #5B21B6;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .dyn-chip:hover {
+    background: #EDE9FE;
+    color: #4C1D95;
+    transform: translateY(-1px);
+  }
+
+  .composer-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .composer-textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #1E1B4B;
+    line-height: 1.5;
+    max-height: 120px;
+    padding: 0.25rem 0;
+  }
+  .btn-send {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 9999px !important;
+    background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.15rem !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+    box-shadow: 0 3px 12px rgba(234, 88, 12, 0.4) !important;
+    transition: all 0.15s ease !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-send:hover {
+    background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%) !important;
+    transform: scale(1.06) !important;
+    box-shadow: 0 4px 16px rgba(234, 88, 12, 0.5) !important;
+  }
+
+  /* Mobile Consultation Room Responsive Harmony (Zero Collisions) */
+  @media (max-width: 640px) {
+    .chat-topbar,
+    .consultation-compact-header {
+      padding: 0.4rem 0.65rem !important;
+      height: 58px !important;
+      min-height: 58px !important;
+    }
+    .consultation-header-left {
+      gap: 0.5rem !important;
+    }
+    .consultation-header-right {
+      gap: 0.4rem !important;
+    }
+    .astrologer-specialty-status {
+      display: none !important;
+    }
+    .astrologer-name {
+      font-size: 0.88rem !important;
+      max-width: 130px !important;
+    }
+    .btn-topbar-call {
+      padding: 0.28rem 0.55rem !important;
+      font-size: 0.72rem !important;
+    }
+    .btn-topbar-call .call-label {
+      display: none !important;
+    }
+    .session-live-timer {
+      padding: 0.25rem 0.5rem !important;
+      font-size: 0.7rem !important;
+    }
+    .btn-compact-end {
+      padding: 0.25rem 0.55rem !important;
+      font-size: 0.72rem !important;
+    }
+    .btn-header-bell {
+      display: none !important;
+    }
+    .chat-transit-strip {
+      justify-content: flex-start !important;
+      padding: 0.35rem 0.65rem !important;
+    }
+    .transit-strip-inner {
+      font-size: 0.72rem !important;
+      gap: 0.45rem !important;
+    }
+    .composer-card {
+      padding: 0.55rem 0.85rem !important;
+    }
+    .chat-quick-suggestions-bar {
+      justify-content: flex-start !important;
+      padding: 0.35rem 0.65rem !important;
+    }
+    .chat-quick-chip {
+      padding: 0.3rem 0.75rem !important;
+      font-size: 0.74rem !important;
+    }
+  }
+
+  /* =========================================================================
+     USER ACCOUNT & SAVED PROFILES MODAL (LUXURY VEDIC MODERN DESIGN)
+     ========================================================================= */
+  .user-account-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .user-profile-header-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #FAF5FF 0%, #FFFFFF 60%, #FFFBEB 100%);
+    border: 1.5px solid #DDD6FE;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 16px -2px rgba(116, 57, 234, 0.08);
+  }
+
+  .user-profile-avatar-large {
+    width: 64px;
+    height: 64px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #7439EA 0%, #4C1D95 100%);
+    color: #FFFFFF;
+    font-family: 'Cinzel', serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(116, 57, 234, 0.3);
+    border: 3px solid #F59E0B;
+    shrink: 0;
+  }
+
+  .user-profile-meta-large {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-profile-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .user-profile-fullname {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1E1B4B;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .user-verified-badge {
+    background: #ECFDF5;
+    color: #059669;
+    border: 1px solid #A7F3D0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .user-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-chip {
+    font-size: 0.76rem;
+    color: #475569;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .btn-user-switch-account {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    background: #FAF5FF;
+    border: 1px solid #C4B5FD;
+    color: #6D28D9;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-user-switch-account:hover {
+    background: #EDE9FE;
+    border-color: #7C3AED;
+    color: #5B21B6;
+  }
+
+  .btn-user-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-user-logout:hover {
+    background: #FEE2E2;
+    border-color: #F87171;
+  }
+
+  .user-profile-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .user-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-radius: 1rem;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
+  }
+  .user-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .wallet-stat-card {
+    background: linear-gradient(135deg, #FFFDF8 0%, #FFFBEB 100%);
+    border-color: #FDE68A;
+  }
+  .wallet-stat-card:hover {
+    border-color: #F59E0B;
+  }
+
+  .kundli-stat-card {
+    background: linear-gradient(135deg, #FDFAFF 0%, #F5F3FF 100%);
+    border-color: #DDD6FE;
+  }
+  .kundli-stat-card:hover {
+    border-color: #7C3AED;
+  }
+
+  .stat-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+
+  .stat-info {
+    flex: 1 1 0%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #B45309;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .stat-value-sm {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1E1B4B;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+  }
+
+  .btn-stat-action {
+    background: #F59E0B;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+  .btn-stat-action:hover {
+    background: #D97706;
+  }
+
+  .btn-stat-secondary {
+    background: #7439EA;
+    box-shadow: 0 2px 6px rgba(116, 57, 234, 0.3);
+  }
+  .btn-stat-secondary:hover {
+    background: #5B21B6;
+  }
+
+  .user-shortcuts-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+
+  .user-quick-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.85rem 0.5rem;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 1rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #1E1B4B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    text-align: center;
+  }
+  .user-quick-btn:hover {
+    border-color: #7439EA;
+    background: #FAF5FF;
+    color: #7439EA;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(116, 57, 234, 0.1);
+  }
+  .quick-icon {
+    font-size: 1.25rem;
+  }
+
+  .user-saved-profiles-box {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .profile-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+  }
+
+  .section-title-text {
+    font-weight: 800;
+    color: #1E1B4B;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .btn-add-profile-pill {
+    background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.74rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(116, 57, 234, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.2s ease;
+  }
+  .btn-add-profile-pill:hover {
+    background: linear-gradient(135deg, #5B21B6 0%, #4C1D95 100%);
+    transform: translateY(-1px);
+  }
+
+  .saved-profiles-table-container {
+    overflow-x: auto;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+  }
+
+  .saved-profiles-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .saved-profiles-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-weight: 700;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid #E2E8F0;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .saved-profiles-table td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #F1F5F9;
+    color: #1E1B4B;
+  }
+
+  .saved-profiles-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .saved-profiles-table tr:hover td {
+    background: #FAF8F2;
+  }
+
+  .badge-default-kundli {
+    background: #DCFCE7;
+    color: #15803D;
+    font-weight: 800;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 9999px;
+  }
+
+  .btn-table-action {
+    background: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    color: #334155;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-table-action:hover {
+    background: #E2E8F0;
+    color: #0F172A;
+  }
+
+  .btn-table-delete {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-table-delete:hover {
+    background: #FEE2E2;
+  }
+
+  /* Auth Tabs Bar */
+  .auth-tabs-bar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.35rem;
+    background: #F5F3FF;
+    border-radius: 0.85rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #DDD6FE;
+  }
+
+  .auth-tab-btn {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border-radius: 0.65rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    color: #64748B;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .auth-tab-btn.active {
+    background: #7439EA;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(116, 57, 234, 0.3);
+  }
+
+  .auth-form-card {
+    background: #FFFFFF;
+    padding: 0.5rem 0.25rem;
+  }
+
+  /* =========================================================================
+     LIVE AUDIO CALLING OVERLAY MODAL (ZERO-COST BROWSER-NATIVE CALL ENGINE)
+     ========================================================================= */
+  .modal-audio-call-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(10, 5, 25, 0.88);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .calling-screen-card {
+    width: 100%;
+    max-width: 780px;
+    max-height: 92vh;
+    background: radial-gradient(circle at 50% 15%, #25124D 0%, #17113A 55%, #0B061A 100%);
+    border: 2px solid rgba(245, 158, 11, 0.45);
+    border-radius: 1.75rem;
+    padding: 1.25rem 1.5rem 1rem;
+    box-shadow: 0 25px 70px -10px rgba(0, 0, 0, 0.85), 0 0 50px rgba(116, 57, 234, 0.3);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    color: #F8FAFC;
+  }
+
+  .calling-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 0.85rem;
+  }
+  @media (min-width: 768px) {
+    .calling-card-grid {
+      grid-template-columns: 240px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+  }
+
+  .calling-col-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .calling-col-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .calling-screen-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .calling-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    color: #F8FAFC;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .pulse-dot-green {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: #10B981;
+    box-shadow: 0 0 10px #10B981;
+    animation: livePulseGreen 1.5s infinite;
+  }
+  @keyframes livePulseGreen {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.4); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+  }
+
+  .calling-timer {
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FDE68A;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.25rem 0.65rem;
+    border-radius: 8px;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+  }
+
+  .calling-avatar-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.75rem 0 1.25rem;
+  }
+
+  .calling-avatar {
+    position: relative;
+    z-index: 5;
+    width: 112px;
+    height: 112px;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: #3B0764;
+    border: 3.5px solid #F59E0B;
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+
+  .calling-sound-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .calling-avatar-wrapper.speaking .ring-1 {
+    border: 2px solid rgba(245, 158, 11, 0.6);
+    animation: soundRing1 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  .calling-avatar-wrapper.speaking .ring-2 {
+    border: 2px solid rgba(167, 139, 250, 0.5);
+    animation: soundRing2 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite 0.4s;
+  }
+  .calling-avatar-wrapper.speaking .ring-3 {
+    border: 1.5px solid rgba(251, 191, 36, 0.3);
+    animation: soundRing3 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite 0.8s;
+  }
+
+  .calling-avatar-wrapper.listening .ring-1 {
+    border: 2px solid rgba(16, 185, 129, 0.5);
+    animation: soundRing1 2s infinite;
+  }
+
+  @keyframes soundRing1 {
+    0% { transform: scale(0.9); opacity: 1; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  @keyframes soundRing2 {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  @keyframes soundRing3 {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+
+  .calling-info {
+    margin-bottom: 1.25rem;
+  }
+
+  .calling-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 0.25rem;
+  }
+
+  .calling-title {
+    font-size: 0.78rem;
+    color: #DDD6FE;
+    margin: 0 0 0.85rem;
+  }
+
+  .calling-status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FAF5FF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .calling-status-chip.listening {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.5);
+    color: #6EE7B7;
+  }
+  .calling-status-chip.speaking {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: rgba(245, 158, 11, 0.5);
+    color: #FDE68A;
+  }
+  .calling-status-chip.analyzing {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: rgba(167, 139, 250, 0.6);
+    color: #E9D5FF;
+  }
+  .calling-status-chip.muted {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #FCA5A5;
+  }
+
+  /* Live Synchronized Mini Lagna Kundli Wheel */
+  .calling-mini-kundli-container {
+    width: 100%;
+    background: rgba(15, 10, 42, 0.65);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 1.25rem;
+    padding: 0.55rem 0.75rem 0.65rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .mini-kundli-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+  }
+  .mini-kundli-title {
+    color: #FDE68A;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .mini-kundli-active-tag {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #FEF3C7;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.15rem 0.55rem;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+  .mini-kundli-svg-wrap {
+    width: 116px;
+    height: 116px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mini-kundli-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .kundli-grid-border {
+    fill: rgba(30, 27, 75, 0.55);
+    stroke: rgba(245, 158, 11, 0.45);
+    stroke-width: 1.2;
+  }
+  .kundli-grid-line {
+    stroke: rgba(245, 158, 11, 0.35);
+    stroke-width: 0.9;
+  }
+  .kundli-grid-diamond {
+    fill: none;
+    stroke: rgba(167, 139, 250, 0.5);
+    stroke-width: 1.1;
+  }
+  .bhava-cell {
+    fill: transparent;
+    stroke: transparent;
+    cursor: pointer;
+    transition: fill 0.25s ease, stroke 0.25s ease, filter 0.25s ease;
+  }
+  .bhava-cell:hover {
+    fill: rgba(245, 158, 11, 0.25);
+    stroke: rgba(245, 158, 11, 0.7);
+  }
+  .bhava-cell.bhava-active {
+    fill: rgba(245, 158, 11, 0.45) !important;
+    stroke: #F59E0B !important;
+    stroke-width: 1.8 !important;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.85));
+    animation: pulseBhavaGlow 1.4s ease-in-out infinite alternate;
+  }
+  @keyframes pulseBhavaGlow {
+    0% { fill: rgba(245, 158, 11, 0.3); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.5)); }
+    100% { fill: rgba(245, 158, 11, 0.6); filter: drop-shadow(0 0 9px rgba(245, 158, 11, 0.95)); }
+  }
+  .bhava-num {
+    fill: #CBD5E1;
+    font-size: 8px;
+    font-weight: 700;
+    font-family: sans-serif;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .calling-captions-box {
+    width: 100%;
+    min-height: 72px;
+    max-height: 96px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+    text-align: left;
+  }
+
+  .caption-line {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+  .user-caption {
+    color: #93C5FD;
+    font-style: italic;
+  }
+  .pandit-caption {
+    color: #FDF4FF;
+    font-weight: 500;
+  }
+
+  /* Real-Time Calling Waveform Audio Visualizer */
+  .calling-waveform-bars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 28px;
+    margin-bottom: 0.75rem;
+    opacity: 0.35;
+    transition: opacity 0.3s ease;
+  }
+  .calling-waveform-bars.active {
+    opacity: 1;
+  }
+  .wave-bar {
+    width: 3.5px;
+    height: 6px;
+    background: linear-gradient(180deg, #F59E0B, #A78BFA);
+    border-radius: 9999px;
+    transition: height 0.15s ease;
+  }
+  .calling-waveform-bars.active .wave-bar {
+    animation: waveBounce 1.2s ease-in-out infinite alternate;
+  }
+  .calling-waveform-bars.active .bar-1 { animation-delay: 0.1s; }
+  .calling-waveform-bars.active .bar-2 { animation-delay: 0.3s; }
+  .calling-waveform-bars.active .bar-3 { animation-delay: 0.5s; }
+  .calling-waveform-bars.active .bar-4 { animation-delay: 0.2s; }
+  .calling-waveform-bars.active .bar-5 { animation-delay: 0.4s; }
+  .calling-waveform-bars.active .bar-6 { animation-delay: 0.6s; }
+  .calling-waveform-bars.active .bar-7 { animation-delay: 0.25s; }
+
+  @keyframes waveBounce {
+    0% { height: 4px; }
+    50% { height: 26px; }
+    100% { height: 8px; }
+  }
+
+  /* Quick Voice Inquiry Pills Bar Inside Calling Modal */
+  .calling-quick-pills-bar {
+    width: 100%;
+    margin-bottom: 1.15rem;
+  }
+  .calling-quick-pills-title {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #FDE68A;
+    margin-bottom: 0.45rem;
+    text-align: left;
+  }
+  .calling-pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+  .call-pill-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #FDF4FF;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.32rem 0.65rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .call-pill-btn:hover {
+    background: rgba(245, 158, 11, 0.25);
+    border-color: #F59E0B;
+    transform: translateY(-1px);
+    color: #FFFFFF;
+  }
+  /* Live Planetary Ephemeris Marquee */
+  @keyframes ephemerisScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ephemeris-marquee {
+    display: flex;
+    width: max-content;
+    animation: ephemerisScroll 32s linear infinite;
+  }
+  .ephemeris-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  /* Calling Screen Auspicious Choghadiya Badge */
+  .calling-choghadiya-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    color: #FDE68A;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+
+  /* In-Call Palmistry / Kundli Snapshot Upload Strip */
+  .calling-upload-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.55rem 0.85rem;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px dashed rgba(245, 158, 11, 0.4);
+    border-radius: 0.85rem;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+  .calling-upload-text {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: #E2E8F0;
+    font-weight: 600;
+  }
+  .btn-calling-upload {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.5);
+    color: #FDE68A;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-calling-upload:hover {
+    background: rgba(245, 158, 11, 0.35);
+    border-color: #F59E0B;
+    color: #FFFFFF;
+  }
+
+  /* Post-Call Royal Vedic Astro-Dossier Modal */
+  .post-call-dossier-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(10, 5, 20, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .post-call-dossier-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .dossier-modal-card {
+    background: #FFFDF7;
+    border: 2px solid #B45309;
+    border-radius: 1.25rem;
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 158, 11, 0.3);
+    position: relative;
+    padding: 1.5rem;
+    color: #1E1B4B;
+  }
+
+  .calling-controls-dock {
+    position: sticky;
+    bottom: -1rem;
+    z-index: 50;
+    width: calc(100% + 3rem);
+    margin: auto -1.5rem -1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 0.9rem 1rem;
+    border-top: 1.5px solid rgba(245, 158, 11, 0.35);
+    background: linear-gradient(180deg, rgba(20, 14, 46, 0.85) 0%, rgba(10, 5, 25, 0.98) 100%);
+    backdrop-filter: blur(12px);
+    border-radius: 0 0 1.75rem 1.75rem;
+    flex-shrink: 0;
+  }
+
+  .btn-call-ctrl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-call-ctrl .ctrl-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.2s ease;
+  }
+  .btn-call-ctrl:hover .ctrl-icon {
+    background: rgba(255, 255, 255, 0.22);
+    transform: scale(1.06);
+  }
+
+  .btn-speak-now .ctrl-icon {
+    background: linear-gradient(135deg, rgba(217, 119, 6, 0.4) 0%, rgba(245, 158, 11, 0.55) 100%) !important;
+    border: 2px solid #FCD34D !important;
+    color: #FFFFFF;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.35);
+  }
+  .btn-speak-now.recording .ctrl-icon {
+    background: #10B981 !important;
+    border-color: #34D399 !important;
+    box-shadow: 0 0 25px #10B981 !important;
+    animation: livePulseGreen 1s infinite alternate;
+  }
+
+  .btn-call-ctrl.active-ctrl .ctrl-icon {
+    background: rgba(239, 68, 68, 0.35);
+    border-color: #EF4444;
+    color: #F87171;
+  }
+
+  .btn-end-call .ctrl-icon {
+    width: 62px;
+    height: 62px;
+    background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%) !important;
+    border: 2.5px solid #F87171 !important;
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6), 0 0 20px rgba(239, 68, 68, 0.45) !important;
+    transform: rotate(135deg);
+    font-size: 1.6rem;
+  }
+  .btn-end-call:hover .ctrl-icon {
+    background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%) !important;
+    transform: rotate(135deg) scale(1.1);
+  }
+
+  .ctrl-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #E2E8F0;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 640px) {
+    .user-profile-header-card {
+      flex-direction: column;
+      text-align: center;
+    }
+    .user-profile-name-row {
+      justify-content: center;
+    }
+    .user-contact-row {
+      justify-content: center;
+    }
+    .user-header-actions {
+      flex-direction: row;
+      width: 100%;
+      justify-content: center;
+    }
+    .user-profile-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .user-shortcuts-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* =========================================================================
+     Directory Modal Luxury Vedic Styling
+     ========================================================================= */
+  .directory-modal-card {
+    background: #FFFDF9;
+    border: 1px solid #E7E2D8;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(30, 27, 75, 0.25);
+  }
+
+  .directory-filter-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid #F1ECE1;
+    margin-bottom: 0.85rem;
+  }
+
+  .directory-tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #F1F5F9;
+    padding: 0.3rem;
+    border-radius: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .dir-tab {
+    padding: 0.4rem 0.85rem;
+    border-radius: 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .dir-tab:hover {
+    color: #1E1B4B;
+  }
+  .dir-tab.active {
+    background: #FFFFFF;
+    color: #7439EA;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn-smart-match-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+    border: 1.5px solid #DDD6FE;
+    color: #7439EA;
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-smart-match-cta:hover {
+    background: #EDE9FE;
+    border-color: #C4B5FD;
+    transform: translateY(-1px);
+  }
+
+  .directory-search-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.15rem;
+  }
+
+  .search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 0.85rem;
+    padding: 0.45rem 0.85rem;
+    transition: all 0.2s ease;
+  }
+  .search-input-wrap:focus-within {
+    border-color: #7439EA;
+    box-shadow: 0 0 0 3px rgba(116, 57, 234, 0.1);
+  }
+  .search-input-wrap input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.82rem;
+    width: 100%;
+    color: #1E1B4B;
+  }
+
+  .dir-select {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 0.85rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #334155;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .dir-select:focus {
+    border-color: #7439EA;
+    box-shadow: 0 0 0 3px rgba(116, 57, 234, 0.1);
+  }
+
+  .astrologers-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.15rem;
+  }
+
+  /* =========================================================================
+     Astrologer Profile Modal Styles
+     ========================================================================= */
+  .profile-modal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-stat-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.85rem;
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .profile-stat-val {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1E1B4B;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.2rem;
+  }
+
+  .profile-stat-lbl {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .profile-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1E1B4B;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-bio-box {
+    background: #FAF8F2;
+    border: 1px solid #E7E2D8;
+    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.82rem;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .specialty-pill {
+    background: #FAF5FF;
+    border: 1px solid #DDD6FE;
+    color: #7439EA;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+  }
+
+  .reviews-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .review-card-item {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .review-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .review-user-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1E1B4B;
+  }
+
+  .review-comment {
+    font-size: 0.78rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+
+  .btn-start-consultation {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%);
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(116, 57, 234, 0.35);
+    transition: all 0.2s ease;
+  }
+  .btn-start-consultation:hover {
+    background: linear-gradient(135deg, #5B21B6 0%, #4C1D95 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(116, 57, 234, 0.45);
+  }
+
+  @media (max-width: 640px) {
+    .profile-stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+

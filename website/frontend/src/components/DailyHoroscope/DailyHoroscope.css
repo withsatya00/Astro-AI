@@ -1,0 +1,371 @@
+/* DailyHoroscope Component Styling */
+.daily-horoscope-section {
+  padding: 4.5rem 1.5rem;
+  background: var(--bg-surface, #FAF8F2);
+  border-bottom: 1px solid var(--border-subtle, #E7E2D8);
+}
+
+.horoscope-container {
+  max-width: var(--container-max-width, 1280px);
+  margin: 0 auto;
+}
+
+.section-header-center {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+.section-tag-gold {
+  display: inline-block;
+  background: #FFFBEB;
+  border: 1px solid var(--border-gold, #FCD34D);
+  color: var(--color-gold-dark, #B45309);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full, 9999px);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: var(--font-serif, serif);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-navy-main, #211D50);
+  margin: 0 0 0.85rem;
+  letter-spacing: -0.01em;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary, #53627A);
+  margin: 0;
+}
+
+.zodiac-tabs-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding-bottom: 1.25rem;
+  scrollbar-width: thin;
+  margin-bottom: 1.75rem;
+}
+
+.zodiac-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-subtle, #E7E2D8);
+  border-radius: var(--radius-md, 12px);
+  padding: 0.75rem 1rem;
+  min-width: 90px;
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.zodiac-tab-btn:hover {
+  border-color: var(--color-purple-primary, #7439EA);
+  transform: translateY(-2px);
+}
+
+.zodiac-tab-btn.active {
+  background: linear-gradient(135deg, var(--color-purple-primary, #7439EA) 0%, var(--color-purple-hover, #5B21B6) 100%);
+  border-color: var(--color-purple-primary, #7439EA);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(116, 57, 234, 0.3);
+}
+
+.zodiac-tab-icon {
+  font-size: 1.45rem;
+}
+
+.zodiac-tab-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.horoscope-result-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle, #E7E2D8);
+  border-radius: var(--radius-xl, 24px);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(33, 29, 80, 0.08));
+}
+
+.horoscope-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle, #E7E2D8);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.horoscope-sign-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.horoscope-sign-huge-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.horoscope-sign-title {
+  font-family: var(--font-serif, serif);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--color-navy-main, #211D50);
+  margin: 0 0 0.25rem;
+}
+
+.horoscope-sign-meta {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #53627A);
+  margin: 0;
+}
+
+.btn-horoscope-consult {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFBEB;
+  border: 1px solid var(--border-gold, #FCD34D);
+  color: var(--color-gold-dark, #B45309);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-full, 9999px);
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.btn-horoscope-consult:hover {
+  background: #FEF3C7;
+  transform: translateY(-1px);
+}
+
+.horoscope-prediction-text {
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: var(--text-primary, #211D50);
+  margin: 0 0 2rem;
+}
+
+.horoscope-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.meta-item-box {
+  background: var(--bg-surface, #FAF8F2);
+  border: 1px solid var(--border-subtle, #E7E2D8);
+  border-radius: var(--radius-md, 12px);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.meta-icon {
+  font-size: 1.35rem;
+}
+
+.meta-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted, #7E8FA6);
+  letter-spacing: 0.04em;
+}
+
+.meta-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-navy-main, #211D50);
+}
+
+@media (max-width: 768px) {
+  .horoscope-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Full Vedic Rashiphal Page Card Styling (.horo-card)
+   ========================================================================== */
+.horo-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E2D8;
+  border-radius: 24px;
+  padding: 2.25rem;
+  box-shadow: 0 4px 20px rgba(33, 29, 80, 0.06);
+  margin-top: 1rem;
+}
+
+.horo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #E7E2D8;
+}
+
+.horo-sign-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.horo-sign-glyph {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #EDE9FE 100%);
+  border: 1.5px solid #FCD34D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+}
+
+.horo-sign-name {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin: 0 0 0.25rem 0;
+}
+
+.horo-period-badge {
+  display: inline-block;
+  background: #F3E8FF;
+  border: 1px solid #DDD6FE;
+  color: #6B21A8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.75rem;
+  border-radius: 9999px;
+  letter-spacing: 0.03em;
+}
+
+.horo-ruler-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #FAF8F2;
+  border: 1px solid #E7E2D8;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+.horo-summary-box {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  background: radial-gradient(circle at 10% 20%, #FFFBEB 0%, #FAF8F2 100%);
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #F59E0B;
+  border-radius: 14px;
+  color: #1E1B4B;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 500;
+}
+
+.horo-domains-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.horo-domain-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E2D8;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.horo-domain-card:hover {
+  border-color: #DDD6FE;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(116, 57, 234, 0.06);
+}
+
+.domain-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1E1B4B;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.5rem;
+}
+
+.domain-text {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.horo-lucky-strip {
+  background: linear-gradient(90deg, #F5F3FF 0%, #FFFBEB 50%, #F5F3FF 100%);
+  border: 1.5px solid #DDD6FE;
+  border-radius: 16px;
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.lucky-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.lucky-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.lucky-val {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1E1B4B;
+}
+
+@media (max-width: 640px) {
+  .horo-card {
+    padding: 1.25rem;
+  }
+  .horo-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .horo-domains-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

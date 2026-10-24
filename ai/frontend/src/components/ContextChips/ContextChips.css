@@ -1,0 +1,39 @@
+/* ContextChips Styles */
+.dynamic-context-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.5rem 0.55rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  animation: fadeInChips 0.25s ease-out;
+}
+.dynamic-context-chips::-webkit-scrollbar {
+  display: none;
+}
+@keyframes fadeInChips {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dyn-chip {
+  background: #FFFFFF;
+  border: 1px solid #DDD6FE;
+  color: #7439EA;
+  border-radius: 999px;
+  padding: 0.32rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 1px 3px rgba(116, 57, 234, 0.08);
+  transition: all 0.18s ease;
+}
+.dyn-chip:hover {
+  background: #F5F3FF;
+  border-color: #7439EA;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(116, 57, 234, 0.16);
+}

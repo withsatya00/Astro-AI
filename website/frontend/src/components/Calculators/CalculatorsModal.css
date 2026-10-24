@@ -1,0 +1,423 @@
+/* ==========================================================================
+   VEDIC CALCULATORS SUITE MODAL & 17 CALCULATORS STYLESHEET
+   Astro Jyotish Luxury Design System
+   ========================================================================== */
+
+#modal-astrology-calculators {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#modal-astrology-calculators.active,
+#modal-astrology-calculators[style*="display: flex"] {
+  display: flex !important;
+}
+
+#modal-astrology-calculators .modal-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  width: 100%;
+  max-width: 940px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal Header */
+#modal-astrology-calculators .modal-header {
+  padding: 1.25rem 1.5rem;
+  background: #FCFBF7;
+  border-bottom: 1px solid #EFEAE2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+#modal-astrology-calculators .modal-close {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#modal-astrology-calculators .modal-close:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+  border-color: #EF4444;
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+#modal-astrology-calculators .modal-body {
+  padding: 1.25rem 1.5rem 2rem;
+  overflow-y: auto;
+  flex: 1;
+  background: #FAF8F5;
+}
+
+/* 1-Click Auto-Fill Seeker Profile Banner */
+.calc-profile-autofill-banner {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 1px solid #FDE68A;
+  border-radius: 14px;
+  padding: 0.85rem 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.08);
+}
+
+.calc-autofill-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.calc-autofill-info strong {
+  color: #78350F;
+  font-size: 0.88rem;
+}
+
+#calc-current-profile-label {
+  color: #92400E;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.btn-calc-autofill {
+  background: #D97706;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.45rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.25);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-calc-autofill:hover {
+  background: #B45309;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.35);
+}
+
+/* 17 Calculators Tabs Navigation Bar */
+.calc-tabs-bar {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.65rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #E7E2D8;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.calc-tabs-bar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.calc-tabs-bar::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 4px;
+}
+
+.calc-tabs-bar::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.calc-tab-btn {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  padding: 0.55rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.calc-tab-btn:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #1E293B;
+  transform: translateY(-1px);
+}
+
+.calc-tab-btn.active {
+  background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%);
+  border-color: #5B21B6;
+  color: #FFFFFF;
+  box-shadow: 0 3px 10px rgba(116, 57, 234, 0.28);
+}
+
+/* Calculator Form Card */
+.calc-form-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E2D8;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(33, 29, 80, 0.04);
+}
+
+.calc-form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.calc-form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.calc-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.calc-input-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.calc-input-label .sublabel {
+  font-weight: 500;
+  color: #64748B;
+  font-size: 0.78rem;
+}
+
+.calc-luxury-input {
+  width: 100%;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: #0F172A;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.calc-luxury-input:focus {
+  outline: none;
+  border-color: #7439EA;
+  box-shadow: 0 0 0 3px rgba(116, 57, 234, 0.15);
+}
+
+/* Quick City Selection Chips */
+.calc-quick-cities {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.calc-city-chip {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.calc-city-chip:hover {
+  background: #E0E7FF;
+  border-color: #C7D2FE;
+  color: #4338CA;
+  transform: translateY(-1px);
+}
+
+/* Submit Action Button */
+.btn-calc-submit-gold {
+  width: 100%;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.28);
+  transition: all 0.18s ease;
+}
+
+.btn-calc-submit-gold:hover {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.38);
+}
+
+/* Calculator Dynamic Result Box */
+.calc-result-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  animation: modalEnter 0.22s ease-out forwards;
+}
+
+.calc-result-box .result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.15rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.calc-result-box .result-header h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+.calc-result-box .result-badge {
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  color: #92400E;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.calc-result-box .result-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.calc-result-box .result-stat-card {
+  background: #FAF8F5;
+  border: 1px solid #EFEAE2;
+  border-radius: 12px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.calc-result-box .stat-label {
+  font-size: 0.72rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.calc-result-box .stat-val {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #7439EA;
+}
+
+.calc-result-box .stat-sub {
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+/* Responsive Rules */
+@media (max-width: 768px) {
+  #modal-astrology-calculators {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  #modal-astrology-calculators .modal-card {
+    max-height: 94vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .calc-form-grid-2,
+  .calc-form-grid-3 {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .calc-profile-autofill-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .btn-calc-autofill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calc-result-box .result-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}

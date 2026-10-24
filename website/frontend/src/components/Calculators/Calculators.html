@@ -1,0 +1,54 @@
+<!-- Calculators Suite Component -->
+<section class="calculators-section" id="calculators-section">
+  <div class="calculators-container">
+    <div class="section-center-head">
+      <span class="section-tag-gold">17 VEDIC CALCULATORS</span>
+      <h2 class="section-title">Complete Vedic Astrology Suite</h2>
+      <p class="section-subtitle">Mathematical algorithms grounded in classical Parashari shastras.</p>
+    </div>
+
+    <div class="calculators-grid" id="calculators-cards-grid">
+      <div class="calc-card" onclick="window.App && window.App.openKundaliMilanModal ? window.App.openKundaliMilanModal() : window.App.openCalculatorsModal('kundali-milan')">
+        <div class="calc-icon">💍</div>
+        <h3>Kundali Milan (Gun Milan)</h3>
+        <p>36-Guna matching with Manglik dosha exceptions.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+
+      <div class="calc-card" onclick="window.App && window.App.openCalculatorsModal('mangal-dosha')">
+        <div class="calc-icon">🔴</div>
+        <h3>Mangal Dosha & Parihar</h3>
+        <p>Detailed analysis of Mars placement and 6 classical cancellations.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+
+      <div class="calc-card" onclick="window.App && window.App.openSadeSatiModal ? window.App.openSadeSatiModal() : window.App.openCalculatorsModal('sade-sati')">
+        <div class="calc-icon">🪐</div>
+        <h3>Shani Sade Sati</h3>
+        <p>Saturn 7.5-year transit periods and Shani Dhaiya timings.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+
+      <div class="calc-card" onclick="window.App && window.App.openCalculatorsModal('kaalsarp')">
+        <div class="calc-icon">🐍</div>
+        <h3>Kaal Sarp Yoga</h3>
+        <p>Identify all 12 classical Kaal Sarp variations and Vedic remedies.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+
+      <div class="calc-card" onclick="window.App && window.App.openCalculatorsModal('gemstone')">
+        <div class="calc-icon">💎</div>
+        <h3>Gemstone Recommendation</h3>
+        <p>Determine your Anukul, Bhagyoday, and Jivan Ratna based on ascendant.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+
+      <div class="calc-card" onclick="window.App && window.App.openCalculatorsModal('dasha')">
+        <div class="calc-icon">⏳</div>
+        <h3>Vimshottari Dasha</h3>
+        <p>Complete 120-year cycle breakdown: Maha, Antar, and Pratyantar dashas.</p>
+        <button type="button" class="btn-launch-calc">Launch Calculator ➔</button>
+      </div>
+    </div>
+  </div>
+</section>

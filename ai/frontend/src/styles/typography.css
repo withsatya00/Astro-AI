@@ -1,0 +1,47 @@
+/**
+ * Typography & Font Styling
+ * Multi-lingual Vedic typography supporting Latin, Sanskrit, and Indic scripts.
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-navy-main, #211D50);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--font-h1, 2.25rem);
+}
+
+h2 {
+  font-size: var(--font-h2, 1.75rem);
+}
+
+h3 {
+  font-size: var(--font-h3, 1.35rem);
+}
+
+p {
+  color: var(--text-secondary, #53627A);
+  font-size: var(--font-body, 1rem);
+  line-height: 1.6;
+}
+
+.text-sanskrit {
+  font-family: 'Noto Serif Devanagari', 'Rozha One', Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
+.text-gold {
+  color: var(--color-gold-dark, #B45309);
+}
+
+.text-purple {
+  color: var(--color-purple-primary, #7439EA);
+}
+
+.text-muted {
+  color: var(--text-muted, #7E8FA6);
+}

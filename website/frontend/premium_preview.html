@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Astro Jyotish - Premium UI/UX Design System Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM TOKENS (DARK COSMIC LUXURY & METRIC RIGOR)
+       ========================================================================== */
+    :root {
+      /* Elevation Scale (3-tier) */
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.07);
+      --shadow-hover: 0 16px 36px -4px rgba(245, 158, 11, 0.2), 0 0 0 1px rgba(245, 158, 11, 0.35);
+      --shadow-modal: 0 24px 60px -8px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+      /* Border Radius Scale */
+      --radius-sm: 8px;   /* chips, buttons, badges */
+      --radius-md: 12px;  /* cards, chat bubbles, inputs */
+      --radius-lg: 20px;  /* modals, containers, bottom bar */
+
+      /* Palette: Dark Cosmic (Default) */
+      --bg-space: #08060F;
+      --bg-surface: #110D20;
+      --bg-card: rgba(22, 17, 40, 0.75);
+      --bg-card-hover: rgba(30, 24, 54, 0.9);
+      --bg-input: rgba(14, 11, 26, 0.8);
+
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(245, 158, 11, 0.3);
+
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-gold: #F59E0B;
+      --text-gold-light: #FDE68A;
+
+      --gold-gradient: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      --gold-vip: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #B8860B 100%);
+      --cosmic-glow: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.22) 0%, transparent 60%);
+
+      /* Transition Tokens */
+      --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Light Mode Overrides for Comparison */
+    [data-theme="light"] {
+      --bg-space: #F8F9FA;
+      --bg-surface: #FFFFFF;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --bg-card-hover: #FFFFFF;
+      --bg-input: #F1F5F9;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-gold: rgba(217, 119, 6, 0.35);
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 14px 28px -4px rgba(217, 119, 6, 0.15), 0 0 0 1px rgba(217, 119, 6, 0.3);
+      --cosmic-glow: radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.08) 0%, transparent 60%);
+    }
+
+    /* Base Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-space);
+      background-image: var(--cosmic-glow);
+      background-attachment: fixed;
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      padding-bottom: 90px; /* Space for mobile bottom bar */
+      overflow-x: hidden;
+    }
+
+    /* Tabular Numeral Class for Currency & Stats */
+    .tabular-num {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       2. TOP SOCIAL PROOF TICKER STRIP
+       ========================================================================== */
+    .social-proof-ticker {
+      background: rgba(17, 13, 32, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .live-indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+      animation: pulseGreen 2s infinite;
+    }
+    .ticker-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5rem;
+      animation: tickerSlide 25s linear infinite;
+    }
+    .ticker-item {
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .ticker-item strong {
+      color: var(--text-gold-light);
+    }
+    @keyframes pulseGreen {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+    @keyframes tickerSlide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       3. TOP NAVIGATION WITH VECTOR LINE-ICONS
+       ========================================================================== */
+    .premium-navbar {
+      background: rgba(17, 13, 32, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(124, 58, 237, 0.2) 100%);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-gold);
+    }
+    .brand-text-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, #FFF 40%, var(--text-gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-badge {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--text-gold);
+      padding: 2px 7px;
+      border-radius: 99px;
+      border: 1px solid var(--border-gold);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-theme-toggle:hover {
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ==========================================================================
+       4. CONTAINER & HERO CONTROLS
+       ========================================================================== */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem;
+    }
+    .hero-banner {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--text-gold);
+      padding: 0.35rem 0.9rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.9rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 0.6rem;
+    }
+    .hero-desc {
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 1.5rem auto;
+      font-size: 0.95rem;
+    }
+
+    /* Showcase Filter Tabs */
+    .tab-pills {
+      display: inline-flex;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 99px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-card);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tab-pill-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1.1rem;
+      border-radius: 99px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.25s var(--transition-smooth);
+    }
+    .tab-pill-btn.active {
+      background: var(--gold-gradient);
+      color: #08060F;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      font-weight: 700;
+    }
+    .tab-pill-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* ==========================================================================
+       5. SHOWCASE GRID (BEFORE & AFTER COMPARISONS)
+       ========================================================================== */
+    .grid-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Card Shell with Level 1 Elevation */
+    .premium-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.28s var(--transition-smooth);
+    }
+    .premium-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      background: var(--bg-card-hover);
+    }
+    .card-label-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 99px;
+    }
+    .badge-plus-vip {
+      background: var(--gold-vip);
+      color: #110D20;
+      font-weight: 900;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Astrologer Profile Layout */
+    .astrologer-flex {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .avatar-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--text-gold);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+    }
+    .avatar-online-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      background: #10B981;
+      border: 2px solid var(--bg-surface);
+      border-radius: 50%;
+    }
+    .astro-info h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .verified-icon {
+      color: #38BDF8;
+      width: 16px;
+      height: 16px;
+    }
+    .astro-tags {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0.2rem 0 0.5rem 0;
+    }
+    .trust-stat-strip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+    }
+    .rating-pill {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--text-gold);
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Price and Action Row */
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1rem;
+      margin-top: 0.75rem;
+    }
+    .price-block {
+      display: flex;
+      flex-direction: column;
+    }
+    .price-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+    .price-value {
+      font-size: 1.25rem;
+      color: var(--text-gold-light);
+    }
+    .price-value small {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+
+    /* Tactile Micro-Bounce Buttons */
+    .btn-tactile-primary {
+      background: var(--gold-gradient);
+      color: #08060F;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: transform 0.1s var(--transition-spring), box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+    .btn-tactile-primary:hover {
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+    }
+    .btn-tactile-primary:active {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================================================
+       6. SHOWCASE 2: KUNDLI WHEEL DRAW-IN ANIMATION
+       ========================================================================== */
+    .kundli-preview-container {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 1.6rem;
+      text-align: center;
+    }
+    .kundli-svg-box {
+      width: 280px;
+      height: 280px;
+      margin: 1.25rem auto;
+      position: relative;
+    }
+    .kundli-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.25));
+    }
+    /* Stroke Dash Draw-in Effect */
+    .kundli-stroke-animate {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawKundli 1.8s var(--transition-smooth) forwards;
+    }
+    .kundli-planet-text {
+      opacity: 0;
+      animation: fadeInPlanets 0.8s 1.2s forwards;
+      font-size: 11px;
+      font-weight: 700;
+      fill: var(--text-gold-light);
+    }
+    @keyframes drawKundli {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes fadeInPlanets {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       7. SHOWCASE 3: CHAT VIEW & 3-DOT PULSING TYPING BUBBLE
+       ========================================================================== */
+    .chat-preview-shell {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      overflow: hidden;
+    }
+    .chat-feed {
+      flex: 1;
+      padding: 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .chat-bubble {
+      max-width: 80%;
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--border-gold);
+      color: var(--text-main);
+      border-bottom-right-radius: 4px;
+    }
+    .chat-bubble.assistant {
+      align-self: flex-start;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* 3-Dot Harmonic Typing Indicator Bubble */
+    .typing-indicator-bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.7rem 1.1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      border-bottom-left-radius: 4px;
+      align-self: flex-start;
+    }
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-gold);
+      animation: harmonicBounce 1.4s infinite ease-in-out both;
+    }
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+    .typing-dot:nth-child(3) { animation-delay: 0s; }
+    @keyframes harmonicBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .chat-composer-row {
+      padding: 0.75rem 1rem;
+      background: rgba(14, 11, 26, 0.95);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 0.5rem;
+    }
+    .chat-input {
+      flex: 1;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      padding: 0.55rem 0.9rem;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .chat-input:focus {
+      border-color: var(--border-gold);
+    }
+
+    /* ==========================================================================
+       8. SHOWCASE 4: SKELETON PLACEHOLDERS (SHIMMER EFFECT)
+       ========================================================================== */
+    .skeleton-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(245, 158, 11, 0.12) 37%,
+        rgba(255, 255, 255, 0.04) 63%
+      );
+      background-size: 400% 100%;
+      animation: shimmerWave 1.6s ease-in-out infinite;
+      border-radius: var(--radius-sm);
+    }
+    .skeleton-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+    }
+    .skeleton-title {
+      width: 60%;
+      height: 20px;
+    }
+    .skeleton-subtitle {
+      width: 85%;
+      height: 14px;
+    }
+    .skeleton-btn {
+      width: 100px;
+      height: 36px;
+    }
+    @keyframes shimmerWave {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0 50%; }
+    }
+
+    /* ==========================================================================
+       9. MOBILE NATIVE BOTTOM NAVIGATION BAR (LEVEL 3 ELEVATION)
+       ========================================================================== */
+    .mobile-tab-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(94%, 440px);
+      background: rgba(17, 13, 32, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-modal);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 8px;
+      z-index: 100;
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s var(--transition-smooth);
+    }
+    .tab-item.active {
+      color: var(--text-gold);
+    }
+    .tab-item.active::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      width: 18px;
+      height: 3px;
+      border-radius: 99px;
+      background: var(--text-gold);
+      box-shadow: 0 0 10px var(--text-gold);
+    }
+    .tab-item svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.75px;
+      transition: transform 0.15s var(--transition-spring);
+    }
+    .tab-item:active svg {
+      transform: scale(0.85);
+    }
+
+    /* Toast Notification */
+    .toast-pill {
+      position: fixed;
+      top: 75px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-gold);
+      color: var(--text-gold-light);
+      padding: 0.5rem 1.25rem;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-hover);
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s var(--transition-spring);
+    }
+    .toast-pill.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. LIVE SOCIAL PROOF TICKER STRIP -->
+  <aside class="social-proof-ticker" aria-label="Live Consultations Ticker">
+    <div class="ticker-left">
+      <span class="live-indicator-dot"></span>
+      <span style="font-weight: 700; color: #10B981; font-size: 0.75rem; text-transform: uppercase;">Live Now</span>
+    </div>
+    <div class="ticker-content">
+      <div class="ticker-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <strong>Rajesh S.</strong> (Mumbai) just consulted <em>Pt. Rameshwar Dwivedi</em> (Career & Dasha)
+      </div>
+      <div class="ticker-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <strong>Ananya & Vikram</strong> completed <em>Kundali Milan</em> (32/36 Gunas Match)
+      </div>
+      <div class="ticker-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <strong class="tabular-num">184 seekers</strong> actively in consultation
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. STICKY TOP NAVBAR WITH VECTOR LINE-ICONS -->
+  <header class="premium-navbar">
+    <a href="#" class="brand-group">
+      <div class="brand-icon-box">
+        <!-- Thin line astrology star icon -->
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.4rem;">
+          <span class="brand-text-title">Astro Jyotish</span>
+          <span class="brand-badge">Premium UI</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <!-- Dark / Light Mode Switcher -->
+      <button class="btn-theme-toggle" id="btn-toggle-theme" title="Toggle Cosmic Dark / Light Mode">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span id="theme-label">Light Mode</span>
+      </button>
+
+      <button class="btn-tactile-primary" onclick="showToast('Astro Jyotish Plus active!')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Get Plus</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 3. MAIN HERO SHOWCASE & INTERACTIVE PILLS -->
+  <main class="main-container">
+    <section class="hero-banner">
+      <div class="hero-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <span>Interactive Transformation Preview</span>
+      </div>
+      <h1 class="hero-title">Astro Jyotish: Luxury UI/UX Redesign</h1>
+      <p class="hero-desc">
+        Aapke sabhi 5 suggestions (A se E) ko live interactive components mein transform kiya gaya hai.
+        Neeche buttons par click karke micro-interactions aur states test karein.
+      </p>
+
+      <!-- Showcase Filter Pills -->
+      <div class="tab-pills" role="tablist">
+        <button class="tab-pill-btn active" onclick="switchFilter('all')">Sabhi Features (All)</button>
+        <button class="tab-pill-btn" onclick="switchFilter('cards')">✦ Plus VIP & Cards</button>
+        <button class="tab-pill-btn" onclick="switchFilter('kundli')">🪐 Kundli Draw-in</button>
+        <button class="tab-pill-btn" onclick="switchFilter('chat')">💬 Typing Indicator</button>
+        <button class="tab-pill-btn" onclick="toggleSkeleton()" id="btn-skeleton-toggle">⚡ Test Skeleton Loading</button>
+      </div>
+    </section>
+
+    <!-- 4. LIVE FEATURE SHOWCASE GRID -->
+    <div class="grid-showcase" id="showcase-grid">
+
+      <!-- CARD 1: Astrologer Profile with Plus VIP Tier & Trust Badges -->
+      <article class="premium-card" data-category="cards">
+        <span class="card-label-badge badge-plus-vip">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          PLUS VIP
+        </span>
+
+        <div class="astrologer-flex">
+          <div class="avatar-wrapper">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80" alt="Dr. Sunita Sharma" class="avatar-img">
+            <span class="avatar-online-dot" title="Online for consultation"></span>
+          </div>
+          <div class="astro-info">
+            <h3>
+              Dr. Sunita Sharma
+              <!-- Verified Shield Line-Icon -->
+              <svg class="verified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </h3>
+            <p class="astro-tags">Vedic & Relationship Counselor • 16 Yrs</p>
+            <div class="trust-stat-strip">
+              <span class="rating-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.98
+              </span>
+              <span class="tabular-num" style="color: var(--text-muted);">1,840+ Consultations</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem;">
+          Specialist in Dasha timing, relationship harmony (Kundali Milan) and Navamsha karmic guidance.
+        </p>
+
+        <div class="card-footer-row">
+          <div class="price-block">
+            <span class="price-label">Consultation</span>
+            <div class="price-value tabular-num">
+              ₹25<small>/min</small>
+            </div>
+          </div>
+          <button class="btn-tactile-primary" onclick="showToast('Connecting with Dr. Sunita...')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Start Call</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- CARD 2: Interactive Kundli Wheel Draw-in Animation -->
+      <article class="kundli-preview-container" data-category="kundli">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="text-align: left;">
+            <h3 style="font-size: 1.1rem; font-weight: 700;">Lagna Kundli (D1)</h3>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Swiss Ephemeris Precision Engine</span>
+          </div>
+          <button class="btn-tactile-primary" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="replayKundli()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Replay Draw</span>
+          </button>
+        </div>
+
+        <div class="kundli-svg-box">
+          <svg viewBox="0 0 300 300" class="kundli-svg" id="kundli-svg-elem">
+            <!-- Diamond outer square -->
+            <rect x="10" y="10" width="280" height="280" fill="none" stroke="var(--text-gold)" stroke-width="2" class="kundli-stroke-animate" />
+            <!-- Diagonal lines -->
+            <line x1="10" y1="10" x2="290" y2="290" stroke="var(--text-gold)" stroke-width="1.5" class="kundli-stroke-animate" />
+            <line x1="290" y1="10" x2="10" y2="290" stroke="var(--text-gold)" stroke-width="1.5" class="kundli-stroke-animate" />
+            <!-- Inner Diamond -->
+            <polygon points="150,10 290,150 150,290 10,150" fill="none" stroke="var(--text-gold)" stroke-width="1.5" class="kundli-stroke-animate" />
+
+            <!-- Planetary Placements (Fading in smoothly) -->
+            <text x="150" y="80" text-anchor="middle" class="kundli-planet-text">Lagna 11 (Kumbha)</text>
+            <text x="150" y="105" text-anchor="middle" class="kundli-planet-text">Su 07° Li • Mo 14° Li</text>
+
+            <text x="75" y="45" text-anchor="middle" class="kundli-planet-text">Ju 18°</text>
+            <text x="225" y="45" text-anchor="middle" class="kundli-planet-text">Me 22°</text>
+            <text x="75" y="150" text-anchor="middle" class="kundli-planet-text">Sa (R) 12°</text>
+            <text x="225" y="150" text-anchor="middle" class="kundli-planet-text">Ve 04°</text>
+            <text x="150" y="235" text-anchor="middle" class="kundli-planet-text">Ra 09° • Ke 09°</text>
+          </svg>
+        </div>
+
+        <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: center; gap: 1.5rem;">
+          <span>Lagna: <strong>Aquarius</strong></span>
+          <span>Rashi: <strong>Libra (Tula)</strong></span>
+          <span>Nakshatra: <strong>Swati</strong></span>
+        </div>
+      </article>
+
+      <!-- CARD 3: Live Chat Micro-Interaction & 3-Dot Pulsing Bubble -->
+      <article class="chat-preview-shell" data-category="chat">
+        <div style="padding: 0.85rem 1.25rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #10B981;"></div>
+            <strong style="font-size: 0.9rem;">Pt. Rameshwar Dwivedi</strong>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--text-gold);">AI Jyotish Active</span>
+        </div>
+
+        <div class="chat-feed" id="chat-messages-container">
+          <div class="chat-bubble user">
+            नमस्ते पंडित जी, क्या मेरी वर्तमान दशा में करियर परिवर्तन के योग बन रहे हैं?
+          </div>
+          <div class="chat-bubble assistant">
+            कल्याणमस्तु! आपकी जन्म कुण्डली में वर्तमान में <strong>बुध महादशा में गुरु अंतर्दशा</strong> सक्रिय है। दशम भाव में गुरु की शुभ दृष्टि से आगामी 3 महीनों में पदोन्नति के प्रबल संकेत हैं।
+          </div>
+
+          <!-- Pulsing Typing Indicator Element -->
+          <div class="typing-indicator-bubble" id="chat-typing-indicator" style="display: none;">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+
+        <form class="chat-composer-row" onsubmit="event.preventDefault(); sendMockMessage();">
+          <input type="text" id="chat-input-text" class="chat-input" placeholder="Type a message (e.g., 'Shani Sade Sati ke upay?')">
+          <button type="submit" class="btn-tactile-primary" style="padding: 0.55rem 0.95rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+      </article>
+
+      <!-- SKELETON PLACEHOLDER DEMO (Toggled via JS) -->
+      <article class="skeleton-card" id="skeleton-card-demo" style="display: none;">
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <div class="skeleton-avatar skeleton-shimmer"></div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+            <div class="skeleton-title skeleton-shimmer"></div>
+            <div class="skeleton-subtitle skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="skeleton-shimmer" style="height: 14px; width: 95%;"></div>
+        <div class="skeleton-shimmer" style="height: 14px; width: 75%;"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+          <div class="skeleton-shimmer" style="height: 24px; width: 80px;"></div>
+          <div class="skeleton-btn skeleton-shimmer"></div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- 5. MOBILE NATIVE BOTTOM TAB BAR (NATIVE APP FEEL) -->
+  <nav class="mobile-tab-bar" aria-label="Mobile Bottom Navigation">
+    <a class="tab-item active" onclick="setMobileTab(this, 'Home')">
+      <!-- Home Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </a>
+    <a class="tab-item" onclick="setMobileTab(this, 'Consult')">
+      <!-- Chat Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Consult</span>
+    </a>
+    <a class="tab-item" onclick="setMobileTab(this, 'Kundli')">
+      <!-- Planet / Geometry Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span>Kundli</span>
+    </a>
+    <a class="tab-item" onclick="setMobileTab(this, 'Profile')">
+      <!-- Profile User Icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- TOAST NOTIFICATION PILL -->
+  <div class="toast-pill" id="global-toast">Feedback received!</div>
+
+  <!-- SCRIPT FOR ALL MICRO-INTERACTIONS -->
+  <script>
+    // 1. Toast Notification Helper
+    function showToast(msg) {
+      const toast = document.getElementById('global-toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2600);
+    }
+
+    // 2. Theme Toggle (Cosmic Dark / Clean Light)
+    const btnToggleTheme = document.getElementById('btn-toggle-theme');
+    const themeLabel = document.getElementById('theme-label');
+    let isDark = true;
+
+    btnToggleTheme.addEventListener('click', () => {
+      isDark = !isDark;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      themeLabel.textContent = isDark ? 'Light Mode' : 'Cosmic Dark';
+      showToast(isDark ? 'Switched to Cosmic Dark Mode' : 'Switched to Light Ivory Mode');
+    });
+
+    // 3. Filter Showcase Categories
+    function switchFilter(category) {
+      const tabs = document.querySelectorAll('.tab-pill-btn');
+      tabs.forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const cards = document.querySelectorAll('.premium-card, .kundli-preview-container, .chat-preview-shell');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+          if (card.classList.contains('kundli-preview-container')) card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('skeleton-card-demo').style.display = 'none';
+    }
+
+    // 4. Toggle Skeleton Loading Shimmer
+    let isSkeleton = false;
+    function toggleSkeleton() {
+      isSkeleton = !isSkeleton;
+      const demo = document.getElementById('skeleton-card-demo');
+      const btn = document.getElementById('btn-skeleton-toggle');
+      if (isSkeleton) {
+        demo.style.display = 'flex';
+        btn.classList.add('active');
+        btn.textContent = 'Hide Skeleton Mode';
+        showToast('Skeleton Shimmer Pulse Active!');
+      } else {
+        demo.style.display = 'none';
+        btn.classList.remove('active');
+        btn.textContent = '⚡ Test Skeleton Loading';
+      }
+    }
+
+    // 5. Kundli Draw-in Replay Animation
+    function replayKundli() {
+      const svg = document.getElementById('kundli-svg-elem');
+      const clone = svg.cloneNode(true);
+      svg.parentNode.replaceChild(clone, svg);
+      showToast('Redrawing Kundali geometry with Swiss Ephemeris...');
+    }
+
+    // 6. Interactive Chat with 3-Dot Pulsing Bubble
+    function sendMockMessage() {
+      const input = document.getElementById('chat-input-text');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chat-messages-container');
+      const typingIndicator = document.getElementById('chat-typing-indicator');
+
+      // Append User message
+      const userBubble = document.createElement('div');
+      userBubble.className = 'chat-bubble user';
+      userBubble.textContent = text;
+      container.insertBefore(userBubble, typingIndicator);
+
+      input.value = '';
+      typingIndicator.style.display = 'inline-flex';
+      container.scrollTop = container.scrollHeight;
+
+      // Simulate typing latency, then deliver response
+      setTimeout(() => {
+        typingIndicator.style.display = 'none';
+        const aiBubble = document.createElement('div');
+        aiBubble.className = 'chat-bubble assistant';
+        aiBubble.innerHTML = '✨ <strong>ज्योतिष परामर्श:</strong> आपके प्रश्न के अनुसार गोचर में शनि देव कुंभ राशि से मीन में प्रवेश कर रहे हैं। हनुमान चालीसा का नित्य पाठ एवं शनिवार को तिल के तेल का दान विशेष शुभ रहेगा।';
+        container.appendChild(aiBubble);
+        container.scrollTop = container.scrollHeight;
+      }, 1500);
+    }
+
+    // 7. Mobile Tab Bar Active Switcher
+    function setMobileTab(elem, name) {
+      document.querySelectorAll('.tab-item').forEach(i => i.classList.remove('active'));
+      elem.classList.add('active');
+      showToast('Switched to: ' + name);
+    }
+  </script>
+</body>
+</html>

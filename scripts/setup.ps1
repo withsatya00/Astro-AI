@@ -25,21 +25,19 @@ $directories = @(
     "documents/approved",
     "documents/metadata",
     "documents/manifests",
-    "frontend",
-    "frontend/css",
-    "frontend/js",
-    "frontend/assets",
-    "backend/app/api",
-    "backend/app/core",
-    "backend/app/db",
-    "backend/app/models",
-    "backend/app/schemas",
-    "backend/app/services",
-    "backend/app/agents",
-    "backend/app/rag",
-    "backend/app/astrology",
-    "backend/app/reports",
-    "backend/tests"
+    "packages",
+    "website/frontend",
+    "website/frontend/css",
+    "website/frontend/js",
+    "website/frontend/assets",
+    "website/backend/app",
+    "website/backend/tests",
+    "ai/frontend",
+    "ai/frontend/css",
+    "ai/frontend/js",
+    "ai/frontend/assets",
+    "ai/backend/app",
+    "ai/backend/tests"
 )
 
 foreach ($dir in $directories) {
@@ -70,22 +68,22 @@ python scripts/verify_environment.py
 # 5. Database Initialization
 Write-Host "`n[5/7] Initializing Local Database..." -ForegroundColor Yellow
 python -c "
-import sys; sys.path.insert(0, './backend');
-from app.db.session import init_db;
+from packages.database.session import init_db;
 init_db();
 print('Database initialized successfully.')
 "
 
 # 6. Execute Smoke Tests
 Write-Host "`n[6/7] Running Unit & Smoke Tests..." -ForegroundColor Yellow
-python -m pytest backend/tests/test_smoke.py -v --tb=short
+python -m pytest website/backend/tests/test_smoke.py -v --tb=short
 
 # 7. Summary
 Write-Host "`n[7/7] Setup Complete!" -ForegroundColor Cyan
 Write-Host "--------------------------------------------------" -ForegroundColor Cyan
-Write-Host "To start the AstroAI backend server:" -ForegroundColor White
-Write-Host "  python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload" -ForegroundColor Green
-Write-Host "`nTo open the frontend:" -ForegroundColor White
-Write-Host "  Open frontend/index.html in any modern browser" -ForegroundColor Green
-Write-Host "  or run: python -m http.server 3000 --directory frontend" -ForegroundColor Green
+Write-Host "To start the Astro Jyotish website backend server:" -ForegroundColor White
+Write-Host "  python -m uvicorn website.backend.app.main:app --host 127.0.0.1 --port 8000 --reload" -ForegroundColor Green
+Write-Host "`nTo start the AstroAI consultation backend server:" -ForegroundColor White
+Write-Host "  python -m uvicorn ai.backend.app.main:app --host 127.0.0.1 --port 8001 --reload" -ForegroundColor Green
+Write-Host "`nTo serve the website frontend:" -ForegroundColor White
+Write-Host "  python -m http.server 3000 --directory website/frontend" -ForegroundColor Green
 Write-Host "==================================================" -ForegroundColor Cyan

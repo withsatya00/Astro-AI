@@ -1,0 +1,42 @@
+<!-- Astrologer Search & Filter Bar Component -->
+<div class="astrologer-search-component" id="astrologer-search-component">
+  <div class="search-bar-row">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="dir-search-input" class="search-input-field" placeholder="Search astrologers by name, language, or specialty..." />
+      <button type="button" id="btn-clear-search" class="btn-clear-search" style="display: none;">✕</button>
+    </div>
+
+    <div class="filter-controls-row">
+      <select id="dir-filter-specialty" class="filter-select">
+        <option value="">All Specialties</option>
+        <option value="Vedic">Vedic Astrology</option>
+        <option value="Kundali">Kundali Milan</option>
+        <option value="Career">Career & Business</option>
+        <option value="Marriage">Marriage & Love</option>
+        <option value="Palmistry">Palmistry</option>
+        <option value="Tarot">Tarot Reading</option>
+        <option value="Vastu">Vastu Shastra</option>
+      </select>
+
+      <select id="dir-filter-language" class="filter-select">
+        <option value="">All Languages</option>
+        <option value="Hindi">हिन्दी (Hindi)</option>
+        <option value="English">English</option>
+        <option value="Sanskrit">संस्कृतम् (Sanskrit)</option>
+        <option value="Gujarati">ગુજરાતી</option>
+        <option value="Bengali">বাংলা</option>
+        <option value="Tamil">தமிழ்</option>
+        <option value="Telugu">తెలుగు</option>
+        <option value="Marathi">मराठी</option>
+      </select>
+
+      <select id="dir-sort-by" class="filter-select">
+        <option value="rating">Highest Rated</option>
+        <option value="experience">Most Experienced</option>
+        <option value="price_low">Price: Low to High</option>
+        <option value="price_high">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+</div>

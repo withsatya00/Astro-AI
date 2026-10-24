@@ -1,0 +1,110 @@
+/**
+ * Astro Jyotish Design System Tokens
+ * Unified design tokens for Website and AI Consultation domains.
+ * Palette: Deep Navy, Vivid Royal Purple, Warm Cream/Ivory, Saffron Gold.
+ */
+
+:root {
+  /* Brand Surfaces & Backgrounds */
+  --bg-page: #FFFCF4;
+  --bg-surface: #FAF8F2;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFFDF9;
+  --bg-elevated: #FFFFFF;
+  --bg-muted: #F3EFE6;
+  --bg-cream: #FFFDF5;
+  --bg-subtle: #F8F5EE;
+
+  /* Brand Primary & Accents */
+  --color-purple-primary: #7439EA;
+  --color-purple-hover: #5B21B6;
+  --color-purple-deep: #4C1D95;
+  --color-purple-light: #F5F3FF;
+  --color-purple-subtle: #DDD6FE;
+  --color-purple-glow: rgba(116, 57, 234, 0.2);
+
+  /* Deep Navy (Typography & Headers) */
+  --color-navy-main: #211D50;
+  --color-navy-deep: #1E1B4B;
+  --color-navy-muted: #3B3673;
+  --color-navy-light: #4A448C;
+
+  /* Saffron Gold & Vedic Accents */
+  --color-gold-primary: #E8AD35;
+  --color-gold-dark: #B45309;
+  --color-gold-amber: #D97706;
+  --color-gold-soft: #FEF3C7;
+  --color-gold-subtle: #FFFBEB;
+  --color-gold-border: #FDE68A;
+
+  /* Text & Foreground */
+  --text-primary: #211D50;
+  --text-secondary: #53627A;
+  --text-muted: #7E8FA6;
+  --text-light: #94A3B8;
+  --text-inverted: #FFFFFF;
+
+  /* Borders & Dividers */
+  --border-subtle: #E7E2D8;
+  --border-card: #EFE9DD;
+  --border-focus: #7439EA;
+  --border-gold: #FCD34D;
+
+  /* Functional Status */
+  --status-online: #10B981;
+  --status-busy: #F59E0B;
+  --status-offline: #94A3B8;
+  --status-error: #EF4444;
+  --status-success: #10B981;
+
+  /* Typography Scale & Font Families (Hindi + English) */
+  --font-serif: 'Cinzel', 'Playfair Display', 'Noto Serif Devanagari', 'Rozha One', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Noto Sans Devanagari', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-hero: clamp(2rem, 3.8vw, 2.75rem);
+  --font-h1: clamp(1.75rem, 3.2vw, 2.25rem);
+  --font-h2: clamp(1.35rem, 2.4vw, 1.75rem);
+  --font-h3: clamp(1.1rem, 1.8vw, 1.35rem);
+  --font-body: 1rem;
+  --font-body-sm: 0.875rem;
+  --font-caption: 0.78rem;
+
+  /* Spacing Scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4.5rem;
+
+  /* Border Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows & Elevation */
+  --shadow-xs: 0 1px 2px rgba(33, 29, 80, 0.04);
+  --shadow-sm: 0 2px 6px rgba(33, 29, 80, 0.06);
+  --shadow-md: 0 4px 16px rgba(33, 29, 80, 0.08);
+  --shadow-lg: 0 10px 30px rgba(33, 29, 80, 0.10);
+  --shadow-xl: 0 20px 40px rgba(33, 29, 80, 0.14);
+  --shadow-glow: 0 0 20px rgba(116, 57, 234, 0.25);
+  --shadow-gold: 0 4px 16px rgba(232, 173, 53, 0.25);
+
+  /* Container & Layout */
+  --container-max-width: 1280px;
+  --container-narrow-width: 960px;
+  --header-height: 72px;
+  --header-compact-height: 60px;
+  --footer-padding: 3.5rem 1.5rem;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow: 0.35s ease;
+}

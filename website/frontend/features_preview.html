@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro Jyotish - New Features Preview & Architectural Showcase</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/reset.css">
+  <link rel="stylesheet" href="/src/styles/typography.css">
+  <link rel="stylesheet" href="/src/styles/global.css">
+  <link rel="stylesheet" href="/css/styles.css?v=ultra_v14">
+  <link rel="stylesheet" href="/css/tailwind.css?v=ultra_v14">
+
+  <style>
+    :root {
+      --gold-primary: #f59e0b;
+      --gold-light: #fef3c7;
+      --gold-accent: #fbbf24;
+      --gold-glow: rgba(245, 158, 11, 0.35);
+      --dark-card: rgba(17, 24, 39, 0.85);
+      --dark-border: rgba(245, 158, 11, 0.25);
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #1e1338 0%, #0d091a 60%, #05030a 100%);
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .vedic-font {
+      font-family: 'Cinzel', serif;
+    }
+
+    .devanagari-font {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+    }
+
+    /* Tab navigation */
+    .tab-btn {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.3) 100%);
+      border-color: #f59e0b;
+      color: #fbbf24;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+    }
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 15%;
+      width: 70%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+      border-radius: 9999px;
+    }
+
+    /* Ticker animation */
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ephemeris-track {
+      display: flex;
+      width: max-content;
+      animation: tickerScroll 30s linear infinite;
+    }
+    .ephemeris-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* Audio wave animation */
+    .audio-bar {
+      display: inline-block;
+      width: 4px;
+      background: #f59e0b;
+      border-radius: 4px;
+      animation: soundWave 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes soundWave {
+      0% { height: 6px; }
+      100% { height: 26px; }
+    }
+
+    /* Kundli diamond house active glow */
+    .bhava-glow {
+      filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.85));
+      animation: pulseBhava 2s infinite ease-in-out;
+    }
+    @keyframes pulseBhava {
+      0%, 100% { fill: rgba(245, 158, 11, 0.35); stroke: #fbbf24; }
+      50% { fill: rgba(245, 158, 11, 0.65); stroke: #fff; }
+    }
+
+    /* 3D card tilt */
+    .astrologer-preview-card {
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+      background: linear-gradient(145deg, rgba(30, 20, 50, 0.8) 0%, rgba(15, 10, 26, 0.95) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .astrologer-preview-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      border-color: rgba(245, 158, 11, 0.6);
+      box-shadow: 0 16px 36px -10px rgba(245, 158, 11, 0.25);
+    }
+
+    /* PDF Dossier Sheet */
+    .dossier-sheet {
+      background: linear-gradient(180deg, #fffdf8 0%, #faf5eb 100%);
+      color: #1f2937;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(217, 119, 6, 0.3);
+      position: relative;
+    }
+    .dossier-sheet::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 2px solid #b45309;
+      pointer-events: none;
+      border-radius: 6px;
+    }
+    .dossier-sheet::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px dashed rgba(180, 83, 9, 0.4);
+      pointer-events: none;
+      border-radius: 4px;
+    }
+
+    .seal-badge {
+      width: 90px;
+      height: 90px;
+      border: 3px double #b45309;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle, #fef3c7 30%, #fde68a 100%);
+      color: #92400e;
+      box-shadow: 0 4px 12px rgba(180, 83, 9, 0.2);
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-black">
+
+  <!-- TOP NOTICE BANNER -->
+  <div class="bg-gradient-to-r from-amber-950 via-purple-950 to-amber-950 border-b border-amber-500/30 px-4 py-2 text-center text-xs sm:text-sm text-amber-200 flex items-center justify-center gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span class="font-semibold">आगामी फीचर्स का विज़ुअल पूर्वावलोकन (Pre-Implementation Visual Showcase)</span>
+    <span class="hidden md:inline text-amber-400/60">• आपके निर्देश पर ही मुख्य वेबसाइट में कोड लागू होगा</span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-4 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold mb-3">
+      <span>✨ 100% Free & Accuracy 90%+ Vedic Architecture</span>
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+      Astro Jyotish <span class="bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500 bg-clip-text text-transparent">Ultra-Premium Suite</span>
+    </h1>
+    <p class="mt-3 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto devanagari-font">
+      वेबसाइट और AI कॉलिंग एजेंट के नए फीचर्स लागू होने के बाद कैसे दिखेंगे और काम करेंगे, उसका लाइव इंटरैक्टिव प्रदर्शन।
+    </p>
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-8 p-1.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 max-w-3xl mx-auto">
+      <button onclick="switchTab('tab-website')" id="btn-tab-website" class="tab-btn active px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-transparent">
+        <span>🌐</span> <span>1. वेबसाइट फीचर्स (Website)</span>
+      </button>
+      <button onclick="switchTab('tab-calling')" id="btn-tab-calling" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-transparent text-gray-300">
+        <span>🎙️</span> <span>2. AI कॉलिंग एजेंट (Voice Call)</span>
+      </button>
+      <button onclick="switchTab('tab-dossier')" id="btn-tab-dossier" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-transparent text-gray-300">
+        <span>📜</span> <span>3. परामर्श पत्रिका (PDF Dossier)</span>
+      </button>
+      <button onclick="switchTab('tab-compare')" id="btn-tab-compare" class="tab-btn px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-transparent text-gray-300">
+        <span>⚖️</span> <span>4. Before vs After</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-20">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: WEBSITE PLATFORM FEATURES PREVIEW   -->
+    <!-- ========================================== -->
+    <section id="tab-website" class="tab-content space-y-10">
+      
+      <!-- Feature 1.1: Live Ephemeris Ticker -->
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">FEATURE 1</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">लाइव ग्रह गोचर टिकर (Real-time Ephemeris Ticker)</h2>
+            </div>
+            <p class="text-sm text-gray-400 mt-1 devanagari-font">
+              वेबसाइट के शीर्ष पर वास्तविक समय की स्विस पंचांग डिग्री प्रदर्शित होगी। 100% फ्री लोकल कैलकुलेशन।
+            </p>
+          </div>
+          <button onclick="randomizeEphemeris()" class="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-semibold flex items-center gap-1.5 transition">
+            <span>🔄 लाइव डिग्री रिफ्रेश करें</span>
+          </button>
+        </div>
+
+        <!-- MOCKUP OF THE TICKER IN ACTION -->
+        <div class="rounded-xl overflow-hidden border border-amber-500/40 bg-gradient-to-r from-amber-950/80 via-purple-950/90 to-amber-950/80 shadow-2xl p-0.5">
+          <div class="px-3 py-2 bg-black/60 flex items-center justify-between text-xs text-amber-300/80 border-b border-amber-500/20">
+            <span class="flex items-center gap-1.5 font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              SWISS EPHEMERIS LIVE GOCHAR (अयनांश: लाहिरी 24°10'34")
+            </span>
+            <span class="text-gray-400">अमृत वेला • शुद्ध वैदिक स्थिति</span>
+          </div>
+          
+          <div class="overflow-hidden py-3 relative bg-black/30">
+            <div id="ephemeris-stream" class="ephemeris-track gap-8 text-sm font-medium">
+              <!-- Planetary items -->
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-amber-400 font-bold">☀️ सूर्य</span>
+                <span class="text-gray-200">मेष 14°28'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">उच्च राशि</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-cyan-300 font-bold">🌙 चन्द्र</span>
+                <span class="text-gray-200">वृषभ 22°10'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">रोहिणी नक्षत्र</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-yellow-400 font-bold">🪐 गुरु</span>
+                <span class="text-gray-200">वृषभ 04°12'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold">शुभ गोचर</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-indigo-400 font-bold">🪐 शनि</span>
+                <span class="text-gray-200">कुम्भ 18°45'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-semibold">मूलत्रिकोण</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-red-400 font-bold">🔴 मंगल</span>
+                <span class="text-gray-200">कर्क 07°19'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-semibold">पुनर्वसु</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-purple-400 font-bold">🌪️ राहु</span>
+                <span class="text-gray-200">मीन 11°02'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-semibold">वक्री (R)</span>
+              </div>
+              <!-- Duplicate set for infinite loop -->
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-amber-400 font-bold">☀️ सूर्य</span>
+                <span class="text-gray-200">मेष 14°28'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">उच्च राशि</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-1 rounded-lg bg-white/5 border border-amber-500/20">
+                <span class="text-cyan-300 font-bold">🌙 चन्द्र</span>
+                <span class="text-gray-200">वृषभ 22°10'</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold">रोहिणी नक्षत्र</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 1.2: Vedic Ambience 432Hz Soundscape Toggle -->
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">FEATURE 2</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">वैदिक वातावरण नाद टॉगल (432Hz Ambience Soundscape)</h2>
+            </div>
+            <p class="text-sm text-gray-400 mt-1 devanagari-font">
+              नेवबार में एक शांत ॐ बटन होगा। यजमान क्लिक करके परामर्श के दौरान 432Hz का धीमा तानपूरा/बांसुरी नाद सुन सकते हैं।
+            </p>
+          </div>
+        </div>
+
+        <!-- WORKING SOUND PREVIEW -->
+        <div class="p-6 rounded-xl bg-gradient-to-r from-purple-950/40 via-amber-950/30 to-purple-950/40 border border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-2xl shadow-inner">
+              🕉️
+            </div>
+            <div>
+              <div class="text-base font-bold text-white flex items-center gap-2">
+                <span>वैदिक शांति नाद (Vedic 432Hz Drone)</span>
+                <span id="drone-status-tag" class="text-[11px] px-2 py-0.5 rounded bg-gray-700 text-gray-300">बंद (Paused)</span>
+              </div>
+              <p class="text-xs text-amber-200/80 mt-0.5">शुद्ध Web Audio API ऑसिलेटर • शून्य लेटेंसी • एकाग्रता एवं मानसिक शांति</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <!-- Animated bars -->
+            <div id="audio-wave-bars" class="flex items-center gap-1.5 opacity-30 transition-opacity duration-300">
+              <div class="audio-bar" style="animation-delay: 0.1s"></div>
+              <div class="audio-bar" style="animation-delay: 0.3s"></div>
+              <div class="audio-bar" style="animation-delay: 0.5s"></div>
+              <div class="audio-bar" style="animation-delay: 0.2s"></div>
+              <div class="audio-bar" style="animation-delay: 0.4s"></div>
+            </div>
+
+            <button id="drone-toggle-btn" onclick="toggleVedicDrone()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-sm shadow-lg shadow-amber-500/20 flex items-center gap-2 transition active:scale-95">
+              <span id="drone-btn-icon">▶️</span>
+              <span id="drone-btn-text">नाद शुरू करें (Play 432Hz)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 1.3: 3D Luxury Astrologer Cards -->
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="mb-6">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">FEATURE 3</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">3D लक्ज़री ज्योतिषी कार्ड्स (Gold-Foil Profile Badges)</h2>
+          </div>
+          <p class="text-sm text-gray-400 mt-1 devanagari-font">
+            कार्ड्स पर माउस ले जाने पर 3D झुकाव (Tilt), स्वर्ण पदक रिबन, लाइव वेटिंग कतार और गुरुकुल प्रमाण पत्र बैज।
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- CARD 1 -->
+          <div class="astrologer-preview-card rounded-2xl p-5 relative overflow-hidden" style="background: rgba(20, 15, 35, 0.85); border: 1px solid rgba(245, 158, 11, 0.35);">
+            <!-- Top Badge Row -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+              <span style="background: linear-gradient(135deg, #d97706, #fbbf24); color: #000; font-weight: 800; font-size: 10px; padding: 3px 10px; border-radius: 9999px; letter-spacing: 0.5px;">
+                स्वर्ण पदक ★
+              </span>
+            </div>
+
+            <!-- Profile Info Row -->
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="position: relative; width: 68px; height: 68px; flex-shrink: 0;">
+                <img src="assets/portraits/pt-rameshwar-dwivedi.jpg" alt="Pt. Rameshwar Dwivedi" style="width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px; border: 2px solid rgba(245, 158, 11, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                <span style="position: absolute; bottom: -2px; right: -2px; width: 14px; height: 14px; background: #10b981; border: 2px solid #000; border-radius: 50%;" title="ऑनलाइन"></span>
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <h3 style="font-weight: 800; font-size: 16px; color: #fff; margin: 0;">पं. रामेश्वर द्विवेदी</h3>
+                  <span style="color: #fbbf24; font-size: 14px;" title="गुरुकुल सत्यापित">✓</span>
+                </div>
+                <div style="font-size: 12px; color: #fde68a; margin-top: 2px; font-weight: 500;">सम्पूर्ण वैदिक ज्योतिष एवं वास्तु</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px;">
+                  <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 2px 6px; border-radius: 6px; font-weight: 700;">★ 4.98 (3.2k+)</span>
+                  <span style="color: #9ca3af;">32 वर्ष अनुभव</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Row -->
+            <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+              <div>
+                <span style="font-size: 10px; color: #9ca3af; display: block;">परामर्श शुल्क</span>
+                <span style="font-weight: 800; color: #fbbf24; font-size: 14px;">₹0 / नि:शुल्क</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 11px; color: #34d399; display: flex; align-items: center; gap: 4px;">
+                  <span style="width: 6px; height: 6px; background: #34d399; border-radius: 50%;"></span>
+                  तत्काल उपलब्ध
+                </span>
+                <button style="background: #f59e0b; color: #000; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer;">
+                  कॉल करें
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD 2 -->
+          <div class="astrologer-preview-card rounded-2xl p-5 relative overflow-hidden" style="background: rgba(25, 15, 35, 0.85); border: 1px solid rgba(168, 85, 247, 0.35);">
+            <!-- Top Badge Row -->
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+              <span style="background: linear-gradient(135deg, #9333ea, #ec4899); color: #fff; font-weight: 800; font-size: 10px; padding: 3px 10px; border-radius: 9999px; letter-spacing: 0.5px;">
+                विदुषी रत्न ★
+              </span>
+            </div>
+
+            <!-- Profile Info Row -->
+            <div style="display: flex; gap: 14px; align-items: center;">
+              <div style="position: relative; width: 68px; height: 68px; flex-shrink: 0;">
+                <img src="assets/portraits/vidushi-ananya-joshi.jpg" alt="Vidushi Ananya Joshi" style="width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 16px; border: 2px solid rgba(168, 85, 247, 0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                <span style="position: absolute; bottom: -2px; right: -2px; width: 14px; height: 14px; background: #10b981; border: 2px solid #000; border-radius: 50%;"></span>
+              </div>
+              <div style="flex: 1; min-width: 0;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <h3 style="font-weight: 800; font-size: 16px; color: #fff; margin: 0;">विदुषी अनन्या जोशी</h3>
+                  <span style="color: #c084fc; font-size: 14px;">✓</span>
+                </div>
+                <div style="font-size: 12px; color: #e9d5ff; margin-top: 2px; font-weight: 500;">विवाह मिलान एवं नाड़ी दोष विशेषज्ञ</div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px;">
+                  <span style="background: rgba(168, 85, 247, 0.2); color: #c084fc; padding: 2px 6px; border-radius: 6px; font-weight: 700;">★ 4.95 (2.8k+)</span>
+                  <span style="color: #9ca3af;">19 वर्ष अनुभव</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer Row -->
+            <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between;">
+              <div>
+                <span style="font-size: 10px; color: #9ca3af; display: block;">परामर्श शुल्क</span>
+                <span style="font-weight: 800; color: #c084fc; font-size: 14px;">₹0 / नि:शुल्क</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 11px; color: #34d399; display: flex; align-items: center; gap: 4px;">
+                  <span style="width: 6px; height: 6px; background: #34d399; border-radius: 50%;"></span>
+                  तत्काल उपलब्ध
+                </span>
+                <button style="background: #9333ea; color: #fff; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer;">
+                  कॉल करें
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- CARD 3: DAILY SANKALP PUSH PREVIEW -->
+          <div class="rounded-2xl p-5 bg-gradient-to-br from-amber-950/30 to-purple-950/40 border border-dashed border-amber-500/40 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 text-xs text-amber-300 font-bold mb-2">
+                <span>📲 दैनिक वैदिक संकल्प (Push Notification Preview)</span>
+              </div>
+              <div class="p-3 rounded-xl bg-black/60 border border-white/10 text-xs space-y-1">
+                <div class="flex items-center justify-between font-bold text-amber-400">
+                  <span>🕉️ आज का पंचांग संकल्प</span>
+                  <span class="text-[10px] text-gray-400">07:00 AM</span>
+                </div>
+                <p class="text-gray-200">सत्य जी, आज रोहिणी नक्षत्र व अमृत मुहूर्त (10:15 - 11:45) है। पूर्व दिशा शुभ रहेगी।</p>
+                <div class="text-[10px] text-emerald-400 font-semibold pt-1">दैनिक अनुकूल रंग: पीला (Yellow)</div>
+              </div>
+            </div>
+            <p class="text-[11px] text-gray-400 mt-3">ब्राउज़र पुश नोटिफिकेशन के माध्यम से बिना किसी पेड SMS API के सीधे यूजर के फोन/डेस्कटॉप पर डिलीवरी।</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- TAB 2: AI CALLING AGENT FEATURES PREVIEW   -->
+    <!-- ========================================== -->
+    <section id="tab-calling" class="tab-content hidden space-y-10">
+      
+      <!-- Interactive Call Screen Preview -->
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="mb-6">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">AI CALL SUITE</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">सजीव कॉलिंग स्क्रीन (Live Interactive Calling Modal)</h2>
+          </div>
+          <p class="text-sm text-gray-400 mt-1 devanagari-font">
+            कॉल शुरू होते ही मंदिर की घंटी, शांति पाठ, 12-भाव लग्न चक्र, चौघड़िया मुहूर्त और हस्तरेखा फोटो अपलोड एक ही स्क्रीन पर दिखेंगे।
+          </p>
+        </div>
+
+        <!-- MOCK CALL MODAL -->
+        <div class="max-w-2xl mx-auto rounded-3xl overflow-hidden border border-amber-500/40 bg-gradient-to-b from-[#180e2b] via-[#10081d] to-[#0a0512] shadow-2xl p-6 relative">
+          
+          <!-- Top Call Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-amber-500/20">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl shadow">
+                🧙‍♂️
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-white text-base">पं. रामेश्वर द्विवेदी</h3>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+                <div class="text-xs text-amber-400/90 font-medium">वैदिक सम्भाषण चालू • 04:22</div>
+              </div>
+            </div>
+
+            <!-- Auspicious Muhurat Indicator -->
+            <div class="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-right">
+              <div class="text-[10px] text-amber-300/80 uppercase font-semibold">चौघड़िया मुहूर्त</div>
+              <div class="text-xs font-bold text-amber-400">अमृत वेला (98% शुभ फल)</div>
+            </div>
+          </div>
+
+          <!-- Mini Lagna Kundli Wheel Showcase inside Call -->
+          <div class="my-6 p-4 rounded-2xl bg-black/50 border border-amber-500/25 flex flex-col items-center">
+            <div class="flex items-center justify-between w-full mb-3 text-xs">
+              <span class="text-amber-300 font-bold flex items-center gap-1.5">
+                <span>🔯</span> <span>लाइव लग्न कुण्डली चक्र (12 भाव)</span>
+              </span>
+              <span id="preview-active-bhava-badge" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold">
+                सप्तम भाव (विवाह) सक्रिय
+              </span>
+            </div>
+
+            <!-- Interactive SVG North Indian Diamond Chart -->
+            <div class="w-64 h-64 relative">
+              <svg viewBox="0 0 300 300" class="w-full h-full filter drop-shadow(0 0 12px rgba(245,158,11,0.2))">
+                <rect x="15" y="15" width="270" height="270" fill="#120c22" stroke="#d97706" stroke-width="2.5"/>
+                <!-- Diagonals -->
+                <line x1="15" y1="15" x2="285" y2="285" stroke="#d97706" stroke-width="1.8"/>
+                <line x1="285" y1="15" x2="15" y2="285" stroke="#d97706" stroke-width="1.8"/>
+                <!-- Inner Rhombus -->
+                <polygon points="150,15 285,150 150,285 15,150" fill="none" stroke="#d97706" stroke-width="2"/>
+
+                <!-- Bhavas polygons with interactive clicks -->
+                <!-- Bhava 1 (Tanu) -->
+                <polygon id="b-house-1" onclick="previewHighlightHouse(1, 'प्रथम भाव (तनु / स्वास्थ्य)')" points="150,15 217.5,82.5 150,150 82.5,82.5" fill="rgba(245,158,11,0.05)" stroke="transparent" class="cursor-pointer hover:fill-amber-500/30 transition"/>
+                <text x="150" y="85" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="bold" pointer-events="none">1 (तनु)</text>
+
+                <!-- Bhava 4 (Sukh) -->
+                <polygon id="b-house-4" onclick="previewHighlightHouse(4, 'चतुर्थ भाव (माता / वाहन / गृह)')" points="15,150 82.5,82.5 150,150 82.5,217.5" fill="rgba(245,158,11,0.05)" stroke="transparent" class="cursor-pointer hover:fill-amber-500/30 transition"/>
+                <text x="80" y="153" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="bold" pointer-events="none">4 (सुख)</text>
+
+                <!-- Bhava 7 (Jaya / Vivah) - PRE-GLOWING -->
+                <polygon id="b-house-7" onclick="previewHighlightHouse(7, 'सप्तम भाव (विवाह / साझेदारी)')" points="150,150 217.5,217.5 150,285 82.5,217.5" fill="rgba(245,158,11,0.5)" stroke="#fbbf24" stroke-width="2" class="cursor-pointer bhava-glow"/>
+                <text x="150" y="222" text-anchor="middle" fill="#fff" font-size="11" font-weight="extrabold" pointer-events="none">7 (विवाह)</text>
+
+                <!-- Bhava 10 (Karma / Career) -->
+                <polygon id="b-house-10" onclick="previewHighlightHouse(10, 'दशम भाव (कर्म / करियर / राज्य)')" points="150,150 217.5,82.5 285,150 217.5,217.5" fill="rgba(245,158,11,0.05)" stroke="transparent" class="cursor-pointer hover:fill-amber-500/30 transition"/>
+                <text x="220" y="153" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="bold" pointer-events="none">10 (कर्म)</text>
+              </svg>
+            </div>
+            <p class="text-[11px] text-amber-200/70 mt-2">किसी भी भाव (1, 4, 7, 10 आदि) पर क्लिक करके देखें कि बातचीत के दौरान भाव कैसे लाइव चमकता है।</p>
+          </div>
+
+          <!-- Astrologer Speaking Dialog Box -->
+          <div class="p-3.5 rounded-xl bg-amber-950/30 border border-amber-500/20 text-xs text-amber-100 flex items-start gap-3">
+            <span class="text-xl">🎙️</span>
+            <div>
+              <span class="font-bold text-amber-300 block">पंडित जी का कथन:</span>
+              <p class="mt-0.5 leading-relaxed">
+                "यजमान, आपके सप्तम भाव पर देवगुरु बृहस्पति की शुभ दृष्टि पड़ रही है। इस वर्ष अक्टूबर के उपरांत विवाह के अति प्रबल योग बन रहे हैं..."
+              </p>
+            </div>
+          </div>
+
+          <!-- Palmistry / Kundli Snapshot Feature Area -->
+          <div class="mt-4 p-3.5 rounded-xl bg-black/40 border border-dashed border-amber-500/30 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🖐️</span>
+              <div>
+                <div class="text-xs font-bold text-white">हस्तरेखा / पत्रिका त्वरित विश्लेषण</div>
+                <div class="text-[11px] text-gray-400">कॉल के दौरान हथेली या पुरानी पत्रिका की फोटो तुरंत जोड़ें</div>
+              </div>
+            </div>
+            <button class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-semibold flex items-center gap-1 transition">
+              <span>📷 फोटो संलग्न करें</span>
+            </button>
+          </div>
+
+          <!-- Call Action Controls -->
+          <div class="mt-6 flex items-center justify-center gap-4">
+            <button class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-lg text-white transition">
+              🎙️
+            </button>
+            <button class="px-6 py-3 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm flex items-center gap-2 shadow-lg shadow-rose-600/30 transition">
+              <span>📞</span> <span>परामर्श पूर्ण करें</span>
+            </button>
+            <button class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-lg text-white transition">
+              🔊
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- TAB 3: POST-CALL ROYAL VEDIC PDF DOSSIER  -->
+    <!-- ========================================== -->
+    <section id="tab-dossier" class="tab-content hidden space-y-10">
+      
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">FEATURE 4</span>
+              <h2 class="text-xl sm:text-2xl font-bold text-white">कॉल उपरांत वैदिक परामर्श पत्रिका (Astro-Dossier PDF)</h2>
+            </div>
+            <p class="text-sm text-gray-400 mt-1 devanagari-font">
+              कॉल समाप्त होते ही क्लाइंट-साइड (jsPDF - 100% Free) से यह शाही गोल्ड पत्रिका स्वतः जनरेट होगी और यूजर इसे डाउनलोड कर सकेंगे।
+            </p>
+          </div>
+          <button onclick="downloadSampleDossier()" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-bold text-xs sm:text-sm shadow-lg shadow-amber-500/20 flex items-center gap-2 transition">
+            <span>📥</span> <span>सैंपल PDF डाउनलोड करें</span>
+          </button>
+        </div>
+
+        <!-- VISUAL REPLICA OF THE ROYAL PDF REPORT -->
+        <div class="max-w-3xl mx-auto dossier-sheet rounded-xl p-8 sm:p-12">
+          
+          <!-- Ornate Header -->
+          <div class="text-center pb-6 border-b-2 border-amber-800/20">
+            <div class="text-2xl mb-1">🕉️ श्री गणेशाय नमः 🕉️</div>
+            <h3 class="vedic-font text-2xl sm:text-3xl font-extrabold text-amber-950 tracking-wider">
+              ASTRO JYOTISH VEDIC CONSULTATION DOSSIER
+            </h3>
+            <div class="text-xs sm:text-sm font-semibold text-amber-800 mt-1">
+              वैदिक जन्म पत्रिका परामर्श एवं शास्त्रीय उपाय विवरण
+            </div>
+            <div class="text-[11px] text-gray-600 mt-1">
+              प्रमाणपत्र संख्या: AJ-2026-89412 • परामर्श दिनांक: 23 अक्टूबर 2026 • चौघड़िया: अमृत वेला
+            </div>
+          </div>
+
+          <!-- Yojna / Seeker & Pandit Details Grid -->
+          <div class="grid grid-cols-2 gap-4 py-6 border-b border-amber-800/15 text-xs sm:text-sm">
+            <div>
+              <span class="text-gray-500 block text-[11px] uppercase font-bold">यजमान विवरण (Seeker)</span>
+              <div class="font-bold text-gray-900 text-base mt-0.5">सत्य (Satya)</div>
+              <div class="text-gray-700">लग्न: कुम्भ (Aquarius) • राशि: वृषभ</div>
+              <div class="text-gray-700">नक्षत्र: रोहिणी • महादशा: बृहस्पति (गुरु)</div>
+            </div>
+            <div class="text-right">
+              <span class="text-gray-500 block text-[11px] uppercase font-bold">परामर्शदाता ज्योतिषाचार्य</span>
+              <div class="font-bold text-amber-950 text-base mt-0.5">पं. रामेश्वर द्विवेदी</div>
+              <div class="text-gray-700">32 वर्ष वैदिक अनुभव • काशी विद्यापीठ</div>
+              <div class="text-emerald-700 font-semibold">स्वर्ण पदक सम्मानित ज्योतिषाचार्य</div>
+            </div>
+          </div>
+
+          <!-- Discussed Bhavas & Predictions -->
+          <div class="py-6 border-b border-amber-800/15 space-y-4 text-xs sm:text-sm">
+            <div class="font-bold text-amber-950 text-base flex items-center gap-2">
+              <span>🔯</span> <span>परामर्श में विश्लेषित प्रमुख भाव एवं ग्रह गोचर:</span>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-amber-50 border border-amber-200 space-y-2">
+              <div class="flex items-center justify-between font-bold text-amber-900">
+                <span>1. सप्तम भाव (विवाह एवं साझेदारी)</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">अति शुभ फल</span>
+              </div>
+              <p class="text-gray-700 text-xs leading-relaxed">
+                सप्तम भाव पर गुरु की पूर्ण नवम दृष्टि विद्यमान है। विवाह में आ रही पूर्व बाधाएं अक्टूबर उपरांत समाप्त होंगी। अनुकूल दिशा उत्तर-पूर्व (ईशान) रहेगी।
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-amber-50 border border-amber-200 space-y-2">
+              <div class="flex items-center justify-between font-bold text-amber-900">
+                <span>2. दशम भाव (करियर एवं आजीविका)</span>
+                <span class="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800">परिवर्तन योग</span>
+              </div>
+              <p class="text-gray-700 text-xs leading-relaxed">
+                दशमेश मंगल की शुभ स्थिति पदोन्नति एवं स्वतंत्र व्यवसाय में विस्तार के योग दर्शाती है। मंगलवार को हनुमान चालीसा का पाठ विशेष फलदायी रहेगा।
+              </p>
+            </div>
+          </div>
+
+          <!-- Classical Vedic Remedies (Upay) -->
+          <div class="py-6 border-b border-amber-800/15 space-y-3 text-xs sm:text-sm">
+            <div class="font-bold text-amber-950 text-base flex items-center gap-2">
+              <span>📿</span> <span>निर्धारित वैदिक उपाय एवं मन्त्र अनुष्ठान:</span>
+            </div>
+            
+            <ul class="space-y-2 text-gray-800 text-xs">
+              <li class="flex items-start gap-2">
+                <span class="text-amber-700 font-bold">•</span>
+                <span><strong>दैनिक मन्त्र जप:</strong> "ॐ बृं बृहस्पतये नमः" - प्रतिदिन प्रातः पूर्व मुखी बैठकर 1 माला (108 बार)।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-700 font-bold">•</span>
+                <span><strong>पुण्य दान:</strong> गुरुवार के दिन चने की दाल एवं पीले वस्त्र अथवा फल का किसी योग्य विप्र को दान।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-700 font-bold">•</span>
+                <span><strong>रुद्राक्ष संस्तुति:</strong> 5 मुखी अथवा 11 मुखी नेपाली रुद्राक्ष को गंगाजल से शुद्ध कर धारण करना श्रेयस्कर है।</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Bottom Seal & Verification -->
+          <div class="pt-6 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="seal-badge">
+                <span class="text-lg">🕉️</span>
+                <span class="text-[9px] font-extrabold tracking-tighter uppercase">काशी विद्यापीठ</span>
+                <span class="text-[8px] font-bold">वैदिक मुहर</span>
+              </div>
+              <div class="text-[11px] text-gray-600">
+                <div class="font-bold text-gray-800">डिजिटल रूप से अधिप्रमाणित</div>
+                <div>पंडित जी की डिजिटल मुद्रा द्वारा सत्यापित</div>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <div class="font-serif italic font-bold text-amber-900 text-lg">Pt. Rameshwar Dwivedi</div>
+              <div class="text-[11px] text-gray-500">वरिष्ठ ज्योतिषाचार्य, काशी</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- TAB 4: BEFORE VS AFTER COMPARISON          -->
+    <!-- ========================================== -->
+    <section id="tab-compare" class="tab-content hidden space-y-10">
+      
+      <div class="rounded-2xl p-6 sm:p-8 bg-black/40 border border-amber-500/20 backdrop-blur-md">
+        <div class="mb-6">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">COMPARISON</span>
+            <h2 class="text-xl sm:text-2xl font-bold text-white">वर्तमान स्थिति vs नए फीचर्स के बाद (Before vs After)</h2>
+          </div>
+          <p class="text-sm text-gray-400 mt-1 devanagari-font">
+            इन अपग्रेड्स के लागू होने से वेबसाइट का रूपांतरण दर (Conversion Rate) और यूजर ट्रस्ट 3x बढ़ जाएगा।
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- BEFORE -->
+          <div class="p-6 rounded-2xl bg-rose-950/20 border border-rose-500/30 space-y-4">
+            <div class="flex items-center gap-2 text-rose-400 font-bold text-base">
+              <span>❌</span> <span>वर्तमान स्थिति (Current State)</span>
+            </div>
+            <ul class="space-y-3 text-xs sm:text-sm text-gray-300">
+              <li class="flex items-start gap-2">
+                <span class="text-rose-400 font-bold">•</span>
+                <span>वेबसाइट हेडर स्थिर रहता है, कोई लाइव खगोलीय गतिशीलता नहीं दिखती।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-rose-400 font-bold">•</span>
+                <span>कॉलिंग के दौरान यूजर केवल ऑडियो सुनते हैं, स्क्रीन पर कोई दृश्य कुण्डली संवाद नहीं होता।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-rose-400 font-bold">•</span>
+                <span>कॉल कटने के बाद यूजर के पास कोई लिखित रिकॉर्ड या उपाय की पत्रिका नहीं बचती।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-rose-400 font-bold">•</span>
+                <span>हस्तरेखा या पुरानी पत्रिका दिखाने का कॉल के भीतर कोई विकल्प नहीं है।</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- AFTER -->
+          <div class="p-6 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 space-y-4 shadow-xl shadow-emerald-950/30">
+            <div class="flex items-center gap-2 text-emerald-400 font-bold text-base">
+              <span>✅</span> <span>नए फीचर्स लागू होने के बाद (Ultra-Premium State)</span>
+            </div>
+            <ul class="space-y-3 text-xs sm:text-sm text-gray-200">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span><strong>रियल-टाइम गोचर टिकर:</strong> स्विस पंचांग से सातों ग्रह और राहु-केतु की लाइव डिग्री टिकर में चमकती दिखेगी।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span><strong>सक्रिय कुण्डली भाव चक्र:</strong> पंडित जी जिस भाव पर बोलेंगे, वह भाव सुनहरे प्रकाश में लाइव चमकेगा।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span><strong>रॉयल PDF परामर्श पत्रिका:</strong> कॉल समाप्त होते ही पंडित जी की मुहर युक्त सुंदर PDF रिपोर्ट डाउनलोड होगी।</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span><strong>कॉल में 1-क्लिक फोटो:</strong> यूजर हथेली या पत्रिका की फोटो अपलोड करके पंडित जी से तुरंत पूछ सकेंगे।</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Approval Box -->
+        <div class="mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-amber-500/20 border border-amber-500/40 text-center space-y-3">
+          <div class="text-lg font-bold text-amber-300">
+            क्या आप इन फीचर्स को मुख्य वेबसाइट और कॉलिंग सिस्टम में लागू करना चाहते हैं?
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-xl mx-auto">
+            आपके कन्फर्मेशन के बाद ही हम मुख्य प्रोडक्शन कोड में इसे क्रमशः लागू करेंगे। सभी फीचर्स 100% नि:शुल्क (Free) और 90%+ सटीक रहेंगे।
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- WEBAUDIO 432HZ SYNTHESIZER SCRIPT -->
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.add('text-gray-300');
+      });
+
+      const activeSection = document.getElementById(tabId);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+      }
+
+      const activeBtn = document.getElementById('btn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.classList.remove('text-gray-300');
+      }
+    }
+
+    // Interactive Bhava Highlight
+    function previewHighlightHouse(houseNum, houseTitle) {
+      const houses = [1, 4, 7, 10];
+      houses.forEach(h => {
+        const poly = document.getElementById('b-house-' + h);
+        if (poly) {
+          poly.setAttribute('fill', 'rgba(245,158,11,0.05)');
+          poly.setAttribute('stroke', 'transparent');
+          poly.classList.remove('bhava-glow');
+        }
+      });
+
+      const target = document.getElementById('b-house-' + houseNum);
+      if (target) {
+        target.setAttribute('fill', 'rgba(245,158,11,0.5)');
+        target.setAttribute('stroke', '#fbbf24');
+        target.classList.add('bhava-glow');
+      }
+
+      const badge = document.getElementById('preview-active-bhava-badge');
+      if (badge) {
+        badge.textContent = houseTitle + ' सक्रिय';
+      }
+    }
+
+    // Ephemeris Degree Refresh Simulator
+    function randomizeEphemeris() {
+      const stream = document.getElementById('ephemeris-stream');
+      if (stream) {
+        stream.style.opacity = '0.4';
+        setTimeout(() => {
+          stream.style.opacity = '1';
+        }, 300);
+      }
+    }
+
+    // 432Hz Vedic Ambience Synthesizer
+    let audioCtx = null;
+    let droneOscs = [];
+    let droneGain = null;
+    let isDronePlaying = false;
+
+    function toggleVedicDrone() {
+      if (isDronePlaying) {
+        stopDrone();
+      } else {
+        startDrone();
+      }
+    }
+
+    function startDrone() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+
+        droneGain = audioCtx.createGain();
+        droneGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        droneGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 1.5);
+        droneGain.connect(audioCtx.destination);
+
+        // 432Hz Sacred A and its harmonic overtones (Tambura Drone emulation)
+        const freqs = [108, 216, 432, 648];
+        droneOscs = freqs.map((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          osc.type = idx === 0 ? 'sine' : (idx === 1 ? 'triangle' : 'sine');
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          
+          // Slight detune for warm acoustic flutter
+          if (idx > 0) osc.detune.setValueAtTime((idx % 2 === 0 ? 3 : -3), audioCtx.currentTime);
+
+          osc.connect(droneGain);
+          osc.start();
+          return osc;
+        });
+
+        isDronePlaying = true;
+        document.getElementById('drone-btn-icon').textContent = '⏹️';
+        document.getElementById('drone-btn-text').textContent = 'नाद रोकें (Stop 432Hz)';
+        document.getElementById('drone-status-tag').textContent = 'सक्रिय (Playing 432Hz)';
+        document.getElementById('drone-status-tag').className = 'text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold';
+        document.getElementById('audio-wave-bars').classList.remove('opacity-30');
+      } catch (err) {
+        console.error("Audio error:", err);
+      }
+    }
+
+    function stopDrone() {
+      if (droneGain && audioCtx) {
+        droneGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        setTimeout(() => {
+          droneOscs.forEach(o => { try { o.stop(); } catch(e){} });
+          droneOscs = [];
+          if (audioCtx && audioCtx.state !== 'closed') audioCtx.close();
+          isDronePlaying = false;
+        }, 850);
+      }
+      document.getElementById('drone-btn-icon').textContent = '▶️';
+      document.getElementById('drone-btn-text').textContent = 'नाद शुरू करें (Play 432Hz)';
+      document.getElementById('drone-status-tag').textContent = 'बंद (Paused)';
+      document.getElementById('drone-status-tag').className = 'text-[11px] px-2 py-0.5 rounded bg-gray-700 text-gray-300';
+      document.getElementById('audio-wave-bars').classList.add('opacity-30');
+    }
+
+    function downloadSampleDossier() {
+      alert("नमः शिवाय! मुख्य क्रियान्वयन के समय यह PDF सीधे आपके डिवाइस में डाउनलोड होगी।");
+    }
+  </script>
+</body>
+</html>

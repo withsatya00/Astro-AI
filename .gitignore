@@ -47,6 +47,14 @@ documents/approved/*
 documents/metadata/*
 !documents/metadata/.gitkeep
 
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Scratch
+scratch/
+
 # IDE & OS
 .vscode/
 .idea/

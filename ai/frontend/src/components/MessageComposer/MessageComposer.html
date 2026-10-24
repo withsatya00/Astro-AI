@@ -1,0 +1,46 @@
+<!-- MessageComposer Component -->
+<div class="composer-card" id="composer-card">
+  <!-- Dynamic Context-Aware Follow-Up Suggestion Chips -->
+  <div class="dynamic-context-chips" id="dynamic-context-chips" style="display: none;"></div>
+
+  <form class="composer-form" id="consultation-form" onsubmit="event.preventDefault(); window.ChatController && window.ChatController.sendMessage && window.ChatController.sendMessage();">
+    <!-- Attachment Dropdown Menu -->
+    <div class="composer-attach-wrap">
+      <button type="button" class="btn-composer-attach" id="btn-composer-attach" onclick="document.getElementById('attach-options-menu').classList.toggle('active')" title="Attach Birth Chart or Palm Photo">
+        📎
+      </button>
+      <div class="attach-options-menu" id="attach-options-menu">
+        <button type="button" class="attach-item" id="btn-attach-kundli" onclick="window.ChatController && window.ChatController.renderKundliInChat ? window.ChatController.renderKundliInChat() : (window.App && window.App.openKundliModal && window.App.openKundliModal()); document.getElementById('attach-options-menu').classList.remove('active');">
+          <span>🪐</span> <span>Attach Janam Kundli</span>
+        </button>
+        <button type="button" class="attach-item" id="btn-upload-palm" onclick="document.getElementById('palm-image-input').click(); document.getElementById('attach-options-menu').classList.remove('active');">
+          <span>✋</span> <span>Upload Palm Photo (हस्तरेखा)</span>
+        </button>
+        <button type="button" class="attach-item" id="btn-inline-kundli" onclick="window.ChatController && window.ChatController.renderKundliInChat && window.ChatController.renderKundliInChat(); document.getElementById('attach-options-menu').classList.remove('active');">
+          <span>📊</span> <span>Render D1 Chart in Chat</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hidden file input for palmistry upload -->
+    <input type="file" id="palm-image-input" accept="image/jpeg,image/png,image/webp" style="display: none;" />
+
+    <!-- Message Input -->
+    <textarea 
+      id="chat-input" 
+      class="composer-textarea" 
+      placeholder="Ask your astrological question (Enter to send, Shift+Enter for newline)..." 
+      rows="1"
+    ></textarea>
+
+    <!-- Voice Mic Button -->
+    <button type="button" class="btn-composer-mic" id="btn-composer-mic" onclick="window.ChatController && window.ChatController.toggleVoiceInput && window.ChatController.toggleVoiceInput()" title="Voice Input / बोलकर पूछें">
+      🎙️
+    </button>
+
+    <!-- Send Action Button (supports both btn-send-chat and btn-chat-send) -->
+    <button type="button" class="btn-composer-send" id="btn-send-chat" title="Send Message">
+      ↑
+    </button>
+  </form>
+</div>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="bgGrad_vidushi-tarot-aradhana" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0.3"/>
+    </radialGradient>
+    <filter id="shadow_vidushi-tarot-aradhana" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Base Background -->
+  <circle cx="60" cy="60" r="56" fill="url(#bgGrad_vidushi-tarot-aradhana)" stroke="#7C3AED" stroke-width="2.5"/>
+
+  <!-- Subtle Aura Halo Ring -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#7C3AED" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- Person Group -->
+  <g filter="url(#shadow_vidushi-tarot-aradhana)">
+    <!-- Body & Garment -->
+    
+        <!-- Saree Pallu & Blouse -->
+        <path d="M28 110 C28 85, 42 78, 60 78 C78 78, 92 85, 92 110 Z" fill="#7C3AED"/>
+        <path d="M42 78 Q60 92 78 78 L85 110 L35 110 Z" fill="#FFFFFF" opacity="0.15"/>
+        <path d="M32 95 Q60 115 88 95" stroke="#FDE047" stroke-width="2.5" fill="none"/> <!-- Gold Zari Border -->
+        <circle cx="36" cy="62" r="3" fill="#F59E0B"/> <!-- Earring L -->
+        <circle cx="84" cy="62" r="3" fill="#F59E0B"/> <!-- Earring R -->
+        
+
+    <!-- Neck -->
+    <path d="M52 68 L52 78 L68 78 L68 68 Z" fill="#FAD2A6"/>
+
+    <!-- Head / Face -->
+    <ellipse cx="60" cy="56" rx="17" ry="20" fill="#FAD2A6"/>
+
+    <!-- Ears -->
+    <ellipse cx="43" cy="56" rx="3.5" ry="6" fill="#FAD2A6"/>
+    <ellipse cx="77" cy="56" rx="3.5" ry="6" fill="#FAD2A6"/>
+
+    <!-- Hair -->
+    
+        <!-- Female Hair (Bun & flowing strands) -->
+        <path d="M35 55 C30 35, 42 22, 60 22 C78 22, 90 35, 85 55 C82 40, 75 32, 60 32 C45 32, 38 40, 35 55 Z" fill="#1C1917"/>
+        <circle cx="60" cy="23" r="10" fill="#1C1917"/>
+        <circle cx="60" cy="23" r="4" fill="#F59E0B" opacity="0.8"/> <!-- Mogra / Gold Hair Pin -->
+        
+
+    <!-- Tilak / Bindi -->
+    <circle cx="60" cy="52" r="2.2" fill="#DC2626"/>
+
+    <!-- Eyes (Gentle, Serene) -->
+    <ellipse cx="53" cy="55" rx="2.5" ry="1.6" fill="#1E293B"/>
+    <circle cx="53.8" cy="54.4" r="0.7" fill="#FFFFFF"/>
+    <ellipse cx="67" cy="55" rx="2.5" ry="1.6" fill="#1E293B"/>
+    <circle cx="67.8" cy="54.4" r="0.7" fill="#FFFFFF"/>
+
+    <!-- Eyebrows -->
+    <path d="M49 51 Q53 49 57 51" stroke="#334155" stroke-width="1.2" fill="none"/>
+    <path d="M63 51 Q67 49 71 51" stroke="#334155" stroke-width="1.2" fill="none"/>
+
+    <!-- Gentle Smile -->
+    <path d="M56 64 Q60 67 64 64" stroke="#78350F" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    
+    <!-- Nose -->
+    <path d="M60 54 L59 60 L61 60" stroke="#B45309" stroke-width="0.9" fill="none" opacity="0.7"/>
+  </g>
+</svg>

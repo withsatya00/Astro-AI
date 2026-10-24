@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Astro Jyotish - प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श (Authentic Vedic Astrology)</title>
+  <meta name="description" content="प्रामाणिक वैदिक ज्योतिष एवं जन्म कुण्डली परामर्श। वरिष्ठ ज्योतिषाचार्यों द्वारा जीवन, करियर एवं विवाह का सटीक मार्गदर्शन।">
+  <meta name="theme-color" content="#4C1D95">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+  <meta property="og:title" content="Astro Jyotish - प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श">
+  <meta property="og:description" content="प्रामाणिक वैदिक ज्योतिष एवं जन्म कुण्डली परामर्श। वरिष्ठ ज्योतिषाचार्यों द्वारा जीवन, करियर एवं विवाह का सटीक मार्गदर्शन।">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <base href="/">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  
+  <!-- Modular Design System Styles -->
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/reset.css">
+  <link rel="stylesheet" href="/src/styles/typography.css">
+  <link rel="stylesheet" href="/src/styles/global.css">
+  <link rel="stylesheet" href="/src/styles/utilities.css">
+  <link rel="stylesheet" href="/css/styles.css?v=feat8_1">
+  <link rel="stylesheet" href="/css/tailwind.css?v=ultra_v14">
+  <link rel="stylesheet" href="/css/responsive.css?v=feat8_1">
+</head>
+<body>
+
+  <!-- Main Application Root Shell -->
+  <div id="app-root" class="site-layout-shell">
+    <!-- Navbar Mount Point -->
+    <div id="site-navbar-mount"></div>
+    
+    <!-- Dynamic Views Container (SPA Views) -->
+    <main class="site-layout-outlet" id="site-layout-outlet">
+      <div id="app-views-container">
+        <div id="view-home" class="app-page-view active home-page-container"></div>
+        <div id="view-directory" class="app-page-view directory-page-container" style="display: none;"></div>
+        <div id="view-profile" class="app-page-view profile-page-container" style="display: none;"></div>
+        <div id="view-horoscope" class="app-page-view horoscope-page-container" style="display: none;"></div>
+        <div id="view-calculators" class="app-page-view calculators-page-container" style="display: none;"></div>
+        <div id="view-panchang" class="app-page-view panchang-page-container" style="display: none;"></div>
+        <div id="view-consultation" class="app-page-view app-shell" style="display: none;"></div>
+      </div>
+    </main>
+
+    <!-- Global Footer Mount Point -->
+    <div id="site-footer-mount"></div>
+
+    <!-- Modals Container -->
+    <div id="modals-container"></div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <!-- Third-party Modern Calendar & Time Picker & PDF Generation -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Core Business Controllers -->
+  <script src="/js/ui-locales.js?v=feat8_1"></script>
+  <script src="/js/i18n.js?v=voice_language_fix_2"></script>
+  <script src="/js/api.js?v=feat8_1"></script>
+  <script src="/js/chart.js?v=ultra_v12"></script>
+  <script src="/js/chat.js?v=feat8_4"></script>
+  <script src="/js/reports.js?v=feat8_1"></script>
+  <script src="/js/router.js?v=ultra_v12"></script>
+  <script src="/js/app.js?v=feat8_2"></script>
+  <script src="/js/portrait-guard.js?v=3"></script>
+
+  <!-- Modular Component Bootstrapper -->
+  <script type="module" src="/src/app/bootstrap.js?v=ultra_v12"></script>
+</body>
+</html>

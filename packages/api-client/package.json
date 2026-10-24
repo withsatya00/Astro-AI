@@ -1,0 +1,9 @@
+{
+  "name": "@astro-ai/api-client",
+  "version": "1.0.0",
+  "description": "Universal API Client for Astro AI Platform",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "keywords": ["api", "client", "sdk", "astrology"],
+  "author": "Astro AI Engineering"
+}

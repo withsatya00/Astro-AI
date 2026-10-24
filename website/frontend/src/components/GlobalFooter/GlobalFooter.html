@@ -1,0 +1,77 @@
+<!-- Global Site Footer Component Matching Reference Design -->
+<footer class="site-global-footer bg-[#0D0B24] text-slate-300 pt-16 pb-10 border-t border-[#1E1B4B]" id="site-global-footer">
+  <div class="site-footer-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="footer-columns-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
+      <!-- Col 1: Brand & Social Links (lg:col-span-4) -->
+      <div class="footer-col-brand lg:col-span-4 space-y-4">
+        <a href="/" data-nav-link class="footer-brand flex items-center gap-2.5 no-underline">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#7439EA] to-[#4C1D95] flex items-center justify-center text-white text-base shadow-sm">
+            <span>🕉️</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-serif font-extrabold text-lg tracking-tight text-white">ASTRO JYOTISH</span>
+          </div>
+        </a>
+        <p class="footer-brand-desc text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+          Authentic Vedic Astrology &amp; Kundli Platform. Guiding your life with wisdom and tradition.
+        </p>
+        
+        <!-- Social Icons Row Matching Reference -->
+        <div class="footer-social-links flex items-center gap-2.5 pt-2">
+          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Facebook" title="Facebook">f</a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Instagram" title="Instagram">📷</a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="YouTube" title="YouTube">▶</a>
+          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Twitter" title="Twitter">𝕏</a>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links (lg:col-span-2) -->
+      <div class="footer-col lg:col-span-2 space-y-3">
+        <h4 class="footer-heading font-semibold text-sm text-white tracking-wide">Quick Links</h4>
+        <ul class="footer-links space-y-2 text-xs text-slate-400">
+          <li><a href="/" data-nav-link class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="/astrologers" data-nav-link class="hover:text-white transition-colors">Astrologers</a></li>
+          <li><a href="/rashiphal" data-nav-link class="hover:text-white transition-colors">Rashiphal</a></li>
+          <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors">Calculators</a></li>
+          <li><a href="/panchang" data-nav-link class="hover:text-white transition-colors">Aaj Ka Panchang</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Our Services (lg:col-span-3) -->
+      <div class="footer-col lg:col-span-3 space-y-3">
+        <h4 class="footer-heading font-semibold text-sm text-white tracking-wide">Our Services</h4>
+        <ul class="footer-links space-y-2 text-xs text-slate-400">
+          <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors" onclick="window.App && window.App.openKundaliMilanModal()">Kundli Milan</a></li>
+          <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors" onclick="window.App && window.App.openCalculatorsModal('numerology')">Numerology</a></li>
+          <li><a href="/astrologers" data-nav-link class="hover:text-white transition-colors">Career Guidance</a></li>
+          <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors" onclick="window.App && window.App.openCalculatorsModal('love-compat')">Love &amp; Marriage</a></li>
+          <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors" onclick="window.App && window.App.openCalculatorsModal('gemstone')">Health &amp; Remedies</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Support (lg:col-span-3) -->
+      <div class="footer-col lg:col-span-3 space-y-3">
+        <h4 class="footer-heading font-semibold text-sm text-white tracking-wide">Support</h4>
+        <ul class="footer-links space-y-2 text-xs text-slate-400">
+          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Astro Jyotish is an authentic Vedic platform.', 'info')">About Us</a></li>
+          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Support email: support@astrojyotish.in', 'info')">Contact Us</a></li>
+          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Your privacy and birth details are 100% encrypted.', 'info')">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Consultations adhere to Vedic interpretation shastras.', 'info')">Terms &amp; Conditions</a></li>
+          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Help Center is available 24/7.', 'info')">Help Center</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright & Made in India Bar Matching Reference -->
+    <div class="footer-bottom-bar pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div class="footer-copyright text-center sm:text-left">
+        © 2026 Astro Jyotish. All rights reserved.
+      </div>
+      <div class="footer-made-in-india flex items-center gap-1.5 text-slate-300">
+        <span>Made with</span>
+        <span class="text-rose-500">❤️</span>
+        <span>in India</span>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,99 @@
+/* AppPromo Styles */
+.app-promo-section {
+  padding: 4.5rem 1.5rem;
+  background: #FFFFFF;
+}
+.app-promo-container {
+  max-width: var(--container-max-width, 1280px);
+  margin: 0 auto;
+}
+.app-promo-banner {
+  background: linear-gradient(135deg, #211D50 0%, #3B3673 100%);
+  border-radius: 24px;
+  padding: 3.5rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  color: #FFFFFF;
+}
+.app-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.app-title {
+  font-family: var(--font-serif, serif);
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+}
+.app-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #CBD5E1;
+  margin-bottom: 2rem;
+}
+.app-buttons-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-store-badge {
+  background: #FFFFFF;
+  color: #211D50;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.75rem 1.4rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-store-badge:hover {
+  background: #FCD34D;
+  transform: translateY(-2px);
+}
+.app-promo-phone-mockup {
+  display: flex;
+  justify-content: center;
+}
+.phone-screen-card {
+  width: 220px;
+  height: 280px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+.phone-om {
+  font-size: 3.5rem;
+  margin-bottom: 0.75rem;
+}
+.phone-screen-card h4 {
+  font-family: var(--font-serif, serif);
+  font-size: 1.15rem;
+  margin: 0 0 0.25rem;
+}
+.phone-screen-card p {
+  font-size: 0.78rem;
+  color: #CBD5E1;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .app-promo-banner {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 1.75rem;
+  }
+}

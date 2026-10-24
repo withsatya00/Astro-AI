@@ -1,0 +1,1610 @@
+<!-- ====================================================================
+       MODAL: CONFIRM END CONSULTATION
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-end-consultation-confirm">
+    <div class="modal-card" style="max-width: 440px; text-align: center; padding: 1.85rem 1.5rem;">
+      <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">⏹️</div>
+      <h3 style="font-size: 1.25rem; font-weight: 700; color: #1E1B4B; margin-bottom: 0.5rem;">End Consultation Session?</h3>
+      <p style="font-size: 0.88rem; color: #475569; line-height: 1.55; margin-bottom: 1.5rem;">
+        Are you sure you want to conclude this active consultation? A complete astrological session summary, horoscope insights, and remedies dossier will be compiled.
+      </p>
+      <div style="display: flex; gap: 0.75rem; justify-content: center;">
+        <button type="button" class="btn-hero-secondary" id="btn-cancel-end-consultation" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">
+          Continue Chat (चैट जारी रखें)
+        </button>
+        <button type="button" class="btn-hero-primary" id="btn-confirm-end-consultation" style="background: #DC2626; border-color: #DC2626; color: #FFF; padding: 0.6rem 1.25rem; font-size: 0.85rem;">
+          End Session (परामर्श समाप्त करें)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 1: BIRTH DETAILS MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-birth-details">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><span>🪐</span> Birth Details & Kundli Calculator</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <form id="form-birth-details">
+        <div class="modal-body">
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1.25rem;">
+            Calculations are performed by Swiss Ephemeris (NASA JPL data) with exact planetary longitudes.
+          </p>
+
+          <!-- Quick City Presets -->
+          <div style="margin-bottom: 1rem;">
+            <span class="form-label">Quick City Presets:</span>
+            <div class="quick-cities">
+              <span class="city-chip" data-city="New Delhi" data-country="India" data-lat="28.6139" data-lon="77.2090" data-tz="5.5">New Delhi</span>
+              <span class="city-chip" data-city="Mumbai" data-country="India" data-lat="19.0760" data-lon="72.8777" data-tz="5.5">Mumbai</span>
+              <span class="city-chip" data-city="Bengaluru" data-country="India" data-lat="12.9716" data-lon="77.5946" data-tz="5.5">Bengaluru</span>
+              <span class="city-chip" data-city="New York" data-country="USA" data-lat="40.7128" data-lon="-74.0060" data-tz="-5.0">New York</span>
+              <span class="city-chip" data-city="London" data-country="UK" data-lat="51.5074" data-lon="-0.1278" data-tz="0.0">London</span>
+              <span class="city-chip" data-city="Dubai" data-country="UAE" data-lat="25.2048" data-lon="55.2708" data-tz="4.0">Dubai</span>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label" for="modal-name">Full Name</label>
+              <input type="text" id="modal-name" class="form-control" placeholder="e.g. Rahul Sharma" value="" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-dob">Date of Birth</label>
+              <div class="picker-input-wrapper">
+                <span class="picker-prefix-icon">📅</span>
+                <input type="text" id="modal-dob" class="form-control modern-date-picker" placeholder="Select Date of Birth" required readonly>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-tob">Exact Birth Time</label>
+              <div class="picker-input-wrapper">
+                <span class="picker-prefix-icon">⏰</span>
+                <input type="text" id="modal-tob" class="form-control modern-time-picker" placeholder="Select Birth Time" readonly>
+              </div>
+            </div>
+
+            <div class="form-group full" style="margin-top: -0.5rem;">
+              <label style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                <input type="checkbox" id="modal-approx-time"> Approximate birth time (exact minute unknown)
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-city">City / Birthplace</label>
+              <input type="text" id="modal-city" class="form-control" placeholder="e.g. New Delhi" value="" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-country">Country</label>
+              <input type="text" id="modal-country" class="form-control" value="India">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-lat">Latitude (-90 to +90)</label>
+              <input type="number" step="0.0001" id="modal-lat" class="form-control" value="28.6139" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-lon">Longitude (-180 to +180)</label>
+              <input type="number" step="0.0001" id="modal-lon" class="form-control" value="77.2090" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-tz">Timezone Offset (Hours)</label>
+              <input type="number" step="0.1" id="modal-tz" class="form-control" value="5.5" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="modal-system">Zodiac System</label>
+              <select id="modal-system" class="form-select">
+                <option value="Vedic">Vedic (Sidereal Zodiac)</option>
+                <option value="Western">Western (Tropical Zodiac)</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label class="form-label" for="modal-ayanamsa">Ayanamsa (Vedic)</label>
+              <select id="modal-ayanamsa" class="form-select">
+                <option value="Lahiri">Lahiri (Chitra Paksha - Standard)</option>
+                <option value="Raman">B.V. Raman</option>
+                <option value="Krishnamurti">KP (Krishnamurti)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-tool modal-close">Cancel</button>
+          <button type="submit" class="btn-new-chat" id="btn-modal-calc-chart">
+            ✨ Calculate & Set Active Kundli
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 2: DOCUMENT UPLOAD MODAL (Knowledge Base Attachment)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-document-upload">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><span>📚</span> Attach Reference Document to Knowledge Base</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <form id="form-modal-upload-doc">
+        <div class="modal-body">
+          <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+            Upload classical astrology treatises, birth records, or reference texts (PDF, DOCX, TXT, MD up to 25MB).
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-file">Select File</label>
+            <input type="file" id="modal-doc-file" class="form-control" accept=".pdf,.txt,.md,.docx" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-title">Document Title</label>
+            <input type="text" id="modal-doc-title" class="form-control" placeholder="e.g. Classical Brihat Jataka Notes">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal-doc-author">Author / Sage</label>
+            <input type="text" id="modal-doc-author" class="form-control" placeholder="e.g. Varahamihira">
+          </div>
+
+          <div id="modal-upload-status" style="margin-top: 0.5rem;"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-tool modal-close">Cancel</button>
+          <button type="submit" class="btn-new-chat">Index Document</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 3: AI AGENT TOOLS TESTING CONSOLE
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-agent-tools">
+    <div class="modal-card" style="max-width: 780px;">
+      <div class="modal-header">
+        <h3><span>🔮</span> वैदिक ज्योतिषीय उपकरण व गणना कंसोल (Vedic Tools)</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          कुण्डली मिलान, पंचांग, गोचर एवं वैदिक दशाओं की शास्त्रीय गणनाएं।
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-agent-tool-select">Select Tool</label>
+          <select id="modal-agent-tool-select" class="form-select"></select>
+        </div>
+
+        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: var(--lavender-soft); border: 1px solid var(--lavender-border); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #4338ca;">
+          Loading tool documentation...
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="modal-agent-tool-payload">Arguments (JSON Payload)</label>
+          <textarea id="modal-agent-tool-payload" class="form-control" rows="6" style="font-family: monospace; font-size: 0.82rem;"></textarea>
+        </div>
+
+        <button class="btn-new-chat" id="btn-modal-exec-tool" style="width: 100%;">शास्त्रोक्त गणना करें ⚡</button>
+
+        <div style="margin-top: 1rem;">
+          <div class="sidebar-section-title">Execution Result</div>
+          <div id="modal-agent-tool-meta" style="margin-bottom: 0.4rem; display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+          <pre id="modal-agent-tool-output" style="background: #F8FAFC; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.85rem; max-height: 220px; overflow: auto; font-family: monospace; font-size: 0.8rem; color: #0F172A;">
+Execution output will appear here.
+          </pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 4: KUNDALI MILAN (GUN MILAN & MANGLIK DOSHA)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-kundali-milan">
+    <div class="modal-card" style="max-width: 860px;">
+      <div class="modal-header">
+        <h3><span>💍</span> Kundali Milan (Gun Milan & Manglik Dosha Analysis)</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          Classical Ashtakoota Gun Milan (36 Gunas) computed using Swiss Ephemeris exact planetary positions for boy and girl, with in-depth Manglik Dosha and Parihar (cancellation) verification.
+        </p>
+
+        <form id="form-kundali-milan">
+          <div class="milan-cards-grid">
+            <!-- Groom Card -->
+            <div style="background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%); border: 1.5px solid #C7D2FE; border-radius: 16px; padding: 1.15rem; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.05);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E0E7FF;">
+                <h4 style="font-size: 0.95rem; color: #1E3A8A; margin: 0; display: flex; align-items: center; gap: 0.4rem; font-weight: 700;">
+                  <span>🤵</span> <span>Groom Details (वर का विवरण)</span>
+                </h4>
+                <button type="button" class="btn-calc-autofill" id="btn-milan-load-boy-profile" style="font-size: 0.72rem; padding: 0.25rem 0.65rem;">Load Active Profile</button>
+              </div>
+              
+              <div class="calc-input-wrapper" style="margin-bottom: 0.75rem;">
+                <label class="calc-input-label" for="milan-boy-name">
+                  <span>👤</span> <span>Boy's Name <span class="sublabel">/ वर का नाम</span></span>
+                </label>
+                <input type="text" id="milan-boy-name" class="calc-luxury-input" placeholder="e.g. Rahul Sharma" value="Rahul Sharma" required>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.75rem;">
+                <div class="calc-input-wrapper">
+                  <label class="calc-input-label" for="milan-boy-dob">
+                    <span>📅</span> <span>Birth Date</span>
+                  </label>
+                  <input type="date" id="milan-boy-dob" class="calc-luxury-input" value="1992-05-14" required>
+                </div>
+                <div class="calc-input-wrapper">
+                  <label class="calc-input-label" for="milan-boy-tob">
+                    <span>⏰</span> <span>Birth Time</span>
+                  </label>
+                  <input type="time" id="milan-boy-tob" class="calc-luxury-input" value="08:30">
+                </div>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="milan-boy-city">
+                  <span>📍</span> <span>Birth City <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="milan-boy-city" class="calc-luxury-input" placeholder="e.g. New Delhi" value="New Delhi" required>
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-boy-city').value='New Delhi'">Delhi</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-boy-city').value='Mumbai'">Mumbai</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-boy-city').value='Varanasi'">Varanasi</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-boy-city').value='Bengaluru'">Bengaluru</span>
+                </div>
+              </div>
+              <input type="hidden" id="milan-boy-country" value="India">
+              <input type="hidden" id="milan-boy-lat" value="28.6139">
+              <input type="hidden" id="milan-boy-lon" value="77.2090">
+              <input type="hidden" id="milan-boy-tz" value="5.5">
+            </div>
+
+            <!-- Bride Card -->
+            <div style="background: linear-gradient(180deg, #FFFDF7 0%, #FFFBEB 100%); border: 1.5px solid #FCD34D; border-radius: 16px; padding: 1.15rem; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.05);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid #FEF3C7;">
+                <h4 style="font-size: 0.95rem; color: #92400E; margin: 0; display: flex; align-items: center; gap: 0.4rem; font-weight: 700;">
+                  <span>👰</span> <span>Bride Details (वधू का विवरण)</span>
+                </h4>
+                <button type="button" class="btn-calc-autofill" id="btn-milan-load-girl-profile" style="font-size: 0.72rem; padding: 0.25rem 0.65rem; background: linear-gradient(135deg, #D97706 0%, #B45309 100%);">Load Active Profile</button>
+              </div>
+
+              <div class="calc-input-wrapper" style="margin-bottom: 0.75rem;">
+                <label class="calc-input-label" for="milan-girl-name">
+                  <span>👤</span> <span>Girl's Name <span class="sublabel">/ वधू का नाम</span></span>
+                </label>
+                <input type="text" id="milan-girl-name" class="calc-luxury-input" placeholder="e.g. Priya Patel" value="Priya Patel" required>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.75rem;">
+                <div class="calc-input-wrapper">
+                  <label class="calc-input-label" for="milan-girl-dob">
+                    <span>📅</span> <span>Birth Date</span>
+                  </label>
+                  <input type="date" id="milan-girl-dob" class="calc-luxury-input" value="1994-08-20" required>
+                </div>
+                <div class="calc-input-wrapper">
+                  <label class="calc-input-label" for="milan-girl-tob">
+                    <span>⏰</span> <span>Birth Time</span>
+                  </label>
+                  <input type="time" id="milan-girl-tob" class="calc-luxury-input" value="14:15">
+                </div>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="milan-girl-city">
+                  <span>📍</span> <span>Birth City <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="milan-girl-city" class="calc-luxury-input" placeholder="e.g. Mumbai" value="Mumbai" required>
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-girl-city').value='Mumbai'">Mumbai</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-girl-city').value='Delhi'">Delhi</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-girl-city').value='Ahmedabad'">Ahmedabad</span>
+                  <span class="calc-city-chip" onclick="document.getElementById('milan-girl-city').value='Pune'">Pune</span>
+                </div>
+              </div>
+              <input type="hidden" id="milan-girl-country" value="India">
+              <input type="hidden" id="milan-girl-lat" value="19.0760">
+              <input type="hidden" id="milan-girl-lon" value="72.8777">
+              <input type="hidden" id="milan-girl-tz" value="5.5">
+            </div>
+          </div>
+
+          <div style="margin-top: 1.25rem;">
+            <button type="submit" id="btn-calc-milan" class="btn-calc-submit-gold" style="width: 100%;">
+              <span>💍</span>
+              <span>Calculate Ashtakoota Gun Milan (36 Gunas & Manglik Dosha)</span>
+              <span>➔</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Milan Calculation Result Area -->
+        <div id="milan-result-container" style="display: none; margin-top: 1.5rem;">
+          <!-- Score Banner -->
+          <div class="milan-score-banner">
+            <div class="milan-radial-score">
+              <div class="milan-score-big" id="milan-score-val">0</div>
+              <div class="milan-score-label">out of 36 Gunas</div>
+            </div>
+            <div class="milan-score-verdict">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                <span class="milan-verdict-pill shubh" id="milan-verdict-badge">Shubh Milan</span>
+                <span style="font-size: 0.8rem; color: var(--text-dim);" id="milan-percentage-text">0% Match</span>
+              </div>
+              <div class="milan-recommendation-box" id="milan-recommendation-text">
+                Recommendation details will appear here.
+              </div>
+            </div>
+          </div>
+
+          <!-- Manglik Comparison Grid -->
+          <div class="manglik-comparison-grid">
+            <div class="manglik-status-card" id="boy-manglik-card">
+              <div class="manglik-status-header">
+                <span id="boy-manglik-title">🤵 Groom (वर) Manglik</span>
+                <span class="manglik-pill non-manglik" id="boy-manglik-pill">Non-Manglik</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);" id="boy-manglik-desc">
+                Mars position checked from Lagna, Moon, and Venus.
+              </div>
+            </div>
+
+            <div class="manglik-status-card" id="girl-manglik-card">
+              <div class="manglik-status-header">
+                <span id="girl-manglik-title">👰 Bride (वधू) Manglik</span>
+                <span class="manglik-pill non-manglik" id="girl-manglik-pill">Non-Manglik</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted);" id="girl-manglik-desc">
+                Mars position checked from Lagna, Moon, and Venus.
+              </div>
+            </div>
+          </div>
+
+          <!-- Overall Manglik Compatibility Note -->
+          <div id="milan-manglik-summary-box" style="background: #FEF3C7; border: 1px solid #FDE68A; border-radius: var(--radius-sm); padding: 0.75rem; margin-bottom: 1.25rem; font-size: 0.82rem; color: #92400E;">
+            <strong>Manglik Compatibility:</strong> <span id="milan-manglik-summary-text">-</span>
+          </div>
+
+          <!-- 8 Kootas Table -->
+          <div>
+            <div class="sidebar-section-title" style="margin-bottom: 0.5rem;">Ashtakoota Breakdown (अष्टकूट विवरण)</div>
+            <div style="overflow-x: auto;">
+              <table class="ashtakoota-table">
+                <thead>
+                  <tr>
+                    <th>Koota (कूट)</th>
+                    <th>Area of Life (क्षेत्र)</th>
+                    <th>Obtained</th>
+                    <th>Max</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody id="milan-kootas-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Share Result CTA -->
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+            <button type="button" class="btn-tool" id="btn-share-milan-whatsapp" style="background: #DCFCE7; color: #166534; border-color: #86EFAC; font-weight: 600;">
+              <span>💬</span>
+              <span>Share Milan Report on WhatsApp</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 5: AAJ KA PANCHANG & MUHURAT
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-panchang">
+    <div class="modal-card" style="max-width: 760px;">
+      <div class="modal-header">
+        <h3><span>📅</span> Aaj Ka Panchang (आज का पंचांग एवं शुभ मुहूर्त)</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          Daily Vedic Panchang with planetary longitudes computed via Swiss Ephemeris. Includes Tithi, Nakshatra, Yoga, Karan, and Shubh Abhijit Muhurat & Rahu Kaal.
+        </p>
+
+        <!-- Location & Date Controls -->
+        <div style="display: flex; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.25rem; flex-wrap: wrap;">
+          <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label class="form-label" style="font-size: 0.75rem;">Date / तिथि</label>
+            <input type="date" id="panchang-input-date" class="form-control">
+          </div>
+          <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label class="form-label" style="font-size: 0.75rem;">City / स्थान</label>
+            <input type="text" id="panchang-input-city" class="form-control" value="New Delhi">
+          </div>
+          <button type="button" class="btn-new-chat" id="btn-refresh-panchang" style="padding: 0.55rem 1rem;">
+            🔄 Refresh Panchang
+          </button>
+        </div>
+
+        <!-- Panchang 5 Limbs Cards -->
+        <div class="panchang-grid-layout">
+          <div class="panchang-card">
+            <span class="panchang-card-label">Tithi (तिथि)</span>
+            <span class="panchang-card-val" id="panchang-tithi">-</span>
+            <span class="panchang-card-sub" id="panchang-paksha">-</span>
+          </div>
+          <div class="panchang-card">
+            <span class="panchang-card-label">Nakshatra (नक्षत्र)</span>
+            <span class="panchang-card-val" id="panchang-nakshatra">-</span>
+            <span class="panchang-card-sub" id="panchang-nakshatra-pada">-</span>
+          </div>
+          <div class="panchang-card">
+            <span class="panchang-card-label">Yoga (योग)</span>
+            <span class="panchang-card-val" id="panchang-yoga">-</span>
+            <span class="panchang-card-sub">Classical Vedic Yoga</span>
+          </div>
+          <div class="panchang-card">
+            <span class="panchang-card-label">Karana (करण)</span>
+            <span class="panchang-card-val" id="panchang-karan">-</span>
+            <span class="panchang-card-sub">Half-tithi division</span>
+          </div>
+          <div class="panchang-card">
+            <span class="panchang-card-label">Sunrise / Sunset (सूर्योदय)</span>
+            <span class="panchang-card-val" id="panchang-sun-timings">-</span>
+            <span class="panchang-card-sub" id="panchang-vaara">-</span>
+          </div>
+          <div class="panchang-card">
+            <span class="panchang-card-label">Moon Sign (चन्द्र राशि)</span>
+            <span class="panchang-card-val" id="panchang-moon-sign">-</span>
+            <span class="panchang-card-sub" id="panchang-ayanamsa">Lahiri Ayanamsa</span>
+          </div>
+        </div>
+
+        <!-- Muhurat Timing Highlights -->
+        <div class="muhurat-timing-grid">
+          <div class="muhurat-box shubh">
+            <div class="muhurat-title">✨ Shubh Abhijit Muhurat (अभिजीत मुहूर्त)</div>
+            <div class="muhurat-time" id="panchang-abhijit">-</div>
+            <div style="font-size: 0.74rem; color: #047857; margin-top: 0.3rem;">Most auspicious window for starting new endeavors.</div>
+          </div>
+          <div class="muhurat-box ashubh">
+            <div class="muhurat-title">⚠️ Ashubh Rahu Kaal (राहु काल)</div>
+            <div class="muhurat-time" id="panchang-rahukaal">-</div>
+            <div style="font-size: 0.74rem; color: #B45309; margin-top: 0.3rem;">Inauspicious window; avoid signing contracts or travel.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 6: SHANI SADE SATI & TRANSIT TRACKER
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-sade-sati">
+    <div class="modal-card" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3><span>🪐</span> Shani Sade Sati & Transit Tracker (शनि साढ़े साती)</h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          Track Saturn's 7.5-year cycle (Sade Sati) and 2.5-year minor cycles (Dhaiya) with live Swiss Ephemeris Saturn transit (currently in Meena/Pisces) and authentic Vedic remedies.
+        </p>
+
+        <!-- Moon Sign Picker -->
+        <div style="display: flex; gap: 0.75rem; align-items: flex-end; margin-bottom: 1.25rem;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" style="font-size: 0.75rem;">Your Moon Sign (चन्द्र राशि)</label>
+            <select id="sadesati-rashi-select" class="form-select">
+              <option value="Aries">Aries (मेष)</option>
+              <option value="Taurus">Taurus (वृषभ)</option>
+              <option value="Gemini">Gemini (मिथुन)</option>
+              <option value="Cancer">Cancer (कर्क)</option>
+              <option value="Leo">Leo (सिंह)</option>
+              <option value="Virgo">Virgo (कन्या)</option>
+              <option value="Libra">Libra (तुला)</option>
+              <option value="Scorpio">Scorpio (वृश्चिक)</option>
+              <option value="Sagittarius">Sagittarius (धनु)</option>
+              <option value="Capricorn">Capricorn (मकर)</option>
+              <option value="Aquarius">Aquarius (कुंभ)</option>
+              <option value="Pisces" selected>Pisces (मीन)</option>
+            </select>
+          </div>
+          <button type="button" class="btn-new-chat" id="btn-calc-sadesati" style="padding: 0.55rem 1.25rem;">
+            🔍 Check Status
+          </button>
+        </div>
+
+        <!-- Sade Sati Status Banner -->
+        <div id="sadesati-status-box" style="background: #FFFBEB; border: 1.5px solid #F59E0B; border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <h4 style="font-size: 1.05rem; color: #92400E; margin: 0;" id="sadesati-heading">Sade Sati Status</h4>
+            <span class="shortcut-badge" style="background: #FDE68A; color: #78350F; font-size: 0.75rem; font-weight: 700;" id="sadesati-phase-badge">Phase</span>
+          </div>
+          <p style="font-size: 0.84rem; color: #78350F; margin: 0;" id="sadesati-explanation">
+            Status details will appear here.
+          </p>
+        </div>
+
+        <!-- 3-Phase Progress Steps -->
+        <div class="sade-sati-phases-bar">
+          <div class="phase-step" id="phase-step-1">
+            <div class="phase-step-title">चरण 1: Rising (उदय)</div>
+            <div class="phase-step-sub">12th house from Moon</div>
+          </div>
+          <div class="phase-step" id="phase-step-2">
+            <div class="phase-step-title">चरण 2: Peak (शिखर)</div>
+            <div class="phase-step-sub">Over Natal Moon</div>
+          </div>
+          <div class="phase-step" id="phase-step-3">
+            <div class="phase-step-title">चरण 3: Setting (अस्त)</div>
+            <div class="phase-step-sub">2nd house from Moon</div>
+          </div>
+        </div>
+
+        <!-- Rahu Ketu Transit -->
+        <div style="background: #F8FAFC; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 1rem;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.25rem;">
+            🌌 Rahu-Ketu Axis Transit Effect
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);" id="sadesati-rahu-ketu">
+            Rahu in Pisces and Ketu in Virgo transit effects for your Rashi.
+          </div>
+        </div>
+
+        <!-- Authentic Classical Remedies -->
+        <div>
+          <div class="sidebar-section-title" style="margin-bottom: 0.5rem;">Authentic Classical Remedies (शास्त्रीय उपाय)</div>
+          <div id="sadesati-remedies-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 7: ASTROLOGERS DIRECTORY & MARKETPLACE (DUAL AI & CERTIFIED HUMAN)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-select-astrologer">
+    <div class="modal-card directory-modal-card" style="max-width: 980px; max-height: 90vh;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>🔮</span> Astrologers Directory • ज्योतिषी चयन
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            Connect with verified Vedic scholars or choose AI Jyotish personas for instant shastriya guidance.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1rem 1.25rem; overflow-y: auto;">
+        <!-- Top Directory Controls Strip -->
+        <div class="directory-filter-strip">
+          <!-- Type Filter Tabs -->
+          <div class="directory-tabs" id="directory-tabs">
+            <button class="dir-tab active" data-tab="all">All Astrologers (<span id="dir-count-all">8</span>)</button>
+            <button class="dir-tab" data-tab="human">Certified Scholars (Human)</button>
+            <button class="dir-tab" data-tab="ai">AI Jyotish Personas</button>
+            <button class="dir-tab" data-tab="online">🟢 Online Now</button>
+          </div>
+
+          <!-- Smart Match Action Button -->
+          <button type="button" class="btn-smart-match-cta" id="btn-open-smart-match-from-dir">
+            <span>🎯</span> <span>Find My Astrologer (AI Match)</span>
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="directory-search-bar-row">
+          <div class="search-input-wrap" style="flex: 2; min-width: 220px;">
+            <span style="font-size: 0.85rem;">🔍</span>
+            <input type="text" id="dir-search-input" placeholder="Search by name, expertise, Vedic branch...">
+          </div>
+          <select id="dir-specialty-filter" class="form-select dir-select">
+            <option value="">All Specialties</option>
+            <option value="Vedic">Vedic Astrology</option>
+            <option value="Kundli">Kundli Analysis</option>
+            <option value="Marriage">Marriage & Compatibility</option>
+            <option value="Career">Career & Business</option>
+            <option value="Palmistry">Palmistry (हस्तरेखा)</option>
+            <option value="Vastu">Vastu Shastra</option>
+            <option value="Numerology">Numerology (अंकज्योतिष)</option>
+            <option value="Prashna">Prashna Kundali</option>
+          </select>
+          <select id="dir-language-filter" class="form-select dir-select">
+            <option value="">All Languages</option>
+            <option value="Hindi">Hindi</option>
+            <option value="English">English</option>
+            <option value="Sanskrit">Sanskrit</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Bengali">Bengali</option>
+          </select>
+          <select id="dir-sort-select" class="form-select dir-select">
+            <option value="recommended">Recommended</option>
+            <option value="rating_desc">Highest Rated</option>
+            <option value="exp_desc">Most Experienced</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+          </select>
+        </div>
+
+        <!-- Active Filters Pill Box -->
+        <div id="dir-active-filters-row" style="display: none; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Active Filters:</span>
+          <div id="dir-active-filter-chips" style="display: flex; gap: 0.35rem; flex-wrap: wrap;"></div>
+          <button type="button" id="btn-clear-dir-filters" style="font-size: 0.72rem; color: #DC2626; background: none; border: none; cursor: pointer; margin-left: auto;">Clear All</button>
+        </div>
+
+        <!-- Astrologers Directory Grid -->
+        <div id="astrologers-modal-list" class="astrologers-grid-container">
+          <!-- Dynamic Astrologer Cards rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 9: INDIVIDUAL ASTROLOGER PROFILE & REVIEWS
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-astrologer-profile">
+    <div class="modal-card" style="max-width: 820px; max-height: 90vh;">
+      <div class="modal-header">
+        <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+          <span>👤</span> Astrologer Profile • ज्योतिषी परिचय
+        </h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.25rem; overflow-y: auto;" id="astrologer-profile-body">
+        <!-- Rendered dynamically by App.showAstrologerProfile(id) -->
+        <div style="text-align: center; padding: 2rem;">Loading Astrologer Profile...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 10: SMART ASTROLOGER MATCHING
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-smart-matching">
+    <div class="modal-card" style="max-width: 780px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>🎯</span> Smart Astrologer Matcher (स्मार्ट ज्योतिषी मिलान)
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            AI-assisted recommendation matching your specific concern, language, and budget.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.25rem;">
+        <form id="form-smart-match" onsubmit="App.handleSmartMatchSubmit(event)">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Primary Concern / परामर्श विषय <span class="req">*</span></label>
+              <select id="match-concern" class="form-select" required>
+                <option value="love">❤️ Love & Relationships</option>
+                <option value="marriage">💍 Marriage & Compatibility</option>
+                <option value="career">💼 Career, Job & Business</option>
+                <option value="wealth">💰 Wealth, Finance & Property</option>
+                <option value="health">🩺 Health & Vitality</option>
+                <option value="kundli" selected>🪐 Kundli, Doshas & Yogas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Preferred Language / भाषा</label>
+              <select id="match-language" class="form-select">
+                <option value="">Any Language</option>
+                <option value="Hindi" selected>Hindi (हिन्दी)</option>
+                <option value="English">English</option>
+                <option value="Sanskrit">Sanskrit (संस्कृतम्)</option>
+                <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+                <option value="Marathi">Marathi (मराठी)</option>
+                <option value="Tamil">Tamil (தமிழ்)</option>
+                <option value="Bengali">Bengali (বাংলা)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Consultation Type</label>
+              <select id="match-mode" class="form-select">
+                <option value="">Any (AI or Human)</option>
+                <option value="ai">AI Astrologer Persona (Instant & Free)</option>
+                <option value="human">Certified Scholar (Real Astrologer)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Max Budget per Minute</label>
+              <select id="match-price" class="form-select">
+                <option value="">Any Budget</option>
+                <option value="0">Free Only (AI Personas)</option>
+                <option value="15">Up to ₹15 / min</option>
+                <option value="30">Up to ₹30 / min</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-new-chat" id="btn-run-smart-match" style="width: 100%; padding: 0.65rem; font-size: 0.9rem; justify-content: center;">
+            <span>⚡</span> <span>Find Best Matching Astrologers</span>
+          </button>
+        </form>
+
+        <!-- Results Area -->
+        <div id="smart-match-results-container" style="margin-top: 1.25rem; display: none;">
+          <div class="sidebar-section-title" style="margin-bottom: 0.5rem;">Recommended Astrologers (शीर्ष संस्तुति)</div>
+          <div id="smart-match-cards-list" class="astrologers-grid-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 11: CONSULTATION SUMMARY & REMEDIES
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-consultation-summary">
+    <div class="modal-card" style="max-width: 760px; max-height: 90vh;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>📜</span> Consultation Summary • परामर्श सार
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            Summary of discussion points, classical Vedic astrological factors, and prescribed remedial guidance.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.25rem; overflow-y: auto;" id="consultation-summary-body">
+        <div style="text-align: center; padding: 2rem;">Loading Consultation Summary...</div>
+      </div>
+      <div class="modal-footer" style="padding: 0.75rem 1.25rem; background: #F8FAFC; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <button type="button" class="btn-tool" onclick="ReportsController.exportConsultationDocument()" style="background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A;">
+          <span>📜</span> Export Certified Record
+        </button>
+        <button type="button" class="btn-tool modal-close" style="padding: 0.45rem 1rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 12: USER ACCOUNT & SAVED KUNDLI PROFILES
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-user-account">
+    <div class="modal-card" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+          <span>👤</span> User Account & Saved Profiles (खाता व कुण्डली विवरण)
+        </h3>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="padding: 1.25rem;" id="user-account-modal-body">
+        <!-- Rendered dynamically based on logged in state -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 8: SHASTRIYA GROUNDED KUNDLI REPORT (CHART-TO-RAG FUSION)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-grounded-report">
+    <div class="modal-card" style="max-width: 860px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>📜</span> Shastriya Grounded Kundli Report (विस्तृत कुंडली विश्लेषण)
+          </h3>
+          <span style="font-size: 0.75rem; color: #78350F; font-weight: 500;">
+            Verified Swiss Ephemeris Calculations + Authentic Classical Shastras (287 Chunks)
+          </span>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+      <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
+        <!-- Dynamic Grounded Report Container -->
+        <div id="grounded-report-container">
+          <div style="text-align: center; padding: 3rem 1rem;">
+            <p class="text-muted">Loading Shastriya Report...</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; background: #F8FAFC; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn-tool" id="btn-grounded-download-pdf" style="background: #1E1B4B; color: #FFFFFF; border: none; padding: 0.5rem 0.85rem; font-size: 0.8rem;">
+            <span>📥</span> Download Full PDF Report
+          </button>
+          <button type="button" class="btn-tool" id="btn-grounded-share-whatsapp" style="background: #DCFCE7; color: #166534; border: 1px solid #86EFAC; padding: 0.5rem 0.85rem; font-size: 0.8rem;">
+            <span>💬</span> Share WhatsApp
+          </button>
+        </div>
+        <button type="button" class="btn-tool modal-close" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 13: VEDIC ASTROLOGY CALCULATORS SUITE (17 TOOLS)
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-astrology-calculators">
+    <div class="modal-card" style="max-width: 940px; max-height: 94vh; display: flex; flex-direction: column;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;" id="calc-modal-title">
+            <span style="color: #F59E0B;">⚡</span> <span>Vedic Calculators Suite (वैदिक गणित एवं फलित केंद्र)</span>
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            Rigorous mathematical calculations powered by Swiss Ephemeris NASA JPL data & classical Parashara Shastras.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.25rem; overflow-y: auto; flex: 1;">
+        <!-- Profile Auto-Fill Banner -->
+        <div class="calc-profile-autofill-banner" id="calc-autofill-banner">
+          <div class="calc-autofill-info">
+            <span style="font-size: 1.25rem;">👤</span>
+            <div>
+              <div><strong>Active Seeker Profile:</strong> <span id="calc-current-profile-label">Satya Prakash (15 Oct 1995, New Delhi)</span></div>
+              <div style="font-size: 0.72rem; color: #B45309;">1-Click fill your birth details into whichever calculator is open</div>
+            </div>
+          </div>
+          <button type="button" class="btn-calc-autofill" onclick="App.autoFillCurrentCalculator()">
+            <span>⚡</span> <span>Auto-Fill Details</span>
+          </button>
+        </div>
+
+        <!-- Calculator Tab Navigation -->
+        <div class="calc-tabs-bar" id="calc-tabs-bar">
+          <button class="calc-tab-btn active" data-tab="numerology"><span>🔢</span> <span>Numerology (अंकज्योतिष)</span></button>
+          <button class="calc-tab-btn" data-tab="name-numerology"><span>✍️</span> <span>Name Number (नाम कंपन)</span></button>
+          <button class="calc-tab-btn" data-tab="mangal-dosha"><span>🔥</span> <span>Mangal Dosha (मांगलिक दोष)</span></button>
+          <button class="calc-tab-btn" data-tab="rising-sign"><span>🌅</span> <span>Rising Sign (लग्न राशि)</span></button>
+          <button class="calc-tab-btn" data-tab="nakshatra"><span>✨</span> <span>Nakshatra (जन्म नक्षत्र)</span></button>
+          <button class="calc-tab-btn" data-tab="atmakaraka"><span>👑</span> <span>Atmakaraka (आत्मकारक)</span></button>
+          <button class="calc-tab-btn" data-tab="kaalsarp"><span>🐍</span> <span>Kaal Sarp (कालसर्प योग)</span></button>
+          <button class="calc-tab-btn" data-tab="moon-sign"><span>🌙</span> <span>Moon Sign (चन्द्र राशि)</span></button>
+          <button class="calc-tab-btn" data-tab="sun-sign"><span>☀️</span> <span>Sun Sign (सूर्य राशि)</span></button>
+          <button class="calc-tab-btn" data-tab="moon-phase"><span>🌔</span> <span>Moon Phase (तिथि व कला)</span></button>
+          <button class="calc-tab-btn" data-tab="love-compat"><span>💖</span> <span>Love Match (प्रेम मिलान)</span></button>
+          <button class="calc-tab-btn" data-tab="friend-compat"><span>🤝</span> <span>Friendship (मित्रता)</span></button>
+          <button class="calc-tab-btn" data-tab="name-compat"><span>✍️</span> <span>Name Match (नाम मिलान)</span></button>
+          <button class="calc-tab-btn" data-tab="gemstone"><span>💎</span> <span>Lucky Gemstone (भाग्य रत्न)</span></button>
+          <button class="calc-tab-btn" data-tab="dasha"><span>⏳</span> <span>Vimshottari Dasha (दशा काल)</span></button>
+          <button class="calc-tab-btn" data-tab="pitra-dosha"><span>🪔</span> <span>Pitra Dosha (पितृ दोष)</span></button>
+          <button class="calc-tab-btn" data-tab="varshphal"><span>☀️</span> <span>Varshphal (वर्षफल)</span></button>
+        </div>
+
+        <!-- Tab 1: Numerology -->
+        <div class="calc-pane active" id="pane-numerology">
+          <form onsubmit="App.executeCalculator('numerology', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-num-name">
+                  <span>👤</span> <span>Full Name <span class="sublabel">/ जातक का नाम</span></span>
+                </label>
+                <input type="text" id="calc-num-name" class="calc-luxury-input" placeholder="e.g. Ramesh Kumar Sharma" required value="Aditya Sharma" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-num-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-num-dob" class="calc-luxury-input" required value="1995-10-15" />
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🔢</span> <span>Calculate Life Path & Destiny Numbers (गणना करें)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 2: Name Numerology -->
+        <div class="calc-pane" id="pane-name-numerology" style="display: none;">
+          <form onsubmit="App.executeCalculator('name-numerology', event)" class="calc-form-card">
+            <div class="calc-input-wrapper" style="margin-bottom: 1.25rem;">
+              <label class="calc-input-label" for="calc-namenum-name">
+                <span>✍️</span> <span>Personal or Business Name <span class="sublabel">/ व्यक्ति या व्यवसाय का नाम</span></span>
+              </label>
+              <input type="text" id="calc-namenum-name" class="calc-luxury-input" placeholder="e.g. Astro Jyotish / Rajesh Sharma" required value="Astro Jyotish" />
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>✍️</span> <span>Analyze Chaldean & Pythagorean Vibrations</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 3: Mangal Dosha -->
+        <div class="calc-pane" id="pane-mangal-dosha" style="display: none;">
+          <form onsubmit="App.executeCalculator('mangal-dosha', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-mangal-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-mangal-dob" class="calc-luxury-input" required value="1996-05-12" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-mangal-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-mangal-tob" class="calc-luxury-input" required value="14:30" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-mangal-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="calc-mangal-city" class="calc-luxury-input" value="New Delhi" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-mangal-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-mangal-city')">Mumbai</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-mangal-city')">Varanasi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-mangal-city')">Bengaluru</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-mangal-city')">Jaipur</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🔥</span> <span>Check Manglik Status & 6 Classical Exceptions (Parihars)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 4: Rising Sign (Lagna) -->
+        <div class="calc-pane" id="pane-rising-sign" style="display: none;">
+          <form onsubmit="App.executeCalculator('rising-sign', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-lagna-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-lagna-dob" class="calc-luxury-input" required value="1992-08-24" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-lagna-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-lagna-tob" class="calc-luxury-input" required value="06:45" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-lagna-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म स्थान</span></span>
+                </label>
+                <input type="text" id="calc-lagna-city" class="calc-luxury-input" value="Varanasi" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-lagna-city')">Varanasi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-lagna-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-lagna-city')">Haridwar</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-lagna-city')">Mumbai</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-lagna-city')">Ayodhya</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🌅</span> <span>Calculate Eastern Ascendant (Lagna) & Degree</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 5: Nakshatra & Pada -->
+        <div class="calc-pane" id="pane-nakshatra" style="display: none;">
+          <form onsubmit="App.executeCalculator('nakshatra', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-nak-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-nak-dob" class="calc-luxury-input" required value="1998-11-19" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-nak-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-nak-tob" class="calc-luxury-input" required value="10:15" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-nak-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="calc-nak-city" class="calc-luxury-input" value="Bengaluru" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-nak-city')">Bengaluru</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-nak-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-nak-city')">Chennai</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-nak-city')">Hyderabad</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-nak-city')">Kolkata</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>✨</span> <span>Find Birth Nakshatra, Charan & Baby Name Syllable</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 6: Atmakaraka & Darakaraka -->
+        <div class="calc-pane" id="pane-atmakaraka" style="display: none;">
+          <form onsubmit="App.executeCalculator('atmakaraka', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-atma-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-atma-dob" class="calc-luxury-input" required value="1990-03-15" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-atma-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-atma-tob" class="calc-luxury-input" required value="08:20" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-atma-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म स्थान</span></span>
+                </label>
+                <input type="text" id="calc-atma-city" class="calc-luxury-input" value="Mumbai" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-atma-city')">Mumbai</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-atma-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-atma-city')">Pune</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-atma-city')">Ahmedabad</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-atma-city')">Nagpur</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>👑</span> <span>Calculate Jaimini 7 Chara Karakas</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 7: Kaal Sarp Dosha -->
+        <div class="calc-pane" id="pane-kaalsarp" style="display: none;">
+          <form onsubmit="App.executeCalculator('kaalsarp', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-ks-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-ks-dob" class="calc-luxury-input" required value="1994-07-08" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-ks-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-ks-tob" class="calc-luxury-input" required value="18:45" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-ks-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म स्थान</span></span>
+                </label>
+                <input type="text" id="calc-ks-city" class="calc-luxury-input" value="Jaipur" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-ks-city')">Jaipur</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-ks-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-ks-city')">Ujjain</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-ks-city')">Trimbakeshwar</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-ks-city')">Lucknow</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🐍</span> <span>Check 12 Types of Kaal Sarp Yoga</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 8: Moon Sign -->
+        <div class="calc-pane" id="pane-moon-sign" style="display: none;">
+          <form onsubmit="App.executeCalculator('moon-sign', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-moon-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-moon-dob" class="calc-luxury-input" required value="1997-12-05" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-moon-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-moon-tob" class="calc-luxury-input" required value="11:30" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-moon-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="calc-moon-city" class="calc-luxury-input" value="Kolkata" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-moon-city')">Kolkata</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-moon-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-moon-city')">Patna</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-moon-city')">Mumbai</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-moon-city')">Ranchi</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🌙</span> <span>Calculate Vedic Chandra Rashi</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 9: Sun Sign -->
+        <div class="calc-pane" id="pane-sun-sign" style="display: none;">
+          <form onsubmit="App.executeCalculator('sun-sign', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-sun-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-sun-dob" class="calc-luxury-input" required value="1993-04-18" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-sun-sys">
+                  <span>♈</span> <span>Zodiac Calculation System <span class="sublabel">/ ज्योतिष पद्धति</span></span>
+                </label>
+                <select id="calc-sun-sys" class="calc-luxury-select">
+                  <option value="both" selected>Both Sidereal (Vedic) & Tropical (Western)</option>
+                  <option value="sidereal">Sidereal Only (Nirayana / Lahiri)</option>
+                  <option value="tropical">Tropical Only (Sayana)</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>☀️</span> <span>Calculate Surya Rashi (Sun Sign)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 10: Moon Phase -->
+        <div class="calc-pane" id="pane-moon-phase" style="display: none;">
+          <form onsubmit="App.executeCalculator('moon-phase', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-phase-dob">
+                  <span>📅</span> <span>Target Date <span class="sublabel">/ लक्षित तिथि</span></span>
+                </label>
+                <input type="date" id="calc-phase-dob" class="calc-luxury-input" required value="2026-10-19" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-phase-tob">
+                  <span>⏰</span> <span>Target Time <span class="sublabel">/ समय</span></span>
+                </label>
+                <input type="time" id="calc-phase-tob" class="calc-luxury-input" required value="12:00" />
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🌔</span> <span>Calculate Lunar Illumination & Tithi</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 11: Love Compatibility -->
+        <div class="calc-pane" id="pane-love-compat" style="display: none;">
+          <form onsubmit="App.executeCalculator('love-compatibility', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-love-sign1">
+                  <span>💖</span> <span>Your Zodiac Sign <span class="sublabel">/ आपकी राशि</span></span>
+                </label>
+                <select id="calc-love-sign1" class="calc-luxury-select">
+                  <option value="Aries">Aries (मेष)</option>
+                  <option value="Taurus">Taurus (वृषभ)</option>
+                  <option value="Gemini">Gemini (मिथुन)</option>
+                  <option value="Cancer">Cancer (कर्क)</option>
+                  <option value="Leo" selected>Leo (सिंह)</option>
+                  <option value="Virgo">Virgo (कन्या)</option>
+                  <option value="Libra">Libra (तुला)</option>
+                  <option value="Scorpio">Scorpio (वृश्चिक)</option>
+                  <option value="Sagittarius">Sagittarius (धनु)</option>
+                  <option value="Capricorn">Capricorn (मकर)</option>
+                  <option value="Aquarius">Aquarius (कुंभ)</option>
+                  <option value="Pisces">Pisces (मीन)</option>
+                </select>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-love-sign2">
+                  <span>💕</span> <span>Partner's Zodiac Sign <span class="sublabel">/ साथी की राशि</span></span>
+                </label>
+                <select id="calc-love-sign2" class="calc-luxury-select">
+                  <option value="Aries" selected>Aries (मेष)</option>
+                  <option value="Taurus">Taurus (वृषभ)</option>
+                  <option value="Gemini">Gemini (मिथुन)</option>
+                  <option value="Cancer">Cancer (कर्क)</option>
+                  <option value="Leo">Leo (सिंह)</option>
+                  <option value="Virgo">Virgo (कन्या)</option>
+                  <option value="Libra">Libra (तुला)</option>
+                  <option value="Scorpio">Scorpio (वृश्चिक)</option>
+                  <option value="Sagittarius">Sagittarius (धनु)</option>
+                  <option value="Capricorn">Capricorn (मकर)</option>
+                  <option value="Aquarius">Aquarius (कुंभ)</option>
+                  <option value="Pisces">Pisces (मीन)</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>💖</span> <span>Calculate Sign Harmony & Planetary Chemistry</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 12: Friendship Compatibility -->
+        <div class="calc-pane" id="pane-friend-compat" style="display: none;">
+          <form onsubmit="App.executeCalculator('friendship-compatibility', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-friend-sign1">
+                  <span>🤝</span> <span>Your Zodiac Sign <span class="sublabel">/ आपकी राशि</span></span>
+                </label>
+                <select id="calc-friend-sign1" class="calc-luxury-select">
+                  <option value="Gemini" selected>Gemini (मिथुन)</option>
+                  <option value="Libra">Libra (तुला)</option>
+                  <option value="Aquarius">Aquarius (कुंभ)</option>
+                  <option value="Aries">Aries (मेष)</option>
+                  <option value="Leo">Leo (सिंह)</option>
+                  <option value="Sagittarius">Sagittarius (धनु)</option>
+                </select>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-friend-sign2">
+                  <span>🤝</span> <span>Friend's Zodiac Sign <span class="sublabel">/ मित्र की राशि</span></span>
+                </label>
+                <select id="calc-friend-sign2" class="calc-luxury-select">
+                  <option value="Libra" selected>Libra (तुला)</option>
+                  <option value="Gemini">Gemini (मिथुन)</option>
+                  <option value="Aquarius">Aquarius (कुंभ)</option>
+                  <option value="Leo">Leo (सिंह)</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🤝</span> <span>Evaluate Natural Vedic Friendships</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 13: Name Compatibility -->
+        <div class="calc-pane" id="pane-name-compat" style="display: none;">
+          <form onsubmit="App.executeCalculator('name-compatibility', event)" class="calc-form-card">
+            <div class="calc-form-grid-2">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-name1">
+                  <span>👤</span> <span>First Person Name <span class="sublabel">/ प्रथम व्यक्ति का नाम</span></span>
+                </label>
+                <input type="text" id="calc-name1" class="calc-luxury-input" required value="Aarav" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-name2">
+                  <span>👤</span> <span>Second Person Name <span class="sublabel">/ द्वितीय व्यक्ति का नाम</span></span>
+                </label>
+                <input type="text" id="calc-name2" class="calc-luxury-input" required value="Ananya" />
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>✍️</span> <span>Calculate Chaldean Name Harmony</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 14: Gemstone Recommender -->
+        <div class="calc-pane" id="pane-gemstone" style="display: none;">
+          <form onsubmit="App.executeCalculator('gemstone', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-gem-rashi">
+                  <span>♈</span> <span>Moon Sign / Lagna <span class="sublabel">/ चन्द्र या लग्न राशि</span></span>
+                </label>
+                <select id="calc-gem-rashi" class="calc-luxury-select">
+                  <option value="Aries">Aries (मेष) - Red Coral / मूंगा</option>
+                  <option value="Taurus">Taurus (वृषभ) - Diamond / हीरा / ओपल</option>
+                  <option value="Gemini">Gemini (मिथुन) - Emerald / पन्ना</option>
+                  <option value="Cancer">Cancer (कर्क) - Pearl / मोती</option>
+                  <option value="Leo">Leo (सिंह) - Ruby / माणिक्य</option>
+                  <option value="Virgo">Virgo (कन्या) - Emerald / पन्ना</option>
+                  <option value="Libra" selected>Libra (तुला) - Diamond / हीरा</option>
+                  <option value="Scorpio">Scorpio (वृश्चिक) - Red Coral / मूंगा</option>
+                  <option value="Sagittarius">Sagittarius (धनु) - Yellow Sapphire / पुखराज</option>
+                  <option value="Capricorn">Capricorn (मकर) - Blue Sapphire / नीलम</option>
+                  <option value="Aquarius">Aquarius (कुंभ) - Blue Sapphire / नीलम</option>
+                  <option value="Pisces">Pisces (मीन) - Yellow Sapphire / पुखराज</option>
+                </select>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-gem-goal">
+                  <span>🎯</span> <span>Consultation Focus <span class="sublabel">/ परामर्श उद्देश्य</span></span>
+                </label>
+                <select id="calc-gem-goal" class="calc-luxury-select">
+                  <option value="overall" selected>Overall Fortune & Lagna Strength (समग्र भाग्योदय)</option>
+                  <option value="career">Career Growth & Job Promotion (करियर व पदोन्नति)</option>
+                  <option value="marriage">Marriage Harmony & Relationship (दांपत्य सुख)</option>
+                  <option value="wealth">Wealth & Business Expansion (धन वृद्धि)</option>
+                  <option value="health">Health & Vitality (दीर्घायु व आरोग्यता)</option>
+                </select>
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-gem-name">
+                  <span>👤</span> <span>Full Name <span class="sublabel">/ जातक का नाम</span></span>
+                </label>
+                <input type="text" id="calc-gem-name" class="calc-luxury-input" value="Satya Prakash" />
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>💎</span> <span>Recommend Auspicious Ratna & Vedic Rules (रत्न परामर्श)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 15: Vimshottari Dasha -->
+        <div class="calc-pane" id="pane-dasha" style="display: none;">
+          <form onsubmit="App.executeCalculator('dasha', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-dasha-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-dasha-dob" class="calc-luxury-input" required value="1995-10-15" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-dasha-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-dasha-tob" class="calc-luxury-input" required value="10:30" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-dasha-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="calc-dasha-city" class="calc-luxury-input" value="New Delhi" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-dasha-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-dasha-city')">Varanasi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-dasha-city')">Mumbai</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>⏳</span> <span>Compute 120-Year Vimshottari Dasha Timeline (महादशा गणना)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 16: Pitra Dosha -->
+        <div class="calc-pane" id="pane-pitra-dosha" style="display: none;">
+          <form onsubmit="App.executeCalculator('pitra-dosha', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-pitra-dob">
+                  <span>📅</span> <span>Date of Birth <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-pitra-dob" class="calc-luxury-input" required value="1995-10-15" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-pitra-tob">
+                  <span>⏰</span> <span>Time of Birth <span class="sublabel">/ जन्म समय</span></span>
+                </label>
+                <input type="time" id="calc-pitra-tob" class="calc-luxury-input" required value="10:30" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-pitra-city">
+                  <span>📍</span> <span>City of Birth <span class="sublabel">/ जन्म शहर</span></span>
+                </label>
+                <input type="text" id="calc-pitra-city" class="calc-luxury-input" value="New Delhi" />
+                <div class="calc-quick-cities">
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-pitra-city')">Delhi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-pitra-city')">Varanasi</span>
+                  <span class="calc-city-chip" onclick="App.setCalcCity(this, 'calc-pitra-city')">Haridwar</span>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>🪔</span> <span>Evaluate Pitra Dosha & Ancestral Pacification (पितृ दोष जांच)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Tab 17: Varshphal -->
+        <div class="calc-pane" id="pane-varshphal" style="display: none;">
+          <form onsubmit="App.executeCalculator('varshphal', event)" class="calc-form-card">
+            <div class="calc-form-grid-3">
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-vp-year">
+                  <span>📅</span> <span>Target Annual Year <span class="sublabel">/ वर्षफल वर्ष</span></span>
+                </label>
+                <input type="number" id="calc-vp-year" class="calc-luxury-input" value="2026" min="1950" max="2060" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-vp-dob">
+                  <span>🎂</span> <span>Birth Date <span class="sublabel">/ जन्म तिथि</span></span>
+                </label>
+                <input type="date" id="calc-vp-dob" class="calc-luxury-input" required value="1995-10-15" />
+              </div>
+              <div class="calc-input-wrapper">
+                <label class="calc-input-label" for="calc-vp-city">
+                  <span>📍</span> <span>Current City <span class="sublabel">/ वर्तमान नगर</span></span>
+                </label>
+                <input type="text" id="calc-vp-city" class="calc-luxury-input" value="New Delhi" />
+              </div>
+            </div>
+            <button type="submit" class="btn-calc-submit-gold">
+              <span>☀️</span> <span>Generate Tajika Solar Return (वर्षफल कुण्डली)</span> <span>➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Dynamic Calculation Results Box -->
+        <div id="calculator-results-pane" style="margin-top: 1.5rem; display: none;">
+          <div class="calc-result-box" id="calc-result-box">
+            <!-- Dynamic Result HTML injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 14: WALLET & APPOINTMENTS BOOKING SYSTEM
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-wallet-bookings">
+    <div class="modal-card" style="max-width: 820px; max-height: 90vh;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>👛</span> Astro Jyotish Wallet & Appointment Desk
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            Manage prepaid consultation credits, book appointments with verified human scholars, and track receipts.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.25rem; overflow-y: auto;">
+        <!-- Wallet Balance Card -->
+        <div class="wallet-balance-card">
+          <div class="wallet-balance-info">
+            <span class="wallet-label">Available Balance (उपलब्ध बैलेंस)</span>
+            <span class="wallet-amount" id="modal-wallet-amount">₹250.00</span>
+            <span class="wallet-note">Instant test wallet enabled • Zero bank fees</span>
+          </div>
+          <div class="wallet-recharge-strip">
+            <span style="font-size: 0.8rem; font-weight: 600; color: #1E293B;">Quick Top-Up:</span>
+            <div class="recharge-presets">
+              <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(100)">+₹100</button>
+              <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(250)">+₹250</button>
+              <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(500)">+₹500</button>
+              <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(1000)">+₹1,000</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appointment Booking Form (for Real Human Scholars) -->
+        <div class="booking-section-box">
+          <div class="sidebar-section-title" style="margin-bottom: 0.75rem;">
+            <span>📅</span> Book a 1-on-1 Session with a Certified Human Scholar
+          </div>
+
+          <form id="form-book-appointment" onsubmit="App.handleBookingSubmit(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Select Astrologer Scholar <span class="req">*</span></label>
+                <select id="booking-astrologer-select" class="form-select" required>
+                  <option value="">-- Choose Verified Astrologer --</option>
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Consultation Mode <span class="req">*</span></label>
+                <select id="booking-mode-select" class="form-select" onchange="App.updateBookingFeePreview()">
+                  <option value="chat">Text Chat Session (₹15/min)</option>
+                  <option value="call" selected>Direct Audio Call (₹20/min)</option>
+                  <option value="video">Live Video Consultation (₹30/min)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Consultation Date <span class="req">*</span></label>
+                <input type="date" id="booking-date-input" class="form-input" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Available Time Slot <span class="req">*</span></label>
+                <select id="booking-slot-select" class="form-select" required>
+                  <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM (Morning Shubh Slot)</option>
+                  <option value="11:30 AM - 12:00 PM">11:30 AM - 12:00 PM (Abhijit Muhurat)</option>
+                  <option value="02:30 PM - 03:00 PM">02:30 PM - 03:00 PM (Afternoon)</option>
+                  <option value="04:30 PM - 05:00 PM">04:30 PM - 05:00 PM (Late Afternoon)</option>
+                  <option value="06:30 PM - 07:00 PM">06:30 PM - 07:00 PM (Sandhya Slot)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Duration <span class="req">*</span></label>
+                <select id="booking-duration-select" class="form-select" onchange="App.updateBookingFeePreview()">
+                  <option value="15">15 Minutes</option>
+                  <option value="30" selected>30 Minutes</option>
+                  <option value="45">45 Minutes</option>
+                  <option value="60">60 Minutes (Deep Chart Analysis)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                <div style="background: #F1F5F9; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.82rem;">
+                  <div>Estimated Fee: <strong id="booking-fee-preview" style="color: #7E22CE; font-size: 1rem;">₹600</strong></div>
+                  <span style="font-size: 0.72rem; color: #64748B;">Deducted from your wallet upon confirmation</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Primary Query / Brief Concern</label>
+              <input type="text" id="booking-notes-input" class="form-input" placeholder="e.g. Navamsha D9 marriage timing, career transition dasha" />
+            </div>
+
+            <button type="submit" class="btn-hero-primary" id="btn-submit-booking" style="width: 100%; justify-content: center; padding: 0.65rem;">
+              <span>🗓️</span> <span>Confirm & Reserve Appointment</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Active Bookings List -->
+        <div style="margin-top: 1.5rem;">
+          <div class="sidebar-section-title" style="margin-bottom: 0.5rem;">Your Scheduled Appointments (आपकी बुकिंग)</div>
+          <div id="wallet-bookings-list">
+            <div style="text-align: center; padding: 1.5rem; color: #64748B; font-size: 0.85rem;">
+              Loading appointments...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL 15: MULTILINGUAL JYOTISH GLOSSARY
+       ==================================================================== -->
+  <div class="modal-overlay" id="modal-astrology-glossary">
+    <div class="modal-card" style="max-width: 820px; max-height: 90vh;">
+      <div class="modal-header">
+        <div>
+          <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            <span>📖</span> Multilingual Vedic Jyotish Glossary (ज्योतिष शब्दकोश)
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
+            Clear classical explanations of authentic Sanskrit astrological terminology across 23 Indian languages.
+          </p>
+        </div>
+        <button class="btn-icon modal-close">✕</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.25rem; overflow-y: auto;">
+        <!-- Search bar -->
+        <div style="margin-bottom: 1.25rem;">
+          <input type="text" id="glossary-search-input" class="form-input" placeholder="Search terms (e.g. Lagna, Dasha, Navamsha, Rahu Kaal, Guna)..." oninput="App.filterGlossary(event.target.value)" />
+        </div>
+
+        <div class="glossary-terms-grid" id="glossary-terms-grid">
+          <!-- Populated by App.renderGlossary() -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->

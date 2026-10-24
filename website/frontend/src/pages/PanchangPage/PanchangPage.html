@@ -1,0 +1,192 @@
+<div class="directory-page-header">
+  <div class="directory-title-row">
+    <h1 class="directory-title" data-i18n="panchang_page_heading">दैनिक वैदिक पंचांग एवं शुभ मुहूर्त (Aaj Ka Panchang)</h1>
+    <span class="directory-badge">Swiss Ephemeris v2.10 Precision</span>
+  </div>
+  <p class="directory-subtitle" data-i18n="panchang_page_subtitle">
+    पारंपरिक पराशरी सिद्धान्तों एवं खगोलीय गणित पर आधारित आज का पंचांग — दैनिक तिथि, नक्षत्र, योग, करण, सूर्योदय-सूर्यास्त, अभिजित मुहूर्त, राहु काल एवं सम्पूर्ण चौघड़िया चक्र।
+  </p>
+</div>
+
+<!-- Date, Location and Controls Bar -->
+<div class="panchang-page-toolbar">
+  <div class="panchang-controls-row">
+    <div class="panchang-control-group">
+      <label class="panchang-control-label">दिनांक (Select Date)</label>
+      <div class="panchang-input-wrap">
+        <input type="date" id="panchang-page-date" class="form-control" onchange="App.fetchPanchangForPage()" />
+      </div>
+    </div>
+    <div class="panchang-control-group">
+      <label class="panchang-control-label">स्थान (City / Location)</label>
+      <div class="panchang-input-wrap">
+        <input type="text" id="panchang-page-city" class="form-control" value="New Delhi" placeholder="Enter city name..." onkeydown="if(event.key==='Enter') App.fetchPanchangForPage()" />
+      </div>
+    </div>
+    <button type="button" class="btn-panchang-refresh" id="btn-panchang-page-refresh" onclick="App.fetchPanchangForPage()">
+      <span>🔄</span> <span>पंचांग गणना करें (Calculate)</span>
+    </button>
+  </div>
+
+  <!-- Quick City Selector Chips -->
+  <div class="panchang-quick-cities-strip">
+    <span class="panchang-quick-label">त्वरित शहर (Popular Cities):</span>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('New Delhi', 28.6139, 77.2090)">New Delhi</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Mumbai', 19.0760, 72.8777)">Mumbai</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Varanasi', 25.3176, 82.9739)">Varanasi (काशी)</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Ujjain', 23.1765, 75.7885)">Ujjain (अवन्तिका)</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Bengaluru', 12.9716, 77.5946)">Bengaluru</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Kolkata', 22.5726, 88.3639)">Kolkata</button>
+    <button type="button" class="btn-city-chip" onclick="App.setPanchangCity('Haridwar', 29.9457, 78.1642)">Haridwar</button>
+  </div>
+</div>
+
+<!-- Live Status Banner -->
+<div class="panchang-status-banner">
+  <div class="status-left">
+    <span class="live-pulse"></span>
+    <span id="panchang-page-city-badge" style="font-weight: 700; color: #1E1B4B;">📍 New Delhi • Today</span>
+  </div>
+  <div class="status-right">
+    <span class="ayanamsa-pill">Lahiri Ayanamsa: 24°10'</span>
+    <span class="precision-pill">Swiss Ephemeris Precision</span>
+  </div>
+</div>
+
+<!-- 5 Limbs (Panchang Angas) Cards Grid -->
+<div class="panchang-cards-grid">
+  <!-- 1. Tithi -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">📜</span>
+      <span class="pfc-tag">अंग १ • Limb 1</span>
+    </div>
+    <div class="pfc-title">Tithi (तिथि)</div>
+    <div class="pfc-value" id="panchang-page-tithi">Shukla Dashami</div>
+    <div class="pfc-sub" id="panchang-page-tithi-sub">Shukla Paksha • Tithi #10</div>
+    <div class="pfc-desc">Lunar day signifying prosperity and mental disposition.</div>
+  </div>
+
+  <!-- 2. Nakshatra -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">✨</span>
+      <span class="pfc-tag">अंग २ • Limb 2</span>
+    </div>
+    <div class="pfc-title">Nakshatra (नक्षत्र)</div>
+    <div class="pfc-value" id="panchang-page-nakshatra">Rohini</div>
+    <div class="pfc-sub" id="panchang-page-nakshatra-sub">Lord: Moon • Pada 2</div>
+    <div class="pfc-desc">Moon constellation removing afflictions and guiding rituals.</div>
+  </div>
+
+  <!-- 3. Yoga -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">🧘</span>
+      <span class="pfc-tag">अंग ३ • Limb 3</span>
+    </div>
+    <div class="pfc-title">Yoga (योग)</div>
+    <div class="pfc-value" id="panchang-page-yoga">Shobhana</div>
+    <div class="pfc-sub" id="panchang-page-yoga-sub">Auspicious Classical Yoga</div>
+    <div class="pfc-desc">Solilunar mathematical relation removing ailments.</div>
+  </div>
+
+  <!-- 4. Karana -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">🌗</span>
+      <span class="pfc-tag">अंग ४ • Limb 4</span>
+    </div>
+    <div class="pfc-title">Karana (करण)</div>
+    <div class="pfc-value" id="panchang-page-karana">Bava</div>
+    <div class="pfc-sub" id="panchang-page-karana-sub">Half-tithi division</div>
+    <div class="pfc-desc">Active half-lunar day determining action accomplishment.</div>
+  </div>
+
+  <!-- 5. Sun & Vaara -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">☀️</span>
+      <span class="pfc-tag">अंग ५ • Limb 5</span>
+    </div>
+    <div class="pfc-title">Vaara & Sun (वार व सूर्य)</div>
+    <div class="pfc-value" id="panchang-page-sun">🌅 06:15 / 🌇 18:10</div>
+    <div class="pfc-sub" id="panchang-page-sun-sub">Wednesday (बुधवार) • Dinmaan</div>
+    <div class="pfc-desc">Solar day of the week presiding over health and vitality.</div>
+  </div>
+
+  <!-- 6. Moon Transit -->
+  <div class="panchang-feature-card">
+    <div class="pfc-header">
+      <span class="pfc-icon">🌙</span>
+      <span class="pfc-tag">गोचर • Transit</span>
+    </div>
+    <div class="pfc-title">Moon Sign (चन्द्र राशि)</div>
+    <div class="pfc-value" id="panchang-page-moon">Taurus (वृषभ)</div>
+    <div class="pfc-sub" id="panchang-page-moon-sub">Lahiri Ayanamsa (24°10')</div>
+    <div class="pfc-desc">Current zodiac transit of the Moon governing daily emotion.</div>
+  </div>
+</div>
+
+<!-- Shubh & Ashubh Muhurat Section -->
+<div class="panchang-muhurat-container">
+  <div class="muhurat-card shubh-card">
+    <div class="muhurat-header">
+      <span class="muhurat-icon">✨</span>
+      <div>
+        <h3 class="muhurat-title">Shubh Abhijit Muhurat (शुभ अभिजित मुहूर्त)</h3>
+        <span class="muhurat-sub">Universal Auspicious Window</span>
+      </div>
+    </div>
+    <div class="muhurat-time-display" id="panchang-page-abhijit">11:45 AM - 12:35 PM</div>
+    <p class="muhurat-text">
+      Best time for initiating new businesses, investment, signing agreements, entering contracts, and spiritual ceremonies.
+    </p>
+  </div>
+
+  <div class="muhurat-card ashubh-card">
+    <div class="muhurat-header">
+      <span class="muhurat-icon">⚠️</span>
+      <div>
+        <h3 class="muhurat-title">Ashubh Rahu Kaal (अशुभ राहु काल)</h3>
+        <span class="muhurat-sub">Inauspicious Planetary Window</span>
+      </div>
+    </div>
+    <div class="muhurat-time-display ashubh-time" id="panchang-page-rahu">04:30 PM - 06:00 PM</div>
+    <p class="muhurat-text">
+      Inauspicious window governed by Rahu. Avoid signing contracts, starting journeys, or inaugurating major auspicious tasks.
+    </p>
+  </div>
+</div>
+
+<!-- Complete Day & Night Choghadiya Section -->
+<div class="choghadiya-container-box">
+  <div class="choghadiya-box-header">
+    <div>
+      <h2 class="choghadiya-box-title">दिन का चौघड़िया चक्र (Day Choghadiya Muhurat)</h2>
+      <p class="choghadiya-box-desc">8-Period solar division from sunrise to sunset indicating auspicious and inauspicious hours for activities.</p>
+    </div>
+    <div class="choghadiya-legend">
+      <span class="legend-badge shubh">Amrit / Shubh / Labh: Auspicious</span>
+      <span class="legend-badge char">Char: Neutral / Travel</span>
+      <span class="legend-badge ashubh">Rog / Kaal / Udveg: Inauspicious</span>
+    </div>
+  </div>
+
+  <div class="choghadiya-cards-grid" id="panchang-page-choghadiya-list">
+    <!-- Rendered dynamically by App.renderPanchangPageView() -->
+  </div>
+</div>
+
+<!-- Classical Shastra Scripture Insight -->
+<div class="panchang-shastra-banner">
+  <div class="shastra-symbol">📜</div>
+  <div class="shastra-text-wrap">
+    <div class="shastra-sanskrit">
+      "तिथिेश्च श्रियमाप्नोति वारादायुष्यवर्धनम्। नक्षत्राद्धरते पापं योगाद्रोगनिवारणम्॥ करणात् कार्यसिद्धिः स्यात् पञ्चाङ्गफलमुत्तमम्॥"
+    </div>
+    <div class="shastra-meaning">
+      <strong>महर्षि पराशर (Brihat Parashara Hora Shastra):</strong> The five limbs of Panchanga bestow specific divine boons: Tithi brings prosperity, Vaara increases longevity, Nakshatra expels sinful karmas, Yoga removes ailments, and Karana ensures accomplishment of noble endeavors.
+    </div>
+  </div>
+</div>

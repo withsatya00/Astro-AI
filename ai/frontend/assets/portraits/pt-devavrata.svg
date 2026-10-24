@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="bgGrad_pt-devavrata" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#FEF9C3"/>
+      <stop offset="100%" stop-color="#EAB308" stop-opacity="0.3"/>
+    </radialGradient>
+    <filter id="shadow_pt-devavrata" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Circular Base Background -->
+  <circle cx="60" cy="60" r="56" fill="url(#bgGrad_pt-devavrata)" stroke="#EAB308" stroke-width="2.5"/>
+
+  <!-- Subtle Aura Halo Ring -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#EAB308" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- Person Group -->
+  <g filter="url(#shadow_pt-devavrata)">
+    <!-- Body & Garment -->
+    
+        <!-- Kurta & Shawl / Angavastram -->
+        <path d="M26 110 C26 82, 40 76, 60 76 C80 76, 94 82, 94 110 Z" fill="#F8FAFC"/>
+        <path d="M26 110 C30 84, 45 78, 56 82 L42 110 Z" fill="#EAB308"/> <!-- Shawl L -->
+        <path d="M94 110 C90 84, 75 78, 64 82 L78 110 Z" fill="#EAB308"/> <!-- Shawl R -->
+        <circle cx="60" cy="94" r="3" fill="#FDE047"/> <!-- Button / Pendant -->
+        <path d="M48 68 Q60 82 72 68 Q60 75 48 68 Z" fill="#78716C" opacity="0.9"/>
+        
+
+    <!-- Neck -->
+    <path d="M52 68 L52 78 L68 78 L68 68 Z" fill="#FAD2A6"/>
+
+    <!-- Head / Face -->
+    <ellipse cx="60" cy="56" rx="17" ry="20" fill="#FAD2A6"/>
+
+    <!-- Ears -->
+    <ellipse cx="43" cy="56" rx="3.5" ry="6" fill="#FAD2A6"/>
+    <ellipse cx="77" cy="56" rx="3.5" ry="6" fill="#FAD2A6"/>
+
+    <!-- Hair -->
+    
+            <!-- Male Traditional Haircut -->
+            <path d="M35 48 C32 30, 42 24, 60 24 C78 24, 88 30, 85 48 C80 34, 74 30, 60 30 C46 30, 40 34, 35 48 Z" fill="#78716C"/>
+            
+
+    <!-- Tilak / Bindi -->
+    
+            <line x1="52" y1="46" x2="68" y2="46" stroke="#E2E8F0" stroke-width="1.8"/>
+            <line x1="52" y1="49" x2="68" y2="49" stroke="#E2E8F0" stroke-width="1.8"/>
+            <line x1="52" y1="52" x2="68" y2="52" stroke="#E2E8F0" stroke-width="1.8"/>
+            <circle cx="60" cy="49" r="1.5" fill="#DC2626"/>
+            
+
+    <!-- Eyes (Gentle, Serene) -->
+    <ellipse cx="53" cy="55" rx="2.5" ry="1.6" fill="#1E293B"/>
+    <circle cx="53.8" cy="54.4" r="0.7" fill="#FFFFFF"/>
+    <ellipse cx="67" cy="55" rx="2.5" ry="1.6" fill="#1E293B"/>
+    <circle cx="67.8" cy="54.4" r="0.7" fill="#FFFFFF"/>
+
+    <!-- Eyebrows -->
+    <path d="M49 51 Q53 49 57 51" stroke="#334155" stroke-width="1.2" fill="none"/>
+    <path d="M63 51 Q67 49 71 51" stroke="#334155" stroke-width="1.2" fill="none"/>
+
+    <!-- Gentle Smile -->
+    <path d="M56 64 Q60 67 64 64" stroke="#78350F" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    
+    <!-- Nose -->
+    <path d="M60 54 L59 60 L61 60" stroke="#B45309" stroke-width="0.9" fill="none" opacity="0.7"/>
+  </g>
+</svg>

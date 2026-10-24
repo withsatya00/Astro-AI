@@ -15,19 +15,23 @@
     },
     {
       "source": "/css/:path*",
-      "destination": "/frontend/css/:path*"
+      "destination": "/website/frontend/css/:path*"
     },
     {
       "source": "/js/:path*",
-      "destination": "/frontend/js/:path*"
+      "destination": "/website/frontend/js/:path*"
     },
     {
       "source": "/assets/:path*",
-      "destination": "/frontend/assets/:path*"
+      "destination": "/website/frontend/assets/:path*"
+    },
+    {
+      "source": "/src/:path*",
+      "destination": "/website/frontend/src/:path*"
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/index.html"
+      "destination": "/website/frontend/index.html"
     }
   ]
 }

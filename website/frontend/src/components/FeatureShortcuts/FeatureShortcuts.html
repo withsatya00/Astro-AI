@@ -1,0 +1,72 @@
+<!-- Explore Astrology Services Component (Matches Reference) -->
+<section class="feature-shortcuts-section bg-[#FAF8F2] border-b border-[#E7E2D8] py-12 md:py-16" id="feature-shortcuts-section">
+  <div class="feature-shortcuts-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="section-header-split flex items-end justify-between gap-4 mb-8">
+      <div>
+        <h2 class="section-title font-serif text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E1B4B] tracking-tight mb-1.5" data-i18n="services_heading">Explore Our Astrology Services</h2>
+        <p class="section-subtitle text-sm text-[#53627A]" data-i18n="services_subtext">Discover accurate insights for every important aspect of your life.</p>
+      </div>
+      <a href="/calculators" data-nav-link class="btn-view-all-services inline-flex items-center gap-1.5 text-sm font-bold text-[#7439EA] hover:text-[#5B21B6] transition-colors shrink-0 no-underline">
+        <span data-i18n="btn_view_all_services">View All Services</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- 6-Card Responsive Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      <!-- 1. Kundli Milan -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#7439EA] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.openKundaliMilanModal ? window.App.openKundaliMilanModal() : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          💖
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_milan">Kundli Milan</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_milan_sub">36 Guns Matching</p>
+      </div>
+
+      <!-- 2. Numerology -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#2563EB] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.openCalculatorsModal ? window.App.openCalculatorsModal('numerology') : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] text-[#2563EB] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          🔢
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_num">Numerology</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_num_sub">Life Path & Destiny</p>
+      </div>
+
+      <!-- 3. Mangal Dosha -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#EF4444] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.openCalculatorsModal ? window.App.openCalculatorsModal('mangal-dosha') : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#FEF2F2] border border-[#FECACA] text-[#DC2626] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          🔥
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_mangal">Mangal Dosha</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_mangal_sub">Check & Remedies</p>
+      </div>
+
+      <!-- 4. Shani Sade Sati -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#7439EA] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.openSadeSatiModal ? window.App.openSadeSatiModal() : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] text-[#7439EA] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          🪐
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_sadesati">Shani Sade Sati</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_sadesati_sub">Timeline & Impact</p>
+      </div>
+
+      <!-- 5. Career Prediction -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#059669] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.filterByCategory ? window.App.filterByCategory('Career') : (window.location.href='/astrologers')">
+        <div class="w-12 h-12 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] text-[#059669] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          💼
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_career">Career Prediction</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_career_sub">Job & Business</p>
+      </div>
+
+      <!-- 6. Love & Marriage -->
+      <div class="service-feature-card bg-white border border-[#E7E2D8] hover:border-[#EC4899] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.filterByCategory ? window.App.filterByCategory('Marriage') : (window.location.href='/astrologers')">
+        <div class="w-12 h-12 rounded-xl bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          ❤️
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1" data-i18n="shortcut_marriage">Love & Marriage</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight" data-i18n="shortcut_marriage_sub">Compatibility</p>
+      </div>
+    </div>
+  </div>
+</section>

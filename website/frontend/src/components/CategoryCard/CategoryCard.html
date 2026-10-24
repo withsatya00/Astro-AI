@@ -1,0 +1,60 @@
+<!-- Quick Service Action Cards Component (Matches Reference Top Strip) -->
+<section class="service-categories-section bg-[#FAF8F2] border-b border-[#E7E2D8] py-8 sm:py-10" id="service-categories-section">
+  <div class="service-categories-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-4">
+      <!-- 1. Chat with Astrologer -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#7439EA] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.Router ? window.Router.navigate('/astrologers') : (window.location.href='/astrologers')">
+        <div class="w-12 h-12 rounded-xl bg-[#F5F3FF] border border-[#DDD6FE] text-[#7439EA] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          💬
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">Chat with Astrologer</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Instant text consultation</p>
+      </div>
+
+      <!-- 2. Call Astrologer -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#EC4899] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.Router ? window.Router.navigate('/astrologers') : (window.location.href='/astrologers')">
+        <div class="w-12 h-12 rounded-xl bg-[#FDF2F8] border border-[#FBCFE8] text-[#DB2777] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          📞
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">Call Astrologer</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Talk to astrologer live</p>
+      </div>
+
+      <!-- 3. Daily Horoscope -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#3B82F6] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.Router ? window.Router.navigate('/rashiphal') : (window.location.href='/rashiphal')">
+        <div class="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] text-[#2563EB] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          📅
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">Daily Horoscope</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Accurate daily predictions</p>
+      </div>
+
+      <!-- 4. Janam Kundli -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#F59E0B] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.App && window.App.openKundaliMilanModal ? window.App.openKundaliMilanModal() : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] text-[#D97706] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          📜
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">Janam Kundli</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Detailed birth chart analysis</p>
+      </div>
+
+      <!-- 5. 17 Calculators -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#7439EA] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.Router ? window.Router.navigate('/calculators') : (window.location.href='/calculators')">
+        <div class="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] text-[#2563EB] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          📐
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">17 Calculators</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Precise Vedic calculations</p>
+      </div>
+
+      <!-- 6. Aaj Ka Panchang -->
+      <div class="quick-action-card bg-white border border-[#E7E2D8] hover:border-[#F59E0B] rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center shadow-xs hover:shadow-md transition-all cursor-pointer transform hover:-translate-y-1" onclick="window.Router ? window.Router.navigate('/panchang') : (window.location.href='/panchang')">
+        <div class="w-12 h-12 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] text-[#D97706] flex items-center justify-center text-xl mb-3 shadow-2xs">
+          🌅
+        </div>
+        <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] mb-1">Aaj Ka Panchang</h3>
+        <p class="text-[11px] text-[#64748B] leading-tight">Today's tithi, muhurat & more</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,165 @@
+<div class="directory-page-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 text-center">
+  <div class="directory-title-row flex items-center justify-center gap-3 mb-3 flex-wrap">
+    <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="calc_page_heading">17 वैदिक ज्योतिष कैलकुलेटर (17 Calculators Suite)</h1>
+    <span class="directory-badge inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 shadow-sm">Swiss Ephemeris Precision</span>
+  </div>
+  <p class="directory-subtitle text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" data-i18n="calc_page_subtitle">Instant, rigorous mathematical calculations for planetary placements, doshas, karakas, compatibility, and numerology.</p>
+</div>
+
+<!-- Calculators Category Filter Tabs -->
+<div class="directory-tabs max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-2 flex-wrap mb-8" id="calculators-page-filter-tabs">
+  <button class="dir-tab active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-purple-600 bg-purple-600 text-white shadow-sm transition-all" data-cat="all" onclick="App.filterCalculatorsGrid('all')">All Calculators (17)</button>
+  <button class="dir-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-cat="marriage" onclick="App.filterCalculatorsGrid('marriage')">💍 Marriage & Compatibility</button>
+  <button class="dir-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-cat="doshas" onclick="App.filterCalculatorsGrid('doshas')">🔥 Doshas & Parihars</button>
+  <button class="dir-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-cat="planetary" onclick="App.filterCalculatorsGrid('planetary')">🪐 Planetary & Dasha</button>
+  <button class="dir-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-cat="personal" onclick="App.filterCalculatorsGrid('personal')">✨ Personal & Numerology</button>
+</div>
+
+<!-- 17 Calculators Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+  <div class="calculators-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="calculators-page-grid">
+    <!-- Card 1: Kundali Milan -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="marriage" onclick="App.openKundaliMilanModal()">
+      <div class="calc-card-icon text-3xl mb-3">💍</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Kundali Milan (36 Gunas)</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Ashtakoota 36-point compatibility matrix evaluating Varna, Vashya, Tara, Yoni, Maitri, Gana, Bhakoot & Nadi.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Match Kundali ➔</span>
+    </div>
+
+    <!-- Card 2: Numerology -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="personal" onclick="App.openCalculatorsModal('numerology')">
+      <div class="calc-card-icon text-3xl mb-3">🔢</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Numerology (अंकज्योतिष)</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Life Path, Destiny, Soul Urge & ruling planet derived from your birth date.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate ➔</span>
+    </div>
+
+    <!-- Card 3: Name Numerology -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="personal" onclick="App.openCalculatorsModal('name-numerology')">
+      <div class="calc-card-icon text-3xl mb-3">✍️</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Name Numerology</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Chaldean and Pythagorean vibrations for your personal or business name.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate ➔</span>
+    </div>
+
+    <!-- Card 4: Mangal Dosha -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="doshas" onclick="App.openCalculatorsModal('mangal-dosha')">
+      <div class="calc-card-icon text-3xl mb-3">🔥</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Mangal Dosha & Parihars</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Check Mars placement in houses 1, 4, 7, 8, 12 with 6 classical cancellation rules.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Check Dosha ➔</span>
+    </div>
+
+    <!-- Card 5: Shani Sade Sati -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="doshas" onclick="App.openSadeSatiModal()">
+      <div class="calc-card-icon text-3xl mb-3">🪐</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Shani Sade Sati Timeline</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Accurate 7.5-year Saturn transit through 12th, 1st & 2nd houses from natal Moon with remedies.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Evaluate Sade Sati ➔</span>
+    </div>
+
+    <!-- Card 6: Kaal Sarp Dosha -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="doshas" onclick="App.openCalculatorsModal('kaalsarp')">
+      <div class="calc-card-icon text-3xl mb-3">🐍</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Kaal Sarp Dosha</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Analyze planetary axis between Rahu and Ketu to identify all 12 Kaal Sarp types.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Check Kaal Sarp ➔</span>
+    </div>
+
+    <!-- Card 7: Rising Sign -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('rising-sign')">
+      <div class="calc-card-icon text-3xl mb-3">🌅</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Rising Sign (Lagna)</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Determine your exact eastern horizon rising sign and ascendant degree.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate ➔</span>
+    </div>
+
+    <!-- Card 8: Nakshatra -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('nakshatra')">
+      <div class="calc-card-icon text-3xl mb-3">✨</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Nakshatra & Pada Finder</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Discover your Moon constellation, deity, planetary lord, and baby naming syllable.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Find Nakshatra ➔</span>
+    </div>
+
+    <!-- Card 9: Atmakaraka -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('atmakaraka')">
+      <div class="calc-card-icon text-3xl mb-3">👑</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Atmakaraka & Darakaraka</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Jaimini Chara Karakas: King of the chart (Soul significator) and spouse indicator.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate ➔</span>
+    </div>
+
+    <!-- Card 10: Love Compatibility -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="marriage" onclick="App.openCalculatorsModal('love-compat')">
+      <div class="calc-card-icon text-3xl mb-3">💖</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Zodiac Love Compatibility</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Elemental harmony (Fire, Earth, Air, Water) and natural Vedic planetary friendships.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Match Signs ➔</span>
+    </div>
+
+    <!-- Card 11: Friendship Compatibility -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="marriage" onclick="App.openCalculatorsModal('friend-compat')">
+      <div class="calc-card-icon text-3xl mb-3">🤝</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Friendship Compatibility</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Elemental and psychological kinship score between two zodiac signs.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Evaluate Friendship ➔</span>
+    </div>
+
+    <!-- Card 12: Name Compatibility -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="personal" onclick="App.openCalculatorsModal('name-compat')">
+      <div class="calc-card-icon text-3xl mb-3">🔤</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Name Compatibility</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Pythagorean vowel & consonant harmony score between two names.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate ➔</span>
+    </div>
+
+    <!-- Card 13: Pitra Dosha -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="doshas" onclick="App.openCalculatorsModal('pitra-dosha')">
+      <div class="calc-card-icon text-3xl mb-3">🪔</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Pitra Dosha Calculator</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Identifies ancestral afflictions involving Sun, 9th house & Rahu/Ketu.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Check Pitra Dosha ➔</span>
+    </div>
+
+    <!-- Card 14: Gemstone -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('gemstone')">
+      <div class="calc-card-icon text-3xl mb-3">💎</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Vedic Gemstone Recommender</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Prescribes auspicious ratnas based on Yogakaraka, Lagnesh, and running Mahadasha.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Recommend Gemstone ➔</span>
+    </div>
+
+    <!-- Card 15: Dasha Timeline -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('dasha')">
+      <div class="calc-card-icon text-3xl mb-3">⏳</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Vimshottari Dasha Timeline</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">120-year planetary period breakdown from Mahadasha to Antardasha and Pratyantardasha.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Calculate Dasha ➔</span>
+    </div>
+
+    <!-- Card 16: Moon Sign -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('moon-sign')">
+      <div class="calc-card-icon text-3xl mb-3">🌙</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Moon Sign (Chandra Rashi)</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Determine your authentic Vedic Moon sign for daily transit horoscopes.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Find Moon Sign ➔</span>
+    </div>
+
+    <!-- Card 17: Panchang & Muhurat -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openPanchangModal()">
+      <div class="calc-card-icon text-3xl mb-3">📅</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Panchang & Shubh Muhurat</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Tithi, Vara, Nakshatra, Yoga, Karana, Abhijit Muhurat, Rahu Kaal & Choghadiya.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Open Panchang ➔</span>
+    </div>
+
+    <!-- Card 18: Varshphal -->
+    <div class="calculator-card bg-white rounded-2xl p-6 border border-[#E7E2D8] hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between cursor-pointer" data-cat="planetary" onclick="App.openCalculatorsModal('varshphal')">
+      <div class="calc-card-icon text-3xl mb-3">☀️</div>
+      <div class="calc-card-title font-serif font-bold text-lg text-[#1E1B4B] mb-2">Varshphal (Solar Return Chart)</div>
+      <p class="calc-card-desc text-xs text-slate-500 leading-relaxed mb-4">Tajika annual chart computed for the exact moment the transit Sun returns to natal degree.</p>
+      <span class="btn-calc-link text-xs font-bold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1">Generate Varshphal ➔</span>
+    </div>
+  </div>
+</div>

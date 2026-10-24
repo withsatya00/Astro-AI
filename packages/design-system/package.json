@@ -1,0 +1,11 @@
+{
+  "name": "@astro-ai/design-system",
+  "version": "1.0.0",
+  "description": "Astro AI warm ivory, deep violet, and saffron design system",
+  "main": "tokens.css",
+  "exports": {
+    "./tokens.css": "./tokens.css"
+  },
+  "keywords": ["astrology", "design-system", "tokens", "css"],
+  "author": "Astro AI Engineering"
+}

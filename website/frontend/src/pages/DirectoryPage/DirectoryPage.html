@@ -1,0 +1,82 @@
+<div class="directory-page-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 text-center">
+  <div class="directory-title-row flex items-center justify-center gap-3 mb-3 flex-wrap">
+    <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="dir_page_heading">Vedic Astrologer Directory</h1>
+    <span class="directory-badge inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 shadow-sm" id="directory-total-badge">30+ Certified Astrologers</span>
+  </div>
+  <p class="directory-subtitle text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" data-i18n="dir_page_subtitle">Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.</p>
+</div>
+
+<!-- Search & Filter Controls Toolbar -->
+<div class="directory-toolbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 space-y-4">
+  <div class="dir-search-row flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+    <div class="dir-search-box flex-1 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
+      <span class="text-slate-400">🔍</span>
+      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search by astrologer name, expertise, or bio keyword..." oninput="App.onDirectorySearchInput(event)" />
+    </div>
+    <button type="button" class="btn-clear-filters px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 text-xs font-semibold shrink-0 transition-colors" onclick="App.clearDirectoryFilters()">
+      <span data-i18n="dir_btn_clear">Clear Filters</span>
+    </button>
+  </div>
+
+  <div class="dir-filters-row grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <!-- Specialty / Concern Filter -->
+    <select id="dir-filter-specialty" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+      <option value="">All Specialties / Concerns</option>
+      <option value="Career">💼 Career & Business</option>
+      <option value="Marriage">💍 Love & Marriage</option>
+      <option value="Kundli">🪐 Kundli & Doshas</option>
+      <option value="Finance">💰 Wealth & Finance</option>
+      <option value="Remedies">🪔 Vedic Remedies</option>
+      <option value="Health">🩺 Health & Longevity</option>
+      <option value="Education">🎓 Education & Studies</option>
+      <option value="Prashna">❓ Prashna Shastra</option>
+      <option value="Gemology">💎 Gemstones</option>
+      <option value="Vastu">🏠 Vastu Shastra</option>
+    </select>
+
+    <!-- Language Filter -->
+    <select id="dir-filter-language" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+      <option value="">All Spoken Languages</option>
+      <option value="Hindi">🇮🇳 Hindi (हिन्दी)</option>
+      <option value="English">🇬🇧 English</option>
+      <option value="Sanskrit">🕉️ Sanskrit (संस्कृत)</option>
+      <option value="Marathi">🚩 Marathi (मराठी)</option>
+      <option value="Gujarati">🦚 Gujarati (ગુજરાતી)</option>
+      <option value="Bengali">🌸 Bengali (বাংলা)</option>
+      <option value="Tamil">🪔 Tamil (தமிழ்)</option>
+      <option value="Telugu">🌾 Telugu (తెలుగు)</option>
+    </select>
+
+    <!-- Consultation Mode Filter -->
+    <select id="dir-filter-mode" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+      <option value="all">All Modes</option>
+      <option value="ai">Automated Consultations (Instant & Free)</option>
+      <option value="human">Certified Human Scholars</option>
+      <option value="online">Online Now</option>
+    </select>
+
+    <!-- Sort Option -->
+    <select id="dir-filter-sort" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+      <option value="popular">Sort: Most Popular</option>
+      <option value="experience">Sort: Highest Experience</option>
+      <option value="rating">Sort: Highest Rated</option>
+      <option value="name">Sort: Name (A-Z)</option>
+    </select>
+  </div>
+
+  <!-- Active Filter Chips Strip -->
+  <div id="dir-active-filters-strip" style="display: none;" class="items-center gap-2 flex-wrap pt-1">
+    <span class="text-xs text-slate-500 font-semibold">Active Filters:</span>
+    <div id="dir-active-chips-content" class="flex gap-1.5 flex-wrap"></div>
+  </div>
+</div>
+
+<!-- 30+ Astrologers Cards Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+  <div class="astrologers-grid-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full" id="directory-page-cards-grid">
+    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: #64748B;">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔮</div>
+      <p style="font-weight: 600;">Loading 30+ Astrologer Profiles from Database...</p>
+    </div>
+  </div>
+</div>

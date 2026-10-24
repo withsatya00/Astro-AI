@@ -15,11 +15,11 @@ import httpx
 # Add repository root to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from backend.app.core.config import settings
-from backend.app.core.logging import logger
-from backend.app.core.security import validate_outbound_url_ssrf, secure_filename
-from backend.app.db.session import SessionLocal, init_db
-from backend.app.rag.ingestion import IngestionPipeline, compute_sha256
+from packages.core.config import settings
+from packages.core.logging import logger
+from packages.core.security import validate_outbound_url_ssrf, secure_filename
+from packages.database.session import SessionLocal, init_db
+from ai.backend.app.rag.ingestion import IngestionPipeline, compute_sha256
 
 MANIFEST_PATH = Path(settings.DOCUMENTS_DIR) / "manifests" / "source_manifest.json"
 
@@ -117,7 +117,7 @@ def acquire_and_index_sources():
             size = file_path.stat().st_size
 
             # Ingest into knowledge base
-            doc = IngestionPipeline.process_and_index_file(
+            doc, _ = IngestionPipeline.process_and_index_file(
                 db=db,
                 file_path=str(file_path),
                 title=title,

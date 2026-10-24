@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/v1/:path*",
+      "destination": "https://astro-ai-backend-4f0l.onrender.com/api/v1/:path*"
+    },
+    {
+      "source": "/docs",
+      "destination": "https://astro-ai-backend-4f0l.onrender.com/docs"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "https://astro-ai-backend-4f0l.onrender.com/openapi.json"
+    },
+    {
+      "source": "/css/:path*",
+      "destination": "/website/frontend/css/:path*"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/website/frontend/js/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/website/frontend/assets/:path*"
+    },
+    {
+      "source": "/src/:path*",
+      "destination": "/website/frontend/src/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/website/frontend/index.html"
+    }
+  ]
+}

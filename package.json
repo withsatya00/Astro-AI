@@ -1,0 +1,20 @@
+{
+  "name": "astrotalk",
+  "version": "1.0.0",
+  "description": "Astro Jyotish - Vedic Astrology & AI Consultation Platform",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --minify && npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./ai/frontend/css/tailwind.css --minify",
+    "watch:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --watch",
+    "serve:frontend": "node scripts/serve_frontend.js",
+    "test:ui": "node scripts/test_frontend_regressions.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "autoprefixer": "^10.4.27",
+    "linkedom": "^0.18.14",
+    "postcss": "^8.5.8",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^3.4.17"
+  }
+}

@@ -1,0 +1,76 @@
+<!-- ConsultationHeader Component -->
+<header class="consultation-topbar" id="consultation-topbar">
+  <div class="consultation-header-left">
+    <button type="button" class="btn-chat-back" id="btn-chat-exit" onclick="window.Router ? window.Router.navigate('/astrologers') : (window.location.href='/astrologers')" title="Back to Astrologers">
+      ←
+    </button>
+    
+    <div class="astrologer-meta-compact" id="topbar-astrologer-badge" onclick="window.App && window.App.openAstrologerProfile && window.App.openAstrologerProfile('pt-rameshwar-dwivedi')" style="cursor: pointer;">
+      <div class="astrologer-avatar-wrap">
+        <img 
+          src="assets/portraits/pt-rameshwar-dwivedi.jpg" 
+          alt="Pt. Rameshwar Dwivedi" 
+          class="astrologer-avatar-img" 
+          id="consultation-astrologer-avatar"
+          onerror="this.onerror=null; this.src='assets/portraits/default-avatar.svg';" 
+        />
+        <span class="status-dot-online"></span>
+      </div>
+      
+      <div class="astrologer-info-compact">
+        <div class="astrologer-name-line">
+          <span class="astrologer-name" id="consultation-astrologer-name">Pt. Rameshwar Dwivedi</span>
+          <span class="consult-badge">Vedic Consultation</span>
+          <span class="verified-star">✦</span>
+          <span class="verified-tick" title="Verified Scholar">✓</span>
+        </div>
+        <div class="astrologer-status-line">
+          <span class="astrologer-sub" id="consultation-astrologer-sub">Senior Vedic Jyotish & Karmakand Scholar • 34+ वर्ष अनुभव</span>
+          <span class="status-text-live">● ऑनलाइन (Online)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="consultation-header-right">
+    <!-- Audio Call Action -->
+    <button type="button" class="btn-header-call" id="btn-header-audio-call" onclick="window.ChatController && window.ChatController.toggleAudioCall && window.ChatController.toggleAudioCall(this)" title="Simulate Astrologer Voice Call">
+      <span class="call-icon">📞</span>
+      <span class="call-label">Audio Call</span>
+    </button>
+
+    <!-- Live Consultation Timer -->
+    <div class="consultation-timer-badge" id="consultation-live-timer" title="Active Consultation Duration">
+      <span class="timer-dot">●</span>
+      <span class="timer-text" id="consultation-timer-text">Live: <span id="chat-timer-count">12:37</span></span>
+    </div>
+
+    <!-- End Consultation Button -->
+    <button type="button" class="btn-header-end" id="btn-header-end-chat" onclick="window.ChatController && window.ChatController.confirmEndConsultation()" title="End Active Consultation Session">
+      <span>⏹ End</span>
+    </button>
+
+    <!-- Gentle Temple Chimes Sound Toggle -->
+    <button type="button" class="btn-sound-toggle" id="btn-sound-toggle" onclick="window.ChatController && window.ChatController.toggleSound && window.ChatController.toggleSound()" title="Toggle Temple Bell Chime">
+      <span id="sound-toggle-icon">🔔</span>
+    </button>
+
+    <!-- Overflow Actions Menu Dropdown -->
+    <div class="header-dropdown-wrap">
+      <button type="button" class="btn-header-more" id="btn-header-overflow-menu" onclick="document.getElementById('consultation-overflow-dropdown').classList.toggle('active')" title="More Consultation Options">
+        ⋮
+      </button>
+      <div class="header-dropdown-menu" id="consultation-overflow-dropdown">
+        <button type="button" class="dropdown-item" id="btn-menu-kundli" onclick="window.ChatController && window.ChatController.toggleKundliSheet && window.ChatController.toggleKundliSheet(); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+          <span>🪐</span> <span>North Indian Kundli (लग्न चक्र)</span>
+        </button>
+        <button type="button" class="dropdown-item" id="btn-menu-birth" onclick="window.App && window.App.openBirthModal && window.App.openBirthModal(); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+          <span>📋</span> <span>Birth Details & Profile</span>
+        </button>
+        <button type="button" class="dropdown-item" id="btn-clear-chat" onclick="window.ChatController && (window.ChatController.clearCurrentChat ? window.ChatController.clearCurrentChat() : window.ChatController.startNewChat()); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+          <span>🗑️</span> <span>Clear Consultation Messages</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

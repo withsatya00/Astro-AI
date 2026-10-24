@@ -1,0 +1,8 @@
+{
+  "name": "@astro-ai/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript and Python schemas for Astro AI platform",
+  "types": "index.d.ts",
+  "keywords": ["astrology", "types", "schemas"],
+  "author": "Astro AI Engineering"
+}

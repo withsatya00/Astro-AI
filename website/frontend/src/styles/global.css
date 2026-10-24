@@ -1,0 +1,59 @@
+/**
+ * Global Layout & Application Shell Styles
+ */
+
+#app-root,
+.site-layout-shell,
+.site-layout-outlet,
+#app-views-container,
+.home-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-page, #FFFCF4);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.site-container {
+  max-width: var(--container-max-width, 1280px);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.site-container-narrow {
+  max-width: var(--container-narrow-width, 960px);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.app-page-view {
+  flex: 1;
+  display: block;
+}
+
+.app-page-view:not(.active) {
+  display: none !important;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-surface, #FAF8F2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle, #E7E2D8);
+  border-radius: var(--radius-full, 9999px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple-subtle, #DDD6FE);
+}

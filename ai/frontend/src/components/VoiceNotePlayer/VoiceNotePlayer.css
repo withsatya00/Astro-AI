@@ -1,0 +1,45 @@
+/* VoiceNotePlayer Styles */
+.voice-note-bubble {
+  background: #FFFFFF;
+  border: 1.5px solid #DDD6FE;
+  border-radius: 16px;
+  padding: 0.65rem 0.95rem;
+  margin: 0.55rem 0 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 2px 8px rgba(116, 57, 234, 0.08);
+}
+.voice-play-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #7439EA;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  flex-shrink: 0;
+  transition: transform 0.18s ease;
+}
+.voice-play-btn:hover {
+  transform: scale(1.08);
+}
+.voice-waveform-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.voice-waveform-svg {
+  width: 100%;
+  height: 22px;
+}
+.voice-duration {
+  font-size: 0.68rem;
+  color: #7439EA;
+  font-weight: 600;
+}

@@ -1,0 +1,88 @@
+<!-- MessageList Component: WhatsApp-Inspired Conversation Feed with Welcome Chamber -->
+<section class="chat-scroll-area" id="consultation-chat-scroll" aria-label="Consultation Messages Feed">
+  <!-- Load older messages button (Cursor Pagination) -->
+  <div id="chat-load-older-wrap" class="chat-load-older-wrap" style="display: none;">
+    <button type="button" id="btn-load-older-messages" class="btn-load-older-messages">
+      <span>⏳ Load older messages (पिछले संदेश देखें)</span>
+    </button>
+  </div>
+
+  <div class="chat-messages-container" id="chat-messages-container">
+    <!-- Date separator -->
+    <div class="chat-date-divider">
+      <span class="date-pill">Today</span>
+    </div>
+
+    <!-- Welcoming Astrologer Persona Consultation Chamber -->
+    <div class="welcome-screen chat-welcome-chamber" id="welcome-screen">
+      <div class="chamber-avatar-wrap" id="workspace-welcome-avatar">
+        <span>🕉️</span>
+        <span class="chamber-verified-seal" title="Verified Vedic Scholar">✓</span>
+      </div>
+      <h2 class="chamber-name" id="workspace-welcome-name">Acharya Shastri</h2>
+      
+      <div class="chamber-specs-row">
+        <span class="chamber-spec-pill" id="workspace-welcome-badge">Classical Vedic Consultation • 24+ Yrs Exp</span>
+        <span class="chamber-rating-pill">⭐ 4.96/5 (18,420+ Consultations)</span>
+        <span class="chamber-spec-pill" style="background: #DCFCE7; color: #15803D;">🟢 100% Online</span>
+      </div>
+
+      <p style="font-size: 0.92rem; color: #475569; line-height: 1.6; margin-bottom: 1.15rem;" id="workspace-welcome-desc">
+        Welcome to your private astrological consultation. Ask freely regarding career, relationship compatibility, marriage timing, wealth yogas, health, or classical Parashari remedies.
+      </p>
+
+      <div class="consultation-disclosure-banner" id="workspace-disclosure-banner" style="margin-bottom: 1.35rem;">
+        ℹ️ <strong>Consultation Guarantee:</strong> Certified Jyotish guidance grounded in Swiss Ephemeris mathematical longitudes and sacred Vedic shastras. First consultation 100% free with complete privacy.
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.75rem;">
+        <button type="button" class="btn-hero-primary" onclick="window.App && window.App.openBirthModal()" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">
+          <span>🪐</span> <span>Enter Birth Details (Optional)</span>
+        </button>
+        <button type="button" class="btn-hero-secondary" onclick="window.Router ? window.Router.navigate('/astrologers') : (window.location.href='/astrologers')" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">
+          <span>🔮</span> <span>Switch Astrologer (30+)</span>
+        </button>
+      </div>
+
+      <!-- 6 AstroTalk Inquiry Cards Grid -->
+      <div class="chamber-inquiry-title">
+        <span>⚡</span> <span>अक्सर पूछे जाने वाले मुख्य प्रश्न (Popular Consultation Questions)</span>
+      </div>
+      <div class="chamber-prompts-grid">
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('मेरी शादी कब तक होगी और जीवनसाथी का स्वभाव व पृष्ठभूमि कैसी रहेगी?')">
+          <div class="prompt-card-badge"><span>💍</span> <span>Marriage & Partner</span></div>
+          <div class="prompt-card-text">मेरी शादी कब तक होगी और जीवनसाथी का स्वभाव व पृष्ठभूमि कैसी रहेगी?</div>
+        </div>
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('करियर में पदोन्नति, प्रमोशन या नई नौकरी का शुभ योग कब बन रहा है?')">
+          <div class="prompt-card-badge"><span>💼</span> <span>Career & Promotion</span></div>
+          <div class="prompt-card-text">करियर में पदोन्नति, प्रमोशन या नई नौकरी का शुभ योग कब बन रहा है?</div>
+        </div>
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('क्या मेरी जन्म कुंडली में कोई शक्तिशाली राजयोग अथवा धन योग उपस्थित है?')">
+          <div class="prompt-card-badge"><span>💰</span> <span>Wealth & Raj Yoga</span></div>
+          <div class="prompt-card-text">क्या मेरी जन्म कुंडली में कोई शक्तिशाली राजयोग अथवा धन योग उपस्थित है?</div>
+        </div>
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('क्या मुझ पर शनि की साढ़ेसाती या ढैय्या का प्रभाव है और इसके क्या उपाय हैं?')">
+          <div class="prompt-card-badge"><span>🪐</span> <span>Saturn & Sade Sati</span></div>
+          <div class="prompt-card-text">क्या मुझ पर शनि की साढ़ेसाती या ढैय्या का प्रभाव है और इसके क्या उपाय हैं?</div>
+        </div>
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('मेरे भाग्योदय, स्वास्थ्य और सफलता के लिए कौन सा रत्न (Gemstone) धारण करना चाहिए?')">
+          <div class="prompt-card-badge"><span>💎</span> <span>Lucky Gemstone</span></div>
+          <div class="prompt-card-text">मेरे भाग्योदय, स्वास्थ्य और सफलता के लिए कौन सा रत्न (Gemstone) धारण करना चाहिए?</div>
+        </div>
+        <div class="chamber-prompt-card" onclick="window.ChatController && window.ChatController.askQuickPrompt('वर्तमान ग्रह बाधाओं और जीवन की अड़चनों को दूर करने के लिए क्या शास्त्रीय उपाय करें?')">
+          <div class="prompt-card-badge"><span>🪔</span> <span>Vedic Upay & Shanti</span></div>
+          <div class="prompt-card-text">वर्तमान ग्रह बाधाओं और जीवन की अड़चनों को दूर करने के लिए क्या शास्त्रीय उपाय करें?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Sentinel for WhatsApp-style scroll anchoring -->
+    <div id="chat-bottom-sentinel" class="chat-bottom-sentinel"></div>
+  </div>
+
+  <!-- Floating Scroll to Bottom / New Messages Button -->
+  <button type="button" id="btn-new-messages-floating" class="btn-new-messages-floating" style="display: none;" title="Scroll to latest message">
+    <span class="floating-badge-icon">↓</span>
+    <span id="floating-btn-text">New messages</span>
+  </button>
+</section>

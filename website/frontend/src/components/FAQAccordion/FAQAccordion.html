@@ -1,0 +1,184 @@
+<!-- Premium Vedic FAQ Accordion Component -->
+<section class="faq-section bg-gradient-to-b from-[#FFFDF7] via-[#FFFDF5] to-[#FAF8F2] border-b border-[#E7E2D8] py-14 md:py-20" id="faq-section">
+  <div class="faq-container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header with Vedic Tag -->
+    <div class="section-center-head text-center max-w-2xl mx-auto mb-10">
+      <span class="inline-flex items-center gap-1.5 bg-[#FFFBEB] border border-[#FCD34D] px-3.5 py-1.5 rounded-full text-xs font-bold text-[#B45309] tracking-wider uppercase mb-3 shadow-2xs">
+        <span>✦</span> <span data-i18n="faq_tag">अक्सर पूछे जाने वाले प्रश्न</span> <span>✦</span>
+      </span>
+      <h2 class="section-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B] tracking-tight mb-3" data-i18n="faq_title">
+        Frequently Asked Questions
+      </h2>
+      <p class="section-subtitle text-xs sm:text-sm text-[#53627A] leading-relaxed" data-i18n="faq_subtitle">
+        Everything you need to know about our authentic Vedic astrology consultations, birth charts, privacy, and wallet.
+      </p>
+
+      <!-- Quick FAQ Search Box -->
+      <div class="faq-search-box mt-6 max-w-md mx-auto relative">
+        <input 
+          type="text" 
+          id="faq-search-input" 
+          placeholder="Search question (e.g., birth time, language, refund)..." 
+          class="w-full bg-white border border-[#E7E2D8] focus:border-[#7439EA] rounded-full py-2.5 pl-10 pr-4 text-xs sm:text-sm text-[#1E1B4B] placeholder:text-gray-400 outline-none shadow-xs transition-all"
+          oninput="window.filterFAQBySearch && window.filterFAQBySearch(this.value)"
+        />
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
+      </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="faq-category-tabs flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-8">
+      <button type="button" class="faq-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer bg-[#7439EA] text-white shadow-xs" onclick="window.filterFAQCategory && window.filterFAQCategory('all', this)">
+        🔮 सभी प्रश्न (All)
+      </button>
+      <button type="button" class="faq-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer bg-white border border-[#E7E2D8] text-[#1E1B4B] hover:border-[#7439EA] shadow-2xs" onclick="window.filterFAQCategory && window.filterFAQCategory('consultation', this)">
+        📞 परामर्श व ज्योतिषी
+      </button>
+      <button type="button" class="faq-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer bg-white border border-[#E7E2D8] text-[#1E1B4B] hover:border-[#7439EA] shadow-2xs" onclick="window.filterFAQCategory && window.filterFAQCategory('kundli', this)">
+        🪐 कुण्डली व गणना
+      </button>
+      <button type="button" class="faq-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer bg-white border border-[#E7E2D8] text-[#1E1B4B] hover:border-[#7439EA] shadow-2xs" onclick="window.filterFAQCategory && window.filterFAQCategory('wallet', this)">
+        🪙 वॉलेट व सुरक्षा
+      </button>
+    </div>
+
+    <!-- Accordion Items List -->
+    <div class="faq-accordion-list flex flex-col gap-3.5" id="faq-accordion-list">
+      <!-- Item 1: Information Needed -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="kundli">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            What information do I need for an accurate birth chart consultation?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            You need your exact <strong>Date of Birth, Time of Birth, and Place of Birth</strong> (City/State/Country). Our astronomical engine calculates planetary degrees using <strong>NASA Swiss Ephemerides with Lahiri Ayanamsha</strong>. If you do not have the exact minute of birth, our senior astrologers perform <em>Prashna Kundli</em> and birth-time rectification.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2: Live Chat & Call Process -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="consultation">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            How does the live consultation with astrologers work?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Once you select an astrologer and click <strong>"Chat Now"</strong> or <strong>"Audio Call"</strong>, your private consultation room opens instantly. You can ask unlimited questions, attach palm photos or chart images, listen to live voice responses, and download a customized Vedic guidance prescription after the session.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 3: Astrologer Verification -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="consultation">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            Are the astrologers on the platform verified?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Yes, 100%. All senior astrologers undergo a <strong>3-tier verification process</strong> checking classical Gurukul credentials, shastriya knowledge (Parashari, Jaimini, Lal Kitab), and minimum 7+ years of authentic consultation experience before being onboarded.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 4: Regional Languages -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="consultation">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            Can I access consultations in my regional Indian language?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Yes! Astro Jyotish supports <strong>13+ Indian languages</strong> including Hindi, Sanskrit, Marathi, Gujarati, Bengali, Tamil, Telugu, Kannada, Malayalam, and Punjabi. You can filter astrologers by language from the Astrologers directory.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 5: Free First Consultation -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="wallet">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            Is my first astrology consultation really free?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Yes! All new seekers receive a complimentary <strong>₹0 First Consultation</strong> using promotional coupon code <code>FIRSTFREE</code>, along with a bonus ₹100 recharge balance to explore our certified scholars without financial worry.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 6: Privacy & Confidentiality -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="wallet">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            Is my birth data and personal consultation private and secure?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Your personal information is 100% confidential. All chat transcripts, audio sessions, and birth coordinates are encrypted with <strong>bank-grade 256-bit SSL encryption</strong>. Your phone number is never shared with astrologers or any third party.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 7: Calculation Precision -->
+      <div class="faq-item bg-white border border-[#E7E2D8] rounded-2xl overflow-hidden shadow-xs hover:border-[#FCD34D] transition-all" data-category="kundli">
+        <button type="button" class="faq-question-btn w-full flex items-center justify-between p-4 sm:p-5 bg-transparent border-none cursor-pointer text-left gap-4" onclick="window.toggleFAQItem && window.toggleFAQItem(this)">
+          <span class="faq-q-text font-serif font-bold text-sm sm:text-base text-[#1E1B4B] leading-snug">
+            How accurate are the planetary charts and Kundali calculations?
+          </span>
+          <span class="faq-chevron-circle w-8 h-8 rounded-full bg-[#FAF8F2] border border-[#E7E2D8] flex items-center justify-center text-xs text-[#7439EA] font-extrabold shrink-0 transition-transform duration-200">
+            ▼
+          </span>
+        </button>
+        <div class="faq-answer-pane hidden px-5 pb-5 pt-1 border-t border-dashed border-[#F1ECE1] bg-[#FFFDF9]">
+          <p class="faq-a-text text-xs sm:text-sm text-[#53627A] leading-relaxed">
+            Our astronomical engine utilizes the official <strong>Swiss Ephemeris</strong> developed by Astrodienst Zürich with Lahiri Ayanamsha. This ensures precision up to seconds of arc for all planetary longitudes, Vimshottari Dashas, and Divisional charts (D1 through D60).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Still have questions? Help Banner -->
+    <div class="faq-support-banner mt-10 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-[#FAF5FF] via-[#FFFDF7] to-[#FFFBEB] border border-[#DDD6FE] flex items-center justify-between gap-4 flex-wrap shadow-xs">
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-full bg-[#7439EA] text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+          💬
+        </div>
+        <div>
+          <h4 class="font-serif font-bold text-sm sm:text-base text-[#1E1B4B]">Still have questions? We're here to help!</h4>
+          <p class="text-xs text-[#64748B]">Our 24/7 Vedic support team is ready to assist you anytime.</p>
+        </div>
+      </div>
+      <button type="button" class="btn-faq-contact px-5 py-2.5 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-xs shadow-md transition-all cursor-pointer" onclick="window.App && window.App.showToast ? window.App.showToast('Support: support@astrojyotish.in | 24/7 Helpline', 'info') : alert('Support email: support@astrojyotish.in');">
+        Contact Support ➔
+      </button>
+    </div>
+  </div>
+</section>
+

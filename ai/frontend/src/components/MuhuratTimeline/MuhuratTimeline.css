@@ -1,0 +1,19 @@
+/* MuhuratTimeline Styles */
+.muhurat-timeline-bar {
+  background: linear-gradient(90deg, #FEF9EE 0%, #FFFDF8 100%);
+  border: 1px solid #FDE68A;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  margin: 0.65rem 0 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.muhurat-timeline-bar .timeline-icon {
+  font-size: 1.15rem;
+}
+.muhurat-timeline-bar .timeline-text {
+  font-size: 0.8rem;
+  color: #92400E;
+  font-weight: 600;
+}

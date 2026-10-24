@@ -1,0 +1,63 @@
+<div class="directory-page-header max-w-4xl mx-auto px-4 sm:px-6 pt-8 pb-6 text-center">
+  <div class="directory-title-row flex items-center justify-center gap-3 mb-3 flex-wrap">
+    <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="horo_page_heading">दैनिक वैदिक राशिफल (Vedic Rashiphal)</h1>
+    <span class="directory-badge inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 shadow-sm">Live Gochara Transits</span>
+  </div>
+  <p class="directory-subtitle text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" data-i18n="horo_page_subtitle">Authentic transit-based forecasts computed using planetary movements in Gochara with classical remedies.</p>
+</div>
+
+<!-- Timeframe Tabs -->
+<div class="horoscope-timeframe-tabs max-w-4xl mx-auto px-4 flex items-center justify-center gap-2 flex-wrap mb-6">
+  <button class="horo-time-tab active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-purple-600 bg-purple-600 text-white shadow-sm transition-all" data-timeframe="today" onclick="App.changeHoroscopeTimeframe('today')" data-i18n="tab_today">Today</button>
+  <button class="horo-time-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-timeframe="tomorrow" onclick="App.changeHoroscopeTimeframe('tomorrow')" data-i18n="tab_tomorrow">Tomorrow</button>
+  <button class="horo-time-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-timeframe="weekly" onclick="App.changeHoroscopeTimeframe('weekly')" data-i18n="tab_this_week">This Week</button>
+  <button class="horo-time-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-timeframe="monthly" onclick="App.changeHoroscopeTimeframe('monthly')" data-i18n="tab_this_month">This Month</button>
+  <button class="horo-time-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-sm transition-all" data-timeframe="yearly" onclick="App.changeHoroscopeTimeframe('yearly')" data-i18n="tab_year_2026">Year 2026</button>
+</div>
+
+<!-- 12-Rashi Circular Selector Grid -->
+<div class="max-w-4xl mx-auto px-4 mb-8">
+  <div class="rashi-selector-track grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5 sm:gap-3" id="rashi-selector-track">
+    <div class="rashi-btn active p-2.5 sm:p-3 rounded-xl border border-purple-300 bg-purple-50 flex flex-col items-center justify-center cursor-pointer hover:shadow-sm transition-all" data-sign="Aries" onclick="App.selectRashi('Aries')">
+      <span class="rashi-icon text-2xl mb-1">♈</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Aries</span><span class="rashi-hi text-[11px] text-slate-500">मेष</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Taurus" onclick="App.selectRashi('Taurus')">
+      <span class="rashi-icon text-2xl mb-1">♉</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Taurus</span><span class="rashi-hi text-[11px] text-slate-500">वृषभ</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Gemini" onclick="App.selectRashi('Gemini')">
+      <span class="rashi-icon text-2xl mb-1">♊</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Gemini</span><span class="rashi-hi text-[11px] text-slate-500">मिथुन</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Cancer" onclick="App.selectRashi('Cancer')">
+      <span class="rashi-icon text-2xl mb-1">♋</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Cancer</span><span class="rashi-hi text-[11px] text-slate-500">कर्क</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Leo" onclick="App.selectRashi('Leo')">
+      <span class="rashi-icon text-2xl mb-1">♌</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Leo</span><span class="rashi-hi text-[11px] text-slate-500">सिंह</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Virgo" onclick="App.selectRashi('Virgo')">
+      <span class="rashi-icon text-2xl mb-1">♍</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Virgo</span><span class="rashi-hi text-[11px] text-slate-500">कन्या</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Libra" onclick="App.selectRashi('Libra')">
+      <span class="rashi-icon text-2xl mb-1">♎</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Libra</span><span class="rashi-hi text-[11px] text-slate-500">तुला</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Scorpio" onclick="App.selectRashi('Scorpio')">
+      <span class="rashi-icon text-2xl mb-1">♏</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Scorpio</span><span class="rashi-hi text-[11px] text-slate-500">वृश्चिक</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Sagittarius" onclick="App.selectRashi('Sagittarius')">
+      <span class="rashi-icon text-2xl mb-1">♐</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Sagittarius</span><span class="rashi-hi text-[11px] text-slate-500">धनु</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Capricorn" onclick="App.selectRashi('Capricorn')">
+      <span class="rashi-icon text-2xl mb-1">♑</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Capricorn</span><span class="rashi-hi text-[11px] text-slate-500">मकर</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Aquarius" onclick="App.selectRashi('Aquarius')">
+      <span class="rashi-icon text-2xl mb-1">♒</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Aquarius</span><span class="rashi-hi text-[11px] text-slate-500">कुंभ</span>
+    </div>
+    <div class="rashi-btn p-2.5 sm:p-3 rounded-xl border border-slate-200 bg-white flex flex-col items-center justify-center cursor-pointer hover:border-purple-200 hover:shadow-sm transition-all" data-sign="Pisces" onclick="App.selectRashi('Pisces')">
+      <span class="rashi-icon text-2xl mb-1">♓</span><span class="rashi-name font-bold text-xs text-[#1E1B4B]">Pisces</span><span class="rashi-hi text-[11px] text-slate-500">मीन</span>
+    </div>
+  </div>
+</div>
+
+<!-- Horoscope Card Container -->
+<div class="horoscope-card-container max-w-4xl mx-auto px-4 pb-16" id="horoscope-card-container">
+  <!-- Rendered dynamically by App.renderHoroscope() -->
+</div>

@@ -1,0 +1,118 @@
+/* AI Consultation Layout Shell Styles */
+.consultation-shell {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-page, #FFFCF4);
+}
+
+.sidebar {
+  width: var(--sidebar-width, 280px);
+  min-width: var(--sidebar-width, 280px);
+  max-width: var(--sidebar-width, 280px);
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sidebar, #FFFDF7);
+  border-right: 1px solid var(--border-subtle, #E7E2D8);
+  z-index: 50;
+  overflow: hidden;
+  transition: transform 0.25s ease, width 0.25s ease;
+}
+
+.chat-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #FFFDF9;
+}
+
+#consultation-header-mount {
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+#dasha-quick-strip-mount {
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+#message-list-mount {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+}
+
+#message-list-mount > .chat-scroll-area {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#analyzing-indicator-mount {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+#message-composer-mount {
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+.context-panel {
+  width: var(--context-panel-width, 320px);
+  min-width: var(--context-panel-width, 320px);
+  max-width: var(--context-panel-width, 320px);
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-left: 1px solid var(--border-subtle, #E7E2D8);
+  overflow-y: auto;
+  z-index: 40;
+  transition: transform 0.25s ease;
+}
+
+@media (max-width: 900px) {
+  .consultation-shell {
+    position: relative;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transform: translateX(-100%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  .context-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    transform: translateX(100%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  .context-panel.mobile-open {
+    transform: translateX(0);
+  }
+}

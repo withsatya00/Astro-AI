@@ -1,0 +1,35 @@
+/* GlobalLoader Styles */
+.global-loader-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.global-loader-card {
+  background: #FFFFFF;
+  border: 1.5px solid #FCD34D;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 10px 30px rgba(33, 29, 80, 0.2);
+  text-align: center;
+}
+.loader-chakra-spinner {
+  font-size: 2.5rem;
+  animation: spinLoader 3s linear infinite;
+  margin-bottom: 0.75rem;
+}
+.loader-text {
+  font-family: var(--font-serif, serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #211D50;
+  margin: 0;
+}
+@keyframes spinLoader {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

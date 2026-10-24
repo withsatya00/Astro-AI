@@ -1,0 +1,32 @@
+<!-- KundliBottomSheet Component -->
+<div class="kundli-sheet-backdrop" id="kundli-sheet-backdrop" onclick="window.ChatController && window.ChatController.closeKundliSheet && window.ChatController.closeKundliSheet()"></div>
+<aside class="kundli-bottom-sheet" id="kundli-bottom-sheet">
+  <div class="sheet-drag-handle-wrap" id="sheet-drag-handle-wrap" onclick="window.ChatController && window.ChatController.toggleKundliSheet && window.ChatController.toggleKundliSheet()">
+    <div class="sheet-drag-handle"></div>
+  </div>
+  <div class="sheet-header">
+    <div class="sheet-title-col">
+      <h3><span>🪐</span> जन्म कुण्डली एवं ग्रह स्थिति (Lagna & Planetary Status)</h3>
+      <p id="sheet-profile-info">Swiss Ephemeris & Parashari Shastras Mathematical Longitude</p>
+    </div>
+    <button type="button" class="btn-sheet-close" id="btn-sheet-close" onclick="window.ChatController && window.ChatController.closeKundliSheet && window.ChatController.closeKundliSheet()">✕</button>
+  </div>
+  
+  <div class="sheet-tabs">
+    <button type="button" class="sheet-tab active" id="tab-btn-lagna" onclick="window.ChatController && window.ChatController.switchSheetTab && window.ChatController.switchSheetTab('lagna')">Lagna Chart (लग्न चक्र)</button>
+    <button type="button" class="sheet-tab" id="tab-btn-navamsha" onclick="window.ChatController && window.ChatController.switchSheetTab && window.ChatController.switchSheetTab('navamsha')">Navamsha (D-9)</button>
+    <button type="button" class="sheet-tab" id="tab-btn-degrees" onclick="window.ChatController && window.ChatController.switchSheetTab && window.ChatController.switchSheetTab('degrees')">Planetary Degrees (ग्रह स्थिति)</button>
+  </div>
+
+  <div class="sheet-body">
+    <div class="sheet-tab-panel active" id="panel-lagna">
+      <div class="sheet-chart-container" id="sheet-chart-container"></div>
+    </div>
+    <div class="sheet-tab-panel" id="panel-navamsha" style="display: none;">
+      <div class="sheet-chart-container" id="sheet-navamsha-container"></div>
+    </div>
+    <div class="sheet-tab-panel" id="panel-degrees" style="display: none;">
+      <div id="sheet-degrees-container"></div>
+    </div>
+  </div>
+</aside>

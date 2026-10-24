@@ -1,0 +1,62 @@
+/* DashaQuickStrip Component Styles */
+.chat-dasha-quick-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.38rem 1rem;
+  background: linear-gradient(90deg, rgba(254, 243, 199, 0.8) 0%, rgba(255, 251, 235, 0.95) 50%, rgba(254, 243, 199, 0.8) 100%);
+  border-bottom: 1px solid var(--border-gold, #FCD34D);
+  font-size: 0.76rem;
+  color: var(--color-gold-dark, #B45309);
+  cursor: pointer;
+  transition: all var(--transition-fast, 0.15s ease);
+  user-select: none;
+  z-index: 90;
+}
+
+.chat-dasha-quick-strip:hover {
+  background: rgba(254, 243, 199, 0.98);
+}
+
+.dasha-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.dasha-item strong {
+  font-weight: 700;
+  color: #92400E;
+}
+
+.dasha-sep {
+  color: #D97706;
+  opacity: 0.6;
+}
+
+.dasha-badge {
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  color: #B45309;
+  font-weight: 700;
+  padding: 0.12rem 0.55rem;
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.68rem;
+  margin-left: 0.35rem;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.chat-dasha-quick-strip:hover .dasha-badge {
+  background: #FDE68A;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .chat-dasha-quick-strip {
+    font-size: 0.7rem;
+    gap: 0.35rem;
+    padding: 0.3rem 0.5rem;
+    flex-wrap: wrap;
+  }
+}

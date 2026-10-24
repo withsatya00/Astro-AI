@@ -1,0 +1,136 @@
+<!-- AI Consultation Workspace Layout Shell -->
+<div class="site-layout-shell consultation-shell app-shell" id="app-root">
+  
+  <!-- ====================================================================
+       LEFT SIDEBAR: Sessions, Conversations & Saved Profiles
+       ==================================================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="/" data-nav-link class="brand">
+        <div class="brand-icon">🕉️</div>
+        <span class="brand-title" data-i18n="brand_title">Astro Jyotish</span>
+      </a>
+      <button type="button" class="btn-icon" id="btn-close-sidebar" title="Collapse sidebar">✕</button>
+    </div>
+
+    <div class="sidebar-actions" style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+      <a href="/astrologers" data-nav-link class="btn-new-chat" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; font-size: 0.82rem; font-weight: 700;">
+        <span>🔮</span>
+        <span>Switch Astrologer (अन्य ज्योतिषी)</span>
+      </a>
+    </div>
+
+    <div class="sidebar-content">
+      <div style="display: none;" aria-hidden="true">
+        <ul id="sessions-list"></ul>
+        <span id="session-count-badge">0</span>
+        <input type="text" id="search-sessions-input">
+        <button id="btn-new-chat"></button>
+      </div>
+
+      <!-- Saved Birth Profiles -->
+      <div>
+        <div class="sidebar-section-title">
+          <span data-i18n="saved_profiles">Saved Kundli Profiles</span>
+          <button type="button" class="btn-icon" id="btn-quick-add-profile" title="Add New Profile" style="width: 20px; height: 20px; font-size: 0.75rem;">+</button>
+        </div>
+        <ul class="sidebar-list" id="profiles-list">
+          <li class="sidebar-item" onclick="window.App && window.App.openBirthModal()">
+            <span class="item-title" data-i18n="add_profile">+ Add Birth Profile</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button type="button" class="btn-sidebar-user" id="btn-open-auth-modal">
+        <span style="display: flex; align-items: center; gap: 0.4rem;">
+          <span>👤</span>
+          <span id="sidebar-user-name">Login / Register</span>
+        </span>
+        <span style="font-size: 0.7rem; color: var(--primary-violet);">➔</span>
+      </button>
+      <div class="status-pill" id="telemetry-pill">
+        <div class="status-dot" id="telemetry-dot"></div>
+        <span id="telemetry-text">🟢 ज्योतिषाचार्य ऑनलाइन उपलब्ध हैं</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ====================================================================
+       CENTRAL MAIN CHAT REGION
+       ==================================================================== -->
+  <main class="chat-main" id="chat-main-region">
+    <!-- Header Mount Point -->
+    <div id="consultation-header-mount"></div>
+
+    <!-- Dasha Quick Strip Mount Point -->
+    <div id="dasha-quick-strip-mount"></div>
+
+    <!-- Mobile Drawer Backdrop -->
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+    <!-- Message List Mount Point (Scroll Feed, Welcome Chamber, Inquiry Cards) -->
+    <div id="message-list-mount"></div>
+
+    <!-- Analyzing Indicator Mount Point -->
+    <div id="analyzing-indicator-mount"></div>
+
+    <!-- Message Composer Mount Point -->
+    <div id="message-composer-mount"></div>
+
+    <!-- Kundli Bottom Sheet Mount Point -->
+    <div id="kundli-bottom-sheet-mount"></div>
+  </main>
+
+  <!-- ====================================================================
+       RIGHT CONTEXTUAL PANEL: Kundli Highlights & Planetary Status
+       ==================================================================== -->
+  <aside class="context-panel" id="context-panel">
+    <div class="context-header">
+      <div class="context-title-row">
+        <span class="context-icon">🪐</span>
+        <h3 class="context-title">जन्म कुण्डली (Kundli Highlights)</h3>
+      </div>
+      <button type="button" class="btn-icon" id="btn-close-context" title="Close Panel">✕</button>
+    </div>
+
+    <div class="context-body">
+      <!-- Seeker Profile Card -->
+      <div class="seeker-profile-card" id="seeker-profile-card">
+        <div class="seeker-name-row">
+          <h4 id="context-seeker-name">Self (Default Profile)</h4>
+          <span class="badge-lagna" id="context-lagna-badge">लग्न: मेष (Aries)</span>
+        </div>
+        <p class="seeker-birth-meta" id="context-seeker-meta">
+          15 Aug 1990 • 10:30 AM • New Delhi, India
+        </p>
+      </div>
+
+      <!-- North Indian Kundli Chart Visualizer -->
+      <div class="kundli-chart-widget">
+        <div class="chart-widget-header">
+          <span>Lagna Chart (D-1)</span>
+          <button type="button" class="btn-text-sm" onclick="window.ChatController && window.ChatController.toggleKundliSheet()">Full Screen ↗</button>
+        </div>
+        <div class="kundli-svg-container" id="context-kundli-chart">
+          <!-- Rendered by ChartController -->
+        </div>
+      </div>
+
+      <!-- Planetary Positions Table -->
+      <div class="planetary-status-box">
+        <div class="box-title">ग्रह स्थिति (Planetary Longitudes)</div>
+        <div class="planetary-degrees-list" id="context-planetary-list">
+          <!-- Populated by ChartController -->
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Modals Container -->
+  <div id="modals-container"></div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+</div>

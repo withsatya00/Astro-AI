@@ -1,0 +1,26 @@
+<!-- MessageBubble Component Template -->
+<!-- User message bubble structure -->
+<div class="message-row user-row" id="user-message-template" style="display: none;">
+  <div class="message-bubble user-bubble">
+    <div class="message-text">User message text goes here</div>
+    <div class="msg-meta-row">
+      <span class="msg-time">12:00 PM</span>
+      <span class="msg-status-tick"><span class="msg-status-delivered" title="Delivered">✓✓</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- Assistant message bubble structure -->
+<div class="message-row assistant-row" id="assistant-message-template" style="display: none;">
+  <div class="message-avatar-wrap">
+    <img src="assets/portraits/default-avatar.svg" alt="Astrologer" class="message-avatar-img" />
+  </div>
+  <div class="message-bubble assistant-bubble">
+    <div class="bubble-sender-name">🕉️ Astrologer Name</div>
+    <div class="message-text">Astrologer guidance content goes here</div>
+    <div class="msg-meta-row assistant-meta">
+      <span class="msg-time">12:01 PM</span>
+      <button type="button" class="btn-copy-discreet" title="Copy text">📋</button>
+    </div>
+  </div>
+</div>

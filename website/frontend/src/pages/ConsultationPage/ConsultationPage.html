@@ -1,0 +1,664 @@
+    <!-- Hidden dummy elements to maintain JS backward compatibility without rendering any sidebar UI -->
+    <div id="sidebar" class="sidebar collapsed" style="display: none !important;" aria-hidden="true">
+      <div id="btn-close-sidebar"></div>
+      <ul id="sessions-list"></ul>
+      <span id="session-count-badge">0</span>
+      <input type="text" id="search-sessions-input">
+      <button id="btn-new-chat"></button>
+      <ul id="profiles-list"></ul>
+      <span id="sidebar-user-name">Login / Register</span>
+      <div id="telemetry-pill"><span id="telemetry-dot"></span><span id="telemetry-text"></span></div>
+      <div id="btn-open-auth-modal-dummy"></div>
+      <div id="btn-quick-add-profile"></div>
+      <div id="nav-shortcut-milan"></div>
+      <div id="nav-shortcut-panchang"></div>
+      <div id="nav-shortcut-sadesati"></div>
+      <div id="nav-shortcut-directory"></div>
+      <div id="nav-shortcut-smart-match"></div>
+      <div id="nav-shortcut-kundli"></div>
+      <div id="nav-shortcut-reports"></div>
+      <div id="nav-shortcut-grounded-report"></div>
+    </div>
+
+    <!-- ====================================================================
+         CENTRAL MAIN CHAT REGION (Pure, Clean & Distraction-Free WhatsApp / AstroView Style)
+         ==================================================================== -->
+    <main class="chat-main" style="width: 100%; max-width: 100vw;">
+      <!-- Clean Consultation Topbar (Astrologer Avatar, Name, Status & Clean Actions) -->
+      <header class="chat-topbar consultation-compact-header" id="consultation-unified-header">
+        <div class="consultation-header-left">
+          <!-- Back arrow to exit active consultation view -->
+          <button class="btn-chat-exit" id="btn-chat-exit" onclick="ChatController.exitConsultation ? ChatController.exitConsultation() : Router.navigate('/astrologers')" title="Exit Consultation (परामर्श से बाहर जाएं)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+
+          <!-- Astrologer Identity (Clean WhatsApp / AstroView Header) -->
+          <div class="consultation-header-astrologer cursor-pointer" id="topbar-astrologer-badge" title="Click to view Astrologer Profile & Credentials" onclick="window.App && window.App.showActiveAstrologerProfile ? window.App.showActiveAstrologerProfile() : null">
+            <div class="astrologer-avatar-container">
+              <div class="astrologer-avatar" id="topbar-astrologer-avatar">🕉️</div>
+              <span class="online-status-dot" title="Online"></span>
+            </div>
+            <div class="astrologer-header-meta">
+              <div class="astrologer-title-row">
+                <h2 class="astrologer-name" id="topbar-astrologer-name">Pt. Rameshwar Dwivedi</h2>
+                <span class="astrologer-badge-verified" title="Verified Vedic Astrologer">✓</span>
+              </div>
+              <p class="astrologer-specialty-status" id="topbar-astrologer-meta">
+                <span class="text-emerald-600 font-bold">● Online</span> · Cosmic guidance ready
+              </p>
+              <!-- Visible only once a birth chart is active; shows which profile answers are based on -->
+              <button type="button" class="linked-profile-chip" id="linked-profile-chip" style="display: none;" onclick="App.openBirthModal()" title="Switch or update the linked birth profile">
+                <span>🪐</span> <span id="linked-profile-chip-text"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="consultation-header-right">
+          <!-- Audio Call Action Pill (Purple theme matching Image 3) -->
+          <button class="btn-topbar-call" id="btn-chat-audio-call" title="Switch to Live Audio Call" onclick="ChatController.startAudioCall ? ChatController.startAudioCall() : App.showToast('Connecting audio call... 📞', 'info')">
+            <span class="call-icon">📞</span>
+            <span class="call-label">Audio Call</span>
+          </button>
+
+          <!-- Live Session Timer (Emerald pill matching Image 3) -->
+          <div class="session-live-timer" id="chat-live-timer">
+            <span class="live-pulse-dot"></span>
+            <span id="chat-timer-count">Live: 11:48</span>
+          </div>
+
+          <!-- Compact End Consultation Button (Red theme matching Image 3) -->
+          <button class="btn-compact-end" id="btn-end-consultation" title="End Active Consultation" onclick="ChatController.confirmEndConsultation ? ChatController.confirmEndConsultation() : (ChatController.endCurrentConsultation ? ChatController.endCurrentConsultation() : Router.navigate('/astrologers'))">
+            <span>⏹️ End</span>
+          </button>
+
+          <!-- Notifications Bell (matching Image 3) -->
+          <button type="button" class="btn-header-bell" id="btn-header-notifications" title="Notifications" onclick="App.showToast('You are in an active live session 🔔', 'info')">
+            🔔
+          </button>
+
+          <!-- Overflow Actions Menu Dropdown Toggle -->
+          <div class="consultation-overflow-wrap relative inline-flex">
+            <button type="button" class="btn-header-overflow" id="btn-header-overflow-menu" title="More Options / अधिक विकल्प" onclick="ChatController.toggleHeaderMenu ? ChatController.toggleHeaderMenu() : null">
+              ⋮
+            </button>
+            <div class="consultation-overflow-dropdown" id="consultation-overflow-dropdown" style="display: none;">
+              <!-- Kundli Bottom Sheet Action -->
+              <button type="button" class="dropdown-item" onclick="ChatController.toggleKundliSheet(); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+                <span>🪐</span> <span>North Indian Kundli (लग्न चक्र)</span>
+              </button>
+              <!-- Birth Details Modal Action -->
+              <button type="button" class="dropdown-item" onclick="App.openBirthModal(); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+                <span>📋</span> <span>Birth Details & Profile</span>
+              </button>
+              <!-- Wallet Recharge -->
+              <button type="button" class="dropdown-item" onclick="App.openWalletModal(); document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+                <span>🪙</span> <span>Wallet & Recharge</span>
+              </button>
+              <!-- Clear chat -->
+              <button type="button" class="dropdown-item" id="btn-clear-chat" onclick="document.getElementById('consultation-overflow-dropdown').classList.remove('active');">
+                <span>🗑️</span> <span>Clear Chat</span>
+              </button>
+              <!-- 23-Language Selector inside dropdown -->
+              <div class="dropdown-item dropdown-lang-row">
+                <span>🌐 Language:</span>
+                <select id="chat-lang-select" class="select-tool-compact">
+                  <option value="en">English</option>
+                  <option value="hi">हिन्दी</option>
+                  <option value="sa">संस्कृतम्</option>
+                  <option value="mr">मराठी</option>
+                  <option value="gu">ગુજરાતી</option>
+                  <option value="bn">বাংলা</option>
+                  <option value="ta">தமிழ்</option>
+                  <option value="te">తెలుగు</option>
+                  <option value="kn">ಕನ್ನಡ</option>
+                  <option value="ml">മലയാളം</option>
+                  <option value="pa">ਪੰਜਾਬੀ</option>
+                  <option value="or">ଓଡ଼ିଆ</option>
+                  <option value="as">অसमীয়া</option>
+                  <option value="ur">اُردُو</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden elements safely preserved to satisfy DOM queries and listeners -->
+        <span style="display:none;" aria-hidden="true">
+          <button id="btn-toggle-sidebar"></button>
+          <button id="btn-toggle-context"></button>
+          <button id="btn-sound-toggle"></button>
+          <div id="topbar-features-bar"></div>
+          <div id="topbar-profile-tag"><span id="topbar-profile-name"></span></div>
+          <button id="btn-topbar-directory"></button>
+          <button id="btn-topbar-smart-match"></button>
+          <button id="btn-topbar-milan"></button>
+          <button id="btn-topbar-panchang"></button>
+          <button id="btn-topbar-sadesati"></button>
+          <button id="chat-topbar-wallet"><span id="chat-wallet-balance-val">₹320</span></button>
+          <input type="checkbox" id="toggle-demo-mode">
+        </span>
+      </header>
+
+      <!-- Sub-header: Transit & Planetary Context Strip (Matching Image 3 Reference) -->
+      <div class="chat-transit-strip" id="chat-dasha-quick-strip">
+        <div class="transit-strip-inner">
+          <span class="transit-item"><span class="transit-icon">🪐</span> <span>लग्न:</span> <strong id="strip-lagna">मेष (Aries)</strong></span>
+          <span class="transit-sep">•</span>
+          <span class="transit-item"><span class="transit-icon">🌟</span> <span>नक्षत्र:</span> <strong id="strip-nakshatra">रोहिणी</strong></span>
+          <span class="transit-sep">•</span>
+          <span class="transit-item"><span class="transit-icon">🪐</span> <span>दशा:</span> <strong id="strip-dasha">राहु-गुरू</strong></span>
+          <button type="button" class="btn-transit-kundli" onclick="ChatController.toggleKundliSheet ? ChatController.toggleKundliSheet() : App.openBirthModal()">
+            <span>कुंडली देखें ▾</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Real-Time Kundli Drawer Panel (Recommended Feature) -->
+      <div class="consultation-kundli-panel" id="consultation-kundli-panel" style="display: none;">
+        <div class="kundli-panel-card max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-[#E7E2D8] p-4 sm:p-5 relative my-2">
+          <button type="button" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-[#F5F3FF] hover:bg-[#EDE9FE] text-[#7439EA] font-bold flex items-center justify-center cursor-pointer transition-all" onclick="ChatController.toggleKundliSheet()" title="Close Kundli Panel">✕</button>
+          <div id="chat-kundli-content">
+            <!-- Dynamically rendered by ChatController.renderChatKundli() -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Backdrop for mobile drawers -->
+      <div class="drawer-backdrop" id="drawer-backdrop" style="display: none !important;"></div>
+
+      <!-- Scrollable Conversation Area -->
+      <div class="chat-scroll-area" id="chat-messages-container">
+        <!-- Load Older Messages (Pagination) -->
+        <div id="chat-load-older-wrap" class="chat-load-older-wrap" style="display: none;">
+          <button type="button" id="btn-load-older-messages" class="btn-load-older-messages">
+            <span>⏳ Load older messages (पिछले संदेश देखें)</span>
+          </button>
+        </div>
+
+        <!-- Welcoming Astrologer Persona Consultation Chamber (Discreet) -->
+        <div class="welcome-screen chat-welcome-chamber" id="welcome-screen" style="display: none;">
+          <div class="chamber-avatar-wrap" id="workspace-welcome-avatar">
+            <span>🕉️</span>
+            <span class="chamber-verified-seal" title="Verified Vedic Scholar">✓</span>
+          </div>
+          <h2 class="chamber-name" id="workspace-welcome-name">Acharya Shastri</h2>
+          
+          <div class="chamber-specs-row">
+            <span class="chamber-spec-pill" id="workspace-welcome-badge">Classical Vedic Consultation • 24+ Yrs Exp</span>
+            <span class="chamber-rating-pill">⭐ 4.96/5 (18,420+ Consultations)</span>
+            <span class="chamber-spec-pill" style="background: #DCFCE7; color: #15803D;">🟢 100% Online</span>
+          </div>
+
+          <p style="font-size: 0.92rem; color: #475569; line-height: 1.6; margin-bottom: 1.15rem;" id="workspace-welcome-desc">
+            Welcome to your private astrological consultation. Ask freely regarding career, relationship compatibility, marriage timing, wealth yogas, health, or classical Parashari remedies.
+          </p>
+
+          <div class="consultation-disclosure-banner" id="workspace-disclosure-banner" style="margin-bottom: 1.35rem;">
+            ℹ️ <strong>Consultation Guarantee:</strong> Certified Jyotish guidance grounded in Swiss Ephemeris mathematical longitudes and sacred Vedic shastras. First consultation 100% free with complete privacy.
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.75rem;">
+            <button type="button" class="btn-hero-primary" onclick="App.openBirthModal()" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">
+              <span>🪐</span> <span>Enter Birth Details (Optional)</span>
+            </button>
+            <button type="button" class="btn-hero-secondary" onclick="Router.navigate('/astrologers')" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">
+              <span>🔮</span> <span>Switch Astrologer (30+)</span>
+            </button>
+          </div>
+          <!-- Duplicate inquiry prompt grid removed to prevent redundancy with composer suggestions bar -->
+        </div>
+        <!-- Bottom Sentinel for WhatsApp-style scroll anchoring -->
+        <div id="chat-bottom-sentinel" class="chat-bottom-sentinel"></div>
+      </div>
+
+      <!-- Floating Scroll to Bottom / New Messages Button -->
+      <button type="button" id="btn-new-messages-floating" class="btn-new-messages-floating" style="display: none;" title="Scroll to latest message">
+        <span class="floating-badge-icon">↓</span>
+        <span id="floating-btn-text">New messages</span>
+      </button>
+
+      <!-- Bottom Anchored Composer (matching reference layout & brand) -->
+      <footer class="composer-wrapper">
+        <!-- Quick Profile Switcher (switch which saved birth chart answers are based on, no sidebar needed) -->
+        <div class="profile-switcher-row" id="profile-switcher-row" style="display: none;"></div>
+
+        <!-- Visible Quick Suggestion Chips (matching Image 3 reference) -->
+        <div class="chat-quick-suggestions-bar" id="chat-quick-suggestions-bar">
+          <button type="button" class="chat-quick-chip" onclick="ChatController.askQuickPrompt('क्या मेरी जन्म कुंडली में कोई शक्तिशाली राजयोग अथवा धन योग उपस्थित है?')">
+            <span>👑</span> <span>राजयोग का प्रभाव?</span>
+          </button>
+          <button type="button" class="chat-quick-chip" onclick="ChatController.askQuickPrompt('क्या मुझ पर शनि की साढ़ेसाती या ढैय्या का प्रभाव है और इसके क्या शांति उपाय हैं?')">
+            <span>🪐</span> <span>शनि शांति उपाय</span>
+          </button>
+          <button type="button" class="chat-quick-chip" onclick="ChatController.askQuickPrompt('मेरे भाग्योदय, स्वास्थ्य और सफलता के लिए कौन सा रत्न (Gemstone) धारण करना चाहिए?')">
+            <span>💎</span> <span>भाग्यशाली रत्न?</span>
+          </button>
+        </div>
+
+        <div class="composer-card">
+          <!-- Dynamic Context-Aware Suggestion Chips (appear after Pandit Ji replies) -->
+          <div class="dynamic-context-chips" id="dynamic-context-chips" style="display: none;">
+            <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('जीवनसाथी की दिशा और पारिवारिक पृष्ठभूमि कैसी रहेगी?')">
+              <span>💍</span> <span>जीवनसाथी की दिशा?</span>
+            </button>
+            <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('कुंडली में मांगलिक दोष या अन्य ग्रह बाधा का क्या प्रभाव है?')">
+              <span>🪐</span> <span>मांगलिक प्रभाव?</span>
+            </button>
+            <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('शास्त्रीय वैदिक शांति उपाय और मंत्र जप बताएं')">
+              <span>🪔</span> <span>वैदिक शांति उपाय</span>
+            </button>
+          </div>
+
+          <div class="composer-input-row">
+            <button type="button" class="btn-composer-attach" id="btn-composer-paperclip" title="Attach birth details or Kundli" onclick="App.openBirthModal()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#53627A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+              </svg>
+            </button>
+            <textarea 
+              id="chat-input" 
+              class="composer-textarea" 
+              data-i18n-placeholder="ask_placeholder"
+              placeholder="✦ Ask your astrological question (Enter to send, Shift+Enter for newline)..." 
+              rows="1"
+            ></textarea>
+            <button type="button" class="btn-icon btn-composer-mic" id="btn-chat-mic" title="Voice Input / बोलकर पूछें" onclick="ChatController.startVoiceInput()">🎙️</button>
+            <button class="btn-send" id="btn-send-chat" title="Send message">↑</button>
+          </div>
+
+          <div class="composer-actions-row" style="display: none;" aria-hidden="true">
+            <div class="composer-chips-bar">
+              <button type="button" class="composer-badge-chip chip-kundli" id="btn-inline-kundli" onclick="ChatController.requestInlineKundli ? ChatController.requestInlineKundli() : App.openBirthModal()">
+                <span>✦</span> <span>Kundli</span>
+              </button>
+              <button type="button" class="composer-badge-chip chip-birth" id="btn-open-birth-modal" title="Manage birth details">
+                <span id="composer-profile-btn-text">Birth Details</span>
+              </button>
+              <button type="button" class="composer-chip" onclick="ChatController.askQuickPrompt('मेरी शादी का शुभ योग कब बनेगा?')"><span>💍</span> <span>शादी का योग</span></button>
+              <button type="button" class="composer-chip" onclick="ChatController.askQuickPrompt('करियर में पदोन्नति और वेतन वृद्धि कब?')"><span>💼</span> <span>करियर तरक्की</span></button>
+              <button type="button" class="composer-chip" onclick="ChatController.askQuickPrompt('कुंडली में राजयोग और धन योग का प्रभाव बताएं')"><span>💰</span> <span>धन योग</span></button>
+              <button type="button" class="composer-chip" onclick="ChatController.askQuickPrompt('शनि साढ़ेसाती और ढैय्या के वैदिक उपाय बताएं')"><span>🪐</span> <span>शनि शांति</span></button>
+
+              <!-- Preserved elements for handlers -->
+              <input type="file" id="palm-image-input" accept="image/*" style="display: none;">
+              <button class="btn-tool" id="btn-upload-palm" style="display: none;"></button>
+              <button class="btn-tool" id="btn-open-upload-modal" style="display: none;"></button>
+              <button class="btn-tool" id="btn-open-agent-modal" style="display: none;"></button>
+              <div id="chat-quick-followup-chips" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clean Reference Subtitle (Matching AstroView AI) -->
+        <div class="composer-subtext text-center text-[10px] text-[#64748B] font-semibold tracking-wider uppercase mt-1.5 select-none">
+          VOICE &amp; TEXT • HINDI, ENGLISH &amp; SANSKRIT TERMS
+        </div>
+      </footer>
+    </main>
+
+    <!-- ====================================================================
+         NORTH INDIAN KUNDLI & DASHA SLIDING BOTTOM SHEET
+         ==================================================================== -->
+    <div class="kundli-sheet-backdrop" id="kundli-sheet-backdrop" onclick="ChatController.closeKundliSheet()"></div>
+    <aside class="kundli-bottom-sheet" id="kundli-bottom-sheet">
+      <div class="sheet-drag-handle-wrap" onclick="ChatController.toggleKundliSheet()">
+        <div class="sheet-drag-handle"></div>
+      </div>
+      <div class="sheet-header">
+        <div class="sheet-title-col">
+          <h3><span>🪐</span> जन्म कुण्डली एवं ग्रह स्थिति (Lagna & Planetary Status)</h3>
+          <p id="sheet-profile-info">Swiss Ephemeris & Parashari Shastras Mathematical Longitude</p>
+        </div>
+        <button type="button" class="btn-sheet-close" onclick="ChatController.closeKundliSheet()">✕</button>
+      </div>
+      
+      <div class="sheet-tabs">
+        <button type="button" class="sheet-tab active" id="tab-btn-lagna" onclick="ChatController.switchSheetTab('lagna')">Lagna Chart (लग्न चक्र)</button>
+        <button type="button" class="sheet-tab" id="tab-btn-navamsha" onclick="ChatController.switchSheetTab('navamsha')">Navamsha (D-9)</button>
+        <button type="button" class="sheet-tab" id="tab-btn-degrees" onclick="ChatController.switchSheetTab('degrees')">Planetary Degrees (ग्रह स्थिति)</button>
+      </div>
+
+      <div class="sheet-body">
+        <div class="sheet-tab-panel active" id="panel-lagna">
+          <div class="sheet-chart-container" id="sheet-chart-container"></div>
+        </div>
+        <div class="sheet-tab-panel" id="panel-navamsha" style="display: none;">
+          <div class="sheet-chart-container" id="sheet-navamsha-container"></div>
+        </div>
+        <div class="sheet-tab-panel" id="panel-degrees" style="display: none;">
+          <div id="sheet-degrees-container"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         RIGHT CONTEXTUAL PANEL: Kundli Highlights & Reports
+         ==================================================================== -->
+    <aside class="context-panel collapsed" id="context-panel">
+      <div class="context-header">
+        <h3><span>🪐</span> <span data-i18n="cosmic_highlights">Cosmic Highlights</span></h3>
+        <button class="btn-icon" id="btn-close-context" title="Collapse Panel">✕</button>
+      </div>
+
+      <div class="context-content">
+        <!-- Active Profile Summary Card (Compact) -->
+        <div class="kundli-card" id="context-profile-card" style="padding: 0.55rem 0.75rem;">
+          <div class="kundli-card-header" style="margin-bottom: 0.25rem;">
+            <h4 style="font-size: 0.78rem;" data-i18n="active_profile">Active Birth Profile</h4>
+            <button class="btn-tool" id="btn-context-edit-profile" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;" data-i18n="edit_profile">Edit</button>
+          </div>
+          <div id="context-profile-summary">
+            <p class="text-muted" style="font-size: 0.78rem;">No profile active. Enter birth details to unlock Kundli.</p>
+          </div>
+        </div>
+
+        <!-- Prominent PDF Kundali Report Card (Directly at the Top - No Scrolling Needed) -->
+        <div class="kundli-card" id="context-pdf-card" style="padding: 0.65rem 0.75rem; border: 1.5px solid #F59E0B; background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); box-shadow: 0 3px 10px rgba(245, 158, 11, 0.18);">
+          <div class="kundli-card-header" style="margin-bottom: 0.3rem;">
+            <h4 style="color: #92400E; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; gap: 0.35rem;">
+              <span>📑</span> <span>संपूर्ण जन्म कुण्डली PDF</span>
+            </h4>
+            <span style="font-size: 0.68rem; background: #D97706; color: #ffffff; padding: 0.12rem 0.45rem; border-radius: 999px; font-weight: 700;">सटीक पत्रिका</span>
+          </div>
+          <p style="font-size: 0.74rem; color: #78350F; margin-bottom: 0.5rem; line-height: 1.35;">
+            लग्न चक्र (D1), नवग्रह स्थिति, विंशोत्तरी महादशा, योग एवं प्रामाणिक वैदिक उपाय सहित विस्तृत PDF।
+          </p>
+          <button class="btn-new-chat" id="btn-quick-generate-report" onclick="ReportsController.generateQuickReport()" style="width: 100%; padding: 0.52rem 0.75rem; font-size: 0.82rem; font-weight: 700; background: linear-gradient(135deg, #F59E0B, #D97706, #B45309); color: #ffffff; border: none; border-radius: 8px; box-shadow: 0 2px 8px rgba(180, 83, 9, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.45rem; cursor: pointer;">
+            <span>📥</span> <span>Download Kundli PDF (कुण्डली डाउनलोड)</span>
+          </button>
+          <div id="quick-report-status" style="margin-top: 0.35rem;"></div>
+        </div>
+
+        <!-- Kundali SVG Diagram Card -->
+        <div class="kundli-card" style="padding: 0.6rem;">
+          <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
+            <h4 data-i18n="lagna_kundli">Lagna Kundli (D1)</h4>
+            <span class="shortcut-badge" id="context-ayanamsa-badge">Lahiri</span>
+          </div>
+          <div id="context-kundali-svg">
+            <p class="text-muted" style="font-size: 0.78rem; text-align: center; padding: 1rem 0;">
+              Kundli diagram will render here after calculating your birth chart.
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.35rem; margin-top: 0.5rem; flex-wrap: wrap;">
+            <button class="btn-tool" id="btn-download-kundli-png" title="Download Lagna Kundli as PNG image" style="flex: 1; min-width: 70px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #F8FAFC;">
+              <span data-i18n="btn_download_png">📥 PNG</span>
+            </button>
+            <button class="btn-tool" id="btn-context-kundli-pdf" onclick="ReportsController.generateQuickReport()" title="Download Full Kundali PDF Dossier" style="flex: 1; min-width: 70px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #EEF2FF; color: #4338CA; border-color: #C7D2FE;">
+              <span data-i18n="btn_download_pdf">📑 PDF</span>
+            </button>
+            <button class="btn-tool" id="btn-context-export-consultation" onclick="ReportsController.exportConsultationDocument()" title="Export Certified Consultation Record" style="flex: 1; min-width: 75px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #FEF3C7; color: #92400E; border-color: #FDE68A;">
+              <span data-i18n="btn_export_consultation">📜 Export</span>
+            </button>
+            <button class="btn-tool" id="btn-share-kundli-whatsapp" title="Share Kundli summary on WhatsApp" style="flex: 1; min-width: 80px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #DCFCE7; color: #166534; border-color: #86EFAC;">
+              <span data-i18n="btn_share_whatsapp">💬 WhatsApp</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Core Planetary Placements Card -->
+        <div class="kundli-card" style="padding: 0.6rem;">
+          <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
+            <h4 data-i18n="key_placements">Key Placements</h4>
+          </div>
+          <div class="highlight-grid" id="context-placements-grid" style="gap: 0.35rem;">
+            <div class="highlight-item" style="padding: 0.35rem 0.5rem;">
+              <div class="highlight-label" data-i18n="ascendant_lagna">Ascendant (Lagna)</div>
+              <div class="highlight-val" id="val-lagna">-</div>
+            </div>
+            <div class="highlight-item" style="padding: 0.35rem 0.5rem;">
+              <div class="highlight-label" data-i18n="moon_sign">Moon Sign (Rashi)</div>
+              <div class="highlight-val" id="val-moon">-</div>
+            </div>
+            <div class="highlight-item" style="padding: 0.35rem 0.5rem;">
+              <div class="highlight-label" data-i18n="sun_sign">Sun Sign (Surya)</div>
+              <div class="highlight-val" id="val-sun">-</div>
+            </div>
+            <div class="highlight-item" style="padding: 0.35rem 0.5rem;">
+              <div class="highlight-label" data-i18n="moon_nakshatra">Moon Nakshatra</div>
+              <div class="highlight-val" id="val-nakshatra">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vimshottari Mahadasha Card -->
+        <div class="kundli-card" style="padding: 0.6rem;">
+          <div class="kundli-card-header" style="margin-bottom: 0.35rem;">
+            <h4>Active Mahadasha</h4>
+          </div>
+          <div id="context-dasha-summary" style="font-size: 0.78rem; color: var(--text-muted);">
+            Calculate birth chart to inspect running planetary cycle.
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         ZERO-COST REALISTIC VEDIC PANDIT / VIDUSHI AUDIO CALLING AGENT MODAL
+         ==================================================================== -->
+    <!-- ====================================================================
+         ZERO-COST REALISTIC VEDIC PANDIT / VIDUSHI AUDIO CALLING AGENT MODAL
+         ==================================================================== -->
+    <div class="modal-overlay modal-audio-call-overlay" id="modal-live-audio-call" style="display: none;">
+      <div class="calling-screen-card">
+        <!-- Cosmic Top Header Bar with Close/End Option -->
+        <div class="calling-screen-header">
+          <div class="calling-badge">
+            <span class="pulse-dot-green"></span>
+            <span id="call-agent-type-label">🕉️ Vedic Calling Agent (पंडित जी स्वर संवाद)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="calling-timer" id="call-timer-display">00:00</div>
+            <button type="button" class="w-8 h-8 rounded-full bg-white/10 hover:bg-rose-600/80 text-white flex items-center justify-center text-sm transition cursor-pointer" onclick="CallingAgentService.endCall()" title="फोन काटें / End Call">✕</button>
+          </div>
+        </div>
+
+        <!-- 2-Column Responsive Calling Body -->
+        <div class="calling-card-grid">
+          <!-- Left Column: Astrologer Portrait & Live Status -->
+          <div class="calling-col-left">
+            <div class="calling-avatar-wrapper">
+              <div class="calling-sound-ring ring-3"></div>
+              <div class="calling-sound-ring ring-2"></div>
+              <div class="calling-sound-ring ring-1"></div>
+              <div class="calling-avatar" id="call-astrologer-avatar">
+                🕉️
+              </div>
+            </div>
+
+            <div class="calling-info">
+              <div class="calling-choghadiya-badge" id="calling-choghadiya-badge">
+                <span>✨</span>
+                <span>अमृत वेला • 98% शुभ मुहूर्त</span>
+              </div>
+              <h3 class="calling-name" id="call-astrologer-name">Pt. Rameshwar Dwivedi</h3>
+              <p class="calling-title" id="call-astrologer-title">Senior Vedic Jyotish & Karmakand Scholar</p>
+
+              <!-- Visible only once a birth chart is linked to this call -->
+              <div class="calling-linked-profile-chip" id="calling-linked-profile-chip" style="display: none;">
+                <span>🪐</span> <span id="calling-linked-profile-chip-text"></span>
+              </div>
+
+              <div class="calling-status-chip connecting" id="call-status-badge">
+                <span class="status-icon">🎙️</span>
+                <span id="call-status-text">पंडित जी से संपर्क स्थापित हो रहा है...</span>
+              </div>
+            </div>
+
+            <!-- In-Call Palmistry / Kundli Snapshot Upload Strip -->
+            <div class="calling-upload-strip" id="calling-upload-strip">
+              <div class="calling-upload-text">
+                <span>🖐️</span>
+                <span>हस्तरेखा / पत्रिका त्वरित विश्लेषण</span>
+              </div>
+              <label for="calling-palm-input" class="btn-calling-upload">
+                <span>📷 फोटो भेजें</span>
+                <input type="file" id="calling-palm-input" accept="image/*" class="hidden" onchange="CallingAgentService.onPalmPhotoUpload(event)" />
+              </label>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Lagna Wheel, Captions, Waveform, Quick Prompts -->
+          <div class="calling-col-right">
+            <!-- Live Synchronized Vedic Bhava Chakra (Mini Kundli Wheel) -->
+            <div class="calling-mini-kundli-container" id="calling-mini-kundli-container">
+              <div class="mini-kundli-header">
+                <span class="mini-kundli-title">🪐 लाइव भाव चक्र (Lagna Wheel)</span>
+                <span class="mini-kundli-active-tag" id="mini-bhava-label">प्रथम भाव (लग्न) सक्रिय</span>
+              </div>
+              <div class="mini-kundli-svg-wrap">
+                <svg viewBox="0 0 160 160" class="mini-kundli-svg" id="mini-kundli-svg" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="4" width="152" height="152" class="kundli-grid-border" />
+                  <line x1="4" y1="4" x2="156" y2="156" class="kundli-grid-line" />
+                  <line x1="156" y1="4" x2="4" y2="156" class="kundli-grid-line" />
+                  <polygon points="80,4 156,80 80,156 4,80" class="kundli-grid-diamond" />
+
+                  <!-- 12 Individual Interactive Bhavas -->
+                  <polygon id="bhava-poly-1" points="80,4 118,42 80,80 42,42" class="bhava-cell bhava-active" onclick="CallingAgentService.onBhavaClick(1, 'लग्न व व्यक्तित्व')" title="प्रथम भाव (लग्न): व्यक्तित्व व स्वभाव" />
+                  <text x="80" y="46" class="bhava-num">1</text>
+
+                  <polygon id="bhava-poly-2" points="4,4 80,4 42,42" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(2, 'धन व परिवार')" title="द्वितीय भाव (धन): पैतृक संपत्ति व वाणी" />
+                  <text x="42" y="18" class="bhava-num">2</text>
+
+                  <polygon id="bhava-poly-3" points="4,4 4,80 42,42" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(3, 'पराक्रम व साहस')" title="तृतीय भाव (सहज): साहस व पराक्रम" />
+                  <text x="18" y="42" class="bhava-num">3</text>
+
+                  <polygon id="bhava-poly-4" points="4,80 42,118 80,80 42,42" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(4, 'सुख, माता व वाहन')" title="चतुर्थ भाव (सुख): माता व वाहन सुख" />
+                  <text x="42" y="84" class="bhava-num">4</text>
+
+                  <polygon id="bhava-poly-5" points="4,80 4,156 42,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(5, 'विद्या व संतान')" title="पंचम भाव (पुत्र): संतान व विद्या" />
+                  <text x="18" y="122" class="bhava-num">5</text>
+
+                  <polygon id="bhava-poly-6" points="4,156 80,156 42,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(6, 'रोग व ऋण शांति')" title="षष्ठ भाव (अरि): रोग व ऋण" />
+                  <text x="42" y="146" class="bhava-num">6</text>
+
+                  <polygon id="bhava-poly-7" points="80,80 118,118 80,156 42,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(7, 'विवाह व जीवनसाथी')" title="सप्तम भाव (कलत्र): विवाह व जीवनसाथी" />
+                  <text x="80" y="122" class="bhava-num">7</text>
+
+                  <polygon id="bhava-poly-8" points="80,156 156,156 118,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(8, 'आयु व गुप्त ज्ञान')" title="अष्टम भाव (आयु): संकट शांति" />
+                  <text x="118" y="146" class="bhava-num">8</text>
+
+                  <polygon id="bhava-poly-9" points="156,80 156,156 118,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(9, 'भाग्य व धर्म')" title="नवम भाव (भाग्य): भाग्योदय व धर्म" />
+                  <text x="142" y="122" class="bhava-num">9</text>
+
+                  <polygon id="bhava-poly-10" points="80,80 118,42 156,80 118,118" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(10, 'करियर व पदोन्नति')" title="दशम भाव (कर्म): करियर व पदोन्नति" />
+                  <text x="118" y="84" class="bhava-num">10</text>
+
+                  <polygon id="bhava-poly-11" points="156,4 156,80 118,42" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(11, 'आय व लाभ योग')" title="एकादश भाव (लाभ): आकस्मिक धन लाभ" />
+                  <text x="142" y="42" class="bhava-num">11</text>
+
+                  <polygon id="bhava-poly-12" points="80,4 156,4 118,42" class="bhava-cell" onclick="CallingAgentService.onBhavaClick(12, 'व्यय व मोक्ष')" title="द्वादश भाव (व्यय): विदेश प्रवास व मोक्ष" />
+                  <text x="118" y="18" class="bhava-num">12</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Real-Time Speech Subtitles / Dialogue Box -->
+            <div class="calling-captions-box" id="call-captions-box">
+              <div class="caption-line user-caption" id="call-user-transcript"></div>
+              <div class="caption-line pandit-caption" id="call-pandit-transcript" aria-live="polite"></div>
+            </div>
+
+            <!-- Voice & connection settings -->
+            <details class="calling-voice-settings" id="calling-voice-settings">
+              <summary>
+                <span>⚙️ Voice settings</span>
+                <span class="calling-net-chip online" id="call-net-chip">● Connected</span>
+              </summary>
+              <div class="calling-settings-grid">
+                <label>Speed
+                  <select id="call-voice-speed" onchange="CallingAgentService.applyVoiceSettings()">
+                    <option value="slow">Slow</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="fast">Fast</option>
+                  </select>
+                </label>
+                <label>Delivery
+                  <select id="call-voice-style" onchange="CallingAgentService.applyVoiceSettings()">
+                    <option value="calm" selected>Calm</option>
+                    <option value="normal">Normal</option>
+                  </select>
+                </label>
+                <label>Voice
+                  <select id="call-voice-gender" onchange="CallingAgentService.applyVoiceSettings()">
+                    <option value="auto" selected>Match astrologer</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </label>
+                <label>Speaker device
+                  <select id="call-output-device" onchange="CallingAgentService.applyVoiceSettings()">
+                    <option value="">Default</option>
+                  </select>
+                </label>
+                <button type="button" class="call-pill-btn" onclick="CallingAgentService.previewVoice()">▶ Preview voice</button>
+              </div>
+            </details>
+
+            <!-- Live Audio Waveform Visualizer -->
+            <div class="calling-waveform-bars" id="calling-waveform-bars">
+              <span class="wave-bar bar-1"></span>
+              <span class="wave-bar bar-2"></span>
+              <span class="wave-bar bar-3"></span>
+              <span class="wave-bar bar-4"></span>
+              <span class="wave-bar bar-5"></span>
+              <span class="wave-bar bar-6"></span>
+              <span class="wave-bar bar-7"></span>
+            </div>
+
+            <!-- Real-Time Voice Inquiry Quick Pills -->
+            <div class="calling-quick-pills-bar" id="calling-quick-pills-bar">
+              <span class="calling-quick-pills-title">✨ त्वरित प्रश्न पूछें (या माइक में बोलें):</span>
+              <div class="calling-pills-row">
+                <button type="button" class="call-pill-btn" onclick="CallingAgentService.askQuickCallPrompt('मेरी शादी कब होगी और वैवाहिक जीवन कैसा रहेगा?')">
+                  💍 शादी का योग?
+                </button>
+                <button type="button" class="call-pill-btn" onclick="CallingAgentService.askQuickCallPrompt('करियर में पदोन्नति और आर्थिक लाभ कब तक मिलेगा?')">
+                  💼 करियर व धन?
+                </button>
+                <button type="button" class="call-pill-btn" onclick="CallingAgentService.askQuickCallPrompt('क्या मुझ पर साढ़ेसाती है और इसके क्या शांति उपाय हैं?')">
+                  🪐 साढ़ेसाती शांति?
+                </button>
+                <button type="button" class="call-pill-btn" onclick="CallingAgentService.askQuickCallPrompt('मेरी कुंडली में कोई राजयोग उपस्थित है?')">
+                  👑 राजयोग प्रभाव?
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sticky Floating Controls Dock (Always Visible at Bottom) -->
+        <div class="calling-controls-dock" id="calling-controls-dock">
+          <!-- Mute/Unmute Mic -->
+          <button type="button" class="btn-call-ctrl btn-mute" id="btn-call-mute" onclick="CallingAgentService.toggleMute()" title="माइक म्यूट / अनम्यूट करें">
+            <span class="ctrl-icon" id="call-mic-icon">🎙️</span>
+            <span class="ctrl-label" id="call-mic-label">Mute</span>
+          </button>
+
+          <!-- Tap/Hold to Speak Button (Direct User Speech) -->
+          <button type="button" class="btn-call-ctrl btn-speak-now" id="btn-call-speak-now" onclick="CallingAgentService.toggleManualMic()" title="बोलने के लिए दबाएं (Tap to Speak)">
+            <span class="ctrl-icon pulse-speak">🗣️</span>
+            <span class="ctrl-label font-bold text-amber-300" id="call-speak-label">दबाकर बोलें</span>
+          </button>
+
+          <!-- PROMINENT RED END CALL / CUT CALL BUTTON -->
+          <button type="button" class="btn-call-ctrl btn-end-call" id="btn-main-end-call" onclick="CallingAgentService.endCall()" title="परामर्श समाप्त करें / फोन काटें">
+            <span class="ctrl-icon">📞</span>
+            <span class="ctrl-label font-extrabold text-red-200">फोन काटें (End)</span>
+          </button>
+
+          <!-- Speaker On/Off -->
+          <button type="button" class="btn-call-ctrl btn-speaker" id="btn-call-speaker" onclick="CallingAgentService.toggleSpeaker()" title="स्पीकर ऑन / ऑफ">
+            <span class="ctrl-icon" id="call-speaker-icon">🔊</span>
+            <span class="ctrl-label" id="call-speaker-label">Speaker</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+

@@ -1,0 +1,98 @@
+/* Calculators Component Styles */
+.calculators-section {
+  padding: 4.5rem 1.5rem;
+  background: var(--bg-page, #FFFCF4);
+  border-bottom: 1px solid var(--border-subtle, #E7E2D8);
+}
+
+.calculators-container {
+  max-width: var(--container-max-width, 1280px);
+  margin: 0 auto;
+}
+
+.calculators-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.calc-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle, #E7E2D8);
+  border-radius: var(--radius-lg, 16px);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm, 0 2px 6px rgba(33, 29, 80, 0.06));
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.calc-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-purple-primary, #7439EA);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(116, 57, 234, 0.12));
+}
+
+.calc-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius-md, 12px);
+  background: var(--bg-surface, #FAF8F2);
+  border: 1px solid var(--border-subtle, #E7E2D8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  transition: all var(--transition-fast, 0.15s ease);
+}
+
+.calc-card:hover .calc-icon-wrap {
+  background: var(--color-purple-light, #F5F3FF);
+  border-color: var(--color-purple-subtle, #DDD6FE);
+  transform: scale(1.05);
+}
+
+.calc-info {
+  flex: 1;
+}
+
+.calc-title {
+  font-family: var(--font-serif, serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-navy-main, #211D50);
+  margin: 0 0 0.25rem;
+}
+
+.calc-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #53627A);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.calc-arrow {
+  font-size: 1.25rem;
+  color: var(--text-muted, #7E8FA6);
+  transition: transform var(--transition-fast, 0.15s ease);
+}
+
+.calc-card:hover .calc-arrow {
+  color: var(--color-purple-primary, #7439EA);
+  transform: translateX(4px);
+}
+
+@media (max-width: 992px) {
+  .calculators-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .calculators-grid {
+    grid-template-columns: 1fr;
+  }
+}

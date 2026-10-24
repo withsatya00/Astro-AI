@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro Jyotish AI - वैदिक ज्योतिष परामर्श कक्ष (Vedic Consultation Room)</title>
+  <meta name="description" content="AI वैदिक ज्योतिष परामर्श कक्ष। Swiss Ephemeris एवं पराशर शास्त्रों पर आधारित प्रामाणिक जन्म कुण्डली विश्लेषण।">
+  <meta name="theme-color" content="#4C1D95">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕉️</text></svg>">
+  <meta property="og:title" content="Astro Jyotish AI - वैदिक ज्योतिष परामर्श कक्ष">
+  <meta property="og:description" content="AI वैदिक ज्योतिष परामर्श कक्ष। 100% प्रामाणिक एवं गोपनीय फलादेश।">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <base href="/">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  
+  <!-- Modular Design System Styles -->
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/reset.css">
+  <link rel="stylesheet" href="/src/styles/typography.css">
+  <link rel="stylesheet" href="/src/styles/global.css">
+  <link rel="stylesheet" href="/src/styles/utilities.css">
+  <link rel="stylesheet" href="/src/layouts/Layout.css">
+  <link rel="stylesheet" href="/css/styles.css?v=ai_ultra_v8">
+  <link rel="stylesheet" href="/css/tailwind.css?v=tw_v2">
+</head>
+<body>
+  <!-- AI Consultation Application Root Shell -->
+  <div class="site-layout-shell consultation-shell app-shell" id="app-root">
+    <!-- LEFT SIDEBAR: Sessions, Conversations & Saved Profiles -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/" data-nav-link class="brand">
+          <div class="brand-icon">🕉️</div>
+          <span class="brand-title" data-i18n="brand_title">Astro Jyotish</span>
+        </a>
+        <button type="button" class="btn-icon" id="btn-close-sidebar" title="Collapse sidebar">✕</button>
+      </div>
+      <div class="sidebar-actions" style="padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+        <a href="/astrologers" data-nav-link class="btn-new-chat" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; font-size: 0.82rem; font-weight: 700;">
+          <span>🔮</span>
+          <span>Switch Astrologer (अन्य ज्योतिषी)</span>
+        </a>
+      </div>
+      <div class="sidebar-content">
+        <div style="display: none;" aria-hidden="true">
+          <ul id="sessions-list"></ul>
+          <span id="session-count-badge">0</span>
+          <input type="text" id="search-sessions-input">
+          <button id="btn-new-chat"></button>
+        </div>
+        <div>
+          <div class="sidebar-section-title"><span data-i18n="saved_profiles">Saved Kundli Profiles</span><button type="button" class="btn-icon" id="btn-quick-add-profile" title="Add New Profile" style="width:20px;height:20px;font-size:0.75rem;">+</button></div>
+          <ul class="sidebar-list" id="profiles-list"><li class="sidebar-item" onclick="window.App && window.App.openBirthModal()"><span class="item-title" data-i18n="add_profile">+ Add Birth Profile</span></li></ul>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <button type="button" class="btn-sidebar-user" id="btn-open-auth-modal"><span style="display:flex;align-items:center;gap:0.4rem;"><span>👤</span><span id="sidebar-user-name">Login / Register</span></span><span style="font-size:0.7rem;color:var(--primary-violet);">➔</span></button>
+        <div class="status-pill" id="telemetry-pill"><div class="status-dot" id="telemetry-dot"></div><span id="telemetry-text">🟢 ज्योतिषाचार्य ऑनलाइन उपलब्ध हैं</span></div>
+      </div>
+    </aside>
+
+    <!-- CENTRAL MAIN CHAT REGION -->
+    <main class="chat-main" id="chat-main-region">
+      <div id="consultation-header-mount"></div>
+      <div id="dasha-quick-strip-mount"></div>
+      <div class="drawer-backdrop" id="drawer-backdrop"></div>
+      
+      <!-- Scroll Feed & Sentinel Elements -->
+      <div id="message-list-mount">
+        <div class="chat-scroll-area" id="consultation-chat-scroll">
+          <div id="chat-load-older-wrap" class="chat-load-older-wrap" style="display:none;"><button type="button" id="btn-load-older-messages" class="btn-load-older-messages"><span>⏳ Load older messages</span></button></div>
+          <div class="chat-messages-container" id="chat-messages-container">
+            <div id="chat-bottom-sentinel" class="chat-bottom-sentinel"></div>
+          </div>
+          <button type="button" class="btn-scroll-bottom" id="btn-new-messages-floating" style="display:none;" title="Scroll to latest message"><span>↓ New Messages</span></button>
+        </div>
+      </div>
+
+      <div id="analyzing-indicator-mount"></div>
+      <div id="message-composer-mount"></div>
+      <div id="kundli-bottom-sheet-mount"></div>
+    </main>
+
+    <!-- RIGHT CONTEXTUAL PANEL: Kundli Highlights -->
+    <aside class="context-panel" id="context-panel">
+      <div class="context-header"><div class="context-title-row"><span class="context-icon">🪐</span><h3 class="context-title">जन्म कुण्डली (Kundli Highlights)</h3></div><button type="button" class="btn-icon" id="btn-close-context" title="Close Panel">✕</button></div>
+      <div class="context-body">
+        <div class="seeker-profile-card" id="seeker-profile-card"><div class="seeker-name-row"><h4 id="context-seeker-name">Self (Default Profile)</h4><span class="badge-lagna" id="context-lagna-badge">लग्न: मेष (Aries)</span></div><p class="seeker-birth-meta" id="context-seeker-meta">15 Aug 1990 • 10:30 AM • New Delhi, India</p></div>
+        <div class="kundli-chart-widget"><div class="chart-widget-header"><span>Lagna Chart (D-1)</span><button type="button" class="btn-text-sm" onclick="window.ChatController && window.ChatController.toggleKundliSheet()">Full Screen ↗</button></div><div class="kundli-svg-container" id="context-kundli-chart"></div></div>
+        <div class="planetary-status-box"><div class="box-title">ग्रह स्थिति (Planetary Longitudes)</div><div class="planetary-degrees-list" id="context-planetary-list"></div></div>
+      </div>
+    </aside>
+
+    <!-- Modals Container -->
+    <div id="modals-container">
+      <div class="modal-overlay" id="modal-end-consultation-confirm" style="display:none;">
+        <div class="modal-card" style="max-width:440px;text-align:center;padding:1.75rem 1.5rem;">
+          <div style="font-size:2.25rem;margin-bottom:0.75rem;">⏹️</div>
+          <h3 style="margin-bottom:0.5rem;color:#1E1B4B;font-size:1.25rem;">End Active Consultation?</h3>
+          <p style="color:#64748B;font-size:0.88rem;line-height:1.5;margin-bottom:1.5rem;">Are you sure you want to end this astrological consultation session?</p>
+          <div style="display:flex;gap:0.75rem;justify-content:center;">
+            <button type="button" class="btn-hero-secondary" id="btn-cancel-end-consultation" onclick="document.getElementById('modal-end-consultation-confirm').style.display='none'">Continue Chat</button>
+            <button type="button" class="btn-hero-primary" id="btn-confirm-end-consultation" onclick="window.ChatController && window.ChatController.endCurrentConsultation()" style="background:#DC2626;border-color:#DC2626;">Yes, End Consultation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container" id="toast-container"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/js/i18n.js?v=ultra_v2"></script>
+  <script src="/js/api.js?v=ultra_v2"></script>
+  <script src="/js/chart.js?v=ultra_v2"></script>
+  <script src="/js/chat.js?v=ultra_v2"></script>
+  <script src="/js/reports.js?v=ultra_v2"></script>
+  <script src="/js/router.js?v=ultra_v5"></script>
+  <script src="/js/app.js?v=ultra_v5"></script>
+  <script type="module" src="/src/app/bootstrap.js"></script>
+</body>
+</html>

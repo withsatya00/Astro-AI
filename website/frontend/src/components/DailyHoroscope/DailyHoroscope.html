@@ -1,0 +1,26 @@
+<!-- Daily Horoscope Component (Matches Reference) -->
+<div class="daily-horoscope-card bg-gradient-to-br from-[#141131] via-[#1E1B4B] to-[#2D1B69] border border-[#3B3673] rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col justify-between text-white relative overflow-hidden h-full" id="daily-horoscope-component">
+  <!-- Subtle Background Constellation Glow -->
+  <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative z-10 flex items-start justify-between gap-4">
+    <div class="max-w-[240px]">
+      <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">Your Daily Horoscope</h3>
+      <p class="text-xs sm:text-sm text-purple-200/80 leading-relaxed mb-6">Find out what the stars say about your day.</p>
+    </div>
+
+    <!-- Golden Ram (Aries) Zodiac Graphic -->
+    <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center text-6xl drop-shadow-lg transform hover:scale-105 transition-transform">
+      ♈
+    </div>
+  </div>
+
+  <!-- Bottom Action: Select Sign / View Aries -->
+  <div class="relative z-10 pt-4 border-t border-white/10 flex items-center gap-3">
+    <a href="/rashiphal" data-nav-link class="inline-flex items-center gap-2 bg-white hover:bg-purple-50 text-[#1E1B4B] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full shadow-md transition-all transform hover:-translate-y-0.5 no-underline">
+      <span>♈ Aries (मेष)</span>
+      <span>➔</span>
+    </a>
+    <span class="text-[11px] text-purple-200/60 hidden sm:inline">12 Rashi Forecasts Available</span>
+  </div>
+</div>

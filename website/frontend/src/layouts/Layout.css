@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Shared Global Website Layout Styles
+   ========================================================================== */
+
+.site-layout-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-app, #FAF9F6);
+  color: var(--text-main, #1F2937);
+  position: relative;
+}
+
+.site-layout-shell.consultation-shell {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.site-layout-outlet {
+  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-layout-outlet.full-screen {
+  height: 100vh;
+  overflow: hidden;
+}

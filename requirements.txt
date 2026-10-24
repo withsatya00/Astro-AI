@@ -19,3 +19,4 @@ python-multipart>=0.0.6
 redis>=5.0.0
 pgvector>=0.2.4
 google-genai>=1.0.0
+edge-tts>=7.3.1,<8

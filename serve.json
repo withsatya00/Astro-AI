@@ -1,0 +1,30 @@
+{
+  "cleanUrls": false,
+  "directoryListing": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/astrologers/**", "destination": "/index.html" },
+    { "source": "/astrologers", "destination": "/index.html" },
+    { "source": "/astrologer/**", "destination": "/index.html" },
+    { "source": "/consultation/**", "destination": "/index.html" },
+    { "source": "/consultations/**", "destination": "/index.html" },
+    { "source": "/rashiphal", "destination": "/index.html" },
+    { "source": "/calculators/**", "destination": "/index.html" },
+    { "source": "/calculators", "destination": "/index.html" },
+    { "source": "/panchang", "destination": "/index.html" },
+    { "source": "/aaj-ka-panchang", "destination": "/index.html" },
+    { "source": "/milan", "destination": "/index.html" },
+    { "source": "/kundali-milan", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "**/*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}

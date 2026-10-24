@@ -1,0 +1,103 @@
+/* VedicRemedyCard Styles */
+.vedic-remedy-card {
+  margin: 0.75rem 0 0.35rem;
+  background: #FFFDF9;
+  border: 1.5px solid #E8AD35;
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  box-shadow: 0 4px 16px rgba(232, 173, 53, 0.15), 0 1px 3px rgba(33, 29, 80, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+.vedic-remedy-card::before {
+  content: '🪔';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 3rem;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.remedy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.5rem;
+}
+.remedy-card-badge {
+  background: #FEF9EE;
+  border: 1px solid #FDE68A;
+  color: #B45309;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.remedy-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #78350F;
+  margin: 0;
+}
+.remedy-mantra-box {
+  background: #FEF3C7;
+  border: 1px dashed #D97706;
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  margin: 0.55rem 0 0.65rem;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #92400E;
+  letter-spacing: 0.03em;
+}
+.remedy-details-text {
+  font-size: 0.84rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+.remedy-actions-row {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.btn-remedy-action {
+  background: #7439EA;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 6px rgba(116, 57, 234, 0.25);
+}
+.btn-remedy-action:hover {
+  background: #5B21B6;
+  transform: translateY(-1px);
+}
+.btn-remedy-secondary {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.18s ease;
+}
+.btn-remedy-secondary:hover {
+  background: #FDE68A;
+}
