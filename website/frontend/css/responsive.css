@@ -171,3 +171,144 @@ pre, code { overflow-wrap: anywhere; }
     perspective: none;
   }
 }
+
+/* ==========================================================================
+   Consultation chat: calmer, less crowded composer on phones
+   - one suggestion row at a time (starter bar OR follow-ups), single line,
+     horizontally scrollable with no visible scrollbar
+   ========================================================================== */
+@media (max-width: 768px) {
+  .chat-quick-suggestions-bar,
+  .dynamic-context-chips {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.45rem !important;
+    padding: 0.2rem 0.15rem 0.35rem !important;
+    margin: 0 !important;
+  }
+  .chat-quick-suggestions-bar::-webkit-scrollbar,
+  .dynamic-context-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .dynamic-context-chips {
+    border-bottom: 0 !important;
+  }
+  .chat-quick-chip,
+  .dyn-chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.74rem !important;
+    padding: 0.3rem 0.7rem !important;
+  }
+  .composer-subtext {
+    margin-top: 0.15rem !important;
+    font-size: 9px !important;
+  }
+}
+
+/* ==========================================================================
+   Astrologer cards on phones: compact rows instead of one full-width photo
+   per screen. Two markup variants exist:
+   - home/featured card: article > div(photo + info) + div(price + buttons)
+   - directory card:     article > div.aspect-square(photo) + div.p-4(info, price, buttons)
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* --- directory card --- */
+  .astrologer-card:has(> .aspect-square) {
+    display: grid !important;
+    grid-template-columns: 92px minmax(0, 1fr);
+    column-gap: 0.75rem;
+    padding: 0.7rem;
+    border-radius: 16px !important;
+  }
+  .astrologer-card > .aspect-square {
+    grid-column: 1;
+    grid-row: 1;
+    width: 92px;
+    border-radius: 12px;
+    align-self: start;
+  }
+  .astrologer-card > .aspect-square > .absolute:first-of-type:not(:last-of-type),
+  .astrologer-card > .aspect-square > .absolute.left-2\.5 {
+    display: none;
+  }
+  .astrologer-card > .aspect-square > .absolute.right-2\.5 {
+    top: 4px;
+    right: 4px;
+    padding: 3px;
+  }
+  .astrologer-card > .aspect-square > .absolute.right-2\.5 > span:last-child {
+    display: none;
+  }
+  .astrologer-card:has(> .aspect-square) h3 {
+    white-space: normal;
+    font-size: 0.92rem;
+    line-height: 1.25;
+  }
+  /* children of the body join the card grid directly */
+  .astrologer-card:has(> .aspect-square) > .p-4 {
+    display: contents;
+  }
+  .astrologer-card:has(> .aspect-square) > .p-4 > div:first-child {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+  .astrologer-card:has(> .aspect-square) > .p-4 > div:first-child > div:last-child {
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .astrologer-card:has(> .aspect-square) > .p-4 > div:nth-child(2),
+  .astrologer-card:has(> .aspect-square) > .p-4 > div:nth-child(3) {
+    grid-column: 1 / -1;
+    margin: 0.6rem 0 0;
+  }
+
+  /* --- home / featured card --- */
+  .astrologer-card:not(:has(> .aspect-square)) {
+    padding: 0.7rem !important;
+    border-radius: 16px !important;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 0.75rem;
+    align-items: center;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child {
+    width: 88px;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.left-2 {
+    display: none;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 {
+    top: 4px !important;
+    right: 4px !important;
+    padding: 3px !important;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 > span:last-child {
+    display: none;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:last-child > div:last-child {
+    margin-bottom: 0 !important;
+    white-space: normal !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .astrologer-card:not(:has(> .aspect-square)) > div:last-child {
+    margin-top: 0.6rem !important;
+    padding-top: 0.55rem !important;
+    gap: 0.5rem !important;
+  }
+}

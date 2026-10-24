@@ -104,6 +104,21 @@ const quickPromptIndex = (() => {
   QUICK_PROMPT_PAIRS.forEach(([hi, en]) => { toEn.set(hi, en); toHi.set(en, hi); });
   return { toEn, toHi };
 })();
+// Starter and follow-up chips word the same question differently; compare them by topic so the
+// user is never offered something they just asked.
+const PROMPT_INTENTS = [
+  ['rajyoga', /राजयोग|धन योग|rajyoga|raj yoga/i],
+  ['shani', /शनि|साढ़ेसाती|shani|sade ?sati/i],
+  ['marriage', /विवाह|शादी|मांगलिक|जीवनसाथी|marriage|spouse/i],
+  ['career', /करियर|पदोन्नति|प्रमोशन|व्यापार|नौकरी|career|promotion|job/i],
+  ['gemstone', /रत्न|gem/i],
+  ['abroad', /विदेश|abroad|foreign/i]
+];
+function promptIntent(text) {
+  const hit = PROMPT_INTENTS.find(([, re]) => re.test(text));
+  return hit ? hit[0] : text;
+}
+
 function localizeQuickPrompt(text) {
   const lang = (window.I18n && I18n.currentLang) || 'en';
   if (lang === 'en') return quickPromptIndex.toEn.get(text) || text;
@@ -1228,7 +1243,10 @@ https://astrojyotish.ai`;
 
   askQuickPrompt(promptText) {
     if (!promptText) return;
+    (this._askedPrompts || (this._askedPrompts = new Set())).add(promptIntent(promptText));
     promptText = localizeQuickPrompt(promptText);
+    this.hideStarterChips();
+    this.hideContextChips();
     const input = document.getElementById('chat-input');
     if (input) {
       input.value = promptText;
@@ -1640,6 +1658,10 @@ https://astrojyotish.ai`;
       // Keep dynamic follow-up chips discreet
       const chips = document.getElementById('dynamic-context-chips');
       if (chips) chips.style.display = 'none';
+      // Fresh conversation: starter suggestions are available again.
+      this._askedPrompts = new Set();
+      const starter = document.getElementById('chat-quick-suggestions-bar');
+      if (starter) starter.style.removeProperty('display');
 
       this.scrollToBottom(false);
     } catch (err) {
@@ -2017,47 +2039,51 @@ https://astrojyotish.ai`;
     const container = document.getElementById('dynamic-context-chips');
     if (!container) return;
 
-    let chipsHtml = '';
-    if (topic === 'marriage') {
-      chipsHtml = `
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('जीवनसाथी की दिशा और पारिवारिक पृष्ठभूमि कैसी रहेगी?')">
-          <span>🧭</span> <span>जीवनसाथी की दिशा?</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('कुंडली में मांगलिक प्रभाव अथवा नाड़ी दोष का क्या उपाय है?')">
-          <span>🪐</span> <span>मांगलिक दोष उपाय?</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('शीघ्र विवाह के लिए शास्त्रीय पूजा और शुभ रत्न कौन सा है?')">
-          <span>💎</span> <span>शुभ रत्न व पूजा</span>
-        </button>
-      `;
-    } else if (topic === 'career') {
-      chipsHtml = `
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('करियर में पदोन्नति और वेतन वृद्धि का शुभ योग कब बनेगा?')">
-          <span>💼</span> <span>प्रमोशन का योग?</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('क्या मेरे लिए व्यापार (Business) नौकरी से बेहतर रहेगा?')">
-          <span>📈</span> <span>नौकरी vs व्यापार?</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('कार्यक्षेत्र में सफलता हेतु सूर्य अर्घ्य व मंत्र जप बताएं')">
-          <span>☀️</span> <span>सूर्य साधना उपाय</span>
-        </button>
-      `;
-    } else {
-      chipsHtml = `
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('मेरी जन्म कुंडली में कौन सा शक्तिशाली राजयोग उपस्थित है?')">
-          <span>👑</span> <span>राजयोग का प्रभाव?</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('शनि साढ़ेसाती और ढैय्या के शास्त्रीय वैदिक उपाय बताएं')">
-          <span>🪐</span> <span>शनि शांति उपाय</span>
-        </button>
-        <button type="button" class="dyn-chip" onclick="ChatController.askQuickPrompt('मेरे भाग्योदय और स्वास्थ्य के लिए सबसे शुभ रत्न कौन सा है?')">
-          <span>💎</span> <span>भाग्यशाली रत्न?</span>
-        </button>
-      `;
-    }
+    // [emoji, label, prompt] - more than 3 per topic so already-asked ones can be skipped.
+    const sets = {
+      marriage: [
+        ['🧭', 'जीवनसाथी की दिशा?', 'जीवनसाथी की दिशा और पारिवारिक पृष्ठभूमि कैसी रहेगी?'],
+        ['🪐', 'मांगलिक दोष उपाय?', 'कुंडली में मांगलिक प्रभाव अथवा नाड़ी दोष का क्या उपाय है?'],
+        ['💎', 'शुभ रत्न व पूजा', 'शीघ्र विवाह के लिए शास्त्रीय पूजा और शुभ रत्न कौन सा है?'],
+        ['📅', 'विवाह का शुभ समय?', 'मेरे विवाह का शुभ समय और दशा कब अनुकूल है?']
+      ],
+      career: [
+        ['💼', 'प्रमोशन का योग?', 'करियर में पदोन्नति और वेतन वृद्धि का शुभ योग कब बनेगा?'],
+        ['📈', 'नौकरी vs व्यापार?', 'क्या मेरे लिए व्यापार (Business) नौकरी से बेहतर रहेगा?'],
+        ['☀️', 'सूर्य साधना उपाय', 'कार्यक्षेत्र में सफलता हेतु सूर्य अर्घ्य व मंत्र जप बताएं'],
+        ['🌍', 'विदेश योग?', 'क्या मेरी कुंडली में विदेश जाने का योग है?']
+      ],
+      general: [
+        ['👑', 'राजयोग का प्रभाव?', 'मेरी जन्म कुंडली में कौन सा शक्तिशाली राजयोग उपस्थित है?'],
+        ['🪐', 'शनि शांति उपाय', 'शनि साढ़ेसाती और ढैय्या के शास्त्रीय वैदिक उपाय बताएं'],
+        ['💎', 'भाग्यशाली रत्न?', 'मेरे भाग्योदय और स्वास्थ्य के लिए सबसे शुभ रत्न कौन सा है?'],
+        ['💼', 'करियर तरक्की?', 'करियर में पदोन्नति और वेतन वृद्धि कब होगी?'],
+        ['💍', 'विवाह योग?', 'मेरी शादी का शुभ योग कब बनेगा?']
+      ]
+    };
 
-    container.innerHTML = chipsHtml;
+    // Never offer a question the user has already asked (once is enough).
+    const asked = this._askedPrompts || (this._askedPrompts = new Set());
+    const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const picks = (sets[topic] || sets.general).filter(c => !asked.has(promptIntent(c[2]))).slice(0, 3);
+
+    // Dynamic follow-ups replace the starter bar instead of stacking under it.
+    this.hideStarterChips();
+    if (!picks.length) {
+      container.style.display = 'none';
+      return;
+    }
+    container.innerHTML = picks.map(c =>
+      `<button type="button" class="dyn-chip" data-prompt="${esc(c[2])}" onclick="ChatController.askQuickPrompt(this.dataset.prompt)">
+        <span>${c[0]}</span> <span>${esc(c[1])}</span>
+      </button>`).join('');
     container.style.display = 'flex';
+  },
+
+  hideStarterChips() {
+    const bar = document.getElementById('chat-quick-suggestions-bar');
+    // The bar's stylesheet rule is display:flex !important, so an inline "none" alone would lose.
+    if (bar) bar.style.setProperty('display', 'none', 'important');
   },
 
   hideContextChips() {
@@ -2119,6 +2145,7 @@ https://astrojyotish.ai`;
 
     const input = document.getElementById('chat-input');
     const msg = (customText || (input ? input.value : '')).trim();
+    if (msg) this.hideStarterChips();
 
     // Check if AstroTalk Intake Form is active
     const intakeForm = document.getElementById('chat-intake-form');

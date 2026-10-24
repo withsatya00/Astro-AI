@@ -1219,7 +1219,9 @@ class LLMService:
                     contents.append(types.Content(role="user", parts=[types.Part.from_text(text=user_message)]))
 
                 # Multi-model streaming fallback list
-                candidate_models = ["call"] if call_mode else [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+                # Chat and voice call share one path and model pair (raced, first token wins);
+                # chat additionally keeps older models as a last-resort fallback.
+                candidate_models = ["__hedged__"] if call_mode else ["__hedged__", "gemini-2.5-flash", "gemini-2.0-flash"]
                 stream_success = False
 
                 for model_name in candidate_models:
@@ -1229,7 +1231,7 @@ class LLMService:
                             temperature=0.75,
                             max_output_tokens=150 if call_mode else 260
                         )
-                        if call_mode:
+                        if model_name == "__hedged__":
                             async for text in _hedged_stream(client, list(dict.fromkeys(["gemini-3.1-flash-lite", settings.GEMINI_MODEL])), contents, gen_config):
                                 full_content += text
                                 yield {"type": "delta", "text": text}
