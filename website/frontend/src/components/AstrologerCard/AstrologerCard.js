@@ -69,130 +69,91 @@ export class AstrologerCardComponent {
     return '/assets/portraits/default-avatar.svg';
   }
 
+  static escape(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  static compact(n) {
+    n = Number(n) || 0;
+    return n >= 1000 ? (Math.round(n / 100) / 10).toString().replace(/\.0$/, '') + 'k' : String(n);
+  }
+
   static render(astrologer, options = {}) {
     if (!astrologer) return '';
+    const esc = (v) => AstrologerCardComponent.escape(v);
     const isOnline = astrologer.availability === 'online' || astrologer.is_online === true;
     const isBusy = astrologer.availability === 'busy';
+    const statusKey = isOnline ? 'online' : (isBusy ? 'busy' : 'offline');
     const statusText = isOnline ? 'Online' : (isBusy ? 'Busy' : 'Offline');
-    const statusDotClass = isOnline ? 'bg-emerald-500' : (isBusy ? 'bg-amber-500' : 'bg-slate-400');
-    const statusBadgeClass = isOnline 
-      ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-      : (isBusy ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-50 text-slate-600 border-slate-200');
 
-    const priceText = (astrologer.price_per_minute === 0 || astrologer.price_per_minute == null)
-      ? '<span class="font-bold text-[#1E1B4B] text-base">₹35</span><span class="text-xs text-slate-500 font-medium"> /min</span>'
-      : `<span class="font-bold text-[#1E1B4B] text-base">₹${Math.round(astrologer.price_per_minute)}</span><span class="text-xs text-slate-500 font-medium"> /min</span>`;
+    const price = (astrologer.price_per_minute === 0 || astrologer.price_per_minute == null)
+      ? 35 : Math.round(astrologer.price_per_minute);
 
     const portraitUrl = this.getPortraitUrl(astrologer);
     const profileSlug = astrologer.slug || astrologer.id;
+    const slugArg = esc(String(profileSlug).replace(/'/g, ''));
+    const nameArg = esc(String(astrologer.name || '').replace(/[\\']/g, ''));
 
-    // Format specialties nicely
-    let specs = astrologer.specialties || ['Vedic Jyotish', 'Career', 'Marriage', 'Dhan Yog'];
-    if (typeof specs === 'string') {
-      specs = specs.split(/[,•\s]+/).filter(Boolean).slice(0, 4);
-    }
-    const specsLine1 = specs.slice(0, 2).join(' • ');
-    const specsLine2 = specs.slice(2, 4).join(' • ') || (astrologer.languages ? (Array.isArray(astrologer.languages) ? astrologer.languages.slice(0, 2).join(', ') : astrologer.languages) : 'Vedic Guidance');
+    let specs = astrologer.specialties || ['Vedic Jyotish', 'Career', 'Marriage'];
+    if (typeof specs === 'string') specs = specs.split(/[,•]+/).map(x => x.trim()).filter(Boolean);
+    const chips = specs.slice(0, 3).map(x => `<li class="ac-chip">${esc(x)}</li>`).join('');
+
+    let langs = astrologer.languages || [];
+    if (typeof langs === 'string') langs = langs.split(',').map(x => x.trim()).filter(Boolean);
+    const langText = langs.slice(0, 3).join(', ');
+    const expText = astrologer.experience_years ? `${astrologer.experience_years} yrs exp` : '';
 
     const ratingVal = astrologer.rating ? Number(astrologer.rating).toFixed(1) : '4.9';
-    const reviewCount = astrologer.review_count || astrologer.consultations_count ? `(${astrologer.review_count ? (astrologer.review_count > 1000 ? (astrologer.review_count/1000).toFixed(1) + 'k' : astrologer.review_count) : '1.2k'})` : '(1.2k)';
+    const reviews = astrologer.review_count ? `(${this.compact(astrologer.review_count)})` : '';
+    const consults = astrologer.consultations_count || 0;
 
     const isFemale = astrologer.gender === 'female' || /ananya|vidushi|meera|gayatri|kalpana|pallavi|priyanka|shalini|shambhavi|sunita|aradhana|meenakshi|radhika|kavita/i.test(astrologer.name || '');
-    const honorBadgeHtml = isFemale
-      ? `<div class="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]"><span>★</span><span>विदुषी रत्न</span></div>`
-      : `<div class="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]"><span>★</span><span>स्वर्ण पदक</span></div>`;
+    const honor = isFemale ? { cls: 'ac-badge--violet', label: 'विदुषी रत्न' } : { cls: 'ac-badge--gold', label: 'स्वर्ण पदक' };
+
+    const svg = (d, extra = '') => `<svg class="ac-ic" viewBox="0 0 24 24" aria-hidden="true" ${extra}>${d}</svg>`;
+    const icStar = svg('<path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 17l-5.4 2.9 1.1-6.1L3.2 9.6l6.1-.8z"/>', 'fill="currentColor" stroke="none"');
+    const icCheck = svg('<path d="M5 12.5l4.2 4.2L19 7"/>', 'fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"');
+    const icChat = svg('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>', 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"');
+    const icCall = svg('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>', 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"');
+    const icPlay = svg('<path d="M8 5.5v13l11-6.5z"/>', 'fill="currentColor"');
+
+    const openProfile = `window.App && window.App.openAstrologerProfile ? window.App.openAstrologerProfile('${slugArg}') : (window.location.href='/astrologer/${slugArg}')`;
 
     return `
-      <article class="astrologer-card bg-white rounded-2xl border border-[#E7E2D8] hover:border-[#FCD34D] hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden shadow-xs group" id="astrologer-card-${astrologer.id}" data-astrologer-id="${astrologer.id}">
-        <!-- Top Image Section with Overlaid Status Badge & Honor Badge -->
-        <div class="relative w-full aspect-square bg-[#FAF8F2] overflow-hidden cursor-pointer" onclick="window.App && window.App.openAstrologerProfile('${profileSlug}')">
-          <img 
-            src="${portraitUrl}" 
-            alt="${astrologer.name}" 
-            class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105" 
-            loading="lazy" decoding="async" 
-            onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';" 
-          />
-          <!-- Honor Badge (Top Left) -->
-          ${honorBadgeHtml}
+      <article class="astrologer-card ac-card" id="astrologer-card-${esc(astrologer.id)}" data-astrologer-id="${esc(astrologer.id)}" data-id="${esc(astrologer.id)}" data-pm-done="1">
+        <span class="ac-badge ${honor.cls}">${icStar}<span>${honor.label}</span></span>
+        <span class="ac-status ac-status--${statusKey}"><i></i>${statusText}</span>
 
-          <!-- Status Badge in Top Right -->
-          <div class="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold border backdrop-blur-md shadow-xs ${statusBadgeClass}">
-            <span class="w-1.5 h-1.5 rounded-full ${statusDotClass}"></span>
-            <span>${statusText}</span>
+        <div class="ac-main">
+          <button type="button" class="ac-photo" onclick="${openProfile}" aria-label="${esc(astrologer.name)} profile">
+            <img src="${esc(portraitUrl)}" alt="${esc(astrologer.name)}" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';" />
+            ${astrologer.is_verified === false ? '' : `<span class="ac-verified" title="Verified by Astro Jyotish">${icCheck}</span>`}
+          </button>
+          <div class="ac-info">
+            <h3 class="ac-name" onclick="${openProfile}" title="${esc(astrologer.name)}">${esc(astrologer.name)}</h3>
+            <p class="ac-title">${esc(astrologer.title || 'Vedic Astrologer')}</p>
+            <div class="ac-rating">
+              <span class="ac-stars">${icStar}</span><b>${ratingVal}</b><span class="ac-muted">${reviews}</span>
+              ${consults ? `<span class="ac-dot-sep"></span><span class="ac-muted">${this.compact(consults)}+ consultations</span>` : ''}
+            </div>
           </div>
         </div>
 
-        <!-- Content Body -->
-        <div class="p-4 flex flex-col flex-1 justify-between">
-          <div>
-            <!-- Astrologer Name with Verified Mark -->
-            <h3 
-              class="font-serif font-bold text-base text-[#1E1B4B] hover:text-[#7439EA] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5" 
-              onclick="window.App && window.App.openAstrologerProfile('${profileSlug}')"
-              title="${astrologer.name}"
-            >
-              <span>${astrologer.name}</span>
-              <span class="text-[#7439EA] text-xs shrink-0 font-bold" title="गुरुकुल एवं वैदिक विवि द्वारा सत्यापित">✓</span>
-            </h3>
+        <ul class="ac-chips">${chips}</ul>
+        <div class="ac-facts">
+          ${expText ? `<span>${expText}</span>` : ''}
+          ${langText ? `<span>${esc(langText)}</span>` : ''}
+        </div>
 
-            <!-- Rating & Reviews -->
-            <div class="flex items-center justify-between text-xs mb-2">
-              <div class="flex items-center gap-1">
-                <span class="text-amber-500 font-bold">★</span>
-                <span class="font-bold text-[#1E1B4B]">${ratingVal}</span>
-                <span class="text-slate-400 font-normal">${reviewCount}</span>
-              </div>
-              <button 
-                type="button" 
-                class="text-[11px] font-bold text-[#7439EA] hover:text-[#5B21B6] hover:underline cursor-pointer transition-colors"
-                onclick="event.stopPropagation(); window.App && window.App.openAstrologerProfile ? window.App.openAstrologerProfile('${profileSlug}') : (window.location.href='/astrologers/${profileSlug}')"
-              >
-                Profile देखें ➔
-              </button>
-            </div>
-
-            <!-- Expertise Lines -->
-            <div class="text-xs text-slate-500 space-y-0.5 mb-3 leading-snug">
-              <p class="truncate font-medium text-slate-600">${specsLine1}</p>
-              <p class="truncate text-slate-400">${specsLine2}</p>
-            </div>
-          </div>
-
-          <!-- Bottom Row: Price & Side-by-Side Action Buttons -->
-            <div class="flex items-center justify-between mb-3">
-              <div>${priceText}</div>
-              <button 
-                type="button" 
-                class="inline-flex items-center gap-1 text-[11px] font-bold text-[#D97706] bg-[#FFFBEB] hover:bg-[#FEF3C7] border border-[#FDE68A] px-2.5 py-0.5 rounded-full transition-all cursor-pointer shadow-2xs hover:scale-105" 
-                title="पंडित जी का स्वर सुनें (Audio Voice Intro)"
-                onclick="event.stopPropagation(); window.App && window.App.playAstrologerVoice ? window.App.playAstrologerVoice('${astrologer.name}') : (window.ChatController && window.ChatController.playTempleChime && window.ChatController.playTempleChime())"
-              >
-                <span>▶️</span> <span>सुनें</span>
-              </button>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-2">
-              <!-- Chat Button -->
-              <button 
-                type="button" 
-                class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#6366F1] hover:from-[#5B21B6] hover:to-[#4F46E5] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer" 
-                onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('${profileSlug}') : (window.location.href='/consultation/${profileSlug}')"
-              >
-                <span>💬</span>
-                <span>Chat</span>
-              </button>
-
-              <!-- Call Button -->
-              <button 
-                type="button" 
-                class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#F5F3FF] border border-[#7439EA] text-[#7439EA] font-bold text-xs transition-colors cursor-pointer" 
-                onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('${profileSlug}') : window.App.startConsultationWith('${profileSlug}'))"
-              >
-                <span>📞</span>
-                <span>Call</span>
-              </button>
-            </div>
+        <div class="ac-foot">
+          <div class="ac-price"><b>₹${price}</b><span>/min</span></div>
+          <button type="button" class="ac-listen" title="पंडित जी का स्वर सुनें (Audio Voice Intro)"
+            onclick="event.stopPropagation(); window.App && window.App.playAstrologerVoice ? window.App.playAstrologerVoice('${nameArg}') : (window.ChatController && window.ChatController.playTempleChime && window.ChatController.playTempleChime())">${icPlay}<span>सुनें</span></button>
+          <div class="ac-actions">
+            <button type="button" class="ac-btn ac-btn--chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('${slugArg}') : (window.location.href='/consultation/${slugArg}')">${icChat}<span>Chat</span></button>
+            <button type="button" class="ac-btn ac-btn--call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('${slugArg}') : window.App.startConsultationWith('${slugArg}'))">${icCall}<span>Call</span></button>
           </div>
         </div>
       </article>

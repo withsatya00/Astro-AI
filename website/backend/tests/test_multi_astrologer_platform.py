@@ -207,7 +207,7 @@ def test_admin_persona_update(client):
     res_update = client.patch(f"/api/v1/astrologers/{astro_id}", json={
         "price_per_minute": 0,
         "is_ai": True,
-        "title": "Master Vedic Numerologist & Jyotish Scholar (AI)"
+        "title": "Master Vedic Numerologist & Jyotish Scholar"
     })
     assert res_update.status_code == 200
     updated = res_update.json()

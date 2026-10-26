@@ -62,3 +62,7 @@ scratch/
 *.swo
 .DS_Store
 Thumbs.db
+
+# Local tooling / generated caches
+.playwright-mcp/
+website/.cache/tts/

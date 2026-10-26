@@ -481,7 +481,8 @@ var ChatController = {
     }
 
     // Phone photos are several MB; the API gateway rejects large bodies, so shrink before sending.
-    this.compressImage(file).then(dataUrl => {
+    // 768px keeps the palm lines readable and fits one vision tile, so the reading starts sooner.
+    this.compressImage(file, 768, 0.8).then(dataUrl => {
       this.sendMessage('Analyze my palm lines (हस्तरेखा विश्लेषण)', dataUrl);
     }).catch(() => {
       App.showToast('Could not read that photo. Please try another image.', 'error');
@@ -1406,7 +1407,7 @@ https://astrojyotish.ai`;
 
   async loadAstrologers() {
     try {
-      const data = await API.getAstrologers();
+      const data = await API.getAstrologers({ limit: 50 });
       this.astrologers = Array.isArray(data) ? data : (data.items || []);
       this.updateAstrologerUI();
       // Also notify App if directory is loaded
@@ -1454,9 +1455,9 @@ https://astrojyotish.ai`;
     if (welcomeDesc && current.bio) welcomeDesc.innerText = current.bio;
     if (welcomeDisclosure) {
       if (current.type === 'human') {
-        welcomeDisclosure.innerHTML = '⚖️ <strong>Verified Human Scholar:</strong> Real-time direct inquiry with certified Vedic Acharya. Zero synthetic AI substitution.';
+        welcomeDisclosure.innerHTML = '⚖️ <strong>Verified Human Scholar:</strong> Real-time direct inquiry with certified Vedic Acharya.';
       } else {
-        welcomeDisclosure.innerHTML = 'ℹ️ <strong>Consultation Notice:</strong> Automated Jyotish assistant powered by Swiss Ephemeris & classical Vedic shastras. Honest, transparent guidance with zero synthetic human pretense.';
+        welcomeDisclosure.innerHTML = 'ℹ️ <strong>Consultation Notice:</strong> Guidance grounded in Swiss Ephemeris calculations & classical Vedic shastras. Honest and transparent.';
       }
     }
 
@@ -1505,7 +1506,44 @@ https://astrojyotish.ai`;
     }
   },
 
+  // Shown the moment a card is tapped: the backend can take a while (cold start), and a silent wait looks like a dead link.
+  showConsultationConnecting(astrologerId) {
+    if (window.Router && window.Router.switchView) window.Router.switchView('view-consultation');
+    const welcome = document.getElementById('welcome-screen');
+    if (welcome) welcome.style.display = 'none';
+    const box = document.getElementById('chat-messages-container');
+    if (!box) return () => {};
+    box.innerHTML = `
+      <div class="consultation-connecting flex flex-col items-center justify-center text-center p-8 my-auto min-h-[300px]">
+        <div style="font-size: 2.4rem; animation: spin 2.5s linear infinite;">🪐</div>
+        <p class="font-serif font-bold text-lg mt-3" style="color:#1E1B4B;">Connecting to your astrologer…</p>
+        <p class="connecting-hint text-sm mt-1" style="color:#64748B;">One moment, opening your consultation.</p>
+      </div>`;
+    const hintTimer = setTimeout(() => {
+      const hint = box.querySelector('.connecting-hint');
+      if (hint) hint.textContent = 'The server is waking up — this can take up to a minute the first time. Please wait.';
+    }, 6000);
+    return () => clearTimeout(hintTimer);
+  },
+
+  showConsultationStartFailed(astrologerId, message) {
+    const box = document.getElementById('chat-messages-container');
+    if (!box || !box.querySelector('.consultation-connecting')) return;
+    const safeId = encodeURIComponent(astrologerId);
+    box.innerHTML = `
+      <div class="flex flex-col items-center justify-center text-center p-8 my-auto min-h-[300px]">
+        <div style="font-size: 2.2rem;">⚠️</div>
+        <p class="font-serif font-bold text-lg mt-3" style="color:#1E1B4B;">Couldn't open the consultation</p>
+        <p class="text-sm mt-1 mb-5" style="color:#64748B;">${message || 'Please check your connection and try again.'}</p>
+        <div class="flex items-center gap-3">
+          <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] cursor-pointer" onclick="ChatController.startConsultationWith(decodeURIComponent('${safeId}'))">Try again</button>
+          <a href="/astrologers" data-nav-link class="py-2.5 px-5 rounded-full text-[#1E1B4B] font-semibold text-sm border border-[#E7E2D8] bg-white no-underline">All astrologers</a>
+        </div>
+      </div>`;
+  },
+
   async startConsultationWith(astrologerId) {
+    const stopConnectingHint = this.showConsultationConnecting(astrologerId);
     try {
       let astrologer = (this.astrologers || []).find(a => a.id === astrologerId || a.slug === astrologerId);
       if (!astrologer) {
@@ -1570,14 +1608,20 @@ https://astrojyotish.ai`;
       }
     } catch (err) {
       console.error('Failed to start consultation:', err);
+      this.showConsultationStartFailed(astrologerId, err && err.message);
       if (window.App && window.App.showToast) {
         window.App.showToast(`Could not start consultation: ${err.message}`, 'error');
       }
+    } finally {
+      stopConnectingHint();
+      document.querySelectorAll('#chat-messages-container .consultation-connecting').forEach(el => el.remove());
     }
   },
 
-  async resumeConsultationById(consultationId) {
+  async resumeConsultationById(consultationId, isRetry = false) {
     if (!consultationId) return;
+    let astroLookupError = null;
+    let sessionLoaded = false;
     try {
       let data = null;
       try {
@@ -1592,12 +1636,14 @@ https://astrojyotish.ai`;
             return;
           }
         } catch (astroErr) {
+          astroLookupError = astroErr;
           throw fetchErr;
         }
       }
 
       if (!data) throw new Error('Consultation session not found');
 
+      sessionLoaded = true;
       this.activeConsultation = data;
       this.currentSessionId = data.id;
       this.selectedAstrologer = data.astrologer_id;
@@ -1622,6 +1668,39 @@ https://astrojyotish.ai`;
       await this.loadConsultationHistory(data.id);
     } catch (err) {
       console.warn('Failed to resume consultation by ID:', consultationId, err);
+      // The session itself loaded and a later UI step failed: the astrologer exists, so never claim they don't.
+      if (sessionLoaded) return;
+      // Only a 404 from the astrologer lookup means "does not exist". A timeout, dropped connection or 5xx is
+      // transient: retry once, then offer a retry instead of a misleading "Astrologer Not Found".
+      const lookupTransient = astroLookupError && astroLookupError.status !== 404;
+      if (lookupTransient && !isRetry) {
+        await new Promise(r => setTimeout(r, 1200));
+        return this.resumeConsultationById(consultationId, true);
+      }
+      if (lookupTransient) {
+        const failContainer = document.getElementById('chat-messages-container');
+        const failWelcome = document.getElementById('welcome-screen');
+        if (failWelcome) failWelcome.style.display = 'none';
+        if (failContainer) {
+          failContainer.innerHTML = `
+            <div class="astrologer-not-found-screen flex flex-col items-center justify-center p-8 sm:p-12 text-center my-auto min-h-[380px]">
+              <div class="w-16 h-16 rounded-2xl bg-[#FFFBEB] border border-[#FCD34D] flex items-center justify-center text-3xl mb-4 shadow-sm">🪐</div>
+              <h2 class="text-xl sm:text-2xl font-serif font-bold text-[#1E1B4B] mb-2">Couldn't open the consultation</h2>
+              <p class="text-sm text-[#64748B] max-w-md mb-6 leading-relaxed">The connection was interrupted. Your astrologer is available — please try again.</p>
+              <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] cursor-pointer" onclick="ChatController.resumeConsultationById(decodeURIComponent('${encodeURIComponent(consultationId)}'))">Try again</button>
+            </div>`;
+        }
+        return;
+      }
+      // A consultation UUID that no longer exists (stale link/bookmark, or it belongs to another browser) is not a
+      // missing astrologer: drop the stale id and open a fresh consultation with the astrologer already selected.
+      const looksLikeSessionId = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(consultationId);
+      if (looksLikeSessionId && this.selectedAstrologer) {
+        try { localStorage.removeItem('astroai_active_consultation'); } catch (_) { /* storage unavailable */ }
+        history.replaceState(null, '', '/consultation');
+        await this.startConsultationWith(this.selectedAstrologer);
+        return;
+      }
       // Requirement 4.8: Handle genuinely missing astrologers with an intentional not-found page.
       const container = document.getElementById('chat-messages-container');
       const welcome = document.getElementById('welcome-screen');
@@ -1684,7 +1763,7 @@ https://astrojyotish.ai`;
         }
       }
 
-      // USER MANDATE: Pure, neat and clean WhatsApp & AstroView AI style consultation room.
+      // USER MANDATE: Pure, neat and clean WhatsApp-style consultation room.
       // Remove all messy floating cards, audio voice widgets, and prescription slips.
       const ast = (data && data.astrologer) || {};
       const astName = ast.name || 'Pt. Tribhuvan Sharma';
@@ -2281,7 +2360,7 @@ https://astrojyotish.ai`;
           this.appendMessage('assistant', res.response.content);
         } else {
           const availText = currentAstrologer.availability === 'offline'
-            ? `Your consultation inquiry has been safely delivered to **${currentAstrologer.name}**'s certified desk queue. He is currently offline and will reply as soon as he is back online. (Honest Human Consultation: Zero synthetic AI substitution).`
+            ? `Your consultation inquiry has been safely delivered to **${currentAstrologer.name}**'s certified desk queue. He is currently offline and will reply as soon as he is back online. (Honest Human Consultation).`
             : `Your consultation message has been received by **${currentAstrologer.name}**. Please hold while he reviews your chart.`;
           this.appendMessage('assistant', availText);
         }
@@ -2301,7 +2380,7 @@ https://astrojyotish.ai`;
       return;
     }
 
-    // Mode 2: Vedic Astrologer Persona Consultation Mode (Streaming)
+    // Mode 2: Vedic Astrologer Consultation Mode (Streaming)
     const isGroupStart = (this.lastSenderRole !== 'assistant');
     this.lastSenderRole = 'assistant';
 
@@ -3943,7 +4022,7 @@ const CallingAgentService = {
     ChatController.appendMessage('user', text);
 
     // Running transcript for birth-detail extraction and the call summary, independent of whether
-    // a turn reaches the LLM (it may be intercepted by the scope or birth-details gate below).
+    // a turn reaches the reply engine (it may be intercepted by the scope or birth-details gate below).
     if (this.callLog) this.callLog.transcript = this.callLog.transcript || [];
     const logLine = (speaker, line) => { if (this.callLog) this.callLog.transcript.push(`${speaker}: ${line}`); };
     logLine('Seeker', text);

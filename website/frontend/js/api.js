@@ -76,6 +76,25 @@ const getApiBase = () => {
 })();
 
 const API_BASE = getApiBase();
+
+// Short-lived GET cache with in-flight de-duplication. Errors are never cached and carry `status`
+// so callers can tell "does not exist" (404) from a transient failure.
+const _getCache = new Map();
+function cachedGet(url, ttlMs, failMessage) {
+  const hit = _getCache.get(url);
+  if (hit && Date.now() - hit.at < ttlMs) return hit.promise;
+  const promise = fetch(url).then(res => {
+    if (!res.ok) {
+      const err = new Error(failMessage);
+      err.status = res.status;
+      throw err;
+    }
+    return res.json();
+  });
+  _getCache.set(url, { at: Date.now(), promise });
+  promise.catch(() => { if (_getCache.get(url)?.promise === promise) _getCache.delete(url); });
+  return promise;
+}
 async function authResponse(res, fallback) {
   const data = await res.json().catch(() => null);
   if (!res.ok) {
@@ -303,10 +322,10 @@ var API = {
     return res.json();
   },
 
-  // Astrologer Personas
+  // Expert Astrologers
   async getAstrologers() {
     const res = await fetch(`${API_BASE}/chat/astrologers`);
-    if (!res.ok) throw new Error('Failed to fetch astrologer personas');
+    if (!res.ok) throw new Error('Failed to fetch astrologers');
     return res.json();
   },
 
@@ -478,15 +497,12 @@ var API = {
     if (params.limit) query.append('limit', params.limit);
 
     const url = `${API_BASE}/astrologers${query.toString() ? '?' + query.toString() : ''}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Failed to load astrologers directory');
-    return res.json();
+    // The home page, directory and chat all ask for the same list at once: share one request and reuse it briefly.
+    return cachedGet(url, 60000, 'Failed to load astrologers directory');
   },
 
   async getAstrologerProfile(slugOrId) {
-    const res = await fetch(`${API_BASE}/astrologers/${encodeURIComponent(slugOrId)}`);
-    if (!res.ok) throw new Error('Failed to load astrologer profile');
-    return res.json();
+    return cachedGet(`${API_BASE}/astrologers/${encodeURIComponent(slugOrId)}`, 60000, 'Failed to load astrologer profile');
   },
 
   async smartMatchAstrologers(params = {}) {

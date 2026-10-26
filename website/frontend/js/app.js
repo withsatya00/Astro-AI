@@ -1763,6 +1763,19 @@ var App = {
     }
   },
 
+  // Last-known astrologer list, so cards can paint instantly while the fresh list loads (stale-while-revalidate).
+  readAstrologerCache() {
+    try {
+      const raw = JSON.parse(localStorage.getItem('astro_list_cache_v1') || 'null');
+      if (raw && Array.isArray(raw.items) && raw.items.length && Date.now() - raw.at < 24 * 3600 * 1000) return raw.items;
+    } catch (_) { /* storage unavailable or corrupt */ }
+    return null;
+  },
+
+  writeAstrologerCache(items) {
+    try { localStorage.setItem('astro_list_cache_v1', JSON.stringify({ at: Date.now(), items })); } catch (_) { /* quota or blocked */ }
+  },
+
   async loadAstrologerDirectory() {
     const listEl = document.getElementById('directory-page-cards-grid');
     const modalListEl = document.getElementById('astrologers-modal-list');
@@ -1779,9 +1792,17 @@ var App = {
       if (this.directoryFilter.sort) params.sort_by = this.directoryFilter.sort;
       if (this.directoryFilter.q) params.search = this.directoryFilter.q;
 
+      const isDefaultView = this.directoryFilter.type === 'all' && !this.directoryFilter.specialty &&
+        !this.directoryFilter.language && !this.directoryFilter.q;
+      if (isDefaultView && listEl && !listEl.querySelector('.ac-card')) {
+        const cached = this.readAstrologerCache();
+        if (cached) listEl.innerHTML = cached.map(a => this.renderAstrologerCardHtml(a, ChatController.selectedAstrologer)).join('');
+      }
+
       const res = await API.getAstrologers(params);
       const astrologers = Array.isArray(res) ? res : (res.items || []);
       this.astrologersList = astrologers;
+      if (isDefaultView) this.writeAstrologerCache(astrologers);
 
       // Update badge counts
       const countBadge = document.getElementById('directory-total-badge');
@@ -1829,6 +1850,7 @@ var App = {
       if (modalListEl) modalListEl.innerHTML = cardsHtml;
     } catch (err) {
       console.error('Failed to load astrologers directory:', err);
+      if (listEl && listEl.querySelector('.ac-card')) return; // keep the cached cards instead of replacing them with an error
       const errHtml = `<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: #DC2626;">Failed to load astrologers: ${err.message}</div>`;
       if (listEl) listEl.innerHTML = errHtml;
       if (modalListEl) modalListEl.innerHTML = errHtml;
@@ -1963,13 +1985,17 @@ var App = {
 
     try {
       if (!this.astrologersList || this.astrologersList.length === 0) {
+        const cached = this.readAstrologerCache();
+        if (cached && !grid.querySelector('.ac-card')) grid.innerHTML = cached.slice(0, 6).map(a => this.renderAstrologerCardHtml(a)).join('');
         const res = await API.getAstrologers({ limit: 50 });
         this.astrologersList = Array.isArray(res) ? res : (res.items || []);
+        this.writeAstrologerCache(this.astrologersList);
       }
-      const featured = (this.astrologersList || []).slice(0, 5);
+      const featured = (this.astrologersList || []).slice(0, 6);
       grid.innerHTML = featured.map(a => this.renderAstrologerCardHtml(a)).join('');
     } catch (err) {
       console.warn('Failed to load home featured astrologers:', err);
+      if (grid.querySelector('.ac-card')) return;
       grid.innerHTML = `<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: #DC2626;">Failed to load featured astrologers.</div>`;
     }
   },
@@ -1981,7 +2007,7 @@ var App = {
       return;
     }
 
-    // Fast synchronous pre-render if persona is already in memory
+    // Fast synchronous pre-render if the astrologer is already in memory
     const cached = (this.astrologersList || []).find(x => x.slug === slug || x.id === slug);
     if (cached) {
       this.populateProfileHtml(cached);
@@ -1996,7 +2022,7 @@ var App = {
 
     try {
       const a = await (window.API || API).getAstrologerProfile(slug);
-      // If astrologersList not loaded yet, fetch in background for similar personas
+      // If astrologersList not loaded yet, fetch in background for similar astrologers
       if (!this.astrologersList || this.astrologersList.length === 0) {
         (window.API || API).getAstrologers({ limit: 24 }).then(res => {
           this.astrologersList = Array.isArray(res) ? res : (res.items || []);
@@ -2011,7 +2037,7 @@ var App = {
           <div style="text-align: center; padding: 4rem 1rem; color: #DC2626;">
             <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚠️</div>
             <h2 style="font-family: var(--font-serif); margin-bottom: 0.5rem;">Astrologer Profile Not Found</h2>
-            <p style="color: #64748B; margin-bottom: 1.5rem;">The astrologer persona "${slug}" does not exist or is currently unavailable.</p>
+            <p style="color: #64748B; margin-bottom: 1.5rem;">The astrologer profile "${slug}" does not exist or is currently unavailable.</p>
             <a href="/astrologers" data-nav-link class="btn-hero-primary" style="display: inline-flex;">
               Browse All Astrologers ➔
             </a>
@@ -2040,7 +2066,7 @@ var App = {
            <span>✓</span> <div><strong>Verified Human Scholar:</strong> Direct personal 1-on-1 consultation with a certified Vedic astrologer.</div>
          </div>`
       : `<div class="consultation-disclosure-banner ai-disclosure">
-           <span>ℹ️</span> <div><strong>Consultation Transparency:</strong> Automated consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.</div>
+           <span>ℹ️</span> <div><strong>Consultation Transparency:</strong> Consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.</div>
          </div>`;
 
     const specialtiesHtml = (a.specialties || []).map(s => `<span class="specialty-pill" style="font-size:0.8rem; padding:0.3rem 0.75rem;">${s}</span>`).join('');
@@ -2141,7 +2167,7 @@ var App = {
             <div style="font-size: 0.78rem; color: #64748B; text-transform: uppercase; font-weight: 700; margin-bottom: 0.25rem;">Consultation Rate</div>
             <div style="display: flex; align-items: baseline; gap: 0.4rem;">
               <span style="font-size: 1.75rem; font-weight: 800; color: #059669;">${a.price_per_minute === 0 ? 'Free' : '₹' + a.price_per_minute}</span>
-              <span style="font-size: 0.8rem; color: #64748B;">${a.price_per_minute === 0 ? 'Instant AI Consultation' : '/ min'}</span>
+              <span style="font-size: 0.8rem; color: #64748B;">${a.price_per_minute === 0 ? 'Instant Consultation' : '/ min'}</span>
             </div>
           </div>
 
@@ -2272,7 +2298,7 @@ var App = {
     this.astrologersList = astrologers;
     const countBadge = document.getElementById('directory-total-badge') || document.getElementById('astrologers-count-badge');
     const dirCountAll = document.getElementById('dir-count-all');
-    if (countBadge) countBadge.innerText = `${astrologers.length} Astrologer Personas`;
+    if (countBadge) countBadge.innerText = `${astrologers.length} Expert Astrologers`;
     if (dirCountAll) dirCountAll.innerText = astrologers.length;
   },
 
@@ -2292,7 +2318,7 @@ var App = {
       const isBusy = a.availability === 'busy';
       const statusClass = isOnline ? 'status-online' : (isBusy ? 'status-busy' : 'status-offline');
       const statusText = isOnline ? '🟢 Online Now' : (isBusy ? '🟡 Busy with Consultation' : '⚪ Currently Offline');
-      const typeLabel = a.type === 'human' ? 'Certified Vedic Scholar (Human)' : 'Authentic वैदिक ज्योतिषी Persona';
+      const typeLabel = a.type === 'human' ? 'Certified Vedic Scholar (Human)' : 'Authentic वैदिक ज्योतिषी';
 
       const specialtiesHtml = (a.specialties || []).map(s => `<span class="specialty-pill" style="font-size:0.75rem; padding:0.25rem 0.6rem;">${s}</span>`).join('');
       const languagesHtml = (a.languages || []).join(', ');
@@ -3173,6 +3199,17 @@ var App = {
       }
     });
     this.fetchAndRenderHoroscope();
+    this.revealHoroscopeResult();
+  },
+
+  // The result card renders below the sign grid; on phones/tablets it is off-screen, so bring it into view.
+  revealHoroscopeResult() {
+    const card = document.getElementById('horoscope-card-container');
+    if (!card) return;
+    const top = card.getBoundingClientRect().top;
+    if (top > window.innerHeight * 0.6 || top < 0) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   },
 
   changeHoroscopeTimeframe(timeframe) {
@@ -3190,6 +3227,7 @@ var App = {
       }
     });
     this.fetchAndRenderHoroscope();
+    this.revealHoroscopeResult();
   },
 
   async fetchAndRenderHoroscope() {

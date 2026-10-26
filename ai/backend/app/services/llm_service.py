@@ -1028,21 +1028,23 @@ class LLMService:
 
         # Handle palm image
         if image_base64:
-            palm_res = LLMService.analyze_palm_image(
+            full_text = ""
+            palm_is_demo = False
+            async for event in LLMService.stream_palm_analysis(
                 image_base64=image_base64,
                 user_message=user_message,
                 language=language,
                 force_demo_mode=use_demo
-            )
-            full_text = palm_res["content"]
-            words = re.findall(r'\S+\s*', full_text)
-            for i in range(0, len(words), 2):
-                yield {"type": "delta", "text": "".join(words[i:i+2])}
-                await asyncio.sleep(0.005)
+            ):
+                if event["type"] == "delta":
+                    full_text += event["text"]
+                    yield {"type": "delta", "text": event["text"]}
+                else:
+                    palm_is_demo = event.get("is_demo_mode", False)
             yield {
                 "type": "done",
-                "content": full_text,
-                "is_demo_mode": palm_res.get("is_demo_mode", False),
+                "content": full_text.strip(),
+                "is_demo_mode": palm_is_demo,
                 "calculated_data_used": False,
                 "citations": [],
                 "chart_svg": None,
@@ -1288,6 +1290,73 @@ class LLMService:
         }
 
     @staticmethod
+    def _palm_prompt(detected_lang: str) -> str:
+        return (
+            "You are an expert, compassionate Vedic Palmistry (Hastarekha / Samudrika Shastra) astrologer. "
+            "Examine this user's uploaded palm photo carefully:\n"
+            "1. Observe the palm shape (Earth, Air, Fire, Water), fingers, and skin texture.\n"
+            "2. Identify and analyze the key lines visible: Life Line (Jeevan Rekha), Heart Line (Hriday Rekha), Head Line (Mastishk Rekha), Fate Line (Bhagya Rekha).\n"
+            "3. Observe key mounts (Mount of Jupiter, Venus, Sun) and any prominent markings.\n"
+            "4. Deliver an authentic, structured, encouraging reading focusing on career strengths, emotional relationships, and mental focus.\n"
+            f"Language requirement: Respond in natural {detected_lang.upper()} (if Hinglish, speak natural, warm conversational Hinglish like an Indian palmist).\n"
+            "Keep formatting clean without excessive bullet spam."
+        )
+
+    @staticmethod
+    async def stream_palm_analysis(
+        image_base64: str,
+        user_message: str = "Analyze my palm lines (हस्तरेखा विश्लेषण)",
+        language: str = "hinglish",
+        force_demo_mode: bool = False
+    ):
+        """Streams the palm reading: {"type": "delta", "text"} chunks, then {"type": "meta", "is_demo_mode"}.
+
+        The blocking Gemini call in analyze_palm_image froze the whole event loop (every other request waited) and
+        nothing reached the user until the full reading was ready. This streams tokens as they arrive instead.
+        """
+        client = None if (force_demo_mode or settings.is_demo_mode) else _get_gemini_client()
+        decoded = None
+        try:
+            if "," in image_base64:
+                header, raw_b64 = image_base64.split(",", 1)
+                mime_type = "image/png" if "png" in header else "image/jpeg"
+            else:
+                raw_b64, mime_type = image_base64, "image/jpeg"
+            decoded = (base64.b64decode(raw_b64), mime_type)
+        except Exception as e:  # noqa: BLE001 - falls through to the friendly "send a valid photo" reply
+            logger.error(f"Failed to decode base64 palm image: {e}")
+
+        streamed = False
+        if client is not None and decoded is not None:
+            try:
+                from google.genai import types
+                detected_lang = _response_language(user_message, language)
+                contents = [types.Part.from_bytes(data=decoded[0], mime_type=decoded[1]), LLMService._palm_prompt(detected_lang)]
+                config = types.GenerateContentConfig(
+                    system_instruction=ASTROAI_SYSTEM_PROMPT_V2, temperature=0.4, max_output_tokens=700
+                )
+                models = list(dict.fromkeys(["gemini-3.1-flash-lite", settings.GEMINI_MODEL]))
+                async for text in _hedged_stream(client, models, contents, config):
+                    streamed = True
+                    yield {"type": "delta", "text": text}
+                yield {"type": "meta", "is_demo_mode": False}
+                return
+            except Exception as e:  # noqa: BLE001
+                logger.error(f"Streaming palm analysis failed: {e}")
+                if streamed:  # part of the reading already reached the user; end it rather than append a second one
+                    yield {"type": "meta", "is_demo_mode": False}
+                    return
+
+        fallback = LLMService.analyze_palm_image(
+            image_base64=image_base64, user_message=user_message, language=language, force_demo_mode=True
+        )
+        words = re.findall(r'\S+\s*', fallback["content"])
+        for i in range(0, len(words), 2):
+            yield {"type": "delta", "text": "".join(words[i:i + 2])}
+            await asyncio.sleep(0.005)
+        yield {"type": "meta", "is_demo_mode": True}
+
+    @staticmethod
     def analyze_palm_image(
         image_base64: str,
         user_message: str = "Analyze my palm lines (हस्तरेखा विश्लेषण)",
@@ -1363,16 +1432,7 @@ class LLMService:
             client = genai.Client(api_key=settings.GEMINI_API_KEY)
             image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
-            palm_prompt = (
-                "You are an expert, compassionate Vedic Palmistry (Hastarekha / Samudrika Shastra) astrologer. "
-                "Examine this user's uploaded palm photo carefully:\n"
-                "1. Observe the palm shape (Earth, Air, Fire, Water), fingers, and skin texture.\n"
-                "2. Identify and analyze the key lines visible: Life Line (Jeevan Rekha), Heart Line (Hriday Rekha), Head Line (Mastishk Rekha), Fate Line (Bhagya Rekha).\n"
-                "3. Observe key mounts (Mount of Jupiter, Venus, Sun) and any prominent markings.\n"
-                "4. Deliver an authentic, structured, encouraging reading focusing on career strengths, emotional relationships, and mental focus.\n"
-                f"Language requirement: Respond in natural {detected_lang.upper()} (if Hinglish, speak natural, warm conversational Hinglish like an Indian palmist).\n"
-                "Keep formatting clean without excessive bullet spam."
-            )
+            palm_prompt = LLMService._palm_prompt(detected_lang)
 
             response = client.models.generate_content(
                 model=settings.GEMINI_MODEL,

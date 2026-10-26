@@ -247,8 +247,10 @@ button:not(#hero-section button):not(:disabled):active,
 
 /* ---- Theme toggle button ------------------------------------------------- */
 .pm-theme-toggle {
-  width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-  border: 1px solid var(--pm-line); background: var(--pm-surface); color: #1E1B4B; cursor: pointer; flex: none;
+  width: 36px; height: 36px; min-width: 36px; aspect-ratio: 1 / 1; border-radius: 50% !important; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid #E3D5B5; background: var(--pm-surface); color: #1E1B4B; cursor: pointer; flex: none;
+  box-shadow: 0 1px 4px rgba(30, 27, 75, 0.12);
 }
 .pm-theme-toggle .pi { width: 1.1rem; height: 1.1rem; }
 
@@ -480,3 +482,133 @@ html[data-theme="dark"] .attach-menu button:hover { background: #2A2438; }
 /* the supplied logo is a finished app-icon tile (own gold frame and depth), so no extra chrome */
 .brand-mark { background: none !important; box-shadow: none !important; overflow: visible; }
 .brand-mark-img { object-fit: contain; filter: drop-shadow(0 2px 5px rgba(60, 28, 120, 0.28)); }
+
+/* ---- Dark mode: page canvas and the pages that kept light surfaces ------------------------------ */
+html[data-theme="dark"] #app-views-container,
+html[data-theme="dark"] .app-views-container,
+html[data-theme="dark"] .app-page-view,
+html[data-theme="dark"] .home-page-container,
+html[data-theme="dark"] #site-layout-outlet {
+  background: #13111D !important;
+  background-image: none !important;
+}
+html[data-theme="dark"] .horo-card,
+html[data-theme="dark"] .horo-domain-card,
+html[data-theme="dark"] .horo-summary-box,
+html[data-theme="dark"] .rashi-btn,
+html[data-theme="dark"] .horo-time-tab:not(.active),
+html[data-theme="dark"] .panchang-page-toolbar,
+html[data-theme="dark"] .panchang-feature-card,
+html[data-theme="dark"] .choghadiya-container-box,
+html[data-theme="dark"] .choghadiya-item,
+html[data-theme="dark"] .muhurat-box,
+html[data-theme="dark"] #calculators-page-filter-tabs,
+html[data-theme="dark"] .calc-tab,
+html[data-theme="dark"] .ayanamsa-pill,
+html[data-theme="dark"] .precision-pill,
+html[data-theme="dark"] [class*="bg-[#FEF2F2"],
+html[data-theme="dark"] [class*="bg-[#FFFBEB"],
+html[data-theme="dark"] [class*="bg-purple-50"],
+html[data-theme="dark"] [class*="bg-white"]:not(.btn-nav-auth):not(.pm-theme-toggle) {
+  background-color: #1C1928 !important;
+  background-image: none !important;
+  border-color: #353041 !important;
+}
+html[data-theme="dark"] .rashi-btn.active,
+html[data-theme="dark"] .horo-time-tab.active {
+  background-color: #4C2D8A !important;
+  border-color: #7439EA !important;
+}
+html[data-theme="dark"] .horo-card *,
+html[data-theme="dark"] .panchang-feature-card *,
+html[data-theme="dark"] .choghadiya-container-box *,
+html[data-theme="dark"] .rashi-btn *,
+html[data-theme="dark"] .muhurat-box * { border-color: #353041; }
+html[data-theme="dark"] .horo-card,
+html[data-theme="dark"] .horo-card p,
+html[data-theme="dark"] .horo-card strong,
+html[data-theme="dark"] .horo-card span,
+html[data-theme="dark"] .choghadiya-item-time,
+html[data-theme="dark"] .choghadiya-item-name,
+html[data-theme="dark"] .choghadiya-box-title,
+html[data-theme="dark"] .muhurat-title,
+html[data-theme="dark"] .rashi-name { color: #F3EEE8 !important; }
+html[data-theme="dark"] .horo-summary-box p { color: #D9D2E6 !important; }
+html[data-theme="dark"] .rashi-hi { color: #ADA6BA !important; }
+html[data-theme="dark"] [class*="text-[#7439EA"],
+html[data-theme="dark"] .btn-calc-link,
+html[data-theme="dark"] [class*="text-purple-"] { color: #C0A0F0 !important; }
+html[data-theme="dark"] .testi-text,
+html[data-theme="dark"] [class*="text-[#334155"] { color: #D9D2E6 !important; }
+html[data-theme="dark"] [class*="text-[#B45309"] { color: #F3C969 !important; }
+
+/* Dark mode: pills, labels and inline-styled callouts that kept light fills or dark text */
+html[data-theme="dark"] .horo-period-badge,
+html[data-theme="dark"] .horo-ruler-pill,
+html[data-theme="dark"] [class*="bg-[#F5F3FF"],
+html[data-theme="dark"] [style*="background: #FFFBEB"],
+html[data-theme="dark"] [style*="background: #F3E8FF"],
+html[data-theme="dark"] [style*="background:#FFFBEB"] {
+  background: #2A2440 !important;
+  border-color: #3C3458 !important;
+  color: #F3EEE8 !important;
+}
+html[data-theme="dark"] .horo-ruler-pill *,
+html[data-theme="dark"] [style*="background: #FFFBEB"] *,
+html[data-theme="dark"] [style*="background: #F3E8FF"] * { color: #F3EEE8 !important; }
+html[data-theme="dark"] .horo-period-badge { color: #C0A0F0 !important; }
+html[data-theme="dark"] .domain-title,
+html[data-theme="dark"] .panchang-control-label,
+html[data-theme="dark"] .pfc-value { color: #F3EEE8 !important; }
+html[data-theme="dark"] .pfc-sub { color: #C0A0F0 !important; }
+html[data-theme="dark"] .ayanamsa-pill { color: #C0A0F0 !important; }
+html[data-theme="dark"] .precision-pill { color: #F3C969 !important; }
+html[data-theme="dark"] #panchang-home-rahu { color: #F87171 !important; }
+
+/* Dark mode: chat speaker label and the "View Horoscope" pill */
+html[data-theme="dark"] .msg-speaker-compact-name,
+html[data-theme="dark"] .msg-speaker-compact-name * { color: #C0A0F0 !important; }
+html[data-theme="dark"] .btn-transit-kundli {
+  background: #2B2410 !important;
+  border-color: #5C4A1A !important;
+  color: #F3C969 !important;
+}
+html[data-theme="dark"] .btn-transit-kundli * { color: #F3C969 !important; }
+
+/* Dark mode: native controls (scrollbars, date pickers, selects) follow the theme; the composer textarea shows no bright scrollbar */
+html[data-theme="dark"] { color-scheme: dark; }
+.composer-textarea { scrollbar-width: none; }
+.composer-textarea::-webkit-scrollbar { display: none; }
+
+/* Dark mode: gradient banner and placeholder text */
+html[data-theme="dark"] .panchang-status-banner {
+  background: #1C1928 !important;
+  background-image: none !important;
+  border-color: #353041 !important;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: #8F88A0 !important; opacity: 1; }
+
+/* Dark mode: chat header controls */
+html[data-theme="dark"] #view-consultation .consultation-compact-header .btn-chat-exit,
+html[data-theme="dark"] #view-consultation .consultation-compact-header .btn-header-overflow,
+html[data-theme="dark"] #view-consultation .consultation-compact-header .btn-header-bell {
+  background: #242030 !important;
+  border-color: #353041 !important;
+  color: #F3EEE8 !important;
+}
+html[data-theme="dark"] #view-consultation .consultation-compact-header .btn-topbar-call {
+  background: #2A2440 !important;
+  border-color: #3C3458 !important;
+  color: #C0A0F0 !important;
+}
+html[data-theme="dark"] #view-consultation .consultation-compact-header .btn-compact-end {
+  background: #3A1620 !important;
+  border-color: #5B2430 !important;
+  color: #FCA5A5 !important;
+}
+html[data-theme="dark"] #view-consultation .consultation-compact-header .session-live-timer {
+  background: #10281F !important;
+  border-color: #1F5A43 !important;
+  color: #6EE7B7 !important;
+}

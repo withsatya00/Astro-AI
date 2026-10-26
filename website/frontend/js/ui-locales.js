@@ -11,7 +11,7 @@ window.ASTRO_UI_LOCALES = {
       "calc_hub_tag": "Pure Mathematics & Shastra",
       "hero_title_line1": "Vedic Wisdom. Personal Guidance.",
       "brand_subtitle": "Authentic Vedic Astrology",
-      "trust_scholars": "30+ Certified Scholars & Personas",
+      "trust_scholars": "30+ Certified Scholars & Experts",
       "btn_export_consultation": "📜 Export Consultation",
       "agent_output_empty": "Execution output will appear here.",
       "btn_share_whatsapp": "💬 WhatsApp",
@@ -62,7 +62,7 @@ window.ASTRO_UI_LOCALES = {
       "exp_years": "Yrs Exp",
       "hero_title_main": "Talk to India's<br/>Top <span class=\"text-[#B45309]\">Vedic Astrologers</span>",
       "hero_badge_pill": "✦ ASTRO JYOTISH • AUTHENTIC VEDIC ASTROLOGY & KUNDALI PLATFORM ✦",
-      "dir_search_placeholder": "Search by astrologer name, expertise, or bio keyword...",
+      "dir_search_placeholder": "Search astrologer or topic...",
       "search_conversations": "Search conversations...",
       "tab_tomorrow": "Tomorrow",
       "why_heading": "Why Astro Jyotish is Different",
@@ -107,7 +107,7 @@ window.ASTRO_UI_LOCALES = {
       "service_calculators": "17 Calculators",
       "hero_subtitle": "Get authentic guidance on career, marriage, health, finance and life's important decisions from experienced Vedic astrologers.",
       "trust_shastras": "287 Classical Shastra Texts",
-      "featured_subtext": "Certified scholars and specialized consultation personas with authentic lineage, experience and classical mastery.",
+      "featured_subtext": "Certified scholars and specialized consultation experts with authentic lineage, experience and classical mastery.",
       "nav_find_astrologer": "Find Astrologer",
       "hero_badge": "AUTHENTIC VEDIC JYOTISH & PRECISION EPHEMERIS",
       "shortcut_marriage_sub": "Compatibility",
@@ -140,7 +140,7 @@ window.ASTRO_UI_LOCALES = {
       "filter_remedies": "Remedies & Graha Shanti",
       "family_profiles_heading": "Family Birth Profiles (Family Horoscope)",
       "dir_page_subtitle": "Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.",
-      "hero_search_placeholder": "Search by astrologer name, concern (Career, Marriage, Health...)",
+      "hero_search_placeholder": "Search astrologer or concern...",
       "filter_marriage": "Love & Marriage",
       "tool_reports": "📑 PDF Kundali Reports",
       "hero_title_line2": "A Deeper Understanding of Your Kundli.",
@@ -161,7 +161,7 @@ window.ASTRO_UI_LOCALES = {
       "categories_tag": "Consultation Areas",
       "faq_heading": "Frequently Asked Questions",
       "nav_horoscope": "Rashiphal",
-      "hero_subheading": "Consult 30+ certified Vedic scholars and specialized consultation personas grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.",
+      "hero_subheading": "Consult 30+ certified Vedic scholars and specialized consultation experts grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.",
       "btn_view_profile": "Profile",
       "shortcut_sadesati": "Shani Sade Sati",
       "tab_featured_ai": "Expert Astrologers",
@@ -238,7 +238,7 @@ window.ASTRO_UI_LOCALES = {
       "exp_years": "वर्ष का अनुभव",
       "hero_title_main": "भारत के<br/>शीर्ष <span class=\"text-[#B45309]\">वैदिक ज्योतिषियों</span> से बात करें",
       "hero_badge_pill": "✦ एस्ट्रो ज्योतिष • प्रामाणिक वैदिक ज्योतिष एवं कुण्डली प्लेटफॉर्म ✦",
-      "dir_search_placeholder": "ज्योतिषी के नाम, विशेषज्ञता या बायो कीवर्ड के आधार पर खोजें...",
+      "dir_search_placeholder": "ज्योतिषी या विषय खोजें...",
       "search_conversations": "वार्तालाप खोजें...",
       "tab_tomorrow": "कल",
       "why_heading": "एस्ट्रो ज्योतिष क्यों भिन्न है",
@@ -316,7 +316,7 @@ window.ASTRO_UI_LOCALES = {
       "filter_remedies": "उपाय और ग्रह शांति",
       "family_profiles_heading": "पारिवारिक कुण्डली",
       "dir_page_subtitle": "करियर, विवाह, वित्त, रत्न और वैदिक उपाय शास्त्रों में प्रमाणित विद्वानों और विशेष ज्योतिषियों की खोज करें।",
-      "hero_search_placeholder": "ज्योतिषी के नाम, चिंता (करियर, विवाह, स्वास्थ्य...) के आधार पर खोजें",
+      "hero_search_placeholder": "ज्योतिषी या समस्या खोजें...",
       "filter_marriage": "प्रेम और विवाह",
       "tool_reports": "📑 पीडीएफ कुण्डली रिपोर्ट",
       "hero_title_line2": "आपकी कुंडली की एक गहरी समझ।",
@@ -1156,8 +1156,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "30+ Certified Astrologers",
       "hi": "30+ प्रमाणित ज्योतिषी"
     },
-    "30+ Certified Scholars & Personas": {
-      "en": "30+ Certified Scholars & Personas",
+    "30+ Certified Scholars & Experts": {
+      "en": "30+ Certified Scholars & Experts",
       "hi": "30+ प्रमाणित विद्वान और विशेषज्ञ"
     },
     "30+ प्रमाणित ज्योतिषाचार्य व विद्वान": {
@@ -1344,8 +1344,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "A Deeper Understanding of Your Kundli.",
       "hi": "आपकी कुंडली की एक गहरी समझ।"
     },
-    "AI ज्योतिष स्वरूप": {
-      "en": "AI Astrology Persona",
+    "विद्वान ज्योतिषी": {
+      "en": "Expert Astrologer",
       "hi": "एआई ज्योतिष स्वरूप"
     },
     "AS": {
@@ -1716,8 +1716,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Anxiety (Distress)",
       "hi": "चिंता"
     },
-    "Any (AI or Human)": {
-      "en": "Any (AI or Human)",
+    "Any Astrologer": {
+      "en": "Any Astrologer",
       "hi": "कोई भी (एआई या मानव)"
     },
     "Any Budget": {
@@ -2068,8 +2068,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Authentic transit-based forecasts computed using planetary movements in Gochara with classical remedies.",
       "hi": "शास्त्रीय उपायों के साथ गोचर में ग्रहों की चाल का उपयोग करके गणना किए गए प्रमाणिक गोचर-आधारित पूर्वानुमान।"
     },
-    "Authentic वैदिक ज्योतिषी Persona": {
-      "en": "Authentic Vedic Astrologer Persona",
+    "Authentic वैदिक ज्योतिषी": {
+      "en": "Authentic Vedic Astrologer",
       "hi": "प्रमाणिक वैदिक ज्योतिषी पर्सना"
     },
     "Author / Sage": {
@@ -2080,12 +2080,12 @@ window.ASTRO_UI_LOCALES = {
       "en": "Auto-Fill Details",
       "hi": "विवरण स्वतः भरें"
     },
-    "Automated Consultations (Instant & Free)": {
-      "en": "Automated Consultations (Instant & Free)",
+    "Instant & Free Consultations": {
+      "en": "Instant & Free Consultations",
       "hi": "स्वचालित परामर्श (तत्काल और निःशुल्क)"
     },
-    "Automated consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.": {
-      "en": "Automated consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.",
+    "Consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.": {
+      "en": "Consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.",
       "hi": "शास्त्रीय पाराशर शास्त्रों और स्विस एhemeris गणितीय गणनाओं पर आधारित स्वचालित परामर्श सेवा।"
     },
     "Available Balance (उपलब्ध बैलेंस)": {
@@ -2668,8 +2668,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Certified human scholar of traditional Mithila Jyotish and Mithila Panchangam with 27 years of experience in pure Parashari calculations and marriage matching.",
       "hi": "पारंपरिक मिथिला ज्योतिष एवं पंचांग के 27 वर्षों के अनुभवी विद्वान। विवाह मुहूर्त एवं कुंडली मिलान के प्रतिष्ठित ज्योतिषी।"
     },
-    "Certified scholars and specialized consultation personas with authentic lineage, experience and classical mastery.": {
-      "en": "Certified scholars and specialized consultation personas with authentic lineage, experience and classical mastery.",
+    "Certified scholars and specialized consultation experts with authentic lineage, experience and classical mastery.": {
+      "en": "Certified scholars and specialized consultation experts with authentic lineage, experience and classical mastery.",
       "hi": "प्रामाणिक वंश, अनुभव और शास्त्रीय महारत के साथ प्रमाणित विद्वान और विशिष्ट परामर्श व्यक्तित्व।"
     },
     "Certified senior human Vedic scholar with 34 years of classical hereditary practice in Varanasi. Specializes in birth chart remediation, Vedic rituals, and direct personal guidance.": {
@@ -3112,8 +3112,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Consult",
       "hi": "परामर्श करें"
     },
-    "Consult 30+ certified Vedic scholars and specialized consultation personas grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.": {
-      "en": "Consult 30+ certified Vedic scholars and specialized consultation personas grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.",
+    "Consult 30+ certified Vedic scholars and specialized consultation experts grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.": {
+      "en": "Consult 30+ certified Vedic scholars and specialized consultation experts grounded in Brihat Parashara Hora Shastra, Jaimini Sutras and Swiss Ephemeris precision. Discover accurate birth chart calculations, career timings, marriage compatibility, and authentic remedies.",
       "hi": "बृहत पराशर होरा शास्त्र, जैमिनी सूत्र और स्विस एफेमरिस की सटीकता पर आधारित 30+ प्रमाणित वैदिक विद्वानों और विशेष परामर्श व्यक्तित्वों से परामर्श करें। सटीक जन्म कुंडली गणना, करियर के समय, विवाह अनुकूलता और प्रामाणिक उपायों की खोज करें।"
     },
     "Consult Astrologer": {
@@ -4124,8 +4124,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Failed to fetch agent tools",
       "hi": "एजेंट टूल लाने में विफल"
     },
-    "Failed to fetch astrologer personas": {
-      "en": "Failed to fetch astrologer personas",
+    "Failed to fetch astrologers": {
+      "en": "Failed to fetch astrologers",
       "hi": "ज्योतिषी व्यक्तित्व लाने में विफल"
     },
     "Failed to fetch bookings": {
@@ -4448,8 +4448,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Free Consultation",
       "hi": "निःशुल्क परामर्श"
     },
-    "Free Only (AI Personas)": {
-      "en": "Free Only (AI Personas)",
+    "Free Only (Expert Astrologers)": {
+      "en": "Free Only (Expert Astrologers)",
       "hi": "केवल निःशुल्क (एआई पर्सना)"
     },
     "Frequently Asked Questions": {
@@ -4988,8 +4988,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Install the Astro Jyotish web application on your Android or iPhone for instant consultation notifications, daily auspicious muhurats, and live dasha updates.",
       "hi": "तत्काल परामर्श सूचनाओं, दैनिक शुभ मुहूर्तों और लाइव दशा अपडेट के लिए अपने एंड्रॉइड या आईफोन पर एस्ट्रो ज्योतिष वेब एप्लिकेशन इंस्टॉल करें।"
     },
-    "Instant AI Consultation": {
-      "en": "Instant AI Consultation",
+    "Instant Consultation": {
+      "en": "Instant Consultation",
       "hi": "तत्काल एआई परामर्श"
     },
     "Instant Yes/No Queries": {
@@ -8060,13 +8060,13 @@ window.ASTRO_UI_LOCALES = {
       "en": "Search astrologers by name, language, or specialty...",
       "hi": "नाम, भाषा या विशेषज्ञता के आधार पर ज्योतिषी खोजें..."
     },
-    "Search by astrologer name, concern (Career, Marriage, Health...)": {
-      "en": "Search by astrologer name, concern (Career, Marriage, Health...)",
-      "hi": "ज्योतिषी के नाम, चिंता (करियर, विवाह, स्वास्थ्य...) के आधार पर खोजें"
+    "Search astrologer or concern...": {
+      "en": "Search astrologer or concern...",
+      "hi": "ज्योतिषी या समस्या खोजें..."
     },
-    "Search by astrologer name, expertise, or bio keyword...": {
-      "en": "Search by astrologer name, expertise, or bio keyword...",
-      "hi": "ज्योतिषी के नाम, विशेषज्ञता या बायो कीवर्ड के आधार पर खोजें..."
+    "Search astrologer or topic...": {
+      "en": "Search astrologer or topic...",
+      "hi": "ज्योतिषी या विषय खोजें..."
     },
     "Search by name, expertise, Vedic branch...": {
       "en": "Search by name, expertise, Vedic branch...",
@@ -8076,9 +8076,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "Search conversations...",
       "hi": "वार्तालाप खोजें..."
     },
-    "Search question (e.g., birth time, language, refund)...": {
-      "en": "Search question (e.g., birth time, language, refund)...",
-      "hi": "प्रश्न खोजें (उदा., जन्म समय, भाषा, रिफंड)..."
+    "Search questions...": {
+      "en": "Search questions...",
+      "hi": "प्रश्न खोजें..."
     },
     "Search terms (e.g. Lagna, Dasha, Navamsha, Rahu Kaal, Guna)...": {
       "en": "Search terms (e.g. Lagna, Dasha, Navamsha, Rahu Kaal, Guna)...",
@@ -8888,8 +8888,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "The D9 chart obtained by dividing each sign into 9 parts. Essential for assessing marriage, marital harmony, spiritual destiny, and true planetary strength in later life.",
       "hi": "प्रत्येक राशि को 9 भागों में विभाजित करके प्राप्त डी9 चार्ट। विवाह, वैवाहिक सुख, आध्यात्मिक भाग्य और जीवन के उत्तरार्ध में ग्रहों की वास्तविक शक्ति का आकलन करने के लिए आवश्यक।"
     },
-    "The astrologer persona \"__ARG0__\" does not exist or is currently unavailable.": {
-      "en": "The astrologer persona \"__ARG0__\" does not exist or is currently unavailable.",
+    "The astrologer profile \"__ARG0__\" does not exist or is currently unavailable.": {
+      "en": "The astrologer profile \"__ARG0__\" does not exist or is currently unavailable.",
       "hi": "ज्योतिषी व्यक्तित्व \"__ARG0__\" मौजूद नहीं है या वर्तमान में उपलब्ध नहीं है।"
     },
     "The five limbs of Panchanga bestow specific divine boons: Tithi brings prosperity, Vaara increases longevity, Nakshatra expels sinful karmas, Yoga removes ailments, and Karana ensures accomplishment of noble endeavors.": {
@@ -9260,8 +9260,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Vedic Astrologer Directory",
       "hi": "वैदिक ज्योतिषी निर्देशिका"
     },
-    "Vedic Astrologer Persona (Instant & Free)": {
-      "en": "Vedic Astrologer Persona (Instant & Free)",
+    "Vedic Astrologer (Instant & Free)": {
+      "en": "Vedic Astrologer (Instant & Free)",
       "hi": "वैदिक ज्योतिषी व्यक्तित्व (त्वरित और निःशुल्क)"
     },
     "Vedic Astrologers": {

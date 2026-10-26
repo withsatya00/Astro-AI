@@ -9,6 +9,17 @@
 (function () {
   'use strict';
 
+  // Phone browsers and in-app WebViews report a viewport taller than what is visible (address/tool bars), which
+  // pushed the chat input and the End Call bar off-screen. Track the real visible height for CSS (--app-h).
+  function setAppHeight() {
+    const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--app-h', Math.round(h) + 'px');
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight);
+  window.addEventListener('orientationchange', () => setTimeout(setAppHeight, 250));
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', setAppHeight);
+
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked */ } }
@@ -200,8 +211,8 @@
   const normName = t => String(t || '').replace(/[✓√]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
   function loadDirectory() {
     if (!directory) {
-      directory = fetch('/api/v1/astrologers?limit=50')
-        .then(r => (r.ok ? r.json() : { items: [] }))
+      // Same request the app makes, so the shared API cache serves it instead of a second round trip.
+      directory = (window.API && window.API.getAstrologers ? window.API.getAstrologers({ limit: 50 }) : fetch('/api/v1/astrologers?limit=50').then(r => (r.ok ? r.json() : { items: [] })))
         .then(d => {
           const m = new Map();
           (d.items || []).forEach(a => { m.set(String(a.id), a); m.set('name:' + normName(a.name), a); });

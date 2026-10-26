@@ -97,6 +97,9 @@ const Router = {
       pathname = pathname.slice(0, -1);
     }
 
+    // Shared links are often typed or auto-capitalised (/Astrologers); every route and slug here is lowercase.
+    pathname = pathname.toLowerCase();
+
     const searchParams = new URLSearchParams(window.location.search);
     this.currentRoute = pathname;
 

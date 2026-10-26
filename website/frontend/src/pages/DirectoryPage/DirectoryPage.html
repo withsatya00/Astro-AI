@@ -11,7 +11,7 @@
   <div class="dir-search-row flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
     <div class="dir-search-box flex-1 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
       <span class="text-slate-400">🔍</span>
-      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search by astrologer name, expertise, or bio keyword..." oninput="App.onDirectorySearchInput(event)" />
+      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search astrologer or topic..." oninput="App.onDirectorySearchInput(event)" />
     </div>
     <button type="button" class="btn-clear-filters px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 text-xs font-semibold shrink-0 transition-colors" onclick="App.clearDirectoryFilters()">
       <span data-i18n="dir_btn_clear">Clear Filters</span>
@@ -50,7 +50,7 @@
     <!-- Consultation Mode Filter -->
     <select id="dir-filter-mode" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
       <option value="all">All Modes</option>
-      <option value="ai">Automated Consultations (Instant & Free)</option>
+      <option value="ai">Instant & Free Consultations</option>
       <option value="human">Certified Human Scholars</option>
       <option value="online">Online Now</option>
     </select>

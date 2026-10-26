@@ -5,7 +5,7 @@
 
 import { NavbarComponent } from '../components/Navbar/Navbar.js';
 import { GlobalFooterComponent } from '../components/GlobalFooter/GlobalFooter.js';
-import { AstrologerCardComponent } from '../components/AstrologerCard/AstrologerCard.js';
+import { AstrologerCardComponent } from '../components/AstrologerCard/AstrologerCard.js?v=r2';
 import { HomePageComponent } from '../pages/HomePage/HomePage.js';
 import { DirectoryPageComponent } from '../pages/DirectoryPage/DirectoryPage.js';
 import { ProfilePageComponent } from '../pages/ProfilePage/ProfilePage.js';

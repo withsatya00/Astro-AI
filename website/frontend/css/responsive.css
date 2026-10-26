@@ -271,34 +271,34 @@ pre, code { overflow-wrap: anywhere; }
   }
 
   /* --- home / featured card --- */
-  .astrologer-card:not(:has(> .aspect-square)) {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) {
     padding: 0.7rem !important;
     border-radius: 16px !important;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child {
     display: grid;
     grid-template-columns: 88px minmax(0, 1fr);
     column-gap: 0.75rem;
     align-items: center;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child > div:first-child {
     width: 88px;
     aspect-ratio: 1 / 1 !important;
     margin: 0 !important;
     border-radius: 12px !important;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.left-2 {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.left-2 {
     display: none;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 {
     top: 4px !important;
     right: 4px !important;
     padding: 3px !important;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 > span:last-child {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child > div:first-child > .absolute.top-2.right-2 > span:last-child {
     display: none;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:first-child > div:last-child > div:last-child {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:first-child > div:last-child > div:last-child {
     margin-bottom: 0 !important;
     white-space: normal !important;
     display: -webkit-box;
@@ -306,7 +306,7 @@ pre, code { overflow-wrap: anywhere; }
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .astrologer-card:not(:has(> .aspect-square)) > div:last-child {
+  .astrologer-card:not(.ac-card):not(:has(> .aspect-square)) > div:last-child {
     margin-top: 0.6rem !important;
     padding-top: 0.55rem !important;
     gap: 0.5rem !important;
@@ -370,5 +370,104 @@ pre, code { overflow-wrap: anywhere; }
     padding: 0.45rem 1.4rem 0.45rem 0.6rem !important;
     font-size: 0.74rem !important;
     text-overflow: ellipsis;
+  }
+}
+
+/* Rashiphal: keep the result card clear of the sticky navbar when scrolled into view */
+.horoscope-card-container {
+  scroll-margin-top: 5.5rem;
+}
+
+/* Views must fill their container: with auto-fill card grids inside, a shrink-to-fit view collapses to a few columns */
+#view-directory,
+#view-home {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  #view-directory {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+/* Home "featured astrologers": wider cards on phones (three nested paddings left only ~170px at 280px) */
+@media (max-width: 480px) {
+  .featured-astrologers-section {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+}
+
+/* Birth details form on phones: date/time and city/country each get a full-width row (two ~110px columns truncated the placeholders) */
+@media (max-width: 480px) {
+  #modal-birth-details .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+  }
+  #modal-birth-details .form-group,
+  #modal-birth-details .form-group.full {
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* Hero astrologer collage is a fixed ~460px composition; on 1024-1279px its column is narrower, so scale it instead of clipping it */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .hero-collage-container {
+    transform: none !important;
+    zoom: 0.8;
+  }
+  .hero-motto-wrapper {
+    max-width: 370px;
+  }
+}
+
+/* Use the measured visible height (--app-h, set in premium.js) so bottom controls are never under browser chrome */
+@media (max-width: 1023px) {
+  body.in-consult #view-consultation {
+    height: var(--app-h, 100dvh);
+  }
+  .app-shell {
+    height: var(--app-h, 100dvh) !important;
+  }
+  .modal-audio-call-overlay {
+    height: var(--app-h, 100dvh);
+    bottom: auto;
+  }
+  .modal-overlay > * {
+    max-height: var(--app-h, 100dvh);
+  }
+  .calling-screen-card {
+    max-height: var(--app-h, 100dvh);
+  }
+}
+@media (max-width: 640px) {
+  .calling-screen-card {
+    height: var(--app-h, 100dvh);
+  }
+}
+
+@media (max-width: 1023px) {
+  body #view-consultation.app-shell,
+  body.in-consult #view-consultation {
+    height: var(--app-h, 100dvh) !important;
+    max-height: var(--app-h, 100dvh) !important;
+  }
+}
+
+/* Placeholders never hard-cut mid-word: ellipsis everywhere, slightly smaller on narrow phones */
+input::placeholder,
+textarea::placeholder {
+  text-overflow: ellipsis;
+}
+input[placeholder] {
+  text-overflow: ellipsis;
+}
+@media (max-width: 400px) {
+  #hero-search-input::placeholder,
+  #faq-search-input::placeholder,
+  #dir-page-search-input::placeholder,
+  .dir-search-box input::placeholder {
+    font-size: 12.5px;
   }
 }

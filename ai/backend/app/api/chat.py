@@ -257,7 +257,8 @@ async def stream_chat_message(
         "hi", "hello", "hii", "hiii", "hey", "namaste", "pranam", "kese ho", "kaise ho",
         "ok", "okay", "theek hai", "thik hai", "achha", "acha", "shukriya", "thanks", "thank you", "dhanyawad"
     }
-    if clean_query not in skip_retrieval_set:
+    # A palm photo is answered from the image alone; retrieval would only add latency.
+    if clean_query not in skip_retrieval_set and not getattr(payload, "image_base64", None):
         citations = RetrievalService.retrieve_relevant_chunks(
             db=db,
             query=clean_msg,
