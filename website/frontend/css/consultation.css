@@ -157,3 +157,8 @@
     mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   }
 }
+
+/* The composer card already shows a focus ring; the global gold :focus-visible outline on the textarea drew a
+   second square box inside the rounded card. */
+#view-consultation .composer-textarea:focus,
+#view-consultation .composer-textarea:focus-visible { outline: none !important; box-shadow: none !important; }
