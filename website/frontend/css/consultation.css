@@ -196,17 +196,19 @@
   #view-consultation .btn-transit-kundli { padding: 3px 10px !important; font-size: 11px !important; min-height: 26px; }
 }
 
-/* Mobile header controls: slimmer (32px) with less inner padding so the Live / Call / End / More row sits clear
-   of the header's bottom border instead of touching it. */
+/* Mobile header controls. The global `pointer: coarse` rule forces every button to min-height 44px, which on a real
+   phone (and DevTools device mode) pushed this row past the header's bottom border. Pin the row to 36px and give the
+   header room for it, so there is clear space under the buttons on touch and mouse alike. */
 @media (max-width: 640px) {
-  #view-consultation .consultation-compact-header { min-height: 100px !important; }
+  #view-consultation .consultation-compact-header { min-height: 108px !important; }
   #view-consultation .consultation-compact-header .btn-topbar-call,
   #view-consultation .consultation-compact-header .btn-header-overflow {
-    width: 32px !important; min-width: 32px !important; height: 32px !important;
+    width: 36px !important; min-width: 36px !important; height: 36px !important; min-height: 36px !important;
   }
   #view-consultation .consultation-compact-header .session-live-timer,
   #view-consultation .consultation-compact-header .btn-compact-end {
-    height: 32px !important; padding: 0 10px !important; font-size: 11.5px !important;
+    height: 36px !important; min-height: 36px !important; padding: 0 10px !important; font-size: 11.5px !important;
   }
   #view-consultation .consultation-compact-header .btn-compact-end { min-width: 64px !important; }
+  #view-consultation .consultation-compact-header .btn-chat-exit { min-height: 36px !important; }
 }
