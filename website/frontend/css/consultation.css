@@ -144,3 +144,16 @@
   #view-consultation .consultation-compact-header .btn-compact-end { order: 2; min-width: 72px !important; }
   #view-consultation .consultation-compact-header .consultation-overflow-wrap { order: 3; }
 }
+
+/* Mobile: the chart strip wraps instead of scrolling so "View Horoscope" is never clipped, and the quick
+   question chips fade out at the right edge to show they scroll. */
+@media (max-width: 640px) {
+  #view-consultation .chat-transit-strip { overflow-x: hidden; }
+  #view-consultation .transit-strip-inner { width: 100%; flex-wrap: wrap; gap: 4px 8px; }
+  #view-consultation .transit-sep { display: none; }
+  #view-consultation .btn-transit-kundli { margin-left: auto; flex: none; white-space: nowrap; }
+  #view-consultation .chat-quick-suggestions-bar, #view-consultation #dynamic-context-chips {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+}
