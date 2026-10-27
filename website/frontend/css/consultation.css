@@ -162,3 +162,36 @@
    second square box inside the rounded card. */
 #view-consultation .composer-textarea:focus,
 #view-consultation .composer-textarea:focus-visible { outline: none !important; box-shadow: none !important; }
+
+/* ==========================================================================
+   Live chat polish: one soft kundli layer, compact header + chart strip, touch-friendly chips.
+   ========================================================================== */
+/* The kundli illustration was painted twice (.chat-main and .chat-scroll-area), so its lines doubled up behind
+   the messages. Keep a single, softer layer that never takes clicks. */
+#view-consultation .chat-main::before { display: none; }
+#view-consultation .chat-scroll-area::before { opacity: .55; pointer-events: none; z-index: 0; }
+@media (min-width: 641px) { #view-consultation .chat-scroll-area::before { opacity: .28; } }
+#view-consultation .chat-scroll-area > * { position: relative; z-index: 1; }
+
+/* Quick-question chips: equal height, swipe sideways without dragging the page, snap to each chip. */
+#view-consultation .chat-quick-suggestions-bar,
+#view-consultation #dynamic-context-chips {
+  overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch;
+  touch-action: pan-x; scroll-snap-type: x proximity; scrollbar-width: none;
+}
+#view-consultation .chat-quick-suggestions-bar::-webkit-scrollbar,
+#view-consultation #dynamic-context-chips::-webkit-scrollbar { display: none; }
+#view-consultation .chat-quick-chip,
+#view-consultation .dyn-chip {
+  display: inline-flex; align-items: center; gap: 6px; flex: none; min-height: 34px; box-sizing: border-box; scroll-snap-align: start;
+}
+
+@media (max-width: 640px) {
+  /* Keep the header clear of a notch / status bar in standalone mode. */
+  #view-consultation .consultation-compact-header { padding-top: max(10px, env(safe-area-inset-top)) !important; }
+  /* Chart strip: tighter items, no icons, smaller horoscope pill so it fits on one row where there is room. */
+  #view-consultation .chat-transit-strip { padding: 6px 12px !important; }
+  #view-consultation .transit-strip-inner { gap: 2px 10px; }
+  #view-consultation .transit-icon { display: none; }
+  #view-consultation .btn-transit-kundli { padding: 3px 10px !important; font-size: 11px !important; min-height: 26px; }
+}
