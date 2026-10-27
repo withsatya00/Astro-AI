@@ -539,11 +539,22 @@ var API = {
 
   // Persistent Consultation Session API
   async createOrResumeConsultation(payload) {
-    const res = await fetch(`${API_BASE}/consultations`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
+    // The hosted backend can be asleep (502/503/504 or a dropped connection); retry while it wakes up.
+    const delays = [1500, 3000, 6000, 10000];
+    let res;
+    for (let attempt = 0; ; attempt++) {
+      try {
+        res = await fetch(`${API_BASE}/consultations`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (![502, 503, 504].includes(res.status) || attempt >= delays.length) break;
+      } catch (e) {
+        if (attempt >= delays.length) throw e;
+      }
+      await new Promise(r => setTimeout(r, delays[attempt]));
+    }
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.detail || 'Failed to start consultation');
