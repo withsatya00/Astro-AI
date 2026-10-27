@@ -471,3 +471,14 @@ input[placeholder] {
     font-size: 12.5px;
   }
 }
+
+/* Mobile text-clipping fixes found in a 320-430px audit */
+@media (max-width: 480px) {
+  /* Hero CTAs were flex: 1 1 0 + nowrap, so "Find an Astrologer" spilled out of its pill. */
+  .hero-cta-group .btn-hero-find,
+  .hero-cta-group .btn-hero-how { flex: 1 1 auto !important; min-width: max-content; justify-content: center; }
+  /* Trust stat labels ("Happy Seekers", "Certified Astrologers") wrap instead of ending in an ellipsis. */
+  .trust-stat-label { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+  /* Directory filters: one select per row so "All Specialties / Concerns" etc. are readable. */
+  .dir-filters-row { grid-template-columns: 1fr !important; }
+}
