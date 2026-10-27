@@ -11,7 +11,7 @@ from pathlib import Path
 import time
 from packages.core.logging import logger
 from packages.database.session import init_db
-from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice
+from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify
 
 app = FastAPI(
     title="Astro Jyotish Website Backend",
@@ -50,6 +50,11 @@ app.include_router(auth.router, prefix=API_V1_PREFIX)
 app.include_router(wallet.router, prefix=API_V1_PREFIX)
 app.include_router(reports.router, prefix=API_V1_PREFIX)
 app.include_router(voice.router, prefix=API_V1_PREFIX)
+app.include_router(mandir.router, prefix=API_V1_PREFIX)
+app.include_router(marketplace.router, prefix=API_V1_PREFIX)
+app.include_router(notifications.router, prefix=API_V1_PREFIX)
+for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router):
+    app.include_router(_router, prefix=API_V1_PREFIX)
 
 # Optional inclusion of AI routers for unified production gateway
 try:
@@ -74,6 +79,9 @@ if frontend_dir.exists():
         app.mount("/js", StaticFiles(directory=str(js_dir)), name="js")
     if assets_dir.exists():
         app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+    uploads_dir = Path(__file__).resolve().parents[3] / "storage" / "uploads"
+    uploads_dir.mkdir(parents=True, exist_ok=True)
+    app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
     src_dir = frontend_dir / "src"
     if src_dir.exists():
         app.mount("/src", StaticFiles(directory=str(src_dir)), name="src")
@@ -97,10 +105,44 @@ if frontend_dir.exists():
             return FileResponse(str(index_file))
         return JSONResponse({"detail": "Website frontend index.html not found"}, status_code=404)
 
+async def _reminder_loop():
+    """Once every few hours, notify users about birthdays/anniversaries coming up (see mandir.send_due_reminders)."""
+    import asyncio
+    from packages.database.session import SessionLocal
+    while True:
+        try:
+            db = SessionLocal()
+            try:
+                mandir.send_due_reminders(db)
+            finally:
+                db.close()
+        except Exception as e:  # never let a failed run stop the loop
+            logger.warning(f"Reminder run failed: {e}")
+        await asyncio.sleep(6 * 3600)
+
+
+@app.on_event("startup")
+async def start_reminder_loop():
+    import asyncio
+    app.state.reminder_task = asyncio.create_task(_reminder_loop())
+
+
 @app.on_event("startup")
 def on_startup():
     logger.info("Initializing Astro Jyotish Website Backend...")
     init_db()
+    # Refresh the Mandir Seva / Astro Mall starter catalog (photos, status text) so old databases pick up current data.
+    try:
+        from packages.database.session import SessionLocal
+        db = SessionLocal()
+        try:
+            mandir.seed_temples_if_empty(db)
+            marketplace.seed_products_if_empty(db)
+            mandir.seed_packages_and_coupons(db)
+        finally:
+            db.close()
+    except Exception as e:
+        logger.warning(f"Catalog seed skipped: {e}")
     try:
         from ai.backend.app.services.llm_service import warm_up_gemini_async
         warm_up_gemini_async()

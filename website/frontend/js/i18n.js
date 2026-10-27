@@ -2118,9 +2118,13 @@ const I18n = {
       });
     }
     if (!this.phrasePattern) return value;
+    // CRUCIAL SAFEGUARD: Do not fragment-replace inside Devanagari text when currentLang is English
+    if (this.currentLang === 'en' && /[\u0900-\u097F]/.test(value)) {
+      return value;
+    }
     return value.replace(this.phrasePattern, (match, offset, source) => {
       // Do not translate parts of identifiers, words, or email addresses.
-      const word = /[\p{L}\p{N}_@]/u;
+      const word = /[\p{L}\p{M}\p{N}_@]/u;
       if ((word.test(match[0]) && offset && word.test(source[offset - 1])) ||
           (word.test(match[match.length - 1]) && word.test(source[offset + match.length] || ' '))) return match;
       return this.phrases.get(match)?.[this.currentLang] || match;
@@ -2263,7 +2267,7 @@ const I18n = {
     document.title = `${brandName} - ${subTitle}`;
     // Translate asynchronously rendered templates and dynamic labels as well.
     // Preserve source strings so switching repeatedly never translates a translation.
-    const skip = 'script, style, code, pre, textarea, [translate="no"], [data-user-content], .user-bubble, .assistant-bubble .msg-text-content, #active-streaming-text, #call-user-transcript, #call-pandit-transcript';
+    const skip = 'script, style, code, pre, textarea, [translate="no"], [data-no-translate], .mandir-seva-container, .astro-mall-container, #chadawa-modal-root, .nav-dropdown-menu, [data-user-content], .user-bubble, .assistant-bubble .msg-text-content, #active-streaming-text, #call-user-transcript, #call-pandit-transcript';
     // Some HTML parsers split character entities into separate text nodes.
     // Translate a leaf's complete label before traversing individual nodes.
     document.querySelectorAll('body *').forEach(el => {

@@ -66,3 +66,6 @@ Thumbs.db
 # Local tooling / generated caches
 .playwright-mcp/
 website/.cache/tts/
+
+# Admin-uploaded sankalp proof videos
+storage/uploads/

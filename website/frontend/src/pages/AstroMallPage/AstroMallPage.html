@@ -1,0 +1,69 @@
+<!-- Astro Mall page. Static text carries data-i18n keys (see utils/shop-i18n.js). Dialogs live in components/shop. -->
+<div class="shop-page mall-page" translate="no">
+
+  <section class="shop-hero">
+    <div>
+      <span class="shop-hero__badge" data-i18n="ml.badge">Energized &amp; sanctified puja items</span>
+      <h1 data-i18n-html="ml.title">Vedic <em>Astro Mall</em></h1>
+      <p data-i18n="ml.sub">Rudraksha, malas, yantras, gemstones and hawan kits from pandits and ashrams across India. Every item is energized in your name and gotra before it is shipped by SpeedPost.</p>
+      <div class="shop-trust">
+        <div><span>🕉️</span><span data-i18n="ml.trust1">Energized in your name &amp; gotra</span></div>
+        <div><span>📜</span><span data-i18n="ml.trust2">Certificate shown where the seller provides one</span></div>
+        <div><span>🚚</span><span data-i18n="ml.trust3">Cash on delivery or wallet payment</span></div>
+      </div>
+    </div>
+    <div class="shop-hero__actions">
+      <button type="button" id="btn-view-mall-orders" class="shop-btn shop-btn--gold"><span>📦</span><span data-i18n="ml.orders">My Orders &amp; Tracking</span></button>
+      <button type="button" id="btn-rewards" class="shop-btn shop-btn--ghost"><span>🎁</span><span data-i18n="rw.open">My Rewards</span></button>
+      <button type="button" id="btn-pandit-sell-item" class="shop-btn shop-btn--ghost"><span>👳</span><span data-i18n="ml.sell">Sell your items</span></button>
+    </div>
+  </section>
+
+  <section id="mall-suggest" class="shop-suggest" hidden></section>
+
+  <section class="shop-toolbar">
+    <div class="shop-toolbar__row">
+      <div class="shop-chips" id="mall-category-filters">
+        <button type="button" data-cat="all" class="shop-chip is-active" data-i18n="ml.cat.all">All Items</button>
+        <button type="button" data-cat="rudraksha" class="shop-chip" data-i18n="ml.cat.rudraksha">🪵 Rudraksha</button>
+        <button type="button" data-cat="mala" class="shop-chip" data-i18n="ml.cat.mala">📿 Malas</button>
+        <button type="button" data-cat="yantra" class="shop-chip" data-i18n="ml.cat.yantra">☸️ Yantras &amp; Kavach</button>
+        <button type="button" data-cat="gemstone" class="shop-chip" data-i18n="ml.cat.gemstone">💎 Gemstones</button>
+        <button type="button" data-cat="samagri" class="shop-chip" data-i18n="ml.cat.samagri">🔥 Hawan &amp; Puja</button>
+        <button type="button" data-cat="wishlist" class="shop-chip"><span data-i18n="ml.cat.wishlist">♥ Wishlist</span> <span id="wishlist-count"></span></button>
+      </div>
+    </div>
+    <div class="shop-toolbar__row">
+      <div class="shop-tools">
+        <input type="search" id="mall-search-input" class="shop-input" data-i18n-ph="ml.search" placeholder="Search rudraksha, mala, gemstone..." autocomplete="off">
+        <select id="mall-price-select" class="shop-select">
+          <option value="" data-i18n="ml.price.any">Any price</option>
+          <option value="0-500" data-i18n="ml.price.1">Under ₹500</option>
+          <option value="500-1000" data-i18n="ml.price.2">₹500 - ₹1,000</option>
+          <option value="1000-2500" data-i18n="ml.price.3">₹1,000 - ₹2,500</option>
+          <option value="2500-999999" data-i18n="ml.price.4">Above ₹2,500</option>
+        </select>
+        <select id="mall-sort-select" class="shop-select">
+          <option value="popular" data-i18n="ml.sort.popular">Top rated</option>
+          <option value="newest" data-i18n="ml.sort.newest">Newest</option>
+          <option value="price_asc" data-i18n="ml.sort.asc">Price: low to high</option>
+          <option value="price_desc" data-i18n="ml.sort.desc">Price: high to low</option>
+        </select>
+        <label class="shop-check"><input type="checkbox" id="mall-instock"> <span data-i18n="ml.instock">In stock only</span></label>
+      </div>
+    </div>
+  </section>
+
+  <div id="mall-loading-state" class="shop-loading"><div class="shop-spinner"></div><p data-i18n="ml.loading">Loading catalog...</p></div>
+  <div id="products-grid" class="shop-grid"></div>
+  <div id="mall-empty-state" class="shop-empty" style="display:none"><b data-i18n="ml.empty.title">No items found</b><span data-i18n="ml.empty.sub">Try a different category, price range or search.</span></div>
+
+  <p class="shop-credit"><span data-i18n="ml.credit">Starter catalog photographs from Wikimedia Commons.</span> <button type="button" data-open-credits data-i18n="credits.link">Photo credits</button></p>
+
+  <div id="mall-credits-modal" class="shop-modal" role="dialog" aria-modal="true">
+    <div class="shop-modal__panel">
+      <div class="shop-modal__head"><h3 data-i18n="credits.title">Photo credits</h3><button type="button" class="shop-modal__x" data-close="mall-credits-modal" data-i18n-aria="close" aria-label="Close">✕</button></div>
+      <div class="shop-modal__body"><ul class="shop-credits-list" id="mall-credits-list"></ul></div>
+    </div>
+  </div>
+</div>

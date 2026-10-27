@@ -108,6 +108,36 @@ def init_db():
                     conn.execute(text(f"UPDATE {table} SET owner_key = 'u:' || user_id WHERE owner_key IS NULL AND user_id IS NOT NULL"))
                     conn.commit()
 
+            # Mandir Seva / Astro Mall columns added after the first release.
+            extra_cols = {
+                "users": {"loyalty_points": "INTEGER DEFAULT 0", "referral_code": "VARCHAR(12)", "referred_by": "VARCHAR(36)"},
+                "temples": {"live_url": "VARCHAR(500)", "aarti_timings": "TEXT"},
+                "marketplace_products": {"listing_status": "VARCHAR(12) DEFAULT 'APPROVED'", "option_groups": "TEXT", "extra_images": "TEXT", "certificate_status": "VARCHAR(20) DEFAULT 'NONE'",
+                                         "certificate_code": "VARCHAR(24)", "certificate_file": "VARCHAR(500)",
+                                         "certificate_lab": "VARCHAR(120)", "certificate_number": "VARCHAR(80)",
+                                         "return_days": "INTEGER DEFAULT 7"},
+                "notifications": {"kind": "VARCHAR(40)", "params": "TEXT"},
+                "chadawa_bookings": {"payment_method": "VARCHAR(30)", "payment_ref": "VARCHAR(100)",
+                                     "scheduled_for": "VARCHAR(40)", "video_recorded_at": "DATETIME",
+                                     "family_members": "TEXT", "priest_id": "VARCHAR(36)", "coupon_code": "VARCHAR(30)",
+                                     "discount_amount": "FLOAT DEFAULT 0", "points_used": "INTEGER DEFAULT 0",
+                                     "package_ref": "VARCHAR(40)", "certificate_code": "VARCHAR(24)",
+                                     "completed_at": "DATETIME"},
+                "marketplace_orders": {"unit_price": "FLOAT", "payment_method": "VARCHAR(30)", "payment_ref": "VARCHAR(100)",
+                                       "order_status": "VARCHAR(50)", "energization_status": "VARCHAR(50)",
+                                       "group_ref": "VARCHAR(40)", "options": "TEXT", "discount_amount": "FLOAT DEFAULT 0",
+                                       "points_used": "INTEGER DEFAULT 0", "coupon_code": "VARCHAR(30)",
+                                       "seller_id": "VARCHAR(36)", "commission_amount": "FLOAT DEFAULT 0",
+                                       "seller_amount": "FLOAT DEFAULT 0", "payout_id": "VARCHAR(36)"},
+            }
+            for table, cols_map in extra_cols.items():
+                if table in table_names:
+                    have = [c["name"] for c in insp.get_columns(table)]
+                    for col, ddl in cols_map.items():
+                        if col not in have:
+                            conn.execute(text(f"ALTER TABLE {table} ADD COLUMN {col} {ddl}"))
+                            conn.commit()
+
             if "users" in table_names:
                 user_cols = [c["name"] for c in insp.get_columns("users")]
                 if "phone" not in user_cols:

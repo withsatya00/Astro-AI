@@ -107,7 +107,12 @@
 
 /* Responsive Navbar Breakpoints: full desktop (>=1280px) vs hamburger (<1280px).
    The full desktop bar needs ~1360px, so 1280-1599px drops the ambience pill and tightens spacing. */
-@media (min-width: 1280px) {
+/* The desktop bar (links + bell + wallet + auth) needs ~1420px, so the hamburger now covers everything below 1500px */
+.site-navbar .site-navbar-inner {
+  max-width: 1760px;
+}
+
+@media (min-width: 1500px) {
   .site-nav-links {
     display: flex !important;
     gap: 1rem;
@@ -129,19 +134,19 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1600px) {
   .site-nav-links {
     gap: 1.5rem;
   }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1760px) {
   .btn-nav-ambience {
     display: inline-flex !important;
   }
 }
 
-@media (max-width: 1279.98px) {
+@media (max-width: 1499.98px) {
   .site-nav-links {
     display: none !important;
   }
@@ -203,7 +208,7 @@
 }
 
 /* 1280-1365px: the full bar is ~16px too wide, so tighten spacing instead of switching to the hamburger */
-@media (min-width: 1280px) and (max-width: 1365.98px) {
+@media (min-width: 1500px) and (max-width: 1559.98px) {
   .site-navbar-inner {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -217,8 +222,8 @@
   }
 }
 
-/* 1280-1679px: language picker collapses to a globe button (the invisible select still opens the native menu) */
-@media (min-width: 1280px) and (max-width: 1679.98px) {
+/* 1500-1759px: language picker collapses to a globe button (the invisible select still opens the native menu) */
+@media (min-width: 1500px) and (max-width: 1759.98px) {
   .site-nav-actions .global-lang-picker-wrapper {
     position: relative;
     width: 2.25rem;
@@ -241,8 +246,20 @@
 
 /* 360-380px phones: slightly smaller logo and title so the hamburger keeps a margin from the screen edge */
 @media (max-width: 380px) {
+  .site-navbar-inner {
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
   .site-brand {
     gap: 0.4rem;
+    min-width: 0;
+  }
+  .site-nav-actions {
+    gap: 0.25rem;
+  }
+  .site-nav-actions .btn-nav-wallet {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
   .site-brand .brand-mark-img {
     width: 38px;
@@ -254,4 +271,95 @@
   .site-nav-actions .btn-nav-wallet {
     font-size: 11px;
   }
+}
+
+/* The menu drawer and its backdrop must cover the mobile bottom tab bar (.pm-tabbar, z-index 400) */
+.mobile-nav-backdrop { z-index: 1100 !important; }
+.mobile-nav-drawer { z-index: 1101 !important; }
+
+/* Closed drawer sits just off-screen; its shadow used to bleed onto the right edge of every page */
+.mobile-nav-drawer.translate-x-full {
+  box-shadow: none !important;
+  visibility: hidden;
+  transition: transform 0.3s, visibility 0s linear 0.3s;
+}
+
+/* Phones: Tailwind utility classes (gap-2, shrink-0) on the header out-rank the rules above, so repeat them with higher specificity */
+@media (max-width: 479.98px) {
+  .site-navbar .site-navbar-inner { gap: 0.375rem; padding-left: 0.625rem; padding-right: 0.625rem; }
+  .site-navbar .site-nav-actions { gap: 0.25rem; }
+  .site-navbar .site-brand { flex-shrink: 1; min-width: 0; gap: 0.4rem; }
+  .site-navbar .site-brand-text { min-width: 0; }
+  .site-navbar .brand-title { font-size: 13px; }
+  .site-navbar .btn-nav-wallet { padding: 0.3rem 0.5rem; }
+}
+@media (max-width: 380px) {
+  .site-navbar .site-nav-actions .pm-theme-toggle { display: none; } /* the same toggle lives in the menu drawer */
+  .site-navbar .brand-title { font-size: 12.5px; }
+}
+
+/* Luxury Nav Dropdown Styles */
+.site-nav-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-nav-dropdown-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 18.5rem;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border-radius: 1rem;
+  border: 1px solid #E2D9C8 !important;
+  box-shadow: 0 20px 45px -8px rgba(30, 27, 75, 0.22), 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  padding: 0.65rem;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px);
+  pointer-events: none !important;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 9999 !important;
+  display: none !important;
+}
+
+.site-nav-dropdown-wrapper.is-open .nav-dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+  display: block !important;
+}
+
+.site-nav-dropdown-wrapper.is-open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-nav-dropdown-wrapper:hover .nav-dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    display: block !important;
+  }
+  .site-nav-dropdown-wrapper:hover .dropdown-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+body.dark .nav-dropdown-menu,
+[data-theme="dark"] .nav-dropdown-menu {
+  background-color: #1A163B !important;
+  background: #1A163B !important;
+  border-color: #3730A3 !important;
 }

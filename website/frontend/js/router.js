@@ -175,6 +175,51 @@ const Router = {
         }
       }
     } 
+    else if (pathname === '/mandir-seva' || pathname === '/mandir' || pathname === '/chadawa') {
+      this.switchView('view-mandir');
+      this.updateNavbarActive('nav-link-mandir');
+      if (window.MandirSevaPageComponent && window.MandirSevaPageComponent.loadTemples) {
+        setTimeout(() => window.MandirSevaPageComponent.loadTemples(), 50);
+      }
+    } 
+    else if (pathname === '/astro-mall' || pathname === '/mall' || pathname === '/samagri') {
+      this.switchView('view-mall');
+      this.updateNavbarActive('nav-link-mall');
+      if (window.AstroMallPageComponent && window.AstroMallPageComponent.loadProducts) {
+        setTimeout(() => window.AstroMallPageComponent.loadProducts(), 50);
+      }
+    } 
+    else if (pathname.startsWith('/astro-mall/product/')) {
+      this.switchView('view-product');
+      this.updateNavbarActive('nav-link-mall');
+      const id = pathname.replace('/astro-mall/product/', '').replace(/\/+$/, '');
+      if (window.ProductPageComponent) setTimeout(() => window.ProductPageComponent.open(id), 30);
+    }
+    else if (pathname.startsWith('/mandir-seva/')) {
+      this.switchView('view-temple');
+      this.updateNavbarActive('nav-link-mandir');
+      const slug = pathname.replace('/mandir-seva/', '').replace(/\/+$/, '');
+      if (window.TemplePageComponent) setTimeout(() => window.TemplePageComponent.open(slug), 30);
+    }
+    else if (pathname === '/rewards' || pathname === '/my-rewards') {
+      this.switchView('view-rewards');
+      if (window.RewardsPageComponent) setTimeout(() => window.RewardsPageComponent.open(), 30);
+    }
+    else if (pathname === '/seller' || pathname === '/seller-dashboard') {
+      this.switchView('view-seller');
+      if (window.SellerPageComponent) setTimeout(() => window.SellerPageComponent.open(), 30);
+    }
+    else if (pathname.startsWith('/verify/')) {
+      this.switchView('view-verify');
+      const code = pathname.replace('/verify/', '').replace(/\/+$/, '');
+      if (window.VerifyPageComponent) setTimeout(() => window.VerifyPageComponent.open(code), 30);
+    }
+    else if (pathname === '/admin') {
+      this.switchView('view-admin');
+      if (window.AdminPageComponent && window.AdminPageComponent.open) {
+        setTimeout(() => window.AdminPageComponent.open(), 50);
+      }
+    }
     else if (pathname === '/panchang' || pathname === '/aaj-ka-panchang') {
       this.switchView('view-panchang');
       this.updateNavbarActive('nav-link-panchang');
@@ -213,7 +258,7 @@ const Router = {
   },
 
   switchView(viewId) {
-    const views = ['view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang'];
+    const views = ['view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang', 'view-mandir', 'view-mall', 'view-admin', 'view-product', 'view-temple', 'view-rewards', 'view-seller', 'view-verify'];
     views.forEach(v => {
       const el = document.getElementById(v);
       if (el) {

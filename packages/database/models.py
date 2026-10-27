@@ -6,7 +6,7 @@ Birth Charts, Sessions, Knowledge Base Documents, and Reports.
 from datetime import datetime, timezone
 import uuid
 from sqlalchemy import (
-    Column, String, Text, Integer, Float, Boolean, DateTime, ForeignKey, JSON
+    Column, String, Text, Integer, Float, Boolean, DateTime, ForeignKey, JSON, UniqueConstraint
 )
 from sqlalchemy.orm import relationship
 from packages.database.session import Base
@@ -27,6 +27,9 @@ class User(Base):
     phone = Column(String(50), nullable=True)
     role = Column(String(50), default="client")  # client, astrologer, admin
     wallet_balance = Column(Float, default=250.0)
+    loyalty_points = Column(Integer, default=0)
+    referral_code = Column(String(12), index=True, nullable=True)
+    referred_by = Column(String(36), nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), default=utc_now)
 
@@ -277,3 +280,339 @@ class Booking(Base):
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime(timezone=True), default=utc_now)
     updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+
+
+class Temple(Base):
+    __tablename__ = "temples"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    name = Column(String(255), nullable=False)
+    slug = Column(String(100), unique=True, index=True, nullable=False)
+    deity = Column(String(100), nullable=False)
+    city = Column(String(100), nullable=False)
+    state = Column(String(100), nullable=False)
+    description = Column(Text, nullable=False)
+    history_significance = Column(Text, nullable=True)
+    image_url = Column(String(1024), nullable=True)
+    banner_url = Column(String(1024), nullable=True)
+    live_status = Column(String(100), default="Aarti & Darshan Active")
+    live_url = Column(String(500), nullable=True)       # embeddable live-darshan URL (e.g. YouTube), set by admin
+    aarti_timings = Column(Text, nullable=True)         # JSON list of {"name": ..., "time": ...}, set by admin
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+    offerings = relationship("TempleOffering", back_populates="temple", cascade="all, delete-orphan")
+
+class TempleOffering(Base):
+    __tablename__ = "temple_offerings"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    temple_id = Column(String(36), ForeignKey("temples.id"), nullable=False, index=True)
+    title = Column(String(255), nullable=False)
+    description = Column(Text, nullable=False)
+    category = Column(String(50), default="chadawa")  # chadawa, sankalp_pooja, aarti, abhishek
+    price = Column(Float, nullable=False)
+    has_prasad_delivery = Column(Boolean, default=True)
+    delivery_fee = Column(Float, default=99.0)
+    includes_video_proof = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+    temple = relationship("Temple", back_populates="offerings")
+    bookings = relationship("ChadawaBooking", back_populates="offering")
+
+class ChadawaBooking(Base):
+    __tablename__ = "chadawa_bookings"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)
+    offering_id = Column(String(36), ForeignKey("temple_offerings.id"), nullable=False, index=True)
+    booking_number = Column(String(50), unique=True, index=True, nullable=False)
+    devotee_name = Column(String(255), nullable=False)
+    devotee_phone = Column(String(50), nullable=True)
+    gotra = Column(String(100), default="Kashyap")
+    rashi = Column(String(100), nullable=True)
+    nakshatra = Column(String(100), nullable=True)
+    sankalp_purpose = Column(String(255), nullable=True)
+    family_members = Column(Text, nullable=True)  # extra names/gotras included in the same sankalp
+    priest_id = Column(String(36), nullable=True)
+    coupon_code = Column(String(30), nullable=True)
+    discount_amount = Column(Float, default=0.0)
+    points_used = Column(Integer, default=0)
+    package_ref = Column(String(40), nullable=True, index=True)
+    certificate_code = Column(String(24), nullable=True, index=True)
+    completed_at = Column(DateTime(timezone=True), nullable=True)
+    include_prasad = Column(Boolean, default=False)
+    delivery_address = Column(Text, nullable=True)
+    amount_paid = Column(Float, nullable=False)
+    payment_method = Column(String(30), default="WALLET")
+    payment_ref = Column(String(100), nullable=True)
+    status = Column(String(50), default="PAID")  # PAID, SANKALP_SCHEDULED, VIDEO_UPLOADED, COMPLETED, CANCELLED
+    scheduled_for = Column(String(40), nullable=True)
+    video_proof_url = Column(String(1024), nullable=True)
+    video_recorded_at = Column(DateTime(timezone=True), nullable=True)
+    prasad_tracking_id = Column(String(100), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+
+    offering = relationship("TempleOffering", back_populates="bookings")
+
+class MarketplaceProduct(Base):
+    __tablename__ = "marketplace_products"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    seller_id = Column(String(36), nullable=True, index=True)
+    option_groups = Column(Text, nullable=True)         # JSON: [{"key","label","values":[{"value","label","price_delta"}]}]
+    extra_images = Column(Text, nullable=True)          # JSON list of additional photo URLs
+    listing_status = Column(String(12), default="APPROVED")   # PENDING, APPROVED, REJECTED (is_active can pause an approved item)
+    certificate_status = Column(String(20), default="NONE")   # NONE, PENDING, VERIFIED, REJECTED
+    certificate_code = Column(String(24), nullable=True, index=True)
+    certificate_file = Column(String(500), nullable=True)
+    certificate_lab = Column(String(120), nullable=True)
+    certificate_number = Column(String(80), nullable=True)
+    return_days = Column(Integer, default=7)
+    seller_name = Column(String(255), nullable=False)
+    title = Column(String(255), nullable=False)
+    category = Column(String(50), index=True)  # rudraksha, mala, yantra, gemstone, samagri
+    description = Column(Text, nullable=False)
+    material = Column(String(100), nullable=True)
+    origin = Column(String(100), nullable=True)
+    price = Column(Float, nullable=False)
+    original_price = Column(Float, nullable=True)
+    stock = Column(Integer, default=50)
+    rating = Column(Float, default=4.9)
+    review_count = Column(Integer, default=48)
+    image_url = Column(String(1024), nullable=True)
+    is_energized = Column(Boolean, default=True)
+    energized_details = Column(String(255), default="Vedic Mantron Dwara Siddha")
+    has_lab_certificate = Column(Boolean, default=True)
+    certificate_url = Column(String(1024), nullable=True)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+    orders = relationship("MarketplaceOrder", back_populates="product")
+
+class MarketplaceOrder(Base):
+    __tablename__ = "marketplace_orders"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)
+    product_id = Column(String(36), ForeignKey("marketplace_products.id"), nullable=False, index=True)
+    order_number = Column(String(50), unique=True, index=True, nullable=False)
+    buyer_name = Column(String(255), nullable=False)
+    buyer_phone = Column(String(50), nullable=False)
+    buyer_gotra = Column(String(100), nullable=True)
+    shipping_address = Column(Text, nullable=False)
+    quantity = Column(Integer, default=1)
+    unit_price = Column(Float, nullable=True)
+    group_ref = Column(String(40), nullable=True, index=True)  # orders placed together from one cart share this
+    options = Column(Text, nullable=True)               # JSON of the options the buyer chose (ratti, metal, ...)
+    discount_amount = Column(Float, default=0.0)
+    points_used = Column(Integer, default=0)
+    coupon_code = Column(String(30), nullable=True)
+    seller_id = Column(String(36), nullable=True, index=True)
+    commission_amount = Column(Float, default=0.0)
+    seller_amount = Column(Float, default=0.0)
+    payout_id = Column(String(36), nullable=True)
+    total_price = Column(Float, nullable=False)
+    payment_method = Column(String(30), default="COD")
+    payment_ref = Column(String(100), nullable=True)
+    order_status = Column(String(50), default="PLACED")  # PLACED, PAID, ENERGIZING, DISPATCHED, DELIVERED, CANCELLED
+    energization_status = Column(String(50), default="UNDER_PROCESS")  # UNDER_PROCESS, ENERGIZED
+    tracking_id = Column(String(100), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+    product = relationship("MarketplaceProduct", back_populates="orders")
+
+
+class MarketplaceReview(Base):
+    __tablename__ = "marketplace_reviews"
+    __table_args__ = (UniqueConstraint("product_id", "owner_key", name="uq_review_product_owner"),)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    product_id = Column(String(36), ForeignKey("marketplace_products.id"), nullable=False, index=True)
+    order_id = Column(String(36), ForeignKey("marketplace_orders.id"), nullable=True)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True)
+    owner_key = Column(String(80), nullable=False, index=True)
+    reviewer_name = Column(String(100), nullable=False)
+    rating = Column(Integer, nullable=False)
+    comment = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    owner_key = Column(String(80), nullable=False, index=True)
+    title = Column(String(200), nullable=False)
+    body = Column(String(500), nullable=True)
+    kind = Column(String(40), nullable=True)   # template key in packages/core/notify.py
+    params = Column(Text, nullable=True)       # JSON values for that template
+    link = Column(String(200), nullable=True)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class SavedCartItem(Base):
+    __tablename__ = "saved_cart_items"
+    __table_args__ = (UniqueConstraint("user_id", "product_id", "options_key", name="uq_cart_user_product_options"),)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    product_id = Column(String(36), ForeignKey("marketplace_products.id"), nullable=False)
+    options_key = Column(String(200), default="")
+    options = Column(Text, nullable=True)
+    quantity = Column(Integer, default=1)
+
+
+class WishlistItem(Base):
+    __tablename__ = "wishlist_items"
+    __table_args__ = (UniqueConstraint("user_id", "product_id", name="uq_wishlist_user_product"),)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    product_id = Column(String(36), ForeignKey("marketplace_products.id"), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Priest(Base):
+    __tablename__ = "priests"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    name = Column(String(200), nullable=False)
+    temple_id = Column(String(36), ForeignKey("temples.id"), nullable=True, index=True)
+    photo_url = Column(String(500), nullable=True)
+    years_experience = Column(Integer, default=0)
+    languages = Column(String(200), nullable=True)
+    bio = Column(Text, nullable=True)
+    bio_en = Column(Text, nullable=True)
+    verified = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class SevaPackage(Base):
+    """A bundle of repeated sevas (e.g. four Mondays) sold at a discount; each session becomes a scheduled booking."""
+    __tablename__ = "seva_packages"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    slug = Column(String(80), unique=True, index=True, nullable=False)
+    offering_id = Column(String(36), ForeignKey("temple_offerings.id"), nullable=False)
+    title = Column(String(255), nullable=False)
+    title_en = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
+    description_en = Column(Text, nullable=True)
+    sessions = Column(Integer, nullable=False)
+    cadence = Column(String(30), nullable=False)        # daily, weekly, monthly
+    weekday = Column(Integer, nullable=True)            # 0=Monday ... 6=Sunday for weekly packages
+    discount_percent = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+
+    offering = relationship("TempleOffering")
+
+
+class Reminder(Base):
+    __tablename__ = "reminders"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    person_name = Column(String(150), nullable=False)
+    kind = Column(String(20), default="birthday")       # birthday, anniversary
+    month = Column(Integer, nullable=False)
+    day = Column(Integer, nullable=False)
+    last_notified_year = Column(Integer, nullable=True)
+
+
+class Coupon(Base):
+    __tablename__ = "coupons"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    code = Column(String(30), unique=True, index=True, nullable=False)
+    kind = Column(String(10), default="percent")        # percent or flat
+    value = Column(Float, nullable=False)
+    min_amount = Column(Float, default=0.0)
+    max_discount = Column(Float, nullable=True)
+    applies_to = Column(String(10), default="all")      # all, mall, seva
+    first_order_only = Column(Boolean, default=False)
+    valid_from = Column(DateTime(timezone=True), nullable=True)
+    valid_to = Column(DateTime(timezone=True), nullable=True)
+    usage_limit = Column(Integer, nullable=True)
+    per_user_limit = Column(Integer, default=1)
+    is_active = Column(Boolean, default=True)
+    description = Column(String(255), nullable=True)
+
+
+class CouponUse(Base):
+    __tablename__ = "coupon_uses"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    coupon_id = Column(String(36), ForeignKey("coupons.id"), nullable=False, index=True)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    ref = Column(String(60), nullable=True)
+    amount = Column(Float, default=0.0)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class LoyaltyEntry(Base):
+    __tablename__ = "loyalty_entries"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    points = Column(Integer, nullable=False)            # positive = earned, negative = redeemed
+    reason = Column(String(40), nullable=False)         # order, seva, referral, redeem, refund
+    ref = Column(String(60), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Membership(Base):
+    __tablename__ = "memberships"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    plan = Column(String(20), nullable=False)           # monthly, yearly
+    amount_paid = Column(Float, default=0.0)
+    started_at = Column(DateTime(timezone=True), default=utc_now)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+
+
+class StatusEvent(Base):
+    """Timeline entries for orders and bookings (shown as tracking)."""
+    __tablename__ = "status_events"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    kind = Column(String(10), nullable=False)           # order or booking
+    ref_id = Column(String(36), nullable=False, index=True)
+    status = Column(String(40), nullable=False)
+    note = Column(String(300), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class SellerProfile(Base):
+    __tablename__ = "seller_profiles"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), unique=True, nullable=False)
+    business_name = Column(String(200), nullable=False)
+    phone = Column(String(30), nullable=True)
+    upi_id = Column(String(120), nullable=True)
+    pan_number = Column(String(20), nullable=True)
+    kyc_doc_url = Column(String(500), nullable=True)    # stored in a private folder, visible to admins only
+    kyc_status = Column(String(20), default="PENDING")  # PENDING, APPROVED, REJECTED
+    kyc_note = Column(String(300), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Payout(Base):
+    __tablename__ = "payouts"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    seller_user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    amount = Column(Float, nullable=False)
+    upi_id = Column(String(120), nullable=True)
+    status = Column(String(20), default="REQUESTED")    # REQUESTED, PAID, REJECTED
+    reference = Column(String(120), nullable=True)
+    requested_at = Column(DateTime(timezone=True), default=utc_now)
+    paid_at = Column(DateTime(timezone=True), nullable=True)

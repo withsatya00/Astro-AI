@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Chadawa & Sankalp Booking Modal Styles
+   ========================================================================== */
+
+#chadawa-booking-modal {
+  z-index: 9999;
+}
+
+.offering-option-card {
+  transition: all 0.2s ease;
+  border-radius: 0.85rem;
+}
+
+.offering-option-card:hover {
+  border-color: #D97706;
+  background: #FFFBEB;
+}
+
+.gotra-pill {
+  transition: all 0.15s ease;
+}
+
+.gotra-pill:hover {
+  background: #7439EA;
+  color: #FFFFFF;
+  border-color: #7439EA;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-up {
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

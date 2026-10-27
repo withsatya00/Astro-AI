@@ -1,0 +1,35 @@
+<section class="admin-page">
+  <header class="admin-header">
+    <div>
+      <h1 class="admin-title">Admin Panel</h1>
+      <p class="admin-sub">Mandir Seva bookings, Astro Mall orders and seller approvals</p>
+    </div>
+    <button type="button" id="admin-refresh" class="admin-btn admin-btn-ghost">Refresh</button>
+  </header>
+
+  <div id="admin-denied" class="admin-notice" hidden>
+    This area is for administrators only. Please sign in with an admin account.
+  </div>
+
+  <div id="admin-body" hidden>
+    <nav class="admin-tabs" id="admin-tabs">
+      <button type="button" class="admin-tab active" data-tab="bookings">Mandir Bookings <span class="admin-count" id="count-bookings"></span></button>
+      <button type="button" class="admin-tab" data-tab="orders">Mall Orders <span class="admin-count" id="count-orders"></span></button>
+      <button type="button" class="admin-tab" data-tab="products">Product Approvals <span class="admin-count" id="count-products"></span></button>
+      <button type="button" class="admin-tab" data-tab="sellers">Seller KYC</button>
+      <button type="button" class="admin-tab" data-tab="certs">Certificates</button>
+      <button type="button" class="admin-tab" data-tab="payouts">Payouts</button>
+      <button type="button" class="admin-tab" data-tab="priests">Priests</button>
+      <button type="button" class="admin-tab" data-tab="temples">Temples</button>
+      <button type="button" class="admin-tab" data-tab="coupons">Coupons</button>
+      <button type="button" class="admin-tab" data-tab="packages">Packages</button>
+    </nav>
+
+    <div class="admin-filter" id="admin-filter-wrap">
+      <label for="admin-status-filter">Status</label>
+      <select id="admin-status-filter" class="admin-input"></select>
+    </div>
+
+    <div id="admin-list" class="admin-list" aria-live="polite"></div>
+  </div>
+</section>

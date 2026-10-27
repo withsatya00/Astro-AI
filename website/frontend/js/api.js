@@ -21,8 +21,8 @@ const getApiBase = () => {
     const hostname = window.location.hostname;
     const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
     
-    if (isLocalhost && port && port !== '8005' && port !== '80' && port !== '443') {
-      return `http://${hostname}:8005/api/v1`;
+    if (isLocalhost && port && port !== '8002' && port !== '8005' && port !== '80' && port !== '443') {
+      return `http://${hostname}:8002/api/v1`;
     }
   }
 
@@ -76,6 +76,8 @@ const getApiBase = () => {
 })();
 
 const API_BASE = getApiBase();
+// Origin that serves /api/v1 and /uploads: empty when the site and API share one server, otherwise e.g. http://localhost:8002.
+if (typeof window !== 'undefined') window.ASTRO_BACKEND_ORIGIN = API_BASE.replace(/\/api\/v1$/, '');
 
 // Short-lived GET cache with in-flight de-duplication. Errors are never cached and carry `status`
 // so callers can tell "does not exist" (404) from a transient failure.
@@ -1208,7 +1210,97 @@ var API = {
     });
     if (!res.ok) throw new Error('Name compatibility calculation failed');
     return res.json();
-  }
+  },
+
+  // ----------------- Mandir Seva & E-Chadawa APIs -----------------
+  async getTemples(category = '', city = '') {
+    let url = API_BASE + '/mandir/temples';
+    const params = new URLSearchParams();
+    if (category) params.append('category', category);
+    if (city) params.append('city', city);
+    if (params.toString()) url += '?' + params.toString();
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch temples');
+    return res.json();
+  },
+
+  async getTempleDetail(templeId) {
+    const res = await fetch(API_BASE + '/mandir/temples/' + encodeURIComponent(templeId));
+    if (!res.ok) throw new Error('Failed to fetch temple details');
+    return res.json();
+  },
+
+  async bookChadawa(bookingData) {
+    const res = await fetch(API_BASE + '/mandir/chadawa/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'चढ़ावा बुकिंग असफल रही');
+    }
+    return res.json();
+  },
+
+  async getMyChadawaBookings() {
+    const res = await fetch(API_BASE + '/mandir/chadawa/my-bookings');
+    if (!res.ok) throw new Error('Failed to fetch your bookings');
+    return res.json();
+  },
+
+  // ----------------- Astro-Mall & Marketplace APIs -----------------
+  async getMarketplaceProducts(category = 'all', search = '', sortBy = 'popular') {
+    let url = API_BASE + '/marketplace/products';
+    const params = new URLSearchParams();
+    if (category && category !== 'all') params.append('category', category);
+    if (search) params.append('search', search);
+    if (sortBy) params.append('sort_by', sortBy);
+    if (params.toString()) url += '?' + params.toString();
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch marketplace products');
+    return res.json();
+  },
+
+  async getMarketplaceProductDetail(productId) {
+    const res = await fetch(API_BASE + '/marketplace/products/' + encodeURIComponent(productId));
+    if (!res.ok) throw new Error('Failed to fetch product details');
+    return res.json();
+  },
+
+  async createMarketplaceOrder(orderData) {
+    const res = await fetch(API_BASE + '/marketplace/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'ऑर्डर दर्ज करने में समस्या आई');
+    }
+    return res.json();
+  },
+
+  async getMyMarketplaceOrders() {
+    const res = await fetch(API_BASE + '/marketplace/my-orders');
+    if (!res.ok) throw new Error('Failed to fetch orders');
+    return res.json();
+  },
+
+  async addPanditProduct(productData) {
+    const res = await fetch(API_BASE + '/marketplace/seller/add-product', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(productData)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'सामग्री लिस्ट करने में समस्या आई');
+    }
+    return res.json();
+  },
 };
 
 if (typeof window !== 'undefined') {

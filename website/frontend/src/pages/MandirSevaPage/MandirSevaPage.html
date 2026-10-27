@@ -1,0 +1,113 @@
+<!-- Mandir Seva page. Static text carries data-i18n keys (see utils/shop-i18n.js). -->
+<div class="shop-page mandir-page" translate="no">
+
+  <section class="shop-hero">
+    <div>
+      <span class="shop-hero__badge" data-i18n="md.badge">E-Chadawa &amp; Sankalp Puja</span>
+      <h1 data-i18n-html="md.title">Offer Chadawa &amp; Sankalp Puja at <em>Holy Temples of India</em></h1>
+      <p data-i18n="md.sub">Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.</p>
+      <div class="shop-trust">
+        <div><span>📹</span><span data-i18n="md.trust1">Video of your sankalp, with name &amp; gotra</span></div>
+        <div><span>🪔</span><span data-i18n="md.trust2">Performed by temple priests</span></div>
+        <div><span>📦</span><span data-i18n="md.trust3">Prasad delivered to your home</span></div>
+      </div>
+    </div>
+    <div class="shop-hero__actions">
+      <button type="button" id="btn-view-my-bookings" class="shop-btn shop-btn--gold"><span>📜</span><span data-i18n="md.bookings">My Bookings &amp; Video Proof</span></button>
+      <button type="button" id="btn-rewards" class="shop-btn shop-btn--ghost"><span>🎁</span><span data-i18n="rw.open">My Rewards</span></button>
+    </div>
+  </section>
+
+  <section id="mandir-today" class="shop-suggest shop-suggest--plain" hidden></section>
+  <section id="mandir-suggest" class="shop-suggest" hidden></section>
+
+  <section id="mandir-packages" class="mp-packages" hidden>
+    <div class="mp-head"><h2 data-i18n="pk.title">Seva packages</h2><p data-i18n="pk.sub">Book repeated sevas once, at a discount. Each session is scheduled on its date.</p></div>
+    <div class="mp-scroll" id="mandir-packages-list"></div>
+  </section>
+
+  <section class="shop-toolbar">
+    <div class="shop-toolbar__row">
+      <div class="shop-chips" id="mandir-category-filters">
+        <button type="button" data-filter="all" class="shop-chip is-active" data-i18n="md.cat.all">All Temples</button>
+        <button type="button" data-filter="shiva" class="shop-chip" data-i18n="md.cat.shiva">🔱 Jyotirlinga &amp; Shiva</button>
+        <button type="button" data-filter="shakti" class="shop-chip" data-i18n="md.cat.shakti">🌸 Shaktipeeth &amp; Devi</button>
+        <button type="button" data-filter="shani" class="shop-chip" data-i18n="md.cat.shani">🪐 Shani &amp; Navgrah</button>
+        <button type="button" data-filter="ganesh" class="shop-chip" data-i18n="md.cat.ganesh">🐘 Ganesh</button>
+        <button type="button" data-filter="ram_krishna" class="shop-chip" data-i18n="md.cat.ram">🏹 Ram &amp; Vishnu</button>
+      </div>
+      <div class="shop-tools">
+        <input type="search" id="mandir-search-input" class="shop-input" data-i18n-ph="md.search" placeholder="Search temple, deity or city..." autocomplete="off">
+      </div>
+    </div>
+  </section>
+
+  <div id="mandir-loading-state" class="shop-loading"><div class="shop-spinner"></div><p data-i18n="md.loading">Loading temples...</p></div>
+  <div id="temples-grid" class="shop-grid"></div>
+  <div id="mandir-empty-state" class="shop-empty" style="display:none"><b data-i18n="md.empty.title">No temples found</b><span data-i18n="md.empty.sub">Try a different name or category.</span></div>
+
+  <p class="shop-credit"><span data-i18n="md.credit">Temple photographs from Wikimedia Commons.</span> <button type="button" data-open-credits data-i18n="credits.link">Photo credits</button></p>
+
+  <!-- My bookings -->
+  <div id="devotee-bookings-modal" class="shop-modal" role="dialog" aria-modal="true" aria-labelledby="bookings-modal-title">
+    <div class="shop-modal__panel shop-modal__panel--wide">
+      <div class="shop-modal__head">
+        <h3 id="bookings-modal-title" data-i18n="md.bookings.title">My Chadawa &amp; Sankalp Bookings</h3>
+        <button type="button" id="btn-close-bookings-modal" class="shop-modal__x" data-i18n-aria="close" aria-label="Close">✕</button>
+      </div>
+      <div class="shop-modal__body" id="devotee-bookings-list"></div>
+    </div>
+  </div>
+
+  <!-- Video proof -->
+  <div id="video-proof-modal" class="shop-modal" role="dialog" aria-modal="true" aria-labelledby="video-proof-title">
+    <div class="shop-modal__panel">
+      <div class="shop-modal__head">
+        <h3 id="video-proof-title" data-i18n="md.video.title">Sankalp Video Proof</h3>
+        <button type="button" id="btn-close-video-modal" class="shop-modal__x" data-i18n-aria="close" aria-label="Close">✕</button>
+      </div>
+      <video id="video-proof-player" class="shop-video" controls playsinline></video>
+      <div class="shop-modal__foot">
+        <span class="shop-hint" style="margin:0" data-i18n="md.video.note">Recorded for your sankalp</span>
+        <a id="video-proof-share" class="shop-btn shop-btn--primary shop-btn--sm" target="_blank" rel="noopener" data-i18n="md.video.share">Share on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Package purchase -->
+  <div id="package-modal" class="shop-modal" role="dialog" aria-modal="true">
+    <div class="shop-modal__panel">
+      <div class="shop-modal__head shop-modal__head--gold"><div><h3 id="pk-title">Package</h3><p id="pk-sub"></p></div><button type="button" class="shop-modal__x" data-close-modal="package-modal" data-i18n-aria="close" aria-label="Close">✕</button></div>
+      <form id="package-form" style="display:flex;flex-direction:column;min-height:0;flex:1">
+        <div class="shop-modal__body">
+          <p class="shop-hint" id="pk-desc" style="margin-top:0"></p>
+          <div class="shop-row">
+            <div class="shop-field"><label class="shop-label" for="pk-name" data-i18n="cd.name">Yajman (devotee) name *</label><input type="text" id="pk-name" class="shop-input" required minlength="2" maxlength="100"></div>
+            <div class="shop-field"><label class="shop-label" for="pk-start" data-i18n="pk.start">First session on *</label><input type="date" id="pk-start" class="shop-input" required></div>
+          </div>
+          <div class="shop-row">
+            <div class="shop-field"><label class="shop-label" for="pk-gotra" data-i18n="cd.gotra">Gotra *</label><input type="text" id="pk-gotra" class="shop-input" required maxlength="100"></div>
+            <div class="shop-field"><label class="shop-label" for="pk-phone" data-i18n="cd.phone">Mobile number *</label><input type="tel" id="pk-phone" class="shop-input" required pattern="[0-9+ ]{10,15}"></div>
+          </div>
+          <div class="shop-field"><label class="shop-label" for="pk-family" data-i18n="cd.family">Family members to include (optional)</label><textarea id="pk-family" class="shop-textarea" rows="2" maxlength="500" data-i18n-ph="cd.family.ph"></textarea></div>
+          <div class="shop-coupon"><input type="text" id="pk-coupon" class="shop-input" maxlength="30" data-i18n-ph="co.couponPh" placeholder="Coupon code" style="text-transform:uppercase"><button type="button" id="pk-apply" class="shop-btn shop-btn--line" data-i18n="co.apply">Apply</button></div>
+          <p class="shop-hint" id="pk-coupon-msg"></p>
+          <label class="shop-check hidden" id="pk-points-wrap"><input type="checkbox" id="pk-points"> <span id="pk-points-label"></span></label>
+          <div class="shop-section" id="pk-dates" style="margin:12px 0 0"></div>
+        </div>
+        <div class="shop-modal__foot" style="align-items:flex-start">
+          <div class="shop-totals" id="pk-totals"></div>
+          <button type="submit" id="pk-submit" class="shop-btn shop-btn--gold" data-i18n="pk.buy">Buy package</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Photo credits -->
+  <div id="mandir-credits-modal" class="shop-modal" role="dialog" aria-modal="true">
+    <div class="shop-modal__panel">
+      <div class="shop-modal__head"><h3 data-i18n="credits.title">Photo credits</h3><button type="button" class="shop-modal__x" data-close-credits data-i18n-aria="close" aria-label="Close">✕</button></div>
+      <div class="shop-modal__body"><ul class="shop-credits-list" id="mandir-credits-list"></ul></div>
+    </div>
+  </div>
+</div>

@@ -56,13 +56,59 @@
       </div>
     </a>
     
-    <!-- Desktop Navigation Links (Controlled cleanly by Navbar.css media queries) -->
-    <nav class="site-nav-links items-center gap-6" id="site-nav-links">
+    <!-- Desktop Navigation Links (Clean 5-Item Navigation with Dropdown) -->
+    <nav class="site-nav-links items-center gap-5" id="site-nav-links">
       <a href="/" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5 active text-[#7439EA]" id="nav-link-home" data-nav-link data-i18n="nav_home">Home</a>
       <a href="/astrologers" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5" id="nav-link-astrologers" data-nav-link data-i18n="nav_astrologers">Astrologers</a>
-      <a href="/rashiphal" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5" id="nav-link-horoscope" data-nav-link data-i18n="nav_horoscope">Rashiphal</a>
-      <a href="/calculators" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5" id="nav-link-calculators" data-nav-link data-i18n="nav_calculators">Calculators</a>
-      <a href="/panchang" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5" id="nav-link-panchang" data-nav-link data-i18n="nav_panchang">Aaj Ka Panchang</a>
+      <a href="/mandir-seva" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5 flex items-center gap-1.5 group font-bold" id="nav-link-mandir" data-nav-link>
+        <span id="nav-text-mandir">🏛️ Mandir Seva</span>
+        <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 border border-amber-300 group-hover:bg-amber-200 transition-colors" id="nav-badge-mandir">Puja</span>
+      </a>
+      <a href="/astro-mall" class="site-nav-link hover:text-[#7439EA] transition-colors py-1.5 flex items-center gap-1.5 group font-bold" id="nav-link-mall" data-nav-link>
+        <span id="nav-text-mall">📿 Astro Mall</span>
+        <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 border border-purple-300 group-hover:bg-purple-200 transition-colors" id="nav-badge-mall">Siddh</span>
+      </a>
+      <!-- 5th Item: Vedic Tools & Panchang Dropdown -->
+      <div class="site-nav-dropdown-wrapper relative py-1.5" id="nav-dropdown-tools">
+        <button type="button" class="site-nav-link flex items-center gap-1 hover:text-[#7439EA] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit" id="nav-link-tools-btn" aria-haspopup="true" aria-expanded="false">
+          <span id="nav-text-tools">🔮 Vedic Tools</span>
+          <span class="dropdown-chevron text-[10px] transition-transform duration-200">▾</span>
+        </button>
+        <!-- Luxury Floating Dropdown Menu -->
+        <div translate="no" class="nav-dropdown-menu absolute top-full right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
+          <div class="px-2 py-1 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 rounded-lg flex items-center gap-1.5" id="nav-tools-heading">
+            <span>✨</span> <span id="nav-tools-title">Vedic Astrology Tools</span>
+          </div>
+          <a href="/rashiphal" data-nav-link class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item">
+            <span class="w-8 h-8 rounded-lg bg-purple-50 text-[#7439EA] flex items-center justify-center text-sm font-bold border border-purple-100 group-hover/item:scale-110 transition-transform shrink-0">♈</span>
+            <div>
+              <span class="font-bold text-xs block text-[#1E1B4B]" id="nav-item1-title">Daily Horoscope</span>
+              <span class="text-[10px] text-slate-500 block" id="nav-item1-desc">Predictions for all 12 Zodiac signs</span>
+            </div>
+          </a>
+          <a href="/panchang" data-nav-link class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item">
+            <span class="w-8 h-8 rounded-lg bg-amber-50 text-[#D97706] flex items-center justify-center text-sm font-bold border border-amber-100 group-hover/item:scale-110 transition-transform shrink-0">📅</span>
+            <div>
+              <span class="font-bold text-xs block text-[#1E1B4B]" id="nav-item2-title">Today's Panchang</span>
+              <span class="text-[10px] text-slate-500 block" id="nav-item2-desc">Tithi, Nakshatra, Shubh Muhurat &amp; Rahukaal</span>
+            </div>
+          </a>
+          <a href="/calculators" data-nav-link class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item">
+            <span class="w-8 h-8 rounded-lg bg-pink-50 text-[#DB2777] flex items-center justify-center text-sm font-bold border border-pink-100 group-hover/item:scale-110 transition-transform shrink-0">💖</span>
+            <div>
+              <span class="font-bold text-xs block text-[#1E1B4B]" id="nav-item3-title">Kundli Matching (Gun Milan)</span>
+              <span class="text-[10px] text-slate-500 block" id="nav-item3-desc">36 Gunas, Ashtakoot &amp; Manglik analysis</span>
+            </div>
+          </a>
+          <a href="/calculators" data-nav-link class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item">
+            <span class="w-8 h-8 rounded-lg bg-indigo-50 text-[#4F46E5] flex items-center justify-center text-sm font-bold border border-indigo-100 group-hover/item:scale-110 transition-transform shrink-0">🪐</span>
+            <div>
+              <span class="font-bold text-xs block text-[#1E1B4B]" id="nav-item4-title">Shani Sade Sati &amp; Dosha</span>
+              <span class="text-[10px] text-slate-500 block" id="nav-item4-desc">Kaal Sarp, Pitra Dosha &amp; Vedic remedies</span>
+            </div>
+          </a>
+        </div>
+      </div>
     </nav>
 
     <!-- Right Controls -->
@@ -179,6 +225,12 @@
       </a>
       <a href="/panchang" data-nav-link class="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#F5F3FF] hover:text-[#7439EA] transition-colors" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden');">
         <span>📅</span> <span data-i18n="nav_panchang">Aaj Ka Panchang</span>
+      </a>
+      <a href="/mandir-seva" data-nav-link class="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#F5F3FF] hover:text-[#7439EA] transition-colors" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden');">
+        <span>🏛️</span> <span>मंदिर सेवा (ई-चढ़ावा)</span>
+      </a>
+      <a href="/astro-mall" data-nav-link class="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#F5F3FF] hover:text-[#7439EA] transition-colors" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden');">
+        <span>📿</span> <span>एस्ट्रो मॉल (सामग्री)</span>
       </a>
     </nav>
   </div>

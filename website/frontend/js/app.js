@@ -4299,6 +4299,18 @@ var App = {
     }
   },
 
+  loadMandirSevaPage() {
+    if (window.MandirSevaPageComponent && typeof window.MandirSevaPageComponent.loadTemples === 'function') {
+      window.MandirSevaPageComponent.loadTemples();
+    }
+  },
+
+  loadAstroMallPage() {
+    if (window.AstroMallPageComponent && typeof window.AstroMallPageComponent.loadProducts === 'function') {
+      window.AstroMallPageComponent.loadProducts();
+    }
+  },
+
   toggleVedicAmbience() {
     if (window.CallingAgentService && typeof window.CallingAgentService.toggleVedicAmbience === 'function') {
       return window.CallingAgentService.toggleVedicAmbience();

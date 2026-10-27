@@ -1,0 +1,92 @@
+<!-- Chadawa / sankalp puja booking modal. Static text carries data-i18n keys (see utils/shop-i18n.js). -->
+<div id="chadawa-booking-modal" class="shop-modal shop-overlays" role="dialog" aria-modal="true" aria-labelledby="modal-temple-name" translate="no">
+  <div class="shop-modal__panel shop-modal__panel--wide">
+    <div class="shop-modal__head shop-modal__head--gold">
+      <div>
+        <h3 id="modal-temple-name">Temple</h3>
+        <p data-i18n="cd.subtitle">Sankalp puja &amp; chadawa booking</p>
+      </div>
+      <button type="button" id="btn-close-chadawa-modal" class="shop-modal__x" data-i18n-aria="close" aria-label="Close">✕</button>
+    </div>
+
+    <form id="chadawa-booking-form" class="shop-modal__body" style="padding:0; display:flex; flex-direction:column; min-height:0;">
+      <div class="shop-modal__body" style="flex:1">
+        <div class="shop-section">
+          <h4 data-i18n="cd.step1">1. Choose your seva</h4>
+          <div id="modal-offerings-container"></div>
+        </div>
+
+        <div class="shop-section">
+          <h4 data-i18n="cd.step2">2. Sankalp details</h4>
+          <button type="button" id="btn-autofill-kundali" class="shop-btn shop-btn--line shop-btn--sm" style="margin-bottom:12px" data-i18n="cd.fillKundli">Fill from my kundli</button>
+          <div class="shop-row">
+            <div class="shop-field"><label class="shop-label" for="devotee-name-input" data-i18n="cd.name">Yajman (devotee) name *</label>
+              <input type="text" id="devotee-name-input" class="shop-input" required minlength="2" maxlength="100" data-i18n-ph="cd.name.ph" placeholder="e.g. Rahul Sharma"></div>
+            <div class="shop-field"><label class="shop-label" for="devotee-phone-input" data-i18n="cd.phone">Mobile number *</label>
+              <input type="tel" id="devotee-phone-input" class="shop-input" required pattern="[0-9+ ]{10,15}" placeholder="9876543210"></div>
+          </div>
+          <div class="shop-field">
+            <label class="shop-label" for="devotee-gotra-input" data-i18n="cd.gotra">Gotra *</label>
+            <input type="text" id="devotee-gotra-input" class="shop-input" value="Kashyap" required maxlength="100">
+            <div class="shop-chips" id="gotra-quick-pills" style="margin-top:8px"></div>
+            <p class="shop-hint" data-i18n="cd.gotra.hint">If you do not know your gotra, Kashyap is used traditionally.</p>
+          </div>
+          <div class="shop-row">
+            <div class="shop-field"><label class="shop-label" for="devotee-rashi-select" data-i18n="cd.rashi">Rashi</label>
+              <select id="devotee-rashi-select" class="shop-select"></select></div>
+            <div class="shop-field"><label class="shop-label" for="sankalp-purpose-select" data-i18n="cd.purpose">Purpose of sankalp</label>
+              <select id="sankalp-purpose-select" class="shop-select"></select></div>
+          </div>
+          <div class="shop-field" style="margin-bottom:0">
+            <label class="shop-label" for="family-members-input" data-i18n="cd.family">Family members to include (optional)</label>
+            <textarea id="family-members-input" class="shop-textarea" rows="2" maxlength="500" data-i18n-ph="cd.family.ph" placeholder="Names (and gotra if different), separated by commas"></textarea>
+          </div>
+        </div>
+
+        <div class="shop-section hidden" id="priest-section">
+          <h4 data-i18n="cd.priestTitle">Choose your priest (optional)</h4>
+          <div id="priest-list"></div>
+        </div>
+
+        <div class="shop-section" id="offers-section">
+          <h4 data-i18n="co.offers">Offers & points</h4>
+          <div class="shop-coupon"><input type="text" id="cd-coupon" class="shop-input" maxlength="30" data-i18n-ph="co.couponPh" placeholder="Coupon code" style="text-transform:uppercase"><button type="button" id="cd-apply" class="shop-btn shop-btn--line" data-i18n="co.apply">Apply</button></div>
+          <p class="shop-hint" id="cd-coupon-msg"></p>
+          <label class="shop-check hidden" id="cd-points-wrap" style="margin-top:6px"><input type="checkbox" id="cd-points"> <span id="cd-points-label"></span></label>
+          <p class="shop-hint" id="cd-member-msg"></p>
+        </div>
+
+        <div class="shop-section shop-section--gold" id="prasad-section">
+          <label class="shop-check" style="align-items:flex-start">
+            <input type="checkbox" id="check-include-prasad" style="margin-top:3px; accent-color:#d97706">
+            <span><strong data-i18n="cd.prasad">Send prasad to my home</strong><br><small id="prasad-fee-note" style="color:#64748b"></small></span>
+          </label>
+          <div id="prasad-address-block" class="hidden" style="margin-top:12px">
+            <label class="shop-label" for="prasad-address-input" data-i18n="cd.address">Full delivery address with PIN code *</label>
+            <textarea id="prasad-address-input" class="shop-textarea" rows="2" maxlength="500" data-i18n-ph="cd.address.ph" placeholder="House no., street, city, state, PIN"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="shop-modal__foot">
+        <div class="shop-totals" id="cd-totals"></div>
+        <button type="submit" id="btn-submit-booking" class="shop-btn shop-btn--gold" data-i18n="cd.submit">Book sankalp puja</button>
+      </div>
+    </form>
+
+    <div id="chadawa-success-view" class="shop-success hidden">
+      <div class="shop-success__icon">✓</div>
+      <h3 style="margin:0;font-family:Georgia,serif" data-i18n="cd.success">Your sankalp is booked</h3>
+      <p id="success-body" style="margin:0;font-size:.85rem;color:#475569"></p>
+      <dl>
+        <div><dt data-i18n="cd.bookingId">Booking ID</dt><dd id="success-booking-num"></dd></div>
+        <div><dt data-i18n="cd.seva">Seva</dt><dd id="success-temple-title"></dd></div>
+        <div><dt data-i18n="cd.paid">Paid</dt><dd id="success-total-paid"></dd></div>
+      </dl>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button type="button" id="btn-view-bookings-after" class="shop-btn shop-btn--primary" data-i18n="cd.viewBookings">View my bookings</button>
+        <button type="button" id="btn-close-success" class="shop-btn shop-btn--line" data-i18n="close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
