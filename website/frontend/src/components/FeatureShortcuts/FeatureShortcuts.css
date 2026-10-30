@@ -41,9 +41,9 @@
 }
 
 .shortcut-pill:hover {
-  background: var(--color-purple-light, #F5F3FF);
-  border-color: var(--color-purple-primary, #7439EA);
-  color: var(--color-purple-primary, #7439EA);
+  background: var(--color-purple-light, #f4eefb);
+  border-color: var(--color-purple-primary, #4a1b9a);
+  color: var(--color-purple-primary, #4a1b9a);
   transform: translateY(-1px);
 }
 

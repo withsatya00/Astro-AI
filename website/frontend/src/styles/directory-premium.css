@@ -1,0 +1,82 @@
+/* Astrologer directory: quick-filter chip bar that stays in view while the grid scrolls. */
+.dir-chips { margin: 0 auto 20px; width: calc(100% - 2rem); max-width: 80rem; box-sizing: border-box; position: sticky; top: 8px; z-index: 25; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px; border-radius: 16px;
+  border: 1px solid var(--exp-line, #e8dfd1); background: var(--exp-card, #fff); box-shadow: var(--exp-shadow, 0 12px 40px -24px #35214140); }
+.dir-chip-row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+.dir-chip-row::-webkit-scrollbar { display: none; }
+.dir-chip { flex: 0 0 auto; padding: 9px 16px; min-height: 40px; border-radius: 999px; border: 1px solid var(--exp-line, #e8dfd1); background: var(--exp-paper, #fffdf8); color: var(--exp-ink, #292039); font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+.dir-chip:hover { border-color: var(--exp-gold, #986724); }
+.dir-chip.is-active { background: var(--exp-ink, #292039); color: var(--exp-card, #fff); border-color: var(--exp-ink, #292039); }
+.dir-count { flex: 0 0 auto; padding-right: 8px; font-size: .78rem; font-weight: 700; color: var(--exp-muted, #706879); white-space: nowrap; }
+.dir-chip:focus-visible { outline: 3px solid #6b3fc4; outline-offset: 2px; }
+@media (max-width: 640px) { .dir-count { display: none; } }
+/* position: sticky needs every ancestor to stay overflow-visible vertically. */
+#app-views-container:has(#view-directory.active), #site-layout-outlet:has(#view-directory.active) { overflow-x: clip; overflow-y: visible; }
+
+/* Directory page hierarchy: works with the existing card, profile and booking components. */
+.directory-page-container { background: linear-gradient(180deg, #fbf7ef 0, #fffdf8 330px, #fffdf8 100%); min-height: 70vh; }
+.directory-masthead__inner { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(380px, .9fr); align-items: end; gap: 36px; padding: 34px 38px; border: 1px solid #e5d9c7; border-radius: 26px; background: radial-gradient(circle at 92% 10%, #eadcf7 0, transparent 29%), var(--brand-banner); box-shadow: 0 18px 50px -34px #281a3c; color: #fff; overflow: hidden; position: relative; }
+.directory-masthead__inner::after { content: ''; position: absolute; width: 270px; height: 270px; border: 1px solid #ffffff21; border-radius: 50%; right: -132px; bottom: -155px; pointer-events: none; }
+.directory-masthead__copy { position: relative; z-index: 1; }
+.directory-eyebrow { margin: 0 0 8px; color: #886396; font-size: .68rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.directory-masthead .directory-eyebrow { color: #efd4a0; }
+.directory-masthead .directory-title { color: #fff !important; letter-spacing: -.035em; line-height: 1.05; }
+.directory-masthead .directory-subtitle { max-width: 630px; margin: 0; color: #e6dcea; font-size: .91rem; }
+.directory-badge { display: inline-flex; align-items: center; min-height: 28px; padding: 5px 11px; border: 1px solid #f0d69d70; border-radius: 999px; background: #ffffff12; color: #ffe4a9; font-size: .7rem; font-weight: 800; white-space: nowrap; }
+.directory-trust-grid { position: relative; z-index: 1; display: grid; gap: 10px; }
+.directory-trust-grid > div { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #ffffff20; border-radius: 13px; background: #ffffff0b; backdrop-filter: blur(5px); }
+.directory-trust-grid > div > span { display: grid; flex: 0 0 auto; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: #f1cf8b; color: #3b2743; font-weight: 900; font-size: .8rem; }
+.directory-trust-grid p { display: grid; gap: 2px; margin: 0; line-height: 1.18; }
+.directory-trust-grid b { color: #fff; font-size: .76rem; }
+.directory-trust-grid small { color: #e0d4e5; font-size: .65rem; }
+
+.directory-toolbar { padding: 18px; border: 1px solid var(--exp-line, #e8dfd1); border-radius: 20px; background: var(--exp-card, #fff); box-shadow: 0 16px 38px -32px #281a3c; }
+.directory-toolbar .dir-search-box { min-height: 48px; border-color: var(--exp-line, #e8dfd1) !important; background: var(--exp-paper, #fffdf8) !important; box-shadow: none !important; }
+.directory-toolbar .dir-search-box:focus-within { border-color: #4a1b9a !important; box-shadow: 0 0 0 3px #4a1b9a18 !important; }
+.directory-toolbar .dir-filter-select { min-height: 46px; border-color: var(--exp-line, #e8dfd1) !important; background: var(--exp-paper, #fffdf8) !important; color: var(--exp-ink, #292039) !important; }
+.dir-mobile-filter-toggle { display: none; align-items: center; justify-content: center; gap: 7px; min-height: 46px; padding: 0 14px; border: 1px solid var(--exp-line, #e8dfd1); border-radius: 12px; background: var(--exp-paper, #fffdf8); color: var(--exp-ink, #292039); font: inherit; font-size: .78rem; font-weight: 800; cursor: pointer; }
+.btn-clear-filters { min-height: 46px; border-color: var(--exp-line, #e8dfd1) !important; background: transparent; }
+.directory-results__head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 28px 0 20px; }
+.directory-results__head h2 { margin: 0; color: var(--exp-ink, #292039); font: 700 clamp(1.35rem, 2.4vw, 1.85rem) var(--font-serif, Georgia, serif); letter-spacing: -.025em; }
+.directory-results__head > p { max-width: 370px; margin: 0; color: var(--exp-muted, #706879); font-size: .78rem; line-height: 1.55; text-align: right; }
+.directory-results .astrologers-grid-container { align-items: stretch; }
+
+html[data-theme="dark"] .directory-page-container { background: linear-gradient(180deg, #211b29 0, var(--exp-paper) 330px); }
+html[data-theme="dark"] .directory-masthead__inner { border-color: #8b6bd9; background: radial-gradient(circle at 92% 10%, #6a4377 0, transparent 30%), linear-gradient(125deg, #1e1727, #33233e); }
+html[data-theme="dark"] .directory-toolbar { background: var(--exp-card); border-color: var(--exp-line); }
+html[data-theme="dark"] .directory-results__head h2 { color: var(--exp-ink); }
+
+@media (max-width: 850px) {
+  .directory-masthead__inner { grid-template-columns: 1fr; gap: 22px; padding: 28px; }
+  .directory-trust-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .directory-trust-grid > div { align-items: flex-start; padding: 11px; }
+  .directory-trust-grid > div > span { width: 24px; height: 24px; }
+}
+@media (max-width: 640px) {
+  .directory-page-container { background: #fffdf8; }
+  .directory-masthead { padding-top: 18px; padding-bottom: 18px; }
+  .directory-masthead__inner { padding: 22px 18px; border-radius: 20px; }
+  .directory-masthead .directory-title { font-size: 1.7rem !important; }
+  .directory-masthead .directory-subtitle { font-size: .78rem; }
+  .directory-badge { font-size: .62rem; }
+  .directory-trust-grid { grid-template-columns: 1fr; gap: 7px; }
+  .directory-trust-grid > div { padding: 9px 10px; }
+  .directory-toolbar { margin-bottom: 14px; padding: 12px; border-radius: 16px; }
+  .dir-search-row { display: grid !important; grid-template-columns: 1fr auto; }
+  .dir-search-box { grid-column: 1 / -1; }
+  .dir-mobile-filter-toggle { display: inline-flex; }
+  .dir-filters-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .2s ease; }
+  .dir-filters-panel > .dir-filters-row { min-height: 0; overflow: hidden; margin-top: 0; transition: margin .2s ease; }
+  .dir-filters-panel.is-open { grid-template-rows: 1fr; }
+  .dir-filters-panel.is-open > .dir-filters-row { margin-top: 10px; }
+  .dir-filters-row { gap: 8px !important; }
+  .directory-results__head { align-items: flex-start; flex-direction: column; gap: 8px; margin: 24px 0 16px; }
+  .directory-results__head > p { max-width: none; text-align: left; font-size: .72rem; }
+  .directory-results .astrologers-grid-container { gap: 12px !important; }
+}
+@media (prefers-reduced-motion: reduce) { .dir-filters-panel, .dir-filters-panel > .dir-filters-row { transition: none; } }
+
+/* One shared column: hero, search box, chip bar and card grid all start and end on the same edges. */
+#view-directory > .directory-masthead, #view-directory > .directory-toolbar, #view-directory > .dir-chips, #view-directory > .directory-results {
+  width: min(100% - 2rem, 1232px); max-width: none; margin-left: auto; margin-right: auto; box-sizing: border-box;
+}
+#view-directory > .directory-masthead, #view-directory > .directory-results { padding-left: 0; padding-right: 0; }

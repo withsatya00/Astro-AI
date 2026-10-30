@@ -48,7 +48,7 @@
 .bubble-sender-name {
   font-size: 0.74rem;
   font-weight: 700;
-  color: #7439EA;
+  color: #4A1B9A;
   margin-bottom: 0.35rem;
 }
 .msg-meta-row {
@@ -61,7 +61,7 @@
   color: #7E8FA6;
 }
 .msg-status-delivered {
-  color: #7439EA;
+  color: #4A1B9A;
   font-weight: 800;
 }
 .btn-copy-discreet {
@@ -73,5 +73,5 @@
   padding: 0;
 }
 .btn-copy-discreet:hover {
-  color: #7439EA;
+  color: #4A1B9A;
 }

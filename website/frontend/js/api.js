@@ -532,10 +532,13 @@ var API = {
   async addAstrologerReview(astrologerId, payload) {
     const res = await fetch(`${API_BASE}/astrologers/${astrologerId}/reviews`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(localStorage.getItem('astro_access_token') ? { 'Authorization': `Bearer ${localStorage.getItem('astro_access_token')}` } : {}) },
       body: JSON.stringify(payload)
     });
-    if (!res.ok) throw new Error('Failed to submit review');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to submit review');
+    }
     return res.json();
   },
 
@@ -949,7 +952,45 @@ var API = {
     return this.getWalletStatus();
   },
 
+  async getPaymentConfig() {
+    try {
+      const res = await fetch(`${API_BASE}/wallet/payment-config`);
+      return res.ok ? await res.json() : { provider: 'unavailable' };
+    } catch (e) { return { provider: 'unavailable' }; }
+  },
+
+  /** Real payments (Razorpay) when the backend has keys; otherwise the test-mode recharge below. */
+  async payWithRazorpay(amount) {
+    const token = localStorage.getItem('astro_access_token');
+    const headers = { 'Content-Type': 'application/json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}) };
+    const fail = async (res, fallback) => { const err = await res.json().catch(() => ({})); throw new Error(typeof err.detail === 'string' ? err.detail : fallback); };
+    const orderRes = await fetch(`${API_BASE}/wallet/razorpay/order`, { method: 'POST', headers, body: JSON.stringify({ amount }) });
+    if (!orderRes.ok) await fail(orderRes, 'Could not start the payment');
+    const order = await orderRes.json();
+    if (!window.Razorpay) {
+      await new Promise((resolve, reject) => {
+        const el = Object.assign(document.createElement('script'), { src: 'https://checkout.razorpay.com/v1/checkout.js', onload: resolve, onerror: () => reject(new Error('Payment window could not load. Check your connection.')) });
+        document.head.appendChild(el);
+      });
+    }
+    return new Promise((resolve, reject) => {
+      const checkout = new window.Razorpay({
+        key: order.key_id, order_id: order.order_id, amount: order.amount, currency: order.currency, name: 'Astro Jyotish', description: 'Wallet recharge',
+        handler: async (r) => {
+          const res = await fetch(`${API_BASE}/wallet/razorpay/verify`, { method: 'POST', headers, body: JSON.stringify(r) });
+          if (!res.ok) { try { await fail(res, 'Payment could not be verified'); } catch (e) { reject(e); } return; }
+          resolve(await res.json());
+        },
+        modal: { ondismiss: () => reject(new Error('Payment cancelled')) },
+      });
+      checkout.open();
+    });
+  },
+
   async rechargeWallet(amount, method = 'UPI (Test Mode)') {
+    const config = await this.getPaymentConfig();
+    if (config.provider === 'razorpay') return this.payWithRazorpay(amount);
+    if (config.provider === 'unavailable') throw new Error('Online payments are not available right now.');
     const token = localStorage.getItem('astro_access_token');
     const headers = {
       'Content-Type': 'application/json',
@@ -960,7 +1001,7 @@ var API = {
       headers,
       body: JSON.stringify({ amount, payment_method: method })
     });
-    if (!res.ok) throw new Error('Wallet recharge failed');
+    if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(typeof err.detail === 'string' ? err.detail : 'Wallet recharge failed'); }
     return res.json();
   },
 
@@ -997,8 +1038,17 @@ var API = {
       method: 'POST',
       headers
     });
-    if (!res.ok) throw new Error('Failed to cancel booking');
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to cancel booking');
+    }
     return res.json();
+  },
+
+  async getBusySlots(astrologerId) {
+    const res = await fetch(`${API_BASE}/wallet/bookings/busy?astrologer_id=${encodeURIComponent(astrologerId)}`);
+    if (!res.ok) throw new Error('Failed to load availability');
+    return (await res.json()).busy || [];
   },
 
   // Vedic Calculators City Coordinates Helper

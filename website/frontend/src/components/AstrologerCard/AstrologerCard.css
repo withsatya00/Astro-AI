@@ -14,7 +14,7 @@
 .astrologer-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(33, 29, 80, 0.08));
-  border-color: var(--color-purple-subtle, #DDD6FE);
+  border-color: var(--color-purple-subtle, #e3d8f3);
 }
 
 .card-main-row {
@@ -117,7 +117,7 @@
 }
 
 .scholar-name:hover {
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4a1b9a);
 }
 
 .verified-check {
@@ -137,9 +137,9 @@
 }
 
 .scholar-badge.badge-ai {
-  background: var(--color-purple-light, #F5F3FF);
-  color: var(--color-purple-primary, #7439EA);
-  border: 1px solid var(--color-purple-subtle, #DDD6FE);
+  background: var(--color-purple-light, #f4eefb);
+  color: var(--color-purple-primary, #4a1b9a);
+  border: 1px solid var(--color-purple-subtle, #e3d8f3);
 }
 
 .scholar-badge.badge-human {
@@ -233,7 +233,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: linear-gradient(135deg, var(--color-purple-primary, #7439EA) 0%, var(--color-purple-hover, #5B21B6) 100%);
+  background: linear-gradient(135deg, var(--color-purple-primary, #4a1b9a) 0%, var(--color-purple-hover, #1e0b44) 100%);
   color: #FFFFFF;
   border: none;
   font-size: 0.82rem;
@@ -242,12 +242,12 @@
   border-radius: var(--radius-full, 9999px);
   cursor: pointer;
   transition: all var(--transition-fast, 0.15s ease);
-  box-shadow: 0 2px 6px rgba(116, 57, 234, 0.25);
+  box-shadow: 0 2px 6px rgba(74, 27, 154, 0.25);
 }
 
 .btn-card-chat:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(116, 57, 234, 0.35);
+  box-shadow: 0 4px 12px rgba(74, 27, 154, 0.35);
 }
 
 .btn-card-chat.disabled, .btn-card-chat:disabled {
@@ -333,7 +333,7 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
-  background: linear-gradient(90deg, #D97706, #E8AD35 40%, #7439EA);
+  background: linear-gradient(90deg, #D97706, #E8AD35 40%, #4a1b9a);
 }
 .astrologer-card.ac-card:hover { border-color: #E3C677; }
 
@@ -353,7 +353,7 @@
 }
 .ac-badge .ac-ic { width: 10px; height: 10px; }
 .ac-badge--gold { background: linear-gradient(90deg, #E8AD35, #F3C969); color: #4A3206; }
-.ac-badge--violet { background: linear-gradient(90deg, #7439EA, #9333EA); color: #fff; }
+.ac-badge--violet { background: linear-gradient(90deg, #4a1b9a, #6b3fc4); color: #fff; }
 
 .ac-status {
   position: absolute;
@@ -388,7 +388,7 @@
   padding: 3px;
   border: 0;
   border-radius: 22px;
-  background: linear-gradient(135deg, #E8AD35, #7439EA);
+  background: linear-gradient(135deg, #E8AD35, #4a1b9a);
   cursor: pointer;
 }
 .ac-photo img {
@@ -409,7 +409,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #7439EA;
+  background: #4a1b9a;
   color: #fff;
   border: 2px solid #fff;
 }
@@ -429,7 +429,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.ac-name:hover { color: #7439EA; }
+.ac-name:hover { color: #4a1b9a; }
 .ac-title {
   margin: 0 0 0.35rem;
   font-size: 12px;
@@ -460,8 +460,8 @@
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  color: #5B21B6;
-  background: #F5F3FF;
+  color: #1e0b44;
+  background: #f4eefb;
   border: 1px solid #E4DCFB;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -522,9 +522,9 @@
   border: 1.5px solid transparent;
 }
 .ac-btn .ac-ic { width: 16px; height: 16px; }
-.ac-btn--chat { background: linear-gradient(90deg, #7439EA, #5B21B6); color: #fff; box-shadow: 0 6px 14px -6px rgba(116, 57, 234, 0.6); }
-.ac-btn--call { background: #fff; color: #6D28D9; border-color: #7439EA; }
-.ac-btn--call:hover { background: #F5F3FF; }
+.ac-btn--chat { background: linear-gradient(90deg, #4a1b9a, #1e0b44); color: #fff; box-shadow: 0 6px 14px -6px rgba(74, 27, 154, 0.6); }
+.ac-btn--call { background: #fff; color: #1e0b44; border-color: #4a1b9a; }
+.ac-btn--call:hover { background: #f4eefb; }
 
 @media (max-width: 400px) {
   .astrologer-card.ac-card { padding-left: 0.85rem; padding-right: 0.85rem; }
@@ -538,8 +538,8 @@
 html[data-theme="dark"] .astrologer-card.ac-card { background: #1C1928 !important; border-color: #353041 !important; }
 html[data-theme="dark"] .ac-name, html[data-theme="dark"] .ac-price b, html[data-theme="dark"] .ac-rating { color: #F3EEE8 !important; }
 html[data-theme="dark"] .ac-title, html[data-theme="dark"] .ac-facts, html[data-theme="dark"] .ac-price { color: #ADA6BA; }
-html[data-theme="dark"] .ac-chip { background: #2A2440; color: #D9C8F7; border-color: #3C3458; }
-html[data-theme="dark"] .ac-btn--call { background: transparent; color: #C0A0F0; border-color: #7439EA; }
+html[data-theme="dark"] .ac-chip { background: #2A2440; color: #e0d1e8; border-color: #3C3458; }
+html[data-theme="dark"] .ac-btn--call { background: transparent; color: #c9b1d6; border-color: #4a1b9a; }
 html[data-theme="dark"] .ac-foot { border-top-color: #3C3458; }
 html[data-theme="dark"] .ac-verified { border-color: #1C1928; }
 html[data-theme="dark"] .ac-listen { background: #2B2410; border-color: #5C4A1A; color: #F3C969; }

@@ -1,0 +1,140 @@
+/*
+ * Premium system layer. Loaded last, so it sets the shared rules the rest of the site is measured against:
+ * one type scale, one heading style, one spacing rhythm, one card and button treatment, visible focus and calm motion.
+ * The home Hero is intentionally left alone (its photo and styling are being designed separately).
+ */
+
+:root {
+  --ps-ink: #1e1b4b;
+  --ps-muted: #5b5670;
+  --ps-line: #e7e0d2;
+  --ps-radius: 14px;
+  --ps-radius-sm: 10px;
+  --ps-shadow: 0 1px 2px rgba(30, 11, 68, .05), 0 12px 32px -20px rgba(30, 11, 68, .28);
+  --ps-shadow-hover: 0 2px 4px rgba(30, 11, 68, .06), 0 22px 44px -22px rgba(30, 11, 68, .38);
+  --ps-section-y: clamp(48px, 6vw, 88px);
+  --ps-ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* type scale: H1 stays the display face; everything below it is the sans face */
+  --font-h2: clamp(1.5rem, 2.4vw, 2rem);
+  --font-h3: clamp(1.05rem, 1.5vw, 1.25rem);
+  --font-body: 1rem;
+  --font-body-sm: .9rem;
+  --font-caption: .8125rem;
+}
+
+/* ---------- Typography ---------- */
+body { line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* Section and card headings: sentence case in the sans face. All-caps serif stays on page titles and the logo only. */
+html body :is(h2, h3, h4, h5, h6):not(.hero-section *):not(.service-banner *):not(.shop-modal__head *):not(.modal-header *) {
+  font-family: var(--font-sans);
+  font-variant: normal;
+  text-transform: none;
+  letter-spacing: -.02em;
+  font-weight: 700;
+  line-height: 1.25;
+}
+html body h2:not(.hero-section *):not(.service-banner *):not(.shop-modal__head *):not(.modal-header *) { font-size: var(--font-h2); }
+html body h3:not(.hero-section *):not(.service-banner *):not(.shop-modal__head *):not(.modal-header *) { font-size: var(--font-h3); }
+html body :is(h2, h3, h4) :where(em) { font-style: normal; }
+
+/* Section intro paragraphs: comfortable measure */
+.section-header-split p, .journey-head p, .home-page-container [class*="section-subtitle"] { max-width: 62ch; color: var(--ps-muted); }
+
+/* Nothing meant to be read is smaller than 12px */
+.home-page-container :is(p, small, span, li, a, label):not(svg *) { min-height: 0; }
+.home-page-container small, .home-page-container .text-\[10px\], .home-page-container .text-\[11px\] { font-size: max(.75rem, 12px); }
+
+/* ---------- Rhythm: consistent vertical spacing between home sections (Hero excluded) ---------- */
+.home-page-container :is(#mount-categories, #mount-featured-astrologers, #mount-feature-shortcuts, #mount-why-choose, #mount-transparency, #mount-testimonials, #mount-faq) > section,
+.home-page-container > .journey-section,
+.home-page-container > .panchang-horoscope-section {
+  padding-top: var(--ps-section-y);
+  padding-bottom: var(--ps-section-y);
+}
+.home-page-container > .gs-home-banner { margin-block: clamp(24px, 4vw, 48px); }
+
+/* ---------- Cards: one radius, one border, one shadow, one hover ---------- */
+.journey-card, .shop-card, .calculator-card, .ch-event, .ch-review, .ch-package-preview article, .dir-card, .astro-card, .testimonial-card, .why-card {
+  border-radius: var(--ps-radius);
+  border: 1px solid var(--ps-line);
+  box-shadow: var(--ps-shadow);
+  transition: transform .25s var(--ps-ease), box-shadow .25s var(--ps-ease), border-color .25s var(--ps-ease);
+}
+@media (hover: hover) {
+  .journey-card:hover, .shop-card:hover, .calculator-card:hover, .ch-event:hover, .ch-review:hover, .astro-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--ps-shadow-hover);
+    border-color: #cdb98d;
+  }
+}
+
+/* ---------- Buttons: same size, radius and feedback everywhere ---------- */
+.shop-btn, .gs-btn, .btn-hero-find, .btn-primary, .btn-new-chat {
+  border-radius: var(--ps-radius-sm);
+  font-weight: 700;
+  letter-spacing: 0;
+  transition: background-color .2s var(--ps-ease), box-shadow .2s var(--ps-ease), transform .12s var(--ps-ease), border-color .2s var(--ps-ease);
+}
+.shop-btn { min-height: 44px; }
+.shop-btn--sm { min-height: 36px; }
+.shop-btn:active, .gs-btn:active { transform: translateY(1px); }
+button:disabled, .shop-btn:disabled { cursor: not-allowed; }
+
+/* ---------- Focus: always visible for keyboard users ---------- */
+:where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #4a1b9a;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------- Top bars: slim offer strip (dismissible), planetary strip only on the home page ---------- */
+.top-promo-bar[hidden] { display: none !important; }
+.promo-dismiss { width: 24px; height: 24px; border: 0; border-radius: 50%; background: #ffffff26; color: #fff; font-size: 16px; line-height: 1; cursor: pointer; flex: 0 0 auto; }
+.promo-dismiss:hover { background: #ffffff45; }
+body:not(:has(#view-home.active)) .ephemeris-ticker-bar { display: none; }
+.ephemeris-marquee:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ephemeris-marquee { animation: none !important; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+  .journey-card, .shop-card, .calculator-card, .ch-event, .ch-review { transition: none; transform: none !important; }
+}
+
+/* ---------- Loading: skeleton blocks instead of empty white boxes ---------- */
+@keyframes ps-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+.ps-skeleton, .astro-skeleton {
+  border-radius: var(--ps-radius);
+  min-height: 190px;
+  background: linear-gradient(100deg, #f1ebdf 30%, #faf6ec 50%, #f1ebdf 70%) 0 0 / 220% 100%;
+  animation: ps-shimmer 1.4s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .ps-skeleton, .astro-skeleton { animation: none; } }
+
+/* ---------- Footer: calmer, with a trust row ---------- */
+.site-global-footer { padding-top: clamp(40px, 5vw, 72px); }
+.footer-trust-row {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  margin: 0 0 36px; padding: 18px 0; border-block: 1px solid #ffffff1f;
+}
+.footer-trust-row > div { display: flex; align-items: center; gap: 12px; font-size: .85rem; color: #d9d3e8; }
+.footer-trust-row b { display: block; color: #fff; font-size: .9rem; }
+.footer-trust-row span[aria-hidden] { display: grid; place-items: center; flex: 0 0 38px; height: 38px; border-radius: 50%; background: #ffffff14; font-size: 1.05rem; }
+.site-global-footer .footer-links a, .site-global-footer .footer-info-link { font-size: .875rem; }
+@media (max-width: 720px) { .footer-trust-row { grid-template-columns: 1fr; } }
+
+/* FAQ questions and other disclosure rows read as sentences, not capitals */
+.faq-section :is(summary, button, h3, h4):not(.faq-tab-btn), .faq-section [class*="faq-q"], details > summary { font-family: var(--font-sans); text-transform: none; font-variant: normal; letter-spacing: -.01em; }
+.faq-section [class*="faq-q"] { font-size: 1rem; font-weight: 600; color: var(--ps-ink); }
+
+/* Footer trust row text */
+.footer-trust-row p { margin: 0; color: #cfc8e2; font-size: .85rem; line-height: 1.5; }
+
+/* Install / update prompts: a compact card in the corner on wide screens, never across the content */
+@media (min-width: 900px) {
+  .pf-install { left: auto; right: 16px; bottom: 16px; transform: none; width: min(360px, calc(100% - 32px)); }
+}
+
+/* Dark theme: the trust strip keeps a dark surface so its light text stays readable */
+[data-theme="dark"] .shop-trust, [data-theme="dark"] .shop-trust.service-benefits { background: #1b1813; border-color: #ffffff1f; }
+[data-theme="dark"] .shop-trust small { color: #d3ccdd; }

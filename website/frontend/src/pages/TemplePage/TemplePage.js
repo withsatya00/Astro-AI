@@ -1,6 +1,11 @@
 // Temple page: live darshan, aarti timings, sevas, verified priests and packages for one temple.
 import { esc, money, toast, api, mediaUrl, t, requireLogin, goTo } from '../../utils/shop.js';
 import { currentLang } from '../../utils/shop-i18n.js';
+import { proofLineHtml, reviewsSectionHtml } from '../../components/sampleProof.js';
+import { skeleton, x } from '../../utils/experience.js';
+import { servicePanel } from '../../components/ServiceInfo.js';
+import { ChadhavaExperience } from '../../components/ChadhavaExperience.js';
+import { loadSevaGalleries, sevaGallery, bindSevaGalleries } from '../../components/SevaGallery.js';
 
 export class TemplePageComponent {
   static root = null;
@@ -17,72 +22,123 @@ export class TemplePageComponent {
 
   static async open(slug) {
     if (!this.root) return;
+    const request = this.openRequest = (this.openRequest || 0) + 1;
     this.slug = slug;
-    this.root.innerHTML = `<div class="shop-page"><div class="shop-loading"><div class="shop-spinner"></div><p>${esc(t('loading'))}</p></div></div>`;
+    this.root.innerHTML = `<div class="shop-page">${skeleton(2)}</div>`;
     window.scrollTo({ top: 0 });
     try {
       const d = await api(`/api/v1/mandir/temples/${encodeURIComponent(slug)}?lang=${currentLang()}`);
+      await loadSevaGalleries();
+      if (request !== this.openRequest) return;
       this.temple = d;
       this.render(d);
     } catch (err) {
-      this.root.innerHTML = `<div class="shop-page"><div class="shop-empty"><b>${esc(t('tp.notFound'))}</b>${esc(err.message)}<br><br><a class="shop-btn shop-btn--line" href="/mandir-seva">${esc(t('tp.back'))}</a></div></div>`;
+      if (request !== this.openRequest) return;
+      this.root.innerHTML = `<div class="shop-page"><div class="shop-empty"><b>${esc(t('tp.notFound'))}</b>${esc(err.message)}<br><br><button type="button" class="shop-btn shop-btn--gold" id="tp-retry">${esc(x('retry'))}</button> <a class="shop-btn shop-btn--line" href="/mandir-seva">${esc(t('tp.back'))}</a></div></div>`;
+      this.root.querySelector('#tp-retry').onclick = () => this.open(slug);
     }
+  }
+
+  static chips(d) {
+    const prices = d.offerings.map(o => o.price);
+    const out = [];
+    if (prices.length) out.push(`${t('md.startsFrom')} ${money(Math.min(...prices))}`);
+    if (d.offerings.some(o => o.includes_video_proof)) out.push(`📹 ${t('tp.videoProof')}`);
+    if (d.live_url) out.push(`📺 ${t('tp.live')}`);
+    if (d.offerings.length) out.push(`🪔 ${d.offerings.length} ${t('tp.sevaCount')}`);
+    return out;
+  }
+
+  static bookCard(d, startFrom) {
+    const points = [t('tp.videoProof'), t('pp.trust.pay')];
+    return `<section class="tp-book"><small>${esc(t('md.startsFrom'))}</small><strong>${money(startFrom)}</strong>
+      <a class="shop-btn shop-btn--gold" href="#tp-sevas" id="tp-jump">🪔 ${esc(t('tp.bookSeva'))}</a>
+      <ul>${points.map(p => `<li>${esc(p)}</li>`).join('')}</ul></section>`;
+  }
+
+  /** At-a-glance facts, all taken from the temple's own data. */
+  static factsHtml(d) {
+    const prices = d.offerings.map(o => o.price);
+    const rows = [
+      [t('tp.deity'), d.deity], [t('tp.location'), `${d.city}, ${d.state}`],
+      [t('tp.sevaCount'), String(d.offerings.length)],
+      [t('tp.priceRange'), prices.length ? (Math.min(...prices) === Math.max(...prices) ? money(prices[0]) : `${money(Math.min(...prices))} – ${money(Math.max(...prices))}`) : '—'],
+      [t('tp.live'), d.live_url ? t('tp.yes') : t('tp.no')],
+      [t('tp.videoProof'), d.offerings.some(o => o.includes_video_proof) ? t('tp.yes') : t('tp.no')],
+    ];
+    return `<section class="pp-section" id="tp-facts"><h2>${esc(t('tp.facts'))}</h2><div class="tp-facts">${rows.map(([k, v]) => `<div class="tp-fact"><small>${esc(k)}</small><b>${esc(v)}</b></div>`).join('')}</div></section>`;
+  }
+
+  /** The significance text is written in Hindi, so it is only shown when the site is in Hindi (no mixed-language blocks). */
+  static significanceHtml(d) {
+    const text = (d.history_significance || '').trim();
+    if (!text || (currentLang() === 'hi') !== /[ऀ-ॿ]/.test(text)) return '';
+    return `<section class="pp-section" id="tp-significance"><h2>📜 ${esc(t('tp.significance'))}</h2><p>${esc(text)}</p></section>`;
   }
 
   static render(d) {
     const startFrom = Math.min(...d.offerings.map(o => o.price));
     this.root.innerHTML = `
     <div class="shop-page tp">
-      <nav class="pp-crumbs"><a href="/mandir-seva">${esc(t('tp.mandir'))}</a> › <span>${esc(d.name)}</span></nav>
-      <section class="tp-hero" style="background-image:linear-gradient(to top, rgba(15,10,40,.85), rgba(15,10,40,.15)), url('${esc(mediaUrl(d.banner_url || d.image_url))}')">
-        <div><span class="shop-hero__badge">📍 ${esc(d.city)}, ${esc(d.state)}</span><h1>${esc(d.name)}</h1><p>🕉️ ${esc(d.deity)}</p></div>
-        <div class="tp-cta"><small>${esc(t('md.startsFrom'))}</small><strong>${money(startFrom)}</strong>
-          <a class="shop-btn shop-btn--gold" href="#tp-sevas" id="tp-jump">🪔 ${esc(t('tp.bookSeva'))}</a></div>
+      <nav class="pp-crumbs"><a href="/">${esc(currentLang()==='hi'?'होम':'Home')}</a> › <a href="/mandir-seva">${esc(t('tp.mandir'))}</a> › <a href="/mandir-seva/chadhava">${esc(currentLang()==='hi'?'चढ़ावा':'Chadhava')}</a> › <span>${esc(d.name)}</span></nav>
+      <section class="tp-sm-hero">
+        <div class="tp-sm-hero__media">${sevaGallery(d.slug,d.image_url,d.name)}</div>
+        <div class="tp-sm-hero__copy">
+          <h1>${esc(d.name)}</h1>
+          <p class="tp-sm-hero__meta">🕉️ ${esc(d.deity)}</p><p class="tp-sm-hero__meta">📍 ${esc(d.city)}, ${esc(d.state)}</p>
+          ${proofLineHtml()}<p class="tp-sm-hero__desc">${esc(d.description)}</p>
+          <div class="tp-chips">${this.chips(d).map(c => `<span class="tp-chip">${esc(c)}</span>`).join('')}</div>
+          <button type="button" class="shop-btn shop-btn--gold tp-green" id="tp-jump">${esc(t('tp.bookSeva'))}</button>
+        </div>
       </section>
 
+      <section data-temple-chadhava></section>
+      <section class="tp-offers" id="tp-sevas"><h2>${esc(currentLang()==='hi'?'चढ़ावा चुनें':'Choose an offering')}</h2>
+        ${d.offerings.map(o => `<article class="tp-offer"><div class="tp-offer__text"><strong>${esc(o.title)}</strong><p>${esc(o.description)}</p>${o.includes_video_proof ? `<small>📹 ${esc(t('tp.video'))}</small>` : ''}<b>${money(o.price)}</b></div>
+          <div class="tp-offer__buy"><img src="${esc(mediaUrl(d.image_url))}" alt="" loading="lazy"><button type="button" class="tp-add" data-book>+ ${esc(currentLang()==='hi'?'जोड़ें':'Add')}</button></div></article>`).join('')}
+      </section>
+
+      ${reviewsSectionHtml('tp-reviews') ? `<div class="tp-reviews">${reviewsSectionHtml('tp-reviews')}</div>` : ''}
       <div class="tp-grid">
         <div>
-          <section class="pp-section"><h2>${esc(t('tp.about'))}</h2><p>${esc(d.description)}</p></section>
+          ${this.factsHtml(d)}
+          <section class="pp-section" id="tp-about"><h2>${esc(t('tp.about'))}</h2><p>${esc(d.description)}</p></section>
+          ${this.significanceHtml(d)}
 
-          <section class="pp-section"><h2>📺 ${esc(t('tp.live'))}</h2>
+          <section class="pp-section ${d.live_url ? '' : 'tp-slim'}" id="tp-live"><h2>📺 ${esc(t('tp.live'))}</h2>
             ${d.live_url ? `<div class="tp-live"><iframe src="${esc(d.live_url)}" title="${esc(d.name)}" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`
-              : `<p class="shop-hint" style="font-size:.85rem">${esc(t('tp.noLive'))}</p>`}
+              : `<p class="tp-quiet">${esc(t('tp.noLive'))}</p>`}
           </section>
 
-          <section class="pp-section" id="tp-sevas"><h2>🪔 ${esc(t('tp.sevas'))}</h2>
-            ${d.offerings.map(o => `<div class="tp-seva"><div><strong>${esc(o.title)}</strong><p>${esc(o.description)}</p>
-              <small>${o.includes_video_proof ? '📹 ' + esc(t('tp.video')) : ''} ${o.has_prasad_delivery ? ' · 📦 ' + esc(t('tp.prasad', { fee: money(o.delivery_fee) })) : ''}</small></div>
-              <div class="tp-seva__buy"><b>${money(o.price)}</b><button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-book>${esc(t('md.book'))}</button></div></div>`).join('')}
-          </section>
-
-          ${d.packages.length ? `<section class="pp-section"><h2>🗓️ ${esc(t('pk.title'))}</h2><div class="mp-scroll" style="padding:0">${d.packages.map(p => `
-            <article class="mp-card"><div class="mp-body"><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p><div class="shop-card__foot"><div class="shop-price"><small>${esc(t('pk.sessions', { n: p.sessions }))}</small>${money(p.price)}${p.discount_percent ? `<s>${money(p.list_price)}</s>` : ''}</div>
-            <button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-package="${esc(p.slug)}">${esc(t('pk.select'))}</button></div></div></article>`).join('')}</div></section>` : ''}
+          ${servicePanel('chadhava')}
         </div>
 
         <aside>
-          <section class="pp-section"><h2>🕰️ ${esc(t('tp.aarti'))}</h2>
+          <section class="pp-section ${d.aarti_timings.length ? '' : 'tp-slim'}" id="tp-aarti"><h2>🕰️ ${esc(t('tp.aarti'))}</h2>
             ${d.aarti_timings.length ? `<table class="tp-table">${d.aarti_timings.map(a => `<tr><td>${esc(a.name)}</td><td><b>${esc(a.time)}</b></td></tr>`).join('')}</table><p class="shop-hint">${esc(t('tp.aartiHint'))}</p>`
-              : `<p class="shop-hint" style="font-size:.85rem">${esc(t('tp.noAarti'))}</p>`}</section>
+              : `<p class="tp-quiet">${esc(t('tp.noAarti'))}</p>`}</section>
 
-          <section class="pp-section"><h2>🙏 ${esc(t('tp.priests'))}</h2>
+          <section class="pp-section ${d.priests.length ? '' : 'tp-slim'}" id="tp-priests"><h2>🙏 ${esc(t('tp.priests'))}</h2>
             ${d.priests.length ? d.priests.map(p => `<div class="tp-priest">${p.photo_url ? `<img src="${esc(mediaUrl(p.photo_url))}" alt="">` : '<span>🙏</span>'}
               <div><strong>${esc(p.name)}</strong> ${p.verified ? `<span class="shop-pill shop-pill--ok">✓ ${esc(t('cd.verified'))}</span>` : ''}
               <small>${esc(t('cd.years', { n: p.years_experience }))}${p.languages ? ' · ' + esc(p.languages) : ''}</small>${p.bio ? `<p>${esc(p.bio)}</p>` : ''}</div></div>`).join('')
-              : `<p class="shop-hint" style="font-size:.85rem">${esc(t('tp.noPriests'))}</p>`}</section>
+              : `<p class="tp-quiet">${esc(t('tp.noPriests'))}</p>`}</section>
 
-          <section class="pp-section"><h2>${esc(t('tp.how'))}</h2>
+          <section class="pp-section" id="tp-how"><h2>${esc(t('tp.how'))}</h2>
             <ol class="tp-steps"><li>${esc(t('tp.step1'))}</li><li>${esc(t('tp.step2'))}</li><li>${esc(t('tp.step3'))}</li><li>${esc(t('tp.step4'))}</li></ol></section>
         </aside>
       </div>
+      <div class="tp-mobilebar"><div><small>${esc(t('md.startsFrom'))}</small><b>${money(startFrom)}</b></div><button type="button" class="shop-btn shop-btn--gold" id="tp-jump-2">🪔 ${esc(t('tp.bookSeva'))}</button></div>
     </div>`;
+    bindSevaGalleries(this.root);
     this.root.querySelectorAll('[data-book]').forEach(b => b.addEventListener('click', () => {
-      if (requireLogin('auth.neededBooking') && window.ChadawaModal) window.ChadawaModal.open(this.temple);
+      ChadhavaExperience.openForTemple(this.temple).catch(err => toast(err.message, 'error'));
     }));
+    ChadhavaExperience.mountTemple(this.root.querySelector('[data-temple-chadhava]'), d.id);
     this.root.querySelectorAll('[data-package]').forEach(b => b.addEventListener('click', () => {
       if (window.MandirSevaPageComponent) window.MandirSevaPageComponent.openPackage(b.getAttribute('data-package'));
     }));
-    this.root.querySelector('#tp-jump').addEventListener('click', (e) => { e.preventDefault(); this.root.querySelector('#tp-sevas').scrollIntoView({ behavior: 'smooth' }); });
+    this.root.querySelectorAll('#tp-jump, #tp-jump-2').forEach(b => b.addEventListener('click', (e) => { e.preventDefault(); this.root.querySelector('#tp-sevas').scrollIntoView({ behavior: 'smooth' }); }));
     this.root.querySelectorAll('.pp-crumbs a').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); goTo(a.getAttribute('href')); }));
   }
 }

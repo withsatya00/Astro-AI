@@ -8,6 +8,7 @@ from sqlalchemy import desc
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional, Dict, Any
 import re
+from pydantic import BaseModel
 
 from packages.database.session import get_db
 from packages.database.models import User, BirthChart, Consultation, generate_uuid, utc_now
@@ -143,6 +144,98 @@ def get_current_user_profile(
         consultations_count=consultations_count
     )
 
+def _row(obj) -> Dict[str, Any]:
+    return {col.name: (val.isoformat() if hasattr(val, "isoformat") else val)
+            for col in obj.__table__.columns for val in [getattr(obj, col.name)]}
+
+
+@router.get("/me/export")
+def export_my_data(current_user: User = Depends(get_current_user_required), db: Session = Depends(get_db)):
+    """Everything we hold about the signed-in account, as JSON (password hash excluded)."""
+    from packages.database.models import (Booking, ChadawaBooking, Notification, Reminder, WalletTransaction, WishlistItem, MarketplaceOrder)
+    from packages.database.chadhava import ChadhavaOrder
+    key = f"u:{current_user.id}"
+    account = _row(current_user)
+    account.pop("hashed_password", None)
+    mine = lambda model, col="user_id": [_row(r) for r in db.query(model).filter(getattr(model, col) == current_user.id).all()]
+    return {
+        "exported_at": utc_now().isoformat(),
+        "account": account,
+        "birth_profiles": mine(BirthChart),
+        "wallet_transactions": mine(WalletTransaction),
+        "appointments": mine(Booking),
+        "puja_bookings": [_row(r) for r in db.query(ChadawaBooking).filter(ChadawaBooking.owner_key == key).all()],
+        "chadhava_orders": mine(ChadhavaOrder),
+        "orders": [_row(r) for r in db.query(MarketplaceOrder).filter(MarketplaceOrder.owner_key == key).all()],
+        "wishlist": mine(WishlistItem),
+        "reminders": mine(Reminder),
+        "notifications": [_row(r) for r in db.query(Notification).filter(Notification.owner_key == key).all()],
+    }
+
+
+class DeleteAccountRequest(BaseModel):
+    password: str
+    confirm_forfeit_balance: bool = False
+
+
+@router.post("/me/delete")
+def delete_my_account(payload: DeleteAccountRequest, current_user: User = Depends(get_current_user_required), db: Session = Depends(get_db)):
+    """Removes personal data and closes the account. Payment, order and booking records are kept without personal details."""
+    from packages.database.models import Booking, ChadawaBooking, Notification, Reminder, WishlistItem
+    if current_user.role == "admin":
+        raise HTTPException(status_code=403, detail="Admin accounts cannot be deleted here.")
+    if not verify_password(payload.password, current_user.hashed_password):
+        raise HTTPException(status_code=403, detail="Password is incorrect.")
+    if (current_user.wallet_balance or 0) > 0 and not payload.confirm_forfeit_balance:
+        raise HTTPException(status_code=409, detail=f"Your wallet still holds ₹{current_user.wallet_balance:.2f}. Confirm to forfeit it, or spend it first.")
+    key = f"u:{current_user.id}"
+    for model in (WishlistItem, Reminder):
+        db.query(model).filter(model.user_id == current_user.id).delete(synchronize_session=False)
+    db.query(Notification).filter(Notification.owner_key == key).delete(synchronize_session=False)
+    for rel in (current_user.charts, current_user.sessions, current_user.reports, current_user.consultations):
+        for row in list(rel):
+            db.delete(row)
+    db.query(Booking).filter(Booking.user_id == current_user.id).update({Booking.user_name: "Deleted user", Booking.user_phone: None, Booking.notes: None}, synchronize_session=False)
+    db.query(ChadawaBooking).filter(ChadawaBooking.owner_key == key).update(
+        {ChadawaBooking.devotee_phone: None, ChadawaBooking.family_members: None}, synchronize_session=False)
+    from packages.database.chadhava import ChadhavaOrder, TempleStaff
+    from pathlib import Path
+    private_root = (Path(__file__).resolve().parents[4] / "storage" / "private" / "chadhava").resolve()
+    private_files = []
+    for order in db.query(ChadhavaOrder).filter_by(user_id=current_user.id).all():
+        snapshot = dict(order.snapshot)
+        filename = snapshot.get("video_filename", "")
+        if filename and Path(filename).name == filename:
+            private_file = (private_root / order.id / filename).resolve()
+            if private_file.is_relative_to(private_root):
+                private_files.append(private_file)
+        snapshot.update(devotee_name="Deleted user", phone="", gotra="", family_members="", purpose="")
+        snapshot.pop("video_filename", None)
+        order.snapshot = snapshot
+        order.video_url = None
+        if order.booking_id:
+            linked_booking = db.get(ChadawaBooking, order.booking_id)
+            if linked_booking:
+                linked_booking.devotee_name = "Deleted user"
+                linked_booking.gotra = None
+                linked_booking.sankalp_purpose = None
+    db.query(TempleStaff).filter_by(user_id=current_user.id).delete()
+    current_user.email = f"deleted-{current_user.id}@deleted.invalid"
+    current_user.full_name = None
+    current_user.phone = None
+    current_user.wallet_balance = 0.0
+    current_user.hashed_password = "!" + generate_uuid()
+    current_user.is_active = False
+    db.commit()
+    for private_file in private_files:
+        try:
+            private_file.unlink(missing_ok=True)
+        except OSError:
+            from packages.core.logging import logger
+            logger.warning("Private chadhava video cleanup needs operator attention")
+    return {"success": True}
+
+
 @router.get("/profiles", response_model=List[Dict[str, Any]])
 def list_saved_birth_profiles(
     owner: Optional[Owner] = Depends(optional_owner),
@@ -198,6 +291,9 @@ def delete_saved_birth_profile(
     if not target:
         raise HTTPException(status_code=404, detail="Birth profile not found.")
 
+    from packages.database.advanced import AdvancedRecord
+    db.query(AdvancedRecord).filter(AdvancedRecord.user_id == target.user_id,
+        AdvancedRecord.subject_id == target.id, AdvancedRecord.kind.in_(["memory", "family"])).delete(synchronize_session=False)
     db.delete(target)
     db.commit()
     return {"status": "success", "message": "Birth profile deleted."}

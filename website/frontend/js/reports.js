@@ -115,7 +115,7 @@ const ReportsController = {
       </head>
       <body>
         <div class="no-print" style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <button onclick="window.print()" style="padding: 0.5rem 1rem; background: #4F46E5; color: #FFF; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">🖨️ Print / Save as PDF</button>
+          <button onclick="window.print()" style="padding: 0.5rem 1rem; background: #4a1b9a; color: #FFF; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">🖨️ Print / Save as PDF</button>
           <span style="font-size: 0.8rem; color: #64748B;">🕉️ प्रामाणिक पराशर वैदिक ज्योतिष पीठ</span>
         </div>
         <div class="header">
@@ -139,7 +139,7 @@ const ReportsController = {
           </tr>
           <tr>
             <th>Ascendant (Lagna)</th>
-            <td><strong style="color: #4F46E5;">${lagna}</strong></td>
+            <td><strong style="color: #4a1b9a;">${lagna}</strong></td>
             <th>Moon Sign (Rashi)</th>
             <td><strong style="color: #0284C7;">${moon} (${nakshatra})</strong></td>
           </tr>

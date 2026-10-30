@@ -1,0 +1,143 @@
+/* Brand polish: one action colour, gold only as a highlight, a readable type floor and AA text contrast.
+   Everything here reads the --brand-* tokens, so a palette change in tokens.css flows through. Loaded last. */
+
+/* ---------------------------------------------------------------- actions: one colour */
+a[class*="bg-[#78350F]"], button[class*="bg-[#78350F]"] { background: var(--brand-primary) !important; color: var(--text-inverted) !important; }
+a[class*="bg-[#78350F]"]:hover, button[class*="bg-[#78350F]"]:hover { background: var(--brand-hover) !important; }
+
+/* ---------------------------------------------------------------- gold is a highlight, not a heading colour */
+h1 .text-\[\#B45309\], h2 .text-\[\#B45309\], h3 .text-\[\#B45309\] { color: var(--brand-highlight) !important; }
+.mt-today__title em { color: var(--brand-highlight); font-style: normal; font-weight: 800; }
+
+/* ---------------------------------------------------------------- type floor: nothing below 12px */
+:where(.app-page-view, #site-global-footer, #site-navbar) :is(small, figcaption),
+[class*="text-[10px]"], [class*="text-[10px]"] *, [class*="text-[11px]"], [class*="text-[11px]"] *,
+.hero-astrologer-centerpiece .absolute,
+.ac2-title, .ac2-badge, .ac2-chip, .ac2-status span,
+.directory-eyebrow, .directory-badge, .directory-title-row span,
+.mandir-hero__eyebrow, .mandir-hero__count, .shop-hero__badge,
+.mt-today__badge, .mt-today__meta, .mt-today__meta strong, .mt-today__label, .mt-today__items li, .mt-today__special span,
+.mp-head p, .mp-body p, .mp-body .shop-card__eyebrow, .shop-card__eyebrow, .shop-card__location, .shop-off, .shop-price small, .shop-stars span,
+.shop-btn, .shop-btn span, .exp-compare-toggle,
+.gs-eyebrow, .gs-hero-name, .gs-hero-caption, .gs-section-kicker, .gs-hint, .gs-illustration figcaption,
+.tp-fact small, .tp-quiet,
+.directory-expert-row b, .directory-expert-row span, .gs-donation-summary span, .gs-donation-summary b { font-size: max(.75rem, 12px) !important; }
+
+/* ---------------------------------------------------------------- text contrast (light) */
+.journey-eyebrow { color: var(--color-gold-dark); }
+.shop-price small, .shop-credit span, .shop-card__body small { color: var(--text-muted); }
+[class*="text-[#DC2626]"] { color: #b91c1c !important; }
+.inline-flex strong.font-bold, [class*="text-emerald"], [class*="text-[#059669]"] { color: #047857; }
+
+/* ---------------------------------------------------------------- text contrast (dark theme) */
+html[data-theme="dark"] :is(.directory-eyebrow, .gs-section-kicker, .gs-suggested, legend, .pp-crumbs a, .tp-steps li, small,
+  [class*="text-[#64748B]"], [class*="text-[#4a1b9a]"], .shop-credit button, .shop-check span) { color: var(--exp-muted, #c1b8cb) !important; }
+html[data-theme="dark"] .mt-today__cta .shop-btn { color: #fff; }
+
+/* ---------------------------------------------------------------- icon tiles: brand colours instead of pink / blue rainbow */
+[class*="bg-[#FDF2F8]"], [class*="bg-[#EFF6FF]"] { background: var(--brand-soft) !important; border-color: var(--color-purple-subtle) !important; color: var(--brand-primary) !important; }
+[class*="text-[#64748B]"] { color: #526074; }
+.service-banner { background-color: var(--brand-deep); }
+
+/* ---------------------------------------------------------------- dark theme: hard-coded light surfaces follow the theme */
+html[data-theme="dark"] :is([class*="bg-[#FDF2F8]"], [class*="bg-[#EFF6FF]"], .gs-home-banner, [class*="from-[#faf6fb]"]) { background: var(--exp-soft, #2d2638) !important; border-color: var(--exp-line, #493c52) !important; color: #e8dcef !important; }
+html[data-theme="dark"] [class*="bg-[#ECFDF5]"] { background: #10281f !important; border-color: #1d5a3f !important; color: #6ee7b7 !important; }
+html[data-theme="dark"] [class*="bg-[#ECFDF5]"] :is(span, strong) { color: #6ee7b7 !important; }
+html[data-theme="dark"] [class*="bg-[#FEF2F2]"] { background: #2e1417 !important; border-color: #6b2a2f !important; }
+html[data-theme="dark"] [class*="bg-[#FEF2F2]"] [class*="text-[#DC2626]"] { color: #fca5a5 !important; }
+html[data-theme="dark"] .journey-eyebrow { color: #e9bc72; }
+html[data-theme="dark"] .gs-home-banner h2, html[data-theme="dark"] .gs-home-banner p { color: #f1e8f5; }
+
+/* page-header badges are brand-coloured on light pages and light-on-plum only inside a banner */
+.directory-page-header .directory-badge:not(.service-banner *) { color: var(--brand-primary); background: var(--brand-soft); border: 1px solid var(--color-purple-subtle); }
+
+
+/* dark theme, specific cases that older !important rules would otherwise win */
+html[data-theme="dark"] .featured-astrologers-section > .featured-astrologers-container > .mb-10 { background: var(--exp-card, #211b2b) !important; border-color: var(--exp-line, #493c52) !important; }
+html[data-theme="dark"] .featured-astrologers-section > .featured-astrologers-container > .mb-10 :is(h3, span, p) { color: #e8dcef !important; }
+html[data-theme="dark"] .service-banner .directory-eyebrow, html[data-theme="dark"] .service-banner__copy .directory-eyebrow { color: #f1d7a1 !important; }
+html[data-theme="dark"] .shop-credit span { color: var(--exp-muted, #c1b8cb); }
+html[data-theme="dark"] .mt-today__cta .shop-btn { background: var(--brand-primary) !important; color: #fff !important; }
+html[data-theme="dark"] [class*="bg-emerald-100"] { background: #10281f !important; color: #6ee7b7 !important; }
+
+/* ---------------------------------------------------------------- home: one page rail
+   Every block of the home page is 1180px wide, centred, with a 16px gutter on small screens,
+   so card edges line up from the hero down to the footer. */
+#view-home :is(.hero-container, .trust-stats-container, .journey-inner, .gs-home-banner, .service-categories-container,
+  .featured-astrologers-container, .feature-shortcuts-container, .panchang-horoscope-section .max-w-7xl,
+  .why-choose-container, .trust-panel__inner, .testimonials-container) {
+  width: min(1180px, calc(100% - 32px)); max-width: none; margin-left: auto; margin-right: auto;
+  padding-left: 0; padding-right: 0; box-sizing: border-box;
+}
+#view-home .featured-astrologers-section > .featured-astrologers-container > .mb-10 { max-width: none; }
+/* the wrappers around those blocks must not add their own side padding on top of the gutter */
+#view-home :is(:has(> .hero-container), :has(> .trust-stats-container), :has(> .journey-inner), :has(> .service-categories-container),
+  :has(> .featured-astrologers-container), :has(> .feature-shortcuts-container), :has(> .why-choose-container),
+  :has(> .trust-panel__inner), :has(> .testimonials-container)) { padding-left: 0 !important; padding-right: 0 !important; }
+
+/* ---------------------------------------------------------------- one button system
+   Primary = flat logo purple, hover = --brand-hover, disabled = faded. No gradients on buttons.
+   On dark banners the same buttons turn ivory with deep-purple text so they stay readable. */
+:is(.shop-btn--gold, .ac2-btn--chat, .gs-btn, .ds-btn--primary, .btn-hero-find, .btn-card-chat, .btn-start-consultation, .btn-faq-contact,
+  .btn-hero-search-circle) {
+  background: var(--brand-primary) !important; background-image: none !important; color: var(--text-inverted) !important;
+  border-color: var(--brand-primary) !important; box-shadow: 0 8px 18px -14px var(--brand-primary);
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+:is(.shop-btn--gold, .ac2-btn--chat, .gs-btn, .ds-btn--primary, .btn-hero-find, .btn-card-chat, .btn-start-consultation, .btn-faq-contact,
+  .btn-hero-search-circle):hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--brand-hover) !important; border-color: var(--brand-hover) !important;
+}
+:is(.shop-btn--gold, .ac2-btn--chat, .gs-btn, .ds-btn--primary, .btn-hero-find):is(:disabled, [aria-disabled="true"]), #pp-buy:disabled, #pp-buy-2:disabled {
+  opacity: .5; cursor: not-allowed; box-shadow: none;
+}
+:is(.service-banner, .mandir-hero, .shop-hero, .gs-hero, .directory-masthead, .mall-hero) :is(.shop-btn--gold, .gs-btn, .ds-btn--primary, .btn-card-chat) {
+  background: #fff8ec !important; color: var(--brand-deep) !important; border-color: #fff8ec !important; box-shadow: none;
+}
+:is(.service-banner, .mandir-hero, .shop-hero, .gs-hero, .directory-masthead, .mall-hero) :is(.shop-btn--gold, .gs-btn, .ds-btn--primary, .btn-card-chat):hover:not(:disabled) { background: #fff !important; border-color: #fff !important; }
+
+/* "Today's special seva" and similar highlight cards: soft logo violet instead of a yellow slab */
+.mandir-today { background: linear-gradient(135deg, var(--brand-soft), #e8def6) !important; border-color: var(--color-purple-subtle) !important; }
+.mandir-today .mt-today__title { color: var(--brand-deep); }
+
+/* Tailwind-styled buttons with hard-coded colours (kept apart so they never out-rank the banner rule) */
+a[class*="bg-[#78350F]"], a[class*="bg-gradient-to-r"][class*="to-[#1e0b44]"], button[class*="bg-gradient-to-r"][class*="to-[#1e0b44]"] {
+  background: var(--brand-primary) !important; background-image: none !important; color: var(--text-inverted) !important; border-color: var(--brand-primary) !important;
+}
+
+/* buttons addressed by id: written out separately so the ids do not inflate the shared rules above */
+#pp-buy, #pp-buy-2, #tp-jump, #tp-jump-2 { background: var(--brand-primary) !important; background-image: none !important; color: var(--text-inverted) !important; border-color: var(--brand-primary) !important; }
+#pp-buy:hover:not(:disabled), #pp-buy-2:hover:not(:disabled), #tp-jump:hover, #tp-jump-2:hover { background: var(--brand-hover) !important; border-color: var(--brand-hover) !important; }
+a[class*="bg-[#78350F]"]:hover { background: var(--brand-hover) !important; }
+html[data-theme="dark"] .mandir-today { background: linear-gradient(135deg, #2a1658, #1e0b44) !important; border-color: #3b1580 !important; }
+html[data-theme="dark"] .mandir-today :is(.mt-today__title, .mt-today__meta, .mt-today__meta strong, .mt-today__lead, .mt-today__label, .mt-today__badge, p, b, small) { color: #efe7fb !important; }
+html[data-theme="dark"] .mandir-today .mt-today__items li { background: #2d1170 !important; color: #efe7fb !important; border-color: #4a1b9a !important; }
+html[data-theme="dark"] .mandir-today .mt-today__title em { color: #cdb6ff; }
+
+/* ---------------------------------------------------------------- responsive: readable text and tappable controls
+   (older mobile rules shrank some labels below 12px and left small hit areas) */
+.trust-stat-label, .quick-action-card p, .ac2-muted, .ac2-facts, .ac2-price span, .directory-trust-grid p, .directory-trust-grid p b,
+.shop-trust p, .shop-trust p b, .directory-recommendations-note, .mt-today__lead, .mt-today__lead b, .gs-hero-copy .gs-btn, .pf-eyebrow,
+h3.font-bold.text-xs span { font-size: max(.75rem, 12px) !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--brand-primary); }
+@media (max-width: 768px) {
+  .ac2-heart, .shop-card__heart { min-width: 36px; min-height: 36px; }
+  .hero-search-input, input.w-full.bg-transparent, .dir-search-box input, .shop-search input { min-height: 40px; }
+  #view-home a.text-xs.font-bold, #view-home a[class*="bg-[#78350F]"] { display: inline-flex; align-items: center; min-height: 40px; }
+  .shop-card__title a, .mt-card .shop-card__title a { display: inline-block; padding-block: 9px; margin-block: -9px; }
+  .pp-crumbs a { display: inline-block; padding: 10px 4px; }
+  a[href^="mailto:"], a[href^="tel:"] { display: inline-block; padding-block: 8px; }
+  .shop-check input, .gs-check input, label input[type="checkbox"] { width: 20px; height: 20px; }
+}
+
+/* home page labels: an id-level selector is needed to beat the older .trust-stats-section mobile rules */
+#view-home .trust-stats-section .trust-stat-label, #view-home .quick-action-card p, #view-home [class*="text-[11px]"], #view-home [class*="text-[10px]"] { font-size: 12px !important; }
+
+/* modal close buttons: a real tap target, not just the width of the cross glyph */
+.modal-close, .btn-icon.modal-close { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+
+/* install / "new version" prompt: above the bottom tab bar and any sticky buy/booking bar, never hidden behind them */
+@media (max-width: 768px) {
+  body.pm-has-tabbar .pf-install { bottom: calc(var(--mobile-tabbar-space, 72px) + 8px); z-index: 7100; }
+  body.pm-has-tabbar .pf-offline { z-index: 7100; }
+}

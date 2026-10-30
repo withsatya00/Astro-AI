@@ -24,11 +24,17 @@ const Router = {
   init() {
     // 1. Intercept internal link clicks across the document
     document.addEventListener('click', (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       const link = e.target.closest('a');
       if (!link) return;
 
       const href = link.getAttribute('href');
       if (!href) return;
+      if (link.hasAttribute('download')) return;
+      if (href === '#') { e.preventDefault(); return; }
+      if (href.startsWith('#') && !href.startsWith('#/')) {
+        try { if (document.getElementById(decodeURIComponent(href.slice(1)))) return; } catch {}
+      }
 
       // Allow external links, downloads, or target="_blank"
       if (link.target === '_blank' || href.startsWith('http://') || href.startsWith('https://') || href.startsWith('mailto:') || href.startsWith('tel:')) {
@@ -102,6 +108,9 @@ const Router = {
 
     const searchParams = new URLSearchParams(window.location.search);
     this.currentRoute = pathname;
+    const firstRoute = !this.hasRouted;
+    this.hasRouted = true;
+    if (window.Seo) window.Seo.update(pathname);
 
     // Route Matching Engine
     if (pathname === '/' || pathname === '/home') {
@@ -112,6 +121,11 @@ const Router = {
       }
       this.updateNavbarActive('nav-link-home');
     } 
+    else if (pathname === '/dashboard' || pathname === '/my-account') {
+      this.switchView('view-dashboard');
+      this.updateNavbarActive(null);
+      window.DashboardPageComponent?.open();
+    }
     else if (pathname === '/astrologers') {
       this.switchView('view-directory');
       const app = window.App || (typeof App !== 'undefined' ? App : null);
@@ -164,9 +178,13 @@ const Router = {
       this.updateNavbarActive('nav-link-horoscope');
     } 
     else if (pathname === '/calculators' || pathname === '/calculator' || pathname.startsWith('/calculators/')) {
-      this.switchView('view-calculators');
-      this.updateNavbarActive('nav-link-calculators');
       const parts = pathname.split('/');
+      // A specific tool (e.g. from the Vedic Tools menu) opens as a dialog over the page the visitor is on;
+      // only a cold load of that URL needs the calculators page behind it.
+      if (!parts[2] || firstRoute) {
+        this.switchView('view-calculators');
+        this.updateNavbarActive('nav-link-calculators');
+      }
       if (parts[2]) {
         const subCalc = parts[2];
         const app = window.App || (typeof App !== 'undefined' ? App : null);
@@ -175,11 +193,16 @@ const Router = {
         }
       }
     } 
-    else if (pathname === '/mandir-seva' || pathname === '/mandir' || pathname === '/chadawa') {
+    else if (pathname === '/mandir-seva' || pathname === '/mandir' || pathname === '/chadawa'
+      || pathname.replace(/\/+$/, '') === '/mandir-seva/chadhava' || pathname.replace(/\/+$/, '') === '/mandir-seva/puja') {
       this.switchView('view-mandir');
       this.updateNavbarActive('nav-link-mandir');
-      if (window.MandirSevaPageComponent && window.MandirSevaPageComponent.loadTemples) {
-        setTimeout(() => window.MandirSevaPageComponent.loadTemples(), 50);
+      const mode = pathname.includes('/chadhava') ? 'chadhava' : pathname.includes('/puja') ? 'puja' : 'home';
+      window.ChadhavaExperience?.closeRouted?.();
+      if (window.MandirSevaPageComponent) {
+        window.MandirSevaPageComponent.mode = mode;
+        if (window.MandirSevaPageComponent.applyMode) window.MandirSevaPageComponent.applyMode();
+        if (window.MandirSevaPageComponent.loadTemples) setTimeout(() => window.MandirSevaPageComponent.loadTemples(), 50);
       }
     } 
     else if (pathname === '/astro-mall' || pathname === '/mall' || pathname === '/samagri') {
@@ -195,6 +218,15 @@ const Router = {
       const id = pathname.replace('/astro-mall/product/', '').replace(/\/+$/, '');
       if (window.ProductPageComponent) setTimeout(() => window.ProductPageComponent.open(id), 30);
     }
+    else if (/^\/mandir-seva\/puja\/[\w-]+\/?$/.test(pathname)) {
+      // A puja detail page: the puja list sits behind it, the detail opens over it and has its own shareable URL.
+      this.switchView('view-mandir');
+      this.updateNavbarActive('nav-link-mandir');
+      const id = pathname.replace('/mandir-seva/puja/', '').replace(/\/+$/, '');
+      const page = window.MandirSevaPageComponent;
+      if (page) { page.mode = 'puja'; if (page.applyMode) page.applyMode(); }
+      setTimeout(() => window.ChadhavaExperience?.calendarDetail?.(id), 150);
+    }
     else if (pathname.startsWith('/mandir-seva/')) {
       this.switchView('view-temple');
       this.updateNavbarActive('nav-link-mandir');
@@ -204,6 +236,23 @@ const Router = {
     else if (pathname === '/rewards' || pathname === '/my-rewards') {
       this.switchView('view-rewards');
       if (window.RewardsPageComponent) setTimeout(() => window.RewardsPageComponent.open(), 30);
+    }
+    else if (pathname === '/gifts' || pathname === '/gift-cards' || pathname === '/festival-packs') {
+      this.switchView('view-gifts');
+      this.updateNavbarActive(null);
+      if (window.GiftsPageComponent) setTimeout(() => window.GiftsPageComponent.open(pathname === '/festival-packs' ? 'packs' : 'cards'), 30);
+    }
+    else if (pathname.startsWith('/gau-sewa/receipt/')) {
+      this.switchView('view-gau-sewa');
+      this.updateNavbarActive('nav-link-gau-sewa');
+      // The receipt token is case-sensitive, so it is read from the original (not lower-cased) path.
+      const token = decodeURIComponent((window.location.pathname.split('/gau-sewa/receipt/')[1] || '').replace(/\/+$/, ''));
+      if (window.GauSewaPageComponent) setTimeout(() => window.GauSewaPageComponent.openReceipt(token), 30);
+    }
+    else if (pathname === '/gau-sewa') {
+      this.switchView('view-gau-sewa');
+      this.updateNavbarActive('nav-link-gau-sewa');
+      if (window.GauSewaPageComponent) setTimeout(() => window.GauSewaPageComponent.open(), 30);
     }
     else if (pathname === '/seller' || pathname === '/seller-dashboard') {
       this.switchView('view-seller');
@@ -258,7 +307,7 @@ const Router = {
   },
 
   switchView(viewId) {
-    const views = ['view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang', 'view-mandir', 'view-mall', 'view-admin', 'view-product', 'view-temple', 'view-rewards', 'view-seller', 'view-verify'];
+    const views = ['view-dashboard', 'view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang', 'view-mandir', 'view-mall', 'view-admin', 'view-product', 'view-temple', 'view-rewards', 'view-gifts', 'view-gau-sewa', 'view-seller', 'view-verify'];
     views.forEach(v => {
       const el = document.getElementById(v);
       if (el) {
@@ -291,7 +340,7 @@ const Router = {
   },
 
   updateNavbarActive(activeNavId) {
-    const navLinks = ['nav-link-home', 'nav-link-astrologers', 'nav-link-horoscope', 'nav-link-calculators', 'nav-link-panchang'];
+    const navLinks = ['nav-link-home', 'nav-link-astrologers', 'nav-link-horoscope', 'nav-link-calculators', 'nav-link-panchang', 'nav-link-mall', 'nav-link-mandir', 'nav-link-gau-sewa'];
     navLinks.forEach(id => {
       const link = document.getElementById(id);
       if (link) {

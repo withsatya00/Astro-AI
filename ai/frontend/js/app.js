@@ -3001,7 +3001,7 @@ var App = {
             Lagna: ${res.ascendant_sign} • Moon: ${res.moon_sign}
           </span>
         </div>
-        <p style="font-size: 0.88rem; color: #4C1D95; line-height: 1.6; margin-bottom: 1rem;">
+        <p style="font-size: 0.88rem; color: #4A1B9A; line-height: 1.6; margin-bottom: 1rem;">
           ${p.personal_synthesis || 'Cosmic transit energies interact directly with your natal Lagna and planetary house placements.'}
         </p>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.82rem;">

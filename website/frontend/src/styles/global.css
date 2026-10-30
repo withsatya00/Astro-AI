@@ -2,6 +2,9 @@
  * Global Layout & Application Shell Styles
  */
 
+html { accent-color: var(--brand-primary); -webkit-tap-highlight-color: rgba(74, 27, 154, .14); }
+::selection { background: var(--brand-primary); color: #fff; }
+
 #app-root,
 .site-layout-shell,
 .site-layout-outlet,
@@ -55,5 +58,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-purple-subtle, #DDD6FE);
+  background: var(--color-purple-subtle, #e3d8f3);
 }

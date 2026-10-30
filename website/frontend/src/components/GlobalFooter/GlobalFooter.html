@@ -4,7 +4,7 @@
     <div class="footer-columns-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
       <!-- Col 1: Brand & Social Links (lg:col-span-4) -->
       <div class="footer-col-brand lg:col-span-4 space-y-4">
-        <a href="/" data-nav-link class="footer-brand flex items-center gap-2.5 no-underline">
+        <a href="/" data-nav-link aria-label="Astro Jyotish home" class="footer-brand flex items-center gap-2.5 no-underline">
           <img src="/assets/brand/logo-full-v2-720.webp" width="240" height="196" alt="Astro Jyotish - Guidance Today, Brighter Tomorrow" class="footer-logo-full" loading="lazy" decoding="async">
         </a>
         <p class="footer-brand-desc text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
@@ -12,12 +12,7 @@
         </p>
         
         <!-- Social Icons Row Matching Reference -->
-        <div class="footer-social-links flex items-center gap-2.5 pt-2">
-          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Facebook" title="Facebook">f</a>
-          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Instagram" title="Instagram">📷</a>
-          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="YouTube" title="YouTube">▶</a>
-          <a href="#" class="w-8 h-8 rounded-full bg-white/10 hover:bg-[#7439EA] text-white flex items-center justify-center text-xs transition-colors" aria-label="Twitter" title="Twitter">𝕏</a>
-        </div>
+
       </div>
 
       <!-- Col 2: Quick Links (lg:col-span-2) -->
@@ -29,6 +24,8 @@
           <li><a href="/rashiphal" data-nav-link class="hover:text-white transition-colors">Rashiphal</a></li>
           <li><a href="/calculators" data-nav-link class="hover:text-white transition-colors">Calculators</a></li>
           <li><a href="/panchang" data-nav-link class="hover:text-white transition-colors">Aaj Ka Panchang</a></li>
+          <li><a href="/gifts" data-nav-link class="hover:text-white transition-colors">Gifts &amp; Festival Packs</a></li>
+          <li><a href="/gau-sewa" data-nav-link class="hover:text-white transition-colors" data-i18n="nav_gau_sewa">Gau Sewa</a></li>
         </ul>
       </div>
 
@@ -48,13 +45,21 @@
       <div class="footer-col lg:col-span-3 space-y-3">
         <h4 class="footer-heading font-semibold text-sm text-white tracking-wide">Support</h4>
         <ul class="footer-links space-y-2 text-xs text-slate-400">
-          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Astro Jyotish is an authentic Vedic platform.', 'info')">About Us</a></li>
-          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Support email: support@astrojyotish.in', 'info')">Contact Us</a></li>
-          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Your privacy and birth details are 100% encrypted.', 'info')">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Consultations adhere to Vedic interpretation shastras.', 'info')">Terms &amp; Conditions</a></li>
-          <li><a href="#" class="hover:text-white transition-colors" onclick="window.App && window.App.showToast('Help Center is available 24/7.', 'info')">Help Center</a></li>
+          <li><button type="button" class="footer-info-link" data-service-info="about" data-i18n="exp.aboutTitle"></button></li>
+          <li><button type="button" class="footer-info-link" data-service-info="contact" data-i18n="exp.contactTitle"></button></li>
+          <li><button type="button" class="footer-info-link" data-service-info="privacy" data-i18n="exp.privacyTitle"></button></li>
+          <li><button type="button" class="footer-info-link" data-service-info="terms" data-i18n="exp.termsTitle"></button></li>
+          <li><button type="button" class="footer-info-link" data-service-info="refund">Cancellations &amp; refunds</button></li>
+          <li><button type="button" class="footer-info-link" data-service-info="help" data-i18n="exp.helpTitle"></button></li>
         </ul>
       </div>
+    </div>
+
+    <!-- Trust row -->
+    <div class="footer-trust-row" aria-label="Why people trust Astro Jyotish">
+      <div><span aria-hidden="true">🔒</span><p><b>Secure payments</b>Pay through your wallet or the supported payment options.</p></div>
+      <div><span aria-hidden="true">✅</span><p><b>Verified astrologers</b>Credentials and rates are shown on every profile.</p></div>
+      <div><span aria-hidden="true">🛡️</span><p><b>Private by design</b>Your birth details stay yours. Export or delete them anytime.</p></div>
     </div>
 
     <!-- Bottom Copyright & Made in India Bar Matching Reference -->

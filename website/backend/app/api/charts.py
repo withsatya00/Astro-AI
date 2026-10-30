@@ -59,6 +59,21 @@ def list_recent_charts(
         for c in charts
     ]
 
+@router.post("/milan/pdf")
+def kundali_milan_pdf(
+    payload: KundaliMilanRequest,
+    db: Session = Depends(get_db),
+    owner: Optional[Owner] = Depends(optional_owner)
+):
+    """Downloadable PDF of a Kundali Milan result, recomputed on the server from the same inputs."""
+    from fastapi.responses import Response
+    from packages.reports.pdf_generator import generate_milan_pdf
+    result = compute_kundali_milan(payload, db, owner)
+    result = result if isinstance(result, dict) else result.model_dump()
+    return Response(generate_milan_pdf(result), media_type="application/pdf",
+                    headers={"Content-Disposition": 'attachment; filename="Kundali_Milan_Report.pdf"'})
+
+
 @router.post("/milan", response_model=KundaliMilanResponse)
 def compute_kundali_milan(
     payload: KundaliMilanRequest,

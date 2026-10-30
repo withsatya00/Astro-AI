@@ -21,9 +21,9 @@
 }
 
 .gotra-pill:hover {
-  background: #7439EA;
+  background: #4a1b9a;
   color: #FFFFFF;
-  border-color: #7439EA;
+  border-color: #4a1b9a;
 }
 
 @keyframes modalPop {

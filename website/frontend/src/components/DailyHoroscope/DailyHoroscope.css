@@ -68,15 +68,15 @@
 }
 
 .zodiac-tab-btn:hover {
-  border-color: var(--color-purple-primary, #7439EA);
+  border-color: var(--color-purple-primary, #4a1b9a);
   transform: translateY(-2px);
 }
 
 .zodiac-tab-btn.active {
-  background: linear-gradient(135deg, var(--color-purple-primary, #7439EA) 0%, var(--color-purple-hover, #5B21B6) 100%);
-  border-color: var(--color-purple-primary, #7439EA);
+  background: linear-gradient(135deg, var(--color-purple-primary, #4a1b9a) 0%, var(--color-purple-hover, #1e0b44) 100%);
+  border-color: var(--color-purple-primary, #4a1b9a);
   color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(116, 57, 234, 0.3);
+  box-shadow: 0 4px 14px rgba(74, 27, 154, 0.3);
 }
 
 .zodiac-tab-icon {
@@ -231,7 +231,7 @@
   width: 58px;
   height: 58px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #EDE9FE 100%);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #f1ebf5 100%);
   border: 1.5px solid #FCD34D;
   display: flex;
   align-items: center;
@@ -251,8 +251,8 @@
 .horo-period-badge {
   display: inline-block;
   background: #F3E8FF;
-  border: 1px solid #DDD6FE;
-  color: #6B21A8;
+  border: 1px solid #e3d8f3;
+  color: #352343;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.2rem 0.75rem;
@@ -302,9 +302,9 @@
 }
 
 .horo-domain-card:hover {
-  border-color: #DDD6FE;
+  border-color: #e3d8f3;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(116, 57, 234, 0.06);
+  box-shadow: 0 6px 18px rgba(74, 27, 154, 0.06);
 }
 
 .domain-title {
@@ -325,8 +325,8 @@
 }
 
 .horo-lucky-strip {
-  background: linear-gradient(90deg, #F5F3FF 0%, #FFFBEB 50%, #F5F3FF 100%);
-  border: 1.5px solid #DDD6FE;
+  background: linear-gradient(90deg, #f4eefb 0%, #FFFBEB 50%, #f4eefb 100%);
+  border: 1.5px solid #e3d8f3;
   border-radius: 16px;
   padding: 1.15rem 1.35rem;
   display: flex;

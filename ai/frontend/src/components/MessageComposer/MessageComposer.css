@@ -20,7 +20,7 @@
 }
 
 .composer-form:focus-within {
-  border-color: var(--color-purple-primary, #7439EA);
+  border-color: var(--color-purple-primary, #4A1B9A);
   box-shadow: 0 0 0 3px rgba(116, 57, 234, 0.12);
 }
 
@@ -40,7 +40,7 @@
 }
 
 .btn-composer-attach:hover {
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4A1B9A);
 }
 
 .attach-options-menu {
@@ -80,7 +80,7 @@
 
 .attach-item:hover {
   background: var(--color-purple-light, #F5F3FF);
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4A1B9A);
 }
 
 .composer-textarea {
@@ -109,14 +109,14 @@
 }
 
 .btn-composer-mic:hover {
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4A1B9A);
 }
 
 .btn-composer-send {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-purple-primary, #7439EA) 0%, var(--color-purple-hover, #5B21B6) 100%);
+  background: linear-gradient(135deg, var(--color-purple-primary, #4A1B9A) 0%, var(--color-purple-hover, #3B1580) 100%);
   color: #FFFFFF;
   border: none;
   cursor: pointer;

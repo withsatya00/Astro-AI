@@ -9,7 +9,9 @@ from sqlalchemy import or_, desc, asc
 from typing import List, Optional
 import re
 from packages.database.session import get_db
-from packages.database.models import Astrologer, AstrologerReview, generate_uuid
+from packages.database.models import Astrologer, AstrologerReview, Booking, ChatMessage, Consultation, User, generate_uuid
+from website.backend.app.api.mandir import require_admin
+from website.backend.app.api.auth import get_current_user_optional
 from packages.core.schemas import (
     AstrologerResponse, AstrologerListResponse, AstrologerCreateRequest, AstrologerUpdateRequest,
     AstrologerAvailabilityUpdate, AstrologerReviewCreate, AstrologerReviewResponse,
@@ -325,10 +327,48 @@ def get_astrologer_profile(slug_or_id: str, db: Session = Depends(get_db)):
         reviews=reviews_out
     )
 
+@router.get("/{slug_or_id}/trust")
+def astrologer_trust(slug_or_id: str, db: Session = Depends(get_db)):
+    """Trust signals computed from real platform records. A figure is left out (null) until there is enough data for it."""
+    from statistics import median
+    astro = db.query(Astrologer).filter((Astrologer.slug == slug_or_id) | (Astrologer.id == slug_or_id)).first()
+    if not astro:
+        raise HTTPException(status_code=404, detail="Astrologer not found.")
+    reviews = db.query(AstrologerReview).filter(AstrologerReview.astrologer_id == astro.id).all()
+    spread = {str(n): 0 for n in (5, 4, 3, 2, 1)}
+    for r in reviews:
+        spread[str(min(5, max(1, round(r.rating or 5))))] += 1
+    consults = db.query(Consultation).filter(Consultation.astrologer_id == astro.id).all()
+    per_client: dict = {}
+    for c in consults:
+        if c.owner_key:
+            per_client[c.owner_key] = per_client.get(c.owner_key, 0) + 1
+    repeat = round(100 * sum(1 for n in per_client.values() if n > 1) / len(per_client)) if len(per_client) >= 20 else None
+    durations = [c.duration_seconds for c in consults if c.duration_seconds]
+    gaps = []
+    for c in consults[:60]:
+        msgs = (db.query(ChatMessage).filter(ChatMessage.consultation_id == c.id).order_by(ChatMessage.created_at.asc()).limit(6).all())
+        first_user = next((m for m in msgs if m.role == "user"), None)
+        reply = next((m for m in msgs if m.role == "assistant" and first_user and m.created_at and first_user.created_at and m.created_at >= first_user.created_at), None)
+        if first_user and reply:
+            gaps.append((reply.created_at - first_user.created_at).total_seconds())
+    return {
+        "verified": bool(astro.is_verified), "rating": astro.rating, "review_count": len(reviews) or astro.review_count,
+        "verified_reviews": sum(1 for r in reviews if r.is_verified), "rating_spread": spread,
+        "consultations": max(astro.consultations_count or 0, len(consults)), "experience_years": astro.experience_years,
+        "repeat_client_percent": repeat,
+        "avg_session_minutes": round(sum(durations) / len(durations) / 60) if len(durations) >= 5 else None,
+        "median_reply_seconds": round(median(gaps)) if len(gaps) >= 10 else None,
+        "languages": astro.languages or [],
+        "is_ai": bool(astro.is_ai),
+    }
+
+
 @router.post("", response_model=AstrologerResponse, status_code=status.HTTP_201_CREATED)
 def create_astrologer_profile(
     payload: AstrologerCreateRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
 ):
     """Admin endpoint to create a new astrologer profile."""
     base_slug = slugify(payload.name)
@@ -369,7 +409,8 @@ def create_astrologer_profile(
 def update_astrologer_persona(
     astrologer_id: str,
     payload: AstrologerUpdateRequest,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
 ):
     """Admin endpoint to update AI persona profile, credentials, specializations, or pricing."""
     astro = db.query(Astrologer).filter(
@@ -391,7 +432,8 @@ def update_astrologer_persona(
 def update_astrologer_availability(
     astrologer_id: str,
     payload: AstrologerAvailabilityUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
 ):
     """Updates astrologer availability: online, busy, offline."""
     astro = db.query(Astrologer).filter(Astrologer.id == astrologer_id).first()
@@ -411,12 +453,26 @@ def update_astrologer_availability(
 def add_astrologer_review(
     astrologer_id: str,
     payload: AstrologerReviewCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user: Optional[User] = Depends(get_current_user_optional)
 ):
-    """Adds a verified review to an astrologer profile and updates overall rating."""
+    """Adds a review from a signed-in client who has actually consulted (or had an appointment with) this astrologer."""
+    if not user:
+        raise HTTPException(status_code=401, detail="Please sign in to write a review.")
     astro = db.query(Astrologer).filter(Astrologer.id == astrologer_id).first()
     if not astro:
         raise HTTPException(status_code=404, detail="Astrologer not found.")
+    if db.query(AstrologerReview).filter(AstrologerReview.astrologer_id == astro.id, AstrologerReview.user_id == user.id).first():
+        raise HTTPException(status_code=409, detail="You have already reviewed this astrologer.")
+    chatted = (db.query(Consultation.id).join(ChatMessage, ChatMessage.consultation_id == Consultation.id)
+               .filter(Consultation.user_id == user.id, Consultation.astrologer_id == astro.id).first())
+    from website.backend.app.api.wallet import _start_time
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    held = any((_start_time(b.scheduled_at) or now) <= now for b in
+               db.query(Booking).filter(Booking.user_id == user.id, Booking.astrologer_id == astro.id, Booking.status == "confirmed").all())
+    if not (chatted or held):
+        raise HTTPException(status_code=403, detail="Reviews can be written after you have consulted this astrologer.")
 
     comment_clean = sanitize_user_input(payload.comment)
     if not comment_clean:
@@ -425,7 +481,8 @@ def add_astrologer_review(
     new_review = AstrologerReview(
         id=generate_uuid(),
         astrologer_id=astro.id,
-        user_name=payload.user_name or "Verified Seeker",
+        user_id=user.id,
+        user_name=(user.full_name or "Verified client").strip()[:60],
         rating=payload.rating,
         comment=comment_clean,
         is_verified=True

@@ -1,0 +1,165 @@
+﻿/* Compact responsive surfaces shared by discovery, account and seva. */
+:root { --ui-radius: 16px; --ui-gap: 16px; }
+#directory-page-cards-grid, .featured-astrologers-grid { display: grid !important; grid-template-columns: repeat(3,minmax(0,1fr)) !important; gap: var(--ui-gap) !important; align-items: stretch; }
+.ac-card.ac2 { padding: 18px; gap: 9px; border-radius: var(--ui-radius); min-height: 0; height: 100%; contain-intrinsic-size: auto 285px; box-shadow: 0 5px 22px -17px #543d25; }
+.ac2:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -20px #543d25; }
+.ac2-top { gap: 12px; padding-right: 24px; align-items: center; }
+.ac2-photo { width: 64px; height: 64px; background: var(--exp-line,#e8dfd1); }
+.ac2.is-online .ac2-photo { background: #986724; }
+.ac2-name { font-family: var(--font-sans,'Plus Jakarta Sans',sans-serif); font-size: .94rem; }
+.ac2-title { height: auto; max-height: 1.4em; -webkit-line-clamp: 1; font-size: .7rem; }
+.ac2-heart { width: 28px; height: 28px; top: 10px; right: 10px; }
+.ac2-badges { height: 21px; gap: 4px; }
+.ac2-badge { font-size: .59rem; padding: 3px 7px; }
+.ac2-chips { height: 24px; margin: 0; }
+.ac2-chip { font-size: .65rem; padding: 3px 8px; }
+.ac2-facts { font-size: .75rem; line-height: 1.5; margin: 0; }
+.ac2-status { margin: 0; font-size: .68rem; }
+.ac2-status em { overflow: hidden; text-overflow: ellipsis; }
+.ac2-foot { min-height: 48px; padding-top: 9px; gap: 8px; }
+.ac2-price b { font-size: 1.1rem; }
+.ac2-actions { gap: 5px; }
+.ac2-btn { height: 40px; border-radius: 10px; font-size: .75rem; }
+.ac2-btn--chat { padding: 0 14px; background: #4a1b9a; box-shadow: none; }
+.ac2-btn--chat:hover { background: #1e0b44; }
+.ac2-btn--icon { width: 36px; }
+.ac2-verified { background: #4a1b9a; }
+.directory-masthead__inner { padding: 24px 28px; border-radius: 20px; }
+.directory-masthead .directory-title { font-size: clamp(1.6rem,3vw,2.2rem) !important; }
+.directory-toolbar { padding: 12px; border-radius: 16px; }
+.directory-results__head { margin: 20px 0 16px; }
+.service-categories-section .quick-action-card { min-height: 116px; padding: 16px 12px !important; border-radius: 16px !important; }
+.exp-stat { padding: 18px; border-radius: 16px; }
+.exp-stat strong { margin-top: 6px; font-size: 1.65rem; }
+.exp-panel { padding: 20px; border-radius: 18px; }
+.exp-dashboard-grid { gap: 16px; }
+.gs-page { max-width: 1232px; padding: 24px 24px 64px; }
+.gs-hero { grid-template-columns: 1fr 1fr; gap: 0; padding: 0; border-radius: 22px; background: #fff7e8; }
+.gs-hero-copy { padding: 30px; }
+.gs-page h1 { font-size: clamp(2.2rem,5vw,3.8rem); letter-spacing: -.035em; }
+.gs-hero-art { border-radius: 0; min-height: 280px; height: 100%; }
+.gs-hero-art img { max-height: none; height: 100%; min-height: 280px; object-fit: cover; }
+.gs-illustration { position: relative; margin: 0; width: 100%; height: 100%; }
+.gs-illustration figcaption { position: absolute; bottom: 10px; right: 12px; background: #fff8e8e8; color: #5a3418; border-radius: 6px; font-size: .6rem; padding: 4px 8px; }
+.gs-content-grid { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(310px,1fr); gap: 24px; align-items: start; }
+.gs-main-column, .gs-donation-column { min-width: 0; }
+.gs-donation-column { position: sticky; top: 20px; }
+.gs-section { margin-top: 24px; }
+.gs-card { padding: 20px; border-radius: 14px; box-shadow: 0 8px 28px -22px #5a341850; }
+.gs-page h2 { font-size: 1.3rem; }
+.gs-purposes { gap: 10px; }
+.gs-purpose { padding: 14px 12px; border-width: 1px; border-radius: 12px; }
+.gs-purpose strong { font-size: .9rem; }
+.gs-purpose small { font-size: .75rem; }
+.gs-purpose.is-on { box-shadow: none; }
+.gs-purpose-icon { width: 42px; height: 42px; display: grid; place-items: center; background: #edf2df; border-radius: 50%; margin-bottom: 7px; }
+.gs-form { gap: 12px; }
+.gs-form-fields { display: grid; gap: 12px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.gs-form-fields:disabled { opacity: .65; }
+.gs-form-fields:disabled button { cursor: not-allowed; }
+.gs-field label, .gs-check, .gs-fieldset legend { font-size: .78rem; }
+.gs-field input { border-radius: 8px; min-height: 44px; font-size: .84rem; }
+.gs-amounts { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+.gs-chip { border-width: 1px; border-radius: 8px; padding: 8px 4px; font-size: .85rem; min-height: 42px; }
+.gs-chip.is-on { background: #cc5b08; color: #fff; }
+.gs-btn { border-radius: 9px; font-size: .86rem; background: #c95f0b; }
+.gs-hint { font-size: .71rem; }
+.gs-recipient { padding: 12px; border-radius: 10px; }
+.gs-recipient h3 { font-size: .9rem; }
+.gs-recipient p { font-size: .76rem; }
+.gs-receipt-note { text-align: center; margin: 0 !important; }
+.gs-notice { font-size: .76rem; font-weight: 400; }
+.gs-notice p { margin: 5px 0 0; }
+.gs-gaushala .gs-photos { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.gs-update h3 { font-size: 1rem; }
+html[data-theme="dark"] #view-gau-sewa { background: #191610; }
+html[data-theme="dark"] .gs-page { --gs-card:#27221b; --gs-line:#493c2c; --gs-brown:#f4dfbe; --gs-text:#e4dacb; --gs-muted:#c2b29e; --gs-green:#b3ce91; --gs-green-soft:#303b25; }
+html[data-theme="dark"] .gs-hero, html[data-theme="dark"] .gs-empty { background:#2b2419; }
+html[data-theme="dark"] .gs-purpose, html[data-theme="dark"] .gs-card { background:var(--gs-card); }
+html[data-theme="dark"] .gs-field input, html[data-theme="dark"] .gs-chip { background:#211c16; color:#f4dfbe; border-color:#79664c; }
+html[data-theme="dark"] .gs-chip.is-on { background:#a84c07; color:#fff; }
+@media(min-width:1600px) { #directory-page-cards-grid { grid-template-columns: repeat(4,minmax(0,1fr)) !important; } }
+@media(min-width:641px) and (max-width:1000px) { #directory-page-cards-grid,.featured-astrologers-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; } }
+@media(max-width:850px) {
+ .gs-content-grid { grid-template-columns: minmax(0,1fr); gap: 0; }
+ .gs-main-column { display: contents; }
+ .gs-donation-column { position: static; grid-row: 2; }
+ .gs-hero-copy { padding: 24px; }
+ .gs-hero-art,.gs-hero-art img { min-height: 240px; }
+}
+@media(max-width:640px) {
+ #directory-page-cards-grid,.featured-astrologers-grid { grid-template-columns: minmax(0,1fr) !important; gap: 10px !important; }
+ .ac-card.ac2 { display: grid; grid-template-columns: minmax(0,1fr) 88px; grid-template-rows: auto auto; gap: 5px 10px; padding: 16px 14px; border-radius: 16px; min-height: 143px; height: auto; contain-intrinsic-size: auto 143px; align-content: center; }
+ .ac2::before { display: none; }
+ .ac2-top { grid-column: 1; grid-row: 1; padding: 0; gap: 10px; }
+ .ac2-photo { width: 54px; height: 54px; }
+ .ac2-name { font-size: .82rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+ .ac2-title { font-size: .64rem; margin: 3px 0; }
+ .ac2-rating { font-size: .71rem; gap: 4px; min-height: 16px; }
+ .ac2-rating .ac2-sep,.ac2-rating .ac2-sep + .ac2-muted { display: none; }
+ .ac2-muted { font-size: .66rem; }
+ .ac2-heart { right: 9px; top: 7px; width: 25px; height: 25px; font-size: .85rem; }
+ .ac2-badges,.ac2-chips,.ac2-status { display: none; }
+ .ac2-facts { grid-row: 2; grid-column: 1; padding-left: 64px; font-size: .65rem; line-height: 1.45; white-space: normal; }
+ .ac2-foot { grid-column: 2; grid-row: 1 / 3; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 10px; border: 0; padding: 12px 0 0; min-height: 0; margin: 0; }
+ .ac2-price { text-align: center; min-width: 0; }
+ .ac2-price b { font-size: .94rem; }
+ .ac2-price span { font-size: .65rem; }
+ .ac2-actions { justify-content: center; }
+ .ac2-btn--chat { width: 100%; min-height: 40px; background: transparent; border: 1px solid #4a1b9a; color: #4a1b9a; padding: 0 10px; }
+ html[data-theme="dark"] .ac2-btn--chat { color: #dcc6e8; border-color: #dcc6e8; }
+ .ac2-btn--chat .ac2-ic,.ac2-btn--icon { display: none; }
+ .directory-masthead__inner { padding: 20px; }
+ .directory-trust-grid { display: none; }
+ .directory-masthead .directory-title { font-size: 1.5rem !important; }
+ .directory-results__head > p { display: none; }
+ .service-categories-section .quick-action-card { min-height: 98px; padding: 12px 8px !important; }
+ .exp-stat { padding: 13px; }
+ .exp-stat strong { font-size: 1.3rem; }
+ .exp-panel { padding: 16px; border-radius: 16px; }
+ .gs-page { padding: 16px 16px 40px; }
+ .gs-hero { grid-template-columns: 1fr; border-radius: 18px; }
+ .gs-hero-copy { padding: 22px; }
+ .gs-hero-art { order: -1; min-height: 180px; max-height: 210px; }
+ .gs-hero-art img { min-height: 180px; max-height: 210px; }
+ .gs-hero-copy h1 { font-size: 2.3rem; }
+ .gs-hero-copy p { font-size: .85rem; }
+ .gs-purposes { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; }
+ .gs-purpose { padding: 10px 8px; }
+ .gs-purpose strong { font-size: .74rem; overflow-wrap: anywhere; }
+ .gs-purpose small { font-size: .65rem; }
+ .gs-purpose-icon { width: 34px; height: 34px; font-size: 1.2rem; }
+ .gs-gaushala .gs-photos { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media(prefers-reduced-motion:reduce) { .ac2,.ac2-btn,.ac2-heart { transition:none; transform:none !important; } html { scroll-behavior:auto !important; } }
+/* Discovery sidebar follows actual consultation counts; no weekly trend claims. */
+.directory-discovery-layout.has-recommendations { display: grid; grid-template-columns: minmax(0,1fr) 275px; gap: 20px; align-items: start; }
+.directory-discovery-layout.has-recommendations #directory-page-cards-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+.directory-recommendations { padding: 20px; background: var(--exp-card); border: 1px solid var(--exp-line); border-radius: 18px; position: sticky; top: 82px; }
+.directory-recommendations[hidden] { display: none; }
+.directory-recommendations h2 { font-size: 1.2rem; margin: 0 0 7px; color: var(--exp-ink); }
+.directory-recommendations-note { font-size: .73rem; color: var(--exp-muted); margin: 0 0 16px; line-height: 1.6; }
+.directory-recommendations-list { display: grid; gap: 10px; }
+.directory-expert-row { display: flex; align-items: center; gap: 10px; padding: 12px 10px; border: 1px solid var(--exp-line); border-radius: 12px; text-decoration: none; background: var(--exp-paper); color: var(--exp-ink); min-width: 0; }
+.directory-expert-row img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.directory-expert-row > span { min-width: 0; flex: 1; }
+.directory-expert-row strong,.directory-expert-row small,.directory-expert-row b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.directory-expert-row strong { font-size: .75rem; }
+.directory-expert-row small { font-size: .66rem; color: var(--exp-muted); margin: 4px 0; }
+.directory-expert-row b { color: var(--exp-gold); font-size: .7rem; }
+.directory-expert-row i { font-style: normal; color: #4a1b9a; }
+.gs-page p { color: var(--gs-text); }
+.gs-page .gs-hint { color: var(--gs-muted); }
+.shop-page .shop-grid { gap: 16px; grid-template-columns: repeat(auto-fill,minmax(230px,1fr)); }
+.shop-page .shop-card { border-radius: 16px; }
+.shop-page .shop-card:hover { transform: translateY(-2px); }
+.shop-page .shop-card__body { padding: 14px; gap: 7px; }
+.mall-page .ml-card .shop-card__body { padding: 14px; gap: 7px; }
+.mall-page .ml-card .shop-card__media { margin: 9px 9px 0; border-radius: 12px; aspect-ratio: 4/3; }
+.mall-page .ml-card .shop-card__title { font-size: .93rem; }
+.shop-page .shop-card__title { font-size: .94rem; }
+.shop-page .shop-card__text { font-size: .73rem; }
+html[data-theme="dark"] { --exp-paper: #100e0a; --exp-card: #1b1813; --exp-soft: #252119; --exp-line: #383228; --exp-ink: #f5efdf; --exp-muted: #bdb5a6; }
+@media(min-width:1250px) { .directory-discovery-layout.has-recommendations { grid-template-columns: minmax(0,1fr) 280px; } .directory-discovery-layout.has-recommendations #directory-page-cards-grid { grid-template-columns: repeat(3,minmax(0,1fr)) !important; } }
+@media(max-width:1000px) { .directory-discovery-layout.has-recommendations { display: block; } .directory-recommendations { position: static; margin-top: 22px; } .directory-recommendations-list { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; } .directory-expert-row { flex: 0 0 220px; scroll-snap-align: start; } }
+@media(max-width:640px) { .directory-discovery-layout.has-recommendations #directory-page-cards-grid { grid-template-columns: 1fr !important; } .directory-recommendations { padding: 16px; } .shop-page .shop-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .shop-page .shop-card__body,.mall-page .ml-card .shop-card__body { padding: 10px; } .shop-page .shop-card__actions { grid-template-columns: minmax(0,1fr); gap: 7px; } .shop-page .shop-card__title { font-size: .84rem; } .shop-page .shop-btn { min-height: 40px; padding: 8px 10px; } }

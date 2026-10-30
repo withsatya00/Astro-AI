@@ -1,0 +1,98 @@
+const {chromium} = require('@playwright/test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+
+(async () => {
+  const browser = await chromium.launch({headless: true, channel: 'msedge'});
+  try {
+    const page = await browser.newPage({viewport: {width: 1440, height: 1000}});
+    page.setDefaultTimeout(20000);
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await page.addInitScript(() => { window.__API_BASE__ = 'http://127.0.0.1:8012/api/v1'; });
+    await page.goto('http://localhost:3000', {waitUntil: 'networkidle'});
+    fs.mkdirSync('scratch/frontend-audit', {recursive: true});
+    assert.equal(await page.locator('#site-global-footer a[href="#"]').count(), 0);
+    await page.locator('[data-service-info="help"]').click();
+    await page.waitForSelector('.service-dialog[open]');
+    assert.equal(await page.locator('.service-dialog a[href^="mailto:"]').count(), 1);
+    await page.keyboard.press('Escape');
+    const res = await page.request.post('http://127.0.0.1:8012/api/v1/auth/register', {data: {email: `audit-${Date.now()}@test.in`, password: 'Audit-QA-123!', full_name: 'Audit QA'}});
+    assert.equal(res.status(), 201);
+    const session = await res.json();
+    await page.evaluate(async token => { localStorage.setItem('astro_access_token', token); await window.App.checkUserSession(); }, session.access_token);
+    await page.evaluate(() => window.App.openWalletModal());
+    assert.equal(await page.locator('#modal-wallet-bookings #form-book-appointment').count(), 0, 'wallet must not contain booking form');
+    let rechargeRequests = 0;
+    await page.route('**/api/v1/wallet/recharge', async route => { rechargeRequests++; await new Promise(resolve => setTimeout(resolve, 350)); await route.continue(); });
+    await page.evaluate(() => Promise.all([window.App.rechargeWallet(1000), window.App.rechargeWallet(1000)]));
+    assert.equal(rechargeRequests, 1, 'duplicate taps must not duplicate recharge');
+    assert.match(await page.locator('#modal-wallet-amount').innerText(), /1000|1,000/);
+    await page.unroute('**/api/v1/wallet/recharge');
+    await page.evaluate(() => window.App.openAppointmentsModal());
+    await page.waitForFunction(() => document.querySelectorAll('#booking-astrologer-select option').length > 1);
+    const astrologer = await page.locator('#booking-astrologer-select option').evaluateAll(options => options.filter(o => o.value).sort((a, b) => Number(a.dataset.rate) - Number(b.dataset.rate))[0].value);
+    await page.locator('#booking-astrologer-select').selectOption(astrologer);
+    await page.locator('#booking-duration-select').selectOption('15');
+    const date = new Date(Date.now() + 2 * 86400000).toISOString().slice(0, 10);
+    await page.locator('#booking-date-input').fill(date);
+    await page.locator('#booking-notes-input').fill('Career planning');
+    const [booked] = await Promise.all([page.waitForResponse(r => r.url().endsWith('/wallet/bookings') && r.request().method() === 'POST'), page.locator('#btn-submit-appointment').click()]);
+    assert.equal(booked.status(), 200, await booked.text());
+    const payload = booked.request().postDataJSON();
+    assert.equal(payload.user_name, 'Audit QA');
+    assert.match(payload.scheduled_at, /T/);
+    assert.equal(payload.mode, 'call');
+    await page.waitForSelector('#wallet-bookings-list .appointment-record');
+    assert.doesNotMatch(await page.locator('#wallet-bookings-list').innerText(), /undefined|NaN|Invalid Date/);
+    page.once('dialog', d => d.accept());
+    const [cancelled] = await Promise.all([page.waitForResponse(r => /\/wallet\/bookings\/.+\/cancel$/.test(r.url())), page.locator('[data-cancel-appointment]').first().click()]);
+    assert.equal(cancelled.status(), 200);
+    await page.waitForFunction(() => !document.querySelector('[data-cancel-appointment]'));
+    await page.evaluate(() => { window.App.closeModal('modal-appointments'); return window.App.openWalletModal(); });
+    assert.match(await page.locator('#modal-wallet-amount').innerText(), /1000|1,000/);
+    assert.equal(await page.locator('#wallet-history-summary strong').count(), 3);
+    for (const width of [375, 1440]) {
+      await page.setViewportSize({width, height: 900});
+      for (const theme of ['light', 'dark']) {
+        await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
+        await page.screenshot({path: `scratch/frontend-audit/wallet-${width}-${theme}.png`});
+      }
+    }
+    await page.evaluate(() => window.App.closeModal('modal-wallet-bookings'));
+    await page.evaluate(() => window.Router.navigate('/my-account'));
+    await page.waitForSelector('.exp-profile-header');
+    assert.equal(await page.locator('.pm-tab.active').getAttribute('data-tab'), 'profile');
+    assert.equal(await page.locator('#nav-link-home.active').count(), 0);
+    const failure = '**/api/v1/wallet';
+    await page.route(failure, route => route.fulfill({status: 503, json: {detail: 'Unavailable'}}));
+    await page.evaluate(() => window.App.openWalletModal());
+    await page.waitForSelector('#wallet-transaction-list button');
+    assert.equal(await page.locator('#modal-wallet-amount').innerText(), '—');
+    await page.unroute(failure);
+    await page.locator('#wallet-transaction-list button').click();
+    await page.waitForSelector('.wallet-transaction');
+    await page.evaluate(() => window.App.closeModal('modal-wallet-bookings'));
+    await page.evaluate(() => window.Router.navigate('/astro-mall'));
+    await page.waitForSelector('#products-grid .shop-card');
+    await page.locator('#products-grid .shop-card__title a').first().click();
+    await page.waitForSelector('#view-product .pp-title');
+    assert.equal(await page.locator('#view-product .service-info details').count(), 4);
+    const original = await page.locator('#pp-main-img').getAttribute('src');
+    await page.locator('#pp-main-img').evaluate(img => { img.src = '/assets/missing-photo-audit.jpg'; });
+    await page.waitForSelector('.pp-stage .media-fallback');
+    await page.locator('#pp-main-img').evaluate((img, src) => { img.src = src; }, original);
+    await page.waitForFunction(() => !document.querySelector('.pp-stage .media-fallback'));
+    await page.evaluate(() => window.Router.navigate('/mandir-seva/mahakaleshwar-ujjain'));
+    await page.waitForSelector('#tp-jump');
+    await page.locator('#tp-jump').click();
+    assert.match(page.url(), /\/mandir-seva\/mahakaleshwar-ujjain/);
+    assert.equal(await page.locator('#view-temple .service-info details').count(), 4);
+    await page.evaluate(() => { localStorage.setItem('astro_access_token', 'expired-audit-token'); return window.API.getMe().catch(() => {}); });
+    await page.waitForFunction(() => !localStorage.getItem('astro_access_token'));
+    await page.waitForSelector('#site-navbar');
+    assert.equal(await page.evaluate(() => window.App.currentUser), null);
+    assert.deepEqual(errors, []);
+    console.log('PASS audit: separate wallet/appointments, duplicate recharge guard, actual booking/cancellation/refund, history retry, profile navigation, support links, media failure/recovery, anchor navigation, expired login.');
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e); process.exitCode = 1; });

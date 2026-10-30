@@ -1,24 +1,34 @@
 <!-- Mandir Seva page. Static text carries data-i18n keys (see utils/shop-i18n.js). -->
-<div class="shop-page mandir-page" translate="no">
+<div class="shop-page mandir-page">
 
-  <section class="shop-hero">
-    <div>
-      <span class="shop-hero__badge" data-i18n="md.badge">E-Chadawa &amp; Sankalp Puja</span>
-      <h1 data-i18n-html="md.title">Offer Chadawa &amp; Sankalp Puja at <em>Holy Temples of India</em></h1>
-      <p data-i18n="md.sub">Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.</p>
-      <div class="shop-trust">
-        <div><span>📹</span><span data-i18n="md.trust1">Video of your sankalp, with name &amp; gotra</span></div>
-        <div><span>🪔</span><span data-i18n="md.trust2">Performed by temple priests</span></div>
-        <div><span>📦</span><span data-i18n="md.trust3">Prasad delivered to your home</span></div>
+  <section class="shop-hero mandir-hero service-banner service-banner--mandir" data-mode="home">
+    <figure class="service-banner__art"><img src="/assets/img/mandir-banner.webp" alt="" fetchpriority="high"><figcaption data-i18n="banner.illustrative">Illustrative image</figcaption></figure>
+    <div class="mandir-hero__copy service-banner__copy">
+      <p class="mandir-hero__eyebrow" data-i18n="md.eyebrow">Sacred seva, from home</p>
+      <h1 data-i18n-html="ch.heroTitle">Offer chadhava at <em>your chosen temple</em></h1>
+      <div class="mandir-hero__titlerow">
+        <span class="shop-hero__badge" data-i18n="md.badge">E-Chadawa &amp; Sankalp Puja</span>
+        <span class="mandir-hero__count" id="mandir-count-badge" hidden></span>
+      </div>
+      <p data-i18n="ch.heroSub">Choose an event, select offerings in your name and gotra, and track your seva through to its recorded video.</p>
+      <div class="shop-hero__actions">
+        <button type="button" id="btn-view-my-bookings" class="shop-btn shop-btn--gold"><span>📜</span><span data-i18n="md.bookings">My Bookings &amp; Video Proof</span></button>
+        <button type="button" id="btn-rewards" class="shop-btn shop-btn--ghost"><span>🎁</span><span data-i18n="rw.open">My Rewards</span></button>
       </div>
     </div>
-    <div class="shop-hero__actions">
-      <button type="button" id="btn-view-my-bookings" class="shop-btn shop-btn--gold"><span>📜</span><span data-i18n="md.bookings">My Bookings &amp; Video Proof</span></button>
-      <button type="button" id="btn-rewards" class="shop-btn shop-btn--ghost"><span>🎁</span><span data-i18n="rw.open">My Rewards</span></button>
-    </div>
   </section>
+  <section class="mandir-choose" id="mandir-choose" data-mode="home" aria-label="Choose a seva"></section>
+    <div class="shop-trust service-benefits" data-mode="home">
+      <div><span>📹</span><p><b data-i18n="md.t1h">Video proof</b><small data-i18n="ch.videoTrust">Video of your sankalp, with name &amp; gotra</small></p></div>
+      <div><span>🪔</span><p><b data-i18n="md.t2h">Temple priests</b><small data-i18n="md.trust2">Performed by temple priests</small></p></div>
+      <div><span>📦</span><p><b data-i18n="ch.updatesTitle">Prasad at home</b><small data-i18n="ch.updatesSub">Prasad delivered to your home</small></p></div>
+    </div>
 
-  <section id="mandir-today" class="shop-suggest shop-suggest--plain" hidden></section>
+  <section class="mandir-subhead" id="mandir-chadhava-head" data-mode="chadhava" hidden></section>
+  <section class="mandir-subhead" id="mandir-puja-head" data-mode="puja" hidden></section>
+  <section data-mode="chadhava" data-chadhava-hub aria-label="Chadhava events" hidden></section>
+  <section data-mode="puja" data-puja-hub aria-label="Puja events" hidden></section>
+  <section id="mandir-today" class="mandir-today" hidden></section>
   <section id="mandir-suggest" class="shop-suggest" hidden></section>
 
   <section id="mandir-packages" class="mp-packages" hidden>
@@ -26,18 +36,20 @@
     <div class="mp-scroll" id="mandir-packages-list"></div>
   </section>
 
+  <div data-mode="chadhava" hidden>
+  <header class="mt-section-head" id="temples-head"></header>
   <section class="shop-toolbar">
     <div class="shop-toolbar__row">
       <div class="shop-chips" id="mandir-category-filters">
         <button type="button" data-filter="all" class="shop-chip is-active" data-i18n="md.cat.all">All Temples</button>
         <button type="button" data-filter="shiva" class="shop-chip" data-i18n="md.cat.shiva">🔱 Jyotirlinga &amp; Shiva</button>
         <button type="button" data-filter="shakti" class="shop-chip" data-i18n="md.cat.shakti">🌸 Shaktipeeth &amp; Devi</button>
-        <button type="button" data-filter="shani" class="shop-chip" data-i18n="md.cat.shani">🪐 Shani &amp; Navgrah</button>
+        <button type="button" data-filter="shani" class="shop-chip" data-i18n="md.cat.shani">🪐 Shani &amp; Hanuman</button>
         <button type="button" data-filter="ganesh" class="shop-chip" data-i18n="md.cat.ganesh">🐘 Ganesh</button>
-        <button type="button" data-filter="ram_krishna" class="shop-chip" data-i18n="md.cat.ram">🏹 Ram &amp; Vishnu</button>
+        <button type="button" data-filter="ram_krishna" class="shop-chip" data-i18n="md.cat.ram">🏹 Ram, Krishna &amp; Vishnu</button>
       </div>
       <div class="shop-tools">
-        <input type="search" id="mandir-search-input" class="shop-input" data-i18n-ph="md.search" placeholder="Search temple, deity or city..." autocomplete="off">
+        <input type="search" id="mandir-search-input" class="shop-input" data-i18n-ph="md.search" placeholder="Search temple, deity or city..." autocomplete="off" aria-label="Search temples and sevas">
       </div>
     </div>
   </section>
@@ -45,6 +57,7 @@
   <div id="mandir-loading-state" class="shop-loading"><div class="shop-spinner"></div><p data-i18n="md.loading">Loading temples...</p></div>
   <div id="temples-grid" class="shop-grid"></div>
   <div id="mandir-empty-state" class="shop-empty" style="display:none"><b data-i18n="md.empty.title">No temples found</b><span data-i18n="md.empty.sub">Try a different name or category.</span></div>
+  </div>
 
   <p class="shop-credit"><span data-i18n="md.credit">Temple photographs from Wikimedia Commons.</span> <button type="button" data-open-credits data-i18n="credits.link">Photo credits</button></p>
 

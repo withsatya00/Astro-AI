@@ -46,6 +46,116 @@ const ASTRO_I18N = {
   // 1. English
   en: {
     lang_name: "English",
+    // Gau Sewa
+    nav_gau_sewa: "Gau Sewa",
+    gs_home_title: "Gau Sewa",
+    gs_home_text: "Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give once.",
+    gs_home_cta: "Contribute",
+    gs_hero_title: "Gau Sewa",
+    gs_hero_sub: "Every cow deserves nourishment, gentle care and a safe place to call home. Join a tradition of compassion and support the everyday needs of cows through Gau Sewa.",
+
+    gs_hero_line_one: "A little kindness.",
+
+    gs_hero_line_two: "A lifetime of care.",
+
+    gs_section_kicker: "AN OFFERING FROM THE HEART",
+
+    gs_purpose_intro: "Choose the care you wish to support. Whether it is a nourishing meal, medical attention or everyday shelter, your offering begins with a simple act of kindness.",
+
+    gs_amount_hint: "Choose a suggested amount or enter any whole-rupee amount between ₹{min} and ₹{max}.",
+
+    gs_form_intro: "An offering of your choice, for care that matters.",
+
+    gs_suggested: "Or choose a suggested amount",
+
+    gs_steps_heading: "A thoughtful way to give",
+
+    gs_step_one: "Choose your seva",
+
+    gs_step_one_desc: "Select fodder, medical support or general care.",
+
+    gs_step_two: "Give what feels right",
+
+    gs_step_two_desc: "Enter an amount that is comfortable for you.",
+
+    gs_step_three: "Keep your receipt",
+
+    gs_step_three_desc: "After payment verification, download your donation receipt.",
+
+    gs_form_kicker: "YOUR ACT OF KINDNESS",
+    gs_hero_cta: "Donate now",
+    gs_hero_alt: "Illustrative scene of a cow and calf in a sunlit gaushala courtyard",
+    gs_illustrative: "Illustrative image",
+    gs_eyebrow: "A tradition of compassion",
+    gs_hero_caption: "Care. Nourish. Make a difference.",
+    gs_payment_receipt_hint: "Receipt available after payment verification.",
+    gs_purpose_heading: "Your kindness, their everyday care",
+    gs_purpose_chaara: "Chaara Seva",
+    gs_purpose_chaara_desc: "Support fresh green fodder, dry feed and nourishing meals for cows. Help the gaushala provide the everyday nutrition that keeps them cared for.",
+    gs_purpose_chikitsa: "Chikitsa Sahayata",
+    gs_purpose_chikitsa_desc: "Contribute towards medicines, veterinary attention and treatment for sick or injured cows. Support gentle care when they need it most.",
+    gs_purpose_general: "General Seva",
+    gs_purpose_general_desc: "Support shelter, cleanliness and the daily work of caring for cows. Let the gaushala direct your contribution to the needs that require attention.",
+    gs_gaushala_heading: "About the gaushala",
+    gs_gaushala_empty_title: "Gaushala details coming soon",
+    gs_gaushala_empty_text: "We are still setting up the gaushala details. They will appear here once confirmed.",
+    gs_location: "Location",
+    gs_form_heading: "Make a donation",
+    gs_amount_label: "Amount",
+    gs_amount_custom: "Enter your own amount",
+    gs_name_label: "Your name",
+    gs_name_ph: "Full name",
+    gs_email_label: "Email (optional)",
+    gs_email_hint: "Your receipt is emailed only if email is set up. You can always download it here.",
+    gs_hide_name: "Keep my name out of public updates",
+    gs_recipient_heading: "Who receives your donation",
+    gs_recipient_line: "Beneficiary: {name}",
+    gs_recipient_note: "Payments are processed securely by Razorpay. This is a one-time donation. The receipt acknowledges your payment and is not a tax exemption certificate.",
+    gs_donate_btn: "Donate",
+    gs_donate_amount_btn: "Donate ₹{amount}",
+    gs_starting: "Starting payment…",
+    gs_err_amount: "Enter an amount between ₹{min} and ₹{max}.",
+    gs_err_amount_whole: "Enter a whole number of rupees.",
+    gs_err_name: "Please enter your name.",
+    gs_err_email: "Enter a valid email address or leave it blank.",
+    gs_unavailable_title: "Donations are not open yet",
+    gs_unavailable_payments: "Online donations are not available right now.",
+    gs_unavailable_recipient: "The gaushala details are still being set up. Donations will open once they are confirmed.",
+    gs_load_error: "Gau Sewa could not be loaded right now.",
+    gs_retry: "Try again",
+    gs_loading: "Loading…",
+    gs_cancelled: "The payment window was closed. No donation has been recorded.",
+    gs_verifying: "Confirming your payment…",
+    gs_pending_title: "Payment is being confirmed",
+    gs_pending_text: "The payment provider has not confirmed this payment yet. This page checks again automatically, and you can open the receipt link later.",
+    gs_failed_title: "Payment did not go through",
+    gs_failed_text: "No donation was recorded. You can try again.",
+    gs_success_title: "Thank you for your donation",
+    gs_success_text: "Your payment has been confirmed.",
+    gs_refunded_title: "This donation was refunded",
+    gs_ref: "Donation reference",
+    gs_amount: "Amount",
+    gs_purpose: "Purpose",
+    gs_date: "Date",
+    gs_recipient: "Recipient",
+    gs_status: "Payment status",
+    gs_status_pending: "Pending",
+    gs_status_success: "Successful",
+    gs_status_failed: "Failed",
+    gs_status_refunded: "Refunded",
+    gs_receipt_download: "Download receipt",
+    gs_receipt_note: "This receipt acknowledges your payment. It is not a tax exemption certificate.",
+    gs_receipt_keep: "Keep this page's link: anyone who has it can view this receipt.",
+    gs_receipt_not_found: "This receipt link is not valid.",
+    gs_back: "Back to Gau Sewa",
+    gs_donate_again: "Donate again",
+    gs_updates_heading: "Seva updates",
+    gs_updates_empty: "No updates have been published yet.",
+    gs_my_title: "My Donations",
+    gs_my_intro: "Your Gau Sewa donations and receipts.",
+    gs_my_empty: "You have not made any Gau Sewa donations yet.",
+    gs_my_cta: "Donate to Gau Sewa",
+    gs_my_receipt: "Receipt",
     agent_output_empty: "Execution output will appear here.",
     brand_title: "Astro Jyotish",
     brand_subtitle: "Authentic Vedic Astrology",
@@ -225,6 +335,116 @@ const ASTRO_I18N = {
   hi: {
     agent_output_empty: "गणना का परिणाम यहाँ दिखाई देगा।",
     lang_name: "हिन्दी (Hindi)",
+    // Gau Sewa
+    nav_gau_sewa: "गौ सेवा",
+    gs_home_title: "गौ सेवा",
+    gs_home_text: "गौशाला में गायों की देखभाल में सहयोग करें। चारा, चिकित्सा या सामान्य सेवा चुनें और एक बार दान करें।",
+    gs_home_cta: "योगदान दें",
+    gs_hero_title: "गौ सेवा",
+    gs_hero_sub: "हर गाय को पौष्टिक आहार, स्नेहपूर्ण देखभाल और सुरक्षित आश्रय मिले। करुणा की इस परंपरा से जुड़ें और गौ सेवा के माध्यम से गायों की रोज़मर्रा की ज़रूरतों में सहयोग करें।",
+
+    gs_hero_line_one: "थोड़ा सा स्नेह।",
+
+    gs_hero_line_two: "जीवन भर की सेवा।",
+
+    gs_section_kicker: "हृदय से एक अर्पण",
+
+    gs_purpose_intro: "अपनी सेवा का उद्देश्य चुनें। पौष्टिक आहार, उपचार या दैनिक आश्रय—आपका छोटा सा सहयोग भी स्नेहपूर्ण देखभाल की दिशा में एक कदम है।",
+
+    gs_amount_hint: "सुझाई गई राशि चुनें या ₹{min} से ₹{max} के बीच अपनी इच्छानुसार राशि पूरे रुपयों में भरें।",
+
+    gs_form_intro: "आपकी इच्छानुसार एक भेंट, गौ सेवा के नाम।",
+
+    gs_suggested: "या सुझाई गई राशि चुनें",
+
+    gs_steps_heading: "सेवा से जुड़ने का सरल तरीका",
+
+    gs_step_one: "अपनी सेवा चुनें",
+
+    gs_step_one_desc: "चारा, चिकित्सा या सामान्य देखभाल का उद्देश्य चुनें।",
+
+    gs_step_two: "इच्छानुसार सहयोग करें",
+
+    gs_step_two_desc: "अपनी सुविधा के अनुसार सहयोग राशि भरें।",
+
+    gs_step_three: "रसीद सुरक्षित रखें",
+
+    gs_step_three_desc: "भुगतान सत्यापन के बाद अपने दान की रसीद डाउनलोड करें।",
+
+    gs_form_kicker: "आपकी स्नेह भरी भेंट",
+    gs_hero_cta: "अभी दान करें",
+    gs_hero_alt: "गौशाला के धूप भरे आँगन में गाय और बछड़े का सांकेतिक दृश्य",
+    gs_illustrative: "सांकेतिक चित्र",
+    gs_eyebrow: "करुणा की एक परंपरा",
+    gs_hero_caption: "सेवा, पोषण और आपका योगदान।",
+    gs_payment_receipt_hint: "भुगतान की पुष्टि के बाद रसीद उपलब्ध होगी।",
+    gs_purpose_heading: "आपका सहयोग, उनकी दैनिक देखभाल",
+    gs_purpose_chaara: "चारा सेवा",
+    gs_purpose_chaara_desc: "गायों के लिए हरा चारा, सूखा भूसा और पौष्टिक आहार उपलब्ध कराने में सहयोग करें। गौशाला में उनकी दैनिक पोषण संबंधी ज़रूरतों की देखभाल में अपना योगदान दें।",
+    gs_purpose_chikitsa: "चिकित्सा सहायता",
+    gs_purpose_chikitsa_desc: "बीमार या घायल गायों की दवाइयों, पशु चिकित्सक की देखभाल और उपचार में सहयोग करें। ज़रूरत के समय उन्हें स्नेहपूर्ण चिकित्सा मिल सके, इसके लिए अपना योगदान दें।",
+    gs_purpose_general: "सामान्य सेवा",
+    gs_purpose_general_desc: "आश्रय, स्वच्छता और गायों की रोज़मर्रा की देखभाल में सहयोग करें। गौशाला आपके योगदान का उपयोग उस ज़रूरत के लिए कर सके जहाँ सहयोग आवश्यक हो।",
+    gs_gaushala_heading: "गौशाला के बारे में",
+    gs_gaushala_empty_title: "गौशाला का विवरण जल्द आएगा",
+    gs_gaushala_empty_text: "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि के बाद यह यहाँ दिखेगा।",
+    gs_location: "स्थान",
+    gs_form_heading: "दान करें",
+    gs_amount_label: "राशि",
+    gs_amount_custom: "अपनी इच्छानुसार राशि भरें",
+    gs_name_label: "आपका नाम",
+    gs_name_ph: "पूरा नाम",
+    gs_email_label: "ईमेल (वैकल्पिक)",
+    gs_email_hint: "ईमेल सेवा चालू होने पर ही रसीद ईमेल की जाती है। आप इसे यहाँ से हमेशा डाउनलोड कर सकते हैं।",
+    gs_hide_name: "सार्वजनिक अपडेट में मेरा नाम गुप्त रखें",
+    gs_recipient_heading: "आपका दान किसे मिलेगा",
+    gs_recipient_line: "लाभार्थी: {name}",
+    gs_recipient_note: "भुगतान Razorpay द्वारा सुरक्षित रूप से संसाधित होता है। यह एक बार का दान है। रसीद आपके भुगतान की पावती है, कर छूट प्रमाणपत्र नहीं।",
+    gs_donate_btn: "दान करें",
+    gs_donate_amount_btn: "₹{amount} दान करें",
+    gs_starting: "भुगतान शुरू हो रहा है…",
+    gs_err_amount: "₹{min} से ₹{max} के बीच राशि दर्ज करें।",
+    gs_err_amount_whole: "रुपये की पूर्ण संख्या दर्ज करें।",
+    gs_err_name: "कृपया अपना नाम दर्ज करें।",
+    gs_err_email: "सही ईमेल पता दर्ज करें या खाली छोड़ें।",
+    gs_unavailable_title: "दान अभी शुरू नहीं हुआ है",
+    gs_unavailable_payments: "ऑनलाइन दान अभी उपलब्ध नहीं है।",
+    gs_unavailable_recipient: "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि होते ही दान शुरू होगा।",
+    gs_load_error: "गौ सेवा अभी लोड नहीं हो सकी।",
+    gs_retry: "फिर प्रयास करें",
+    gs_loading: "लोड हो रहा है…",
+    gs_cancelled: "भुगतान विंडो बंद हो गई। कोई दान दर्ज नहीं हुआ।",
+    gs_verifying: "आपका भुगतान सत्यापित हो रहा है…",
+    gs_pending_title: "भुगतान की पुष्टि हो रही है",
+    gs_pending_text: "भुगतान प्रदाता ने अभी इस भुगतान की पुष्टि नहीं की है। यह पृष्ठ अपने आप फिर जाँच करेगा, और आप रसीद लिंक बाद में भी खोल सकते हैं।",
+    gs_failed_title: "भुगतान पूरा नहीं हुआ",
+    gs_failed_text: "कोई दान दर्ज नहीं हुआ। आप फिर प्रयास कर सकते हैं।",
+    gs_success_title: "आपके दान के लिए धन्यवाद",
+    gs_success_text: "आपके भुगतान की पुष्टि हो गई है।",
+    gs_refunded_title: "यह दान वापस कर दिया गया",
+    gs_ref: "दान संदर्भ",
+    gs_amount: "राशि",
+    gs_purpose: "उद्देश्य",
+    gs_date: "तिथि",
+    gs_recipient: "प्राप्तकर्ता",
+    gs_status: "भुगतान की स्थिति",
+    gs_status_pending: "लंबित",
+    gs_status_success: "सफल",
+    gs_status_failed: "असफल",
+    gs_status_refunded: "वापस किया गया",
+    gs_receipt_download: "रसीद डाउनलोड करें",
+    gs_receipt_note: "यह रसीद आपके भुगतान की पावती है। यह कर छूट प्रमाणपत्र नहीं है।",
+    gs_receipt_keep: "इस पृष्ठ का लिंक सहेज लें: जिसके पास यह लिंक होगा वह इस रसीद को देख सकता है।",
+    gs_receipt_not_found: "यह रसीद लिंक मान्य नहीं है।",
+    gs_back: "गौ सेवा पर वापस जाएँ",
+    gs_donate_again: "फिर से दान करें",
+    gs_updates_heading: "सेवा अपडेट",
+    gs_updates_empty: "अभी तक कोई अपडेट प्रकाशित नहीं हुआ है।",
+    gs_my_title: "मेरे दान",
+    gs_my_intro: "आपके गौ सेवा दान और रसीदें।",
+    gs_my_empty: "आपने अभी तक कोई गौ सेवा दान नहीं किया है।",
+    gs_my_cta: "गौ सेवा में दान करें",
+    gs_my_receipt: "रसीद",
     brand_title: "एस्ट्रो ज्योतिष",
     brand_subtitle: "प्रामाणिक वैदिक ज्योतिष एवं जन्म कुण्डली",
     nav_home: "मुखपृष्ठ",
@@ -2118,10 +2338,6 @@ const I18n = {
       });
     }
     if (!this.phrasePattern) return value;
-    // CRUCIAL SAFEGUARD: Do not fragment-replace inside Devanagari text when currentLang is English
-    if (this.currentLang === 'en' && /[\u0900-\u097F]/.test(value)) {
-      return value;
-    }
     return value.replace(this.phrasePattern, (match, offset, source) => {
       // Do not translate parts of identifiers, words, or email addresses.
       const word = /[\p{L}\p{M}\p{N}_@]/u;
@@ -2188,6 +2404,8 @@ const I18n = {
     if (mobileDrawerSelect && mobileDrawerSelect.value !== lang) {
       mobileDrawerSelect.value = lang;
     }
+
+    if (window.App?.renderWalletHistory) window.App.renderWalletHistory();
 
     // Synchronize ChatController language
     if (window.ChatController) {
@@ -2264,10 +2482,10 @@ const I18n = {
     // 4. Update page document title
     const brandName = this.t("brand_title") || "Astro Jyotish";
     const subTitle = this.t("brand_subtitle") || "Vedic Astrology";
-    document.title = `${brandName} - ${subTitle}`;
+    if (!(window.Seo && window.Seo.refresh())) document.title = `${brandName} - ${subTitle}`;
     // Translate asynchronously rendered templates and dynamic labels as well.
     // Preserve source strings so switching repeatedly never translates a translation.
-    const skip = 'script, style, code, pre, textarea, [translate="no"], [data-no-translate], .mandir-seva-container, .astro-mall-container, #chadawa-modal-root, .nav-dropdown-menu, [data-user-content], .user-bubble, .assistant-bubble .msg-text-content, #active-streaming-text, #call-user-transcript, #call-pandit-transcript';
+    const skip = 'script, style, code, pre, textarea, [translate="no"], [data-no-translate], [data-user-content], .user-bubble, .assistant-bubble .msg-text-content, #active-streaming-text, #call-user-transcript, #call-pandit-transcript';
     // Some HTML parsers split character entities into separate text nodes.
     // Translate a leaf's complete label before traversing individual nodes.
     document.querySelectorAll('body *').forEach(el => {

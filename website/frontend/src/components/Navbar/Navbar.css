@@ -48,11 +48,11 @@
 }
 
 .site-nav-link:hover {
-  color: #7439EA;
+  color: #4a1b9a;
 }
 
 .site-nav-link.active {
-  color: #7439EA;
+  color: #4a1b9a;
   font-weight: 700;
 }
 
@@ -63,7 +63,7 @@
   left: 0;
   right: 0;
   height: 2.5px;
-  background: #7439EA;
+  background: #4a1b9a;
   border-radius: 9999px;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .global-lang-picker-wrapper:hover {
-  border-color: #7439EA;
+  border-color: #4a1b9a;
 }
 
 .btn-mobile-menu {
@@ -361,5 +361,15 @@ body.dark .nav-dropdown-menu,
 [data-theme="dark"] .nav-dropdown-menu {
   background-color: #1A163B !important;
   background: #1A163B !important;
-  border-color: #3730A3 !important;
+  border-color: #1e0b44 !important;
 }
+
+/* A menu item was just chosen: stay closed while the pointer is still over the dropdown */
+.site-nav-dropdown-wrapper.is-closed .nav-dropdown-menu,
+.site-nav-dropdown-wrapper.is-closed:hover .nav-dropdown-menu {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+.site-nav-dropdown-wrapper.is-closed:hover .dropdown-chevron { transform: none; }

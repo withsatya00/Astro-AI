@@ -1411,7 +1411,7 @@ https://astrojyotish.ai`;
               The astrologer profile or consultation session "<strong>${decodeURIComponent(consultationId)}</strong>" was not found. Please choose an active Vedic astrologer from our verified directory.
             </p>
             <div class="flex items-center gap-3">
-              <a href="/astrologers" data-nav-link class="btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all no-underline">
+              <a href="/astrologers" data-nav-link class="btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4A1B9A] to-[#3B1580] hover:from-[#3B1580] hover:to-[#4A1B9A] shadow-md transition-all no-underline">
                 View Astrologers Directory →
               </a>
               <a href="/" data-nav-link class="py-2.5 px-5 rounded-full text-[#1E1B4B] font-semibold text-sm border border-[#E7E2D8] bg-white hover:bg-[#FAF8F2] shadow-2xs transition-all no-underline">
@@ -1702,7 +1702,7 @@ https://astrojyotish.ai`;
       this.isVoicePlaying = false;
       bars.forEach(b => b.classList.remove('playing'));
       if (icon) icon.textContent = '▶';
-      if (btn) btn.style.background = 'linear-gradient(135deg, #7439EA, #5B21B6)';
+      if (btn) btn.style.background = 'linear-gradient(135deg, #4A1B9A, #3B1580)';
       return;
     }
 
@@ -1729,7 +1729,7 @@ https://astrojyotish.ai`;
         this.isVoicePlaying = false;
         bars.forEach(b => b.classList.remove('playing'));
         if (icon) icon.textContent = '▶';
-        if (btn) btn.style.background = 'linear-gradient(135deg, #7439EA, #5B21B6)';
+        if (btn) btn.style.background = 'linear-gradient(135deg, #4A1B9A, #3B1580)';
         if (durationLabel) durationLabel.textContent = '0:24';
       }
     }, 1000);

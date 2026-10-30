@@ -26,7 +26,7 @@ class User(Base):
     full_name = Column(String(255), nullable=True)
     phone = Column(String(50), nullable=True)
     role = Column(String(50), default="client")  # client, astrologer, admin
-    wallet_balance = Column(Float, default=250.0)
+    wallet_balance = Column(Float, default=0.0)
     loyalty_points = Column(Integer, default=0)
     referral_code = Column(String(12), index=True, nullable=True)
     referred_by = Column(String(36), nullable=True)
@@ -278,6 +278,8 @@ class Booking(Base):
     total_amount = Column(Float, default=0.0)
     concern = Column(String(255), nullable=True)
     notes = Column(Text, nullable=True)
+    is_priority = Column(Boolean, default=False)       # booked by a Premium member
+    member_discount = Column(Float, default=0.0)       # rupees saved through Premium membership
     created_at = Column(DateTime(timezone=True), default=utc_now)
     updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
 
@@ -310,8 +312,14 @@ class TempleOffering(Base):
     temple_id = Column(String(36), ForeignKey("temples.id"), nullable=False, index=True)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=False)
-    category = Column(String(50), default="chadawa")  # chadawa, sankalp_pooja, aarti, abhishek
+    category = Column(String(50), default="chadawa")  # chadawa, sankalp_pooja, aarti, abhishek, item (single chadhava item), puja_tier
     price = Column(Float, nullable=False)
+    title_en = Column(String(255), nullable=True)
+    description_en = Column(Text, nullable=True)
+    emoji = Column(String(8), nullable=True)            # shown on item cards
+    popular = Column(Boolean, default=False)            # most-offered items at this temple are listed first
+    sort_order = Column(Integer, default=0)
+    max_members = Column(Integer, default=1)            # puja tiers: how many devotees one booking covers
     has_prasad_delivery = Column(Boolean, default=True)
     delivery_fee = Column(Float, default=99.0)
     includes_video_proof = Column(Boolean, default=True)
@@ -616,3 +624,135 @@ class Payout(Base):
     reference = Column(String(120), nullable=True)
     requested_at = Column(DateTime(timezone=True), default=utc_now)
     paid_at = Column(DateTime(timezone=True), nullable=True)
+
+
+class RemedyTask(Base):
+    """A remedy (mantra, fast, donation, gemstone, puja...) a user is following, with a daily/weekly check-in streak."""
+    __tablename__ = "remedy_tasks"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    title = Column(String(160), nullable=False)
+    kind = Column(String(20), default="mantra")        # mantra, fast, donation, gemstone, puja, other
+    detail = Column(Text, nullable=True)
+    frequency = Column(String(10), default="daily")    # daily, weekly, once
+    weekday = Column(Integer, nullable=True)           # 0=Monday..6=Sunday, for weekly remedies
+    source = Column(String(20), default="self")        # self, astrologer, suggested
+    astrologer_name = Column(String(255), nullable=True)
+    target_days = Column(Integer, nullable=True)       # e.g. 40 days, 11 weeks; None = ongoing
+    link_type = Column(String(10), nullable=True)      # mall, seva
+    link_ref = Column(String(120), nullable=True)      # product category / temple slug
+    status = Column(String(10), default="active")      # active, completed, paused
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class RemedyLog(Base):
+    __tablename__ = "remedy_logs"
+    __table_args__ = (UniqueConstraint("task_id", "done_on", name="uq_remedy_log_day"),)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    task_id = Column(String(36), ForeignKey("remedy_tasks.id"), nullable=False, index=True)
+    done_on = Column(String(10), nullable=False)       # YYYY-MM-DD in IST
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class GiftCard(Base):
+    """Prepaid wallet credit one user buys for someone else; redeemed with the code."""
+    __tablename__ = "gift_cards"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    code = Column(String(20), unique=True, index=True, nullable=False)
+    amount = Column(Float, nullable=False)
+    buyer_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    recipient_name = Column(String(120), nullable=True)
+    message = Column(String(300), nullable=True)
+    theme = Column(String(20), default="diwali")
+    status = Column(String(10), default="ISSUED")      # ISSUED, REDEEMED
+    redeemed_by = Column(String(36), nullable=True)
+    redeemed_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class FavouriteAstrologer(Base):
+    """An astrologer a signed-in user has saved to come back to."""
+    __tablename__ = "favourite_astrologers"
+    __table_args__ = (UniqueConstraint("user_id", "astrologer_id", name="uq_favourite_astrologer"),)
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    astrologer_id = Column(String(36), ForeignKey("astrologers.id"), nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Gaushala(Base):
+    """A cow shelter that Gau Sewa donations are for. Donations stay disabled until an admin configures the recipient."""
+    __tablename__ = "gaushalas"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    slug = Column(String(100), unique=True, index=True, nullable=False)
+    name = Column(String(255), nullable=False)
+    location = Column(String(255), nullable=True)
+    introduction = Column(Text, nullable=True)
+    photos = Column(Text, nullable=True)                # JSON list of image URLs
+    beneficiary_name = Column(String(255), nullable=True)   # who the money is passed to (shown on the page)
+    beneficiary_details = Column(Text, nullable=True)       # plain-language note on how the funds reach the gaushala
+    donations_enabled = Column(Boolean, default=False)      # admin switch; also needs beneficiary_name
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+
+
+class GauSevaUpdate(Base):
+    """A seva update (text + photos) published by an admin."""
+    __tablename__ = "gau_seva_updates"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    gaushala_id = Column(String(36), ForeignKey("gaushalas.id"), nullable=True, index=True)
+    title = Column(String(255), nullable=False)
+    body = Column(Text, nullable=True)
+    photos = Column(Text, nullable=True)                # JSON list of image URLs
+    is_published = Column(Boolean, default=False)
+    published_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class Donation(Base):
+    """One-time Gau Sewa donation. Kept apart from the wallet: a donation never credits wallet_balance."""
+    __tablename__ = "donations"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    reference = Column(String(24), unique=True, index=True, nullable=False)       # shown to the donor, e.g. GS-1A2B3C4D5E
+    receipt_token = Column(String(64), unique=True, index=True, nullable=False)   # unguessable; grants receipt access
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)  # null for guest donations
+    donor_name = Column(String(120), nullable=False)
+    donor_email = Column(String(255), nullable=True)
+    hide_name_public = Column(Boolean, default=False)   # "keep my name out of public updates"; names are never public by default
+    purpose = Column(String(20), nullable=False)        # chaara, chikitsa, general
+    amount_paise = Column(Integer, nullable=False)
+    currency = Column(String(3), default="INR", nullable=False)
+    gaushala_id = Column(String(36), ForeignKey("gaushalas.id"), nullable=True, index=True)
+    recipient_name = Column(String(255), nullable=True)  # snapshot of the beneficiary at the time of the donation
+    provider = Column(String(20), default="razorpay")
+    provider_order_id = Column(String(64), unique=True, index=True, nullable=True)
+    provider_payment_id = Column(String(64), unique=True, index=True, nullable=True)
+    status = Column(String(12), default="PENDING", index=True)   # PENDING, SUCCESS, FAILED, REFUNDED
+    refunded_paise = Column(Integer, default=0)
+    failure_reason = Column(String(255), nullable=True)
+    receipt_emailed_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+    paid_at = Column(DateTime(timezone=True), nullable=True)
+    refunded_at = Column(DateTime(timezone=True), nullable=True)
+
+
+class PaymentWebhookEvent(Base):
+    """Provider webhook deliveries already handled; the unique event id makes redelivery a no-op."""
+    __tablename__ = "payment_webhook_events"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    provider = Column(String(20), nullable=False)
+    event_id = Column(String(100), nullable=False)
+    event_type = Column(String(60), nullable=True)
+    received_at = Column(DateTime(timezone=True), default=utc_now)
+
+    __table_args__ = (UniqueConstraint("provider", "event_id", name="uq_webhook_provider_event"),)

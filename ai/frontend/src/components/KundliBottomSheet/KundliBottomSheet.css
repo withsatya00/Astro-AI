@@ -108,7 +108,7 @@
   transition: all 0.18s ease;
 }
 .sheet-tab.active {
-  background: #7439EA;
+  background: #4A1B9A;
   color: #FFFFFF;
   box-shadow: 0 2px 8px rgba(116, 57, 234, 0.25);
 }

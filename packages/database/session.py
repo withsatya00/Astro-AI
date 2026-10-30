@@ -50,6 +50,8 @@ def init_db():
     """Initializes all database tables and ensures required columns exist."""
     # Import all models before create_all
     import packages.database.models  # noqa
+    import packages.database.advanced  # noqa
+    import packages.database.chadhava  # noqa
     Base.metadata.create_all(bind=engine)
 
     # Safe migration check for metadata and extended columns in SQLite / Postgres
@@ -110,8 +112,12 @@ def init_db():
 
             # Mandir Seva / Astro Mall columns added after the first release.
             extra_cols = {
+                "bookings": {"is_priority": "BOOLEAN DEFAULT 0", "member_discount": "FLOAT DEFAULT 0"},
                 "users": {"loyalty_points": "INTEGER DEFAULT 0", "referral_code": "VARCHAR(12)", "referred_by": "VARCHAR(36)"},
                 "temples": {"live_url": "VARCHAR(500)", "aarti_timings": "TEXT"},
+                "temple_offerings": {"title_en": "VARCHAR(255)", "description_en": "TEXT", "emoji": "VARCHAR(8)",
+                                     "popular": "BOOLEAN DEFAULT 0", "sort_order": "INTEGER DEFAULT 0", "max_members": "INTEGER DEFAULT 1"},
+                "chadhava_events": {"kind": "VARCHAR(12) NOT NULL DEFAULT 'chadhava'", "benefits": "JSON"},
                 "marketplace_products": {"listing_status": "VARCHAR(12) DEFAULT 'APPROVED'", "option_groups": "TEXT", "extra_images": "TEXT", "certificate_status": "VARCHAR(20) DEFAULT 'NONE'",
                                          "certificate_code": "VARCHAR(24)", "certificate_file": "VARCHAR(500)",
                                          "certificate_lab": "VARCHAR(120)", "certificate_number": "VARCHAR(80)",
@@ -144,7 +150,7 @@ def init_db():
                     conn.execute(text("ALTER TABLE users ADD COLUMN phone VARCHAR(50)"))
                     conn.commit()
                 if "wallet_balance" not in user_cols:
-                    conn.execute(text("ALTER TABLE users ADD COLUMN wallet_balance FLOAT DEFAULT 250.0"))
+                    conn.execute(text("ALTER TABLE users ADD COLUMN wallet_balance FLOAT DEFAULT 0.0"))
                     conn.commit()
     except Exception:
         pass

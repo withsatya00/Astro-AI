@@ -32,7 +32,7 @@ LORD_REMEDY: Dict[str, Dict[str, Any]] = {
 # weekday -> (Hindi deity, English deity, temple slug)
 WEEKDAY_SEVA = {
     "Monday": ("भगवान शिव", "Lord Shiva", "kashi-vishwanath-varanasi"),
-    "Tuesday": ("श्री हनुमान जी", "Lord Hanuman", "mahakaleshwar-ujjain"),
+    "Tuesday": ("श्री हनुमान जी", "Lord Hanuman", "sankat-mochan-hanuman-varanasi"),
     "Wednesday": ("भगवान श्री गणेश", "Lord Ganesh", "siddhivinayak-mumbai"),
     "Thursday": ("भगवान विष्णु", "Lord Vishnu", "tirupati-balaji-andhra"),
     "Friday": ("मां लक्ष्मी व देवी", "Goddess Lakshmi & Devi", "vaishno-devi-katra"),

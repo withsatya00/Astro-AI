@@ -1,163 +1,302 @@
 [
- {
-  "file": "temples/mahakaleshwar-ujjain.jpg",
-  "title": "Mahakaleshwar Temple, Ujjain.jpg",
-  "author": "Ashverse",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Mahakaleshwar_Temple,_Ujjain.jpg"
- },
- {
-  "file": "temples/kashi-vishwanath-varanasi.jpg",
-  "title": "Ganga Dwar, Gateway of Corridor of Kashi Vishwanath Temple, Varanasi 2.webp",
-  "author": "Ashvin Kaitabhya, clicked by Abhishek Pandey",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Ganga_Dwar,_Gateway_of_Corridor_of_Kashi_Vishwanath_Temple,_Varanasi_2.webp"
- },
- {
-  "file": "temples/somnath-jyotirlinga-gujarat.jpg",
-  "title": "Shree Somnath Temple.jpg",
-  "author": "Prime Minister's Office",
-  "license": "GODL-India",
-  "page": "https://commons.wikimedia.org/wiki/File:Shree_Somnath_Temple.jpg"
- },
- {
-  "file": "temples/kedarnath-dham-uttarakhand.jpg",
-  "title": "Kedarnath Temple.jpg",
-  "author": "Shaq774 at en.wikipedia",
-  "license": "Public domain",
-  "page": "https://commons.wikimedia.org/wiki/File:Kedarnath_Temple.jpg"
- },
- {
-  "file": "temples/tirupati-balaji-andhra.jpg",
-  "title": "Tirumala Venkateswara temple entrance 09062015.JPG",
-  "author": "Nikhilb239",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Tirumala_Venkateswara_temple_entrance_09062015.JPG"
- },
- {
-  "file": "temples/vaishno-devi-katra.jpg",
-  "title": "Mata Vaishno Devi Mandir, Katra.jpg",
-  "author": "Lpp3535",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Mata_Vaishno_Devi_Mandir,_Katra.jpg"
- },
- {
-  "file": "temples/kamakhya-devi-assam.jpg",
-  "title": "Kamakhya Temple, Guwahati.jpg",
-  "author": "Kunal Dalui",
-  "license": "CC BY-SA 3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Kamakhya_Temple,_Guwahati.jpg"
- },
- {
-  "file": "temples/siddhivinayak-mumbai.jpg",
-  "title": "View of Siddhivinayak Temple.jpg",
-  "author": "Feroze Ahmad 2",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:View_of_Siddhivinayak_Temple.jpg"
- },
- {
-  "file": "temples/shani-shingnapur.jpg",
-  "title": "Shree Shanidev Temple, Shani Shingnapur.jpg",
-  "author": "Shivashanky",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Shree_Shanidev_Temple,_Shani_Shingnapur.jpg"
- },
- {
-  "file": "temples/jagannath-temple-puri.jpg",
-  "title": "Jagannath Temple, Puri 04.jpg",
-  "author": "Bernard Gagnon",
-  "license": "CC BY-SA 3.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Jagannath_Temple,_Puri_04.jpg"
- },
- {
-  "file": "temples/ram-janmabhoomi-ayodhya.jpg",
-  "title": "Shri Ram Janambhoomi Mandir, Ayodhya Dham.jpg",
-  "author": "Prime Minister's Office",
-  "license": "GODL-India",
-  "page": "https://commons.wikimedia.org/wiki/File:Shri_Ram_Janambhoomi_Mandir,_Ayodhya_Dham.jpg"
- },
- {
-  "file": "products/rudraksha-5.jpg",
-  "title": "RudrakshaBeads.jpg",
-  "author": "Merasmita",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:RudrakshaBeads.jpg"
- },
- {
-  "file": "products/rudraksha-7.jpg",
-  "title": "Rudraksha mala with 36 beads and 108 mukhi's.jpg",
-  "author": "Rushtook",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Rudraksha_mala_with_36_beads_and_108_mukhi%27s.jpg"
- },
- {
-  "file": "products/sphatik-mala.jpg",
-  "title": "Different types of Japa mala (prayer beads) selling in Varanasi, India.jpg",
-  "author": "Suyash Dwivedi",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Different_types_of_Japa_mala_(prayer_beads)_selling_in_Varanasi,_India.jpg"
- },
- {
-  "file": "products/vyapar-yantra.jpg",
-  "title": "Sri Yantra copper.jpg",
-  "author": "Tangopaso",
-  "license": "Public domain",
-  "page": "https://commons.wikimedia.org/wiki/File:Sri_Yantra_copper.jpg"
- },
- {
-  "file": "products/kuber-yantra.jpg",
-  "title": "A Sri Yantra copper relief.jpg",
-  "author": "Ms Sarah Welch",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:A_Sri_Yantra_copper_relief.jpg"
- },
- {
-  "file": "products/emerald.jpg",
-  "title": "Béryl var. émeraude sur gangue (Muzo Mine Boyaca - Colombie) 2.jpg",
-  "author": "Géry PARENT",
-  "license": "CC0",
-  "page": "https://commons.wikimedia.org/wiki/File:B%C3%A9ryl_var._%C3%A9meraude_sur_gangue_(Muzo_Mine_Boyaca_-_Colombie)_2.jpg"
- },
- {
-  "file": "products/tulsi-mala.jpg",
-  "title": "Japa mala (prayer beads) of Tulasi wood with 108 beads - 20040101-01.jpg",
-  "author": "GourangaUK.",
-  "license": "CC BY-SA 2.5",
-  "page": "https://commons.wikimedia.org/wiki/File:Japa_mala_(prayer_beads)_of_Tulasi_wood_with_108_beads_-_20040101-01.jpg"
- },
- {
-  "file": "products/hawan-kit.jpg",
-  "title": "Homa yagya during Maha Shivaratri in Nepal-070A2846.jpg",
-  "author": "Bijay Chaurasia",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Homa_yagya_during_Maha_Shivaratri_in_Nepal-070A2846.jpg"
- },
- {
-  "file": "products/parad-shivling.jpg",
-  "title": "Shiv lingam Tripundra.jpg",
-  "author": "शिव साहिल",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Shiv_lingam_Tripundra.jpg"
- },
- {
-  "file": "products/shankh.jpg",
-  "title": "Shankha with rosette.jpg",
-  "author": "Tangopaso",
-  "license": "Public domain",
-  "page": "https://commons.wikimedia.org/wiki/File:Shankha_with_rosette.jpg"
- },
- {
-  "file": "products/kamalgatta-mala.jpg",
-  "title": "Seeds of Nelumbo nucifera.jpg",
-  "author": "そらみみ (Soramimi)",
-  "license": "CC BY-SA 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Seeds_of_Nelumbo_nucifera.jpg"
- },
- {
-  "file": "products/hanuman-locket.jpg",
-  "title": "Panchmukhi-Hanuman-Idol-GoldArtIndia.jpg",
-  "author": "HanumanSevak2025",
-  "license": "CC BY 4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Panchmukhi-Hanuman-Idol-GoldArtIndia.jpg"
- }
+  {
+    "file": "temples/mahakaleshwar-ujjain.jpg",
+    "title": "Mahakaleshwar Temple, Ujjain.jpg",
+    "author": "Ashverse",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mahakaleshwar_Temple,_Ujjain.jpg"
+  },
+  {
+    "file": "temples/kashi-vishwanath-varanasi.jpg",
+    "title": "Ganga Dwar, Gateway of Corridor of Kashi Vishwanath Temple, Varanasi 2.webp",
+    "author": "Ashvin Kaitabhya, clicked by Abhishek Pandey",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Ganga_Dwar,_Gateway_of_Corridor_of_Kashi_Vishwanath_Temple,_Varanasi_2.webp"
+  },
+  {
+    "file": "temples/somnath-jyotirlinga-gujarat.jpg",
+    "title": "Shree Somnath Temple.jpg",
+    "author": "Prime Minister's Office",
+    "license": "GODL-India",
+    "page": "https://commons.wikimedia.org/wiki/File:Shree_Somnath_Temple.jpg"
+  },
+  {
+    "file": "temples/kedarnath-dham-uttarakhand.jpg",
+    "title": "Kedarnath Temple.jpg",
+    "author": "Shaq774 at en.wikipedia",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Kedarnath_Temple.jpg"
+  },
+  {
+    "file": "temples/tirupati-balaji-andhra.jpg",
+    "title": "Tirumala Venkateswara temple entrance 09062015.JPG",
+    "author": "Nikhilb239",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Tirumala_Venkateswara_temple_entrance_09062015.JPG"
+  },
+  {
+    "file": "temples/vaishno-devi-katra.jpg",
+    "title": "Mata Vaishno Devi Mandir, Katra.jpg",
+    "author": "Lpp3535",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mata_Vaishno_Devi_Mandir,_Katra.jpg"
+  },
+  {
+    "file": "temples/kamakhya-devi-assam.jpg",
+    "title": "Kamakhya Temple, Guwahati.jpg",
+    "author": "Kunal Dalui",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Kamakhya_Temple,_Guwahati.jpg"
+  },
+  {
+    "file": "temples/siddhivinayak-mumbai.jpg",
+    "title": "View of Siddhivinayak Temple.jpg",
+    "author": "Feroze Ahmad 2",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:View_of_Siddhivinayak_Temple.jpg"
+  },
+  {
+    "file": "temples/shani-shingnapur.jpg",
+    "title": "Shree Shanidev Temple, Shani Shingnapur.jpg",
+    "author": "Shivashanky",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Shree_Shanidev_Temple,_Shani_Shingnapur.jpg"
+  },
+  {
+    "file": "temples/jagannath-temple-puri.jpg",
+    "title": "Jagannath Temple, Puri 04.jpg",
+    "author": "Bernard Gagnon",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Jagannath_Temple,_Puri_04.jpg"
+  },
+  {
+    "file": "temples/ram-janmabhoomi-ayodhya.jpg",
+    "title": "Shri Ram Janambhoomi Mandir, Ayodhya Dham.jpg",
+    "author": "Prime Minister's Office",
+    "license": "GODL-India",
+    "page": "https://commons.wikimedia.org/wiki/File:Shri_Ram_Janambhoomi_Mandir,_Ayodhya_Dham.jpg"
+  },
+  {
+    "file": "products/rudraksha-5.jpg",
+    "title": "RudrakshaBeads.jpg",
+    "author": "Merasmita",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:RudrakshaBeads.jpg"
+  },
+  {
+    "file": "products/rudraksha-7.jpg",
+    "title": "Rudraksha mala with 36 beads and 108 mukhi's.jpg",
+    "author": "Rushtook",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Rudraksha_mala_with_36_beads_and_108_mukhi%27s.jpg"
+  },
+  {
+    "file": "products/sphatik-mala.jpg",
+    "title": "Different types of Japa mala (prayer beads) selling in Varanasi, India.jpg",
+    "author": "Suyash Dwivedi",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Different_types_of_Japa_mala_(prayer_beads)_selling_in_Varanasi,_India.jpg"
+  },
+  {
+    "file": "products/vyapar-yantra.jpg",
+    "title": "Sri Yantra copper.jpg",
+    "author": "Tangopaso",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Sri_Yantra_copper.jpg"
+  },
+  {
+    "file": "products/kuber-yantra.jpg",
+    "title": "A Sri Yantra copper relief.jpg",
+    "author": "Ms Sarah Welch",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:A_Sri_Yantra_copper_relief.jpg"
+  },
+  {
+    "file": "products/emerald.jpg",
+    "title": "Béryl var. émeraude sur gangue (Muzo Mine Boyaca - Colombie) 2.jpg",
+    "author": "Géry PARENT",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:B%C3%A9ryl_var._%C3%A9meraude_sur_gangue_(Muzo_Mine_Boyaca_-_Colombie)_2.jpg"
+  },
+  {
+    "file": "products/tulsi-mala.jpg",
+    "title": "Japa mala (prayer beads) of Tulasi wood with 108 beads - 20040101-01.jpg",
+    "author": "GourangaUK.",
+    "license": "CC BY-SA 2.5",
+    "page": "https://commons.wikimedia.org/wiki/File:Japa_mala_(prayer_beads)_of_Tulasi_wood_with_108_beads_-_20040101-01.jpg"
+  },
+  {
+    "file": "products/hawan-kit.jpg",
+    "title": "Homa yagya during Maha Shivaratri in Nepal-070A2846.jpg",
+    "author": "Bijay Chaurasia",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Homa_yagya_during_Maha_Shivaratri_in_Nepal-070A2846.jpg"
+  },
+  {
+    "file": "products/parad-shivling.jpg",
+    "title": "Shiv lingam Tripundra.jpg",
+    "author": "शिव साहिल",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Shiv_lingam_Tripundra.jpg"
+  },
+  {
+    "file": "products/shankh.jpg",
+    "title": "Shankha with rosette.jpg",
+    "author": "Tangopaso",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Shankha_with_rosette.jpg"
+  },
+  {
+    "file": "products/kamalgatta-mala.jpg",
+    "title": "Seeds of Nelumbo nucifera.jpg",
+    "author": "そらみみ (Soramimi)",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Seeds_of_Nelumbo_nucifera.jpg"
+  },
+  {
+    "file": "products/hanuman-locket.jpg",
+    "title": "Panchmukhi-Hanuman-Idol-GoldArtIndia.jpg",
+    "author": "HanumanSevak2025",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Panchmukhi-Hanuman-Idol-GoldArtIndia.jpg"
+  },
+  {
+    "file": "temples/meenakshi-amman-madurai.jpg",
+    "title": "Madurai Meenakshi Amman Koil Temple Tower.JPG",
+    "author": "Rahuljeswin",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Madurai_Meenakshi_Amman_Koil_Temple_Tower.JPG"
+  },
+  {
+    "file": "temples/ramanathaswamy-rameswaram.jpg",
+    "title": "Ramanathaswamy temple Entrance.jpg",
+    "author": "Wanderlusts",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Ramanathaswamy_temple_Entrance.jpg"
+  },
+  {
+    "file": "temples/badrinath-dham-uttarakhand.jpg",
+    "title": "Badrinath Temple, Uttarakhand (Photo- Vishwanath Negi).jpg",
+    "author": "Vishwanath Negi",
+    "license": "CC BY 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Badrinath_Temple,_Uttarakhand_(Photo-_Vishwanath_Negi).jpg"
+  },
+  {
+    "file": "temples/dwarkadhish-dwarka.jpg",
+    "title": "N-GJ-126 Dwarkadhish Temple, Dwarka Flag Hoisting.jpg",
+    "author": "MADHURANTHAKAN JAGADEESAN",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:N-GJ-126_Dwarkadhish_Temple,_Dwarka_Flag_Hoisting.jpg"
+  },
+  {
+    "file": "temples/trimbakeshwar-nashik.jpg",
+    "title": "Trimbakeshwar Shiva Temple 2005.jpg",
+    "author": "Saket Verma",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Trimbakeshwar_Shiva_Temple_2005.jpg"
+  },
+  {
+    "file": "temples/baidyanath-deoghar.jpg",
+    "title": "Sacred Pond - Baidyanath Dham Temple Complex - Deoghar.jpg",
+    "author": "Shivsh0336 at hi.wikipedia",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sacred_Pond_-_Baidyanath_Dham_Temple_Complex_-_Deoghar.jpg"
+  },
+  {
+    "file": "temples/mallikarjuna-srisailam.jpg",
+    "title": "Srisailam-temple-entrance.jpg",
+    "author": "Chintohere",
+    "license": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Srisailam-temple-entrance.jpg"
+  },
+  {
+    "file": "temples/omkareshwar-madhya-pradesh.jpg",
+    "title": "Omkareshwar Temple 02.jpg",
+    "author": "Bernard Gagnon",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Omkareshwar_Temple_02.jpg"
+  },
+  {
+    "file": "temples/banke-bihari-vrindavan.jpg",
+    "title": "Banke Bihari Temple, Vrindavan, Mathura, Uttar Pradesh, India (2010).jpg",
+    "author": "Guptaele",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Banke_Bihari_Temple,_Vrindavan,_Mathura,_Uttar_Pradesh,_India_(2010).jpg"
+  },
+  {
+    "file": "temples/krishna-janmabhoomi-mathura.jpg",
+    "title": "Mathura Temple-Mathura-India0002.JPG",
+    "author": "Diego Delso",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mathura_Temple-Mathura-India0002.JPG"
+  },
+  {
+    "file": "temples/khatu-shyam-rajasthan.jpg",
+    "title": "Khatu shyam temple.jpg",
+    "author": "Ansh patanker",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Khatu_shyam_temple.jpg"
+  },
+  {
+    "file": "temples/mahalakshmi-kolhapur.jpg",
+    "title": "Mahalaxmi Temple, Kolhapur, Maharashtra 11.jpg",
+    "author": "A.Murali",
+    "license": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mahalaxmi_Temple,_Kolhapur,_Maharashtra_11.jpg"
+  },
+  {
+    "file": "temples/kalighat-kali-kolkata.jpg",
+    "title": "Kalighat Temple Kolkata India - panoramio.jpg",
+    "author": "Hiroki Ogawa",
+    "license": "CC BY 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Kalighat_Temple_Kolkata_India_-_panoramio.jpg"
+  },
+  {
+    "file": "temples/padmanabhaswamy-thiruvananthapuram.jpg",
+    "title": "Padmanabhaswamy Temple (78808).jpg",
+    "author": "Manukrishnan80",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Padmanabhaswamy_Temple_(78808).jpg"
+  },
+  {
+    "file": "temples/sankat-mochan-hanuman-varanasi.jpg",
+    "title": "Sankat Mochan temple entrance, Varanasi - IRCTC 2017.jpg",
+    "author": "Vinayaraj",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Sankat_Mochan_temple_entrance,_Varanasi_-_IRCTC_2017.jpg"
+  },
+  {
+    "file": "temples/brihadeeswara-thanjavur.jpg",
+    "title": "Brihadisvara Temple during Maha Shivaratri-WUS03611 (edit).jpg",
+    "author": "Original:  Rainer Halama\nDerivative work:  UnpetitproleX",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_(edit).jpg"
+  },
+  {
+    "file": "temples/mansa-devi-haridwar.jpg",
+    "title": "Mansa Devi Temple, Haridwar.JPG",
+    "author": "Ekabhishek",
+    "license": "CC BY-SA 3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mansa_Devi_Temple,_Haridwar.JPG"
+  },
+  {
+    "file": "temples/bhimashankar-maharashtra.jpg",
+    "title": "Bhimashankar temple front.jpg",
+    "author": "Mechatron00",
+    "license": "CC BY-SA 4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Bhimashankar_temple_front.jpg"
+  },
+  {
+    "file": "gau-sewa-illustrative.webp",
+    "title": "Illustrative gaushala scene",
+    "author": "AI-generated with OpenAI image generation",
+    "usage": "Conceptual page illustration, not evidence of a partner gaushala or completed seva"
+  },
+  {
+    "file": "gau-sewa-hero-v2.webp",
+    "title": "Cow and calf in a sunlit gaushala courtyard",
+    "author": "AI-generated with the built-in OpenAI image generation tool",
+    "usage": "Conceptual page illustration, not evidence of a partner gaushala or completed seva",
+    "prompt": "Use case: photorealistic-natural. Asset type: premium Indian Gau Sewa charity website panoramic hero photograph, no text. A beautiful calm Indian Gir cow and a young calf in an airy immaculate sandstone gaushala courtyard, a caretaker's hands gently offering fresh green fodder, soft early morning sunlight filtering through a banyan tree, distant carved sandstone arches, authentic humane cow care, elegant editorial photography with fine natural texture, warm ivory, muted sage and honey gold palette. Wide landscape composition with cows on right two thirds, soft uncluttered softly lit cream courtyard on left third. Realistic anatomy, tasteful peaceful premium Indian heritage aesthetic, no garlands, no religious symbols, no lettering, no logo, no watermark. Photographic image only, no UI, no borders."
+  }
 ]

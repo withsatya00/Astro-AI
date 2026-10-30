@@ -16,6 +16,15 @@ def client():
     with TestClient(app, headers={"X-Client-Id": "test-client-0123456789abcdef"}) as c:
         yield c
 
+def _admin_headers():
+    from packages.core.security import create_access_token
+    with SessionLocal() as db:
+        user = User(email=f"admin-{uuid.uuid4().hex}@test.in", hashed_password="test", full_name="Admin", role="admin")
+        db.add(user)
+        db.commit()
+        return {"Authorization": f"Bearer {create_access_token({'sub': user.id})}"}
+
+
 def test_astrologer_directory_list_and_filter(client):
     """Verifies that astrologers are loaded dynamically with search and filters."""
     res = client.get("/api/v1/astrologers")
@@ -181,22 +190,35 @@ def test_astrologer_reviews_and_availability_update(client):
     res_astro = client.get("/api/v1/astrologers")
     astro_id = res_astro.json()["items"][0]["id"]
 
-    # Add review
-    res_review = client.post(f"/api/v1/astrologers/{astro_id}/reviews", json={
-        "rating": 5,
-        "comment": "Accurate prediction and very soothing guidance.",
-        "user_name": "Satisfied Seeker"
-    })
-    assert res_review.status_code == 200
-    assert res_review.json()["comment"] == "Accurate prediction and very soothing guidance."
+    # Reviews need a signed-in client who has actually consulted this astrologer.
+    review = {"rating": 5, "comment": "Accurate prediction and very soothing guidance."}
+    assert client.post(f"/api/v1/astrologers/{astro_id}/reviews", json=review).status_code == 401
+    headers = _admin_headers()
+    assert client.post(f"/api/v1/astrologers/{astro_id}/reviews", headers=headers, json=review).status_code == 403
+    from packages.database.models import ChatMessage
+    user_id = None
+    with SessionLocal() as db:
+        user = db.query(User).filter(User.email.like("admin-%")).order_by(User.created_at.desc()).first()
+        user_id = user.id
+        consult = Consultation(user_id=user_id, owner_key=f"u:{user_id}", astrologer_id=astro_id)
+        db.add(consult)
+        db.flush()
+        db.add(ChatMessage(session_id="test-session", consultation_id=consult.id, role="user", content="Hello"))
+        db.commit()
+    res_review = client.post(f"/api/v1/astrologers/{astro_id}/reviews", headers=headers, json=review)
+    assert res_review.status_code == 200, res_review.text
+    assert res_review.json()["comment"] == review["comment"]
     assert res_review.json()["rating"] == 5
+    assert client.post(f"/api/v1/astrologers/{astro_id}/reviews", headers=headers, json=review).status_code == 409
 
-    # Update availability
-    res_avail = client.patch(f"/api/v1/astrologers/{astro_id}/availability", json={
+    # Availability can only be changed by an admin.
+    assert client.patch(f"/api/v1/astrologers/{astro_id}/availability", json={"availability": "busy"}).status_code == 403
+    res_avail = client.patch(f"/api/v1/astrologers/{astro_id}/availability", headers=_admin_headers(), json={
         "availability": "busy"
     })
     assert res_avail.status_code == 200
     assert res_avail.json()["availability"] == "busy"
+    client.patch(f"/api/v1/astrologers/{astro_id}/availability", headers=_admin_headers(), json={"availability": "online"})
 
 def test_admin_persona_update(client):
     """Verifies that an administrator can update an AI astrologer persona's credentials and pricing."""
@@ -204,11 +226,9 @@ def test_admin_persona_update(client):
     astro = res_astro.json()["items"][0]
     astro_id = astro["id"]
 
-    res_update = client.patch(f"/api/v1/astrologers/{astro_id}", json={
-        "price_per_minute": 0,
-        "is_ai": True,
-        "title": "Master Vedic Numerologist & Jyotish Scholar"
-    })
+    body = {"price_per_minute": 0, "is_ai": True, "title": "Master Vedic Numerologist & Jyotish Scholar"}
+    assert client.patch(f"/api/v1/astrologers/{astro_id}", json=body).status_code == 403
+    res_update = client.patch(f"/api/v1/astrologers/{astro_id}", headers=_admin_headers(), json=body)
     assert res_update.status_code == 200
     updated = res_update.json()
     assert updated["price_per_minute"] == 0

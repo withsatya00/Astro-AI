@@ -15,9 +15,9 @@
   --bg-subtle: #F8F5EE;
 
   /* Brand Primary & Accents */
-  --color-purple-primary: #7439EA;
-  --color-purple-hover: #5B21B6;
-  --color-purple-deep: #4C1D95;
+  --color-purple-primary: #4A1B9A;
+  --color-purple-hover: #3B1580;
+  --color-purple-deep: #4A1B9A;
   --color-purple-light: #F5F3FF;
   --color-purple-subtle: #DDD6FE;
   --color-purple-glow: rgba(116, 57, 234, 0.2);
@@ -46,7 +46,7 @@
   /* Borders & Dividers */
   --border-subtle: #E7E2D8;
   --border-card: #EFE9DD;
-  --border-focus: #7439EA;
+  --border-focus: #4A1B9A;
   --border-gold: #FCD34D;
 
   /* Functional Status */

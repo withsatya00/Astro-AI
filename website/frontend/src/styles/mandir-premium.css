@@ -1,0 +1,136 @@
+/* Mandir Seva premium pass: hero matches the astrologer directory masthead, a bold "today" banner and richer temple cards. */
+
+/* ---------- hero (same plum + gold look as .directory-masthead__inner) ---------- */
+:is(.mandir-page, .mall-page) .mandir-hero {
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .8fr); align-items: end; gap: 36px; padding: 34px 38px; margin-bottom: 22px;
+  border: 1px solid #e5d9c7; border-radius: 26px; box-shadow: 0 18px 50px -34px #281a3c;
+  background: radial-gradient(circle at 92% 6%, #eadcf7 0, #b99ad3 14%, transparent 38%), var(--brand-banner);
+}
+:is(.mandir-page, .mall-page) .mandir-hero::before { display: none; }
+:is(.mandir-page, .mall-page) .mandir-hero::after { content: ''; position: absolute; width: 270px; height: 270px; border: 1px solid #ffffff21; border-radius: 50%; right: -132px; bottom: -155px; pointer-events: none; }
+.mandir-hero__copy { z-index: 1; }
+.mandir-hero__eyebrow { margin: 0 0 8px !important; color: #efd4a0 !important; font-size: .68rem !important; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.mandir-hero__titlerow { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+:is(.mandir-page, .mall-page) .mandir-hero .shop-hero__badge { margin: 0; background: #ffffff12; border-color: #f0d69d70; color: #ffe4a9; letter-spacing: .04em; }
+.mandir-hero__count { display: inline-flex; align-items: center; min-height: 28px; padding: 5px 11px; border: 1px solid #f0d69d70; border-radius: 999px; background: #ffffff12; color: #ffe4a9; font-size: .7rem; font-weight: 800; }
+:is(.mandir-page, .mall-page) .mandir-hero h1 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); letter-spacing: -.02em; line-height: 1.12; margin: 0 0 12px; }
+:is(.mandir-page, .mall-page) .mandir-hero h1 em { background: linear-gradient(90deg, #f6dca0, #efc36d); -webkit-background-clip: text; background-clip: text; }
+:is(.mandir-page, .mall-page) .mandir-hero p { color: #e6dcea; font-size: .91rem; max-width: 630px; }
+.mandir-hero .shop-hero__actions { display: flex; flex-wrap: wrap; gap: 10px; width: auto; margin-top: 4px; }
+.mandir-hero .shop-trust { z-index: 1; display: grid; grid-template-columns: 1fr; gap: 10px; max-width: none; }
+.mandir-hero .shop-trust > div { gap: 10px; padding: 10px 12px; border: 1px solid #ffffff20; border-radius: 13px; background: #ffffff0b; backdrop-filter: blur(5px); color: #fff; font-size: .78rem; }
+.mandir-hero .shop-trust > div { padding: 14px 16px; border-radius: 16px; gap: 14px; }
+.mandir-hero .shop-trust > div > span:first-child { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: #f1cf8b; font-size: 1rem; }
+.mandir-hero .shop-trust p { display: grid; gap: 2px; margin: 0; line-height: 1.2; }
+.mandir-hero .shop-trust b { color: #fff; font-size: .86rem; }
+.mandir-hero .shop-trust small { color: #e0d4e5; font-size: .72rem; font-weight: 500; }
+
+/* ---------- today's seva: the loudest block on the page ---------- */
+.mandir-today { position: relative; display: grid; grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); margin-bottom: 26px; overflow: hidden; border-radius: 26px;
+  border: 2px solid #e8b04b; background: linear-gradient(135deg, #fff3d6 0%, #ffe3a8 55%, #fcd27a 100%); box-shadow: 0 0 0 5px #f59e0b22, 0 26px 54px -28px #b45309; }
+.mandir-today[hidden] { display: none; }
+.mt-today__media { position: relative; min-height: 240px; }
+.mt-today__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mt-today__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, #fcd27a 100%); }
+.mt-today__body { display: grid; gap: 8px; align-content: center; padding: 26px 30px; color: #3b2743; }
+.mt-today__badge { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: #1e0b44; color: #ffe4a9; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.mt-today__badge i { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 0 #f59e0b; animation: mt-pulse 1.6s infinite; }
+@keyframes mt-pulse { 70% { box-shadow: 0 0 0 9px #f59e0b00; } 100% { box-shadow: 0 0 0 0 #f59e0b00; } }
+.mt-today__title { margin: 4px 0 0; font: 800 clamp(1.5rem, 3.6vw, 2.4rem)/1.15 Georgia, "Times New Roman", serif; color: #1e0b44; letter-spacing: -.02em; }
+.mt-today__title em { font-style: normal; color: #b45309; }
+.mt-today__meta { margin: 0; font-size: .8rem; color: #6b4a1e; }
+.mt-today__lead { margin: 4px 0 0; font-size: 1rem; color: #3b2743; }
+.mt-today__label { margin: 8px 0 0; font-size: .72rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #92400e; }
+.mt-today__items { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.mt-today__items li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid #efc36d; font-size: .9rem; font-weight: 800; color: #1e0b44; box-shadow: 0 6px 14px -10px #b45309; }
+.mt-today__items li span { font-size: 1.2rem; }
+.mt-today__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; }
+.mt-today__cta .shop-btn { padding: 14px 24px; font-size: .95rem; background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; box-shadow: 0 14px 26px -16px #1e0b44; }
+.mt-today__cta .shop-btn:hover { filter: brightness(1.15); }
+.mt-today__special { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 5px; border-radius: 14px; border: 1px dashed #b45309; background: #ffffff99; cursor: pointer; font: inherit; text-align: left; }
+.mt-today__special img { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; }
+.mt-today__special span { display: grid; font-size: .76rem; font-weight: 800; color: #1e0b44; line-height: 1.3; max-width: 220px; }
+.mt-today__special small { font-weight: 600; color: #6b4a1e; }
+
+/* ---------- temple cards ---------- */
+.mandir-page .shop-grid { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+.mandir-page .mt-card { position: relative; border-radius: 24px; border: 1px solid #e5d9c7; background: #fffdf8; box-shadow: 0 16px 38px -28px #281a3c; transition: transform .3s, box-shadow .3s, border-color .3s; }
+.mandir-page .mt-card::before { content: ''; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #b45309, #f6dca0, #b45309); }
+.mandir-page .mt-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #4a1b9a; }
+.mandir-page .mt-card .shop-card__media { aspect-ratio: 16 / 11; }
+.mandir-page .mt-card .shop-card__media::after { height: 60%; background: linear-gradient(to top, rgba(32, 18, 48, .78), transparent); }
+.mandir-page .mt-card .shop-card__tag { backdrop-filter: blur(6px); box-shadow: 0 6px 14px -8px #000; }
+.mandir-page .mt-card .shop-card__tag--bl { background: rgba(32, 18, 48, .62); border: 1px solid #ffffff2e; }
+.mt-card__cat { position: absolute; z-index: 2; top: 12px; right: 12px; padding: 4px 11px; border-radius: 999px; background: linear-gradient(135deg, #f6dca0, #efc36d); color: #3b2743; font-size: .66rem; font-weight: 900; letter-spacing: .03em; box-shadow: 0 6px 14px -8px #000; }
+.mandir-page .mt-card .shop-card__body { gap: 10px; padding: 18px 18px 16px; }
+.mandir-page .mt-card .shop-card__eyebrow { align-self: flex-start; padding: 3px 10px; border-radius: 999px; background: #fdf1d6; color: #92400e; letter-spacing: .03em; text-transform: none; font-size: .7rem; }
+.mandir-page .mt-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.12rem; font-weight: 800; line-height: 1.3; color: #1e0b44; }
+.mandir-page .mt-card .shop-card__title a { color: inherit; text-decoration: none; }
+.mandir-page .mt-card .shop-card__list { margin-top: 2px; padding: 12px; border: 1px solid #f0e4cc; border-radius: 14px; background: #fbf5e8; }
+.mandir-page .mt-card .shop-card__list b { color: #92400e; }
+.mandir-page .mt-card .shop-card__foot { border-top: 0; padding-top: 6px; }
+.mandir-page .mt-card .shop-price { font-size: 1.25rem; font-weight: 900; color: #1e0b44; }
+.mt-card__btns { display: flex; gap: 6px; }
+.mandir-page .mt-card .shop-btn--gold { background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; }
+
+/* ---------- dark ---------- */
+html[data-theme="dark"] :is(.mandir-page, .mall-page) .mandir-hero { border-color: #8b6bd9; background: radial-gradient(circle at 92% 10%, #6a4377 0, transparent 30%), linear-gradient(125deg, #1e1727, #33233e); }
+html[data-theme="dark"] .mandir-today { background: linear-gradient(135deg, #3a2a14, #4a3416); border-color: #b9842f; }
+html[data-theme="dark"] .mt-today__media::after { background: linear-gradient(90deg, transparent 55%, #3a2a14 100%); }
+html[data-theme="dark"] .mt-today__body, html[data-theme="dark"] .mt-today__title, html[data-theme="dark"] .mt-today__lead { color: #fbeacb; }
+html[data-theme="dark"] .mt-today__meta, html[data-theme="dark"] .mt-today__label { color: #e9bc72; }
+html[data-theme="dark"] .mt-today__items li { background: #2a2018; color: #fbeacb; border-color: #8a6422; }
+html[data-theme="dark"] .mt-today__cta .shop-btn { background: linear-gradient(135deg, #f6dca0, #efc36d); color: #1e0b44; }
+html[data-theme="dark"] .mt-today__special { background: #2a201866; border-color: #b9842f; }
+html[data-theme="dark"] .mt-today__special span { color: #fbeacb; }
+html[data-theme="dark"] .mandir-page .mt-card { background: var(--exp-card, #241c2e); border-color: var(--exp-line, #433350); }
+html[data-theme="dark"] .mandir-page .mt-card .shop-card__title, html[data-theme="dark"] .mandir-page .mt-card .shop-price { color: var(--exp-ink, #f1e9f7); }
+html[data-theme="dark"] .mandir-page .mt-card .shop-card__list { background: #1d1626; border-color: var(--exp-line, #433350); }
+html[data-theme="dark"] .mandir-page .mt-card .shop-card__eyebrow { background: #3a2a14; color: #e9bc72; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  :is(.mandir-page, .mall-page) .mandir-hero { grid-template-columns: 1fr; gap: 22px; padding: 28px; }
+  .mandir-today { grid-template-columns: 1fr; }
+  .mt-today__media { min-height: 0; height: 180px; }
+  .mt-today__media::after { background: linear-gradient(180deg, transparent 50%, #fcd27a 100%); }
+  html[data-theme="dark"] .mt-today__media::after { background: linear-gradient(180deg, transparent 50%, #3a2a14 100%); }
+}
+@media (max-width: 640px) {
+  :is(.mandir-page, .mall-page) .mandir-hero { padding: 22px 18px; border-radius: 20px; }
+  :is(.mandir-page, .mall-page) .mandir-hero h1 { font-size: 1.7rem; }
+  :is(.mandir-page, .mall-page) .mandir-hero p { font-size: .82rem; }
+  .mandir-hero .shop-hero__actions .shop-btn { flex: 1 1 100%; }
+  .mt-today__body { padding: 20px 18px; }
+  .mt-today__items li { padding: 7px 12px; font-size: .82rem; }
+  .mt-today__cta .shop-btn { width: 100%; }
+  .mandir-page .shop-grid { grid-template-columns: 1fr; }
+  .mandir-page .mt-card .shop-card__foot { flex-wrap: wrap; }
+}
+
+/* ---------- Astro Mall product cards ---------- */
+.mall-page .shop-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.mall-page .ml-card { position: relative; border-radius: 24px; border: 1px solid #e5d9c7; background: #fffdf8; box-shadow: 0 16px 38px -28px #281a3c; transition: transform .3s, box-shadow .3s, border-color .3s; }
+.mall-page .ml-card::before { content: ''; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #b45309, #f6dca0, #b45309); }
+.mall-page .ml-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #4a1b9a; }
+.mall-page .ml-card .shop-card__media { margin: 12px 12px 0; border-radius: 18px; border: 1px solid #f0e4cc; background: radial-gradient(circle at 50% 30%, #fffaf0, #f5ead3); }
+.mall-page .ml-card .shop-card__media::after { display: none; }
+.mall-page .ml-card .shop-card__tag { backdrop-filter: blur(6px); box-shadow: 0 6px 14px -8px #000; }
+.mall-page .ml-card .shop-card__tag--tl { background: linear-gradient(135deg, #f6dca0, #efc36d); color: #3b2743; }
+.mall-page .ml-card .shop-card__tag--bl { background: rgba(32, 18, 48, .72); }
+.mall-page .ml-card .shop-card__heart { top: 22px; right: 22px; }
+.mall-page .ml-card .shop-card__body { gap: 9px; padding: 16px 18px 18px; }
+.mall-page .ml-card .shop-card__eyebrow { align-self: flex-start; max-width: 100%; padding: 3px 10px; border-radius: 999px; background: #fdf1d6; color: #92400e; letter-spacing: .02em; text-transform: none; font-size: .7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mall-page .ml-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.05rem; font-weight: 800; color: #1e0b44; }
+.mall-page .ml-card .shop-card__title a { color: inherit; text-decoration: none; }
+.mall-page .ml-card .shop-card__foot { margin-top: 2px; padding: 10px 12px; border: 1px solid #f0e4cc; border-radius: 14px; background: #fbf5e8; }
+.mall-page .ml-card .shop-price { font-size: 1.3rem; font-weight: 900; color: #1e0b44; }
+.mall-page .ml-card .shop-btn--gold { background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; }
+html[data-theme="dark"] .mall-page .ml-card { background: var(--exp-card, #241c2e); border-color: var(--exp-line, #433350); }
+html[data-theme="dark"] .mall-page .ml-card .shop-card__media { background: #1d1626; border-color: var(--exp-line, #433350); }
+html[data-theme="dark"] .mall-page .ml-card .shop-card__title, html[data-theme="dark"] .mall-page .ml-card .shop-price { color: var(--exp-ink, #f1e9f7); }
+html[data-theme="dark"] .mall-page .ml-card .shop-card__foot { background: #1d1626; border-color: var(--exp-line, #433350); }
+html[data-theme="dark"] .mall-page .ml-card .shop-card__eyebrow { background: #3a2a14; color: #e9bc72; }
+@media (max-width: 640px) { .mall-page .shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .mall-page .ml-card .shop-card__body { padding: 12px; } }
+.mall-page .ml-card .shop-card__media { padding: 0; aspect-ratio: 1; overflow: hidden; }
+.mall-page .ml-card .shop-card__media img { object-fit: cover; }

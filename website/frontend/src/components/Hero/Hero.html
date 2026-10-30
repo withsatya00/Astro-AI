@@ -25,15 +25,14 @@
 
         <!-- Hero Search Box -->
         <div class="hero-search-wrapper w-full max-w-xl mb-4">
-          <form class="hero-search-bar bg-white border-2 border-[#E7E2D8] focus-within:border-[#7439EA] rounded-full p-1.5 pl-5 flex items-center shadow-md transition-all" id="hero-search-form" onsubmit="event.preventDefault(); window.App && window.App.onHeroSearch();">
+          <form class="hero-search-bar bg-white border-2 border-[#E7E2D8] focus-within:border-[#4a1b9a] rounded-full p-1.5 pl-5 flex items-center shadow-md transition-all" id="hero-search-form" onsubmit="event.preventDefault(); window.App && window.App.onHeroSearch();">
             <input 
               type="text" 
               id="hero-search-input" 
               class="hero-search-input flex-1 bg-transparent border-none outline-none text-sm text-[#1E1B4B] placeholder:text-gray-400 py-1" 
               placeholder="Search astrologer or concern..." 
-              data-i18n-placeholder="hero_search_placeholder"
-            />
-            <button type="submit" class="btn-hero-search-circle w-10 h-10 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white flex items-center justify-center shrink-0 transition-all shadow-md cursor-pointer ml-2" aria-label="Search Astrologer" title="Search Astrologer">
+              data-i18n-placeholder="hero_search_placeholder" aria-label="Search astrologers, services or topics"/>
+            <button type="submit" class="btn-hero-search-circle w-10 h-10 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white flex items-center justify-center shrink-0 transition-all shadow-md cursor-pointer ml-2" aria-label="Search Astrologer" title="Search Astrologer">
               <span class="text-sm">🔍</span>
             </button>
           </form>
@@ -41,22 +40,22 @@
           <!-- Trending Topics Strip -->
           <div class="hero-trending-tags flex items-center gap-1.5 sm:gap-2 flex-wrap mt-3 text-xs text-[#64748B]">
             <span class="trending-label font-bold text-[#B45309]" data-i18n="trending_label">🔥 Trending:</span>
-            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:text-[#7439EA] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Career')" data-i18n="trend_career">Career Growth</button>
-            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:text-[#7439EA] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Marriage')" data-i18n="trend_marriage">Marriage & Love</button>
-            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:text-[#7439EA] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Wealth')" data-i18n="trend_wealth">Dhan Yog</button>
-            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:text-[#7439EA] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Sade Sati')" data-i18n="trend_sadesati">Shani Sade Sati</button>
-            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:text-[#7439EA] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Kundli Milan')" data-i18n="trend_milan">Kundli Milan</button>
+            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:text-[#4a1b9a] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Career')" data-i18n="trend_career">Career Growth</button>
+            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:text-[#4a1b9a] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Marriage')" data-i18n="trend_marriage">Marriage & Love</button>
+            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:text-[#4a1b9a] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Wealth')" data-i18n="trend_wealth">Dhan Yog</button>
+            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:text-[#4a1b9a] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Sade Sati')" data-i18n="trend_sadesati">Shani Sade Sati</button>
+            <button type="button" class="trending-tag bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:text-[#4a1b9a] rounded-full px-3 py-1 text-xs font-medium transition-colors cursor-pointer" onclick="window.App && window.App.quickSearch('Kundli Milan')" data-i18n="trend_milan">Kundli Milan</button>
           </div>
         </div>
 
         <!-- Hero CTAs -->
         <div class="hero-cta-group flex items-center gap-3.5 flex-wrap mt-2">
-          <a href="/astrologers" data-nav-link class="btn-hero-find inline-flex items-center gap-2 bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg shadow-purple-500/25 transition-all transform hover:-translate-y-0.5 no-underline">
+          <a href="/astrologers" data-nav-link class="btn-hero-find inline-flex items-center gap-2 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg shadow-purple-500/25 transition-all transform hover:-translate-y-0.5 no-underline">
             <span data-i18n="hero_cta_find">Find an Astrologer</span>
             <span>➔</span>
           </a>
-          <button type="button" class="btn-hero-how inline-flex items-center gap-2 bg-white border border-[#E7E2D8] hover:border-[#7439EA] hover:bg-[#F5F3FF] text-[#1E1B4B] font-semibold text-sm px-6 py-3.5 rounded-full shadow-xs transition-all cursor-pointer" onclick="document.getElementById('home-why-choose') && document.getElementById('home-why-choose').scrollIntoView({ behavior: 'smooth' })">
-            <span class="play-icon text-xs text-[#7439EA]">▶</span> <span data-i18n="hero_how_it_works">How It Works</span>
+          <button type="button" class="btn-hero-how inline-flex items-center gap-2 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:bg-[#f4eefb] text-[#1E1B4B] font-semibold text-sm px-6 py-3.5 rounded-full shadow-xs transition-all cursor-pointer" onclick="document.getElementById('home-why-choose') && document.getElementById('home-why-choose').scrollIntoView({ behavior: 'smooth' })">
+            <span class="play-icon text-xs text-[#4a1b9a]">▶</span> <span data-i18n="hero_how_it_works">How It Works</span>
           </button>
         </div>
       </div>

@@ -14,13 +14,13 @@
     <div class="panchang-control-group">
       <label class="panchang-control-label">दिनांक (Select Date)</label>
       <div class="panchang-input-wrap">
-        <input type="date" id="panchang-page-date" class="form-control" onchange="App.fetchPanchangForPage()" />
+        <input type="date" id="panchang-page-date" class="form-control" onchange="App.fetchPanchangForPage()" aria-label="Panchang date"/>
       </div>
     </div>
     <div class="panchang-control-group">
       <label class="panchang-control-label">स्थान (City / Location)</label>
       <div class="panchang-input-wrap">
-        <input type="text" id="panchang-page-city" class="form-control" value="New Delhi" placeholder="Enter city name..." onkeydown="if(event.key==='Enter') App.fetchPanchangForPage()" />
+        <input type="text" id="panchang-page-city" class="form-control" value="New Delhi" placeholder="Enter city name..." onkeydown="if(event.key==='Enter') App.fetchPanchangForPage()" aria-label="City for panchang"/>
       </div>
     </div>
     <button type="button" class="btn-panchang-refresh" id="btn-panchang-page-refresh" onclick="App.fetchPanchangForPage()">

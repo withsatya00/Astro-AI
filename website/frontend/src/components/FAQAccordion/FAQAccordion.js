@@ -57,7 +57,7 @@ export class FAQAccordionComponent {
           const active = tab === button;
           tab.classList.toggle('active', active);
           tab.setAttribute('aria-pressed', String(active));
-          tab.classList.toggle('bg-[#7439EA]', active);
+          tab.classList.toggle('bg-[#4a1b9a]', active);
           tab.classList.toggle('text-white', active);
           tab.classList.toggle('bg-white', !active);
           tab.classList.toggle('text-[#1E1B4B]', !active);

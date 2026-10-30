@@ -17,6 +17,10 @@ MAX_POINTS_SHARE = 0.20           # points can pay for at most this share of an 
 MEMBER_MALL_DISCOUNT = 0.05       # extra discount on Astro Mall for members
 REFERRAL_BONUS_POINTS = 100       # given to both people when the referred person completes a first paid order
 
+MEMBER_CONSULT_DISCOUNT = 0.10    # members pay this much less for scheduled astrologer appointments
+MEMBER_MONTHLY_BONUS = 100.0      # wallet credit a member can claim once every calendar month
+REFERRAL_MILESTONES = {3: 150, 5: 300, 10: 750}   # friends who completed a first order -> extra points (once each)
+
 MEMBER_PLANS: Dict[str, Dict[str, Any]] = {
     "monthly": {"price": 149.0, "days": 30},
     "yearly": {"price": 999.0, "days": 365},
@@ -133,4 +137,21 @@ def maybe_reward_referral(db: Session, user: User, ref: str) -> bool:
         return False
     award_points(db, user.id, REFERRAL_BONUS_POINTS, "referral", ref)
     award_points(db, user.referred_by, REFERRAL_BONUS_POINTS, "referral", ref)
+    award_referral_milestones(db, user.referred_by, ref)
     return True
+
+
+def referral_count(db: Session, referrer_id: str) -> int:
+    """Friends this user invited who have completed a first paid order."""
+    return (db.query(User.id).join(LoyaltyEntry, LoyaltyEntry.user_id == User.id)
+            .filter(User.referred_by == referrer_id, LoyaltyEntry.reason == "referral").distinct().count())
+
+
+def award_referral_milestones(db: Session, referrer_id: str, ref: str) -> None:
+    """Extra points the first time a referrer reaches 3, 5 and 10 successful invites (flush first so the new bonus counts)."""
+    db.flush()
+    count = referral_count(db, referrer_id)
+    for need, points in REFERRAL_MILESTONES.items():
+        reason = f"referral_milestone_{need}"
+        if count >= need and not db.query(LoyaltyEntry.id).filter(LoyaltyEntry.user_id == referrer_id, LoyaltyEntry.reason == reason).first():
+            award_points(db, referrer_id, points, reason, ref)

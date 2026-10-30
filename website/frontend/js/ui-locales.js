@@ -175,7 +175,1104 @@ window.ASTRO_UI_LOCALES = {
       "hero_cta_find": "Find an Astrologer",
       "featured_tag": "Featured Astrologers",
       "tab_today": "Today",
-      "tool_sadesati": "🪐 Shani Sade Sati Tracker"
+      "tool_sadesati": "🪐 Shani Sade Sati Tracker",
+      "close": "Close",
+      "retry": "Retry",
+      "loading": "Loading...",
+      "credits.link": "Photo credits",
+      "credits.title": "Photo credits",
+      "credits.fallback": "Credits are listed on the Wikimedia Commons file pages.",
+      "status.cancelled": "Cancelled",
+      "md.badge": "E-Chadawa & Sankalp Puja",
+      "md.title": "Offer Chadawa & Sankalp Puja at <em>Holy Temples of India</em>",
+      "md.sub": "Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.",
+      "md.trust1": "Video of your sankalp, with name & gotra",
+      "md.trust2": "Performed by temple priests",
+      "md.trust3": "Prasad delivered to your home",
+      "md.bookings": "My Bookings & Video Proof",
+      "md.cat.all": "All Temples",
+      "md.cat.shiva": "🔱 Jyotirlinga & Shiva",
+      "md.cat.shakti": "🌸 Shaktipeeth & Devi",
+      "md.cat.shani": "🪐 Shani & Hanuman",
+      "md.cat.ganesh": "🐘 Ganesh",
+      "md.cat.ram": "🏹 Ram, Krishna & Vishnu",
+      "md.search": "Search temple, deity or city...",
+      "md.loading": "Loading temples...",
+      "md.empty.title": "No temples found",
+      "md.empty.sub": "Try a different name or category.",
+      "md.credit": "Temple photographs from Wikimedia Commons.",
+      "md.bookings.title": "My Chadawa & Sankalp Bookings",
+      "md.video.title": "Sankalp Video Proof",
+      "md.video.note": "Recorded for your sankalp",
+      "md.video.share": "Share on WhatsApp",
+      "md.share.text": "Video of my sankalp puja:",
+      "md.today": "Today",
+      "md.tithi": "Tithi",
+      "md.deityOfDay": "Deity of the day",
+      "md.forKundli": "For your kundli",
+      "md.suggest": "Your moon sign {sign} is ruled by {lord}. Tradition recommends seva of {deity}.",
+      "md.disclaimer": "Traditional guidance, not a guarantee of results.",
+      "md.bookingOpen": "Booking open",
+      "md.startsFrom": "Starts from",
+      "md.book": "Book puja",
+      "md.loadingBookings": "Loading your bookings...",
+      "md.noBookings.title": "No bookings yet",
+      "md.noBookings.sub": "Choose a temple and book your first sankalp puja.",
+      "md.loadFail": "Could not load bookings",
+      "md.paidAmount": "{amount} paid",
+      "md.yajman": "Yajman",
+      "md.gotra": "Gotra",
+      "md.alsoIncluded": "Also included",
+      "md.scheduled": "Scheduled",
+      "md.prasadTrack": "Prasad SpeedPost",
+      "md.watch": "Watch proof",
+      "md.videoLater": "Video appears here after the sankalp",
+      "md.cancel": "Cancel",
+      "md.cancelConfirm": "Cancel this booking? The amount will be refunded to your wallet.",
+      "md.cancelled": "Booking cancelled",
+      "md.cancelledRefunded": "Cancelled & refunded",
+      "step.PAID": "Booked",
+      "step.SANKALP_SCHEDULED": "Scheduled",
+      "step.VIDEO_UPLOADED": "Video ready",
+      "step.COMPLETED": "Completed",
+      "cd.subtitle": "Sankalp puja & chadawa booking",
+      "cd.step1": "1. Choose your seva",
+      "cd.step2": "2. Sankalp details",
+      "cd.fillKundli": "Fill from my kundli",
+      "cd.name": "Yajman (devotee) name *",
+      "cd.name.ph": "e.g. Rahul Sharma",
+      "cd.phone": "Mobile number *",
+      "cd.gotra": "Gotra *",
+      "cd.gotra.hint": "If you do not know your gotra, Kashyap is used traditionally.",
+      "cd.rashi": "Rashi",
+      "cd.purpose": "Purpose of sankalp",
+      "cd.family": "Family members to include (optional)",
+      "cd.family.ph": "Names (and gotra if different), separated by commas",
+      "cd.prasad": "Send prasad to my home",
+      "cd.prasadFee": "Delivery by SpeedPost (+{fee})",
+      "cd.address": "Full delivery address with PIN code *",
+      "cd.address.ph": "House no., street, city, state, PIN",
+      "cd.total": "Total",
+      "cd.submit": "Book sankalp puja",
+      "cd.submitting": "Booking...",
+      "cd.noSeva": "No sevas are available for this temple right now.",
+      "cd.success": "Your sankalp is booked",
+      "cd.successBody": "The priest will perform the sankalp in the name of {name}, gotra {gotra}. The video will appear in My Bookings.",
+      "cd.bookingId": "Booking ID",
+      "cd.seva": "Seva",
+      "cd.paid": "Paid",
+      "cd.viewBookings": "View my bookings",
+      "cd.toast.booked": "Sankalp puja booked",
+      "cd.toast.filled": "Filled from your kundli",
+      "cd.toast.noChart": "No saved kundli found. Create one from the Kundli page.",
+      "cd.toast.chartFail": "Could not read your kundli right now",
+      "purpose.health": "Health & long life",
+      "purpose.business": "Business growth & prosperity",
+      "purpose.marriage": "Marriage & family harmony",
+      "purpose.shani": "Shani / graha shanti",
+      "purpose.children": "Children & education",
+      "purpose.wishes": "All wishes fulfilled",
+      "ml.badge": "Energized & sanctified puja items",
+      "ml.title": "Vedic <em>Astro Mall</em>",
+      "ml.sub": "Rudraksha, malas, yantras, gemstones and hawan kits from pandits and ashrams across India. Every item is energized in your name and gotra before it is shipped by SpeedPost.",
+      "ml.trust1": "Energized in your name & gotra",
+      "ml.trust2": "Certificate shown where the seller provides one",
+      "ml.trust3": "Cash on delivery or wallet payment",
+      "ml.orders": "My Orders & Tracking",
+      "ml.sell": "Sell your items",
+      "ml.cat.all": "All Items",
+      "ml.cat.rudraksha": "🪵 Rudraksha",
+      "ml.cat.mala": "📿 Malas",
+      "ml.cat.yantra": "☸️ Yantras & Kavach",
+      "ml.cat.gemstone": "💎 Gemstones",
+      "ml.cat.samagri": "🔥 Hawan & Puja",
+      "ml.cat.wishlist": "♥ Wishlist",
+      "ml.search": "Search rudraksha, mala, gemstone...",
+      "ml.price.any": "Any price",
+      "ml.price.1": "Under ₹500",
+      "ml.price.2": "₹500 - ₹1,000",
+      "ml.price.3": "₹1,000 - ₹2,500",
+      "ml.price.4": "Above ₹2,500",
+      "ml.sort.popular": "Top rated",
+      "ml.sort.newest": "Newest",
+      "ml.sort.asc": "Price: low to high",
+      "ml.sort.desc": "Price: high to low",
+      "ml.instock": "In stock only",
+      "ml.loading": "Loading catalog...",
+      "ml.empty.title": "No items found",
+      "ml.empty.sub": "Try a different category, price range or search.",
+      "ml.credit": "Starter catalog photographs from Wikimedia Commons.",
+      "ml.cart": "Cart",
+      "ml.energized": "Energized",
+      "ml.certificate": "Certificate",
+      "ml.new": "New - no reviews yet",
+      "ml.outOfStock": "Out of stock",
+      "ml.onlyLeft": "Only {n} left",
+      "ml.addToCart": "Add to cart",
+      "ml.details": "Details",
+      "ml.off": "{n}% off",
+      "ml.buyNow": "Buy now",
+      "ml.reviews": "Reviews",
+      "ml.loadingReviews": "Loading reviews...",
+      "ml.noReviews": "No reviews yet. Buyers can review an item after it is delivered.",
+      "ml.verified": "Verified buyer",
+      "ml.seller": "Seller",
+      "ml.material": "Material",
+      "ml.origin": "Origin",
+      "ml.energization": "Energization",
+      "ml.viewCert": "View certificate",
+      "ml.addedToCart": "Added to cart",
+      "ml.onlyAvail": "Only {n} available",
+      "ml.cartTitle": "Your cart",
+      "ml.subtotal": "Subtotal",
+      "ml.checkout": "Checkout",
+      "ml.cartEmpty.title": "Your cart is empty",
+      "ml.cartEmpty.sub": "Add items you like and they will wait here.",
+      "ml.remove": "Remove",
+      "ml.yourItems": "Your items",
+      "ml.qty": "Qty {n}",
+      "ml.energizeHead": "Energization details (pran-pratishtha)",
+      "ml.fullName": "Full name *",
+      "ml.gotra": "Gotra *",
+      "ml.energizeNote": "The pandit chants mantras with this name and gotra before the items are dispatched.",
+      "ml.delivery": "Delivery",
+      "ml.mobile": "Mobile number *",
+      "ml.address": "Full address with PIN code *",
+      "ml.payment": "Payment",
+      "ml.cod": "Cash on delivery",
+      "ml.cod.sub": "Pay when the parcel arrives",
+      "ml.wallet": "Astro wallet",
+      "ml.wallet.sub": "Pay instantly from your wallet balance",
+      "ml.wallet.balance": "Balance {amount}",
+      "ml.wallet.signin": "Sign in to pay from your wallet",
+      "ml.total": "Total",
+      "ml.placeOrder": "Place order",
+      "ml.placing": "Placing order...",
+      "ml.orderPlaced": "Order placed",
+      "ml.orderMsg": "{count} item(s) ordered, total {total}. They will be energized in your name and gotra before dispatch.",
+      "ml.viewOrders": "View my orders",
+      "ml.continue": "Continue shopping",
+      "ml.unavailable": "These items are not available right now",
+      "ml.needSignin": "Please sign in to pay from your wallet, or choose cash on delivery",
+      "sl.title": "Seller portal",
+      "sl.sub": "List your energized items for devotees across India",
+      "sl.signin.title": "Sign in to list items.",
+      "sl.signin.body": "Your listing is saved to your account and goes live after our team reviews it.",
+      "sl.photo": "Item photo *",
+      "sl.photo.hint": "JPG, PNG or WebP, at least 300 x 300 px, up to 6 MB. Use a clear photo of the actual item.",
+      "sl.photo.alt": "Photo preview",
+      "sl.name": "Pandit / ashram name *",
+      "sl.itemTitle": "Item title *",
+      "sl.itemTitle.ph": "e.g. 7-Mukhi Nepali Rudraksha, silver cap",
+      "sl.category": "Category *",
+      "sl.cat.rudraksha": "Rudraksha",
+      "sl.cat.mala": "Mala",
+      "sl.cat.yantra": "Yantra & kavach",
+      "sl.cat.gemstone": "Gemstone",
+      "sl.cat.samagri": "Hawan & puja samagri",
+      "sl.stock": "Pieces in stock *",
+      "sl.price": "Selling price (₹) *",
+      "sl.mrp": "MRP (₹, optional)",
+      "sl.material": "Material",
+      "sl.origin": "Origin",
+      "sl.desc": "Description & benefits *",
+      "sl.desc.ph": "Significance, usage and care instructions",
+      "sl.energize": "Energization details",
+      "sl.energize.ph": "e.g. Chanted 108 times with Mahamrityunjaya mantra",
+      "sl.submit": "Submit for review",
+      "sl.submitting": "Submitting...",
+      "sl.listings": "Your listings",
+      "sl.live": "Live",
+      "sl.review": "Awaiting review",
+      "sl.stockLine": "stock {n}",
+      "sl.photoUploaded": "Photo uploaded",
+      "sl.needPhoto": "Please upload a photo of your item first",
+      "sl.submitted": "Your item was sent for review. It will appear on Astro Mall once approved.",
+      "sl.needSignin": "Please sign in to list your items",
+      "or.title": "My Orders & Tracking",
+      "or.loading": "Loading your orders...",
+      "or.loadFail": "Could not load orders",
+      "or.none.title": "No orders yet",
+      "or.none.sub": "Your orders and tracking appear here.",
+      "or.PLACED": "Order placed",
+      "or.PAID": "Paid",
+      "or.ENERGIZING": "Being energized",
+      "or.DISPATCHED": "Dispatched",
+      "or.DELIVERED": "Delivered",
+      "or.CANCELLED": "Cancelled",
+      "or.energized": "✨ Energized in your name & gotra",
+      "or.pending": "🕉️ Energization pending",
+      "or.tracking": "SpeedPost",
+      "or.noTracking": "Tracking ID appears once dispatched",
+      "or.rate": "★ Rate item",
+      "or.editReview": "Edit review",
+      "or.cancel": "Cancel",
+      "or.cancelConfirm": "Cancel this order? Any amount paid is refunded to your wallet.",
+      "or.cancelled": "Order cancelled",
+      "rv.default": "Rate this item",
+      "rv.title": "Rate: {name}",
+      "rv.comment": "Your review (optional)",
+      "rv.submit": "Submit review",
+      "rv.note": "Only delivered orders can be reviewed.",
+      "rv.chooseStars": "Please choose a star rating",
+      "rv.thanks": "Thank you for your review",
+      "ml.forKundli": "Suggested for your kundli",
+      "ml.suggest": "Your moon sign {sign} is ruled by {lord}. Traditionally {gem} is recommended.",
+      "ml.disclaimer": "Traditional guidance, not a guarantee of results. Consult your astrologer before wearing a gemstone.",
+      "nb.title": "Notifications",
+      "nb.readAll": "Mark all read",
+      "nb.empty": "No notifications yet.",
+      "nb.aria": "Notifications",
+      "auth.needed": "Please sign in to continue.",
+      "auth.neededOrder": "Please sign in to place your order.",
+      "auth.neededOrders": "Please sign in to see your orders.",
+      "auth.neededBooking": "Please sign in to book a seva.",
+      "auth.neededBookings": "Please sign in to see your bookings.",
+      "auth.neededCoupon": "Please sign in to use a coupon.",
+      "auth.neededRewards": "Please sign in to see your rewards.",
+      "auth.neededSeller": "Please sign in to open the seller dashboard.",
+      "auth.signInBtn": "Sign in",
+      "md.certificate": "Certificate",
+      "md.liveDarshan": "🔴 Live darshan",
+      "md.priest": "Priest",
+      "cd.priestTitle": "Choose your priest (optional)",
+      "cd.anyPriest": "Any available priest",
+      "cd.verified": "Verified",
+      "cd.years": "{n} years of experience",
+      "cd.prasadRow": "Prasad delivery",
+      "cd.free": "Free (member)",
+      "co.offers": "Offers & points",
+      "co.couponPh": "Coupon code",
+      "co.apply": "Apply",
+      "co.coupon": "Coupon {code}",
+      "co.couponOk": "{code} applied: you save {amount}.",
+      "co.usePoints": "Use my {points} points (worth {worth})",
+      "co.pointsUsed": "Points used ({n})",
+      "co.memberDiscount": "Premium member discount",
+      "co.memberOn": "Premium member: extra discount and double points applied.",
+      "co.memberOnSeva": "Premium member: free prasad delivery and double points.",
+      "co.memberHint": "Premium members get extra discount, free prasad delivery and double points.",
+      "co.earn": "You will earn {n} points on this order.",
+      "co.gemTitle": "Gemstone advice",
+      "co.gemPolicy": "Please consult your astrologer before wearing a gemstone. Gemstones are energized and fitted for you, so returns are accepted only for a damaged, wrong or certificate-mismatched stone.",
+      "co.gemAck": "I have consulted my astrologer and I accept the return policy for gemstones.",
+      "pk.title": "Seva packages",
+      "pk.sub": "Book repeated sevas once, at a discount. Each session is scheduled on its date.",
+      "pk.sessions": "{n} sessions",
+      "pk.select": "Choose",
+      "pk.start": "First session on *",
+      "pk.dates": "Your session dates",
+      "pk.listPrice": "Price without package",
+      "pk.buy": "Buy package",
+      "pk.bought": "Package booked: {n} sessions scheduled",
+      "pk.part": "Package session",
+      "or.RETURN_REQUESTED": "Return requested",
+      "or.saved": "saved {amount}",
+      "or.track": "Track",
+      "or.trackTitle": "Track your order",
+      "or.courier": "Courier",
+      "or.trackIndiaPost": "Track on India Post",
+      "or.trackHint": "SpeedPost scans are shown on the India Post website with your tracking ID.",
+      "or.return": "Return",
+      "or.returnTitle": "Request a return",
+      "or.returnPolicy": "Returns are accepted only for damaged or wrong items inside the return window shown on the product page.",
+      "or.returnReason": "What is wrong with the item? *",
+      "or.returnSubmit": "Send request",
+      "or.returnSent": "Return request sent. We will contact you.",
+      "ml.from": "From",
+      "ml.chooseOptions": "Please choose the options on the product page.",
+      "ml.chooseOpts": "Choose options",
+      "pp.mall": "Astro Mall",
+      "pp.notFound": "This item is not available",
+      "pp.backToMall": "Back to Astro Mall",
+      "pp.verifiedSeller": "Verified seller",
+      "pp.inStock": "In stock",
+      "pp.delivery": "Energized in your name, then dispatched by SpeedPost to your address.",
+      "pp.returnShort": "Returns for damaged or wrong items within {days} days of delivery.",
+      "pp.about": "About this item",
+      "pp.certificate": "Lab certificate",
+      "pp.verifiedCert": "Certificate verified",
+      "pp.lab": "Lab",
+      "pp.certNo": "Certificate no.",
+      "pp.certCode": "Verification code",
+      "pp.verifyOnline": "Verify online",
+      "pp.noCert": "The seller has not provided a verified lab certificate for this item.",
+      "pp.returns": "Returns & refunds",
+      "pp.basedOn": "based on {n} reviews",
+      "pp.related": "You may also like",
+      "tp.mandir": "Mandir Seva",
+      "tp.notFound": "Temple not found",
+      "tp.back": "Back to Mandir Seva",
+      "tp.bookSeva": "Book a seva",
+      "tp.about": "About this temple",
+      "tp.live": "Live darshan",
+      "tp.noLive": "A live darshan link has not been added for this temple yet.",
+      "tp.sevas": "Sevas you can book",
+      "tp.video": "Video of your sankalp",
+      "tp.prasad": "prasad delivery available (+{fee})",
+      "tp.aarti": "Aarti timings",
+      "tp.aartiHint": "Timings are set by the temple and can change on festivals.",
+      "tp.noAarti": "Aarti timings have not been added for this temple yet.",
+      "tp.priests": "Priests",
+      "tp.noPriests": "Priest profiles for this temple will appear here once they are verified.",
+      "tp.how": "How it works",
+      "tp.step1": "Choose a seva and give your name, gotra and sankalp.",
+      "tp.step2": "The priest performs the seva on the scheduled day.",
+      "tp.step3": "You get the video of your sankalp in My Bookings.",
+      "tp.step4": "Download the seva certificate; prasad is sent if booked.",
+      "rw.open": "My Rewards",
+      "rw.title": "My Rewards",
+      "rw.signin": "Sign in to see your points, membership and offers.",
+      "rw.points": "Loyalty points",
+      "rw.worth": "worth {amount}",
+      "rw.membership": "Premium membership",
+      "rw.member": "Active",
+      "rw.notMember": "Not a member",
+      "rw.until": "valid till {date}",
+      "rw.joinHint": "Join below for extra benefits",
+      "rw.referral": "Your referral code",
+      "rw.referHint": "Invite friends: both get {n} points",
+      "rw.premium": "Premium membership",
+      "rw.b1": "{n}% extra discount on Astro Mall",
+      "rw.b2": "Free prasad delivery on sevas",
+      "rw.b3": "Double loyalty points on every order and seva",
+      "rw.plan.monthly": "Monthly",
+      "rw.plan.yearly": "Yearly",
+      "rw.days": "{n} days",
+      "rw.join": "Join",
+      "rw.extend": "Extend",
+      "rw.confirmPlan": "Buy the {plan} plan from your wallet?",
+      "rw.joined": "Welcome to Premium!",
+      "rw.referTitle": "Refer & earn",
+      "rw.referBody": "When a friend you invite completes their first order or seva, you both get {n} points.",
+      "rw.copy": "Copy",
+      "rw.copied": "Code copied",
+      "rw.shareText": "Join me on Astro Jyotish. Use my code {code} when you sign up.",
+      "rw.friendPh": "Friend's referral code",
+      "rw.friendHint": "Have a code? Add it before your first order.",
+      "rw.referredOk": "A referral code is applied to your account.",
+      "rw.coupons": "Coupons for you",
+      "rw.noCoupons": "No coupons are running right now.",
+      "rw.scope.all": "Mall & seva",
+      "rw.scope.mall": "Astro Mall",
+      "rw.scope.seva": "Mandir Seva",
+      "rw.reminders": "Birthday & anniversary reminders",
+      "rw.remindersHint": "We remind you a week before so you can book a seva in their name.",
+      "rw.remName": "Person's name",
+      "rw.birthday": "Birthday",
+      "rw.anniversary": "Anniversary",
+      "rw.addRem": "Add reminder",
+      "rw.remAdded": "Reminder saved",
+      "rw.bookSeva": "Book seva",
+      "rw.remove": "Remove",
+      "rw.history": "Points history",
+      "rw.noHistory": "You will see your points here after your first order or seva.",
+      "rw.reason.order": "Order delivered",
+      "rw.reason.seva": "Seva completed",
+      "rw.reason.referral": "Referral bonus",
+      "rw.reason.redeem": "Redeemed",
+      "rw.reason.refund": "Refunded",
+      "sd.title": "Seller dashboard",
+      "sd.signin": "Sign in to open the seller dashboard.",
+      "sd.registerTitle": "Become a seller",
+      "sd.registerHint": "Tell us about your ashram or shop. After KYC approval you can list items and receive payouts.",
+      "sd.pan": "PAN number",
+      "sd.saveProfile": "Save details",
+      "sd.saved": "Saved",
+      "sd.kyc.PENDING": "Pending review",
+      "sd.kyc.APPROVED": "Approved",
+      "sd.kyc.REJECTED": "Not approved",
+      "sd.kycNeedDoc": "Upload your PAN or ID proof (PDF, JPG or PNG) so our team can approve your account.",
+      "sd.kycWait": "Your document is with our team. We will notify you once it is reviewed.",
+      "sd.uploadDoc": "Upload document",
+      "sd.chooseFile": "Please choose a file first",
+      "sd.docSent": "Document sent for review",
+      "sd.available": "Available to withdraw",
+      "sd.net": "net earnings {amount}",
+      "sd.openOrders": "Orders to fulfil",
+      "sd.toFulfil": "energize and dispatch",
+      "sd.listings": "Listings",
+      "sd.inCatalog": "items in your catalog",
+      "sd.tab.products": "Products",
+      "sd.tab.orders": "Orders",
+      "sd.tab.earnings": "Earnings & payouts",
+      "sd.tab.profile": "Profile",
+      "sd.addProduct": "Add product",
+      "sd.needKyc": "You can add products once your KYC is approved.",
+      "sd.noProducts": "You have not listed anything yet.",
+      "sd.extraHint": "Optional extra photos (up to 5), one at a time.",
+      "sd.maxPhotos": "You can add up to 5 extra photos",
+      "sd.ls.PENDING": "Awaiting review",
+      "sd.ls.APPROVED": "Live",
+      "sd.ls.REJECTED": "Not approved",
+      "sd.ls.PAUSED": "Paused",
+      "sd.cs.NONE": "No certificate",
+      "sd.cs.PENDING": "Certificate under review",
+      "sd.cs.VERIFIED": "Certificate verified",
+      "sd.cs.REJECTED": "Certificate not accepted",
+      "sd.save": "Save",
+      "sd.pause": "Pause",
+      "sd.resume": "Resume",
+      "sd.certUpload": "Lab certificate",
+      "sd.lab": "Lab name (e.g. GII)",
+      "sd.certNo": "Certificate number",
+      "sd.sendCert": "Send for verification",
+      "sd.certSent": "Certificate sent for verification",
+      "sd.noOrders": "No orders for your items yet.",
+      "sd.energizeFor": "Energize for",
+      "sd.yourShare": "your share {amount}",
+      "sd.startEnergize": "Start energization",
+      "sd.trackingId": "Tracking ID",
+      "sd.dispatch": "Mark dispatched",
+      "sd.gross": "Sales (delivered)",
+      "sd.commission": "Platform commission",
+      "sd.netEarn": "Net earnings",
+      "sd.paidOut": "Paid out",
+      "sd.pending": "Payout requested",
+      "sd.commissionHint": "Earnings are counted when an order is delivered. A commission of 10% is kept by the platform.",
+      "sd.amount": "Amount (minimum {min})",
+      "sd.requestPayout": "Request payout",
+      "sd.payoutSent": "Payout requested. It is sent to your UPI after review.",
+      "sd.po.REQUESTED": "Requested",
+      "sd.po.PAID": "Paid",
+      "sd.po.REJECTED": "Rejected",
+      "sd.editProfile": "Edit details",
+      "vf.sevaOk": "Seva certificate is genuine",
+      "vf.productOk": "Lab certificate is verified",
+      "vf.yajman": "Yajman",
+      "vf.temple": "Temple",
+      "vf.date": "Date",
+      "vf.product": "Product",
+      "vf.viewProduct": "View product",
+      "vf.bad": "Certificate not found",
+      "vf.badHint": "We could not match this code. Check the code or scan the QR on the certificate again.",
+      "vf.home": "Back to home",
+      "pp.tab.details": "Details",
+      "pp.tab.specs": "Specifications",
+      "pp.tab.certificate": "Certificate",
+      "pp.tab.returns": "Returns",
+      "pp.tab.reviews": "Reviews",
+      "pp.taxes": "Inclusive of all taxes",
+      "pp.save": "You save {amt}",
+      "pp.share": "Share",
+      "pp.shared": "Link copied",
+      "pp.zoom": "Tap to zoom",
+      "pp.pin.title": "Check delivery",
+      "pp.pin.ph": "Enter 6-digit pincode",
+      "pp.pin.btn": "Check",
+      "pp.pin.bad": "Enter a valid 6-digit pincode",
+      "pp.pin.ok": "Estimated delivery by {date} to {pin}",
+      "pp.pin.note": "Energization takes 1-2 days before dispatch.",
+      "pp.trust.cert": "Lab certified",
+      "pp.trust.certSub": "Genuine, verifiable",
+      "pp.trust.energ": "Energized for you",
+      "pp.trust.energSub": "In your name & gotra",
+      "pp.trust.pay": "Secure payment",
+      "pp.trust.paySub": "COD or wallet",
+      "pp.trust.ret": "Easy returns",
+      "pp.trust.retSub": "{days}-day window",
+      "pp.seller.view": "More from this seller",
+      "pp.copy": "Copy",
+      "pp.copied": "Copied",
+      "pp.sealed": "Verified by lab",
+      "pp.bar.add": "Add",
+      "pp.nospec": "No specifications listed.",
+      "pp.qty": "Quantity",
+      "exp.dashboard": "My dashboard",
+      "exp.welcome": "Your personal space",
+      "exp.intro": "Your guidance, sacred journeys and shopping, together in one place.",
+      "exp.refresh": "Refresh",
+      "exp.wallet": "Wallet",
+      "exp.orders": "Orders",
+      "exp.pujas": "Puja bookings",
+      "exp.profiles": "Saved kundli",
+      "exp.consultations": "Consultation history",
+      "exp.sessions": "Appointments",
+      "exp.saved": "Wishlist",
+      "exp.recent": "Recently viewed",
+      "exp.recentNote": "Saved on this browser. Clear whenever you like.",
+      "exp.clear": "Clear history",
+      "exp.explore": "Explore Astro Mall",
+      "exp.temples": "Explore temples",
+      "exp.empty": "Nothing here yet",
+      "exp.emptyNote": "Your activity will appear here when you get started.",
+      "exp.login": "Sign in to your dashboard",
+      "exp.loginNote": "Access your account wallet, orders, bookings and saved birth charts.",
+      "exp.signin": "Sign in",
+      "exp.retry": "Try again",
+      "exp.failed": "Could not load this section",
+      "exp.loading": "Loading your experience…",
+      "exp.manage": "Manage",
+      "exp.add": "Add funds",
+      "exp.compare": "Compare",
+      "exp.comparing": "Selected for comparison",
+      "exp.compareTitle": "Compare your favourites",
+      "exp.compareNote": "Compare up to 3 products. Prices are for the base variant.",
+      "exp.compareLimit": "You can compare up to 3 products.",
+      "exp.remove": "Remove",
+      "exp.close": "Close",
+      "exp.price": "Price",
+      "exp.material": "Material",
+      "exp.origin": "Origin",
+      "exp.certified": "Lab certificate",
+      "exp.energized": "Energized",
+      "exp.stock": "Availability",
+      "exp.yes": "Available",
+      "exp.no": "Not listed",
+      "exp.inStock": "In stock",
+      "exp.outStock": "Out of stock",
+      "exp.view": "View product",
+      "exp.returns": "Returns & delivery",
+      "exp.delivery": "Estimated delivery",
+      "exp.deliveryNote": "Enter your PIN below for an estimate. Final dispatch depends on the seller and selected options.",
+      "exp.photo": "Product photo",
+      "exp.next": "Next photo",
+      "exp.previous": "Previous photo",
+      "exp.tracker": "Your puja journey",
+      "exp.confirmed": "Booking confirmed",
+      "exp.scheduled": "Puja scheduled",
+      "exp.performed": "Ritual video available",
+      "exp.completed": "Puja completed",
+      "exp.prasad": "Prasad dispatched",
+      "exp.pending": "Pending update",
+      "exp.done": "Completed",
+      "exp.current": "Current stage",
+      "exp.cancelled": "Cancelled · refund recorded",
+      "exp.trackNote": "Progress updates come from the temple team. Future stages are not confirmed yet.",
+      "exp.tracking": "Tracking reference",
+      "exp.watch": "View booking & video",
+      "exp.balance": "Available balance",
+      "exp.testMode": "Test wallet",
+      "exp.transaction": "Recent transactions",
+      "exp.default": "Primary",
+      "exp.newChart": "Create birth chart",
+      "exp.resume": "Open consultation",
+      "exp.wishlistEmpty": "Save something meaningful",
+      "exp.wishlistNote": "Tap the heart on any product to keep it here.",
+      "exp.recentlyEmpty": "Your next discovery starts here",
+      "exp.find": "Find an astrologer",
+      "exp.confirmedStatus": "Confirmed",
+      "exp.cancelledStatus": "Cancelled",
+      "exp.completedStatus": "Completed",
+      "exp.account": "My profile",
+      "exp.settings": "Account details & settings",
+      "exp.accountOverview": "Account overview",
+      "exp.accountActivity": "Your activity at a glance",
+      "exp.quickAccess": "Made for your next step",
+      "exp.walletNote": "Your balance, payments and receipts, all in one place.",
+      "exp.totalAdded": "Total added",
+      "exp.totalSpent": "Total deducted",
+      "exp.viewHistory": "View wallet history",
+      "exp.personalAccount": "Personal account",
+      "exp.editProfile": "Edit profile",
+      "exp.aboutTitle": "About Astro Jyotish",
+      "exp.aboutCopy": "Explore astrology consultations, birth charts, temple services and spiritual products from one account.",
+      "exp.privacyTitle": "Privacy & account controls",
+      "exp.privacyCopy": "Your profile brings together your saved charts and account history. Sign out on shared devices. Recently viewed products are stored in this browser and can be cleared from your profile.",
+      "exp.termsTitle": "Service information",
+      "exp.termsCopy": "Review the final price, selected options and cancellation or return conditions before confirming. Delivery and ritual schedules are estimates unless separately confirmed. Astrological guidance does not guarantee an outcome.",
+      "exp.contactTitle": "Contact support",
+      "exp.contactCopy": "Include your order or booking reference and a description of the issue. Never send passwords or payment credentials.",
+      "exp.helpTitle": "Help centre",
+      "exp.helpCopy": "Use your profile to find orders, appointments and puja progress. Open Wallet to see additions, deductions and refunds. If a section fails to load, use Try again.",
+      "exp.productIncludes": "The selected product and variant are listed in your order summary. Certificate and energization details are shown when available.",
+      "exp.pujaIncludes": "Inclusions vary by seva. Check the selected offering, ritual video and optional prasad delivery before confirming.",
+      "exp.modechat": "Text chat",
+      "exp.modecall": "Audio call",
+      "exp.modevideo": "Video call",
+      "exp.cancelAppointment": "Cancel & refund",
+      "exp.walletIntro": "Your balance and every payment, clearly organised.",
+      "exp.testCreditNote": "Test credits · no bank payment is collected",
+      "exp.topUp": "Add funds",
+      "exp.appointmentsHint": "Looking for an astrologer appointment?",
+      "exp.manageAppointments": "Manage appointments",
+      "exp.appointmentsIntro": "Book and manage a scheduled consultation.",
+      "exp.shortConsultations": "Consultations",
+      "exp.continue": "Continue",
+      "exp.withAstrologer": "Consultation with",
+      "exp.serviceDetails": "Before you book",
+      "exp.inclusions": "What is included",
+      "exp.timeline": "What happens next",
+      "exp.cancellation": "Cancellation & refunds",
+      "exp.support": "Help & support",
+      "exp.productTimeline": "The seller prepares your selected item, then dispatches it. Track progress from your profile. Delivery dates are estimates.",
+      "exp.pujaTimeline": "The temple team confirms the schedule. Available ritual videos and prasad tracking appear in your bookings.",
+      "exp.pujaCancel": "You can cancel while the booking is in the paid stage. The refund is credited to your wallet. Once the ritual progresses, cancellation is unavailable.",
+      "exp.productCancel": "Orders can be cancelled before energization or dispatch. Wallet payments are refunded to the wallet. Returns follow the policy shown for this product.",
+      "exp.mediaUnavailable": "Photo unavailable",
+      "exp.activeStatus": "Active",
+      "exp.preferredTime": "Preferred Time",
+      "exp.credentials": "Credentials & expertise",
+      "exp.verifiedBadge": "Verified by Astro Jyotish",
+      "exp.typeHuman": "Verified astrologer",
+      "exp.typeAi": "Instant guidance",
+      "exp.humanNote": "Personal one-to-one consultation with a human astrologer.",
+      "exp.aiNote": "This is an automated guidance service, not a consultation with a human astrologer.",
+      "exp.yearsExp": "{n} years of experience",
+      "exp.consultsDone": "{n} consultations recorded",
+      "exp.ratedBy": "Rated {r}/5 from {n} reviews",
+      "exp.speaks": "Speaks {list}",
+      "exp.focusAreas": "Focus areas: {list}",
+      "exp.whyConsult": "Why consult this expert?",
+      "exp.whyNone": "More details will appear as this expert completes consultations.",
+      "exp.clientReviews": "Client reviews",
+      "exp.noReviews": "No client reviews yet.",
+      "exp.aboutExpert": "About",
+      "exp.languagesLabel": "Languages",
+      "exp.apptModes": "Appointment modes",
+      "exp.specialisations": "Specialisations",
+      "exp.ratePerMin": "Rate per minute",
+      "exp.freeRate": "Free",
+      "exp.perMin": "/ min",
+      "exp.estimateTitle": "Estimated session cost",
+      "exp.minutesShort": "{n} min",
+      "exp.yourBalance": "Your wallet balance",
+      "exp.signInBalance": "Sign in to see your wallet balance and book.",
+      "exp.lowBalance": "Your balance is ₹{n} short for a {m}-minute session.",
+      "exp.enoughBalance": "Wallet balance ₹{b} covers this session.",
+      "exp.shortBalance": "Balance ₹{b}. Add ₹{n} more to confirm.",
+      "exp.bookAppt": "Book an appointment",
+      "exp.chatNow": "Start consultation now",
+      "exp.attachKundli": "Attach birth chart",
+      "exp.offlineNote": "Currently offline. You can still book a future appointment.",
+      "exp.busyNote": "In a consultation right now. Book a later slot or try again shortly.",
+      "exp.statusOnline": "Online now",
+      "exp.statusBusy": "In a consultation",
+      "exp.statusOffline": "Offline",
+      "exp.cancelRule": "Free cancellation until the appointment starts; the full fee returns to your wallet. Once it has started, it cannot be cancelled.",
+      "exp.slotTaken": "booked",
+      "exp.slotPast": "passed",
+      "exp.noSlots": "No free slots on this date. Please choose another date.",
+      "exp.profileFailed": "We could not load this profile.",
+      "exp.profileMissing": "Astrologer not found",
+      "exp.profileMissingNote": "This profile does not exist or is not available right now.",
+      "exp.browseAll": "Browse all astrologers",
+      "exp.similarAstro": "Similar astrologers",
+      "exp.viewBtn": "View",
+      "exp.loadingProfile": "Loading astrologer profile…",
+      "exp.bookingMode": "Consultation mode",
+      "exp.journeyEyebrow": "Your journey",
+      "exp.journeyTitle": "From guidance to action, in four steps",
+      "exp.journeySub": "Speak with an astrologer, understand your chart, perform a puja and choose supportive items, all in one place.",
+      "exp.journeyStep1": "Consult an astrologer",
+      "exp.journeyStep1Text": "Chat, call or book a time with an astrologer for your question.",
+      "exp.journeyStep1Cta": "Find an astrologer",
+      "exp.journeyStep2": "Kundli & Vedic tools",
+      "exp.journeyStep2Text": "Birth chart, Kundli matching, Panchang, Dosha and Sade Sati checks.",
+      "exp.journeyStep2Cta": "Open tools",
+      "exp.journeyStep3": "Mandir Seva",
+      "exp.journeyStep3Text": "Book a sankalp puja at a temple and follow its progress.",
+      "exp.journeyStep3Cta": "Explore temples",
+      "exp.journeyStep4": "Astro Mall",
+      "exp.journeyStep4Text": "Rudraksha, gemstones and yantras with clear product details.",
+      "exp.journeyStep4Cta": "Shop Astro Mall",
+      "exp.reviewRule": "Only clients who have consulted this astrologer can post a review, once.",
+      "exp.yourRating": "Your rating",
+      "exp.yourReview": "Your review",
+      "exp.postReview": "Post review",
+      "exp.reviewThanks": "Thank you! Your review has been posted.",
+      "exp.yourData": "Your data",
+      "exp.downloadData": "Download my data (JSON)",
+      "exp.dataSignIn": "Sign in to download or delete your data.",
+      "exp.deleteNote": "Deleting removes your profile, saved charts, chats and wishlist. Payment, order and booking records are kept without personal details. This cannot be undone.",
+      "exp.passwordLabel": "Confirm with your password",
+      "exp.forfeitLabel": "I understand any wallet balance will be forfeited",
+      "exp.deleteAccount": "Delete my account",
+      "exp.deleteConfirm": "Delete your account permanently?",
+      "exp.searchTitle": "Search",
+      "exp.searchPlaceholder": "Search astrologers, temples or products",
+      "exp.searchHint": "Type at least two letters. Press / anywhere to open search.",
+      "exp.searchAstrologers": "Astrologers",
+      "exp.searchTemples": "Temples",
+      "exp.searchProducts": "Products",
+      "exp.searchNone": "Nothing matches your search.",
+      "exp.trustTitle": "How Astro Jyotish works",
+      "exp.trustIntro": "Plain facts about the service, so you know what to expect.",
+      "exp.trustCounts": "{all} profiles listed: {human} verified astrologers and {ai} instant guidance services. Each profile clearly shows its type.",
+      "exp.trustAiLabel": "Instant guidance services are clearly marked.",
+      "exp.trustRefund": "A cancelled appointment before it starts is refunded in full to your wallet.",
+      "exp.trustReviews": "Only clients who have consulted an astrologer can review them.",
+      "exp.trustData": "You can download or delete your personal data any time from Privacy & account controls.",
+      "brief.eyebrow": "Your day, personalised",
+      "brief.title": "Today's cosmic brief",
+      "brief.for": "Prepared for {name} · {sign} Moon",
+      "brief.energy": "Day energy",
+      "brief.l.excellent": "Excellent",
+      "brief.l.good": "Good",
+      "brief.l.balanced": "Balanced",
+      "brief.l.gentle": "Go gently",
+      "brief.tithi": "Tithi",
+      "brief.nakshatra": "Nakshatra",
+      "brief.chandra": "Chandra Bala",
+      "brief.tara": "Tara Bala",
+      "brief.dasha": "Running period",
+      "brief.favourable": "Favourable",
+      "brief.caution": "Needs care",
+      "brief.house": "House {n} from your Moon",
+      "brief.dashaLine": "{planet} Mahadasha until {date}",
+      "brief.sade": "Shani Sade Sati is active",
+      "brief.dhaiya": "Shani Dhaiya is active",
+      "brief.window": "Best window",
+      "brief.avoid": "Avoid new beginnings",
+      "brief.lucky": "Lucky for you",
+      "brief.colour": "Colour",
+      "brief.number": "Number",
+      "brief.seva": "Seva of the day",
+      "brief.sevaBtn": "Book this seva",
+      "brief.focus": "Focus areas",
+      "brief.career": "Career",
+      "brief.love": "Love",
+      "brief.finance": "Finance",
+      "brief.health": "Health",
+      "brief.due": "{n} remedies waiting today",
+      "brief.allDone": "No remedies pending today",
+      "brief.openTracker": "Open remedy tracker",
+      "brief.noProfileTitle": "Make this brief personal",
+      "brief.noProfileBody": "Add your birth details to see Chandra Bala, Tara Bala, your running dasha and a day score built for you.",
+      "brief.addBirth": "Add birth details",
+      "brief.note": "Traditional Vedic guidance for reflection, not a prediction.",
+      "brief.today": "Today",
+      "rem.title": "My remedies",
+      "rem.sub": "Follow mantras, fasts and daily practices with a streak that keeps you consistent.",
+      "rem.stat.active": "Active",
+      "rem.stat.today": "Done today",
+      "rem.stat.best": "Best streak",
+      "rem.add": "Add a remedy",
+      "rem.save": "Save remedy",
+      "rem.cancel": "Cancel",
+      "rem.f.title": "Remedy",
+      "rem.f.titlePh": "e.g. Hanuman Chalisa",
+      "rem.f.kind": "Type",
+      "rem.f.freq": "How often",
+      "rem.f.day": "Day",
+      "rem.f.days": "For how many days (optional)",
+      "rem.f.note": "Notes (optional)",
+      "rem.kind.mantra": "Mantra / path",
+      "rem.kind.fast": "Fast",
+      "rem.kind.donation": "Donation",
+      "rem.kind.gemstone": "Gemstone",
+      "rem.kind.puja": "Puja",
+      "rem.kind.other": "Other",
+      "rem.freq.daily": "Every day",
+      "rem.freq.weekly": "Every week",
+      "rem.freq.once": "One time",
+      "rem.day.0": "Monday",
+      "rem.day.1": "Tuesday",
+      "rem.day.2": "Wednesday",
+      "rem.day.3": "Thursday",
+      "rem.day.4": "Friday",
+      "rem.day.5": "Saturday",
+      "rem.day.6": "Sunday",
+      "rem.markDone": "Mark done",
+      "rem.done": "Done today",
+      "rem.undo": "Undo",
+      "rem.notDue": "Not due today",
+      "rem.streakD": "{n}-day streak",
+      "rem.streakW": "{n}-week streak",
+      "rem.progress": "{done} of {total} days",
+      "rem.completedLabel": "Completed",
+      "rem.remove": "Remove",
+      "rem.by": "Advised by {name}",
+      "rem.fromAstro": "From your astrologer",
+      "rem.suggested": "Suggested",
+      "rem.bookSeva": "Book seva",
+      "rem.shop": "Shop",
+      "rem.suggestTitle": "Suggested for you",
+      "rem.suggestHint": "Based on your Moon sign and traditional practice. Tap to start following.",
+      "rem.follow": "Follow",
+      "rem.empty": "No remedies yet",
+      "rem.emptyNote": "Add one of your own, or start from a suggestion below.",
+      "rem.importBtn": "Add remedies to tracker",
+      "rem.imported": "{n} remedies added to your tracker",
+      "rem.importNone": "This consultation has no remedies to add.",
+      "rem.tab": "Remedies",
+      "rem.disclaimer": "Remedies are traditional practices. Consult your astrologer before wearing gemstones.",
+      "gf.title": "Gifts & Festival Packs",
+      "gf.sub": "Send blessings as wallet credit, or bring home a ready festival set.",
+      "gf.tab.cards": "Gift cards",
+      "gf.tab.packs": "Festival packs",
+      "gf.pickAmount": "Choose an amount",
+      "gf.pickTheme": "Choose a style",
+      "gf.theme.diwali": "Diwali",
+      "gf.theme.blessing": "Blessing",
+      "gf.theme.birthday": "Birthday",
+      "gf.theme.wedding": "Wedding",
+      "gf.to": "Recipient name",
+      "gf.toPh": "e.g. Anita",
+      "gf.msg": "Your message",
+      "gf.msgPh": "Wishing you peace and prosperity",
+      "gf.defaultMsg": "Wishing you peace and prosperity.",
+      "gf.buy": "Buy with wallet · {amount}",
+      "gf.buying": "Creating your gift...",
+      "gf.walletNote": "Paid from your wallet. The code is ready instantly.",
+      "gf.readyTitle": "Your gift card is ready",
+      "gf.copy": "Copy code",
+      "gf.copied": "Code copied",
+      "gf.share": "Share on WhatsApp",
+      "gf.another": "Send another",
+      "gf.shareText": "A gift for you from Astro Jyotish: {amount} wallet credit. Redeem code {code} at {url}/gifts",
+      "gf.redeemTitle": "Have a gift card?",
+      "gf.redeemPh": "AJ-XXXX-XXXX-XXXX",
+      "gf.redeem": "Redeem",
+      "gf.redeemed": "{amount} added to your wallet",
+      "gf.history": "Gifts you sent",
+      "gf.received": "Gifts you received",
+      "gf.statusIssued": "Not used yet",
+      "gf.statusRedeemed": "Redeemed",
+      "gf.noSent": "You have not sent a gift yet.",
+      "gf.signin": "Sign in to send or redeem a gift card",
+      "gf.signinBtn": "Sign in",
+      "gf.to2": "For {name}",
+      "gf.cardBrand": "Astro Jyotish Gift Card",
+      "gf.cardFrom": "With blessings",
+      "fp.daysLeft": "{n} days to go",
+      "fp.today": "Today",
+      "fp.evergreen": "Available all year",
+      "fp.includes": "In this pack",
+      "fp.total": "Items worth {amount}",
+      "fp.save": "Save up to {amount} with {code}",
+      "fp.addAll": "Add all to cart",
+      "fp.added": "Pack added to your cart. Use code {code} at checkout.",
+      "fp.seva": "Add a seva at {name}",
+      "fp.empty": "No festival packs are available right now.",
+      "fp.copyCode": "Copy code",
+      "rw2.benefits": "Your Premium benefits",
+      "rw2.consult": "{n}% off appointments",
+      "rw2.priority": "Priority booking badge",
+      "rw2.bonus": "{amount} wallet bonus every month",
+      "rw2.saved": "Saved on appointments: {amount}",
+      "rw2.claim": "Claim this month's {amount}",
+      "rw2.claimed": "This month's bonus is claimed",
+      "rw2.claimOk": "{amount} added to your wallet",
+      "rw2.unlock": "Premium members get {n}% off appointments, priority booking and a monthly wallet bonus.",
+      "rw2.refTitle": "Your invites",
+      "rw2.joined": "Joined",
+      "rw2.ordered": "First order done",
+      "rw2.earned": "Points earned",
+      "rw2.milestones": "Invite milestones",
+      "rw2.milestone": "{n} friends · +{pts} points",
+      "rw2.friendDone": "Ordered",
+      "rw2.friendPending": "Waiting for first order",
+      "rw2.noFriends": "Share your code to see your friends here.",
+      "rw2.giftsLink": "Send a gift card",
+      "tr.title": "Why you can trust this astrologer",
+      "tr.verified": "Verified by Astro Jyotish",
+      "tr.consults": "Consultations",
+      "tr.experience": "Years of experience",
+      "tr.repeat": "Clients who came back",
+      "tr.reply": "Typical first reply",
+      "tr.session": "Average session",
+      "tr.sec": "{n} sec",
+      "tr.min": "{n} min",
+      "tr.ratings": "Rating breakdown",
+      "tr.verifiedReviews": "{n} reviews from clients who consulted this astrologer",
+      "tr.thin": "More figures will appear as more consultations are completed.",
+      "tr.since": "On Astro Jyotish since {date}",
+      "pwa.installTitle": "Install Astro Jyotish",
+      "pwa.installBody": "Add it to your home screen for one-tap access to your daily brief and remedies.",
+      "pwa.install": "Install",
+      "pwa.later": "Not now",
+      "pwa.iosBody": "On iPhone, tap Share, then \"Add to Home Screen\".",
+      "pwa.update": "A new version is ready.",
+      "pwa.refresh": "Refresh",
+      "pwa.offline": "You are offline. Some features need a connection.",
+      "pwa.online": "Back online",
+      "pv.nav.about": "About",
+      "pv.nav.trust": "Trust",
+      "pv.nav.reviews": "Reviews",
+      "pv.nav.book": "Book",
+      "pv.stat.rating": "Rating",
+      "pv.stat.exp": "Years of practice",
+      "pv.stat.consults": "Consultations",
+      "pv.save": "Save",
+      "pv.saved": "Saved",
+      "pv.share": "Share",
+      "pv.linkCopied": "Profile link copied",
+      "pv.saveLogin": "Sign in to save astrologers",
+      "pv.avail": "Next available slots",
+      "pv.today": "Today",
+      "pv.tomorrow": "Tomorrow",
+      "pv.noSlots": "No free slots this week. You can still start a chat.",
+      "pv.memberPrice": "Premium price {price} for 15 min · you save {save}",
+      "pv.memberPitch": "Premium members save {n}% on appointments.",
+      "pv.joinPremium": "See Premium",
+      "pv.similar": "Astrologers like this",
+      "pv.outOf": "out of 5",
+      "pv.basedOn": "{n} written reviews shown",
+      "pv.perMin": "/min",
+      "pv.view": "View profile",
+      "pv.free": "Free",
+      "pv.slotsFor": "Tap a time to book",
+      "ac.chat": "Chat",
+      "ac.call": "Call",
+      "ac.free": "Free",
+      "ac.perMin": "/min",
+      "ac.ai": "Instant guidance",
+      "ac.human": "Verified astrologer",
+      "ac.topRated": "Top rated",
+      "ac.mostConsulted": "Most consulted",
+      "ac.featured": "Featured",
+      "ac.new": "New",
+      "ac.consults": "{n} consults",
+      "ac.exp": "{n} yrs",
+      "ac.onlineAi": "Available now · instant replies",
+      "ac.onlineHuman": "Online now",
+      "ac.busy": "Busy right now",
+      "ac.offline": "Offline",
+      "ac.next": "Next free: {when}",
+      "ac.listen": "Listen to voice intro",
+      "ac.save": "Save astrologer",
+      "ac.saved": "Saved",
+      "ac.new.reviews": "New",
+      "dir.all": "All",
+      "dir.online": "Online now",
+      "dir.human": "Verified astrologers",
+      "dir.ai": "Instant guidance",
+      "dir.top": "Top rated",
+      "dir.Marriage": "Marriage",
+      "dir.Career": "Career",
+      "dir.Finance": "Finance",
+      "dir.Health": "Health",
+      "dir.Kundli": "Kundli",
+      "dir.Remedies": "Remedies",
+      "dir.count": "{n} astrologers",
+      "pv.pkg.title": "Consultation packages",
+      "pv.pkg.sub": "Choose a length. You pick the date and time while booking.",
+      "pv.pkg.quick": "Quick answer",
+      "pv.pkg.quickDesc": "One focused question: a decision, a timing, a yes or no.",
+      "pv.pkg.standard": "Standard reading",
+      "pv.pkg.standardDesc": "A walk through your kundli and two or three questions.",
+      "pv.pkg.deep": "Deep dive",
+      "pv.pkg.deepDesc": "Dasha, transits and remedies in detail.",
+      "pv.pkg.recommended": "Recommended",
+      "pv.pkg.book": "Book {n} min",
+      "pv.pkg.min": "{n} min",
+      "pv.slotsCount": "{n} free",
+      "pv.dayFull": "Full",
+      "pv.pickTime": "Pick a time",
+      "mp.download": "Download PDF report",
+      "mp.preparing": "Preparing PDF...",
+      "mp.failed": "Could not create the PDF. Please try again.",
+      "dir.eyebrow": "Guidance, chosen with clarity",
+      "dir.filters": "Filters",
+      "dir.trust.verified": "Verified profiles",
+      "dir.trust.verifiedSub": "Credentials shown clearly",
+      "dir.trust.rates": "Clear rates",
+      "dir.trust.ratesSub": "See the fee before you start",
+      "dir.trust.availability": "Live availability",
+      "dir.trust.availabilitySub": "Find the next suitable time",
+      "dir.resultsEyebrow": "Explore specialists",
+      "dir.resultsTitle": "Find the right astrologer for your concern",
+      "dir.resultsNote": "Compare expertise, language, availability and fee before you connect.",
+      "nav_gau_sewa": "Gau Sewa",
+      "gs_home_title": "Gau Sewa",
+      "gs_home_text": "Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give once.",
+      "gs_home_cta": "Contribute",
+      "gs_hero_title": "Gau Sewa",
+      "gs_hero_sub": "Every cow deserves nourishment, gentle care and a safe place to call home. Join a tradition of compassion and support the everyday needs of cows through Gau Sewa.",
+      "banner.illustrative": "Illustrative image",
+      "banner.md.title": "Sacred seva at <em>India’s holy temples</em>",
+      "banner.md.sub": "Offer a puja in your name and gotra. Explore temple sevas, receive your sankalp video, and choose prasad delivery where available.",
+      "banner.ml.sub": "Discover rudraksha, malas, yantras and puja essentials from pandits and ashrams. Explore product details and delivery options before you order.",
+      "gs_hero_line_one": "A little kindness.",
+      "gs_hero_line_two": "A lifetime of care.",
+      "gs_section_kicker": "AN OFFERING FROM THE HEART",
+      "gs_purpose_intro": "Choose the care you wish to support. Whether it is a nourishing meal, medical attention or everyday shelter, your offering begins with a simple act of kindness.",
+      "gs_amount_hint": "Choose a suggested amount or enter any whole-rupee amount between ₹{min} and ₹{max}.",
+      "gs_form_intro": "An offering of your choice, for care that matters.",
+      "gs_suggested": "Or choose a suggested amount",
+      "gs_steps_heading": "A thoughtful way to give",
+      "gs_step_one": "Choose your seva",
+      "gs_step_one_desc": "Select fodder, medical support or general care.",
+      "gs_step_two": "Give what feels right",
+      "gs_step_two_desc": "Enter an amount that is comfortable for you.",
+      "gs_step_three": "Keep your receipt",
+      "gs_step_three_desc": "After payment verification, download your donation receipt.",
+      "gs_form_kicker": "YOUR ACT OF KINDNESS",
+      "gs_hero_cta": "Donate now",
+      "gs_hero_alt": "Illustrative scene of a cow and calf in a sunlit gaushala courtyard",
+      "gs_purpose_heading": "Your kindness, their everyday care",
+      "gs_purpose_chaara": "Chaara Seva",
+      "gs_purpose_chaara_desc": "Support fresh green fodder, dry feed and nourishing meals for cows. Help the gaushala provide the everyday nutrition that keeps them cared for.",
+      "gs_purpose_chikitsa": "Chikitsa Sahayata",
+      "gs_purpose_chikitsa_desc": "Contribute towards medicines, veterinary attention and treatment for sick or injured cows. Support gentle care when they need it most.",
+      "gs_purpose_general": "General Seva",
+      "gs_purpose_general_desc": "Support shelter, cleanliness and the daily work of caring for cows. Let the gaushala direct your contribution to the needs that require attention.",
+      "gs_gaushala_heading": "About the gaushala",
+      "gs_gaushala_empty_title": "Gaushala details coming soon",
+      "gs_gaushala_empty_text": "We are still setting up the gaushala details. They will appear here once confirmed.",
+      "gs_location": "Location",
+      "gs_form_heading": "Make a donation",
+      "gs_amount_label": "Amount",
+      "gs_amount_custom": "Enter your own amount",
+      "gs_name_label": "Your name",
+      "gs_name_ph": "Full name",
+      "gs_email_label": "Email (optional)",
+      "gs_email_hint": "Your receipt is emailed only if email is set up. You can always download it here.",
+      "gs_hide_name": "Keep my name out of public updates",
+      "gs_recipient_heading": "Who receives your donation",
+      "gs_recipient_line": "Beneficiary: {name}",
+      "gs_recipient_note": "Payments are processed securely by Razorpay. This is a one-time donation. The receipt acknowledges your payment and is not a tax exemption certificate.",
+      "gs_donate_btn": "Donate",
+      "gs_donate_amount_btn": "Donate ₹{amount}",
+      "gs_starting": "Starting payment…",
+      "gs_err_amount": "Enter an amount between ₹{min} and ₹{max}.",
+      "gs_err_amount_whole": "Enter a whole number of rupees.",
+      "gs_err_name": "Please enter your name.",
+      "gs_err_email": "Enter a valid email address or leave it blank.",
+      "gs_unavailable_title": "Donations are not open yet",
+      "gs_unavailable_payments": "Online donations are not available right now.",
+      "gs_unavailable_recipient": "The gaushala details are still being set up. Donations will open once they are confirmed.",
+      "gs_load_error": "Gau Sewa could not be loaded right now.",
+      "gs_retry": "Try again",
+      "gs_loading": "Loading…",
+      "gs_cancelled": "The payment window was closed. No donation has been recorded.",
+      "gs_verifying": "Confirming your payment…",
+      "gs_pending_title": "Payment is being confirmed",
+      "gs_pending_text": "The payment provider has not confirmed this payment yet. This page checks again automatically, and you can open the receipt link later.",
+      "gs_failed_title": "Payment did not go through",
+      "gs_failed_text": "No donation was recorded. You can try again.",
+      "gs_success_title": "Thank you for your donation",
+      "gs_success_text": "Your payment has been confirmed.",
+      "gs_refunded_title": "This donation was refunded",
+      "gs_ref": "Donation reference",
+      "gs_amount": "Amount",
+      "gs_purpose": "Purpose",
+      "gs_date": "Date",
+      "gs_recipient": "Recipient",
+      "gs_status": "Payment status",
+      "gs_status_pending": "Pending",
+      "gs_status_success": "Successful",
+      "gs_status_failed": "Failed",
+      "gs_status_refunded": "Refunded",
+      "gs_receipt_download": "Download receipt",
+      "gs_receipt_note": "This receipt acknowledges your payment. It is not a tax exemption certificate.",
+      "gs_receipt_keep": "Keep this page's link: anyone who has it can view this receipt.",
+      "gs_receipt_not_found": "This receipt link is not valid.",
+      "gs_back": "Back to Gau Sewa",
+      "gs_donate_again": "Donate again",
+      "gs_updates_heading": "Seva updates",
+      "gs_updates_empty": "No updates have been published yet.",
+      "gs_my_title": "My Donations",
+      "gs_my_intro": "Your Gau Sewa donations and receipts.",
+      "gs_my_empty": "You have not made any Gau Sewa donations yet.",
+      "gs_my_cta": "Donate to Gau Sewa",
+      "gs_my_receipt": "Receipt",
+      "md.eyebrow": "Sacred seva, from home",
+      "md.t1h": "Video proof",
+      "md.t2h": "Temple priests",
+      "md.t3h": "Prasad at home",
+      "md.todayBadge": "Today's special seva",
+      "md.todayLead": "Offer this at the temple of the day",
+      "md.canOffer": "You can donate today",
+      "md.offerNow": "Offer today's chadawa",
+      "md.cardBook": "Book",
+      "md.count": "{n} sacred temples",
+      "ml.eyebrow": "Sanctified, shipped to your door",
+      "ml.t1h": "Energized",
+      "ml.t2h": "Certified",
+      "ml.t3h": "Easy payment",
+      "ml.count": "{n} sacred items"
     },
     "hi": {
       "btn_browse_glossary": "📖 बहुभाषी ज्योतिष शब्दकोश देखें (35+ शब्द)",
@@ -351,11 +1448,1111 @@ window.ASTRO_UI_LOCALES = {
       "hero_cta_find": "एक ज्योतिषी खोजें",
       "featured_tag": "विशेष ज्योतिषी",
       "tab_today": "आज",
-      "tool_sadesati": "🪐 शनि साढ़े साती ट्रैकर"
+      "tool_sadesati": "🪐 शनि साढ़े साती ट्रैकर",
+      "close": "बंद करें",
+      "retry": "पुनः प्रयास करें",
+      "loading": "लोड हो रहा है...",
+      "credits.link": "फ़ोटो क्रेडिट",
+      "credits.title": "फ़ोटो क्रेडिट",
+      "credits.fallback": "क्रेडिट विकिमीडिया कॉमन्स की फ़ाइल पेज पर दिए गए हैं।",
+      "status.cancelled": "रद्द",
+      "md.badge": "ई-चढ़ावा एवं संकल्प पूजा",
+      "md.title": "पावन तीर्थों में <em>चढ़ावा एवं संकल्प पूजा</em> करवाएं",
+      "md.sub": "महाकालेश्वर, काशी विश्वनाथ, सोमनाथ, केदारनाथ, तिरुपति सहित देश के पावन धामों में अपने नाम व गोत्र से पूजा बुक करें। संकल्प का वीडियो आपको यहीं मिलेगा और चाहें तो प्रसाद घर तक पहुँचेगा।",
+      "md.trust1": "नाम व गोत्र सहित संकल्प का वीडियो",
+      "md.trust2": "मंदिर के पुरोहितों द्वारा संकल्प",
+      "md.trust3": "प्रसाद आपके घर तक",
+      "md.bookings": "मेरी बुकिंग एवं वीडियो प्रमाण",
+      "md.cat.all": "सभी तीर्थ",
+      "md.cat.shiva": "🔱 ज्योतिर्लिंग व शिव",
+      "md.cat.shakti": "🌸 शक्तिपीठ व देवी",
+      "md.cat.shani": "🪐 शनि व हनुमान",
+      "md.cat.ganesh": "🐘 गणेश",
+      "md.cat.ram": "🏹 राम, कृष्ण व विष्णु",
+      "md.search": "मंदिर, देवता या शहर खोजें...",
+      "md.loading": "तीर्थ लोड हो रहे हैं...",
+      "md.empty.title": "कोई तीर्थ नहीं मिला",
+      "md.empty.sub": "कृपया दूसरा नाम या श्रेणी चुनें।",
+      "md.credit": "मंदिरों की तस्वीरें विकिमीडिया कॉमन्स से।",
+      "md.bookings.title": "मेरी चढ़ावा एवं संकल्प बुकिंग",
+      "md.video.title": "संकल्प का वीडियो प्रमाण",
+      "md.video.note": "आपके संकल्प के लिए रिकॉर्ड किया गया",
+      "md.video.share": "व्हाट्सऐप पर भेजें",
+      "md.share.text": "मेरी संकल्प पूजा का वीडियो:",
+      "md.today": "आज",
+      "md.tithi": "तिथि",
+      "md.deityOfDay": "आज के देव",
+      "md.forKundli": "आपकी कुंडली के अनुसार",
+      "md.suggest": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {deity} की सेवा शुभ मानी जाती है।",
+      "md.disclaimer": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं।",
+      "md.bookingOpen": "बुकिंग उपलब्ध",
+      "md.startsFrom": "शुरुआती दर",
+      "md.book": "पूजा बुक करें",
+      "md.loadingBookings": "आपकी बुकिंग लोड हो रही हैं...",
+      "md.noBookings.title": "अभी कोई बुकिंग नहीं",
+      "md.noBookings.sub": "कोई तीर्थ चुनें और अपनी पहली संकल्प पूजा बुक करें।",
+      "md.loadFail": "बुकिंग लोड नहीं हो सकीं",
+      "md.paidAmount": "{amount} का भुगतान",
+      "md.yajman": "यजमान",
+      "md.gotra": "गोत्र",
+      "md.alsoIncluded": "साथ में शामिल",
+      "md.scheduled": "निर्धारित समय",
+      "md.prasadTrack": "प्रसाद स्पीड पोस्ट",
+      "md.watch": "वीडियो देखें",
+      "md.videoLater": "संकल्प के बाद वीडियो यहीं दिखेगा",
+      "md.cancel": "रद्द करें",
+      "md.cancelConfirm": "बुकिंग रद्द करें? राशि आपके वॉलेट में लौटा दी जाएगी।",
+      "md.cancelled": "बुकिंग रद्द हो गई",
+      "md.cancelledRefunded": "रद्द व राशि वापस",
+      "step.PAID": "बुक हुई",
+      "step.SANKALP_SCHEDULED": "समय तय",
+      "step.VIDEO_UPLOADED": "वीडियो तैयार",
+      "step.COMPLETED": "संपन्न",
+      "cd.subtitle": "संकल्प पूजा एवं चढ़ावा बुकिंग",
+      "cd.step1": "1. अपनी सेवा चुनें",
+      "cd.step2": "2. संकल्प का विवरण",
+      "cd.fillKundli": "मेरी कुंडली से भरें",
+      "cd.name": "यजमान का नाम *",
+      "cd.name.ph": "जैसे राहुल शर्मा",
+      "cd.phone": "मोबाइल नंबर *",
+      "cd.gotra": "गोत्र *",
+      "cd.gotra.hint": "गोत्र ज्ञात न होने पर परंपरा से कश्यप गोत्र लिया जाता है।",
+      "cd.rashi": "राशि",
+      "cd.purpose": "संकल्प का उद्देश्य",
+      "cd.family": "शामिल करने वाले परिवारजन (वैकल्पिक)",
+      "cd.family.ph": "नाम (गोत्र भिन्न हो तो वह भी), अल्पविराम से अलग करें",
+      "cd.prasad": "प्रसाद मेरे घर भेजें",
+      "cd.prasadFee": "स्पीड पोस्ट से डिलीवरी (+{fee})",
+      "cd.address": "पिन कोड सहित पूरा पता *",
+      "cd.address.ph": "मकान नं., गली, शहर, राज्य, पिन",
+      "cd.total": "कुल",
+      "cd.submit": "संकल्प पूजा बुक करें",
+      "cd.submitting": "बुकिंग हो रही है...",
+      "cd.noSeva": "इस तीर्थ की कोई सेवा अभी उपलब्ध नहीं है।",
+      "cd.success": "आपका संकल्प बुक हो गया",
+      "cd.successBody": "पुरोहित जी {name}, गोत्र {gotra} के नाम से संकल्प संपन्न कराएंगे। वीडियो \"मेरी बुकिंग\" में दिखेगा।",
+      "cd.bookingId": "बुकिंग आईडी",
+      "cd.seva": "सेवा",
+      "cd.paid": "भुगतान",
+      "cd.viewBookings": "मेरी बुकिंग देखें",
+      "cd.toast.booked": "संकल्प पूजा बुक हो गई",
+      "cd.toast.filled": "आपकी कुंडली से भर दिया गया",
+      "cd.toast.noChart": "कोई सहेजी हुई कुंडली नहीं मिली। कुंडली पेज से बनाएं।",
+      "cd.toast.chartFail": "अभी आपकी कुंडली नहीं पढ़ी जा सकी",
+      "purpose.health": "स्वास्थ्य एवं दीर्घायु",
+      "purpose.business": "व्यापार वृद्धि एवं धन आगमन",
+      "purpose.marriage": "विवाह एवं दांपत्य सुख",
+      "purpose.shani": "शनि व ग्रह शांति",
+      "purpose.children": "संतान सुख एवं विद्या",
+      "purpose.wishes": "सर्वमनोकामना सिद्धि",
+      "ml.badge": "अभिमंत्रित एवं पवित्र पूजा सामग्री",
+      "ml.title": "वैदिक <em>एस्ट्रो मॉल</em>",
+      "ml.sub": "देशभर के पंडितों और आश्रमों से रुद्राक्ष, मालाएं, यंत्र, रत्न और हवन सामग्री। हर सामग्री आपके नाम व गोत्र से अभिमंत्रित करके स्पीड पोस्ट से भेजी जाती है।",
+      "ml.trust1": "आपके नाम व गोत्र से अभिमंत्रित",
+      "ml.trust2": "विक्रेता द्वारा दिया गया प्रमाणपत्र जहाँ उपलब्ध",
+      "ml.trust3": "कैश ऑन डिलीवरी या वॉलेट भुगतान",
+      "ml.orders": "मेरे ऑर्डर एवं ट्रैकिंग",
+      "ml.sell": "अपनी सामग्री बेचें",
+      "ml.cat.all": "सभी सामग्री",
+      "ml.cat.rudraksha": "🪵 रुद्राक्ष",
+      "ml.cat.mala": "📿 मालाएं",
+      "ml.cat.yantra": "☸️ यंत्र व कवच",
+      "ml.cat.gemstone": "💎 रत्न",
+      "ml.cat.samagri": "🔥 हवन व पूजन",
+      "ml.cat.wishlist": "♥ पसंदीदा",
+      "ml.search": "रुद्राक्ष, माला, रत्न खोजें...",
+      "ml.price.any": "कोई भी मूल्य",
+      "ml.price.1": "₹500 से कम",
+      "ml.price.2": "₹500 - ₹1,000",
+      "ml.price.3": "₹1,000 - ₹2,500",
+      "ml.price.4": "₹2,500 से अधिक",
+      "ml.sort.popular": "सर्वश्रेष्ठ रेटिंग",
+      "ml.sort.newest": "नवीनतम",
+      "ml.sort.asc": "मूल्य: कम से अधिक",
+      "ml.sort.desc": "मूल्य: अधिक से कम",
+      "ml.instock": "केवल उपलब्ध",
+      "ml.loading": "सूची लोड हो रही है...",
+      "ml.empty.title": "कोई सामग्री नहीं मिली",
+      "ml.empty.sub": "कृपया दूसरी श्रेणी, मूल्य या खोज आज़माएं।",
+      "ml.credit": "शुरुआती सूची की तस्वीरें विकिमीडिया कॉमन्स से।",
+      "ml.cart": "कार्ट",
+      "ml.energized": "अभिमंत्रित",
+      "ml.certificate": "प्रमाणपत्र",
+      "ml.new": "नई सामग्री - अभी कोई समीक्षा नहीं",
+      "ml.outOfStock": "स्टॉक में नहीं",
+      "ml.onlyLeft": "केवल {n} शेष",
+      "ml.addToCart": "कार्ट में जोड़ें",
+      "ml.details": "विवरण",
+      "ml.off": "{n}% छूट",
+      "ml.buyNow": "अभी खरीदें",
+      "ml.reviews": "समीक्षाएं",
+      "ml.loadingReviews": "समीक्षाएं लोड हो रही हैं...",
+      "ml.noReviews": "अभी कोई समीक्षा नहीं। सामग्री मिलने के बाद खरीदार समीक्षा दे सकते हैं।",
+      "ml.verified": "सत्यापित खरीदार",
+      "ml.seller": "विक्रेता",
+      "ml.material": "सामग्री",
+      "ml.origin": "उत्पत्ति",
+      "ml.energization": "अभिमंत्रण",
+      "ml.viewCert": "प्रमाणपत्र देखें",
+      "ml.addedToCart": "कार्ट में जोड़ा गया",
+      "ml.onlyAvail": "केवल {n} उपलब्ध हैं",
+      "ml.cartTitle": "आपका कार्ट",
+      "ml.subtotal": "उप-योग",
+      "ml.checkout": "चेकआउट",
+      "ml.cartEmpty.title": "आपका कार्ट खाली है",
+      "ml.cartEmpty.sub": "पसंद की सामग्री जोड़ें, वह यहाँ रहेगी।",
+      "ml.remove": "हटाएं",
+      "ml.yourItems": "आपकी सामग्री",
+      "ml.qty": "मात्रा {n}",
+      "ml.energizeHead": "अभिमंत्रण विवरण (प्राण-प्रतिष्ठा)",
+      "ml.fullName": "पूरा नाम *",
+      "ml.gotra": "गोत्र *",
+      "ml.energizeNote": "पंडित जी सामग्री भेजने से पहले इसी नाम व गोत्र से मंत्रोच्चार करते हैं।",
+      "ml.delivery": "डिलीवरी",
+      "ml.mobile": "मोबाइल नंबर *",
+      "ml.address": "पिन कोड सहित पूरा पता *",
+      "ml.payment": "भुगतान",
+      "ml.cod": "कैश ऑन डिलीवरी",
+      "ml.cod.sub": "पार्सल मिलने पर भुगतान करें",
+      "ml.wallet": "एस्ट्रो वॉलेट",
+      "ml.wallet.sub": "वॉलेट बैलेंस से तुरंत भुगतान करें",
+      "ml.wallet.balance": "बैलेंस {amount}",
+      "ml.wallet.signin": "वॉलेट से भुगतान के लिए साइन इन करें",
+      "ml.total": "कुल",
+      "ml.placeOrder": "ऑर्डर करें",
+      "ml.placing": "ऑर्डर हो रहा है...",
+      "ml.orderPlaced": "ऑर्डर दर्ज हो गया",
+      "ml.orderMsg": "{count} सामग्री का ऑर्डर दर्ज हुआ, कुल {total}। भेजने से पहले इन्हें आपके नाम व गोत्र से अभिमंत्रित किया जाएगा।",
+      "ml.viewOrders": "मेरे ऑर्डर देखें",
+      "ml.continue": "खरीदारी जारी रखें",
+      "ml.unavailable": "ये सामग्री अभी उपलब्ध नहीं है",
+      "ml.needSignin": "वॉलेट से भुगतान के लिए साइन इन करें, या कैश ऑन डिलीवरी चुनें",
+      "sl.title": "विक्रेता पोर्टल",
+      "sl.sub": "अपनी अभिमंत्रित सामग्री देशभर के श्रद्धालुओं को बेचें",
+      "sl.signin.title": "सामग्री लिस्ट करने के लिए साइन इन करें।",
+      "sl.signin.body": "आपकी लिस्टिंग आपके खाते में सहेजी जाती है और हमारी समीक्षा के बाद लाइव होती है।",
+      "sl.photo": "सामग्री की फ़ोटो *",
+      "sl.photo.hint": "JPG, PNG या WebP फ़ोटो, कम से कम 300 x 300 पिक्सल, अधिकतम 6 एमबी। असली सामग्री की साफ़ फ़ोटो लगाएं।",
+      "sl.photo.alt": "फ़ोटो पूर्वावलोकन",
+      "sl.name": "पंडित / आश्रम का नाम *",
+      "sl.itemTitle": "सामग्री का नाम *",
+      "sl.itemTitle.ph": "जैसे 7-मुखी नेपाली रुद्राक्ष, चांदी कैप",
+      "sl.category": "श्रेणी *",
+      "sl.cat.rudraksha": "रुद्राक्ष",
+      "sl.cat.mala": "माला",
+      "sl.cat.yantra": "यंत्र व कवच",
+      "sl.cat.gemstone": "रत्न",
+      "sl.cat.samagri": "हवन व पूजन सामग्री",
+      "sl.stock": "स्टॉक में नग *",
+      "sl.price": "बिक्री मूल्य (₹) *",
+      "sl.mrp": "अंकित मूल्य (₹, वैकल्पिक)",
+      "sl.material": "सामग्री",
+      "sl.origin": "उत्पत्ति",
+      "sl.desc": "विवरण व लाभ *",
+      "sl.desc.ph": "महत्व, उपयोग विधि और देखभाल",
+      "sl.energize": "अभिमंत्रण का विवरण",
+      "sl.energize.ph": "जैसे महामृत्युंजय मंत्र के 108 जप से",
+      "sl.submit": "समीक्षा के लिए भेजें",
+      "sl.submitting": "भेजा जा रहा है...",
+      "sl.listings": "आपकी लिस्टिंग",
+      "sl.live": "लाइव",
+      "sl.review": "समीक्षा लंबित",
+      "sl.stockLine": "स्टॉक {n}",
+      "sl.photoUploaded": "फ़ोटो अपलोड हो गई",
+      "sl.needPhoto": "पहले अपनी सामग्री की फ़ोटो अपलोड करें",
+      "sl.submitted": "आपकी सामग्री समीक्षा के लिए भेज दी गई है। स्वीकृति के बाद एस्ट्रो मॉल पर दिखेगी।",
+      "sl.needSignin": "सामग्री लिस्ट करने के लिए साइन इन करें",
+      "or.title": "मेरे ऑर्डर एवं ट्रैकिंग",
+      "or.loading": "आपके ऑर्डर लोड हो रहे हैं...",
+      "or.loadFail": "ऑर्डर लोड नहीं हो सके",
+      "or.none.title": "अभी कोई ऑर्डर नहीं",
+      "or.none.sub": "आपके ऑर्डर और ट्रैकिंग यहाँ दिखेंगे।",
+      "or.PLACED": "ऑर्डर दर्ज",
+      "or.PAID": "भुगतान हुआ",
+      "or.ENERGIZING": "अभिमंत्रण जारी",
+      "or.DISPATCHED": "भेजा गया",
+      "or.DELIVERED": "पहुँच गया",
+      "or.CANCELLED": "रद्द",
+      "or.energized": "✨ आपके नाम व गोत्र से अभिमंत्रित",
+      "or.pending": "🕉️ अभिमंत्रण शेष",
+      "or.tracking": "स्पीड पोस्ट",
+      "or.noTracking": "भेजे जाने पर ट्रैकिंग आईडी दिखेगी",
+      "or.rate": "★ रेटिंग दें",
+      "or.editReview": "समीक्षा बदलें",
+      "or.cancel": "रद्द करें",
+      "or.cancelConfirm": "ऑर्डर रद्द करें? भुगतान की गई राशि वॉलेट में लौटाई जाएगी।",
+      "or.cancelled": "ऑर्डर रद्द हो गया",
+      "rv.default": "इस सामग्री को रेटिंग दें",
+      "rv.title": "रेटिंग दें: {name}",
+      "rv.comment": "आपकी समीक्षा (वैकल्पिक)",
+      "rv.submit": "समीक्षा भेजें",
+      "rv.note": "केवल मिल चुके ऑर्डर की समीक्षा हो सकती है।",
+      "rv.chooseStars": "कृपया स्टार रेटिंग चुनें",
+      "rv.thanks": "आपकी समीक्षा के लिए धन्यवाद",
+      "ml.forKundli": "आपकी कुंडली के अनुसार सुझाव",
+      "ml.suggest": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {gem} शुभ माना जाता है।",
+      "ml.disclaimer": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं। रत्न धारण से पहले अपने ज्योतिषी से परामर्श करें।",
+      "nb.title": "सूचनाएं",
+      "nb.readAll": "सभी पढ़ी हुई करें",
+      "nb.empty": "अभी कोई सूचना नहीं।",
+      "nb.aria": "सूचनाएं",
+      "auth.needed": "आगे बढ़ने के लिए कृपया साइन इन करें।",
+      "auth.neededOrder": "ऑर्डर करने के लिए कृपया साइन इन करें।",
+      "auth.neededOrders": "अपने ऑर्डर देखने के लिए कृपया साइन इन करें।",
+      "auth.neededBooking": "सेवा बुक करने के लिए कृपया साइन इन करें।",
+      "auth.neededBookings": "अपनी बुकिंग देखने के लिए कृपया साइन इन करें।",
+      "auth.neededCoupon": "कूपन लगाने के लिए कृपया साइन इन करें।",
+      "auth.neededRewards": "अपने रिवॉर्ड देखने के लिए कृपया साइन इन करें।",
+      "auth.neededSeller": "विक्रेता डैशबोर्ड के लिए कृपया साइन इन करें।",
+      "auth.signInBtn": "साइन इन",
+      "md.certificate": "प्रमाण पत्र",
+      "md.liveDarshan": "🔴 लाइव दर्शन",
+      "md.priest": "पुरोहित",
+      "cd.priestTitle": "अपने पुरोहित चुनें (वैकल्पिक)",
+      "cd.anyPriest": "कोई भी उपलब्ध पुरोहित",
+      "cd.verified": "सत्यापित",
+      "cd.years": "{n} वर्ष का अनुभव",
+      "cd.prasadRow": "प्रसाद डिलीवरी",
+      "cd.free": "निःशुल्क (सदस्य)",
+      "co.offers": "ऑफ़र व पॉइंट",
+      "co.couponPh": "कूपन कोड",
+      "co.apply": "लगाएं",
+      "co.coupon": "कूपन {code}",
+      "co.couponOk": "{code} लग गया: आपकी बचत {amount}।",
+      "co.usePoints": "मेरे {points} पॉइंट उपयोग करें ({worth} के बराबर)",
+      "co.pointsUsed": "उपयोग किए पॉइंट ({n})",
+      "co.memberDiscount": "प्रीमियम सदस्य छूट",
+      "co.memberOn": "प्रीमियम सदस्य: अतिरिक्त छूट और दोगुने पॉइंट लगे हैं।",
+      "co.memberOnSeva": "प्रीमियम सदस्य: प्रसाद डिलीवरी निःशुल्क और दोगुने पॉइंट।",
+      "co.memberHint": "प्रीमियम सदस्यों को अतिरिक्त छूट, निःशुल्क प्रसाद डिलीवरी और दोगुने पॉइंट मिलते हैं।",
+      "co.earn": "इस ऑर्डर पर आपको {n} पॉइंट मिलेंगे।",
+      "co.gemTitle": "रत्न संबंधी सलाह",
+      "co.gemPolicy": "रत्न धारण करने से पहले कृपया अपने ज्योतिषी से परामर्श करें। रत्न आपके लिए अभिमंत्रित व तैयार किए जाते हैं, इसलिए वापसी केवल क्षतिग्रस्त, गलत या प्रमाणपत्र से भिन्न रत्न पर मान्य है।",
+      "co.gemAck": "मैंने अपने ज्योतिषी से परामर्श कर लिया है और रत्न की वापसी नीति स्वीकार करता/करती हूँ।",
+      "pk.title": "सेवा पैकेज",
+      "pk.sub": "बार-बार होने वाली सेवाएं एक बार में, छूट के साथ बुक करें। हर सत्र अपनी तारीख पर निर्धारित होता है।",
+      "pk.sessions": "{n} सत्र",
+      "pk.select": "चुनें",
+      "pk.start": "पहला सत्र दिनांक *",
+      "pk.dates": "आपके सत्र की तारीखें",
+      "pk.listPrice": "पैकेज के बिना मूल्य",
+      "pk.buy": "पैकेज खरीदें",
+      "pk.bought": "पैकेज बुक हुआ: {n} सत्र निर्धारित",
+      "pk.part": "पैकेज का सत्र",
+      "or.RETURN_REQUESTED": "वापसी अनुरोधित",
+      "or.saved": "{amount} की बचत",
+      "or.track": "ट्रैक करें",
+      "or.trackTitle": "अपना ऑर्डर ट्रैक करें",
+      "or.courier": "कूरियर",
+      "or.trackIndiaPost": "इंडिया पोस्ट पर ट्रैक करें",
+      "or.trackHint": "स्पीड पोस्ट की स्कैन जानकारी आपकी ट्रैकिंग आईडी से इंडिया पोस्ट की वेबसाइट पर दिखती है।",
+      "or.return": "वापसी",
+      "or.returnTitle": "वापसी का अनुरोध",
+      "or.returnPolicy": "वापसी केवल क्षतिग्रस्त या गलत सामग्री पर, सामग्री पेज पर दी गई समय-सीमा के भीतर मान्य है।",
+      "or.returnReason": "सामग्री में क्या समस्या है? *",
+      "or.returnSubmit": "अनुरोध भेजें",
+      "or.returnSent": "वापसी का अनुरोध भेज दिया गया। हम आपसे संपर्क करेंगे।",
+      "ml.from": "शुरुआत",
+      "ml.chooseOptions": "कृपया सामग्री पेज पर विकल्प चुनें।",
+      "ml.chooseOpts": "विकल्प चुनें",
+      "pp.mall": "एस्ट्रो मॉल",
+      "pp.notFound": "यह सामग्री उपलब्ध नहीं है",
+      "pp.backToMall": "एस्ट्रो मॉल पर लौटें",
+      "pp.verifiedSeller": "सत्यापित विक्रेता",
+      "pp.inStock": "स्टॉक में उपलब्ध",
+      "pp.delivery": "आपके नाम से अभिमंत्रित होकर स्पीड पोस्ट से आपके पते पर भेजा जाता है।",
+      "pp.returnShort": "क्षतिग्रस्त या गलत सामग्री की वापसी डिलीवरी के {days} दिन के भीतर।",
+      "pp.about": "इस सामग्री के बारे में",
+      "pp.certificate": "लैब प्रमाणपत्र",
+      "pp.verifiedCert": "प्रमाणपत्र सत्यापित",
+      "pp.lab": "लैब",
+      "pp.certNo": "प्रमाणपत्र क्रमांक",
+      "pp.certCode": "सत्यापन कोड",
+      "pp.verifyOnline": "ऑनलाइन सत्यापित करें",
+      "pp.noCert": "विक्रेता ने इस सामग्री का सत्यापित लैब प्रमाणपत्र नहीं दिया है।",
+      "pp.returns": "वापसी व रिफंड",
+      "pp.basedOn": "{n} समीक्षाओं के आधार पर",
+      "pp.related": "आपको ये भी पसंद आ सकते हैं",
+      "tp.mandir": "मंदिर सेवा",
+      "tp.notFound": "तीर्थ नहीं मिला",
+      "tp.back": "मंदिर सेवा पर लौटें",
+      "tp.bookSeva": "सेवा बुक करें",
+      "tp.about": "इस तीर्थ के बारे में",
+      "tp.live": "लाइव दर्शन",
+      "tp.noLive": "इस तीर्थ का लाइव दर्शन लिंक अभी जोड़ा नहीं गया है।",
+      "tp.sevas": "बुक की जा सकने वाली सेवाएं",
+      "tp.video": "संकल्प का वीडियो",
+      "tp.prasad": "प्रसाद डिलीवरी उपलब्ध (+{fee})",
+      "tp.aarti": "आरती का समय",
+      "tp.aartiHint": "समय मंदिर द्वारा तय होते हैं और त्योहारों पर बदल सकते हैं।",
+      "tp.noAarti": "इस तीर्थ की आरती का समय अभी जोड़ा नहीं गया है।",
+      "tp.priests": "पुरोहित",
+      "tp.noPriests": "इस तीर्थ के पुरोहितों की जानकारी सत्यापन के बाद यहाँ दिखेगी।",
+      "tp.how": "यह कैसे होता है",
+      "tp.step1": "सेवा चुनें और अपना नाम, गोत्र व संकल्प दें।",
+      "tp.step2": "पुरोहित निर्धारित दिन पर सेवा संपन्न करते हैं।",
+      "tp.step3": "आपको संकल्प का वीडियो \"मेरी बुकिंग\" में मिलता है।",
+      "tp.step4": "सेवा का प्रमाण पत्र डाउनलोड करें; प्रसाद बुक किया हो तो भेजा जाता है।",
+      "rw.open": "मेरे रिवॉर्ड",
+      "rw.title": "मेरे रिवॉर्ड",
+      "rw.signin": "अपने पॉइंट, सदस्यता और ऑफ़र देखने के लिए साइन इन करें।",
+      "rw.points": "लॉयल्टी पॉइंट",
+      "rw.worth": "{amount} के बराबर",
+      "rw.membership": "प्रीमियम सदस्यता",
+      "rw.member": "सक्रिय",
+      "rw.notMember": "सदस्य नहीं",
+      "rw.until": "{date} तक मान्य",
+      "rw.joinHint": "अतिरिक्त लाभ के लिए नीचे जुड़ें",
+      "rw.referral": "आपका रेफरल कोड",
+      "rw.referHint": "मित्रों को बुलाएं: दोनों को {n} पॉइंट",
+      "rw.premium": "प्रीमियम सदस्यता",
+      "rw.b1": "एस्ट्रो मॉल पर {n}% अतिरिक्त छूट",
+      "rw.b2": "सेवाओं पर प्रसाद डिलीवरी निःशुल्क",
+      "rw.b3": "हर ऑर्डर व सेवा पर दोगुने लॉयल्टी पॉइंट",
+      "rw.plan.monthly": "मासिक",
+      "rw.plan.yearly": "वार्षिक",
+      "rw.days": "{n} दिन",
+      "rw.join": "जुड़ें",
+      "rw.extend": "बढ़ाएं",
+      "rw.confirmPlan": "{plan} योजना वॉलेट से खरीदें?",
+      "rw.joined": "प्रीमियम में आपका स्वागत है!",
+      "rw.referTitle": "रेफर करें और कमाएं",
+      "rw.referBody": "आपका बुलाया मित्र जब अपना पहला ऑर्डर या सेवा पूरी करता है, तो आप दोनों को {n} पॉइंट मिलते हैं।",
+      "rw.copy": "कॉपी",
+      "rw.copied": "कोड कॉपी हो गया",
+      "rw.shareText": "एस्ट्रो ज्योतिष पर मेरे साथ जुड़ें। साइन अप के समय मेरा कोड {code} डालें।",
+      "rw.friendPh": "मित्र का रेफरल कोड",
+      "rw.friendHint": "कोड है? पहले ऑर्डर से पहले यहाँ जोड़ें।",
+      "rw.referredOk": "आपके खाते में रेफरल कोड लग चुका है।",
+      "rw.coupons": "आपके लिए कूपन",
+      "rw.noCoupons": "अभी कोई कूपन उपलब्ध नहीं है।",
+      "rw.scope.all": "मॉल व सेवा",
+      "rw.scope.mall": "एस्ट्रो मॉल",
+      "rw.scope.seva": "मंदिर सेवा",
+      "rw.reminders": "जन्मदिन व वर्षगांठ के रिमाइंडर",
+      "rw.remindersHint": "हम एक सप्ताह पहले याद दिलाते हैं ताकि आप उनके नाम से सेवा बुक कर सकें।",
+      "rw.remName": "व्यक्ति का नाम",
+      "rw.birthday": "जन्मदिन",
+      "rw.anniversary": "वर्षगांठ",
+      "rw.addRem": "रिमाइंडर जोड़ें",
+      "rw.remAdded": "रिमाइंडर सहेज लिया गया",
+      "rw.bookSeva": "सेवा बुक करें",
+      "rw.remove": "हटाएं",
+      "rw.history": "पॉइंट का इतिहास",
+      "rw.noHistory": "पहले ऑर्डर या सेवा के बाद आपके पॉइंट यहाँ दिखेंगे।",
+      "rw.reason.order": "ऑर्डर मिला",
+      "rw.reason.seva": "सेवा संपन्न",
+      "rw.reason.referral": "रेफरल बोनस",
+      "rw.reason.redeem": "उपयोग किए",
+      "rw.reason.refund": "वापस मिले",
+      "sd.title": "विक्रेता डैशबोर्ड",
+      "sd.signin": "विक्रेता डैशबोर्ड के लिए साइन इन करें।",
+      "sd.registerTitle": "विक्रेता बनें",
+      "sd.registerHint": "अपने आश्रम या दुकान की जानकारी दें। KYC स्वीकृत होने के बाद आप सामग्री लिस्ट कर सकते हैं और भुगतान पा सकते हैं।",
+      "sd.pan": "पैन नंबर",
+      "sd.saveProfile": "विवरण सहेजें",
+      "sd.saved": "सहेज लिया गया",
+      "sd.kyc.PENDING": "समीक्षा लंबित",
+      "sd.kyc.APPROVED": "स्वीकृत",
+      "sd.kyc.REJECTED": "स्वीकृत नहीं",
+      "sd.kycNeedDoc": "अपना पैन या पहचान प्रमाण (PDF, JPG या PNG) अपलोड करें ताकि हमारी टीम आपका खाता स्वीकृत कर सके।",
+      "sd.kycWait": "आपका दस्तावेज़ हमारी टीम के पास है। समीक्षा होते ही आपको सूचना मिलेगी।",
+      "sd.uploadDoc": "दस्तावेज़ अपलोड करें",
+      "sd.chooseFile": "पहले कोई फ़ाइल चुनें",
+      "sd.docSent": "दस्तावेज़ समीक्षा के लिए भेजा गया",
+      "sd.available": "निकासी हेतु उपलब्ध",
+      "sd.net": "कुल शुद्ध कमाई {amount}",
+      "sd.openOrders": "पूरे करने वाले ऑर्डर",
+      "sd.toFulfil": "अभिमंत्रित कर भेजें",
+      "sd.listings": "लिस्टिंग",
+      "sd.inCatalog": "आपकी सूची में सामग्री",
+      "sd.tab.products": "सामग्री",
+      "sd.tab.orders": "ऑर्डर",
+      "sd.tab.earnings": "कमाई व भुगतान",
+      "sd.tab.profile": "प्रोफ़ाइल",
+      "sd.addProduct": "सामग्री जोड़ें",
+      "sd.needKyc": "KYC स्वीकृत होने के बाद आप सामग्री जोड़ सकेंगे।",
+      "sd.noProducts": "आपने अभी कुछ लिस्ट नहीं किया है।",
+      "sd.extraHint": "वैकल्पिक अतिरिक्त फ़ोटो (अधिकतम 5), एक-एक करके।",
+      "sd.maxPhotos": "आप अधिकतम 5 अतिरिक्त फ़ोटो जोड़ सकते हैं",
+      "sd.ls.PENDING": "समीक्षा लंबित",
+      "sd.ls.APPROVED": "लाइव",
+      "sd.ls.REJECTED": "स्वीकृत नहीं",
+      "sd.ls.PAUSED": "रुकी हुई",
+      "sd.cs.NONE": "प्रमाणपत्र नहीं",
+      "sd.cs.PENDING": "प्रमाणपत्र समीक्षा में",
+      "sd.cs.VERIFIED": "प्रमाणपत्र सत्यापित",
+      "sd.cs.REJECTED": "प्रमाणपत्र स्वीकार नहीं",
+      "sd.save": "सहेजें",
+      "sd.pause": "रोकें",
+      "sd.resume": "फिर शुरू करें",
+      "sd.certUpload": "लैब प्रमाणपत्र",
+      "sd.lab": "लैब का नाम (जैसे GII)",
+      "sd.certNo": "प्रमाणपत्र क्रमांक",
+      "sd.sendCert": "सत्यापन हेतु भेजें",
+      "sd.certSent": "प्रमाणपत्र सत्यापन हेतु भेजा गया",
+      "sd.noOrders": "आपकी सामग्री के लिए अभी कोई ऑर्डर नहीं।",
+      "sd.energizeFor": "अभिमंत्रण किसके नाम से",
+      "sd.yourShare": "आपका हिस्सा {amount}",
+      "sd.startEnergize": "अभिमंत्रण शुरू करें",
+      "sd.trackingId": "ट्रैकिंग आईडी",
+      "sd.dispatch": "भेजा गया चिह्नित करें",
+      "sd.gross": "बिक्री (पहुँचे ऑर्डर)",
+      "sd.commission": "प्लेटफ़ॉर्म कमीशन",
+      "sd.netEarn": "शुद्ध कमाई",
+      "sd.paidOut": "भुगतान हो चुका",
+      "sd.pending": "भुगतान अनुरोधित",
+      "sd.commissionHint": "कमाई ऑर्डर पहुँचने पर गिनी जाती है। प्लेटफ़ॉर्म 10% कमीशन रखता है।",
+      "sd.amount": "राशि (न्यूनतम {min})",
+      "sd.requestPayout": "भुगतान का अनुरोध करें",
+      "sd.payoutSent": "भुगतान का अनुरोध भेजा गया। समीक्षा के बाद आपके UPI पर भेजा जाएगा।",
+      "sd.po.REQUESTED": "अनुरोधित",
+      "sd.po.PAID": "भुगतान हुआ",
+      "sd.po.REJECTED": "अस्वीकृत",
+      "sd.editProfile": "विवरण बदलें",
+      "vf.sevaOk": "सेवा प्रमाण पत्र असली है",
+      "vf.productOk": "लैब प्रमाणपत्र सत्यापित है",
+      "vf.yajman": "यजमान",
+      "vf.temple": "तीर्थ",
+      "vf.date": "दिनांक",
+      "vf.product": "सामग्री",
+      "vf.viewProduct": "सामग्री देखें",
+      "vf.bad": "प्रमाण पत्र नहीं मिला",
+      "vf.badHint": "यह कोड मेल नहीं खाया। कोड जांचें या प्रमाण पत्र का QR दोबारा स्कैन करें।",
+      "vf.home": "होम पर लौटें",
+      "pp.tab.details": "विवरण",
+      "pp.tab.specs": "विशेषताएँ",
+      "pp.tab.certificate": "प्रमाणपत्र",
+      "pp.tab.returns": "वापसी",
+      "pp.tab.reviews": "समीक्षाएँ",
+      "pp.taxes": "सभी करों सहित",
+      "pp.save": "आपकी बचत {amt}",
+      "pp.share": "साझा करें",
+      "pp.shared": "लिंक कॉपी हो गया",
+      "pp.zoom": "ज़ूम करने के लिए टैप करें",
+      "pp.pin.title": "डिलीवरी जाँचें",
+      "pp.pin.ph": "6 अंकों का पिनकोड लिखें",
+      "pp.pin.btn": "जाँचें",
+      "pp.pin.bad": "सही 6 अंकों का पिनकोड लिखें",
+      "pp.pin.ok": "{pin} तक अनुमानित डिलीवरी {date} तक",
+      "pp.pin.note": "अभिमंत्रण में डिस्पैच से पहले 1-2 दिन लगते हैं।",
+      "pp.trust.cert": "लैब प्रमाणित",
+      "pp.trust.certSub": "असली व सत्यापन योग्य",
+      "pp.trust.energ": "आपके लिए अभिमंत्रित",
+      "pp.trust.energSub": "आपके नाम व गोत्र से",
+      "pp.trust.pay": "सुरक्षित भुगतान",
+      "pp.trust.paySub": "COD या वॉलेट",
+      "pp.trust.ret": "आसान वापसी",
+      "pp.trust.retSub": "{days} दिन की अवधि",
+      "pp.seller.view": "इस विक्रेता की और सामग्री",
+      "pp.copy": "कॉपी",
+      "pp.copied": "कॉपी हुआ",
+      "pp.sealed": "लैब द्वारा सत्यापित",
+      "pp.bar.add": "जोड़ें",
+      "pp.nospec": "कोई विशेषता सूचीबद्ध नहीं है।",
+      "pp.qty": "मात्रा",
+      "exp.dashboard": "मेरा डैशबोर्ड",
+      "exp.welcome": "आपका निजी स्थान",
+      "exp.intro": "आपके परामर्श, धार्मिक सेवाएँ और खरीदारी, सब एक जगह।",
+      "exp.refresh": "ताज़ा करें",
+      "exp.wallet": "वॉलेट",
+      "exp.orders": "ऑर्डर",
+      "exp.pujas": "पूजा बुकिंग",
+      "exp.profiles": "सहेजी गई कुंडली",
+      "exp.consultations": "परामर्श इतिहास",
+      "exp.sessions": "अपॉइंटमेंट",
+      "exp.saved": "पसंदीदा सामग्री",
+      "exp.recent": "हाल में देखी गई सामग्री",
+      "exp.recentNote": "इस ब्राउज़र में सहेजा गया। आप इसे कभी भी हटा सकते हैं।",
+      "exp.clear": "इतिहास हटाएँ",
+      "exp.explore": "एस्ट्रो मॉल देखें",
+      "exp.temples": "मंदिर देखें",
+      "exp.empty": "अभी यहाँ कुछ नहीं है",
+      "exp.emptyNote": "शुरुआत करने पर आपकी गतिविधियाँ यहाँ दिखाई देंगी।",
+      "exp.login": "अपने डैशबोर्ड में साइन इन करें",
+      "exp.loginNote": "अपने खाते का वॉलेट, ऑर्डर, बुकिंग और सहेजी हुई कुंडली देखें।",
+      "exp.signin": "साइन इन करें",
+      "exp.retry": "दोबारा प्रयास करें",
+      "exp.failed": "यह अनुभाग लोड नहीं हुआ",
+      "exp.loading": "आपके लिए जानकारी लोड हो रही है…",
+      "exp.manage": "प्रबंधित करें",
+      "exp.add": "राशि जोड़ें",
+      "exp.compare": "तुलना करें",
+      "exp.comparing": "तुलना के लिए चुना गया",
+      "exp.compareTitle": "पसंदीदा सामग्री की तुलना करें",
+      "exp.compareNote": "अधिकतम 3 सामग्री की तुलना करें। मूल्य मूल विकल्प के हैं।",
+      "exp.compareLimit": "आप अधिकतम 3 सामग्री की तुलना कर सकते हैं।",
+      "exp.remove": "हटाएँ",
+      "exp.close": "बंद करें",
+      "exp.price": "मूल्य",
+      "exp.material": "धातु / सामग्री",
+      "exp.origin": "उत्पत्ति",
+      "exp.certified": "लैब प्रमाण पत्र",
+      "exp.energized": "अभिमंत्रित",
+      "exp.stock": "उपलब्धता",
+      "exp.yes": "उपलब्ध",
+      "exp.no": "सूचीबद्ध नहीं",
+      "exp.inStock": "स्टॉक में",
+      "exp.outStock": "स्टॉक में नहीं",
+      "exp.view": "सामग्री देखें",
+      "exp.returns": "वापसी और डिलीवरी",
+      "exp.delivery": "अनुमानित डिलीवरी",
+      "exp.deliveryNote": "अनुमान के लिए नीचे पिन कोड डालें। भेजने का समय विक्रेता और चुने गए विकल्पों पर निर्भर है।",
+      "exp.photo": "सामग्री की तस्वीर",
+      "exp.next": "अगली तस्वीर",
+      "exp.previous": "पिछली तस्वीर",
+      "exp.tracker": "आपकी पूजा की प्रगति",
+      "exp.confirmed": "बुकिंग की पुष्टि",
+      "exp.scheduled": "पूजा निर्धारित",
+      "exp.performed": "पूजा का वीडियो उपलब्ध",
+      "exp.completed": "पूजा संपन्न",
+      "exp.prasad": "प्रसाद भेजा गया",
+      "exp.pending": "जानकारी की प्रतीक्षा",
+      "exp.done": "पूरा हुआ",
+      "exp.current": "वर्तमान चरण",
+      "exp.cancelled": "रद्द · रिफंड दर्ज",
+      "exp.trackNote": "प्रगति की जानकारी मंदिर की टीम देती है। अगले चरणों की अभी पुष्टि नहीं हुई है।",
+      "exp.tracking": "ट्रैकिंग संदर्भ",
+      "exp.watch": "बुकिंग और वीडियो देखें",
+      "exp.balance": "उपलब्ध राशि",
+      "exp.testMode": "टेस्ट वॉलेट",
+      "exp.transaction": "हाल के लेनदेन",
+      "exp.default": "मुख्य",
+      "exp.newChart": "जन्म कुंडली बनाएँ",
+      "exp.resume": "परामर्श खोलें",
+      "exp.wishlistEmpty": "अपनी पसंद की सामग्री सहेजें",
+      "exp.wishlistNote": "किसी सामग्री पर दिल का बटन दबाकर उसे यहाँ सहेजें।",
+      "exp.recentlyEmpty": "यहाँ से अपनी पसंद खोजना शुरू करें",
+      "exp.find": "ज्योतिषी खोजें",
+      "exp.confirmedStatus": "पुष्टि हुई",
+      "exp.cancelledStatus": "रद्द",
+      "exp.completedStatus": "पूरा हुआ",
+      "exp.account": "मेरी प्रोफ़ाइल",
+      "exp.settings": "खाते की जानकारी और सेटिंग्स",
+      "exp.accountOverview": "खाते का सारांश",
+      "exp.accountActivity": "आपकी गतिविधियाँ एक नज़र में",
+      "exp.quickAccess": "आपके अगले कदम के लिए",
+      "exp.walletNote": "आपकी राशि, भुगतान और रसीदें, सब एक जगह।",
+      "exp.totalAdded": "कुल जोड़ी गई राशि",
+      "exp.totalSpent": "कुल कटी हुई राशि",
+      "exp.viewHistory": "वॉलेट इतिहास देखें",
+      "exp.personalAccount": "निजी खाता",
+      "exp.editProfile": "प्रोफ़ाइल बदलें",
+      "exp.aboutTitle": "एस्ट्रो ज्योतिष के बारे में",
+      "exp.aboutCopy": "एक ही खाते से ज्योतिष परामर्श, जन्म कुंडली, मंदिर सेवाएँ और आध्यात्मिक सामग्री देखें।",
+      "exp.privacyTitle": "गोपनीयता और खाते के नियंत्रण",
+      "exp.privacyCopy": "आपकी प्रोफ़ाइल में सहेजी गई कुंडली और खाते का इतिहास दिखता है। साझा उपकरण पर साइन आउट करें। हाल में देखी सामग्री इस ब्राउज़र में सहेजी जाती है और प्रोफ़ाइल से हटाई जा सकती है।",
+      "exp.termsTitle": "सेवा की जानकारी",
+      "exp.termsCopy": "पुष्टि से पहले अंतिम मूल्य, चुने विकल्प और रद्द करने या वापसी की शर्तें देखें। अलग से पुष्टि होने तक डिलीवरी और पूजा का समय अनुमानित है। ज्योतिषीय मार्गदर्शन किसी परिणाम की गारंटी नहीं देता।",
+      "exp.contactTitle": "सहायता से संपर्क करें",
+      "exp.contactCopy": "ऑर्डर या बुकिंग का संदर्भ और समस्या का विवरण भेजें। पासवर्ड या भुगतान की गुप्त जानकारी कभी न भेजें।",
+      "exp.helpTitle": "सहायता केंद्र",
+      "exp.helpCopy": "ऑर्डर, अपॉइंटमेंट और पूजा की प्रगति अपनी प्रोफ़ाइल में देखें। जोड़ी गई राशि, कटौती और रिफंड वॉलेट में देखें। अनुभाग लोड न होने पर दोबारा प्रयास करें।",
+      "exp.productIncludes": "चुनी गई सामग्री और विकल्प ऑर्डर सारांश में दिखते हैं। उपलब्ध होने पर प्रमाण पत्र और अभिमंत्रण का विवरण दिखाया जाता है।",
+      "exp.pujaIncludes": "क्या शामिल है यह सेवा पर निर्भर है। पुष्टि से पहले चुनी हुई पूजा, वीडियो और वैकल्पिक प्रसाद डिलीवरी देखें।",
+      "exp.modechat": "लिखित परामर्श",
+      "exp.modecall": "ऑडियो कॉल",
+      "exp.modevideo": "वीडियो कॉल",
+      "exp.cancelAppointment": "रद्द करें और रिफंड पाएँ",
+      "exp.walletIntro": "आपकी राशि और हर भुगतान की स्पष्ट जानकारी।",
+      "exp.testCreditNote": "टेस्ट क्रेडिट · बैंक से कोई भुगतान नहीं लिया जाता",
+      "exp.topUp": "राशि जोड़ें",
+      "exp.appointmentsHint": "ज्योतिषी से अपॉइंटमेंट चाहिए?",
+      "exp.manageAppointments": "अपॉइंटमेंट प्रबंधित करें",
+      "exp.appointmentsIntro": "निर्धारित परामर्श बुक और प्रबंधित करें।",
+      "exp.shortConsultations": "परामर्श",
+      "exp.continue": "जारी रखें",
+      "exp.withAstrologer": "इनके साथ परामर्श",
+      "exp.serviceDetails": "बुकिंग से पहले जानें",
+      "exp.inclusions": "क्या शामिल है",
+      "exp.timeline": "आगे क्या होगा",
+      "exp.cancellation": "रद्द करना और रिफंड",
+      "exp.support": "सहायता और समर्थन",
+      "exp.productTimeline": "विक्रेता आपकी चुनी सामग्री तैयार करके भेजता है। प्रगति अपनी प्रोफ़ाइल से देखें। डिलीवरी की तारीख अनुमानित है।",
+      "exp.pujaTimeline": "मंदिर की टीम समय की पुष्टि करती है। उपलब्ध पूजा वीडियो और प्रसाद ट्रैकिंग आपकी बुकिंग में दिखते हैं।",
+      "exp.pujaCancel": "भुगतान वाले शुरुआती चरण में बुकिंग रद्द कर सकते हैं। रिफंड वॉलेट में आता है। पूजा की प्रक्रिया आगे बढ़ने पर रद्द करना उपलब्ध नहीं है।",
+      "exp.productCancel": "अभिमंत्रण या भेजे जाने से पहले ऑर्डर रद्द कर सकते हैं। वॉलेट भुगतान का रिफंड वॉलेट में आता है। वापसी इस सामग्री की दिखाई गई नीति के अनुसार है।",
+      "exp.mediaUnavailable": "तस्वीर उपलब्ध नहीं है",
+      "exp.activeStatus": "जारी",
+      "exp.preferredTime": "पसंदीदा समय",
+      "exp.credentials": "योग्यता और विशेषज्ञता",
+      "exp.verifiedBadge": "एस्ट्रो ज्योतिष द्वारा सत्यापित",
+      "exp.typeHuman": "सत्यापित ज्योतिषी",
+      "exp.typeAi": "तुरंत मार्गदर्शन",
+      "exp.humanNote": "मानव ज्योतिषी के साथ व्यक्तिगत परामर्श।",
+      "exp.aiNote": "यह स्वचालित मार्गदर्शन सेवा है, किसी मानव ज्योतिषी के साथ परामर्श नहीं।",
+      "exp.yearsExp": "{n} वर्षों का अनुभव",
+      "exp.consultsDone": "{n} परामर्श दर्ज",
+      "exp.ratedBy": "{n} समीक्षाओं से {r}/5 रेटिंग",
+      "exp.speaks": "{list} में बात करते हैं",
+      "exp.focusAreas": "विशेषज्ञता: {list}",
+      "exp.whyConsult": "इन विशेषज्ञ से परामर्श क्यों लें?",
+      "exp.whyNone": "जैसे-जैसे परामर्श पूरे होंगे, अधिक जानकारी यहाँ दिखेगी।",
+      "exp.clientReviews": "ग्राहक समीक्षाएँ",
+      "exp.noReviews": "अभी कोई ग्राहक समीक्षा नहीं है।",
+      "exp.aboutExpert": "परिचय",
+      "exp.languagesLabel": "भाषाएँ",
+      "exp.apptModes": "अपॉइंटमेंट के प्रकार",
+      "exp.specialisations": "विशेषज्ञता के क्षेत्र",
+      "exp.ratePerMin": "प्रति मिनट शुल्क",
+      "exp.freeRate": "निःशुल्क",
+      "exp.perMin": "/ मिनट",
+      "exp.estimateTitle": "सत्र का अनुमानित शुल्क",
+      "exp.minutesShort": "{n} मिनट",
+      "exp.yourBalance": "आपके वॉलेट में राशि",
+      "exp.signInBalance": "वॉलेट राशि देखने और बुक करने के लिए साइन इन करें।",
+      "exp.lowBalance": "{m} मिनट के सत्र के लिए आपकी राशि ₹{n} कम है।",
+      "exp.enoughBalance": "वॉलेट में ₹{b} हैं, जो इस सत्र के लिए पर्याप्त हैं।",
+      "exp.shortBalance": "राशि ₹{b}। पुष्टि के लिए ₹{n} और जोड़ें।",
+      "exp.bookAppt": "अपॉइंटमेंट बुक करें",
+      "exp.chatNow": "अभी परामर्श शुरू करें",
+      "exp.attachKundli": "जन्म कुंडली जोड़ें",
+      "exp.offlineNote": "अभी ऑफ़लाइन हैं। आप आगे का अपॉइंटमेंट बुक कर सकते हैं।",
+      "exp.busyNote": "अभी परामर्श में हैं। बाद का समय बुक करें या कुछ देर में प्रयास करें।",
+      "exp.statusOnline": "अभी ऑनलाइन",
+      "exp.statusBusy": "परामर्श में व्यस्त",
+      "exp.statusOffline": "ऑफ़लाइन",
+      "exp.cancelRule": "अपॉइंटमेंट शुरू होने तक निःशुल्क रद्द करें; पूरा शुल्क वॉलेट में लौटता है। शुरू होने के बाद रद्द नहीं हो सकता।",
+      "exp.slotTaken": "बुक है",
+      "exp.slotPast": "बीत गया",
+      "exp.noSlots": "इस तारीख पर कोई खाली समय नहीं है। कृपया दूसरी तारीख चुनें।",
+      "exp.profileFailed": "यह प्रोफ़ाइल लोड नहीं हो सकी।",
+      "exp.profileMissing": "ज्योतिषी नहीं मिले",
+      "exp.profileMissingNote": "यह प्रोफ़ाइल मौजूद नहीं है या अभी उपलब्ध नहीं है।",
+      "exp.browseAll": "सभी ज्योतिषी देखें",
+      "exp.similarAstro": "मिलते-जुलते ज्योतिषी",
+      "exp.viewBtn": "देखें",
+      "exp.loadingProfile": "ज्योतिषी की प्रोफ़ाइल लोड हो रही है…",
+      "exp.bookingMode": "परामर्श का प्रकार",
+      "exp.journeyEyebrow": "आपकी यात्रा",
+      "exp.journeyTitle": "मार्गदर्शन से कर्म तक, चार चरणों में",
+      "exp.journeySub": "ज्योतिषी से बात करें, कुंडली समझें, पूजा करवाएँ और सहायक सामग्री चुनें, सब एक ही जगह।",
+      "exp.journeyStep1": "ज्योतिषी से परामर्श",
+      "exp.journeyStep1Text": "अपने प्रश्न के लिए ज्योतिषी से चैट, कॉल या समय बुक करें।",
+      "exp.journeyStep1Cta": "ज्योतिषी खोजें",
+      "exp.journeyStep2": "कुंडली और वैदिक साधन",
+      "exp.journeyStep2Text": "जन्म कुंडली, कुंडली मिलान, पंचांग, दोष और साढ़ेसाती की जाँच।",
+      "exp.journeyStep2Cta": "साधन खोलें",
+      "exp.journeyStep3": "मंदिर सेवा",
+      "exp.journeyStep3Text": "मंदिर में संकल्प पूजा बुक करें और उसकी प्रगति देखें।",
+      "exp.journeyStep3Cta": "मंदिर देखें",
+      "exp.journeyStep4": "एस्ट्रो मॉल",
+      "exp.journeyStep4Text": "रुद्राक्ष, रत्न और यंत्र, स्पष्ट सामग्री विवरण के साथ।",
+      "exp.journeyStep4Cta": "एस्ट्रो मॉल देखें",
+      "exp.reviewRule": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने इन ज्योतिषी से परामर्श लिया हो, एक बार।",
+      "exp.yourRating": "आपकी रेटिंग",
+      "exp.yourReview": "आपकी समीक्षा",
+      "exp.postReview": "समीक्षा भेजें",
+      "exp.reviewThanks": "धन्यवाद! आपकी समीक्षा जुड़ गई है।",
+      "exp.yourData": "आपका डेटा",
+      "exp.downloadData": "मेरा डेटा डाउनलोड करें (JSON)",
+      "exp.dataSignIn": "अपना डेटा डाउनलोड या हटाने के लिए साइन इन करें।",
+      "exp.deleteNote": "हटाने पर आपकी प्रोफ़ाइल, सहेजी कुंडली, चैट और विशलिस्ट मिट जाएँगी। भुगतान, ऑर्डर और बुकिंग के रिकॉर्ड व्यक्तिगत जानकारी के बिना रखे जाते हैं। इसे वापस नहीं किया जा सकता।",
+      "exp.passwordLabel": "अपने पासवर्ड से पुष्टि करें",
+      "exp.forfeitLabel": "मैं समझता/समझती हूँ कि वॉलेट की शेष राशि समाप्त हो जाएगी",
+      "exp.deleteAccount": "मेरा खाता हटाएँ",
+      "exp.deleteConfirm": "क्या आप अपना खाता हमेशा के लिए हटाना चाहते हैं?",
+      "exp.searchTitle": "खोजें",
+      "exp.searchPlaceholder": "ज्योतिषी, मंदिर या सामग्री खोजें",
+      "exp.searchHint": "कम से कम दो अक्षर लिखें। कहीं भी / दबाकर खोज खोलें।",
+      "exp.searchAstrologers": "ज्योतिषी",
+      "exp.searchTemples": "मंदिर",
+      "exp.searchProducts": "सामग्री",
+      "exp.searchNone": "आपकी खोज से कुछ नहीं मिला।",
+      "exp.trustTitle": "एस्ट्रो ज्योतिष कैसे काम करता है",
+      "exp.trustIntro": "सेवा के बारे में सीधी जानकारी, ताकि आपको पता रहे क्या अपेक्षा रखनी है।",
+      "exp.trustCounts": "{all} प्रोफ़ाइल सूचीबद्ध हैं: {human} सत्यापित ज्योतिषी और {ai} तुरंत मार्गदर्शन सेवाएँ। हर प्रोफ़ाइल में उसका प्रकार स्पष्ट है।",
+      "exp.trustAiLabel": "तुरंत मार्गदर्शन सेवाएँ स्पष्ट रूप से दर्शाई जाती हैं।",
+      "exp.trustRefund": "शुरू होने से पहले रद्द किए गए अपॉइंटमेंट का पूरा शुल्क आपके वॉलेट में लौटाया जाता है।",
+      "exp.trustReviews": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने ज्योतिषी से परामर्श लिया हो।",
+      "exp.trustData": "आप गोपनीयता और खाते के नियंत्रण से अपना व्यक्तिगत डेटा कभी भी डाउनलोड या हटा सकते हैं।",
+      "brief.eyebrow": "आपका दिन, आपके लिए",
+      "brief.title": "आज का ज्योतिष सार",
+      "brief.for": "{name} के लिए · {sign} चंद्र राशि",
+      "brief.energy": "आज की ऊर्जा",
+      "brief.l.excellent": "अति उत्तम",
+      "brief.l.good": "शुभ",
+      "brief.l.balanced": "सामान्य",
+      "brief.l.gentle": "संयम रखें",
+      "brief.tithi": "तिथि",
+      "brief.nakshatra": "नक्षत्र",
+      "brief.chandra": "चंद्र बल",
+      "brief.tara": "तारा बल",
+      "brief.dasha": "चल रही दशा",
+      "brief.favourable": "अनुकूल",
+      "brief.caution": "सावधानी",
+      "brief.house": "आपके चंद्र से {n}वाँ भाव",
+      "brief.dashaLine": "{planet} महादशा {date} तक",
+      "brief.sade": "शनि साढ़ेसाती चल रही है",
+      "brief.dhaiya": "शनि ढैया चल रही है",
+      "brief.window": "शुभ समय",
+      "brief.avoid": "नया कार्य टालें",
+      "brief.lucky": "आपके लिए शुभ",
+      "brief.colour": "रंग",
+      "brief.number": "अंक",
+      "brief.seva": "आज की सेवा",
+      "brief.sevaBtn": "यह सेवा बुक करें",
+      "brief.focus": "आज के क्षेत्र",
+      "brief.career": "करियर",
+      "brief.love": "प्रेम",
+      "brief.finance": "धन",
+      "brief.health": "स्वास्थ्य",
+      "brief.due": "आज {n} उपाय बाकी हैं",
+      "brief.allDone": "आज कोई उपाय बाकी नहीं",
+      "brief.openTracker": "उपाय ट्रैकर खोलें",
+      "brief.noProfileTitle": "इसे अपना बनाइए",
+      "brief.noProfileBody": "जन्म विवरण जोड़ें और अपना चंद्र बल, तारा बल, चल रही दशा और दिन का स्कोर देखें।",
+      "brief.addBirth": "जन्म विवरण जोड़ें",
+      "brief.note": "पारंपरिक वैदिक मार्गदर्शन, भविष्यवाणी नहीं।",
+      "brief.today": "आज",
+      "rem.title": "मेरे उपाय",
+      "rem.sub": "मंत्र, व्रत और दैनिक साधना को स्ट्रीक के साथ नियमित रखें।",
+      "rem.stat.active": "सक्रिय",
+      "rem.stat.today": "आज पूरे",
+      "rem.stat.best": "सर्वश्रेष्ठ स्ट्रीक",
+      "rem.add": "उपाय जोड़ें",
+      "rem.save": "उपाय सहेजें",
+      "rem.cancel": "रद्द करें",
+      "rem.f.title": "उपाय",
+      "rem.f.titlePh": "जैसे हनुमान चालीसा",
+      "rem.f.kind": "प्रकार",
+      "rem.f.freq": "कितनी बार",
+      "rem.f.day": "दिन",
+      "rem.f.days": "कितने दिन (वैकल्पिक)",
+      "rem.f.note": "टिप्पणी (वैकल्पिक)",
+      "rem.kind.mantra": "मंत्र / पाठ",
+      "rem.kind.fast": "व्रत",
+      "rem.kind.donation": "दान",
+      "rem.kind.gemstone": "रत्न",
+      "rem.kind.puja": "पूजा",
+      "rem.kind.other": "अन्य",
+      "rem.freq.daily": "प्रतिदिन",
+      "rem.freq.weekly": "प्रति सप्ताह",
+      "rem.freq.once": "एक बार",
+      "rem.day.0": "सोमवार",
+      "rem.day.1": "मंगलवार",
+      "rem.day.2": "बुधवार",
+      "rem.day.3": "गुरुवार",
+      "rem.day.4": "शुक्रवार",
+      "rem.day.5": "शनिवार",
+      "rem.day.6": "रविवार",
+      "rem.markDone": "पूरा किया",
+      "rem.done": "आज पूरा",
+      "rem.undo": "वापस",
+      "rem.notDue": "आज नहीं",
+      "rem.streakD": "{n} दिन की स्ट्रीक",
+      "rem.streakW": "{n} सप्ताह की स्ट्रीक",
+      "rem.progress": "{total} में से {done} दिन",
+      "rem.completedLabel": "संपूर्ण",
+      "rem.remove": "हटाएँ",
+      "rem.by": "{name} द्वारा सुझाया",
+      "rem.fromAstro": "आपके ज्योतिषी से",
+      "rem.suggested": "सुझाव",
+      "rem.bookSeva": "सेवा बुक करें",
+      "rem.shop": "खरीदें",
+      "rem.suggestTitle": "आपके लिए सुझाव",
+      "rem.suggestHint": "आपकी चंद्र राशि और परंपरा पर आधारित। शुरू करने के लिए दबाएँ।",
+      "rem.follow": "अपनाएँ",
+      "rem.empty": "अभी कोई उपाय नहीं",
+      "rem.emptyNote": "अपना उपाय जोड़ें या नीचे के सुझाव से शुरू करें।",
+      "rem.importBtn": "उपाय ट्रैकर में जोड़ें",
+      "rem.imported": "{n} उपाय आपके ट्रैकर में जुड़े",
+      "rem.importNone": "इस परामर्श में जोड़ने योग्य उपाय नहीं हैं।",
+      "rem.tab": "उपाय",
+      "rem.disclaimer": "उपाय पारंपरिक साधनाएँ हैं। रत्न धारण से पहले ज्योतिषी से परामर्श लें।",
+      "gf.title": "उपहार एवं त्योहार पैक",
+      "gf.sub": "आशीर्वाद वॉलेट क्रेडिट के रूप में भेजें, या त्योहार का तैयार सेट घर लाएँ।",
+      "gf.tab.cards": "गिफ्ट कार्ड",
+      "gf.tab.packs": "त्योहार पैक",
+      "gf.pickAmount": "राशि चुनें",
+      "gf.pickTheme": "शैली चुनें",
+      "gf.theme.diwali": "दीवाली",
+      "gf.theme.blessing": "आशीर्वाद",
+      "gf.theme.birthday": "जन्मदिन",
+      "gf.theme.wedding": "विवाह",
+      "gf.to": "पाने वाले का नाम",
+      "gf.toPh": "जैसे अनिता",
+      "gf.msg": "आपका संदेश",
+      "gf.msgPh": "आपको शांति और समृद्धि की शुभकामनाएँ",
+      "gf.defaultMsg": "आपको शांति और समृद्धि की शुभकामनाएँ।",
+      "gf.buy": "वॉलेट से खरीदें · {amount}",
+      "gf.buying": "उपहार बन रहा है...",
+      "gf.walletNote": "भुगतान आपके वॉलेट से होगा। कोड तुरंत मिलेगा।",
+      "gf.readyTitle": "आपका गिफ्ट कार्ड तैयार है",
+      "gf.copy": "कोड कॉपी करें",
+      "gf.copied": "कोड कॉपी हुआ",
+      "gf.share": "WhatsApp पर भेजें",
+      "gf.another": "एक और भेजें",
+      "gf.shareText": "Astro Jyotish की ओर से आपके लिए उपहार: {amount} वॉलेट क्रेडिट। कोड {code} यहाँ रिडीम करें: {url}/gifts",
+      "gf.redeemTitle": "क्या आपके पास गिफ्ट कार्ड है?",
+      "gf.redeemPh": "AJ-XXXX-XXXX-XXXX",
+      "gf.redeem": "रिडीम करें",
+      "gf.redeemed": "{amount} आपके वॉलेट में जुड़े",
+      "gf.history": "आपके भेजे उपहार",
+      "gf.received": "आपको मिले उपहार",
+      "gf.statusIssued": "उपयोग नहीं हुआ",
+      "gf.statusRedeemed": "रिडीम हुआ",
+      "gf.noSent": "आपने अभी कोई उपहार नहीं भेजा।",
+      "gf.signin": "गिफ्ट कार्ड भेजने या रिडीम करने के लिए साइन इन करें",
+      "gf.signinBtn": "साइन इन",
+      "gf.to2": "{name} के लिए",
+      "gf.cardBrand": "Astro Jyotish गिफ्ट कार्ड",
+      "gf.cardFrom": "शुभकामनाओं सहित",
+      "fp.daysLeft": "{n} दिन शेष",
+      "fp.today": "आज",
+      "fp.evergreen": "पूरे वर्ष उपलब्ध",
+      "fp.includes": "इस पैक में",
+      "fp.total": "सामग्री का मूल्य {amount}",
+      "fp.save": "{code} से {amount} तक बचाएँ",
+      "fp.addAll": "सब कार्ट में जोड़ें",
+      "fp.added": "पैक कार्ट में जुड़ा। चेकआउट पर कोड {code} लगाएँ।",
+      "fp.seva": "{name} में सेवा जोड़ें",
+      "fp.empty": "अभी कोई त्योहार पैक उपलब्ध नहीं है।",
+      "fp.copyCode": "कोड कॉपी करें",
+      "rw2.benefits": "आपके प्रीमियम लाभ",
+      "rw2.consult": "अपॉइंटमेंट पर {n}% छूट",
+      "rw2.priority": "प्राथमिकता बुकिंग",
+      "rw2.bonus": "हर माह {amount} वॉलेट बोनस",
+      "rw2.saved": "अपॉइंटमेंट पर बचत: {amount}",
+      "rw2.claim": "इस माह का {amount} पाएँ",
+      "rw2.claimed": "इस माह का बोनस ले लिया गया",
+      "rw2.claimOk": "{amount} आपके वॉलेट में जुड़े",
+      "rw2.unlock": "प्रीमियम सदस्यों को अपॉइंटमेंट पर {n}% छूट, प्राथमिकता बुकिंग और मासिक वॉलेट बोनस मिलता है।",
+      "rw2.refTitle": "आपके आमंत्रण",
+      "rw2.joined": "जुड़े",
+      "rw2.ordered": "पहला ऑर्डर पूरा",
+      "rw2.earned": "अर्जित पॉइंट",
+      "rw2.milestones": "आमंत्रण पड़ाव",
+      "rw2.milestone": "{n} मित्र · +{pts} पॉइंट",
+      "rw2.friendDone": "ऑर्डर किया",
+      "rw2.friendPending": "पहले ऑर्डर की प्रतीक्षा",
+      "rw2.noFriends": "अपना कोड साझा करें, मित्र यहाँ दिखेंगे।",
+      "rw2.giftsLink": "गिफ्ट कार्ड भेजें",
+      "tr.title": "इन ज्योतिषी पर भरोसा क्यों करें",
+      "tr.verified": "Astro Jyotish द्वारा सत्यापित",
+      "tr.consults": "परामर्श",
+      "tr.experience": "वर्षों का अनुभव",
+      "tr.repeat": "दोबारा आने वाले ग्राहक",
+      "tr.reply": "पहला उत्तर, सामान्यतः",
+      "tr.session": "औसत सत्र",
+      "tr.sec": "{n} सेकंड",
+      "tr.min": "{n} मिनट",
+      "tr.ratings": "रेटिंग विवरण",
+      "tr.verifiedReviews": "{n} समीक्षाएँ उन ग्राहकों की जिन्होंने परामर्श लिया",
+      "tr.thin": "अधिक परामर्श पूरे होने पर और आँकड़े दिखेंगे।",
+      "tr.since": "Astro Jyotish पर {date} से",
+      "pwa.installTitle": "Astro Jyotish इंस्टॉल करें",
+      "pwa.installBody": "होम स्क्रीन पर जोड़ें और रोज़ का सार व उपाय एक टैप में खोलें।",
+      "pwa.install": "इंस्टॉल करें",
+      "pwa.later": "अभी नहीं",
+      "pwa.iosBody": "iPhone पर Share दबाएँ, फिर \"Add to Home Screen\" चुनें।",
+      "pwa.update": "नया संस्करण तैयार है।",
+      "pwa.refresh": "रीफ़्रेश",
+      "pwa.offline": "आप ऑफ़लाइन हैं। कुछ सुविधाओं के लिए इंटरनेट चाहिए।",
+      "pwa.online": "फिर से ऑनलाइन",
+      "pv.nav.about": "परिचय",
+      "pv.nav.trust": "भरोसा",
+      "pv.nav.reviews": "समीक्षाएँ",
+      "pv.nav.book": "बुकिंग",
+      "pv.stat.rating": "रेटिंग",
+      "pv.stat.exp": "वर्षों का अनुभव",
+      "pv.stat.consults": "परामर्श",
+      "pv.save": "सहेजें",
+      "pv.saved": "सहेजा गया",
+      "pv.share": "साझा करें",
+      "pv.linkCopied": "प्रोफ़ाइल लिंक कॉपी हुआ",
+      "pv.saveLogin": "ज्योतिषी सहेजने के लिए साइन इन करें",
+      "pv.avail": "अगले उपलब्ध समय",
+      "pv.today": "आज",
+      "pv.tomorrow": "कल",
+      "pv.noSlots": "इस सप्ताह कोई खाली समय नहीं। आप चैट शुरू कर सकते हैं।",
+      "pv.memberPrice": "प्रीमियम मूल्य 15 मिनट के {price} · आपकी बचत {save}",
+      "pv.memberPitch": "प्रीमियम सदस्य अपॉइंटमेंट पर {n}% बचाते हैं।",
+      "pv.joinPremium": "प्रीमियम देखें",
+      "pv.similar": "ऐसे ही अन्य ज्योतिषी",
+      "pv.outOf": "5 में से",
+      "pv.basedOn": "{n} लिखित समीक्षाएँ",
+      "pv.perMin": "/मिनट",
+      "pv.view": "प्रोफ़ाइल देखें",
+      "pv.free": "निःशुल्क",
+      "pv.slotsFor": "बुक करने के लिए समय चुनें",
+      "ac.chat": "चैट",
+      "ac.call": "कॉल",
+      "ac.free": "निःशुल्क",
+      "ac.perMin": "/मिनट",
+      "ac.ai": "तुरंत मार्गदर्शन",
+      "ac.human": "सत्यापित ज्योतिषी",
+      "ac.topRated": "उच्च रेटिंग",
+      "ac.mostConsulted": "सर्वाधिक परामर्श",
+      "ac.featured": "विशेष",
+      "ac.new": "नए",
+      "ac.consults": "{n} परामर्श",
+      "ac.exp": "{n} वर्ष",
+      "ac.onlineAi": "अभी उपलब्ध · तुरंत उत्तर",
+      "ac.onlineHuman": "अभी ऑनलाइन",
+      "ac.busy": "अभी व्यस्त",
+      "ac.offline": "ऑफ़लाइन",
+      "ac.next": "अगला समय: {when}",
+      "ac.listen": "स्वर परिचय सुनें",
+      "ac.save": "ज्योतिषी सहेजें",
+      "ac.saved": "सहेजा गया",
+      "ac.new.reviews": "नए",
+      "dir.all": "सभी",
+      "dir.online": "अभी ऑनलाइन",
+      "dir.human": "सत्यापित ज्योतिषी",
+      "dir.ai": "तुरंत मार्गदर्शन",
+      "dir.top": "उच्च रेटिंग",
+      "dir.Marriage": "विवाह",
+      "dir.Career": "करियर",
+      "dir.Finance": "धन",
+      "dir.Health": "स्वास्थ्य",
+      "dir.Kundli": "कुंडली",
+      "dir.Remedies": "उपाय",
+      "dir.count": "{n} ज्योतिषी",
+      "pv.pkg.title": "परामर्श पैकेज",
+      "pv.pkg.sub": "अवधि चुनें। तारीख और समय बुकिंग के समय चुनें।",
+      "pv.pkg.quick": "त्वरित उत्तर",
+      "pv.pkg.quickDesc": "एक केंद्रित प्रश्न: निर्णय, समय या हाँ/ना।",
+      "pv.pkg.standard": "सामान्य परामर्श",
+      "pv.pkg.standardDesc": "आपकी कुंडली का विश्लेषण और दो-तीन प्रश्न।",
+      "pv.pkg.deep": "विस्तृत विश्लेषण",
+      "pv.pkg.deepDesc": "दशा, गोचर और उपाय विस्तार से।",
+      "pv.pkg.recommended": "अनुशंसित",
+      "pv.pkg.book": "{n} मिनट बुक करें",
+      "pv.pkg.min": "{n} मिनट",
+      "pv.slotsCount": "{n} खाली",
+      "pv.dayFull": "भरा",
+      "pv.pickTime": "समय चुनें",
+      "mp.download": "PDF रिपोर्ट डाउनलोड करें",
+      "mp.preparing": "PDF बन रही है...",
+      "mp.failed": "PDF नहीं बन सकी। कृपया फिर प्रयास करें।",
+      "dir.eyebrow": "स्पष्टता के साथ चुना गया मार्गदर्शन",
+      "dir.filters": "फ़िल्टर",
+      "dir.trust.verified": "सत्यापित प्रोफ़ाइल",
+      "dir.trust.verifiedSub": "प्रमाण-पत्र स्पष्ट रूप से देखें",
+      "dir.trust.rates": "स्पष्ट शुल्क",
+      "dir.trust.ratesSub": "शुरू करने से पहले शुल्क देखें",
+      "dir.trust.availability": "वर्तमान उपलब्धता",
+      "dir.trust.availabilitySub": "अगला उपयुक्त समय देखें",
+      "dir.resultsEyebrow": "विशेषज्ञों को देखें",
+      "dir.resultsTitle": "अपनी समस्या के लिए सही ज्योतिषी चुनें",
+      "dir.resultsNote": "परामर्श से पहले विशेषज्ञता, भाषा, उपलब्धता और शुल्क की तुलना करें।",
+      "nav_gau_sewa": "गौ सेवा",
+      "gs_home_title": "गौ सेवा",
+      "gs_home_text": "गौशाला में गायों की देखभाल में सहयोग करें। चारा, चिकित्सा या सामान्य सेवा चुनें और एक बार दान करें।",
+      "gs_home_cta": "योगदान दें",
+      "gs_hero_title": "गौ सेवा",
+      "gs_hero_sub": "हर गाय को पौष्टिक आहार, स्नेहपूर्ण देखभाल और सुरक्षित आश्रय मिले। करुणा की इस परंपरा से जुड़ें और गौ सेवा के माध्यम से गायों की रोज़मर्रा की ज़रूरतों में सहयोग करें।",
+      "banner.illustrative": "सांकेतिक चित्र",
+      "banner.md.title": "पावन तीर्थों में <em>चढ़ावा और संकल्प पूजा</em>",
+      "banner.md.sub": "अपने नाम और गोत्र से पूजा अर्पित करें। मंदिर सेवा चुनें, संकल्प का वीडियो पाएँ और जहाँ उपलब्ध हो, प्रसाद घर मँगवाएँ।",
+      "banner.ml.sub": "पंडितों और आश्रमों से रुद्राक्ष, मालाएँ, यंत्र और पूजा सामग्री चुनें। ऑर्डर से पहले सामग्री का विवरण और डिलीवरी के विकल्प देखें।",
+      "gs_hero_line_one": "थोड़ा सा स्नेह।",
+      "gs_hero_line_two": "जीवन भर की सेवा।",
+      "gs_section_kicker": "हृदय से एक अर्पण",
+      "gs_purpose_intro": "अपनी सेवा का उद्देश्य चुनें। पौष्टिक आहार, उपचार या दैनिक आश्रय—आपका छोटा सा सहयोग भी स्नेहपूर्ण देखभाल की दिशा में एक कदम है।",
+      "gs_amount_hint": "सुझाई गई राशि चुनें या ₹{min} से ₹{max} के बीच अपनी इच्छानुसार राशि पूरे रुपयों में भरें।",
+      "gs_form_intro": "आपकी इच्छानुसार एक भेंट, गौ सेवा के नाम।",
+      "gs_suggested": "या सुझाई गई राशि चुनें",
+      "gs_steps_heading": "सेवा से जुड़ने का सरल तरीका",
+      "gs_step_one": "अपनी सेवा चुनें",
+      "gs_step_one_desc": "चारा, चिकित्सा या सामान्य देखभाल का उद्देश्य चुनें।",
+      "gs_step_two": "इच्छानुसार सहयोग करें",
+      "gs_step_two_desc": "अपनी सुविधा के अनुसार सहयोग राशि भरें।",
+      "gs_step_three": "रसीद सुरक्षित रखें",
+      "gs_step_three_desc": "भुगतान सत्यापन के बाद अपने दान की रसीद डाउनलोड करें।",
+      "gs_form_kicker": "आपकी स्नेह भरी भेंट",
+      "gs_hero_cta": "अभी दान करें",
+      "gs_hero_alt": "गौशाला के धूप भरे आँगन में गाय और बछड़े का सांकेतिक दृश्य",
+      "gs_purpose_heading": "आपका सहयोग, उनकी दैनिक देखभाल",
+      "gs_purpose_chaara": "चारा सेवा",
+      "gs_purpose_chaara_desc": "गायों के लिए हरा चारा, सूखा भूसा और पौष्टिक आहार उपलब्ध कराने में सहयोग करें। गौशाला में उनकी दैनिक पोषण संबंधी ज़रूरतों की देखभाल में अपना योगदान दें।",
+      "gs_purpose_chikitsa": "चिकित्सा सहायता",
+      "gs_purpose_chikitsa_desc": "बीमार या घायल गायों की दवाइयों, पशु चिकित्सक की देखभाल और उपचार में सहयोग करें। ज़रूरत के समय उन्हें स्नेहपूर्ण चिकित्सा मिल सके, इसके लिए अपना योगदान दें।",
+      "gs_purpose_general": "सामान्य सेवा",
+      "gs_purpose_general_desc": "आश्रय, स्वच्छता और गायों की रोज़मर्रा की देखभाल में सहयोग करें। गौशाला आपके योगदान का उपयोग उस ज़रूरत के लिए कर सके जहाँ सहयोग आवश्यक हो।",
+      "gs_gaushala_heading": "गौशाला के बारे में",
+      "gs_gaushala_empty_title": "गौशाला का विवरण जल्द आएगा",
+      "gs_gaushala_empty_text": "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि के बाद यह यहाँ दिखेगा।",
+      "gs_location": "स्थान",
+      "gs_form_heading": "दान करें",
+      "gs_amount_label": "राशि",
+      "gs_amount_custom": "अपनी इच्छानुसार राशि भरें",
+      "gs_name_label": "आपका नाम",
+      "gs_name_ph": "पूरा नाम",
+      "gs_email_label": "ईमेल (वैकल्पिक)",
+      "gs_email_hint": "ईमेल सेवा चालू होने पर ही रसीद ईमेल की जाती है। आप इसे यहाँ से हमेशा डाउनलोड कर सकते हैं।",
+      "gs_hide_name": "सार्वजनिक अपडेट में मेरा नाम गुप्त रखें",
+      "gs_recipient_heading": "आपका दान किसे मिलेगा",
+      "gs_recipient_line": "लाभार्थी: {name}",
+      "gs_recipient_note": "भुगतान Razorpay द्वारा सुरक्षित रूप से संसाधित होता है। यह एक बार का दान है। रसीद आपके भुगतान की पावती है, कर छूट प्रमाणपत्र नहीं।",
+      "gs_donate_btn": "दान करें",
+      "gs_donate_amount_btn": "₹{amount} दान करें",
+      "gs_starting": "भुगतान शुरू हो रहा है…",
+      "gs_err_amount": "₹{min} से ₹{max} के बीच राशि दर्ज करें।",
+      "gs_err_amount_whole": "रुपये की पूर्ण संख्या दर्ज करें।",
+      "gs_err_name": "कृपया अपना नाम दर्ज करें।",
+      "gs_err_email": "सही ईमेल पता दर्ज करें या खाली छोड़ें।",
+      "gs_unavailable_title": "दान अभी शुरू नहीं हुआ है",
+      "gs_unavailable_payments": "ऑनलाइन दान अभी उपलब्ध नहीं है।",
+      "gs_unavailable_recipient": "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि होते ही दान शुरू होगा।",
+      "gs_load_error": "गौ सेवा अभी लोड नहीं हो सकी।",
+      "gs_retry": "फिर प्रयास करें",
+      "gs_loading": "लोड हो रहा है…",
+      "gs_cancelled": "भुगतान विंडो बंद हो गई। कोई दान दर्ज नहीं हुआ।",
+      "gs_verifying": "आपका भुगतान सत्यापित हो रहा है…",
+      "gs_pending_title": "भुगतान की पुष्टि हो रही है",
+      "gs_pending_text": "भुगतान प्रदाता ने अभी इस भुगतान की पुष्टि नहीं की है। यह पृष्ठ अपने आप फिर जाँच करेगा, और आप रसीद लिंक बाद में भी खोल सकते हैं।",
+      "gs_failed_title": "भुगतान पूरा नहीं हुआ",
+      "gs_failed_text": "कोई दान दर्ज नहीं हुआ। आप फिर प्रयास कर सकते हैं।",
+      "gs_success_title": "आपके दान के लिए धन्यवाद",
+      "gs_success_text": "आपके भुगतान की पुष्टि हो गई है।",
+      "gs_refunded_title": "यह दान वापस कर दिया गया",
+      "gs_ref": "दान संदर्भ",
+      "gs_amount": "राशि",
+      "gs_purpose": "उद्देश्य",
+      "gs_date": "तिथि",
+      "gs_recipient": "प्राप्तकर्ता",
+      "gs_status": "भुगतान की स्थिति",
+      "gs_status_pending": "लंबित",
+      "gs_status_success": "सफल",
+      "gs_status_failed": "असफल",
+      "gs_status_refunded": "वापस किया गया",
+      "gs_receipt_download": "रसीद डाउनलोड करें",
+      "gs_receipt_note": "यह रसीद आपके भुगतान की पावती है। यह कर छूट प्रमाणपत्र नहीं है।",
+      "gs_receipt_keep": "इस पृष्ठ का लिंक सहेज लें: जिसके पास यह लिंक होगा वह इस रसीद को देख सकता है।",
+      "gs_receipt_not_found": "यह रसीद लिंक मान्य नहीं है।",
+      "gs_back": "गौ सेवा पर वापस जाएँ",
+      "gs_donate_again": "फिर से दान करें",
+      "gs_updates_heading": "सेवा अपडेट",
+      "gs_updates_empty": "अभी तक कोई अपडेट प्रकाशित नहीं हुआ है।",
+      "gs_my_title": "मेरे दान",
+      "gs_my_intro": "आपके गौ सेवा दान और रसीदें।",
+      "gs_my_empty": "आपने अभी तक कोई गौ सेवा दान नहीं किया है।",
+      "gs_my_cta": "गौ सेवा में दान करें",
+      "gs_my_receipt": "रसीद",
+      "md.eyebrow": "घर बैठे पावन सेवा",
+      "md.t1h": "वीडियो प्रमाण",
+      "md.t2h": "मंदिर के पुजारी",
+      "md.t3h": "घर तक प्रसाद",
+      "md.todayBadge": "आज की विशेष सेवा",
+      "md.todayLead": "आज के मंदिर में यह अर्पित करें",
+      "md.canOffer": "आज आप यह चढ़ावा दे सकते हैं",
+      "md.offerNow": "आज का चढ़ावा अर्पित करें",
+      "md.cardBook": "बुक करें",
+      "md.count": "{n} पावन तीर्थ",
+      "ml.eyebrow": "अभिमंत्रित, सीधे आपके द्वार",
+      "ml.t1h": "अभिमंत्रित",
+      "ml.t2h": "प्रमाणित",
+      "ml.t3h": "आसान भुगतान",
+      "ml.count": "{n} पावन वस्तुएं"
     }
   },
   "phrases": {
-    "Palm reading": {"en": "Palm reading", "hi": "हस्तरेखा विश्लेषण"},
+    "Palm reading": {
+      "en": "Palm reading",
+      "hi": "हस्तरेखा विश्लेषण"
+    },
     "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">": {
       "en": "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">",
       "hi": "\" fill=\"#1f2937\" font-size=\"10\" font-weight=\"600\" text-anchor=\"middle\" font-family=\"'Plus Jakarta Sans', system-ui, sans-serif\">"
@@ -2486,7 +4683,7 @@ window.ASTRO_UI_LOCALES = {
     },
     "Call": {
       "en": "Call",
-      "hi": "कॉल करें"
+      "hi": "कॉल"
     },
     "Call Astrologer": {
       "en": "Call Astrologer",
@@ -3554,7 +5751,7 @@ window.ASTRO_UI_LOCALES = {
     },
     "Delivered": {
       "en": "Delivered",
-      "hi": "वितरित"
+      "hi": "पहुँच गया"
     },
     "Delivery failed": {
       "en": "Delivery failed",
@@ -6826,7 +9023,7 @@ window.ASTRO_UI_LOCALES = {
     },
     "Number": {
       "en": "Number",
-      "hi": "संख्या"
+      "hi": "अंक"
     },
     "Numerology": {
       "en": "Numerology",
@@ -8194,7 +10391,7 @@ window.ASTRO_UI_LOCALES = {
     },
     "Shani Sade Sati": {
       "en": "Shani Sade Sati",
-      "hi": "शनि साढ़े साती"
+      "hi": "शनि साढ़ेसाती"
     },
     "Shani Sade Sati & Rahu-Ketu Shanti Guide": {
       "en": "Shani Sade Sati & Rahu-Ketu Shanti Guide",
@@ -10088,17 +12285,17 @@ window.ASTRO_UI_LOCALES = {
       "en": "__ARG0__° • Spouse / Partner",
       "hi": "__ARG0__° • जीवनसाथी / पार्टनर"
     },
-    "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]": {
-      "en": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]",
-      "hi": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]"
+    "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]": {
+      "en": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]",
+      "hi": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]"
     },
     "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]": {
       "en": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]",
       "hi": "absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]"
     },
-    "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]": {
-      "en": "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]",
-      "hi": "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]"
+    "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]": {
+      "en": "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]",
+      "hi": "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e6dcec]"
     },
     "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]": {
       "en": "absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]",
@@ -10144,9 +12341,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "bank-grade 256-bit SSL encryption",
       "hi": "बैंक-ग्रेड 256-बिट एसएसएल एन्क्रिप्शन"
     },
-    "bg-[#7439EA] h-full rounded-full": {
-      "en": "bg-[#7439EA] h-full rounded-full",
-      "hi": "bg-[#7439EA] h-full rounded-full"
+    "bg-[#4a1b9a] h-full rounded-full": {
+      "en": "bg-[#4a1b9a] h-full rounded-full",
+      "hi": "bg-[#4a1b9a] h-full rounded-full"
     },
     "bg-amber-50 text-amber-700 border-amber-200": {
       "en": "bg-amber-50 text-amber-700 border-amber-200",
@@ -10164,13 +12361,13 @@ window.ASTRO_UI_LOCALES = {
       "en": "bold 30px \"Plus Jakarta Sans\", sans-serif",
       "hi": "bold 30px \"Plus Jakarta Sans\", sans-serif"
     },
-    "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all no-underline": {
-      "en": "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all no-underline",
-      "hi": "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all no-underline"
+    "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all no-underline": {
+      "en": "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all no-underline",
+      "hi": "btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all no-underline"
     },
-    "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer": {
-      "en": "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer",
-      "hi": "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+    "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer": {
+      "en": "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer",
+      "hi": "btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
     },
     "btn-profile-chip add-chip": {
       "en": "btn-profile-chip add-chip",
@@ -10192,13 +12389,13 @@ window.ASTRO_UI_LOCALES = {
       "en": "btn-tool modal-close",
       "hi": "btn-tool modal-close"
     },
-    "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs hover:bg-[#F3E8FF]": {
-      "en": "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs hover:bg-[#F3E8FF]",
-      "hi": "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs hover:bg-[#F3E8FF]"
+    "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs hover:bg-[#F3E8FF]": {
+      "en": "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs hover:bg-[#F3E8FF]",
+      "hi": "btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs hover:bg-[#F3E8FF]"
     },
-    "btn-tool-sm text-xs font-bold text-[#7439EA] hover:underline cursor-pointer": {
-      "en": "btn-tool-sm text-xs font-bold text-[#7439EA] hover:underline cursor-pointer",
-      "hi": "btn-tool-sm text-xs font-bold text-[#7439EA] hover:underline cursor-pointer"
+    "btn-tool-sm text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer": {
+      "en": "btn-tool-sm text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer",
+      "hi": "btn-tool-sm text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer"
     },
     "calling-status-chip": {
       "en": "calling-status-chip",
@@ -10220,9 +12417,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "chat-kundli-header-bar flex items-center justify-between pb-3 border-b border-[#E7E2D8] mb-3",
       "hi": "chat-kundli-header-bar flex items-center justify-between pb-3 border-b border-[#E7E2D8] mb-3"
     },
-    "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#F5F3FF] rounded-xl border border-[#DDD6FE]": {
-      "en": "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#F5F3FF] rounded-xl border border-[#DDD6FE]",
-      "hi": "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#F5F3FF] rounded-xl border border-[#DDD6FE]"
+    "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#f7f3f8] rounded-xl border border-[#e6dcec]": {
+      "en": "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#f7f3f8] rounded-xl border border-[#e6dcec]",
+      "hi": "chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#f7f3f8] rounded-xl border border-[#e6dcec]"
     },
     "checking classical Gurukul credentials, shastriya knowledge (Parashari, Jaimini, Lal Kitab), and minimum 7+ years of authentic consultation experience before being onboarded.": {
       "en": "checking classical Gurukul credentials, shastriya knowledge (Parashari, Jaimini, Lal Kitab), and minimum 7+ years of authentic consultation experience before being onboarded.",
@@ -10268,9 +12465,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "d M Y",
       "hi": "d M Y"
     },
-    "dasha-step current-dasha mb-2.5 p-3 bg-[#FAF5FF] border border-[#DDD6FE] rounded-xl shadow-xs": {
-      "en": "dasha-step current-dasha mb-2.5 p-3 bg-[#FAF5FF] border border-[#DDD6FE] rounded-xl shadow-xs",
-      "hi": "dasha-step current-dasha mb-2.5 p-3 bg-[#FAF5FF] border border-[#DDD6FE] rounded-xl shadow-xs"
+    "dasha-step current-dasha mb-2.5 p-3 bg-[#faf6fb] border border-[#e6dcec] rounded-xl shadow-xs": {
+      "en": "dasha-step current-dasha mb-2.5 p-3 bg-[#faf6fb] border border-[#e6dcec] rounded-xl shadow-xs",
+      "hi": "dasha-step current-dasha mb-2.5 p-3 bg-[#faf6fb] border border-[#e6dcec] rounded-xl shadow-xs"
     },
     "dasha-step mb-2 p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#475569] flex justify-between items-center": {
       "en": "dasha-step mb-2 p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#475569] flex justify-between items-center",
@@ -10338,7 +12535,7 @@ window.ASTRO_UI_LOCALES = {
     },
     "e.g. Rahul Sharma": {
       "en": "e.g. Rahul Sharma",
-      "hi": "उदा. राहुल शर्मा"
+      "hi": "जैसे राहुल शर्मा"
     },
     "e.g. Rahul Sharma / आपका पूरा नाम": {
       "en": "e.g. Rahul Sharma",
@@ -10416,17 +12613,17 @@ window.ASTRO_UI_LOCALES = {
       "en": "flex items-center justify-between text-xs mb-2",
       "hi": "flex items-center justify-between text-xs mb-2"
     },
-    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs rounded-xl shadow-xs cursor-pointer": {
-      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs rounded-xl shadow-xs cursor-pointer",
-      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs rounded-xl shadow-xs cursor-pointer"
+    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs rounded-xl shadow-xs cursor-pointer": {
+      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs rounded-xl shadow-xs cursor-pointer",
+      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#faf6fb] border border-[#e6dcec] text-[#4a1b9a] font-bold text-xs rounded-xl shadow-xs cursor-pointer"
     },
-    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#7439EA] to-[#5B21B6] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer": {
-      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#7439EA] to-[#5B21B6] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer",
-      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#7439EA] to-[#5B21B6] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer"
+    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer": {
+      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer",
+      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer"
     },
-    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#7439EA] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer": {
-      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#7439EA] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer",
-      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#7439EA] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
+    "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer": {
+      "en": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer",
+      "hi": "flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
     },
     "font-bold text-[#1E1B4B]": {
       "en": "font-bold text-[#1E1B4B]",
@@ -10444,13 +12641,13 @@ window.ASTRO_UI_LOCALES = {
       "en": "font-serif font-bold text-[#1E1B4B] text-base mb-0.5 flex items-center gap-1.5",
       "hi": "font-serif font-bold text-[#1E1B4B] text-base mb-0.5 flex items-center gap-1.5"
     },
-    "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#7439EA] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5": {
-      "en": "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#7439EA] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5",
-      "hi": "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#7439EA] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5"
+    "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#4a1b9a] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5": {
+      "en": "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#4a1b9a] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5",
+      "hi": "font-serif font-bold text-base text-[#1E1B4B] hover:text-[#4a1b9a] transition-colors truncate cursor-pointer mb-1 flex items-center gap-1.5"
     },
-    "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#7439EA] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1": {
-      "en": "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#7439EA] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1",
-      "hi": "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#7439EA] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1"
+    "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#4a1b9a] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1": {
+      "en": "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#4a1b9a] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1",
+      "hi": "font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#4a1b9a] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1"
     },
     "for overall harmony.": {
       "en": "for overall harmony.",
@@ -10536,17 +12733,17 @@ window.ASTRO_UI_LOCALES = {
       "en": "inline-flex items-center gap-1 text-[11px] font-bold text-[#D97706] bg-[#FFFBEB] hover:bg-[#FEF3C7] border border-[#FDE68A] px-2.5 py-0.5 rounded-full transition-all cursor-pointer shadow-2xs hover:scale-105",
       "hi": "inline-flex items-center gap-1 text-[11px] font-bold text-[#D97706] bg-[#FFFBEB] hover:bg-[#FEF3C7] border border-[#FDE68A] px-2.5 py-0.5 rounded-full transition-all cursor-pointer shadow-2xs hover:scale-105"
     },
-    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer": {
-      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer",
-      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
+    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer": {
+      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer",
+      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
     },
-    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#6366F1] hover:from-[#5B21B6] hover:to-[#4F46E5] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer": {
-      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#6366F1] hover:from-[#5B21B6] hover:to-[#4F46E5] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer",
-      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#6366F1] hover:from-[#5B21B6] hover:to-[#4F46E5] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
+    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] hover:from-[#1e0b44] hover:to-[#4a1b9a] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer": {
+      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] hover:from-[#1e0b44] hover:to-[#4a1b9a] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer",
+      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] hover:from-[#1e0b44] hover:to-[#4a1b9a] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
     },
-    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#F5F3FF] border border-[#7439EA] text-[#7439EA] font-bold text-xs transition-colors cursor-pointer": {
-      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#F5F3FF] border border-[#7439EA] text-[#7439EA] font-bold text-xs transition-colors cursor-pointer",
-      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#F5F3FF] border border-[#7439EA] text-[#7439EA] font-bold text-xs transition-colors cursor-pointer"
+    "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#f7f3f8] border border-[#4a1b9a] text-[#4a1b9a] font-bold text-xs transition-colors cursor-pointer": {
+      "en": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#f7f3f8] border border-[#4a1b9a] text-[#4a1b9a] font-bold text-xs transition-colors cursor-pointer",
+      "hi": "inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#f7f3f8] border border-[#4a1b9a] text-[#4a1b9a] font-bold text-xs transition-colors cursor-pointer"
     },
     "intake-input modern-date-picker": {
       "en": "intake-input modern-date-picker",
@@ -10608,9 +12805,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "linear-gradient(135deg, #10B981, #059669)",
       "hi": "linear-gradient(135deg, #10B981, #059669)"
     },
-    "linear-gradient(135deg, #7439EA, #5B21B6)": {
-      "en": "linear-gradient(135deg, #7439EA, #5B21B6)",
-      "hi": "linear-gradient(135deg, #7439EA, #5B21B6)"
+    "linear-gradient(135deg, #4a1b9a, #1e0b44)": {
+      "en": "linear-gradient(135deg, #4a1b9a, #1e0b44)",
+      "hi": "linear-gradient(135deg, #4a1b9a, #1e0b44)"
     },
     "manglik-pill active-dosha": {
       "en": "manglik-pill active-dosha",
@@ -10720,9 +12917,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "south node",
       "hi": "दक्षिण नोड"
     },
-    "stat-icon-wrap bg-[#EDE9FE] text-[#7439EA] shrink-0": {
-      "en": "stat-icon-wrap bg-[#EDE9FE] text-[#7439EA] shrink-0",
-      "hi": "stat-icon-wrap bg-[#EDE9FE] text-[#7439EA] shrink-0"
+    "stat-icon-wrap bg-[#f1ebf5] text-[#4a1b9a] shrink-0": {
+      "en": "stat-icon-wrap bg-[#f1ebf5] text-[#4a1b9a] shrink-0",
+      "hi": "stat-icon-wrap bg-[#f1ebf5] text-[#4a1b9a] shrink-0"
     },
     "stat-icon-wrap bg-[#FEF3C7] text-[#B45309] shrink-0": {
       "en": "stat-icon-wrap bg-[#FEF3C7] text-[#B45309] shrink-0",
@@ -10744,25 +12941,25 @@ window.ASTRO_UI_LOCALES = {
       "en": "text-3xl mb-2 block",
       "hi": "text-3xl mb-2 block"
     },
-    "text-[#7439EA] font-bold hover:underline": {
-      "en": "text-[#7439EA] font-bold hover:underline",
-      "hi": "text-[#7439EA] font-bold hover:underline"
+    "text-[#4a1b9a] font-bold hover:underline": {
+      "en": "text-[#4a1b9a] font-bold hover:underline",
+      "hi": "text-[#4a1b9a] font-bold hover:underline"
     },
-    "text-[#7439EA] font-semibold": {
-      "en": "text-[#7439EA] font-semibold",
-      "hi": "text-[#7439EA] font-semibold"
+    "text-[#4a1b9a] font-semibold": {
+      "en": "text-[#4a1b9a] font-semibold",
+      "hi": "text-[#4a1b9a] font-semibold"
     },
-    "text-[#7439EA] text-xs shrink-0 font-bold": {
-      "en": "text-[#7439EA] text-xs shrink-0 font-bold",
-      "hi": "text-[#7439EA] text-xs shrink-0 font-bold"
+    "text-[#4a1b9a] text-xs shrink-0 font-bold": {
+      "en": "text-[#4a1b9a] text-xs shrink-0 font-bold",
+      "hi": "text-[#4a1b9a] text-xs shrink-0 font-bold"
     },
     "text-[#B45309] font-bold": {
       "en": "text-[#B45309] font-bold",
       "hi": "text-[#B45309] font-bold"
     },
-    "text-[11px] font-bold text-[#7439EA] hover:text-[#5B21B6] hover:underline cursor-pointer transition-colors": {
-      "en": "text-[11px] font-bold text-[#7439EA] hover:text-[#5B21B6] hover:underline cursor-pointer transition-colors",
-      "hi": "text-[11px] font-bold text-[#7439EA] hover:text-[#5B21B6] hover:underline cursor-pointer transition-colors"
+    "text-[11px] font-bold text-[#4a1b9a] hover:text-[#1e0b44] hover:underline cursor-pointer transition-colors": {
+      "en": "text-[11px] font-bold text-[#4a1b9a] hover:text-[#1e0b44] hover:underline cursor-pointer transition-colors",
+      "hi": "text-[11px] font-bold text-[#4a1b9a] hover:text-[#1e0b44] hover:underline cursor-pointer transition-colors"
     },
     "text-[11px] text-[#64748B] block leading-relaxed": {
       "en": "text-[11px] text-[#64748B] block leading-relaxed",
@@ -10800,9 +12997,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "text-xs font-bold text-[#1E1B4B] mb-2.5 flex items-center gap-1.5",
       "hi": "text-xs font-bold text-[#1E1B4B] mb-2.5 flex items-center gap-1.5"
     },
-    "text-xs font-bold text-[#7439EA] block mb-1": {
-      "en": "text-xs font-bold text-[#7439EA] block mb-1",
-      "hi": "text-xs font-bold text-[#7439EA] block mb-1"
+    "text-xs font-bold text-[#4a1b9a] block mb-1": {
+      "en": "text-xs font-bold text-[#4a1b9a] block mb-1",
+      "hi": "text-xs font-bold text-[#4a1b9a] block mb-1"
     },
     "text-xs text-[#64748B]": {
       "en": "text-xs text-[#64748B]",
@@ -10840,9 +13037,9 @@ window.ASTRO_UI_LOCALES = {
       "en": "truncate text-slate-400",
       "hi": "truncate text-slate-400"
     },
-    "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#7439EA] to-[#4C1D95] text-white flex items-center justify-center text-[10px] shadow-xs": {
-      "en": "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#7439EA] to-[#4C1D95] text-white flex items-center justify-center text-[10px] shadow-xs",
-      "hi": "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#7439EA] to-[#4C1D95] text-white flex items-center justify-center text-[10px] shadow-xs"
+    "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#4a1b9a] to-[#1e0b44] text-white flex items-center justify-center text-[10px] shadow-xs": {
+      "en": "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#4a1b9a] to-[#1e0b44] text-white flex items-center justify-center text-[10px] shadow-xs",
+      "hi": "user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#4a1b9a] to-[#1e0b44] text-white flex items-center justify-center text-[10px] shadow-xs"
     },
     "user-header-actions flex flex-col gap-1.5 shrink-0": {
       "en": "user-header-actions flex flex-col gap-1.5 shrink-0",
@@ -11329,7 +13526,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "कुंडली देखें ▾"
     },
     "कुंडली मिलान": {
-      "en": "Horoscope Matching",
+      "en": "Kundli Matching (Gun Milan)",
       "hi": "कुंडली मिलान"
     },
     "कुंडली मिलान एवं दांपत्य विशेषज्ञ": {
@@ -11597,7 +13794,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "ज्योतिषी के परामर्श पर अपना अनुभव लिखें..."
     },
     "ज्योतिषी खोजें": {
-      "en": "Search astrologer",
+      "en": "Find an astrologer",
       "hi": "ज्योतिषी खोजें"
     },
     "ज्योतिषी खोजें ➔": {
@@ -11729,7 +13926,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "दैनिक मन्त्र जप, रुद्राक्ष एवं दान"
     },
     "दैनिक राशिफल": {
-      "en": "Daily horoscope",
+      "en": "Daily Horoscope",
       "hi": "दैनिक राशिफल"
     },
     "दैनिक वैदिक पंचांग एवं शुभ मुहूर्त (Aaj Ka Panchang)": {
@@ -12369,7 +14566,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "राजयोग का प्रभाव?"
     },
     "राशि": {
-      "en": "Zodiac Sign",
+      "en": "Rashi",
       "hi": "राशि"
     },
     "राशि के लिए अत्यंत सहायक एवं कर्मफल प्रदाता स्थिति में हैं। कर्म में ईमानदारी और अनुशासन से निरंतर समृद्धि प्राप्त होगी।": {
@@ -12573,7 +14770,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "विद्वान ज्योतिषी ➔"
     },
     "विवरण": {
-      "en": "Description",
+      "en": "Details",
       "hi": "विवरण"
     },
     "विवाह": {
@@ -12873,7 +15070,7 @@ window.ASTRO_UI_LOCALES = {
       "hi": "शुभ मुहूर्त, गृह प्रवेश एवं षोडश संस्कार"
     },
     "शुभ समय": {
-      "en": "Auspicious Time",
+      "en": "Best window",
       "hi": "शुभ समय"
     },
     "शेयर बाजार, ट्रेडिंग एवं सट्टा विचार": {
@@ -14158,11 +16355,11 @@ window.ASTRO_UI_LOCALES = {
     },
     "Fast": {
       "en": "Fast",
-      "hi": "तेज़"
+      "hi": "व्रत"
     },
     "Delivery": {
       "en": "Delivery",
-      "hi": "बोलने का ढंग"
+      "hi": "डिलीवरी"
     },
     "Calm": {
       "en": "Calm",
@@ -14199,6 +16396,7746 @@ window.ASTRO_UI_LOCALES = {
     "My Reports": {
       "en": "My Reports",
       "hi": "मेरी रिपोर्ट्स"
+    },
+    "Wallet transaction history": {
+      "en": "Wallet transaction history",
+      "hi": "वॉलेट लेनदेन का इतिहास"
+    },
+    "No transactions yet. Recharges and payments will appear here.": {
+      "en": "No transactions yet. Recharges and payments will appear here.",
+      "hi": "अभी कोई लेनदेन नहीं है। रिचार्ज और भुगतान यहाँ दिखेंगे।"
+    },
+    "घर बैठे तीर्थों में चढ़ावा एवं पूजा": {
+      "en": "Temple offerings and worship from home",
+      "hi": "घर बैठे तीर्थों में चढ़ावा एवं पूजा"
+    },
+    "Temple offerings and worship from home": {
+      "en": "Temple offerings and worship from home",
+      "hi": "घर बैठे तीर्थों में चढ़ावा एवं पूजा"
+    },
+    "महाकालेश्वर, काशी विश्वनाथ धाम में संकल्प वीडियो एवं प्रसाद घर मंगवाएं।": {
+      "en": "Book worship at Mahakaleshwar and Kashi Vishwanath, with a ritual video and prasad delivered home.",
+      "hi": "महाकालेश्वर, काशी विश्वनाथ धाम में संकल्प वीडियो एवं प्रसाद घर मंगवाएं।"
+    },
+    "Book worship at Mahakaleshwar and Kashi Vishwanath, with a ritual video and prasad delivered home.": {
+      "en": "Book worship at Mahakaleshwar and Kashi Vishwanath, with a ritual video and prasad delivered home.",
+      "hi": "महाकालेश्वर, काशी विश्वनाथ धाम में संकल्प वीडियो एवं प्रसाद घर मंगवाएं।"
+    },
+    "चढ़ावा अर्पित करें ➔": {
+      "en": "Make an offering ➔",
+      "hi": "चढ़ावा अर्पित करें ➔"
+    },
+    "Make an offering ➔": {
+      "en": "Make an offering ➔",
+      "hi": "चढ़ावा अर्पित करें ➔"
+    },
+    "वैदिक एस्ट्रो मॉल (पंडित स्टोर)": {
+      "en": "Vedic Astro Mall (Priest Store)",
+      "hi": "वैदिक एस्ट्रो मॉल (पंडित स्टोर)"
+    },
+    "Vedic Astro Mall (Priest Store)": {
+      "en": "Vedic Astro Mall (Priest Store)",
+      "hi": "वैदिक एस्ट्रो मॉल (पंडित स्टोर)"
+    },
+    "नेपाली रुद्राक्ष, स्फटिक माला, व्यापार यंत्र व लैब-सर्टिफाइड रत्न आपके नाम से अभिमंत्रित।": {
+      "en": "Shop Nepalese rudraksha, crystal prayer beads, prosperity yantras and lab-certified gemstones, energized in your name.",
+      "hi": "नेपाली रुद्राक्ष, स्फटिक माला, व्यापार यंत्र व लैब-सर्टिफाइड रत्न आपके नाम से अभिमंत्रित।"
+    },
+    "Shop Nepalese rudraksha, crystal prayer beads, prosperity yantras and lab-certified gemstones, energized in your name.": {
+      "en": "Shop Nepalese rudraksha, crystal prayer beads, prosperity yantras and lab-certified gemstones, energized in your name.",
+      "hi": "नेपाली रुद्राक्ष, स्फटिक माला, व्यापार यंत्र व लैब-सर्टिफाइड रत्न आपके नाम से अभिमंत्रित।"
+    },
+    "सामग्री देखें व खरीदें ➔": {
+      "en": "Explore and shop ➔",
+      "hi": "सामग्री देखें व खरीदें ➔"
+    },
+    "Explore and shop ➔": {
+      "en": "Explore and shop ➔",
+      "hi": "सामग्री देखें व खरीदें ➔"
+    },
+    "मंदिर सेवा (ई-चढ़ावा)": {
+      "en": "Temple services (Online offerings)",
+      "hi": "मंदिर सेवा (ई-चढ़ावा)"
+    },
+    "Temple services (Online offerings)": {
+      "en": "Temple services (Online offerings)",
+      "hi": "मंदिर सेवा (ई-चढ़ावा)"
+    },
+    "एस्ट्रो मॉल (सामग्री)": {
+      "en": "Astro Mall (Products)",
+      "hi": "एस्ट्रो मॉल (सामग्री)"
+    },
+    "Astro Mall (Products)": {
+      "en": "Astro Mall (Products)",
+      "hi": "एस्ट्रो मॉल (सामग्री)"
+    },
+    "वॉलेट लेनदेन का इतिहास": {
+      "en": "Wallet transaction history",
+      "hi": "वॉलेट लेनदेन का इतिहास"
+    },
+    "अभी कोई लेनदेन नहीं है। रिचार्ज और भुगतान यहाँ दिखेंगे।": {
+      "en": "No transactions yet. Recharges and payments will appear here.",
+      "hi": "अभी कोई लेनदेन नहीं है। रिचार्ज और भुगतान यहाँ दिखेंगे।"
+    },
+    "बंद करें": {
+      "en": "Close",
+      "hi": "बंद करें"
+    },
+    "पुनः प्रयास करें": {
+      "en": "Retry",
+      "hi": "पुनः प्रयास करें"
+    },
+    "Loading...": {
+      "en": "Loading...",
+      "hi": "लोड हो रहा है..."
+    },
+    "लोड हो रहा है...": {
+      "en": "Loading...",
+      "hi": "लोड हो रहा है..."
+    },
+    "Photo credits": {
+      "en": "Photo credits",
+      "hi": "फ़ोटो क्रेडिट"
+    },
+    "फ़ोटो क्रेडिट": {
+      "en": "Photo credits",
+      "hi": "फ़ोटो क्रेडिट"
+    },
+    "Credits are listed on the Wikimedia Commons file pages.": {
+      "en": "Credits are listed on the Wikimedia Commons file pages.",
+      "hi": "क्रेडिट विकिमीडिया कॉमन्स की फ़ाइल पेज पर दिए गए हैं।"
+    },
+    "क्रेडिट विकिमीडिया कॉमन्स की फ़ाइल पेज पर दिए गए हैं।": {
+      "en": "Credits are listed on the Wikimedia Commons file pages.",
+      "hi": "क्रेडिट विकिमीडिया कॉमन्स की फ़ाइल पेज पर दिए गए हैं।"
+    },
+    "Cancelled": {
+      "en": "Cancelled",
+      "hi": "रद्द"
+    },
+    "रद्द": {
+      "en": "Cancelled",
+      "hi": "रद्द"
+    },
+    "E-Chadawa & Sankalp Puja": {
+      "en": "E-Chadawa & Sankalp Puja",
+      "hi": "ई-चढ़ावा एवं संकल्प पूजा"
+    },
+    "ई-चढ़ावा एवं संकल्प पूजा": {
+      "en": "E-Chadawa & Sankalp Puja",
+      "hi": "ई-चढ़ावा एवं संकल्प पूजा"
+    },
+    "Offer Chadawa & Sankalp Puja at <em>Holy Temples of India</em>": {
+      "en": "Offer Chadawa & Sankalp Puja at <em>Holy Temples of India</em>",
+      "hi": "पावन तीर्थों में <em>चढ़ावा एवं संकल्प पूजा</em> करवाएं"
+    },
+    "पावन तीर्थों में <em>चढ़ावा एवं संकल्प पूजा</em> करवाएं": {
+      "en": "Offer Chadawa & Sankalp Puja at <em>Holy Temples of India</em>",
+      "hi": "पावन तीर्थों में <em>चढ़ावा एवं संकल्प पूजा</em> करवाएं"
+    },
+    "Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.": {
+      "en": "Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.",
+      "hi": "महाकालेश्वर, काशी विश्वनाथ, सोमनाथ, केदारनाथ, तिरुपति सहित देश के पावन धामों में अपने नाम व गोत्र से पूजा बुक करें। संकल्प का वीडियो आपको यहीं मिलेगा और चाहें तो प्रसाद घर तक पहुँचेगा।"
+    },
+    "महाकालेश्वर, काशी विश्वनाथ, सोमनाथ, केदारनाथ, तिरुपति सहित देश के पावन धामों में अपने नाम व गोत्र से पूजा बुक करें। संकल्प का वीडियो आपको यहीं मिलेगा और चाहें तो प्रसाद घर तक पहुँचेगा।": {
+      "en": "Book a puja in your name and gotra at Mahakaleshwar, Kashi Vishwanath, Somnath, Kedarnath, Tirupati and other sacred shrines. You receive the video of your sankalp and, where booked, the temple prasad at your doorstep.",
+      "hi": "महाकालेश्वर, काशी विश्वनाथ, सोमनाथ, केदारनाथ, तिरुपति सहित देश के पावन धामों में अपने नाम व गोत्र से पूजा बुक करें। संकल्प का वीडियो आपको यहीं मिलेगा और चाहें तो प्रसाद घर तक पहुँचेगा।"
+    },
+    "Video of your sankalp, with name & gotra": {
+      "en": "Video of your sankalp, with name & gotra",
+      "hi": "नाम व गोत्र सहित संकल्प का वीडियो"
+    },
+    "नाम व गोत्र सहित संकल्प का वीडियो": {
+      "en": "Video of your sankalp, with name & gotra",
+      "hi": "नाम व गोत्र सहित संकल्प का वीडियो"
+    },
+    "Performed by temple priests": {
+      "en": "Performed by temple priests",
+      "hi": "मंदिर के पुरोहितों द्वारा संकल्प"
+    },
+    "मंदिर के पुरोहितों द्वारा संकल्प": {
+      "en": "Performed by temple priests",
+      "hi": "मंदिर के पुरोहितों द्वारा संकल्प"
+    },
+    "Prasad delivered to your home": {
+      "en": "Prasad delivered to your home",
+      "hi": "प्रसाद आपके घर तक"
+    },
+    "प्रसाद आपके घर तक": {
+      "en": "Prasad delivered to your home",
+      "hi": "प्रसाद आपके घर तक"
+    },
+    "My Bookings & Video Proof": {
+      "en": "My Bookings & Video Proof",
+      "hi": "मेरी बुकिंग एवं वीडियो प्रमाण"
+    },
+    "मेरी बुकिंग एवं वीडियो प्रमाण": {
+      "en": "My Bookings & Video Proof",
+      "hi": "मेरी बुकिंग एवं वीडियो प्रमाण"
+    },
+    "All Temples": {
+      "en": "All Temples",
+      "hi": "सभी तीर्थ"
+    },
+    "सभी तीर्थ": {
+      "en": "All Temples",
+      "hi": "सभी तीर्थ"
+    },
+    "🔱 Jyotirlinga & Shiva": {
+      "en": "🔱 Jyotirlinga & Shiva",
+      "hi": "🔱 ज्योतिर्लिंग व शिव"
+    },
+    "🔱 ज्योतिर्लिंग व शिव": {
+      "en": "🔱 Jyotirlinga & Shiva",
+      "hi": "🔱 ज्योतिर्लिंग व शिव"
+    },
+    "🌸 Shaktipeeth & Devi": {
+      "en": "🌸 Shaktipeeth & Devi",
+      "hi": "🌸 शक्तिपीठ व देवी"
+    },
+    "🌸 शक्तिपीठ व देवी": {
+      "en": "🌸 Shaktipeeth & Devi",
+      "hi": "🌸 शक्तिपीठ व देवी"
+    },
+    "🪐 Shani & Navgrah": {
+      "en": "🪐 Shani & Navgrah",
+      "hi": "🪐 शनि व नवग्रह"
+    },
+    "🪐 शनि व नवग्रह": {
+      "en": "🪐 Shani & Navgrah",
+      "hi": "🪐 शनि व नवग्रह"
+    },
+    "🐘 Ganesh": {
+      "en": "🐘 Ganesh",
+      "hi": "🐘 गणेश"
+    },
+    "🐘 गणेश": {
+      "en": "🐘 Ganesh",
+      "hi": "🐘 गणेश"
+    },
+    "🏹 Ram & Vishnu": {
+      "en": "🏹 Ram & Vishnu",
+      "hi": "🏹 राम व विष्णु"
+    },
+    "🏹 राम व विष्णु": {
+      "en": "🏹 Ram & Vishnu",
+      "hi": "🏹 राम व विष्णु"
+    },
+    "Search temple, deity or city...": {
+      "en": "Search temple, deity or city...",
+      "hi": "मंदिर, देवता या शहर खोजें..."
+    },
+    "मंदिर, देवता या शहर खोजें...": {
+      "en": "Search temple, deity or city...",
+      "hi": "मंदिर, देवता या शहर खोजें..."
+    },
+    "Loading temples...": {
+      "en": "Loading temples...",
+      "hi": "तीर्थ लोड हो रहे हैं..."
+    },
+    "तीर्थ लोड हो रहे हैं...": {
+      "en": "Loading temples...",
+      "hi": "तीर्थ लोड हो रहे हैं..."
+    },
+    "No temples found": {
+      "en": "No temples found",
+      "hi": "कोई तीर्थ नहीं मिला"
+    },
+    "कोई तीर्थ नहीं मिला": {
+      "en": "No temples found",
+      "hi": "कोई तीर्थ नहीं मिला"
+    },
+    "Try a different name or category.": {
+      "en": "Try a different name or category.",
+      "hi": "कृपया दूसरा नाम या श्रेणी चुनें।"
+    },
+    "कृपया दूसरा नाम या श्रेणी चुनें।": {
+      "en": "Try a different name or category.",
+      "hi": "कृपया दूसरा नाम या श्रेणी चुनें।"
+    },
+    "Temple photographs from Wikimedia Commons.": {
+      "en": "Temple photographs from Wikimedia Commons.",
+      "hi": "मंदिरों की तस्वीरें विकिमीडिया कॉमन्स से।"
+    },
+    "मंदिरों की तस्वीरें विकिमीडिया कॉमन्स से।": {
+      "en": "Temple photographs from Wikimedia Commons.",
+      "hi": "मंदिरों की तस्वीरें विकिमीडिया कॉमन्स से।"
+    },
+    "My Chadawa & Sankalp Bookings": {
+      "en": "My Chadawa & Sankalp Bookings",
+      "hi": "मेरी चढ़ावा एवं संकल्प बुकिंग"
+    },
+    "मेरी चढ़ावा एवं संकल्प बुकिंग": {
+      "en": "My Chadawa & Sankalp Bookings",
+      "hi": "मेरी चढ़ावा एवं संकल्प बुकिंग"
+    },
+    "Sankalp Video Proof": {
+      "en": "Sankalp Video Proof",
+      "hi": "संकल्प का वीडियो प्रमाण"
+    },
+    "संकल्प का वीडियो प्रमाण": {
+      "en": "Sankalp Video Proof",
+      "hi": "संकल्प का वीडियो प्रमाण"
+    },
+    "Recorded for your sankalp": {
+      "en": "Recorded for your sankalp",
+      "hi": "आपके संकल्प के लिए रिकॉर्ड किया गया"
+    },
+    "आपके संकल्प के लिए रिकॉर्ड किया गया": {
+      "en": "Recorded for your sankalp",
+      "hi": "आपके संकल्प के लिए रिकॉर्ड किया गया"
+    },
+    "Share on WhatsApp": {
+      "en": "Share on WhatsApp",
+      "hi": "WhatsApp पर भेजें"
+    },
+    "व्हाट्सऐप पर भेजें": {
+      "en": "Share on WhatsApp",
+      "hi": "व्हाट्सऐप पर भेजें"
+    },
+    "Video of my sankalp puja:": {
+      "en": "Video of my sankalp puja:",
+      "hi": "मेरी संकल्प पूजा का वीडियो:"
+    },
+    "मेरी संकल्प पूजा का वीडियो:": {
+      "en": "Video of my sankalp puja:",
+      "hi": "मेरी संकल्प पूजा का वीडियो:"
+    },
+    "तिथि": {
+      "en": "Tithi",
+      "hi": "तिथि"
+    },
+    "Deity of the day": {
+      "en": "Deity of the day",
+      "hi": "आज के देव"
+    },
+    "आज के देव": {
+      "en": "Deity of the day",
+      "hi": "आज के देव"
+    },
+    "For your kundli": {
+      "en": "For your kundli",
+      "hi": "आपकी कुंडली के अनुसार"
+    },
+    "आपकी कुंडली के अनुसार": {
+      "en": "For your kundli",
+      "hi": "आपकी कुंडली के अनुसार"
+    },
+    "Your moon sign {sign} is ruled by {lord}. Tradition recommends seva of {deity}.": {
+      "en": "Your moon sign {sign} is ruled by {lord}. Tradition recommends seva of {deity}.",
+      "hi": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {deity} की सेवा शुभ मानी जाती है।"
+    },
+    "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {deity} की सेवा शुभ मानी जाती है।": {
+      "en": "Your moon sign {sign} is ruled by {lord}. Tradition recommends seva of {deity}.",
+      "hi": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {deity} की सेवा शुभ मानी जाती है।"
+    },
+    "Traditional guidance, not a guarantee of results.": {
+      "en": "Traditional guidance, not a guarantee of results.",
+      "hi": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं।"
+    },
+    "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं।": {
+      "en": "Traditional guidance, not a guarantee of results.",
+      "hi": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं।"
+    },
+    "Booking open": {
+      "en": "Booking open",
+      "hi": "बुकिंग उपलब्ध"
+    },
+    "बुकिंग उपलब्ध": {
+      "en": "Booking open",
+      "hi": "बुकिंग उपलब्ध"
+    },
+    "Starts from": {
+      "en": "Starts from",
+      "hi": "शुरुआती दर"
+    },
+    "शुरुआती दर": {
+      "en": "Starts from",
+      "hi": "शुरुआती दर"
+    },
+    "Book puja": {
+      "en": "Book puja",
+      "hi": "पूजा बुक करें"
+    },
+    "पूजा बुक करें": {
+      "en": "Book puja",
+      "hi": "पूजा बुक करें"
+    },
+    "Loading your bookings...": {
+      "en": "Loading your bookings...",
+      "hi": "आपकी बुकिंग लोड हो रही हैं..."
+    },
+    "आपकी बुकिंग लोड हो रही हैं...": {
+      "en": "Loading your bookings...",
+      "hi": "आपकी बुकिंग लोड हो रही हैं..."
+    },
+    "No bookings yet": {
+      "en": "No bookings yet",
+      "hi": "अभी कोई बुकिंग नहीं"
+    },
+    "अभी कोई बुकिंग नहीं": {
+      "en": "No bookings yet",
+      "hi": "अभी कोई बुकिंग नहीं"
+    },
+    "Choose a temple and book your first sankalp puja.": {
+      "en": "Choose a temple and book your first sankalp puja.",
+      "hi": "कोई तीर्थ चुनें और अपनी पहली संकल्प पूजा बुक करें।"
+    },
+    "कोई तीर्थ चुनें और अपनी पहली संकल्प पूजा बुक करें।": {
+      "en": "Choose a temple and book your first sankalp puja.",
+      "hi": "कोई तीर्थ चुनें और अपनी पहली संकल्प पूजा बुक करें।"
+    },
+    "Could not load bookings": {
+      "en": "Could not load bookings",
+      "hi": "बुकिंग लोड नहीं हो सकीं"
+    },
+    "बुकिंग लोड नहीं हो सकीं": {
+      "en": "Could not load bookings",
+      "hi": "बुकिंग लोड नहीं हो सकीं"
+    },
+    "{amount} paid": {
+      "en": "{amount} paid",
+      "hi": "{amount} का भुगतान"
+    },
+    "{amount} का भुगतान": {
+      "en": "{amount} paid",
+      "hi": "{amount} का भुगतान"
+    },
+    "Yajman": {
+      "en": "Yajman",
+      "hi": "यजमान"
+    },
+    "यजमान": {
+      "en": "Yajman",
+      "hi": "यजमान"
+    },
+    "Gotra": {
+      "en": "Gotra",
+      "hi": "गोत्र"
+    },
+    "गोत्र": {
+      "en": "Gotra",
+      "hi": "गोत्र"
+    },
+    "Also included": {
+      "en": "Also included",
+      "hi": "साथ में शामिल"
+    },
+    "साथ में शामिल": {
+      "en": "Also included",
+      "hi": "साथ में शामिल"
+    },
+    "Scheduled": {
+      "en": "Scheduled",
+      "hi": "समय तय"
+    },
+    "निर्धारित समय": {
+      "en": "Scheduled",
+      "hi": "निर्धारित समय"
+    },
+    "Prasad SpeedPost": {
+      "en": "Prasad SpeedPost",
+      "hi": "प्रसाद स्पीड पोस्ट"
+    },
+    "प्रसाद स्पीड पोस्ट": {
+      "en": "Prasad SpeedPost",
+      "hi": "प्रसाद स्पीड पोस्ट"
+    },
+    "Watch proof": {
+      "en": "Watch proof",
+      "hi": "वीडियो देखें"
+    },
+    "वीडियो देखें": {
+      "en": "Watch proof",
+      "hi": "वीडियो देखें"
+    },
+    "Video appears here after the sankalp": {
+      "en": "Video appears here after the sankalp",
+      "hi": "संकल्प के बाद वीडियो यहीं दिखेगा"
+    },
+    "संकल्प के बाद वीडियो यहीं दिखेगा": {
+      "en": "Video appears here after the sankalp",
+      "hi": "संकल्प के बाद वीडियो यहीं दिखेगा"
+    },
+    "रद्द करें": {
+      "en": "Cancel",
+      "hi": "रद्द करें"
+    },
+    "Cancel this booking? The amount will be refunded to your wallet.": {
+      "en": "Cancel this booking? The amount will be refunded to your wallet.",
+      "hi": "बुकिंग रद्द करें? राशि आपके वॉलेट में लौटा दी जाएगी।"
+    },
+    "बुकिंग रद्द करें? राशि आपके वॉलेट में लौटा दी जाएगी।": {
+      "en": "Cancel this booking? The amount will be refunded to your wallet.",
+      "hi": "बुकिंग रद्द करें? राशि आपके वॉलेट में लौटा दी जाएगी।"
+    },
+    "Booking cancelled": {
+      "en": "Booking cancelled",
+      "hi": "बुकिंग रद्द हो गई"
+    },
+    "बुकिंग रद्द हो गई": {
+      "en": "Booking cancelled",
+      "hi": "बुकिंग रद्द हो गई"
+    },
+    "Cancelled & refunded": {
+      "en": "Cancelled & refunded",
+      "hi": "रद्द व राशि वापस"
+    },
+    "रद्द व राशि वापस": {
+      "en": "Cancelled & refunded",
+      "hi": "रद्द व राशि वापस"
+    },
+    "Booked": {
+      "en": "Booked",
+      "hi": "बुक हुई"
+    },
+    "बुक हुई": {
+      "en": "Booked",
+      "hi": "बुक हुई"
+    },
+    "समय तय": {
+      "en": "Scheduled",
+      "hi": "समय तय"
+    },
+    "Video ready": {
+      "en": "Video ready",
+      "hi": "वीडियो तैयार"
+    },
+    "वीडियो तैयार": {
+      "en": "Video ready",
+      "hi": "वीडियो तैयार"
+    },
+    "Completed": {
+      "en": "Completed",
+      "hi": "संपूर्ण"
+    },
+    "संपन्न": {
+      "en": "Completed",
+      "hi": "संपन्न"
+    },
+    "Sankalp puja & chadawa booking": {
+      "en": "Sankalp puja & chadawa booking",
+      "hi": "संकल्प पूजा एवं चढ़ावा बुकिंग"
+    },
+    "संकल्प पूजा एवं चढ़ावा बुकिंग": {
+      "en": "Sankalp puja & chadawa booking",
+      "hi": "संकल्प पूजा एवं चढ़ावा बुकिंग"
+    },
+    "1. Choose your seva": {
+      "en": "1. Choose your seva",
+      "hi": "1. अपनी सेवा चुनें"
+    },
+    "1. अपनी सेवा चुनें": {
+      "en": "1. Choose your seva",
+      "hi": "1. अपनी सेवा चुनें"
+    },
+    "2. Sankalp details": {
+      "en": "2. Sankalp details",
+      "hi": "2. संकल्प का विवरण"
+    },
+    "2. संकल्प का विवरण": {
+      "en": "2. Sankalp details",
+      "hi": "2. संकल्प का विवरण"
+    },
+    "Fill from my kundli": {
+      "en": "Fill from my kundli",
+      "hi": "मेरी कुंडली से भरें"
+    },
+    "मेरी कुंडली से भरें": {
+      "en": "Fill from my kundli",
+      "hi": "मेरी कुंडली से भरें"
+    },
+    "Yajman (devotee) name *": {
+      "en": "Yajman (devotee) name *",
+      "hi": "यजमान का नाम *"
+    },
+    "यजमान का नाम *": {
+      "en": "Yajman (devotee) name *",
+      "hi": "यजमान का नाम *"
+    },
+    "जैसे राहुल शर्मा": {
+      "en": "e.g. Rahul Sharma",
+      "hi": "जैसे राहुल शर्मा"
+    },
+    "Mobile number *": {
+      "en": "Mobile number *",
+      "hi": "मोबाइल नंबर *"
+    },
+    "मोबाइल नंबर *": {
+      "en": "Mobile number *",
+      "hi": "मोबाइल नंबर *"
+    },
+    "Gotra *": {
+      "en": "Gotra *",
+      "hi": "गोत्र *"
+    },
+    "गोत्र *": {
+      "en": "Gotra *",
+      "hi": "गोत्र *"
+    },
+    "If you do not know your gotra, Kashyap is used traditionally.": {
+      "en": "If you do not know your gotra, Kashyap is used traditionally.",
+      "hi": "गोत्र ज्ञात न होने पर परंपरा से कश्यप गोत्र लिया जाता है।"
+    },
+    "गोत्र ज्ञात न होने पर परंपरा से कश्यप गोत्र लिया जाता है।": {
+      "en": "If you do not know your gotra, Kashyap is used traditionally.",
+      "hi": "गोत्र ज्ञात न होने पर परंपरा से कश्यप गोत्र लिया जाता है।"
+    },
+    "Purpose of sankalp": {
+      "en": "Purpose of sankalp",
+      "hi": "संकल्प का उद्देश्य"
+    },
+    "संकल्प का उद्देश्य": {
+      "en": "Purpose of sankalp",
+      "hi": "संकल्प का उद्देश्य"
+    },
+    "Family members to include (optional)": {
+      "en": "Family members to include (optional)",
+      "hi": "शामिल करने वाले परिवारजन (वैकल्पिक)"
+    },
+    "शामिल करने वाले परिवारजन (वैकल्पिक)": {
+      "en": "Family members to include (optional)",
+      "hi": "शामिल करने वाले परिवारजन (वैकल्पिक)"
+    },
+    "Names (and gotra if different), separated by commas": {
+      "en": "Names (and gotra if different), separated by commas",
+      "hi": "नाम (गोत्र भिन्न हो तो वह भी), अल्पविराम से अलग करें"
+    },
+    "नाम (गोत्र भिन्न हो तो वह भी), अल्पविराम से अलग करें": {
+      "en": "Names (and gotra if different), separated by commas",
+      "hi": "नाम (गोत्र भिन्न हो तो वह भी), अल्पविराम से अलग करें"
+    },
+    "Send prasad to my home": {
+      "en": "Send prasad to my home",
+      "hi": "प्रसाद मेरे घर भेजें"
+    },
+    "प्रसाद मेरे घर भेजें": {
+      "en": "Send prasad to my home",
+      "hi": "प्रसाद मेरे घर भेजें"
+    },
+    "Delivery by SpeedPost (+{fee})": {
+      "en": "Delivery by SpeedPost (+{fee})",
+      "hi": "स्पीड पोस्ट से डिलीवरी (+{fee})"
+    },
+    "स्पीड पोस्ट से डिलीवरी (+{fee})": {
+      "en": "Delivery by SpeedPost (+{fee})",
+      "hi": "स्पीड पोस्ट से डिलीवरी (+{fee})"
+    },
+    "Full delivery address with PIN code *": {
+      "en": "Full delivery address with PIN code *",
+      "hi": "पिन कोड सहित पूरा पता *"
+    },
+    "पिन कोड सहित पूरा पता *": {
+      "en": "Full address with PIN code *",
+      "hi": "पिन कोड सहित पूरा पता *"
+    },
+    "House no., street, city, state, PIN": {
+      "en": "House no., street, city, state, PIN",
+      "hi": "मकान नं., गली, शहर, राज्य, पिन"
+    },
+    "मकान नं., गली, शहर, राज्य, पिन": {
+      "en": "House no., street, city, state, PIN",
+      "hi": "मकान नं., गली, शहर, राज्य, पिन"
+    },
+    "Total": {
+      "en": "Total",
+      "hi": "कुल"
+    },
+    "कुल": {
+      "en": "Total",
+      "hi": "कुल"
+    },
+    "Book sankalp puja": {
+      "en": "Book sankalp puja",
+      "hi": "संकल्प पूजा बुक करें"
+    },
+    "संकल्प पूजा बुक करें": {
+      "en": "Book sankalp puja",
+      "hi": "संकल्प पूजा बुक करें"
+    },
+    "Booking...": {
+      "en": "Booking...",
+      "hi": "बुकिंग हो रही है..."
+    },
+    "बुकिंग हो रही है...": {
+      "en": "Booking...",
+      "hi": "बुकिंग हो रही है..."
+    },
+    "No sevas are available for this temple right now.": {
+      "en": "No sevas are available for this temple right now.",
+      "hi": "इस तीर्थ की कोई सेवा अभी उपलब्ध नहीं है।"
+    },
+    "इस तीर्थ की कोई सेवा अभी उपलब्ध नहीं है।": {
+      "en": "No sevas are available for this temple right now.",
+      "hi": "इस तीर्थ की कोई सेवा अभी उपलब्ध नहीं है।"
+    },
+    "Your sankalp is booked": {
+      "en": "Your sankalp is booked",
+      "hi": "आपका संकल्प बुक हो गया"
+    },
+    "आपका संकल्प बुक हो गया": {
+      "en": "Your sankalp is booked",
+      "hi": "आपका संकल्प बुक हो गया"
+    },
+    "The priest will perform the sankalp in the name of {name}, gotra {gotra}. The video will appear in My Bookings.": {
+      "en": "The priest will perform the sankalp in the name of {name}, gotra {gotra}. The video will appear in My Bookings.",
+      "hi": "पुरोहित जी {name}, गोत्र {gotra} के नाम से संकल्प संपन्न कराएंगे। वीडियो \"मेरी बुकिंग\" में दिखेगा।"
+    },
+    "पुरोहित जी {name}, गोत्र {gotra} के नाम से संकल्प संपन्न कराएंगे। वीडियो \"मेरी बुकिंग\" में दिखेगा।": {
+      "en": "The priest will perform the sankalp in the name of {name}, gotra {gotra}. The video will appear in My Bookings.",
+      "hi": "पुरोहित जी {name}, गोत्र {gotra} के नाम से संकल्प संपन्न कराएंगे। वीडियो \"मेरी बुकिंग\" में दिखेगा।"
+    },
+    "Booking ID": {
+      "en": "Booking ID",
+      "hi": "बुकिंग आईडी"
+    },
+    "बुकिंग आईडी": {
+      "en": "Booking ID",
+      "hi": "बुकिंग आईडी"
+    },
+    "Seva": {
+      "en": "Seva",
+      "hi": "सेवा"
+    },
+    "सेवा": {
+      "en": "Seva",
+      "hi": "सेवा"
+    },
+    "Paid": {
+      "en": "Paid",
+      "hi": "भुगतान हुआ"
+    },
+    "भुगतान": {
+      "en": "Payment",
+      "hi": "भुगतान"
+    },
+    "View my bookings": {
+      "en": "View my bookings",
+      "hi": "मेरी बुकिंग देखें"
+    },
+    "मेरी बुकिंग देखें": {
+      "en": "View my bookings",
+      "hi": "मेरी बुकिंग देखें"
+    },
+    "Sankalp puja booked": {
+      "en": "Sankalp puja booked",
+      "hi": "संकल्प पूजा बुक हो गई"
+    },
+    "संकल्प पूजा बुक हो गई": {
+      "en": "Sankalp puja booked",
+      "hi": "संकल्प पूजा बुक हो गई"
+    },
+    "Filled from your kundli": {
+      "en": "Filled from your kundli",
+      "hi": "आपकी कुंडली से भर दिया गया"
+    },
+    "आपकी कुंडली से भर दिया गया": {
+      "en": "Filled from your kundli",
+      "hi": "आपकी कुंडली से भर दिया गया"
+    },
+    "No saved kundli found. Create one from the Kundli page.": {
+      "en": "No saved kundli found. Create one from the Kundli page.",
+      "hi": "कोई सहेजी हुई कुंडली नहीं मिली। कुंडली पेज से बनाएं।"
+    },
+    "कोई सहेजी हुई कुंडली नहीं मिली। कुंडली पेज से बनाएं।": {
+      "en": "No saved kundli found. Create one from the Kundli page.",
+      "hi": "कोई सहेजी हुई कुंडली नहीं मिली। कुंडली पेज से बनाएं।"
+    },
+    "Could not read your kundli right now": {
+      "en": "Could not read your kundli right now",
+      "hi": "अभी आपकी कुंडली नहीं पढ़ी जा सकी"
+    },
+    "अभी आपकी कुंडली नहीं पढ़ी जा सकी": {
+      "en": "Could not read your kundli right now",
+      "hi": "अभी आपकी कुंडली नहीं पढ़ी जा सकी"
+    },
+    "Health & long life": {
+      "en": "Health & long life",
+      "hi": "स्वास्थ्य एवं दीर्घायु"
+    },
+    "स्वास्थ्य एवं दीर्घायु": {
+      "en": "Health & long life",
+      "hi": "स्वास्थ्य एवं दीर्घायु"
+    },
+    "Business growth & prosperity": {
+      "en": "Business growth & prosperity",
+      "hi": "व्यापार वृद्धि एवं धन आगमन"
+    },
+    "व्यापार वृद्धि एवं धन आगमन": {
+      "en": "Business growth & prosperity",
+      "hi": "व्यापार वृद्धि एवं धन आगमन"
+    },
+    "Marriage & family harmony": {
+      "en": "Marriage & family harmony",
+      "hi": "विवाह एवं दांपत्य सुख"
+    },
+    "विवाह एवं दांपत्य सुख": {
+      "en": "Marriage & family harmony",
+      "hi": "विवाह एवं दांपत्य सुख"
+    },
+    "Shani / graha shanti": {
+      "en": "Shani / graha shanti",
+      "hi": "शनि व ग्रह शांति"
+    },
+    "शनि व ग्रह शांति": {
+      "en": "Shani / graha shanti",
+      "hi": "शनि व ग्रह शांति"
+    },
+    "Children & education": {
+      "en": "Children & education",
+      "hi": "संतान सुख एवं विद्या"
+    },
+    "संतान सुख एवं विद्या": {
+      "en": "Children & education",
+      "hi": "संतान सुख एवं विद्या"
+    },
+    "All wishes fulfilled": {
+      "en": "All wishes fulfilled",
+      "hi": "सर्वमनोकामना सिद्धि"
+    },
+    "सर्वमनोकामना सिद्धि": {
+      "en": "All wishes fulfilled",
+      "hi": "सर्वमनोकामना सिद्धि"
+    },
+    "Energized & sanctified puja items": {
+      "en": "Energized & sanctified puja items",
+      "hi": "अभिमंत्रित एवं पवित्र पूजा सामग्री"
+    },
+    "अभिमंत्रित एवं पवित्र पूजा सामग्री": {
+      "en": "Energized & sanctified puja items",
+      "hi": "अभिमंत्रित एवं पवित्र पूजा सामग्री"
+    },
+    "Vedic <em>Astro Mall</em>": {
+      "en": "Vedic <em>Astro Mall</em>",
+      "hi": "वैदिक <em>एस्ट्रो मॉल</em>"
+    },
+    "वैदिक <em>एस्ट्रो मॉल</em>": {
+      "en": "Vedic <em>Astro Mall</em>",
+      "hi": "वैदिक <em>एस्ट्रो मॉल</em>"
+    },
+    "Rudraksha, malas, yantras, gemstones and hawan kits from pandits and ashrams across India. Every item is energized in your name and gotra before it is shipped by SpeedPost.": {
+      "en": "Rudraksha, malas, yantras, gemstones and hawan kits from pandits and ashrams across India. Every item is energized in your name and gotra before it is shipped by SpeedPost.",
+      "hi": "देशभर के पंडितों और आश्रमों से रुद्राक्ष, मालाएं, यंत्र, रत्न और हवन सामग्री। हर सामग्री आपके नाम व गोत्र से अभिमंत्रित करके स्पीड पोस्ट से भेजी जाती है।"
+    },
+    "देशभर के पंडितों और आश्रमों से रुद्राक्ष, मालाएं, यंत्र, रत्न और हवन सामग्री। हर सामग्री आपके नाम व गोत्र से अभिमंत्रित करके स्पीड पोस्ट से भेजी जाती है।": {
+      "en": "Rudraksha, malas, yantras, gemstones and hawan kits from pandits and ashrams across India. Every item is energized in your name and gotra before it is shipped by SpeedPost.",
+      "hi": "देशभर के पंडितों और आश्रमों से रुद्राक्ष, मालाएं, यंत्र, रत्न और हवन सामग्री। हर सामग्री आपके नाम व गोत्र से अभिमंत्रित करके स्पीड पोस्ट से भेजी जाती है।"
+    },
+    "Energized in your name & gotra": {
+      "en": "Energized in your name & gotra",
+      "hi": "आपके नाम व गोत्र से अभिमंत्रित"
+    },
+    "आपके नाम व गोत्र से अभिमंत्रित": {
+      "en": "Energized in your name & gotra",
+      "hi": "आपके नाम व गोत्र से अभिमंत्रित"
+    },
+    "Certificate shown where the seller provides one": {
+      "en": "Certificate shown where the seller provides one",
+      "hi": "विक्रेता द्वारा दिया गया प्रमाणपत्र जहाँ उपलब्ध"
+    },
+    "विक्रेता द्वारा दिया गया प्रमाणपत्र जहाँ उपलब्ध": {
+      "en": "Certificate shown where the seller provides one",
+      "hi": "विक्रेता द्वारा दिया गया प्रमाणपत्र जहाँ उपलब्ध"
+    },
+    "Cash on delivery or wallet payment": {
+      "en": "Cash on delivery or wallet payment",
+      "hi": "कैश ऑन डिलीवरी या वॉलेट भुगतान"
+    },
+    "कैश ऑन डिलीवरी या वॉलेट भुगतान": {
+      "en": "Cash on delivery or wallet payment",
+      "hi": "कैश ऑन डिलीवरी या वॉलेट भुगतान"
+    },
+    "My Orders & Tracking": {
+      "en": "My Orders & Tracking",
+      "hi": "मेरे ऑर्डर एवं ट्रैकिंग"
+    },
+    "मेरे ऑर्डर एवं ट्रैकिंग": {
+      "en": "My Orders & Tracking",
+      "hi": "मेरे ऑर्डर एवं ट्रैकिंग"
+    },
+    "Sell your items": {
+      "en": "Sell your items",
+      "hi": "अपनी सामग्री बेचें"
+    },
+    "अपनी सामग्री बेचें": {
+      "en": "Sell your items",
+      "hi": "अपनी सामग्री बेचें"
+    },
+    "All Items": {
+      "en": "All Items",
+      "hi": "सभी सामग्री"
+    },
+    "सभी सामग्री": {
+      "en": "All Items",
+      "hi": "सभी सामग्री"
+    },
+    "🪵 Rudraksha": {
+      "en": "🪵 Rudraksha",
+      "hi": "🪵 रुद्राक्ष"
+    },
+    "🪵 रुद्राक्ष": {
+      "en": "🪵 Rudraksha",
+      "hi": "🪵 रुद्राक्ष"
+    },
+    "📿 Malas": {
+      "en": "📿 Malas",
+      "hi": "📿 मालाएं"
+    },
+    "📿 मालाएं": {
+      "en": "📿 Malas",
+      "hi": "📿 मालाएं"
+    },
+    "☸️ Yantras & Kavach": {
+      "en": "☸️ Yantras & Kavach",
+      "hi": "☸️ यंत्र व कवच"
+    },
+    "☸️ यंत्र व कवच": {
+      "en": "☸️ Yantras & Kavach",
+      "hi": "☸️ यंत्र व कवच"
+    },
+    "💎 रत्न": {
+      "en": "💎 Gemstones",
+      "hi": "💎 रत्न"
+    },
+    "🔥 Hawan & Puja": {
+      "en": "🔥 Hawan & Puja",
+      "hi": "🔥 हवन व पूजन"
+    },
+    "🔥 हवन व पूजन": {
+      "en": "🔥 Hawan & Puja",
+      "hi": "🔥 हवन व पूजन"
+    },
+    "♥ Wishlist": {
+      "en": "♥ Wishlist",
+      "hi": "♥ पसंदीदा"
+    },
+    "♥ पसंदीदा": {
+      "en": "♥ Wishlist",
+      "hi": "♥ पसंदीदा"
+    },
+    "Search rudraksha, mala, gemstone...": {
+      "en": "Search rudraksha, mala, gemstone...",
+      "hi": "रुद्राक्ष, माला, रत्न खोजें..."
+    },
+    "रुद्राक्ष, माला, रत्न खोजें...": {
+      "en": "Search rudraksha, mala, gemstone...",
+      "hi": "रुद्राक्ष, माला, रत्न खोजें..."
+    },
+    "Any price": {
+      "en": "Any price",
+      "hi": "कोई भी मूल्य"
+    },
+    "कोई भी मूल्य": {
+      "en": "Any price",
+      "hi": "कोई भी मूल्य"
+    },
+    "Under ₹500": {
+      "en": "Under ₹500",
+      "hi": "₹500 से कम"
+    },
+    "₹500 से कम": {
+      "en": "Under ₹500",
+      "hi": "₹500 से कम"
+    },
+    "₹500 - ₹1,000": {
+      "en": "₹500 - ₹1,000",
+      "hi": "₹500 - ₹1,000"
+    },
+    "₹1,000 - ₹2,500": {
+      "en": "₹1,000 - ₹2,500",
+      "hi": "₹1,000 - ₹2,500"
+    },
+    "Above ₹2,500": {
+      "en": "Above ₹2,500",
+      "hi": "₹2,500 से अधिक"
+    },
+    "₹2,500 से अधिक": {
+      "en": "Above ₹2,500",
+      "hi": "₹2,500 से अधिक"
+    },
+    "Top rated": {
+      "en": "Top rated",
+      "hi": "उच्च रेटिंग"
+    },
+    "सर्वश्रेष्ठ रेटिंग": {
+      "en": "Top rated",
+      "hi": "सर्वश्रेष्ठ रेटिंग"
+    },
+    "Newest": {
+      "en": "Newest",
+      "hi": "नवीनतम"
+    },
+    "नवीनतम": {
+      "en": "Newest",
+      "hi": "नवीनतम"
+    },
+    "Price: low to high": {
+      "en": "Price: low to high",
+      "hi": "मूल्य: कम से अधिक"
+    },
+    "मूल्य: कम से अधिक": {
+      "en": "Price: low to high",
+      "hi": "मूल्य: कम से अधिक"
+    },
+    "Price: high to low": {
+      "en": "Price: high to low",
+      "hi": "मूल्य: अधिक से कम"
+    },
+    "मूल्य: अधिक से कम": {
+      "en": "Price: high to low",
+      "hi": "मूल्य: अधिक से कम"
+    },
+    "In stock only": {
+      "en": "In stock only",
+      "hi": "केवल उपलब्ध"
+    },
+    "केवल उपलब्ध": {
+      "en": "In stock only",
+      "hi": "केवल उपलब्ध"
+    },
+    "Loading catalog...": {
+      "en": "Loading catalog...",
+      "hi": "सूची लोड हो रही है..."
+    },
+    "सूची लोड हो रही है...": {
+      "en": "Loading catalog...",
+      "hi": "सूची लोड हो रही है..."
+    },
+    "No items found": {
+      "en": "No items found",
+      "hi": "कोई सामग्री नहीं मिली"
+    },
+    "कोई सामग्री नहीं मिली": {
+      "en": "No items found",
+      "hi": "कोई सामग्री नहीं मिली"
+    },
+    "Try a different category, price range or search.": {
+      "en": "Try a different category, price range or search.",
+      "hi": "कृपया दूसरी श्रेणी, मूल्य या खोज आज़माएं।"
+    },
+    "कृपया दूसरी श्रेणी, मूल्य या खोज आज़माएं।": {
+      "en": "Try a different category, price range or search.",
+      "hi": "कृपया दूसरी श्रेणी, मूल्य या खोज आज़माएं।"
+    },
+    "Starter catalog photographs from Wikimedia Commons.": {
+      "en": "Starter catalog photographs from Wikimedia Commons.",
+      "hi": "शुरुआती सूची की तस्वीरें विकिमीडिया कॉमन्स से।"
+    },
+    "शुरुआती सूची की तस्वीरें विकिमीडिया कॉमन्स से।": {
+      "en": "Starter catalog photographs from Wikimedia Commons.",
+      "hi": "शुरुआती सूची की तस्वीरें विकिमीडिया कॉमन्स से।"
+    },
+    "Cart": {
+      "en": "Cart",
+      "hi": "कार्ट"
+    },
+    "कार्ट": {
+      "en": "Cart",
+      "hi": "कार्ट"
+    },
+    "Energized": {
+      "en": "Energized",
+      "hi": "अभिमंत्रित"
+    },
+    "अभिमंत्रित": {
+      "en": "Energized",
+      "hi": "अभिमंत्रित"
+    },
+    "Certificate": {
+      "en": "Certificate",
+      "hi": "प्रमाणपत्र"
+    },
+    "प्रमाणपत्र": {
+      "en": "Certificate",
+      "hi": "प्रमाणपत्र"
+    },
+    "New - no reviews yet": {
+      "en": "New - no reviews yet",
+      "hi": "नई सामग्री - अभी कोई समीक्षा नहीं"
+    },
+    "नई सामग्री - अभी कोई समीक्षा नहीं": {
+      "en": "New - no reviews yet",
+      "hi": "नई सामग्री - अभी कोई समीक्षा नहीं"
+    },
+    "Out of stock": {
+      "en": "Out of stock",
+      "hi": "स्टॉक में नहीं"
+    },
+    "स्टॉक में नहीं": {
+      "en": "Out of stock",
+      "hi": "स्टॉक में नहीं"
+    },
+    "Only {n} left": {
+      "en": "Only {n} left",
+      "hi": "केवल {n} शेष"
+    },
+    "केवल {n} शेष": {
+      "en": "Only {n} left",
+      "hi": "केवल {n} शेष"
+    },
+    "Add to cart": {
+      "en": "Add to cart",
+      "hi": "कार्ट में जोड़ें"
+    },
+    "कार्ट में जोड़ें": {
+      "en": "Add to cart",
+      "hi": "कार्ट में जोड़ें"
+    },
+    "Details": {
+      "en": "Details",
+      "hi": "विवरण"
+    },
+    "{n}% off": {
+      "en": "{n}% off",
+      "hi": "{n}% छूट"
+    },
+    "{n}% छूट": {
+      "en": "{n}% off",
+      "hi": "{n}% छूट"
+    },
+    "Buy now": {
+      "en": "Buy now",
+      "hi": "अभी खरीदें"
+    },
+    "अभी खरीदें": {
+      "en": "Buy now",
+      "hi": "अभी खरीदें"
+    },
+    "Reviews": {
+      "en": "Reviews",
+      "hi": "समीक्षाएँ"
+    },
+    "समीक्षाएं": {
+      "en": "Reviews",
+      "hi": "समीक्षाएं"
+    },
+    "Loading reviews...": {
+      "en": "Loading reviews...",
+      "hi": "समीक्षाएं लोड हो रही हैं..."
+    },
+    "समीक्षाएं लोड हो रही हैं...": {
+      "en": "Loading reviews...",
+      "hi": "समीक्षाएं लोड हो रही हैं..."
+    },
+    "No reviews yet. Buyers can review an item after it is delivered.": {
+      "en": "No reviews yet. Buyers can review an item after it is delivered.",
+      "hi": "अभी कोई समीक्षा नहीं। सामग्री मिलने के बाद खरीदार समीक्षा दे सकते हैं।"
+    },
+    "अभी कोई समीक्षा नहीं। सामग्री मिलने के बाद खरीदार समीक्षा दे सकते हैं।": {
+      "en": "No reviews yet. Buyers can review an item after it is delivered.",
+      "hi": "अभी कोई समीक्षा नहीं। सामग्री मिलने के बाद खरीदार समीक्षा दे सकते हैं।"
+    },
+    "Verified buyer": {
+      "en": "Verified buyer",
+      "hi": "सत्यापित खरीदार"
+    },
+    "सत्यापित खरीदार": {
+      "en": "Verified buyer",
+      "hi": "सत्यापित खरीदार"
+    },
+    "Seller": {
+      "en": "Seller",
+      "hi": "विक्रेता"
+    },
+    "विक्रेता": {
+      "en": "Seller",
+      "hi": "विक्रेता"
+    },
+    "Material": {
+      "en": "Material",
+      "hi": "सामग्री"
+    },
+    "सामग्री": {
+      "en": "Product",
+      "hi": "सामग्री"
+    },
+    "Origin": {
+      "en": "Origin",
+      "hi": "उत्पत्ति"
+    },
+    "उत्पत्ति": {
+      "en": "Origin",
+      "hi": "उत्पत्ति"
+    },
+    "Energization": {
+      "en": "Energization",
+      "hi": "अभिमंत्रण"
+    },
+    "अभिमंत्रण": {
+      "en": "Energization",
+      "hi": "अभिमंत्रण"
+    },
+    "View certificate": {
+      "en": "View certificate",
+      "hi": "प्रमाणपत्र देखें"
+    },
+    "प्रमाणपत्र देखें": {
+      "en": "View certificate",
+      "hi": "प्रमाणपत्र देखें"
+    },
+    "Added to cart": {
+      "en": "Added to cart",
+      "hi": "कार्ट में जोड़ा गया"
+    },
+    "कार्ट में जोड़ा गया": {
+      "en": "Added to cart",
+      "hi": "कार्ट में जोड़ा गया"
+    },
+    "Only {n} available": {
+      "en": "Only {n} available",
+      "hi": "केवल {n} उपलब्ध हैं"
+    },
+    "केवल {n} उपलब्ध हैं": {
+      "en": "Only {n} available",
+      "hi": "केवल {n} उपलब्ध हैं"
+    },
+    "Your cart": {
+      "en": "Your cart",
+      "hi": "आपका कार्ट"
+    },
+    "आपका कार्ट": {
+      "en": "Your cart",
+      "hi": "आपका कार्ट"
+    },
+    "Subtotal": {
+      "en": "Subtotal",
+      "hi": "उप-योग"
+    },
+    "उप-योग": {
+      "en": "Subtotal",
+      "hi": "उप-योग"
+    },
+    "Checkout": {
+      "en": "Checkout",
+      "hi": "चेकआउट"
+    },
+    "चेकआउट": {
+      "en": "Checkout",
+      "hi": "चेकआउट"
+    },
+    "Your cart is empty": {
+      "en": "Your cart is empty",
+      "hi": "आपका कार्ट खाली है"
+    },
+    "आपका कार्ट खाली है": {
+      "en": "Your cart is empty",
+      "hi": "आपका कार्ट खाली है"
+    },
+    "Add items you like and they will wait here.": {
+      "en": "Add items you like and they will wait here.",
+      "hi": "पसंद की सामग्री जोड़ें, वह यहाँ रहेगी।"
+    },
+    "पसंद की सामग्री जोड़ें, वह यहाँ रहेगी।": {
+      "en": "Add items you like and they will wait here.",
+      "hi": "पसंद की सामग्री जोड़ें, वह यहाँ रहेगी।"
+    },
+    "Remove": {
+      "en": "Remove",
+      "hi": "हटाएँ"
+    },
+    "हटाएं": {
+      "en": "Remove",
+      "hi": "हटाएं"
+    },
+    "Your items": {
+      "en": "Your items",
+      "hi": "आपकी सामग्री"
+    },
+    "आपकी सामग्री": {
+      "en": "Your items",
+      "hi": "आपकी सामग्री"
+    },
+    "Qty {n}": {
+      "en": "Qty {n}",
+      "hi": "मात्रा {n}"
+    },
+    "मात्रा {n}": {
+      "en": "Qty {n}",
+      "hi": "मात्रा {n}"
+    },
+    "Energization details (pran-pratishtha)": {
+      "en": "Energization details (pran-pratishtha)",
+      "hi": "अभिमंत्रण विवरण (प्राण-प्रतिष्ठा)"
+    },
+    "अभिमंत्रण विवरण (प्राण-प्रतिष्ठा)": {
+      "en": "Energization details (pran-pratishtha)",
+      "hi": "अभिमंत्रण विवरण (प्राण-प्रतिष्ठा)"
+    },
+    "Full name *": {
+      "en": "Full name *",
+      "hi": "पूरा नाम *"
+    },
+    "पूरा नाम *": {
+      "en": "Full name *",
+      "hi": "पूरा नाम *"
+    },
+    "The pandit chants mantras with this name and gotra before the items are dispatched.": {
+      "en": "The pandit chants mantras with this name and gotra before the items are dispatched.",
+      "hi": "पंडित जी सामग्री भेजने से पहले इसी नाम व गोत्र से मंत्रोच्चार करते हैं।"
+    },
+    "पंडित जी सामग्री भेजने से पहले इसी नाम व गोत्र से मंत्रोच्चार करते हैं।": {
+      "en": "The pandit chants mantras with this name and gotra before the items are dispatched.",
+      "hi": "पंडित जी सामग्री भेजने से पहले इसी नाम व गोत्र से मंत्रोच्चार करते हैं।"
+    },
+    "डिलीवरी": {
+      "en": "Delivery",
+      "hi": "डिलीवरी"
+    },
+    "Full address with PIN code *": {
+      "en": "Full address with PIN code *",
+      "hi": "पिन कोड सहित पूरा पता *"
+    },
+    "Payment": {
+      "en": "Payment",
+      "hi": "भुगतान"
+    },
+    "Cash on delivery": {
+      "en": "Cash on delivery",
+      "hi": "कैश ऑन डिलीवरी"
+    },
+    "कैश ऑन डिलीवरी": {
+      "en": "Cash on delivery",
+      "hi": "कैश ऑन डिलीवरी"
+    },
+    "Pay when the parcel arrives": {
+      "en": "Pay when the parcel arrives",
+      "hi": "पार्सल मिलने पर भुगतान करें"
+    },
+    "पार्सल मिलने पर भुगतान करें": {
+      "en": "Pay when the parcel arrives",
+      "hi": "पार्सल मिलने पर भुगतान करें"
+    },
+    "Astro wallet": {
+      "en": "Astro wallet",
+      "hi": "एस्ट्रो वॉलेट"
+    },
+    "एस्ट्रो वॉलेट": {
+      "en": "Astro wallet",
+      "hi": "एस्ट्रो वॉलेट"
+    },
+    "Pay instantly from your wallet balance": {
+      "en": "Pay instantly from your wallet balance",
+      "hi": "वॉलेट बैलेंस से तुरंत भुगतान करें"
+    },
+    "वॉलेट बैलेंस से तुरंत भुगतान करें": {
+      "en": "Pay instantly from your wallet balance",
+      "hi": "वॉलेट बैलेंस से तुरंत भुगतान करें"
+    },
+    "Balance {amount}": {
+      "en": "Balance {amount}",
+      "hi": "बैलेंस {amount}"
+    },
+    "बैलेंस {amount}": {
+      "en": "Balance {amount}",
+      "hi": "बैलेंस {amount}"
+    },
+    "Sign in to pay from your wallet": {
+      "en": "Sign in to pay from your wallet",
+      "hi": "वॉलेट से भुगतान के लिए साइन इन करें"
+    },
+    "वॉलेट से भुगतान के लिए साइन इन करें": {
+      "en": "Sign in to pay from your wallet",
+      "hi": "वॉलेट से भुगतान के लिए साइन इन करें"
+    },
+    "Place order": {
+      "en": "Place order",
+      "hi": "ऑर्डर करें"
+    },
+    "ऑर्डर करें": {
+      "en": "Place order",
+      "hi": "ऑर्डर करें"
+    },
+    "Placing order...": {
+      "en": "Placing order...",
+      "hi": "ऑर्डर हो रहा है..."
+    },
+    "ऑर्डर हो रहा है...": {
+      "en": "Placing order...",
+      "hi": "ऑर्डर हो रहा है..."
+    },
+    "Order placed": {
+      "en": "Order placed",
+      "hi": "ऑर्डर दर्ज"
+    },
+    "ऑर्डर दर्ज हो गया": {
+      "en": "Order placed",
+      "hi": "ऑर्डर दर्ज हो गया"
+    },
+    "{count} item(s) ordered, total {total}. They will be energized in your name and gotra before dispatch.": {
+      "en": "{count} item(s) ordered, total {total}. They will be energized in your name and gotra before dispatch.",
+      "hi": "{count} सामग्री का ऑर्डर दर्ज हुआ, कुल {total}। भेजने से पहले इन्हें आपके नाम व गोत्र से अभिमंत्रित किया जाएगा।"
+    },
+    "{count} सामग्री का ऑर्डर दर्ज हुआ, कुल {total}। भेजने से पहले इन्हें आपके नाम व गोत्र से अभिमंत्रित किया जाएगा।": {
+      "en": "{count} item(s) ordered, total {total}. They will be energized in your name and gotra before dispatch.",
+      "hi": "{count} सामग्री का ऑर्डर दर्ज हुआ, कुल {total}। भेजने से पहले इन्हें आपके नाम व गोत्र से अभिमंत्रित किया जाएगा।"
+    },
+    "View my orders": {
+      "en": "View my orders",
+      "hi": "मेरे ऑर्डर देखें"
+    },
+    "मेरे ऑर्डर देखें": {
+      "en": "View my orders",
+      "hi": "मेरे ऑर्डर देखें"
+    },
+    "Continue shopping": {
+      "en": "Continue shopping",
+      "hi": "खरीदारी जारी रखें"
+    },
+    "खरीदारी जारी रखें": {
+      "en": "Continue shopping",
+      "hi": "खरीदारी जारी रखें"
+    },
+    "These items are not available right now": {
+      "en": "These items are not available right now",
+      "hi": "ये सामग्री अभी उपलब्ध नहीं है"
+    },
+    "ये सामग्री अभी उपलब्ध नहीं है": {
+      "en": "These items are not available right now",
+      "hi": "ये सामग्री अभी उपलब्ध नहीं है"
+    },
+    "Please sign in to pay from your wallet, or choose cash on delivery": {
+      "en": "Please sign in to pay from your wallet, or choose cash on delivery",
+      "hi": "वॉलेट से भुगतान के लिए साइन इन करें, या कैश ऑन डिलीवरी चुनें"
+    },
+    "वॉलेट से भुगतान के लिए साइन इन करें, या कैश ऑन डिलीवरी चुनें": {
+      "en": "Please sign in to pay from your wallet, or choose cash on delivery",
+      "hi": "वॉलेट से भुगतान के लिए साइन इन करें, या कैश ऑन डिलीवरी चुनें"
+    },
+    "Seller portal": {
+      "en": "Seller portal",
+      "hi": "विक्रेता पोर्टल"
+    },
+    "विक्रेता पोर्टल": {
+      "en": "Seller portal",
+      "hi": "विक्रेता पोर्टल"
+    },
+    "List your energized items for devotees across India": {
+      "en": "List your energized items for devotees across India",
+      "hi": "अपनी अभिमंत्रित सामग्री देशभर के श्रद्धालुओं को बेचें"
+    },
+    "अपनी अभिमंत्रित सामग्री देशभर के श्रद्धालुओं को बेचें": {
+      "en": "List your energized items for devotees across India",
+      "hi": "अपनी अभिमंत्रित सामग्री देशभर के श्रद्धालुओं को बेचें"
+    },
+    "Sign in to list items.": {
+      "en": "Sign in to list items.",
+      "hi": "सामग्री लिस्ट करने के लिए साइन इन करें।"
+    },
+    "सामग्री लिस्ट करने के लिए साइन इन करें।": {
+      "en": "Sign in to list items.",
+      "hi": "सामग्री लिस्ट करने के लिए साइन इन करें।"
+    },
+    "Your listing is saved to your account and goes live after our team reviews it.": {
+      "en": "Your listing is saved to your account and goes live after our team reviews it.",
+      "hi": "आपकी लिस्टिंग आपके खाते में सहेजी जाती है और हमारी समीक्षा के बाद लाइव होती है।"
+    },
+    "आपकी लिस्टिंग आपके खाते में सहेजी जाती है और हमारी समीक्षा के बाद लाइव होती है।": {
+      "en": "Your listing is saved to your account and goes live after our team reviews it.",
+      "hi": "आपकी लिस्टिंग आपके खाते में सहेजी जाती है और हमारी समीक्षा के बाद लाइव होती है।"
+    },
+    "Item photo *": {
+      "en": "Item photo *",
+      "hi": "सामग्री की फ़ोटो *"
+    },
+    "सामग्री की फ़ोटो *": {
+      "en": "Item photo *",
+      "hi": "सामग्री की फ़ोटो *"
+    },
+    "JPG, PNG or WebP, at least 300 x 300 px, up to 6 MB. Use a clear photo of the actual item.": {
+      "en": "JPG, PNG or WebP, at least 300 x 300 px, up to 6 MB. Use a clear photo of the actual item.",
+      "hi": "JPG, PNG या WebP फ़ोटो, कम से कम 300 x 300 पिक्सल, अधिकतम 6 एमबी। असली सामग्री की साफ़ फ़ोटो लगाएं।"
+    },
+    "JPG, PNG या WebP फ़ोटो, कम से कम 300 x 300 पिक्सल, अधिकतम 6 एमबी। असली सामग्री की साफ़ फ़ोटो लगाएं।": {
+      "en": "JPG, PNG or WebP, at least 300 x 300 px, up to 6 MB. Use a clear photo of the actual item.",
+      "hi": "JPG, PNG या WebP फ़ोटो, कम से कम 300 x 300 पिक्सल, अधिकतम 6 एमबी। असली सामग्री की साफ़ फ़ोटो लगाएं।"
+    },
+    "Photo preview": {
+      "en": "Photo preview",
+      "hi": "फ़ोटो पूर्वावलोकन"
+    },
+    "फ़ोटो पूर्वावलोकन": {
+      "en": "Photo preview",
+      "hi": "फ़ोटो पूर्वावलोकन"
+    },
+    "Pandit / ashram name *": {
+      "en": "Pandit / ashram name *",
+      "hi": "पंडित / आश्रम का नाम *"
+    },
+    "पंडित / आश्रम का नाम *": {
+      "en": "Pandit / ashram name *",
+      "hi": "पंडित / आश्रम का नाम *"
+    },
+    "Item title *": {
+      "en": "Item title *",
+      "hi": "सामग्री का नाम *"
+    },
+    "सामग्री का नाम *": {
+      "en": "Item title *",
+      "hi": "सामग्री का नाम *"
+    },
+    "e.g. 7-Mukhi Nepali Rudraksha, silver cap": {
+      "en": "e.g. 7-Mukhi Nepali Rudraksha, silver cap",
+      "hi": "जैसे 7-मुखी नेपाली रुद्राक्ष, चांदी कैप"
+    },
+    "जैसे 7-मुखी नेपाली रुद्राक्ष, चांदी कैप": {
+      "en": "e.g. 7-Mukhi Nepali Rudraksha, silver cap",
+      "hi": "जैसे 7-मुखी नेपाली रुद्राक्ष, चांदी कैप"
+    },
+    "Category *": {
+      "en": "Category *",
+      "hi": "श्रेणी *"
+    },
+    "श्रेणी *": {
+      "en": "Category *",
+      "hi": "श्रेणी *"
+    },
+    "Rudraksha": {
+      "en": "Rudraksha",
+      "hi": "रुद्राक्ष"
+    },
+    "रुद्राक्ष": {
+      "en": "Rudraksha",
+      "hi": "रुद्राक्ष"
+    },
+    "Mala": {
+      "en": "Mala",
+      "hi": "माला"
+    },
+    "माला": {
+      "en": "Mala",
+      "hi": "माला"
+    },
+    "Yantra & kavach": {
+      "en": "Yantra & kavach",
+      "hi": "यंत्र व कवच"
+    },
+    "यंत्र व कवच": {
+      "en": "Yantra & kavach",
+      "hi": "यंत्र व कवच"
+    },
+    "Gemstone": {
+      "en": "Gemstone",
+      "hi": "रत्न"
+    },
+    "रत्न": {
+      "en": "Gemstone",
+      "hi": "रत्न"
+    },
+    "Hawan & puja samagri": {
+      "en": "Hawan & puja samagri",
+      "hi": "हवन व पूजन सामग्री"
+    },
+    "हवन व पूजन सामग्री": {
+      "en": "Hawan & puja samagri",
+      "hi": "हवन व पूजन सामग्री"
+    },
+    "Pieces in stock *": {
+      "en": "Pieces in stock *",
+      "hi": "स्टॉक में नग *"
+    },
+    "स्टॉक में नग *": {
+      "en": "Pieces in stock *",
+      "hi": "स्टॉक में नग *"
+    },
+    "Selling price (₹) *": {
+      "en": "Selling price (₹) *",
+      "hi": "बिक्री मूल्य (₹) *"
+    },
+    "बिक्री मूल्य (₹) *": {
+      "en": "Selling price (₹) *",
+      "hi": "बिक्री मूल्य (₹) *"
+    },
+    "MRP (₹, optional)": {
+      "en": "MRP (₹, optional)",
+      "hi": "अंकित मूल्य (₹, वैकल्पिक)"
+    },
+    "अंकित मूल्य (₹, वैकल्पिक)": {
+      "en": "MRP (₹, optional)",
+      "hi": "अंकित मूल्य (₹, वैकल्पिक)"
+    },
+    "Description & benefits *": {
+      "en": "Description & benefits *",
+      "hi": "विवरण व लाभ *"
+    },
+    "विवरण व लाभ *": {
+      "en": "Description & benefits *",
+      "hi": "विवरण व लाभ *"
+    },
+    "Significance, usage and care instructions": {
+      "en": "Significance, usage and care instructions",
+      "hi": "महत्व, उपयोग विधि और देखभाल"
+    },
+    "महत्व, उपयोग विधि और देखभाल": {
+      "en": "Significance, usage and care instructions",
+      "hi": "महत्व, उपयोग विधि और देखभाल"
+    },
+    "Energization details": {
+      "en": "Energization details",
+      "hi": "अभिमंत्रण का विवरण"
+    },
+    "अभिमंत्रण का विवरण": {
+      "en": "Energization details",
+      "hi": "अभिमंत्रण का विवरण"
+    },
+    "e.g. Chanted 108 times with Mahamrityunjaya mantra": {
+      "en": "e.g. Chanted 108 times with Mahamrityunjaya mantra",
+      "hi": "जैसे महामृत्युंजय मंत्र के 108 जप से"
+    },
+    "जैसे महामृत्युंजय मंत्र के 108 जप से": {
+      "en": "e.g. Chanted 108 times with Mahamrityunjaya mantra",
+      "hi": "जैसे महामृत्युंजय मंत्र के 108 जप से"
+    },
+    "Submit for review": {
+      "en": "Submit for review",
+      "hi": "समीक्षा के लिए भेजें"
+    },
+    "समीक्षा के लिए भेजें": {
+      "en": "Submit for review",
+      "hi": "समीक्षा के लिए भेजें"
+    },
+    "Submitting...": {
+      "en": "Submitting...",
+      "hi": "भेजा जा रहा है..."
+    },
+    "भेजा जा रहा है...": {
+      "en": "Submitting...",
+      "hi": "भेजा जा रहा है..."
+    },
+    "Your listings": {
+      "en": "Your listings",
+      "hi": "आपकी लिस्टिंग"
+    },
+    "आपकी लिस्टिंग": {
+      "en": "Your listings",
+      "hi": "आपकी लिस्टिंग"
+    },
+    "Live": {
+      "en": "Live",
+      "hi": "लाइव"
+    },
+    "लाइव": {
+      "en": "Live",
+      "hi": "लाइव"
+    },
+    "Awaiting review": {
+      "en": "Awaiting review",
+      "hi": "समीक्षा लंबित"
+    },
+    "समीक्षा लंबित": {
+      "en": "Awaiting review",
+      "hi": "समीक्षा लंबित"
+    },
+    "stock {n}": {
+      "en": "stock {n}",
+      "hi": "स्टॉक {n}"
+    },
+    "स्टॉक {n}": {
+      "en": "stock {n}",
+      "hi": "स्टॉक {n}"
+    },
+    "Photo uploaded": {
+      "en": "Photo uploaded",
+      "hi": "फ़ोटो अपलोड हो गई"
+    },
+    "फ़ोटो अपलोड हो गई": {
+      "en": "Photo uploaded",
+      "hi": "फ़ोटो अपलोड हो गई"
+    },
+    "Please upload a photo of your item first": {
+      "en": "Please upload a photo of your item first",
+      "hi": "पहले अपनी सामग्री की फ़ोटो अपलोड करें"
+    },
+    "पहले अपनी सामग्री की फ़ोटो अपलोड करें": {
+      "en": "Please upload a photo of your item first",
+      "hi": "पहले अपनी सामग्री की फ़ोटो अपलोड करें"
+    },
+    "Your item was sent for review. It will appear on Astro Mall once approved.": {
+      "en": "Your item was sent for review. It will appear on Astro Mall once approved.",
+      "hi": "आपकी सामग्री समीक्षा के लिए भेज दी गई है। स्वीकृति के बाद एस्ट्रो मॉल पर दिखेगी।"
+    },
+    "आपकी सामग्री समीक्षा के लिए भेज दी गई है। स्वीकृति के बाद एस्ट्रो मॉल पर दिखेगी।": {
+      "en": "Your item was sent for review. It will appear on Astro Mall once approved.",
+      "hi": "आपकी सामग्री समीक्षा के लिए भेज दी गई है। स्वीकृति के बाद एस्ट्रो मॉल पर दिखेगी।"
+    },
+    "Please sign in to list your items": {
+      "en": "Please sign in to list your items",
+      "hi": "सामग्री लिस्ट करने के लिए साइन इन करें"
+    },
+    "सामग्री लिस्ट करने के लिए साइन इन करें": {
+      "en": "Please sign in to list your items",
+      "hi": "सामग्री लिस्ट करने के लिए साइन इन करें"
+    },
+    "Loading your orders...": {
+      "en": "Loading your orders...",
+      "hi": "आपके ऑर्डर लोड हो रहे हैं..."
+    },
+    "आपके ऑर्डर लोड हो रहे हैं...": {
+      "en": "Loading your orders...",
+      "hi": "आपके ऑर्डर लोड हो रहे हैं..."
+    },
+    "Could not load orders": {
+      "en": "Could not load orders",
+      "hi": "ऑर्डर लोड नहीं हो सके"
+    },
+    "ऑर्डर लोड नहीं हो सके": {
+      "en": "Could not load orders",
+      "hi": "ऑर्डर लोड नहीं हो सके"
+    },
+    "No orders yet": {
+      "en": "No orders yet",
+      "hi": "अभी कोई ऑर्डर नहीं"
+    },
+    "अभी कोई ऑर्डर नहीं": {
+      "en": "No orders yet",
+      "hi": "अभी कोई ऑर्डर नहीं"
+    },
+    "Your orders and tracking appear here.": {
+      "en": "Your orders and tracking appear here.",
+      "hi": "आपके ऑर्डर और ट्रैकिंग यहाँ दिखेंगे।"
+    },
+    "आपके ऑर्डर और ट्रैकिंग यहाँ दिखेंगे।": {
+      "en": "Your orders and tracking appear here.",
+      "hi": "आपके ऑर्डर और ट्रैकिंग यहाँ दिखेंगे।"
+    },
+    "ऑर्डर दर्ज": {
+      "en": "Order placed",
+      "hi": "ऑर्डर दर्ज"
+    },
+    "भुगतान हुआ": {
+      "en": "Paid",
+      "hi": "भुगतान हुआ"
+    },
+    "Being energized": {
+      "en": "Being energized",
+      "hi": "अभिमंत्रण जारी"
+    },
+    "अभिमंत्रण जारी": {
+      "en": "Being energized",
+      "hi": "अभिमंत्रण जारी"
+    },
+    "Dispatched": {
+      "en": "Dispatched",
+      "hi": "भेजा गया"
+    },
+    "भेजा गया": {
+      "en": "Dispatched",
+      "hi": "भेजा गया"
+    },
+    "पहुँच गया": {
+      "en": "Delivered",
+      "hi": "पहुँच गया"
+    },
+    "✨ Energized in your name & gotra": {
+      "en": "✨ Energized in your name & gotra",
+      "hi": "✨ आपके नाम व गोत्र से अभिमंत्रित"
+    },
+    "✨ आपके नाम व गोत्र से अभिमंत्रित": {
+      "en": "✨ Energized in your name & gotra",
+      "hi": "✨ आपके नाम व गोत्र से अभिमंत्रित"
+    },
+    "🕉️ Energization pending": {
+      "en": "🕉️ Energization pending",
+      "hi": "🕉️ अभिमंत्रण शेष"
+    },
+    "🕉️ अभिमंत्रण शेष": {
+      "en": "🕉️ Energization pending",
+      "hi": "🕉️ अभिमंत्रण शेष"
+    },
+    "SpeedPost": {
+      "en": "SpeedPost",
+      "hi": "स्पीड पोस्ट"
+    },
+    "स्पीड पोस्ट": {
+      "en": "SpeedPost",
+      "hi": "स्पीड पोस्ट"
+    },
+    "Tracking ID appears once dispatched": {
+      "en": "Tracking ID appears once dispatched",
+      "hi": "भेजे जाने पर ट्रैकिंग आईडी दिखेगी"
+    },
+    "भेजे जाने पर ट्रैकिंग आईडी दिखेगी": {
+      "en": "Tracking ID appears once dispatched",
+      "hi": "भेजे जाने पर ट्रैकिंग आईडी दिखेगी"
+    },
+    "★ Rate item": {
+      "en": "★ Rate item",
+      "hi": "★ रेटिंग दें"
+    },
+    "★ रेटिंग दें": {
+      "en": "★ Rate item",
+      "hi": "★ रेटिंग दें"
+    },
+    "Edit review": {
+      "en": "Edit review",
+      "hi": "समीक्षा बदलें"
+    },
+    "समीक्षा बदलें": {
+      "en": "Edit review",
+      "hi": "समीक्षा बदलें"
+    },
+    "Cancel this order? Any amount paid is refunded to your wallet.": {
+      "en": "Cancel this order? Any amount paid is refunded to your wallet.",
+      "hi": "ऑर्डर रद्द करें? भुगतान की गई राशि वॉलेट में लौटाई जाएगी।"
+    },
+    "ऑर्डर रद्द करें? भुगतान की गई राशि वॉलेट में लौटाई जाएगी।": {
+      "en": "Cancel this order? Any amount paid is refunded to your wallet.",
+      "hi": "ऑर्डर रद्द करें? भुगतान की गई राशि वॉलेट में लौटाई जाएगी।"
+    },
+    "Order cancelled": {
+      "en": "Order cancelled",
+      "hi": "ऑर्डर रद्द हो गया"
+    },
+    "ऑर्डर रद्द हो गया": {
+      "en": "Order cancelled",
+      "hi": "ऑर्डर रद्द हो गया"
+    },
+    "Rate this item": {
+      "en": "Rate this item",
+      "hi": "इस सामग्री को रेटिंग दें"
+    },
+    "इस सामग्री को रेटिंग दें": {
+      "en": "Rate this item",
+      "hi": "इस सामग्री को रेटिंग दें"
+    },
+    "Rate: {name}": {
+      "en": "Rate: {name}",
+      "hi": "रेटिंग दें: {name}"
+    },
+    "रेटिंग दें: {name}": {
+      "en": "Rate: {name}",
+      "hi": "रेटिंग दें: {name}"
+    },
+    "Your review (optional)": {
+      "en": "Your review (optional)",
+      "hi": "आपकी समीक्षा (वैकल्पिक)"
+    },
+    "आपकी समीक्षा (वैकल्पिक)": {
+      "en": "Your review (optional)",
+      "hi": "आपकी समीक्षा (वैकल्पिक)"
+    },
+    "Submit review": {
+      "en": "Submit review",
+      "hi": "समीक्षा भेजें"
+    },
+    "समीक्षा भेजें": {
+      "en": "Submit review",
+      "hi": "समीक्षा भेजें"
+    },
+    "Only delivered orders can be reviewed.": {
+      "en": "Only delivered orders can be reviewed.",
+      "hi": "केवल मिल चुके ऑर्डर की समीक्षा हो सकती है।"
+    },
+    "केवल मिल चुके ऑर्डर की समीक्षा हो सकती है।": {
+      "en": "Only delivered orders can be reviewed.",
+      "hi": "केवल मिल चुके ऑर्डर की समीक्षा हो सकती है।"
+    },
+    "Please choose a star rating": {
+      "en": "Please choose a star rating",
+      "hi": "कृपया स्टार रेटिंग चुनें"
+    },
+    "कृपया स्टार रेटिंग चुनें": {
+      "en": "Please choose a star rating",
+      "hi": "कृपया स्टार रेटिंग चुनें"
+    },
+    "Thank you for your review": {
+      "en": "Thank you for your review",
+      "hi": "आपकी समीक्षा के लिए धन्यवाद"
+    },
+    "आपकी समीक्षा के लिए धन्यवाद": {
+      "en": "Thank you for your review",
+      "hi": "आपकी समीक्षा के लिए धन्यवाद"
+    },
+    "Suggested for your kundli": {
+      "en": "Suggested for your kundli",
+      "hi": "आपकी कुंडली के अनुसार सुझाव"
+    },
+    "आपकी कुंडली के अनुसार सुझाव": {
+      "en": "Suggested for your kundli",
+      "hi": "आपकी कुंडली के अनुसार सुझाव"
+    },
+    "Your moon sign {sign} is ruled by {lord}. Traditionally {gem} is recommended.": {
+      "en": "Your moon sign {sign} is ruled by {lord}. Traditionally {gem} is recommended.",
+      "hi": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {gem} शुभ माना जाता है।"
+    },
+    "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {gem} शुभ माना जाता है।": {
+      "en": "Your moon sign {sign} is ruled by {lord}. Traditionally {gem} is recommended.",
+      "hi": "आपकी चंद्र राशि {sign} के स्वामी {lord} हैं। परंपरा के अनुसार {gem} शुभ माना जाता है।"
+    },
+    "Traditional guidance, not a guarantee of results. Consult your astrologer before wearing a gemstone.": {
+      "en": "Traditional guidance, not a guarantee of results. Consult your astrologer before wearing a gemstone.",
+      "hi": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं। रत्न धारण से पहले अपने ज्योतिषी से परामर्श करें।"
+    },
+    "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं। रत्न धारण से पहले अपने ज्योतिषी से परामर्श करें।": {
+      "en": "Traditional guidance, not a guarantee of results. Consult your astrologer before wearing a gemstone.",
+      "hi": "यह शास्त्रीय परंपरा पर आधारित मार्गदर्शन है, कोई गारंटी नहीं। रत्न धारण से पहले अपने ज्योतिषी से परामर्श करें।"
+    },
+    "सूचनाएं": {
+      "en": "Notifications",
+      "hi": "सूचनाएं"
+    },
+    "Mark all read": {
+      "en": "Mark all read",
+      "hi": "सभी पढ़ी हुई करें"
+    },
+    "सभी पढ़ी हुई करें": {
+      "en": "Mark all read",
+      "hi": "सभी पढ़ी हुई करें"
+    },
+    "No notifications yet.": {
+      "en": "No notifications yet.",
+      "hi": "अभी कोई सूचना नहीं।"
+    },
+    "अभी कोई सूचना नहीं।": {
+      "en": "No notifications yet.",
+      "hi": "अभी कोई सूचना नहीं।"
+    },
+    "Please sign in to continue.": {
+      "en": "Please sign in to continue.",
+      "hi": "आगे बढ़ने के लिए कृपया साइन इन करें।"
+    },
+    "आगे बढ़ने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to continue.",
+      "hi": "आगे बढ़ने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to place your order.": {
+      "en": "Please sign in to place your order.",
+      "hi": "ऑर्डर करने के लिए कृपया साइन इन करें।"
+    },
+    "ऑर्डर करने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to place your order.",
+      "hi": "ऑर्डर करने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to see your orders.": {
+      "en": "Please sign in to see your orders.",
+      "hi": "अपने ऑर्डर देखने के लिए कृपया साइन इन करें।"
+    },
+    "अपने ऑर्डर देखने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to see your orders.",
+      "hi": "अपने ऑर्डर देखने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to book a seva.": {
+      "en": "Please sign in to book a seva.",
+      "hi": "सेवा बुक करने के लिए कृपया साइन इन करें।"
+    },
+    "सेवा बुक करने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to book a seva.",
+      "hi": "सेवा बुक करने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to see your bookings.": {
+      "en": "Please sign in to see your bookings.",
+      "hi": "अपनी बुकिंग देखने के लिए कृपया साइन इन करें।"
+    },
+    "अपनी बुकिंग देखने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to see your bookings.",
+      "hi": "अपनी बुकिंग देखने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to use a coupon.": {
+      "en": "Please sign in to use a coupon.",
+      "hi": "कूपन लगाने के लिए कृपया साइन इन करें।"
+    },
+    "कूपन लगाने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to use a coupon.",
+      "hi": "कूपन लगाने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to see your rewards.": {
+      "en": "Please sign in to see your rewards.",
+      "hi": "अपने रिवॉर्ड देखने के लिए कृपया साइन इन करें।"
+    },
+    "अपने रिवॉर्ड देखने के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to see your rewards.",
+      "hi": "अपने रिवॉर्ड देखने के लिए कृपया साइन इन करें।"
+    },
+    "Please sign in to open the seller dashboard.": {
+      "en": "Please sign in to open the seller dashboard.",
+      "hi": "विक्रेता डैशबोर्ड के लिए कृपया साइन इन करें।"
+    },
+    "विक्रेता डैशबोर्ड के लिए कृपया साइन इन करें।": {
+      "en": "Please sign in to open the seller dashboard.",
+      "hi": "विक्रेता डैशबोर्ड के लिए कृपया साइन इन करें।"
+    },
+    "Sign in": {
+      "en": "Sign in",
+      "hi": "साइन इन"
+    },
+    "साइन इन": {
+      "en": "Sign in",
+      "hi": "साइन इन"
+    },
+    "प्रमाण पत्र": {
+      "en": "Certificates",
+      "hi": "प्रमाण पत्र"
+    },
+    "🔴 Live darshan": {
+      "en": "🔴 Live darshan",
+      "hi": "🔴 लाइव दर्शन"
+    },
+    "🔴 लाइव दर्शन": {
+      "en": "🔴 Live darshan",
+      "hi": "🔴 लाइव दर्शन"
+    },
+    "Priest": {
+      "en": "Priest",
+      "hi": "पुरोहित"
+    },
+    "पुरोहित": {
+      "en": "Priests",
+      "hi": "पुरोहित"
+    },
+    "Choose your priest (optional)": {
+      "en": "Choose your priest (optional)",
+      "hi": "अपने पुरोहित चुनें (वैकल्पिक)"
+    },
+    "अपने पुरोहित चुनें (वैकल्पिक)": {
+      "en": "Choose your priest (optional)",
+      "hi": "अपने पुरोहित चुनें (वैकल्पिक)"
+    },
+    "Any available priest": {
+      "en": "Any available priest",
+      "hi": "कोई भी उपलब्ध पुरोहित"
+    },
+    "कोई भी उपलब्ध पुरोहित": {
+      "en": "Any available priest",
+      "hi": "कोई भी उपलब्ध पुरोहित"
+    },
+    "Verified": {
+      "en": "Verified",
+      "hi": "सत्यापित"
+    },
+    "सत्यापित": {
+      "en": "Verified",
+      "hi": "सत्यापित"
+    },
+    "{n} years of experience": {
+      "en": "{n} years of experience",
+      "hi": "{n} वर्ष का अनुभव"
+    },
+    "{n} वर्ष का अनुभव": {
+      "en": "{n} years of experience",
+      "hi": "{n} वर्ष का अनुभव"
+    },
+    "Prasad delivery": {
+      "en": "Prasad delivery",
+      "hi": "प्रसाद डिलीवरी"
+    },
+    "प्रसाद डिलीवरी": {
+      "en": "Prasad delivery",
+      "hi": "प्रसाद डिलीवरी"
+    },
+    "Free (member)": {
+      "en": "Free (member)",
+      "hi": "निःशुल्क (सदस्य)"
+    },
+    "निःशुल्क (सदस्य)": {
+      "en": "Free (member)",
+      "hi": "निःशुल्क (सदस्य)"
+    },
+    "Offers & points": {
+      "en": "Offers & points",
+      "hi": "ऑफ़र व पॉइंट"
+    },
+    "ऑफ़र व पॉइंट": {
+      "en": "Offers & points",
+      "hi": "ऑफ़र व पॉइंट"
+    },
+    "Coupon code": {
+      "en": "Coupon code",
+      "hi": "कूपन कोड"
+    },
+    "कूपन कोड": {
+      "en": "Coupon code",
+      "hi": "कूपन कोड"
+    },
+    "Apply": {
+      "en": "Apply",
+      "hi": "लगाएं"
+    },
+    "लगाएं": {
+      "en": "Apply",
+      "hi": "लगाएं"
+    },
+    "Coupon {code}": {
+      "en": "Coupon {code}",
+      "hi": "कूपन {code}"
+    },
+    "कूपन {code}": {
+      "en": "Coupon {code}",
+      "hi": "कूपन {code}"
+    },
+    "{code} applied: you save {amount}.": {
+      "en": "{code} applied: you save {amount}.",
+      "hi": "{code} लग गया: आपकी बचत {amount}।"
+    },
+    "{code} लग गया: आपकी बचत {amount}।": {
+      "en": "{code} applied: you save {amount}.",
+      "hi": "{code} लग गया: आपकी बचत {amount}।"
+    },
+    "Use my {points} points (worth {worth})": {
+      "en": "Use my {points} points (worth {worth})",
+      "hi": "मेरे {points} पॉइंट उपयोग करें ({worth} के बराबर)"
+    },
+    "मेरे {points} पॉइंट उपयोग करें ({worth} के बराबर)": {
+      "en": "Use my {points} points (worth {worth})",
+      "hi": "मेरे {points} पॉइंट उपयोग करें ({worth} के बराबर)"
+    },
+    "Points used ({n})": {
+      "en": "Points used ({n})",
+      "hi": "उपयोग किए पॉइंट ({n})"
+    },
+    "उपयोग किए पॉइंट ({n})": {
+      "en": "Points used ({n})",
+      "hi": "उपयोग किए पॉइंट ({n})"
+    },
+    "Premium member discount": {
+      "en": "Premium member discount",
+      "hi": "प्रीमियम सदस्य छूट"
+    },
+    "प्रीमियम सदस्य छूट": {
+      "en": "Premium member discount",
+      "hi": "प्रीमियम सदस्य छूट"
+    },
+    "Premium member: extra discount and double points applied.": {
+      "en": "Premium member: extra discount and double points applied.",
+      "hi": "प्रीमियम सदस्य: अतिरिक्त छूट और दोगुने पॉइंट लगे हैं।"
+    },
+    "प्रीमियम सदस्य: अतिरिक्त छूट और दोगुने पॉइंट लगे हैं।": {
+      "en": "Premium member: extra discount and double points applied.",
+      "hi": "प्रीमियम सदस्य: अतिरिक्त छूट और दोगुने पॉइंट लगे हैं।"
+    },
+    "Premium member: free prasad delivery and double points.": {
+      "en": "Premium member: free prasad delivery and double points.",
+      "hi": "प्रीमियम सदस्य: प्रसाद डिलीवरी निःशुल्क और दोगुने पॉइंट।"
+    },
+    "प्रीमियम सदस्य: प्रसाद डिलीवरी निःशुल्क और दोगुने पॉइंट।": {
+      "en": "Premium member: free prasad delivery and double points.",
+      "hi": "प्रीमियम सदस्य: प्रसाद डिलीवरी निःशुल्क और दोगुने पॉइंट।"
+    },
+    "Premium members get extra discount, free prasad delivery and double points.": {
+      "en": "Premium members get extra discount, free prasad delivery and double points.",
+      "hi": "प्रीमियम सदस्यों को अतिरिक्त छूट, निःशुल्क प्रसाद डिलीवरी और दोगुने पॉइंट मिलते हैं।"
+    },
+    "प्रीमियम सदस्यों को अतिरिक्त छूट, निःशुल्क प्रसाद डिलीवरी और दोगुने पॉइंट मिलते हैं।": {
+      "en": "Premium members get extra discount, free prasad delivery and double points.",
+      "hi": "प्रीमियम सदस्यों को अतिरिक्त छूट, निःशुल्क प्रसाद डिलीवरी और दोगुने पॉइंट मिलते हैं।"
+    },
+    "You will earn {n} points on this order.": {
+      "en": "You will earn {n} points on this order.",
+      "hi": "इस ऑर्डर पर आपको {n} पॉइंट मिलेंगे।"
+    },
+    "इस ऑर्डर पर आपको {n} पॉइंट मिलेंगे।": {
+      "en": "You will earn {n} points on this order.",
+      "hi": "इस ऑर्डर पर आपको {n} पॉइंट मिलेंगे।"
+    },
+    "Gemstone advice": {
+      "en": "Gemstone advice",
+      "hi": "रत्न संबंधी सलाह"
+    },
+    "रत्न संबंधी सलाह": {
+      "en": "Gemstone advice",
+      "hi": "रत्न संबंधी सलाह"
+    },
+    "Please consult your astrologer before wearing a gemstone. Gemstones are energized and fitted for you, so returns are accepted only for a damaged, wrong or certificate-mismatched stone.": {
+      "en": "Please consult your astrologer before wearing a gemstone. Gemstones are energized and fitted for you, so returns are accepted only for a damaged, wrong or certificate-mismatched stone.",
+      "hi": "रत्न धारण करने से पहले कृपया अपने ज्योतिषी से परामर्श करें। रत्न आपके लिए अभिमंत्रित व तैयार किए जाते हैं, इसलिए वापसी केवल क्षतिग्रस्त, गलत या प्रमाणपत्र से भिन्न रत्न पर मान्य है।"
+    },
+    "रत्न धारण करने से पहले कृपया अपने ज्योतिषी से परामर्श करें। रत्न आपके लिए अभिमंत्रित व तैयार किए जाते हैं, इसलिए वापसी केवल क्षतिग्रस्त, गलत या प्रमाणपत्र से भिन्न रत्न पर मान्य है।": {
+      "en": "Please consult your astrologer before wearing a gemstone. Gemstones are energized and fitted for you, so returns are accepted only for a damaged, wrong or certificate-mismatched stone.",
+      "hi": "रत्न धारण करने से पहले कृपया अपने ज्योतिषी से परामर्श करें। रत्न आपके लिए अभिमंत्रित व तैयार किए जाते हैं, इसलिए वापसी केवल क्षतिग्रस्त, गलत या प्रमाणपत्र से भिन्न रत्न पर मान्य है।"
+    },
+    "I have consulted my astrologer and I accept the return policy for gemstones.": {
+      "en": "I have consulted my astrologer and I accept the return policy for gemstones.",
+      "hi": "मैंने अपने ज्योतिषी से परामर्श कर लिया है और रत्न की वापसी नीति स्वीकार करता/करती हूँ।"
+    },
+    "मैंने अपने ज्योतिषी से परामर्श कर लिया है और रत्न की वापसी नीति स्वीकार करता/करती हूँ।": {
+      "en": "I have consulted my astrologer and I accept the return policy for gemstones.",
+      "hi": "मैंने अपने ज्योतिषी से परामर्श कर लिया है और रत्न की वापसी नीति स्वीकार करता/करती हूँ।"
+    },
+    "Seva packages": {
+      "en": "Seva packages",
+      "hi": "सेवा पैकेज"
+    },
+    "सेवा पैकेज": {
+      "en": "Seva packages",
+      "hi": "सेवा पैकेज"
+    },
+    "Book repeated sevas once, at a discount. Each session is scheduled on its date.": {
+      "en": "Book repeated sevas once, at a discount. Each session is scheduled on its date.",
+      "hi": "बार-बार होने वाली सेवाएं एक बार में, छूट के साथ बुक करें। हर सत्र अपनी तारीख पर निर्धारित होता है।"
+    },
+    "बार-बार होने वाली सेवाएं एक बार में, छूट के साथ बुक करें। हर सत्र अपनी तारीख पर निर्धारित होता है।": {
+      "en": "Book repeated sevas once, at a discount. Each session is scheduled on its date.",
+      "hi": "बार-बार होने वाली सेवाएं एक बार में, छूट के साथ बुक करें। हर सत्र अपनी तारीख पर निर्धारित होता है।"
+    },
+    "{n} sessions": {
+      "en": "{n} sessions",
+      "hi": "{n} सत्र"
+    },
+    "{n} सत्र": {
+      "en": "{n} sessions",
+      "hi": "{n} सत्र"
+    },
+    "Choose": {
+      "en": "Choose",
+      "hi": "चुनें"
+    },
+    "चुनें": {
+      "en": "Choose",
+      "hi": "चुनें"
+    },
+    "First session on *": {
+      "en": "First session on *",
+      "hi": "पहला सत्र दिनांक *"
+    },
+    "पहला सत्र दिनांक *": {
+      "en": "First session on *",
+      "hi": "पहला सत्र दिनांक *"
+    },
+    "Your session dates": {
+      "en": "Your session dates",
+      "hi": "आपके सत्र की तारीखें"
+    },
+    "आपके सत्र की तारीखें": {
+      "en": "Your session dates",
+      "hi": "आपके सत्र की तारीखें"
+    },
+    "Price without package": {
+      "en": "Price without package",
+      "hi": "पैकेज के बिना मूल्य"
+    },
+    "पैकेज के बिना मूल्य": {
+      "en": "Price without package",
+      "hi": "पैकेज के बिना मूल्य"
+    },
+    "Buy package": {
+      "en": "Buy package",
+      "hi": "पैकेज खरीदें"
+    },
+    "पैकेज खरीदें": {
+      "en": "Buy package",
+      "hi": "पैकेज खरीदें"
+    },
+    "Package booked: {n} sessions scheduled": {
+      "en": "Package booked: {n} sessions scheduled",
+      "hi": "पैकेज बुक हुआ: {n} सत्र निर्धारित"
+    },
+    "पैकेज बुक हुआ: {n} सत्र निर्धारित": {
+      "en": "Package booked: {n} sessions scheduled",
+      "hi": "पैकेज बुक हुआ: {n} सत्र निर्धारित"
+    },
+    "Package session": {
+      "en": "Package session",
+      "hi": "पैकेज का सत्र"
+    },
+    "पैकेज का सत्र": {
+      "en": "Package session",
+      "hi": "पैकेज का सत्र"
+    },
+    "Return requested": {
+      "en": "Return requested",
+      "hi": "वापसी अनुरोधित"
+    },
+    "वापसी अनुरोधित": {
+      "en": "Return requested",
+      "hi": "वापसी अनुरोधित"
+    },
+    "saved {amount}": {
+      "en": "saved {amount}",
+      "hi": "{amount} की बचत"
+    },
+    "{amount} की बचत": {
+      "en": "saved {amount}",
+      "hi": "{amount} की बचत"
+    },
+    "Track": {
+      "en": "Track",
+      "hi": "ट्रैक करें"
+    },
+    "ट्रैक करें": {
+      "en": "Track",
+      "hi": "ट्रैक करें"
+    },
+    "Track your order": {
+      "en": "Track your order",
+      "hi": "अपना ऑर्डर ट्रैक करें"
+    },
+    "अपना ऑर्डर ट्रैक करें": {
+      "en": "Track your order",
+      "hi": "अपना ऑर्डर ट्रैक करें"
+    },
+    "Courier": {
+      "en": "Courier",
+      "hi": "कूरियर"
+    },
+    "कूरियर": {
+      "en": "Courier",
+      "hi": "कूरियर"
+    },
+    "Track on India Post": {
+      "en": "Track on India Post",
+      "hi": "इंडिया पोस्ट पर ट्रैक करें"
+    },
+    "इंडिया पोस्ट पर ट्रैक करें": {
+      "en": "Track on India Post",
+      "hi": "इंडिया पोस्ट पर ट्रैक करें"
+    },
+    "SpeedPost scans are shown on the India Post website with your tracking ID.": {
+      "en": "SpeedPost scans are shown on the India Post website with your tracking ID.",
+      "hi": "स्पीड पोस्ट की स्कैन जानकारी आपकी ट्रैकिंग आईडी से इंडिया पोस्ट की वेबसाइट पर दिखती है।"
+    },
+    "स्पीड पोस्ट की स्कैन जानकारी आपकी ट्रैकिंग आईडी से इंडिया पोस्ट की वेबसाइट पर दिखती है।": {
+      "en": "SpeedPost scans are shown on the India Post website with your tracking ID.",
+      "hi": "स्पीड पोस्ट की स्कैन जानकारी आपकी ट्रैकिंग आईडी से इंडिया पोस्ट की वेबसाइट पर दिखती है।"
+    },
+    "Return": {
+      "en": "Return",
+      "hi": "वापसी"
+    },
+    "वापसी": {
+      "en": "Returns",
+      "hi": "वापसी"
+    },
+    "Request a return": {
+      "en": "Request a return",
+      "hi": "वापसी का अनुरोध"
+    },
+    "वापसी का अनुरोध": {
+      "en": "Request a return",
+      "hi": "वापसी का अनुरोध"
+    },
+    "Returns are accepted only for damaged or wrong items inside the return window shown on the product page.": {
+      "en": "Returns are accepted only for damaged or wrong items inside the return window shown on the product page.",
+      "hi": "वापसी केवल क्षतिग्रस्त या गलत सामग्री पर, सामग्री पेज पर दी गई समय-सीमा के भीतर मान्य है।"
+    },
+    "वापसी केवल क्षतिग्रस्त या गलत सामग्री पर, सामग्री पेज पर दी गई समय-सीमा के भीतर मान्य है।": {
+      "en": "Returns are accepted only for damaged or wrong items inside the return window shown on the product page.",
+      "hi": "वापसी केवल क्षतिग्रस्त या गलत सामग्री पर, सामग्री पेज पर दी गई समय-सीमा के भीतर मान्य है।"
+    },
+    "What is wrong with the item? *": {
+      "en": "What is wrong with the item? *",
+      "hi": "सामग्री में क्या समस्या है? *"
+    },
+    "सामग्री में क्या समस्या है? *": {
+      "en": "What is wrong with the item? *",
+      "hi": "सामग्री में क्या समस्या है? *"
+    },
+    "Send request": {
+      "en": "Send request",
+      "hi": "अनुरोध भेजें"
+    },
+    "अनुरोध भेजें": {
+      "en": "Send request",
+      "hi": "अनुरोध भेजें"
+    },
+    "Return request sent. We will contact you.": {
+      "en": "Return request sent. We will contact you.",
+      "hi": "वापसी का अनुरोध भेज दिया गया। हम आपसे संपर्क करेंगे।"
+    },
+    "वापसी का अनुरोध भेज दिया गया। हम आपसे संपर्क करेंगे।": {
+      "en": "Return request sent. We will contact you.",
+      "hi": "वापसी का अनुरोध भेज दिया गया। हम आपसे संपर्क करेंगे।"
+    },
+    "From": {
+      "en": "From",
+      "hi": "शुरुआत"
+    },
+    "शुरुआत": {
+      "en": "From",
+      "hi": "शुरुआत"
+    },
+    "Please choose the options on the product page.": {
+      "en": "Please choose the options on the product page.",
+      "hi": "कृपया सामग्री पेज पर विकल्प चुनें।"
+    },
+    "कृपया सामग्री पेज पर विकल्प चुनें।": {
+      "en": "Please choose the options on the product page.",
+      "hi": "कृपया सामग्री पेज पर विकल्प चुनें।"
+    },
+    "Choose options": {
+      "en": "Choose options",
+      "hi": "विकल्प चुनें"
+    },
+    "विकल्प चुनें": {
+      "en": "Choose options",
+      "hi": "विकल्प चुनें"
+    },
+    "Astro Mall": {
+      "en": "Astro Mall",
+      "hi": "एस्ट्रो मॉल"
+    },
+    "एस्ट्रो मॉल": {
+      "en": "Astro Mall",
+      "hi": "एस्ट्रो मॉल"
+    },
+    "This item is not available": {
+      "en": "This item is not available",
+      "hi": "यह सामग्री उपलब्ध नहीं है"
+    },
+    "यह सामग्री उपलब्ध नहीं है": {
+      "en": "This item is not available",
+      "hi": "यह सामग्री उपलब्ध नहीं है"
+    },
+    "Back to Astro Mall": {
+      "en": "Back to Astro Mall",
+      "hi": "एस्ट्रो मॉल पर लौटें"
+    },
+    "एस्ट्रो मॉल पर लौटें": {
+      "en": "Back to Astro Mall",
+      "hi": "एस्ट्रो मॉल पर लौटें"
+    },
+    "Verified seller": {
+      "en": "Verified seller",
+      "hi": "सत्यापित विक्रेता"
+    },
+    "सत्यापित विक्रेता": {
+      "en": "Verified seller",
+      "hi": "सत्यापित विक्रेता"
+    },
+    "In stock": {
+      "en": "In stock",
+      "hi": "स्टॉक में उपलब्ध"
+    },
+    "स्टॉक में उपलब्ध": {
+      "en": "In stock",
+      "hi": "स्टॉक में उपलब्ध"
+    },
+    "Energized in your name, then dispatched by SpeedPost to your address.": {
+      "en": "Energized in your name, then dispatched by SpeedPost to your address.",
+      "hi": "आपके नाम से अभिमंत्रित होकर स्पीड पोस्ट से आपके पते पर भेजा जाता है।"
+    },
+    "आपके नाम से अभिमंत्रित होकर स्पीड पोस्ट से आपके पते पर भेजा जाता है।": {
+      "en": "Energized in your name, then dispatched by SpeedPost to your address.",
+      "hi": "आपके नाम से अभिमंत्रित होकर स्पीड पोस्ट से आपके पते पर भेजा जाता है।"
+    },
+    "Returns for damaged or wrong items within {days} days of delivery.": {
+      "en": "Returns for damaged or wrong items within {days} days of delivery.",
+      "hi": "क्षतिग्रस्त या गलत सामग्री की वापसी डिलीवरी के {days} दिन के भीतर।"
+    },
+    "क्षतिग्रस्त या गलत सामग्री की वापसी डिलीवरी के {days} दिन के भीतर।": {
+      "en": "Returns for damaged or wrong items within {days} days of delivery.",
+      "hi": "क्षतिग्रस्त या गलत सामग्री की वापसी डिलीवरी के {days} दिन के भीतर।"
+    },
+    "About this item": {
+      "en": "About this item",
+      "hi": "इस सामग्री के बारे में"
+    },
+    "इस सामग्री के बारे में": {
+      "en": "About this item",
+      "hi": "इस सामग्री के बारे में"
+    },
+    "Lab certificate": {
+      "en": "Lab certificate",
+      "hi": "लैब प्रमाणपत्र"
+    },
+    "लैब प्रमाणपत्र": {
+      "en": "Lab certificate",
+      "hi": "लैब प्रमाणपत्र"
+    },
+    "Certificate verified": {
+      "en": "Certificate verified",
+      "hi": "प्रमाणपत्र सत्यापित"
+    },
+    "प्रमाणपत्र सत्यापित": {
+      "en": "Certificate verified",
+      "hi": "प्रमाणपत्र सत्यापित"
+    },
+    "Lab": {
+      "en": "Lab",
+      "hi": "लैब"
+    },
+    "लैब": {
+      "en": "Lab",
+      "hi": "लैब"
+    },
+    "Certificate no.": {
+      "en": "Certificate no.",
+      "hi": "प्रमाणपत्र क्रमांक"
+    },
+    "प्रमाणपत्र क्रमांक": {
+      "en": "Certificate number",
+      "hi": "प्रमाणपत्र क्रमांक"
+    },
+    "Verification code": {
+      "en": "Verification code",
+      "hi": "सत्यापन कोड"
+    },
+    "सत्यापन कोड": {
+      "en": "Verification code",
+      "hi": "सत्यापन कोड"
+    },
+    "Verify online": {
+      "en": "Verify online",
+      "hi": "ऑनलाइन सत्यापित करें"
+    },
+    "ऑनलाइन सत्यापित करें": {
+      "en": "Verify online",
+      "hi": "ऑनलाइन सत्यापित करें"
+    },
+    "The seller has not provided a verified lab certificate for this item.": {
+      "en": "The seller has not provided a verified lab certificate for this item.",
+      "hi": "विक्रेता ने इस सामग्री का सत्यापित लैब प्रमाणपत्र नहीं दिया है।"
+    },
+    "विक्रेता ने इस सामग्री का सत्यापित लैब प्रमाणपत्र नहीं दिया है।": {
+      "en": "The seller has not provided a verified lab certificate for this item.",
+      "hi": "विक्रेता ने इस सामग्री का सत्यापित लैब प्रमाणपत्र नहीं दिया है।"
+    },
+    "Returns & refunds": {
+      "en": "Returns & refunds",
+      "hi": "वापसी व रिफंड"
+    },
+    "वापसी व रिफंड": {
+      "en": "Returns & refunds",
+      "hi": "वापसी व रिफंड"
+    },
+    "based on {n} reviews": {
+      "en": "based on {n} reviews",
+      "hi": "{n} समीक्षाओं के आधार पर"
+    },
+    "{n} समीक्षाओं के आधार पर": {
+      "en": "based on {n} reviews",
+      "hi": "{n} समीक्षाओं के आधार पर"
+    },
+    "You may also like": {
+      "en": "You may also like",
+      "hi": "आपको ये भी पसंद आ सकते हैं"
+    },
+    "आपको ये भी पसंद आ सकते हैं": {
+      "en": "You may also like",
+      "hi": "आपको ये भी पसंद आ सकते हैं"
+    },
+    "Mandir Seva": {
+      "en": "Mandir Seva",
+      "hi": "मंदिर सेवा"
+    },
+    "मंदिर सेवा": {
+      "en": "Mandir Seva",
+      "hi": "मंदिर सेवा"
+    },
+    "Temple not found": {
+      "en": "Temple not found",
+      "hi": "तीर्थ नहीं मिला"
+    },
+    "तीर्थ नहीं मिला": {
+      "en": "Temple not found",
+      "hi": "तीर्थ नहीं मिला"
+    },
+    "Back to Mandir Seva": {
+      "en": "Back to Mandir Seva",
+      "hi": "मंदिर सेवा पर लौटें"
+    },
+    "मंदिर सेवा पर लौटें": {
+      "en": "Back to Mandir Seva",
+      "hi": "मंदिर सेवा पर लौटें"
+    },
+    "Book a seva": {
+      "en": "Book a seva",
+      "hi": "सेवा बुक करें"
+    },
+    "सेवा बुक करें": {
+      "en": "Book seva",
+      "hi": "सेवा बुक करें"
+    },
+    "About this temple": {
+      "en": "About this temple",
+      "hi": "इस तीर्थ के बारे में"
+    },
+    "इस तीर्थ के बारे में": {
+      "en": "About this temple",
+      "hi": "इस तीर्थ के बारे में"
+    },
+    "Live darshan": {
+      "en": "Live darshan",
+      "hi": "लाइव दर्शन"
+    },
+    "लाइव दर्शन": {
+      "en": "Live darshan",
+      "hi": "लाइव दर्शन"
+    },
+    "A live darshan link has not been added for this temple yet.": {
+      "en": "A live darshan link has not been added for this temple yet.",
+      "hi": "इस तीर्थ का लाइव दर्शन लिंक अभी जोड़ा नहीं गया है।"
+    },
+    "इस तीर्थ का लाइव दर्शन लिंक अभी जोड़ा नहीं गया है।": {
+      "en": "A live darshan link has not been added for this temple yet.",
+      "hi": "इस तीर्थ का लाइव दर्शन लिंक अभी जोड़ा नहीं गया है।"
+    },
+    "Sevas you can book": {
+      "en": "Sevas you can book",
+      "hi": "बुक की जा सकने वाली सेवाएं"
+    },
+    "बुक की जा सकने वाली सेवाएं": {
+      "en": "Sevas you can book",
+      "hi": "बुक की जा सकने वाली सेवाएं"
+    },
+    "Video of your sankalp": {
+      "en": "Video of your sankalp",
+      "hi": "संकल्प का वीडियो"
+    },
+    "संकल्प का वीडियो": {
+      "en": "Video of your sankalp",
+      "hi": "संकल्प का वीडियो"
+    },
+    "prasad delivery available (+{fee})": {
+      "en": "prasad delivery available (+{fee})",
+      "hi": "प्रसाद डिलीवरी उपलब्ध (+{fee})"
+    },
+    "प्रसाद डिलीवरी उपलब्ध (+{fee})": {
+      "en": "prasad delivery available (+{fee})",
+      "hi": "प्रसाद डिलीवरी उपलब्ध (+{fee})"
+    },
+    "Aarti timings": {
+      "en": "Aarti timings",
+      "hi": "आरती का समय"
+    },
+    "आरती का समय": {
+      "en": "Aarti timings",
+      "hi": "आरती का समय"
+    },
+    "Timings are set by the temple and can change on festivals.": {
+      "en": "Timings are set by the temple and can change on festivals.",
+      "hi": "समय मंदिर द्वारा तय होते हैं और त्योहारों पर बदल सकते हैं।"
+    },
+    "समय मंदिर द्वारा तय होते हैं और त्योहारों पर बदल सकते हैं।": {
+      "en": "Timings are set by the temple and can change on festivals.",
+      "hi": "समय मंदिर द्वारा तय होते हैं और त्योहारों पर बदल सकते हैं।"
+    },
+    "Aarti timings have not been added for this temple yet.": {
+      "en": "Aarti timings have not been added for this temple yet.",
+      "hi": "इस तीर्थ की आरती का समय अभी जोड़ा नहीं गया है।"
+    },
+    "इस तीर्थ की आरती का समय अभी जोड़ा नहीं गया है।": {
+      "en": "Aarti timings have not been added for this temple yet.",
+      "hi": "इस तीर्थ की आरती का समय अभी जोड़ा नहीं गया है।"
+    },
+    "Priests": {
+      "en": "Priests",
+      "hi": "पुरोहित"
+    },
+    "Priest profiles for this temple will appear here once they are verified.": {
+      "en": "Priest profiles for this temple will appear here once they are verified.",
+      "hi": "इस तीर्थ के पुरोहितों की जानकारी सत्यापन के बाद यहाँ दिखेगी।"
+    },
+    "इस तीर्थ के पुरोहितों की जानकारी सत्यापन के बाद यहाँ दिखेगी।": {
+      "en": "Priest profiles for this temple will appear here once they are verified.",
+      "hi": "इस तीर्थ के पुरोहितों की जानकारी सत्यापन के बाद यहाँ दिखेगी।"
+    },
+    "How it works": {
+      "en": "How it works",
+      "hi": "यह कैसे होता है"
+    },
+    "यह कैसे होता है": {
+      "en": "How it works",
+      "hi": "यह कैसे होता है"
+    },
+    "Choose a seva and give your name, gotra and sankalp.": {
+      "en": "Choose a seva and give your name, gotra and sankalp.",
+      "hi": "सेवा चुनें और अपना नाम, गोत्र व संकल्प दें।"
+    },
+    "सेवा चुनें और अपना नाम, गोत्र व संकल्प दें।": {
+      "en": "Choose a seva and give your name, gotra and sankalp.",
+      "hi": "सेवा चुनें और अपना नाम, गोत्र व संकल्प दें।"
+    },
+    "The priest performs the seva on the scheduled day.": {
+      "en": "The priest performs the seva on the scheduled day.",
+      "hi": "पुरोहित निर्धारित दिन पर सेवा संपन्न करते हैं।"
+    },
+    "पुरोहित निर्धारित दिन पर सेवा संपन्न करते हैं।": {
+      "en": "The priest performs the seva on the scheduled day.",
+      "hi": "पुरोहित निर्धारित दिन पर सेवा संपन्न करते हैं।"
+    },
+    "You get the video of your sankalp in My Bookings.": {
+      "en": "You get the video of your sankalp in My Bookings.",
+      "hi": "आपको संकल्प का वीडियो \"मेरी बुकिंग\" में मिलता है।"
+    },
+    "आपको संकल्प का वीडियो \"मेरी बुकिंग\" में मिलता है।": {
+      "en": "You get the video of your sankalp in My Bookings.",
+      "hi": "आपको संकल्प का वीडियो \"मेरी बुकिंग\" में मिलता है।"
+    },
+    "Download the seva certificate; prasad is sent if booked.": {
+      "en": "Download the seva certificate; prasad is sent if booked.",
+      "hi": "सेवा का प्रमाण पत्र डाउनलोड करें; प्रसाद बुक किया हो तो भेजा जाता है।"
+    },
+    "सेवा का प्रमाण पत्र डाउनलोड करें; प्रसाद बुक किया हो तो भेजा जाता है।": {
+      "en": "Download the seva certificate; prasad is sent if booked.",
+      "hi": "सेवा का प्रमाण पत्र डाउनलोड करें; प्रसाद बुक किया हो तो भेजा जाता है।"
+    },
+    "My Rewards": {
+      "en": "My Rewards",
+      "hi": "मेरे रिवॉर्ड"
+    },
+    "मेरे रिवॉर्ड": {
+      "en": "My Rewards",
+      "hi": "मेरे रिवॉर्ड"
+    },
+    "Sign in to see your points, membership and offers.": {
+      "en": "Sign in to see your points, membership and offers.",
+      "hi": "अपने पॉइंट, सदस्यता और ऑफ़र देखने के लिए साइन इन करें।"
+    },
+    "अपने पॉइंट, सदस्यता और ऑफ़र देखने के लिए साइन इन करें।": {
+      "en": "Sign in to see your points, membership and offers.",
+      "hi": "अपने पॉइंट, सदस्यता और ऑफ़र देखने के लिए साइन इन करें।"
+    },
+    "Loyalty points": {
+      "en": "Loyalty points",
+      "hi": "लॉयल्टी पॉइंट"
+    },
+    "लॉयल्टी पॉइंट": {
+      "en": "Loyalty points",
+      "hi": "लॉयल्टी पॉइंट"
+    },
+    "worth {amount}": {
+      "en": "worth {amount}",
+      "hi": "{amount} के बराबर"
+    },
+    "{amount} के बराबर": {
+      "en": "worth {amount}",
+      "hi": "{amount} के बराबर"
+    },
+    "Premium membership": {
+      "en": "Premium membership",
+      "hi": "प्रीमियम सदस्यता"
+    },
+    "प्रीमियम सदस्यता": {
+      "en": "Premium membership",
+      "hi": "प्रीमियम सदस्यता"
+    },
+    "Active": {
+      "en": "Active",
+      "hi": "सक्रिय"
+    },
+    "Not a member": {
+      "en": "Not a member",
+      "hi": "सदस्य नहीं"
+    },
+    "सदस्य नहीं": {
+      "en": "Not a member",
+      "hi": "सदस्य नहीं"
+    },
+    "valid till {date}": {
+      "en": "valid till {date}",
+      "hi": "{date} तक मान्य"
+    },
+    "{date} तक मान्य": {
+      "en": "valid till {date}",
+      "hi": "{date} तक मान्य"
+    },
+    "Join below for extra benefits": {
+      "en": "Join below for extra benefits",
+      "hi": "अतिरिक्त लाभ के लिए नीचे जुड़ें"
+    },
+    "अतिरिक्त लाभ के लिए नीचे जुड़ें": {
+      "en": "Join below for extra benefits",
+      "hi": "अतिरिक्त लाभ के लिए नीचे जुड़ें"
+    },
+    "Your referral code": {
+      "en": "Your referral code",
+      "hi": "आपका रेफरल कोड"
+    },
+    "आपका रेफरल कोड": {
+      "en": "Your referral code",
+      "hi": "आपका रेफरल कोड"
+    },
+    "Invite friends: both get {n} points": {
+      "en": "Invite friends: both get {n} points",
+      "hi": "मित्रों को बुलाएं: दोनों को {n} पॉइंट"
+    },
+    "मित्रों को बुलाएं: दोनों को {n} पॉइंट": {
+      "en": "Invite friends: both get {n} points",
+      "hi": "मित्रों को बुलाएं: दोनों को {n} पॉइंट"
+    },
+    "{n}% extra discount on Astro Mall": {
+      "en": "{n}% extra discount on Astro Mall",
+      "hi": "एस्ट्रो मॉल पर {n}% अतिरिक्त छूट"
+    },
+    "एस्ट्रो मॉल पर {n}% अतिरिक्त छूट": {
+      "en": "{n}% extra discount on Astro Mall",
+      "hi": "एस्ट्रो मॉल पर {n}% अतिरिक्त छूट"
+    },
+    "Free prasad delivery on sevas": {
+      "en": "Free prasad delivery on sevas",
+      "hi": "सेवाओं पर प्रसाद डिलीवरी निःशुल्क"
+    },
+    "सेवाओं पर प्रसाद डिलीवरी निःशुल्क": {
+      "en": "Free prasad delivery on sevas",
+      "hi": "सेवाओं पर प्रसाद डिलीवरी निःशुल्क"
+    },
+    "Double loyalty points on every order and seva": {
+      "en": "Double loyalty points on every order and seva",
+      "hi": "हर ऑर्डर व सेवा पर दोगुने लॉयल्टी पॉइंट"
+    },
+    "हर ऑर्डर व सेवा पर दोगुने लॉयल्टी पॉइंट": {
+      "en": "Double loyalty points on every order and seva",
+      "hi": "हर ऑर्डर व सेवा पर दोगुने लॉयल्टी पॉइंट"
+    },
+    "Monthly": {
+      "en": "Monthly",
+      "hi": "मासिक"
+    },
+    "मासिक": {
+      "en": "Monthly",
+      "hi": "मासिक"
+    },
+    "Yearly": {
+      "en": "Yearly",
+      "hi": "वार्षिक"
+    },
+    "वार्षिक": {
+      "en": "Yearly",
+      "hi": "वार्षिक"
+    },
+    "{n} days": {
+      "en": "{n} days",
+      "hi": "{n} दिन"
+    },
+    "{n} दिन": {
+      "en": "{n} days",
+      "hi": "{n} दिन"
+    },
+    "Join": {
+      "en": "Join",
+      "hi": "जुड़ें"
+    },
+    "जुड़ें": {
+      "en": "Join",
+      "hi": "जुड़ें"
+    },
+    "Extend": {
+      "en": "Extend",
+      "hi": "बढ़ाएं"
+    },
+    "बढ़ाएं": {
+      "en": "Extend",
+      "hi": "बढ़ाएं"
+    },
+    "Buy the {plan} plan from your wallet?": {
+      "en": "Buy the {plan} plan from your wallet?",
+      "hi": "{plan} योजना वॉलेट से खरीदें?"
+    },
+    "{plan} योजना वॉलेट से खरीदें?": {
+      "en": "Buy the {plan} plan from your wallet?",
+      "hi": "{plan} योजना वॉलेट से खरीदें?"
+    },
+    "Welcome to Premium!": {
+      "en": "Welcome to Premium!",
+      "hi": "प्रीमियम में आपका स्वागत है!"
+    },
+    "प्रीमियम में आपका स्वागत है!": {
+      "en": "Welcome to Premium!",
+      "hi": "प्रीमियम में आपका स्वागत है!"
+    },
+    "Refer & earn": {
+      "en": "Refer & earn",
+      "hi": "रेफर करें और कमाएं"
+    },
+    "रेफर करें और कमाएं": {
+      "en": "Refer & earn",
+      "hi": "रेफर करें और कमाएं"
+    },
+    "When a friend you invite completes their first order or seva, you both get {n} points.": {
+      "en": "When a friend you invite completes their first order or seva, you both get {n} points.",
+      "hi": "आपका बुलाया मित्र जब अपना पहला ऑर्डर या सेवा पूरी करता है, तो आप दोनों को {n} पॉइंट मिलते हैं।"
+    },
+    "आपका बुलाया मित्र जब अपना पहला ऑर्डर या सेवा पूरी करता है, तो आप दोनों को {n} पॉइंट मिलते हैं।": {
+      "en": "When a friend you invite completes their first order or seva, you both get {n} points.",
+      "hi": "आपका बुलाया मित्र जब अपना पहला ऑर्डर या सेवा पूरी करता है, तो आप दोनों को {n} पॉइंट मिलते हैं।"
+    },
+    "Copy": {
+      "en": "Copy",
+      "hi": "कॉपी"
+    },
+    "कॉपी": {
+      "en": "Copy",
+      "hi": "कॉपी"
+    },
+    "Code copied": {
+      "en": "Code copied",
+      "hi": "कोड कॉपी हुआ"
+    },
+    "कोड कॉपी हो गया": {
+      "en": "Code copied",
+      "hi": "कोड कॉपी हो गया"
+    },
+    "Join me on Astro Jyotish. Use my code {code} when you sign up.": {
+      "en": "Join me on Astro Jyotish. Use my code {code} when you sign up.",
+      "hi": "एस्ट्रो ज्योतिष पर मेरे साथ जुड़ें। साइन अप के समय मेरा कोड {code} डालें।"
+    },
+    "एस्ट्रो ज्योतिष पर मेरे साथ जुड़ें। साइन अप के समय मेरा कोड {code} डालें।": {
+      "en": "Join me on Astro Jyotish. Use my code {code} when you sign up.",
+      "hi": "एस्ट्रो ज्योतिष पर मेरे साथ जुड़ें। साइन अप के समय मेरा कोड {code} डालें।"
+    },
+    "Friend's referral code": {
+      "en": "Friend's referral code",
+      "hi": "मित्र का रेफरल कोड"
+    },
+    "मित्र का रेफरल कोड": {
+      "en": "Friend's referral code",
+      "hi": "मित्र का रेफरल कोड"
+    },
+    "Have a code? Add it before your first order.": {
+      "en": "Have a code? Add it before your first order.",
+      "hi": "कोड है? पहले ऑर्डर से पहले यहाँ जोड़ें।"
+    },
+    "कोड है? पहले ऑर्डर से पहले यहाँ जोड़ें।": {
+      "en": "Have a code? Add it before your first order.",
+      "hi": "कोड है? पहले ऑर्डर से पहले यहाँ जोड़ें।"
+    },
+    "A referral code is applied to your account.": {
+      "en": "A referral code is applied to your account.",
+      "hi": "आपके खाते में रेफरल कोड लग चुका है।"
+    },
+    "आपके खाते में रेफरल कोड लग चुका है।": {
+      "en": "A referral code is applied to your account.",
+      "hi": "आपके खाते में रेफरल कोड लग चुका है।"
+    },
+    "Coupons for you": {
+      "en": "Coupons for you",
+      "hi": "आपके लिए कूपन"
+    },
+    "आपके लिए कूपन": {
+      "en": "Coupons for you",
+      "hi": "आपके लिए कूपन"
+    },
+    "No coupons are running right now.": {
+      "en": "No coupons are running right now.",
+      "hi": "अभी कोई कूपन उपलब्ध नहीं है।"
+    },
+    "अभी कोई कूपन उपलब्ध नहीं है।": {
+      "en": "No coupons are running right now.",
+      "hi": "अभी कोई कूपन उपलब्ध नहीं है।"
+    },
+    "Mall & seva": {
+      "en": "Mall & seva",
+      "hi": "मॉल व सेवा"
+    },
+    "मॉल व सेवा": {
+      "en": "Mall & seva",
+      "hi": "मॉल व सेवा"
+    },
+    "Birthday & anniversary reminders": {
+      "en": "Birthday & anniversary reminders",
+      "hi": "जन्मदिन व वर्षगांठ के रिमाइंडर"
+    },
+    "जन्मदिन व वर्षगांठ के रिमाइंडर": {
+      "en": "Birthday & anniversary reminders",
+      "hi": "जन्मदिन व वर्षगांठ के रिमाइंडर"
+    },
+    "We remind you a week before so you can book a seva in their name.": {
+      "en": "We remind you a week before so you can book a seva in their name.",
+      "hi": "हम एक सप्ताह पहले याद दिलाते हैं ताकि आप उनके नाम से सेवा बुक कर सकें।"
+    },
+    "हम एक सप्ताह पहले याद दिलाते हैं ताकि आप उनके नाम से सेवा बुक कर सकें।": {
+      "en": "We remind you a week before so you can book a seva in their name.",
+      "hi": "हम एक सप्ताह पहले याद दिलाते हैं ताकि आप उनके नाम से सेवा बुक कर सकें।"
+    },
+    "Person's name": {
+      "en": "Person's name",
+      "hi": "व्यक्ति का नाम"
+    },
+    "व्यक्ति का नाम": {
+      "en": "Person's name",
+      "hi": "व्यक्ति का नाम"
+    },
+    "Birthday": {
+      "en": "Birthday",
+      "hi": "जन्मदिन"
+    },
+    "जन्मदिन": {
+      "en": "Birthday",
+      "hi": "जन्मदिन"
+    },
+    "Anniversary": {
+      "en": "Anniversary",
+      "hi": "वर्षगांठ"
+    },
+    "वर्षगांठ": {
+      "en": "Anniversary",
+      "hi": "वर्षगांठ"
+    },
+    "Add reminder": {
+      "en": "Add reminder",
+      "hi": "रिमाइंडर जोड़ें"
+    },
+    "रिमाइंडर जोड़ें": {
+      "en": "Add reminder",
+      "hi": "रिमाइंडर जोड़ें"
+    },
+    "Reminder saved": {
+      "en": "Reminder saved",
+      "hi": "रिमाइंडर सहेज लिया गया"
+    },
+    "रिमाइंडर सहेज लिया गया": {
+      "en": "Reminder saved",
+      "hi": "रिमाइंडर सहेज लिया गया"
+    },
+    "Book seva": {
+      "en": "Book seva",
+      "hi": "सेवा बुक करें"
+    },
+    "Points history": {
+      "en": "Points history",
+      "hi": "पॉइंट का इतिहास"
+    },
+    "पॉइंट का इतिहास": {
+      "en": "Points history",
+      "hi": "पॉइंट का इतिहास"
+    },
+    "You will see your points here after your first order or seva.": {
+      "en": "You will see your points here after your first order or seva.",
+      "hi": "पहले ऑर्डर या सेवा के बाद आपके पॉइंट यहाँ दिखेंगे।"
+    },
+    "पहले ऑर्डर या सेवा के बाद आपके पॉइंट यहाँ दिखेंगे।": {
+      "en": "You will see your points here after your first order or seva.",
+      "hi": "पहले ऑर्डर या सेवा के बाद आपके पॉइंट यहाँ दिखेंगे।"
+    },
+    "Order delivered": {
+      "en": "Order delivered",
+      "hi": "ऑर्डर मिला"
+    },
+    "ऑर्डर मिला": {
+      "en": "Order delivered",
+      "hi": "ऑर्डर मिला"
+    },
+    "Seva completed": {
+      "en": "Seva completed",
+      "hi": "सेवा संपन्न"
+    },
+    "सेवा संपन्न": {
+      "en": "Seva completed",
+      "hi": "सेवा संपन्न"
+    },
+    "Referral bonus": {
+      "en": "Referral bonus",
+      "hi": "रेफरल बोनस"
+    },
+    "रेफरल बोनस": {
+      "en": "Referral bonus",
+      "hi": "रेफरल बोनस"
+    },
+    "Redeemed": {
+      "en": "Redeemed",
+      "hi": "रिडीम हुआ"
+    },
+    "उपयोग किए": {
+      "en": "Redeemed",
+      "hi": "उपयोग किए"
+    },
+    "Refunded": {
+      "en": "Refunded",
+      "hi": "वापस मिले"
+    },
+    "वापस मिले": {
+      "en": "Refunded",
+      "hi": "वापस मिले"
+    },
+    "Seller dashboard": {
+      "en": "Seller dashboard",
+      "hi": "विक्रेता डैशबोर्ड"
+    },
+    "विक्रेता डैशबोर्ड": {
+      "en": "Seller dashboard",
+      "hi": "विक्रेता डैशबोर्ड"
+    },
+    "Sign in to open the seller dashboard.": {
+      "en": "Sign in to open the seller dashboard.",
+      "hi": "विक्रेता डैशबोर्ड के लिए साइन इन करें।"
+    },
+    "विक्रेता डैशबोर्ड के लिए साइन इन करें।": {
+      "en": "Sign in to open the seller dashboard.",
+      "hi": "विक्रेता डैशबोर्ड के लिए साइन इन करें।"
+    },
+    "Become a seller": {
+      "en": "Become a seller",
+      "hi": "विक्रेता बनें"
+    },
+    "विक्रेता बनें": {
+      "en": "Become a seller",
+      "hi": "विक्रेता बनें"
+    },
+    "Tell us about your ashram or shop. After KYC approval you can list items and receive payouts.": {
+      "en": "Tell us about your ashram or shop. After KYC approval you can list items and receive payouts.",
+      "hi": "अपने आश्रम या दुकान की जानकारी दें। KYC स्वीकृत होने के बाद आप सामग्री लिस्ट कर सकते हैं और भुगतान पा सकते हैं।"
+    },
+    "अपने आश्रम या दुकान की जानकारी दें। KYC स्वीकृत होने के बाद आप सामग्री लिस्ट कर सकते हैं और भुगतान पा सकते हैं।": {
+      "en": "Tell us about your ashram or shop. After KYC approval you can list items and receive payouts.",
+      "hi": "अपने आश्रम या दुकान की जानकारी दें। KYC स्वीकृत होने के बाद आप सामग्री लिस्ट कर सकते हैं और भुगतान पा सकते हैं।"
+    },
+    "PAN number": {
+      "en": "PAN number",
+      "hi": "पैन नंबर"
+    },
+    "पैन नंबर": {
+      "en": "PAN number",
+      "hi": "पैन नंबर"
+    },
+    "Save details": {
+      "en": "Save details",
+      "hi": "विवरण सहेजें"
+    },
+    "विवरण सहेजें": {
+      "en": "Save details",
+      "hi": "विवरण सहेजें"
+    },
+    "Saved": {
+      "en": "Saved",
+      "hi": "सहेजा गया"
+    },
+    "सहेज लिया गया": {
+      "en": "Saved",
+      "hi": "सहेज लिया गया"
+    },
+    "Pending review": {
+      "en": "Pending review",
+      "hi": "समीक्षा लंबित"
+    },
+    "Approved": {
+      "en": "Approved",
+      "hi": "स्वीकृत"
+    },
+    "स्वीकृत": {
+      "en": "Approved",
+      "hi": "स्वीकृत"
+    },
+    "Not approved": {
+      "en": "Not approved",
+      "hi": "स्वीकृत नहीं"
+    },
+    "स्वीकृत नहीं": {
+      "en": "Not approved",
+      "hi": "स्वीकृत नहीं"
+    },
+    "Upload your PAN or ID proof (PDF, JPG or PNG) so our team can approve your account.": {
+      "en": "Upload your PAN or ID proof (PDF, JPG or PNG) so our team can approve your account.",
+      "hi": "अपना पैन या पहचान प्रमाण (PDF, JPG या PNG) अपलोड करें ताकि हमारी टीम आपका खाता स्वीकृत कर सके।"
+    },
+    "अपना पैन या पहचान प्रमाण (PDF, JPG या PNG) अपलोड करें ताकि हमारी टीम आपका खाता स्वीकृत कर सके।": {
+      "en": "Upload your PAN or ID proof (PDF, JPG or PNG) so our team can approve your account.",
+      "hi": "अपना पैन या पहचान प्रमाण (PDF, JPG या PNG) अपलोड करें ताकि हमारी टीम आपका खाता स्वीकृत कर सके।"
+    },
+    "Your document is with our team. We will notify you once it is reviewed.": {
+      "en": "Your document is with our team. We will notify you once it is reviewed.",
+      "hi": "आपका दस्तावेज़ हमारी टीम के पास है। समीक्षा होते ही आपको सूचना मिलेगी।"
+    },
+    "आपका दस्तावेज़ हमारी टीम के पास है। समीक्षा होते ही आपको सूचना मिलेगी।": {
+      "en": "Your document is with our team. We will notify you once it is reviewed.",
+      "hi": "आपका दस्तावेज़ हमारी टीम के पास है। समीक्षा होते ही आपको सूचना मिलेगी।"
+    },
+    "Upload document": {
+      "en": "Upload document",
+      "hi": "दस्तावेज़ अपलोड करें"
+    },
+    "दस्तावेज़ अपलोड करें": {
+      "en": "Upload document",
+      "hi": "दस्तावेज़ अपलोड करें"
+    },
+    "Please choose a file first": {
+      "en": "Please choose a file first",
+      "hi": "पहले कोई फ़ाइल चुनें"
+    },
+    "पहले कोई फ़ाइल चुनें": {
+      "en": "Please choose a file first",
+      "hi": "पहले कोई फ़ाइल चुनें"
+    },
+    "Document sent for review": {
+      "en": "Document sent for review",
+      "hi": "दस्तावेज़ समीक्षा के लिए भेजा गया"
+    },
+    "दस्तावेज़ समीक्षा के लिए भेजा गया": {
+      "en": "Document sent for review",
+      "hi": "दस्तावेज़ समीक्षा के लिए भेजा गया"
+    },
+    "Available to withdraw": {
+      "en": "Available to withdraw",
+      "hi": "निकासी हेतु उपलब्ध"
+    },
+    "निकासी हेतु उपलब्ध": {
+      "en": "Available to withdraw",
+      "hi": "निकासी हेतु उपलब्ध"
+    },
+    "net earnings {amount}": {
+      "en": "net earnings {amount}",
+      "hi": "कुल शुद्ध कमाई {amount}"
+    },
+    "कुल शुद्ध कमाई {amount}": {
+      "en": "net earnings {amount}",
+      "hi": "कुल शुद्ध कमाई {amount}"
+    },
+    "Orders to fulfil": {
+      "en": "Orders to fulfil",
+      "hi": "पूरे करने वाले ऑर्डर"
+    },
+    "पूरे करने वाले ऑर्डर": {
+      "en": "Orders to fulfil",
+      "hi": "पूरे करने वाले ऑर्डर"
+    },
+    "energize and dispatch": {
+      "en": "energize and dispatch",
+      "hi": "अभिमंत्रित कर भेजें"
+    },
+    "अभिमंत्रित कर भेजें": {
+      "en": "energize and dispatch",
+      "hi": "अभिमंत्रित कर भेजें"
+    },
+    "Listings": {
+      "en": "Listings",
+      "hi": "लिस्टिंग"
+    },
+    "लिस्टिंग": {
+      "en": "Listings",
+      "hi": "लिस्टिंग"
+    },
+    "items in your catalog": {
+      "en": "items in your catalog",
+      "hi": "आपकी सूची में सामग्री"
+    },
+    "आपकी सूची में सामग्री": {
+      "en": "items in your catalog",
+      "hi": "आपकी सूची में सामग्री"
+    },
+    "Products": {
+      "en": "Products",
+      "hi": "सामग्री"
+    },
+    "Orders": {
+      "en": "Orders",
+      "hi": "ऑर्डर"
+    },
+    "ऑर्डर": {
+      "en": "Orders",
+      "hi": "ऑर्डर"
+    },
+    "Earnings & payouts": {
+      "en": "Earnings & payouts",
+      "hi": "कमाई व भुगतान"
+    },
+    "कमाई व भुगतान": {
+      "en": "Earnings & payouts",
+      "hi": "कमाई व भुगतान"
+    },
+    "प्रोफ़ाइल": {
+      "en": "Profile",
+      "hi": "प्रोफ़ाइल"
+    },
+    "Add product": {
+      "en": "Add product",
+      "hi": "सामग्री जोड़ें"
+    },
+    "सामग्री जोड़ें": {
+      "en": "Add product",
+      "hi": "सामग्री जोड़ें"
+    },
+    "You can add products once your KYC is approved.": {
+      "en": "You can add products once your KYC is approved.",
+      "hi": "KYC स्वीकृत होने के बाद आप सामग्री जोड़ सकेंगे।"
+    },
+    "KYC स्वीकृत होने के बाद आप सामग्री जोड़ सकेंगे।": {
+      "en": "You can add products once your KYC is approved.",
+      "hi": "KYC स्वीकृत होने के बाद आप सामग्री जोड़ सकेंगे।"
+    },
+    "You have not listed anything yet.": {
+      "en": "You have not listed anything yet.",
+      "hi": "आपने अभी कुछ लिस्ट नहीं किया है।"
+    },
+    "आपने अभी कुछ लिस्ट नहीं किया है।": {
+      "en": "You have not listed anything yet.",
+      "hi": "आपने अभी कुछ लिस्ट नहीं किया है।"
+    },
+    "Optional extra photos (up to 5), one at a time.": {
+      "en": "Optional extra photos (up to 5), one at a time.",
+      "hi": "वैकल्पिक अतिरिक्त फ़ोटो (अधिकतम 5), एक-एक करके।"
+    },
+    "वैकल्पिक अतिरिक्त फ़ोटो (अधिकतम 5), एक-एक करके।": {
+      "en": "Optional extra photos (up to 5), one at a time.",
+      "hi": "वैकल्पिक अतिरिक्त फ़ोटो (अधिकतम 5), एक-एक करके।"
+    },
+    "You can add up to 5 extra photos": {
+      "en": "You can add up to 5 extra photos",
+      "hi": "आप अधिकतम 5 अतिरिक्त फ़ोटो जोड़ सकते हैं"
+    },
+    "आप अधिकतम 5 अतिरिक्त फ़ोटो जोड़ सकते हैं": {
+      "en": "You can add up to 5 extra photos",
+      "hi": "आप अधिकतम 5 अतिरिक्त फ़ोटो जोड़ सकते हैं"
+    },
+    "Paused": {
+      "en": "Paused",
+      "hi": "रुकी हुई"
+    },
+    "रुकी हुई": {
+      "en": "Paused",
+      "hi": "रुकी हुई"
+    },
+    "No certificate": {
+      "en": "No certificate",
+      "hi": "प्रमाणपत्र नहीं"
+    },
+    "प्रमाणपत्र नहीं": {
+      "en": "No certificate",
+      "hi": "प्रमाणपत्र नहीं"
+    },
+    "Certificate under review": {
+      "en": "Certificate under review",
+      "hi": "प्रमाणपत्र समीक्षा में"
+    },
+    "प्रमाणपत्र समीक्षा में": {
+      "en": "Certificate under review",
+      "hi": "प्रमाणपत्र समीक्षा में"
+    },
+    "Certificate not accepted": {
+      "en": "Certificate not accepted",
+      "hi": "प्रमाणपत्र स्वीकार नहीं"
+    },
+    "प्रमाणपत्र स्वीकार नहीं": {
+      "en": "Certificate not accepted",
+      "hi": "प्रमाणपत्र स्वीकार नहीं"
+    },
+    "Save": {
+      "en": "Save",
+      "hi": "सहेजें"
+    },
+    "सहेजें": {
+      "en": "Save",
+      "hi": "सहेजें"
+    },
+    "Pause": {
+      "en": "Pause",
+      "hi": "रोकें"
+    },
+    "रोकें": {
+      "en": "Pause",
+      "hi": "रोकें"
+    },
+    "Resume": {
+      "en": "Resume",
+      "hi": "फिर शुरू करें"
+    },
+    "फिर शुरू करें": {
+      "en": "Resume",
+      "hi": "फिर शुरू करें"
+    },
+    "Lab name (e.g. GII)": {
+      "en": "Lab name (e.g. GII)",
+      "hi": "लैब का नाम (जैसे GII)"
+    },
+    "लैब का नाम (जैसे GII)": {
+      "en": "Lab name (e.g. GII)",
+      "hi": "लैब का नाम (जैसे GII)"
+    },
+    "Certificate number": {
+      "en": "Certificate number",
+      "hi": "प्रमाणपत्र क्रमांक"
+    },
+    "Send for verification": {
+      "en": "Send for verification",
+      "hi": "सत्यापन हेतु भेजें"
+    },
+    "सत्यापन हेतु भेजें": {
+      "en": "Send for verification",
+      "hi": "सत्यापन हेतु भेजें"
+    },
+    "Certificate sent for verification": {
+      "en": "Certificate sent for verification",
+      "hi": "प्रमाणपत्र सत्यापन हेतु भेजा गया"
+    },
+    "प्रमाणपत्र सत्यापन हेतु भेजा गया": {
+      "en": "Certificate sent for verification",
+      "hi": "प्रमाणपत्र सत्यापन हेतु भेजा गया"
+    },
+    "No orders for your items yet.": {
+      "en": "No orders for your items yet.",
+      "hi": "आपकी सामग्री के लिए अभी कोई ऑर्डर नहीं।"
+    },
+    "आपकी सामग्री के लिए अभी कोई ऑर्डर नहीं।": {
+      "en": "No orders for your items yet.",
+      "hi": "आपकी सामग्री के लिए अभी कोई ऑर्डर नहीं।"
+    },
+    "Energize for": {
+      "en": "Energize for",
+      "hi": "अभिमंत्रण किसके नाम से"
+    },
+    "अभिमंत्रण किसके नाम से": {
+      "en": "Energize for",
+      "hi": "अभिमंत्रण किसके नाम से"
+    },
+    "your share {amount}": {
+      "en": "your share {amount}",
+      "hi": "आपका हिस्सा {amount}"
+    },
+    "आपका हिस्सा {amount}": {
+      "en": "your share {amount}",
+      "hi": "आपका हिस्सा {amount}"
+    },
+    "Start energization": {
+      "en": "Start energization",
+      "hi": "अभिमंत्रण शुरू करें"
+    },
+    "अभिमंत्रण शुरू करें": {
+      "en": "Start energization",
+      "hi": "अभिमंत्रण शुरू करें"
+    },
+    "Tracking ID": {
+      "en": "Tracking ID",
+      "hi": "ट्रैकिंग आईडी"
+    },
+    "ट्रैकिंग आईडी": {
+      "en": "Tracking ID",
+      "hi": "ट्रैकिंग आईडी"
+    },
+    "Mark dispatched": {
+      "en": "Mark dispatched",
+      "hi": "भेजा गया चिह्नित करें"
+    },
+    "भेजा गया चिह्नित करें": {
+      "en": "Mark dispatched",
+      "hi": "भेजा गया चिह्नित करें"
+    },
+    "Sales (delivered)": {
+      "en": "Sales (delivered)",
+      "hi": "बिक्री (पहुँचे ऑर्डर)"
+    },
+    "बिक्री (पहुँचे ऑर्डर)": {
+      "en": "Sales (delivered)",
+      "hi": "बिक्री (पहुँचे ऑर्डर)"
+    },
+    "Platform commission": {
+      "en": "Platform commission",
+      "hi": "प्लेटफ़ॉर्म कमीशन"
+    },
+    "प्लेटफ़ॉर्म कमीशन": {
+      "en": "Platform commission",
+      "hi": "प्लेटफ़ॉर्म कमीशन"
+    },
+    "Net earnings": {
+      "en": "Net earnings",
+      "hi": "शुद्ध कमाई"
+    },
+    "शुद्ध कमाई": {
+      "en": "Net earnings",
+      "hi": "शुद्ध कमाई"
+    },
+    "Paid out": {
+      "en": "Paid out",
+      "hi": "भुगतान हो चुका"
+    },
+    "भुगतान हो चुका": {
+      "en": "Paid out",
+      "hi": "भुगतान हो चुका"
+    },
+    "Payout requested": {
+      "en": "Payout requested",
+      "hi": "भुगतान अनुरोधित"
+    },
+    "भुगतान अनुरोधित": {
+      "en": "Payout requested",
+      "hi": "भुगतान अनुरोधित"
+    },
+    "Earnings are counted when an order is delivered. A commission of 10% is kept by the platform.": {
+      "en": "Earnings are counted when an order is delivered. A commission of 10% is kept by the platform.",
+      "hi": "कमाई ऑर्डर पहुँचने पर गिनी जाती है। प्लेटफ़ॉर्म 10% कमीशन रखता है।"
+    },
+    "कमाई ऑर्डर पहुँचने पर गिनी जाती है। प्लेटफ़ॉर्म 10% कमीशन रखता है।": {
+      "en": "Earnings are counted when an order is delivered. A commission of 10% is kept by the platform.",
+      "hi": "कमाई ऑर्डर पहुँचने पर गिनी जाती है। प्लेटफ़ॉर्म 10% कमीशन रखता है।"
+    },
+    "Amount (minimum {min})": {
+      "en": "Amount (minimum {min})",
+      "hi": "राशि (न्यूनतम {min})"
+    },
+    "राशि (न्यूनतम {min})": {
+      "en": "Amount (minimum {min})",
+      "hi": "राशि (न्यूनतम {min})"
+    },
+    "Request payout": {
+      "en": "Request payout",
+      "hi": "भुगतान का अनुरोध करें"
+    },
+    "भुगतान का अनुरोध करें": {
+      "en": "Request payout",
+      "hi": "भुगतान का अनुरोध करें"
+    },
+    "Payout requested. It is sent to your UPI after review.": {
+      "en": "Payout requested. It is sent to your UPI after review.",
+      "hi": "भुगतान का अनुरोध भेजा गया। समीक्षा के बाद आपके UPI पर भेजा जाएगा।"
+    },
+    "भुगतान का अनुरोध भेजा गया। समीक्षा के बाद आपके UPI पर भेजा जाएगा।": {
+      "en": "Payout requested. It is sent to your UPI after review.",
+      "hi": "भुगतान का अनुरोध भेजा गया। समीक्षा के बाद आपके UPI पर भेजा जाएगा।"
+    },
+    "Requested": {
+      "en": "Requested",
+      "hi": "अनुरोधित"
+    },
+    "अनुरोधित": {
+      "en": "Requested",
+      "hi": "अनुरोधित"
+    },
+    "Rejected": {
+      "en": "Rejected",
+      "hi": "अस्वीकृत"
+    },
+    "अस्वीकृत": {
+      "en": "Rejected",
+      "hi": "अस्वीकृत"
+    },
+    "Edit details": {
+      "en": "Edit details",
+      "hi": "विवरण बदलें"
+    },
+    "विवरण बदलें": {
+      "en": "Edit details",
+      "hi": "विवरण बदलें"
+    },
+    "Seva certificate is genuine": {
+      "en": "Seva certificate is genuine",
+      "hi": "सेवा प्रमाण पत्र असली है"
+    },
+    "सेवा प्रमाण पत्र असली है": {
+      "en": "Seva certificate is genuine",
+      "hi": "सेवा प्रमाण पत्र असली है"
+    },
+    "Lab certificate is verified": {
+      "en": "Lab certificate is verified",
+      "hi": "लैब प्रमाणपत्र सत्यापित है"
+    },
+    "लैब प्रमाणपत्र सत्यापित है": {
+      "en": "Lab certificate is verified",
+      "hi": "लैब प्रमाणपत्र सत्यापित है"
+    },
+    "Temple": {
+      "en": "Temple",
+      "hi": "तीर्थ"
+    },
+    "तीर्थ": {
+      "en": "Temple",
+      "hi": "तीर्थ"
+    },
+    "Date": {
+      "en": "Date",
+      "hi": "दिनांक"
+    },
+    "दिनांक": {
+      "en": "Date",
+      "hi": "दिनांक"
+    },
+    "Product": {
+      "en": "Product",
+      "hi": "सामग्री"
+    },
+    "View product": {
+      "en": "View product",
+      "hi": "सामग्री देखें"
+    },
+    "सामग्री देखें": {
+      "en": "View product",
+      "hi": "सामग्री देखें"
+    },
+    "Certificate not found": {
+      "en": "Certificate not found",
+      "hi": "प्रमाण पत्र नहीं मिला"
+    },
+    "प्रमाण पत्र नहीं मिला": {
+      "en": "Certificate not found",
+      "hi": "प्रमाण पत्र नहीं मिला"
+    },
+    "We could not match this code. Check the code or scan the QR on the certificate again.": {
+      "en": "We could not match this code. Check the code or scan the QR on the certificate again.",
+      "hi": "यह कोड मेल नहीं खाया। कोड जांचें या प्रमाण पत्र का QR दोबारा स्कैन करें।"
+    },
+    "यह कोड मेल नहीं खाया। कोड जांचें या प्रमाण पत्र का QR दोबारा स्कैन करें।": {
+      "en": "We could not match this code. Check the code or scan the QR on the certificate again.",
+      "hi": "यह कोड मेल नहीं खाया। कोड जांचें या प्रमाण पत्र का QR दोबारा स्कैन करें।"
+    },
+    "Back to home": {
+      "en": "Back to home",
+      "hi": "होम पर लौटें"
+    },
+    "होम पर लौटें": {
+      "en": "Back to home",
+      "hi": "होम पर लौटें"
+    },
+    "Specifications": {
+      "en": "Specifications",
+      "hi": "विशेषताएँ"
+    },
+    "विशेषताएँ": {
+      "en": "Specifications",
+      "hi": "विशेषताएँ"
+    },
+    "Returns": {
+      "en": "Returns",
+      "hi": "वापसी"
+    },
+    "समीक्षाएँ": {
+      "en": "Reviews",
+      "hi": "समीक्षाएँ"
+    },
+    "Inclusive of all taxes": {
+      "en": "Inclusive of all taxes",
+      "hi": "सभी करों सहित"
+    },
+    "सभी करों सहित": {
+      "en": "Inclusive of all taxes",
+      "hi": "सभी करों सहित"
+    },
+    "You save {amt}": {
+      "en": "You save {amt}",
+      "hi": "आपकी बचत {amt}"
+    },
+    "आपकी बचत {amt}": {
+      "en": "You save {amt}",
+      "hi": "आपकी बचत {amt}"
+    },
+    "Share": {
+      "en": "Share",
+      "hi": "साझा करें"
+    },
+    "साझा करें": {
+      "en": "Share",
+      "hi": "साझा करें"
+    },
+    "Link copied": {
+      "en": "Link copied",
+      "hi": "लिंक कॉपी हो गया"
+    },
+    "लिंक कॉपी हो गया": {
+      "en": "Link copied",
+      "hi": "लिंक कॉपी हो गया"
+    },
+    "Tap to zoom": {
+      "en": "Tap to zoom",
+      "hi": "ज़ूम करने के लिए टैप करें"
+    },
+    "ज़ूम करने के लिए टैप करें": {
+      "en": "Tap to zoom",
+      "hi": "ज़ूम करने के लिए टैप करें"
+    },
+    "Check delivery": {
+      "en": "Check delivery",
+      "hi": "डिलीवरी जाँचें"
+    },
+    "डिलीवरी जाँचें": {
+      "en": "Check delivery",
+      "hi": "डिलीवरी जाँचें"
+    },
+    "Enter 6-digit pincode": {
+      "en": "Enter 6-digit pincode",
+      "hi": "6 अंकों का पिनकोड लिखें"
+    },
+    "6 अंकों का पिनकोड लिखें": {
+      "en": "Enter 6-digit pincode",
+      "hi": "6 अंकों का पिनकोड लिखें"
+    },
+    "Check": {
+      "en": "Check",
+      "hi": "जाँचें"
+    },
+    "जाँचें": {
+      "en": "Check",
+      "hi": "जाँचें"
+    },
+    "Enter a valid 6-digit pincode": {
+      "en": "Enter a valid 6-digit pincode",
+      "hi": "सही 6 अंकों का पिनकोड लिखें"
+    },
+    "सही 6 अंकों का पिनकोड लिखें": {
+      "en": "Enter a valid 6-digit pincode",
+      "hi": "सही 6 अंकों का पिनकोड लिखें"
+    },
+    "Estimated delivery by {date} to {pin}": {
+      "en": "Estimated delivery by {date} to {pin}",
+      "hi": "{pin} तक अनुमानित डिलीवरी {date} तक"
+    },
+    "{pin} तक अनुमानित डिलीवरी {date} तक": {
+      "en": "Estimated delivery by {date} to {pin}",
+      "hi": "{pin} तक अनुमानित डिलीवरी {date} तक"
+    },
+    "Energization takes 1-2 days before dispatch.": {
+      "en": "Energization takes 1-2 days before dispatch.",
+      "hi": "अभिमंत्रण में डिस्पैच से पहले 1-2 दिन लगते हैं।"
+    },
+    "अभिमंत्रण में डिस्पैच से पहले 1-2 दिन लगते हैं।": {
+      "en": "Energization takes 1-2 days before dispatch.",
+      "hi": "अभिमंत्रण में डिस्पैच से पहले 1-2 दिन लगते हैं।"
+    },
+    "Lab certified": {
+      "en": "Lab certified",
+      "hi": "लैब प्रमाणित"
+    },
+    "लैब प्रमाणित": {
+      "en": "Lab certified",
+      "hi": "लैब प्रमाणित"
+    },
+    "Genuine, verifiable": {
+      "en": "Genuine, verifiable",
+      "hi": "असली व सत्यापन योग्य"
+    },
+    "असली व सत्यापन योग्य": {
+      "en": "Genuine, verifiable",
+      "hi": "असली व सत्यापन योग्य"
+    },
+    "Energized for you": {
+      "en": "Energized for you",
+      "hi": "आपके लिए अभिमंत्रित"
+    },
+    "आपके लिए अभिमंत्रित": {
+      "en": "Energized for you",
+      "hi": "आपके लिए अभिमंत्रित"
+    },
+    "In your name & gotra": {
+      "en": "In your name & gotra",
+      "hi": "आपके नाम व गोत्र से"
+    },
+    "आपके नाम व गोत्र से": {
+      "en": "In your name & gotra",
+      "hi": "आपके नाम व गोत्र से"
+    },
+    "Secure payment": {
+      "en": "Secure payment",
+      "hi": "सुरक्षित भुगतान"
+    },
+    "सुरक्षित भुगतान": {
+      "en": "Secure payment",
+      "hi": "सुरक्षित भुगतान"
+    },
+    "COD or wallet": {
+      "en": "COD or wallet",
+      "hi": "COD या वॉलेट"
+    },
+    "COD या वॉलेट": {
+      "en": "COD or wallet",
+      "hi": "COD या वॉलेट"
+    },
+    "Easy returns": {
+      "en": "Easy returns",
+      "hi": "आसान वापसी"
+    },
+    "आसान वापसी": {
+      "en": "Easy returns",
+      "hi": "आसान वापसी"
+    },
+    "{days}-day window": {
+      "en": "{days}-day window",
+      "hi": "{days} दिन की अवधि"
+    },
+    "{days} दिन की अवधि": {
+      "en": "{days}-day window",
+      "hi": "{days} दिन की अवधि"
+    },
+    "More from this seller": {
+      "en": "More from this seller",
+      "hi": "इस विक्रेता की और सामग्री"
+    },
+    "इस विक्रेता की और सामग्री": {
+      "en": "More from this seller",
+      "hi": "इस विक्रेता की और सामग्री"
+    },
+    "Copied": {
+      "en": "Copied",
+      "hi": "कॉपी हुआ"
+    },
+    "कॉपी हुआ": {
+      "en": "Copied",
+      "hi": "कॉपी हुआ"
+    },
+    "Verified by lab": {
+      "en": "Verified by lab",
+      "hi": "लैब द्वारा सत्यापित"
+    },
+    "लैब द्वारा सत्यापित": {
+      "en": "Verified by lab",
+      "hi": "लैब द्वारा सत्यापित"
+    },
+    "Add": {
+      "en": "Add",
+      "hi": "जोड़ें"
+    },
+    "जोड़ें": {
+      "en": "Add",
+      "hi": "जोड़ें"
+    },
+    "No specifications listed.": {
+      "en": "No specifications listed.",
+      "hi": "कोई विशेषता सूचीबद्ध नहीं है।"
+    },
+    "कोई विशेषता सूचीबद्ध नहीं है।": {
+      "en": "No specifications listed.",
+      "hi": "कोई विशेषता सूचीबद्ध नहीं है।"
+    },
+    "Quantity": {
+      "en": "Quantity",
+      "hi": "मात्रा"
+    },
+    "मात्रा": {
+      "en": "Quantity",
+      "hi": "मात्रा"
+    },
+    "पैकेज": {
+      "en": "Package",
+      "hi": "पैकेज"
+    },
+    "Packages": {
+      "en": "Packages",
+      "hi": "पैकेज"
+    },
+    "Package": {
+      "en": "Package",
+      "hi": "पैकेज"
+    },
+    "वैदिक": {
+      "en": "Vedic",
+      "hi": "वैदिक"
+    },
+    "Vedic": {
+      "en": "Vedic",
+      "hi": "वैदिक"
+    },
+    "चढ़ावा अर्पित करें": {
+      "en": "Offer Chadawa",
+      "hi": "चढ़ावा अर्पित करें"
+    },
+    "Offer Chadawa": {
+      "en": "Offer Chadawa",
+      "hi": "चढ़ावा अर्पित करें"
+    },
+    "यहाँ संकल्प पूजा करें": {
+      "en": "Sankalp Puja at",
+      "hi": "यहाँ संकल्प पूजा करें"
+    },
+    "Sankalp Puja at": {
+      "en": "Sankalp Puja at",
+      "hi": "यहाँ संकल्प पूजा करें"
+    },
+    "भारत के पवित्र तीर्थ": {
+      "en": "Holy Temples of India",
+      "hi": "भारत के पवित्र तीर्थ"
+    },
+    "Holy Temples of India": {
+      "en": "Holy Temples of India",
+      "hi": "भारत के पवित्र तीर्थ"
+    },
+    "ई-चढ़ावा एवं संकल्प": {
+      "en": "E-CHADAWA & SANKALP",
+      "hi": "ई-चढ़ावा एवं संकल्प"
+    },
+    "E-CHADAWA & SANKALP": {
+      "en": "E-CHADAWA & SANKALP",
+      "hi": "ई-चढ़ावा एवं संकल्प"
+    },
+    "पूजा": {
+      "en": "Puja",
+      "hi": "पूजा"
+    },
+    "Puja": {
+      "en": "Puja",
+      "hi": "पूजा"
+    },
+    "सिद्ध": {
+      "en": "Siddh",
+      "hi": "सिद्ध"
+    },
+    "Siddh": {
+      "en": "Siddh",
+      "hi": "सिद्ध"
+    },
+    "🔮 वैदिक साधन": {
+      "en": "🔮 Vedic Tools",
+      "hi": "🔮 वैदिक साधन"
+    },
+    "🔮 Vedic Tools": {
+      "en": "🔮 Vedic Tools",
+      "hi": "🔮 वैदिक साधन"
+    },
+    "वैदिक ज्योतिष साधन": {
+      "en": "Vedic Astrology Tools",
+      "hi": "वैदिक ज्योतिष साधन"
+    },
+    "Vedic Astrology Tools": {
+      "en": "Vedic Astrology Tools",
+      "hi": "वैदिक ज्योतिष साधन"
+    },
+    "सभी 12 राशियों का आज का फल": {
+      "en": "Predictions for all 12 Zodiac signs",
+      "hi": "सभी 12 राशियों का आज का फल"
+    },
+    "Predictions for all 12 Zodiac signs": {
+      "en": "Predictions for all 12 Zodiac signs",
+      "hi": "सभी 12 राशियों का आज का फल"
+    },
+    "Today's Panchang": {
+      "en": "Today's Panchang",
+      "hi": "आज का पंचांग"
+    },
+    "तिथि, नक्षत्र, शुभ मुहूर्त": {
+      "en": "Tithi, Nakshatra, Shubh Muhurat",
+      "hi": "तिथि, नक्षत्र, शुभ मुहूर्त"
+    },
+    "Tithi, Nakshatra, Shubh Muhurat": {
+      "en": "Tithi, Nakshatra, Shubh Muhurat",
+      "hi": "तिथि, नक्षत्र, शुभ मुहूर्त"
+    },
+    "राहुकाल": {
+      "en": "Rahukaal",
+      "hi": "राहुकाल"
+    },
+    "Rahukaal": {
+      "en": "Rahukaal",
+      "hi": "राहुकाल"
+    },
+    "Kundli Matching (Gun Milan)": {
+      "en": "Kundli Matching (Gun Milan)",
+      "hi": "कुंडली मिलान"
+    },
+    "मांगलिक विश्लेषण": {
+      "en": "Manglik analysis",
+      "hi": "मांगलिक विश्लेषण"
+    },
+    "Manglik analysis": {
+      "en": "Manglik analysis",
+      "hi": "मांगलिक विश्लेषण"
+    },
+    "शनि साढ़ेसाती": {
+      "en": "Shani Sade Sati",
+      "hi": "शनि साढ़ेसाती"
+    },
+    "दोष": {
+      "en": "Dosha",
+      "hi": "दोष"
+    },
+    "Dosha": {
+      "en": "Dosha",
+      "hi": "दोष"
+    },
+    "कालसर्प, पितृ दोष": {
+      "en": "Kaal Sarp, Pitra Dosha",
+      "hi": "कालसर्प, पितृ दोष"
+    },
+    "Kaal Sarp, Pitra Dosha": {
+      "en": "Kaal Sarp, Pitra Dosha",
+      "hi": "कालसर्प, पितृ दोष"
+    },
+    "वैदिक उपाय": {
+      "en": "Vedic remedies",
+      "hi": "वैदिक उपाय"
+    },
+    "Vedic remedies": {
+      "en": "Vedic remedies",
+      "hi": "वैदिक उपाय"
+    },
+    "व्यवस्थापक पैनल": {
+      "en": "Admin Panel",
+      "hi": "व्यवस्थापक पैनल"
+    },
+    "Admin Panel": {
+      "en": "Admin Panel",
+      "hi": "व्यवस्थापक पैनल"
+    },
+    "ताज़ा करें": {
+      "en": "Refresh",
+      "hi": "ताज़ा करें"
+    },
+    "Refresh": {
+      "en": "Refresh",
+      "hi": "ताज़ा करें"
+    },
+    "यह क्षेत्र केवल व्यवस्थापकों के लिए है। कृपया व्यवस्थापक खाते से साइन इन करें।": {
+      "en": "This area is for administrators only. Please sign in with an admin account.",
+      "hi": "यह क्षेत्र केवल व्यवस्थापकों के लिए है। कृपया व्यवस्थापक खाते से साइन इन करें।"
+    },
+    "This area is for administrators only. Please sign in with an admin account.": {
+      "en": "This area is for administrators only. Please sign in with an admin account.",
+      "hi": "यह क्षेत्र केवल व्यवस्थापकों के लिए है। कृपया व्यवस्थापक खाते से साइन इन करें।"
+    },
+    "मंदिर बुकिंग": {
+      "en": "Mandir Bookings",
+      "hi": "मंदिर बुकिंग"
+    },
+    "Mandir Bookings": {
+      "en": "Mandir Bookings",
+      "hi": "मंदिर बुकिंग"
+    },
+    "Certificates": {
+      "en": "Certificates",
+      "hi": "प्रमाण पत्र"
+    },
+    "विक्रेता भुगतान": {
+      "en": "Payouts",
+      "hi": "विक्रेता भुगतान"
+    },
+    "Payouts": {
+      "en": "Payouts",
+      "hi": "विक्रेता भुगतान"
+    },
+    "मंदिर": {
+      "en": "Temples",
+      "hi": "मंदिर"
+    },
+    "Temples": {
+      "en": "Temples",
+      "hi": "मंदिर"
+    },
+    "कूपन": {
+      "en": "Coupons",
+      "hi": "कूपन"
+    },
+    "Coupons": {
+      "en": "Coupons",
+      "hi": "कूपन"
+    },
+    "My dashboard": {
+      "en": "My dashboard",
+      "hi": "मेरा डैशबोर्ड"
+    },
+    "मेरा डैशबोर्ड": {
+      "en": "My dashboard",
+      "hi": "मेरा डैशबोर्ड"
+    },
+    "Your personal space": {
+      "en": "Your personal space",
+      "hi": "आपका निजी स्थान"
+    },
+    "आपका निजी स्थान": {
+      "en": "Your personal space",
+      "hi": "आपका निजी स्थान"
+    },
+    "Your guidance, sacred journeys and shopping, together in one place.": {
+      "en": "Your guidance, sacred journeys and shopping, together in one place.",
+      "hi": "आपके परामर्श, धार्मिक सेवाएँ और खरीदारी, सब एक जगह।"
+    },
+    "आपके परामर्श, धार्मिक सेवाएँ और खरीदारी, सब एक जगह।": {
+      "en": "Your guidance, sacred journeys and shopping, together in one place.",
+      "hi": "आपके परामर्श, धार्मिक सेवाएँ और खरीदारी, सब एक जगह।"
+    },
+    "Wallet": {
+      "en": "Wallet",
+      "hi": "वॉलेट"
+    },
+    "वॉलेट": {
+      "en": "Wallet",
+      "hi": "वॉलेट"
+    },
+    "Puja bookings": {
+      "en": "Puja bookings",
+      "hi": "पूजा बुकिंग"
+    },
+    "पूजा बुकिंग": {
+      "en": "Puja bookings",
+      "hi": "पूजा बुकिंग"
+    },
+    "Saved kundli": {
+      "en": "Saved kundli",
+      "hi": "सहेजी गई कुंडली"
+    },
+    "सहेजी गई कुंडली": {
+      "en": "Saved kundli",
+      "hi": "सहेजी गई कुंडली"
+    },
+    "Consultation history": {
+      "en": "Consultation history",
+      "hi": "परामर्श इतिहास"
+    },
+    "परामर्श इतिहास": {
+      "en": "Consultation history",
+      "hi": "परामर्श इतिहास"
+    },
+    "Appointments": {
+      "en": "Appointments",
+      "hi": "अपॉइंटमेंट"
+    },
+    "अपॉइंटमेंट": {
+      "en": "Appointments",
+      "hi": "अपॉइंटमेंट"
+    },
+    "Wishlist": {
+      "en": "Wishlist",
+      "hi": "पसंदीदा सामग्री"
+    },
+    "पसंदीदा सामग्री": {
+      "en": "Wishlist",
+      "hi": "पसंदीदा सामग्री"
+    },
+    "Recently viewed": {
+      "en": "Recently viewed",
+      "hi": "हाल में देखी गई सामग्री"
+    },
+    "हाल में देखी गई सामग्री": {
+      "en": "Recently viewed",
+      "hi": "हाल में देखी गई सामग्री"
+    },
+    "Saved on this browser. Clear whenever you like.": {
+      "en": "Saved on this browser. Clear whenever you like.",
+      "hi": "इस ब्राउज़र में सहेजा गया। आप इसे कभी भी हटा सकते हैं।"
+    },
+    "इस ब्राउज़र में सहेजा गया। आप इसे कभी भी हटा सकते हैं।": {
+      "en": "Saved on this browser. Clear whenever you like.",
+      "hi": "इस ब्राउज़र में सहेजा गया। आप इसे कभी भी हटा सकते हैं।"
+    },
+    "Clear history": {
+      "en": "Clear history",
+      "hi": "इतिहास हटाएँ"
+    },
+    "इतिहास हटाएँ": {
+      "en": "Clear history",
+      "hi": "इतिहास हटाएँ"
+    },
+    "Explore Astro Mall": {
+      "en": "Explore Astro Mall",
+      "hi": "एस्ट्रो मॉल देखें"
+    },
+    "एस्ट्रो मॉल देखें": {
+      "en": "Shop Astro Mall",
+      "hi": "एस्ट्रो मॉल देखें"
+    },
+    "Explore temples": {
+      "en": "Explore temples",
+      "hi": "मंदिर देखें"
+    },
+    "मंदिर देखें": {
+      "en": "Explore temples",
+      "hi": "मंदिर देखें"
+    },
+    "Nothing here yet": {
+      "en": "Nothing here yet",
+      "hi": "अभी यहाँ कुछ नहीं है"
+    },
+    "अभी यहाँ कुछ नहीं है": {
+      "en": "Nothing here yet",
+      "hi": "अभी यहाँ कुछ नहीं है"
+    },
+    "Your activity will appear here when you get started.": {
+      "en": "Your activity will appear here when you get started.",
+      "hi": "शुरुआत करने पर आपकी गतिविधियाँ यहाँ दिखाई देंगी।"
+    },
+    "शुरुआत करने पर आपकी गतिविधियाँ यहाँ दिखाई देंगी।": {
+      "en": "Your activity will appear here when you get started.",
+      "hi": "शुरुआत करने पर आपकी गतिविधियाँ यहाँ दिखाई देंगी।"
+    },
+    "Sign in to your dashboard": {
+      "en": "Sign in to your dashboard",
+      "hi": "अपने डैशबोर्ड में साइन इन करें"
+    },
+    "अपने डैशबोर्ड में साइन इन करें": {
+      "en": "Sign in to your dashboard",
+      "hi": "अपने डैशबोर्ड में साइन इन करें"
+    },
+    "Access your account wallet, orders, bookings and saved birth charts.": {
+      "en": "Access your account wallet, orders, bookings and saved birth charts.",
+      "hi": "अपने खाते का वॉलेट, ऑर्डर, बुकिंग और सहेजी हुई कुंडली देखें।"
+    },
+    "अपने खाते का वॉलेट, ऑर्डर, बुकिंग और सहेजी हुई कुंडली देखें।": {
+      "en": "Access your account wallet, orders, bookings and saved birth charts.",
+      "hi": "अपने खाते का वॉलेट, ऑर्डर, बुकिंग और सहेजी हुई कुंडली देखें।"
+    },
+    "साइन इन करें": {
+      "en": "Sign in",
+      "hi": "साइन इन करें"
+    },
+    "Try again": {
+      "en": "Try again",
+      "hi": "दोबारा प्रयास करें"
+    },
+    "दोबारा प्रयास करें": {
+      "en": "Try again",
+      "hi": "दोबारा प्रयास करें"
+    },
+    "Could not load this section": {
+      "en": "Could not load this section",
+      "hi": "यह अनुभाग लोड नहीं हुआ"
+    },
+    "यह अनुभाग लोड नहीं हुआ": {
+      "en": "Could not load this section",
+      "hi": "यह अनुभाग लोड नहीं हुआ"
+    },
+    "Loading your experience…": {
+      "en": "Loading your experience…",
+      "hi": "आपके लिए जानकारी लोड हो रही है…"
+    },
+    "आपके लिए जानकारी लोड हो रही है…": {
+      "en": "Loading your experience…",
+      "hi": "आपके लिए जानकारी लोड हो रही है…"
+    },
+    "Manage": {
+      "en": "Manage",
+      "hi": "प्रबंधित करें"
+    },
+    "प्रबंधित करें": {
+      "en": "Manage",
+      "hi": "प्रबंधित करें"
+    },
+    "Add funds": {
+      "en": "Add funds",
+      "hi": "राशि जोड़ें"
+    },
+    "राशि जोड़ें": {
+      "en": "Add funds",
+      "hi": "राशि जोड़ें"
+    },
+    "Compare": {
+      "en": "Compare",
+      "hi": "तुलना करें"
+    },
+    "तुलना करें": {
+      "en": "Compare",
+      "hi": "तुलना करें"
+    },
+    "Selected for comparison": {
+      "en": "Selected for comparison",
+      "hi": "तुलना के लिए चुना गया"
+    },
+    "तुलना के लिए चुना गया": {
+      "en": "Selected for comparison",
+      "hi": "तुलना के लिए चुना गया"
+    },
+    "Compare your favourites": {
+      "en": "Compare your favourites",
+      "hi": "पसंदीदा सामग्री की तुलना करें"
+    },
+    "पसंदीदा सामग्री की तुलना करें": {
+      "en": "Compare your favourites",
+      "hi": "पसंदीदा सामग्री की तुलना करें"
+    },
+    "Compare up to 3 products. Prices are for the base variant.": {
+      "en": "Compare up to 3 products. Prices are for the base variant.",
+      "hi": "अधिकतम 3 सामग्री की तुलना करें। मूल्य मूल विकल्प के हैं।"
+    },
+    "अधिकतम 3 सामग्री की तुलना करें। मूल्य मूल विकल्प के हैं।": {
+      "en": "Compare up to 3 products. Prices are for the base variant.",
+      "hi": "अधिकतम 3 सामग्री की तुलना करें। मूल्य मूल विकल्प के हैं।"
+    },
+    "You can compare up to 3 products.": {
+      "en": "You can compare up to 3 products.",
+      "hi": "आप अधिकतम 3 सामग्री की तुलना कर सकते हैं।"
+    },
+    "आप अधिकतम 3 सामग्री की तुलना कर सकते हैं।": {
+      "en": "You can compare up to 3 products.",
+      "hi": "आप अधिकतम 3 सामग्री की तुलना कर सकते हैं।"
+    },
+    "हटाएँ": {
+      "en": "Remove",
+      "hi": "हटाएँ"
+    },
+    "Price": {
+      "en": "Price",
+      "hi": "मूल्य"
+    },
+    "मूल्य": {
+      "en": "Price",
+      "hi": "मूल्य"
+    },
+    "धातु / सामग्री": {
+      "en": "Material",
+      "hi": "धातु / सामग्री"
+    },
+    "लैब प्रमाण पत्र": {
+      "en": "Lab certificate",
+      "hi": "लैब प्रमाण पत्र"
+    },
+    "Availability": {
+      "en": "Availability",
+      "hi": "उपलब्धता"
+    },
+    "उपलब्धता": {
+      "en": "Availability",
+      "hi": "उपलब्धता"
+    },
+    "Available": {
+      "en": "Available",
+      "hi": "उपलब्ध"
+    },
+    "Not listed": {
+      "en": "Not listed",
+      "hi": "सूचीबद्ध नहीं"
+    },
+    "सूचीबद्ध नहीं": {
+      "en": "Not listed",
+      "hi": "सूचीबद्ध नहीं"
+    },
+    "स्टॉक में": {
+      "en": "In stock",
+      "hi": "स्टॉक में"
+    },
+    "Returns & delivery": {
+      "en": "Returns & delivery",
+      "hi": "वापसी और डिलीवरी"
+    },
+    "वापसी और डिलीवरी": {
+      "en": "Returns & delivery",
+      "hi": "वापसी और डिलीवरी"
+    },
+    "Estimated delivery": {
+      "en": "Estimated delivery",
+      "hi": "अनुमानित डिलीवरी"
+    },
+    "अनुमानित डिलीवरी": {
+      "en": "Estimated delivery",
+      "hi": "अनुमानित डिलीवरी"
+    },
+    "Enter your PIN below for an estimate. Final dispatch depends on the seller and selected options.": {
+      "en": "Enter your PIN below for an estimate. Final dispatch depends on the seller and selected options.",
+      "hi": "अनुमान के लिए नीचे पिन कोड डालें। भेजने का समय विक्रेता और चुने गए विकल्पों पर निर्भर है।"
+    },
+    "अनुमान के लिए नीचे पिन कोड डालें। भेजने का समय विक्रेता और चुने गए विकल्पों पर निर्भर है।": {
+      "en": "Enter your PIN below for an estimate. Final dispatch depends on the seller and selected options.",
+      "hi": "अनुमान के लिए नीचे पिन कोड डालें। भेजने का समय विक्रेता और चुने गए विकल्पों पर निर्भर है।"
+    },
+    "Product photo": {
+      "en": "Product photo",
+      "hi": "सामग्री की तस्वीर"
+    },
+    "सामग्री की तस्वीर": {
+      "en": "Product photo",
+      "hi": "सामग्री की तस्वीर"
+    },
+    "Next photo": {
+      "en": "Next photo",
+      "hi": "अगली तस्वीर"
+    },
+    "अगली तस्वीर": {
+      "en": "Next photo",
+      "hi": "अगली तस्वीर"
+    },
+    "Previous photo": {
+      "en": "Previous photo",
+      "hi": "पिछली तस्वीर"
+    },
+    "पिछली तस्वीर": {
+      "en": "Previous photo",
+      "hi": "पिछली तस्वीर"
+    },
+    "Your puja journey": {
+      "en": "Your puja journey",
+      "hi": "आपकी पूजा की प्रगति"
+    },
+    "आपकी पूजा की प्रगति": {
+      "en": "Your puja journey",
+      "hi": "आपकी पूजा की प्रगति"
+    },
+    "Booking confirmed": {
+      "en": "Booking confirmed",
+      "hi": "बुकिंग की पुष्टि"
+    },
+    "बुकिंग की पुष्टि": {
+      "en": "Booking confirmed",
+      "hi": "बुकिंग की पुष्टि"
+    },
+    "Puja scheduled": {
+      "en": "Puja scheduled",
+      "hi": "पूजा निर्धारित"
+    },
+    "पूजा निर्धारित": {
+      "en": "Puja scheduled",
+      "hi": "पूजा निर्धारित"
+    },
+    "Ritual video available": {
+      "en": "Ritual video available",
+      "hi": "पूजा का वीडियो उपलब्ध"
+    },
+    "पूजा का वीडियो उपलब्ध": {
+      "en": "Ritual video available",
+      "hi": "पूजा का वीडियो उपलब्ध"
+    },
+    "Puja completed": {
+      "en": "Puja completed",
+      "hi": "पूजा संपन्न"
+    },
+    "पूजा संपन्न": {
+      "en": "Puja completed",
+      "hi": "पूजा संपन्न"
+    },
+    "Prasad dispatched": {
+      "en": "Prasad dispatched",
+      "hi": "प्रसाद भेजा गया"
+    },
+    "प्रसाद भेजा गया": {
+      "en": "Prasad dispatched",
+      "hi": "प्रसाद भेजा गया"
+    },
+    "Pending update": {
+      "en": "Pending update",
+      "hi": "जानकारी की प्रतीक्षा"
+    },
+    "जानकारी की प्रतीक्षा": {
+      "en": "Pending update",
+      "hi": "जानकारी की प्रतीक्षा"
+    },
+    "पूरा हुआ": {
+      "en": "Completed",
+      "hi": "पूरा हुआ"
+    },
+    "Current stage": {
+      "en": "Current stage",
+      "hi": "वर्तमान चरण"
+    },
+    "वर्तमान चरण": {
+      "en": "Current stage",
+      "hi": "वर्तमान चरण"
+    },
+    "Cancelled · refund recorded": {
+      "en": "Cancelled · refund recorded",
+      "hi": "रद्द · रिफंड दर्ज"
+    },
+    "रद्द · रिफंड दर्ज": {
+      "en": "Cancelled · refund recorded",
+      "hi": "रद्द · रिफंड दर्ज"
+    },
+    "Progress updates come from the temple team. Future stages are not confirmed yet.": {
+      "en": "Progress updates come from the temple team. Future stages are not confirmed yet.",
+      "hi": "प्रगति की जानकारी मंदिर की टीम देती है। अगले चरणों की अभी पुष्टि नहीं हुई है।"
+    },
+    "प्रगति की जानकारी मंदिर की टीम देती है। अगले चरणों की अभी पुष्टि नहीं हुई है।": {
+      "en": "Progress updates come from the temple team. Future stages are not confirmed yet.",
+      "hi": "प्रगति की जानकारी मंदिर की टीम देती है। अगले चरणों की अभी पुष्टि नहीं हुई है।"
+    },
+    "Tracking reference": {
+      "en": "Tracking reference",
+      "hi": "ट्रैकिंग संदर्भ"
+    },
+    "ट्रैकिंग संदर्भ": {
+      "en": "Tracking reference",
+      "hi": "ट्रैकिंग संदर्भ"
+    },
+    "View booking & video": {
+      "en": "View booking & video",
+      "hi": "बुकिंग और वीडियो देखें"
+    },
+    "बुकिंग और वीडियो देखें": {
+      "en": "View booking & video",
+      "hi": "बुकिंग और वीडियो देखें"
+    },
+    "Available balance": {
+      "en": "Available balance",
+      "hi": "उपलब्ध राशि"
+    },
+    "उपलब्ध राशि": {
+      "en": "Available balance",
+      "hi": "उपलब्ध राशि"
+    },
+    "Test wallet": {
+      "en": "Test wallet",
+      "hi": "टेस्ट वॉलेट"
+    },
+    "टेस्ट वॉलेट": {
+      "en": "Test wallet",
+      "hi": "टेस्ट वॉलेट"
+    },
+    "Recent transactions": {
+      "en": "Recent transactions",
+      "hi": "हाल के लेनदेन"
+    },
+    "हाल के लेनदेन": {
+      "en": "Recent transactions",
+      "hi": "हाल के लेनदेन"
+    },
+    "Primary": {
+      "en": "Primary",
+      "hi": "मुख्य"
+    },
+    "मुख्य": {
+      "en": "Primary",
+      "hi": "मुख्य"
+    },
+    "Create birth chart": {
+      "en": "Create birth chart",
+      "hi": "जन्म कुंडली बनाएँ"
+    },
+    "जन्म कुंडली बनाएँ": {
+      "en": "Create birth chart",
+      "hi": "जन्म कुंडली बनाएँ"
+    },
+    "Open consultation": {
+      "en": "Open consultation",
+      "hi": "परामर्श खोलें"
+    },
+    "परामर्श खोलें": {
+      "en": "Open consultation",
+      "hi": "परामर्श खोलें"
+    },
+    "Save something meaningful": {
+      "en": "Save something meaningful",
+      "hi": "अपनी पसंद की सामग्री सहेजें"
+    },
+    "अपनी पसंद की सामग्री सहेजें": {
+      "en": "Save something meaningful",
+      "hi": "अपनी पसंद की सामग्री सहेजें"
+    },
+    "Tap the heart on any product to keep it here.": {
+      "en": "Tap the heart on any product to keep it here.",
+      "hi": "किसी सामग्री पर दिल का बटन दबाकर उसे यहाँ सहेजें।"
+    },
+    "किसी सामग्री पर दिल का बटन दबाकर उसे यहाँ सहेजें।": {
+      "en": "Tap the heart on any product to keep it here.",
+      "hi": "किसी सामग्री पर दिल का बटन दबाकर उसे यहाँ सहेजें।"
+    },
+    "Your next discovery starts here": {
+      "en": "Your next discovery starts here",
+      "hi": "यहाँ से अपनी पसंद खोजना शुरू करें"
+    },
+    "यहाँ से अपनी पसंद खोजना शुरू करें": {
+      "en": "Your next discovery starts here",
+      "hi": "यहाँ से अपनी पसंद खोजना शुरू करें"
+    },
+    "Find an astrologer": {
+      "en": "Find an astrologer",
+      "hi": "ज्योतिषी खोजें"
+    },
+    "Confirmed": {
+      "en": "Confirmed",
+      "hi": "पुष्टि हुई"
+    },
+    "पुष्टि हुई": {
+      "en": "Confirmed",
+      "hi": "पुष्टि हुई"
+    },
+    "My profile": {
+      "en": "My profile",
+      "hi": "मेरी प्रोफ़ाइल"
+    },
+    "मेरी प्रोफ़ाइल": {
+      "en": "My profile",
+      "hi": "मेरी प्रोफ़ाइल"
+    },
+    "Account details & settings": {
+      "en": "Account details & settings",
+      "hi": "खाते की जानकारी और सेटिंग्स"
+    },
+    "खाते की जानकारी और सेटिंग्स": {
+      "en": "Account details & settings",
+      "hi": "खाते की जानकारी और सेटिंग्स"
+    },
+    "Account overview": {
+      "en": "Account overview",
+      "hi": "खाते का सारांश"
+    },
+    "खाते का सारांश": {
+      "en": "Account overview",
+      "hi": "खाते का सारांश"
+    },
+    "Your activity at a glance": {
+      "en": "Your activity at a glance",
+      "hi": "आपकी गतिविधियाँ एक नज़र में"
+    },
+    "आपकी गतिविधियाँ एक नज़र में": {
+      "en": "Your activity at a glance",
+      "hi": "आपकी गतिविधियाँ एक नज़र में"
+    },
+    "Made for your next step": {
+      "en": "Made for your next step",
+      "hi": "आपके अगले कदम के लिए"
+    },
+    "आपके अगले कदम के लिए": {
+      "en": "Made for your next step",
+      "hi": "आपके अगले कदम के लिए"
+    },
+    "Your balance, payments and receipts, all in one place.": {
+      "en": "Your balance, payments and receipts, all in one place.",
+      "hi": "आपकी राशि, भुगतान और रसीदें, सब एक जगह।"
+    },
+    "आपकी राशि, भुगतान और रसीदें, सब एक जगह।": {
+      "en": "Your balance, payments and receipts, all in one place.",
+      "hi": "आपकी राशि, भुगतान और रसीदें, सब एक जगह।"
+    },
+    "Total added": {
+      "en": "Total added",
+      "hi": "कुल जोड़ी गई राशि"
+    },
+    "कुल जोड़ी गई राशि": {
+      "en": "Total added",
+      "hi": "कुल जोड़ी गई राशि"
+    },
+    "Total deducted": {
+      "en": "Total deducted",
+      "hi": "कुल कटी हुई राशि"
+    },
+    "कुल कटी हुई राशि": {
+      "en": "Total deducted",
+      "hi": "कुल कटी हुई राशि"
+    },
+    "View wallet history": {
+      "en": "View wallet history",
+      "hi": "वॉलेट इतिहास देखें"
+    },
+    "वॉलेट इतिहास देखें": {
+      "en": "View wallet history",
+      "hi": "वॉलेट इतिहास देखें"
+    },
+    "Personal account": {
+      "en": "Personal account",
+      "hi": "निजी खाता"
+    },
+    "निजी खाता": {
+      "en": "Personal account",
+      "hi": "निजी खाता"
+    },
+    "Edit profile": {
+      "en": "Edit profile",
+      "hi": "प्रोफ़ाइल बदलें"
+    },
+    "प्रोफ़ाइल बदलें": {
+      "en": "Edit profile",
+      "hi": "प्रोफ़ाइल बदलें"
+    },
+    "About Astro Jyotish": {
+      "en": "About Astro Jyotish",
+      "hi": "एस्ट्रो ज्योतिष के बारे में"
+    },
+    "एस्ट्रो ज्योतिष के बारे में": {
+      "en": "About Astro Jyotish",
+      "hi": "एस्ट्रो ज्योतिष के बारे में"
+    },
+    "Explore astrology consultations, birth charts, temple services and spiritual products from one account.": {
+      "en": "Explore astrology consultations, birth charts, temple services and spiritual products from one account.",
+      "hi": "एक ही खाते से ज्योतिष परामर्श, जन्म कुंडली, मंदिर सेवाएँ और आध्यात्मिक सामग्री देखें।"
+    },
+    "एक ही खाते से ज्योतिष परामर्श, जन्म कुंडली, मंदिर सेवाएँ और आध्यात्मिक सामग्री देखें।": {
+      "en": "Explore astrology consultations, birth charts, temple services and spiritual products from one account.",
+      "hi": "एक ही खाते से ज्योतिष परामर्श, जन्म कुंडली, मंदिर सेवाएँ और आध्यात्मिक सामग्री देखें।"
+    },
+    "Privacy & account controls": {
+      "en": "Privacy & account controls",
+      "hi": "गोपनीयता और खाते के नियंत्रण"
+    },
+    "गोपनीयता और खाते के नियंत्रण": {
+      "en": "Privacy & account controls",
+      "hi": "गोपनीयता और खाते के नियंत्रण"
+    },
+    "Your profile brings together your saved charts and account history. Sign out on shared devices. Recently viewed products are stored in this browser and can be cleared from your profile.": {
+      "en": "Your profile brings together your saved charts and account history. Sign out on shared devices. Recently viewed products are stored in this browser and can be cleared from your profile.",
+      "hi": "आपकी प्रोफ़ाइल में सहेजी गई कुंडली और खाते का इतिहास दिखता है। साझा उपकरण पर साइन आउट करें। हाल में देखी सामग्री इस ब्राउज़र में सहेजी जाती है और प्रोफ़ाइल से हटाई जा सकती है।"
+    },
+    "आपकी प्रोफ़ाइल में सहेजी गई कुंडली और खाते का इतिहास दिखता है। साझा उपकरण पर साइन आउट करें। हाल में देखी सामग्री इस ब्राउज़र में सहेजी जाती है और प्रोफ़ाइल से हटाई जा सकती है।": {
+      "en": "Your profile brings together your saved charts and account history. Sign out on shared devices. Recently viewed products are stored in this browser and can be cleared from your profile.",
+      "hi": "आपकी प्रोफ़ाइल में सहेजी गई कुंडली और खाते का इतिहास दिखता है। साझा उपकरण पर साइन आउट करें। हाल में देखी सामग्री इस ब्राउज़र में सहेजी जाती है और प्रोफ़ाइल से हटाई जा सकती है।"
+    },
+    "Service information": {
+      "en": "Service information",
+      "hi": "सेवा की जानकारी"
+    },
+    "सेवा की जानकारी": {
+      "en": "Service information",
+      "hi": "सेवा की जानकारी"
+    },
+    "Review the final price, selected options and cancellation or return conditions before confirming. Delivery and ritual schedules are estimates unless separately confirmed. Astrological guidance does not guarantee an outcome.": {
+      "en": "Review the final price, selected options and cancellation or return conditions before confirming. Delivery and ritual schedules are estimates unless separately confirmed. Astrological guidance does not guarantee an outcome.",
+      "hi": "पुष्टि से पहले अंतिम मूल्य, चुने विकल्प और रद्द करने या वापसी की शर्तें देखें। अलग से पुष्टि होने तक डिलीवरी और पूजा का समय अनुमानित है। ज्योतिषीय मार्गदर्शन किसी परिणाम की गारंटी नहीं देता।"
+    },
+    "पुष्टि से पहले अंतिम मूल्य, चुने विकल्प और रद्द करने या वापसी की शर्तें देखें। अलग से पुष्टि होने तक डिलीवरी और पूजा का समय अनुमानित है। ज्योतिषीय मार्गदर्शन किसी परिणाम की गारंटी नहीं देता।": {
+      "en": "Review the final price, selected options and cancellation or return conditions before confirming. Delivery and ritual schedules are estimates unless separately confirmed. Astrological guidance does not guarantee an outcome.",
+      "hi": "पुष्टि से पहले अंतिम मूल्य, चुने विकल्प और रद्द करने या वापसी की शर्तें देखें। अलग से पुष्टि होने तक डिलीवरी और पूजा का समय अनुमानित है। ज्योतिषीय मार्गदर्शन किसी परिणाम की गारंटी नहीं देता।"
+    },
+    "Contact support": {
+      "en": "Contact support",
+      "hi": "सहायता से संपर्क करें"
+    },
+    "सहायता से संपर्क करें": {
+      "en": "Contact support",
+      "hi": "सहायता से संपर्क करें"
+    },
+    "Include your order or booking reference and a description of the issue. Never send passwords or payment credentials.": {
+      "en": "Include your order or booking reference and a description of the issue. Never send passwords or payment credentials.",
+      "hi": "ऑर्डर या बुकिंग का संदर्भ और समस्या का विवरण भेजें। पासवर्ड या भुगतान की गुप्त जानकारी कभी न भेजें।"
+    },
+    "ऑर्डर या बुकिंग का संदर्भ और समस्या का विवरण भेजें। पासवर्ड या भुगतान की गुप्त जानकारी कभी न भेजें।": {
+      "en": "Include your order or booking reference and a description of the issue. Never send passwords or payment credentials.",
+      "hi": "ऑर्डर या बुकिंग का संदर्भ और समस्या का विवरण भेजें। पासवर्ड या भुगतान की गुप्त जानकारी कभी न भेजें।"
+    },
+    "Help centre": {
+      "en": "Help centre",
+      "hi": "सहायता केंद्र"
+    },
+    "सहायता केंद्र": {
+      "en": "Help centre",
+      "hi": "सहायता केंद्र"
+    },
+    "Use your profile to find orders, appointments and puja progress. Open Wallet to see additions, deductions and refunds. If a section fails to load, use Try again.": {
+      "en": "Use your profile to find orders, appointments and puja progress. Open Wallet to see additions, deductions and refunds. If a section fails to load, use Try again.",
+      "hi": "ऑर्डर, अपॉइंटमेंट और पूजा की प्रगति अपनी प्रोफ़ाइल में देखें। जोड़ी गई राशि, कटौती और रिफंड वॉलेट में देखें। अनुभाग लोड न होने पर दोबारा प्रयास करें।"
+    },
+    "ऑर्डर, अपॉइंटमेंट और पूजा की प्रगति अपनी प्रोफ़ाइल में देखें। जोड़ी गई राशि, कटौती और रिफंड वॉलेट में देखें। अनुभाग लोड न होने पर दोबारा प्रयास करें।": {
+      "en": "Use your profile to find orders, appointments and puja progress. Open Wallet to see additions, deductions and refunds. If a section fails to load, use Try again.",
+      "hi": "ऑर्डर, अपॉइंटमेंट और पूजा की प्रगति अपनी प्रोफ़ाइल में देखें। जोड़ी गई राशि, कटौती और रिफंड वॉलेट में देखें। अनुभाग लोड न होने पर दोबारा प्रयास करें।"
+    },
+    "The selected product and variant are listed in your order summary. Certificate and energization details are shown when available.": {
+      "en": "The selected product and variant are listed in your order summary. Certificate and energization details are shown when available.",
+      "hi": "चुनी गई सामग्री और विकल्प ऑर्डर सारांश में दिखते हैं। उपलब्ध होने पर प्रमाण पत्र और अभिमंत्रण का विवरण दिखाया जाता है।"
+    },
+    "चुनी गई सामग्री और विकल्प ऑर्डर सारांश में दिखते हैं। उपलब्ध होने पर प्रमाण पत्र और अभिमंत्रण का विवरण दिखाया जाता है।": {
+      "en": "The selected product and variant are listed in your order summary. Certificate and energization details are shown when available.",
+      "hi": "चुनी गई सामग्री और विकल्प ऑर्डर सारांश में दिखते हैं। उपलब्ध होने पर प्रमाण पत्र और अभिमंत्रण का विवरण दिखाया जाता है।"
+    },
+    "Inclusions vary by seva. Check the selected offering, ritual video and optional prasad delivery before confirming.": {
+      "en": "Inclusions vary by seva. Check the selected offering, ritual video and optional prasad delivery before confirming.",
+      "hi": "क्या शामिल है यह सेवा पर निर्भर है। पुष्टि से पहले चुनी हुई पूजा, वीडियो और वैकल्पिक प्रसाद डिलीवरी देखें।"
+    },
+    "क्या शामिल है यह सेवा पर निर्भर है। पुष्टि से पहले चुनी हुई पूजा, वीडियो और वैकल्पिक प्रसाद डिलीवरी देखें।": {
+      "en": "Inclusions vary by seva. Check the selected offering, ritual video and optional prasad delivery before confirming.",
+      "hi": "क्या शामिल है यह सेवा पर निर्भर है। पुष्टि से पहले चुनी हुई पूजा, वीडियो और वैकल्पिक प्रसाद डिलीवरी देखें।"
+    },
+    "Text chat": {
+      "en": "Text chat",
+      "hi": "लिखित परामर्श"
+    },
+    "लिखित परामर्श": {
+      "en": "Text chat",
+      "hi": "लिखित परामर्श"
+    },
+    "Audio call": {
+      "en": "Audio call",
+      "hi": "ऑडियो कॉल"
+    },
+    "ऑडियो कॉल": {
+      "en": "Audio call",
+      "hi": "ऑडियो कॉल"
+    },
+    "Video call": {
+      "en": "Video call",
+      "hi": "वीडियो कॉल"
+    },
+    "वीडियो कॉल": {
+      "en": "Video call",
+      "hi": "वीडियो कॉल"
+    },
+    "Cancel & refund": {
+      "en": "Cancel & refund",
+      "hi": "रद्द करें और रिफंड पाएँ"
+    },
+    "रद्द करें और रिफंड पाएँ": {
+      "en": "Cancel & refund",
+      "hi": "रद्द करें और रिफंड पाएँ"
+    },
+    "Your balance and every payment, clearly organised.": {
+      "en": "Your balance and every payment, clearly organised.",
+      "hi": "आपकी राशि और हर भुगतान की स्पष्ट जानकारी।"
+    },
+    "आपकी राशि और हर भुगतान की स्पष्ट जानकारी।": {
+      "en": "Your balance and every payment, clearly organised.",
+      "hi": "आपकी राशि और हर भुगतान की स्पष्ट जानकारी।"
+    },
+    "Test credits · no bank payment is collected": {
+      "en": "Test credits · no bank payment is collected",
+      "hi": "टेस्ट क्रेडिट · बैंक से कोई भुगतान नहीं लिया जाता"
+    },
+    "टेस्ट क्रेडिट · बैंक से कोई भुगतान नहीं लिया जाता": {
+      "en": "Test credits · no bank payment is collected",
+      "hi": "टेस्ट क्रेडिट · बैंक से कोई भुगतान नहीं लिया जाता"
+    },
+    "Looking for an astrologer appointment?": {
+      "en": "Looking for an astrologer appointment?",
+      "hi": "ज्योतिषी से अपॉइंटमेंट चाहिए?"
+    },
+    "ज्योतिषी से अपॉइंटमेंट चाहिए?": {
+      "en": "Looking for an astrologer appointment?",
+      "hi": "ज्योतिषी से अपॉइंटमेंट चाहिए?"
+    },
+    "Manage appointments": {
+      "en": "Manage appointments",
+      "hi": "अपॉइंटमेंट प्रबंधित करें"
+    },
+    "अपॉइंटमेंट प्रबंधित करें": {
+      "en": "Manage appointments",
+      "hi": "अपॉइंटमेंट प्रबंधित करें"
+    },
+    "Book and manage a scheduled consultation.": {
+      "en": "Book and manage a scheduled consultation.",
+      "hi": "निर्धारित परामर्श बुक और प्रबंधित करें।"
+    },
+    "निर्धारित परामर्श बुक और प्रबंधित करें।": {
+      "en": "Book and manage a scheduled consultation.",
+      "hi": "निर्धारित परामर्श बुक और प्रबंधित करें।"
+    },
+    "परामर्श": {
+      "en": "Consultations",
+      "hi": "परामर्श"
+    },
+    "Continue": {
+      "en": "Continue",
+      "hi": "जारी रखें"
+    },
+    "जारी रखें": {
+      "en": "Continue",
+      "hi": "जारी रखें"
+    },
+    "Consultation with": {
+      "en": "Consultation with",
+      "hi": "इनके साथ परामर्श"
+    },
+    "इनके साथ परामर्श": {
+      "en": "Consultation with",
+      "hi": "इनके साथ परामर्श"
+    },
+    "Before you book": {
+      "en": "Before you book",
+      "hi": "बुकिंग से पहले जानें"
+    },
+    "बुकिंग से पहले जानें": {
+      "en": "Before you book",
+      "hi": "बुकिंग से पहले जानें"
+    },
+    "What is included": {
+      "en": "What is included",
+      "hi": "क्या शामिल है"
+    },
+    "क्या शामिल है": {
+      "en": "What is included",
+      "hi": "क्या शामिल है"
+    },
+    "What happens next": {
+      "en": "What happens next",
+      "hi": "आगे क्या होगा"
+    },
+    "आगे क्या होगा": {
+      "en": "What happens next",
+      "hi": "आगे क्या होगा"
+    },
+    "Cancellation & refunds": {
+      "en": "Cancellation & refunds",
+      "hi": "रद्द करना और रिफंड"
+    },
+    "रद्द करना और रिफंड": {
+      "en": "Cancellation & refunds",
+      "hi": "रद्द करना और रिफंड"
+    },
+    "Help & support": {
+      "en": "Help & support",
+      "hi": "सहायता और समर्थन"
+    },
+    "सहायता और समर्थन": {
+      "en": "Help & support",
+      "hi": "सहायता और समर्थन"
+    },
+    "The seller prepares your selected item, then dispatches it. Track progress from your profile. Delivery dates are estimates.": {
+      "en": "The seller prepares your selected item, then dispatches it. Track progress from your profile. Delivery dates are estimates.",
+      "hi": "विक्रेता आपकी चुनी सामग्री तैयार करके भेजता है। प्रगति अपनी प्रोफ़ाइल से देखें। डिलीवरी की तारीख अनुमानित है।"
+    },
+    "विक्रेता आपकी चुनी सामग्री तैयार करके भेजता है। प्रगति अपनी प्रोफ़ाइल से देखें। डिलीवरी की तारीख अनुमानित है।": {
+      "en": "The seller prepares your selected item, then dispatches it. Track progress from your profile. Delivery dates are estimates.",
+      "hi": "विक्रेता आपकी चुनी सामग्री तैयार करके भेजता है। प्रगति अपनी प्रोफ़ाइल से देखें। डिलीवरी की तारीख अनुमानित है।"
+    },
+    "The temple team confirms the schedule. Available ritual videos and prasad tracking appear in your bookings.": {
+      "en": "The temple team confirms the schedule. Available ritual videos and prasad tracking appear in your bookings.",
+      "hi": "मंदिर की टीम समय की पुष्टि करती है। उपलब्ध पूजा वीडियो और प्रसाद ट्रैकिंग आपकी बुकिंग में दिखते हैं।"
+    },
+    "मंदिर की टीम समय की पुष्टि करती है। उपलब्ध पूजा वीडियो और प्रसाद ट्रैकिंग आपकी बुकिंग में दिखते हैं।": {
+      "en": "The temple team confirms the schedule. Available ritual videos and prasad tracking appear in your bookings.",
+      "hi": "मंदिर की टीम समय की पुष्टि करती है। उपलब्ध पूजा वीडियो और प्रसाद ट्रैकिंग आपकी बुकिंग में दिखते हैं।"
+    },
+    "You can cancel while the booking is in the paid stage. The refund is credited to your wallet. Once the ritual progresses, cancellation is unavailable.": {
+      "en": "You can cancel while the booking is in the paid stage. The refund is credited to your wallet. Once the ritual progresses, cancellation is unavailable.",
+      "hi": "भुगतान वाले शुरुआती चरण में बुकिंग रद्द कर सकते हैं। रिफंड वॉलेट में आता है। पूजा की प्रक्रिया आगे बढ़ने पर रद्द करना उपलब्ध नहीं है।"
+    },
+    "भुगतान वाले शुरुआती चरण में बुकिंग रद्द कर सकते हैं। रिफंड वॉलेट में आता है। पूजा की प्रक्रिया आगे बढ़ने पर रद्द करना उपलब्ध नहीं है।": {
+      "en": "You can cancel while the booking is in the paid stage. The refund is credited to your wallet. Once the ritual progresses, cancellation is unavailable.",
+      "hi": "भुगतान वाले शुरुआती चरण में बुकिंग रद्द कर सकते हैं। रिफंड वॉलेट में आता है। पूजा की प्रक्रिया आगे बढ़ने पर रद्द करना उपलब्ध नहीं है।"
+    },
+    "Orders can be cancelled before energization or dispatch. Wallet payments are refunded to the wallet. Returns follow the policy shown for this product.": {
+      "en": "Orders can be cancelled before energization or dispatch. Wallet payments are refunded to the wallet. Returns follow the policy shown for this product.",
+      "hi": "अभिमंत्रण या भेजे जाने से पहले ऑर्डर रद्द कर सकते हैं। वॉलेट भुगतान का रिफंड वॉलेट में आता है। वापसी इस सामग्री की दिखाई गई नीति के अनुसार है।"
+    },
+    "अभिमंत्रण या भेजे जाने से पहले ऑर्डर रद्द कर सकते हैं। वॉलेट भुगतान का रिफंड वॉलेट में आता है। वापसी इस सामग्री की दिखाई गई नीति के अनुसार है।": {
+      "en": "Orders can be cancelled before energization or dispatch. Wallet payments are refunded to the wallet. Returns follow the policy shown for this product.",
+      "hi": "अभिमंत्रण या भेजे जाने से पहले ऑर्डर रद्द कर सकते हैं। वॉलेट भुगतान का रिफंड वॉलेट में आता है। वापसी इस सामग्री की दिखाई गई नीति के अनुसार है।"
+    },
+    "Photo unavailable": {
+      "en": "Photo unavailable",
+      "hi": "तस्वीर उपलब्ध नहीं है"
+    },
+    "तस्वीर उपलब्ध नहीं है": {
+      "en": "Photo unavailable",
+      "hi": "तस्वीर उपलब्ध नहीं है"
+    },
+    "जारी": {
+      "en": "Active",
+      "hi": "जारी"
+    },
+    "Preferred Time": {
+      "en": "Preferred Time",
+      "hi": "पसंदीदा समय"
+    },
+    "पसंदीदा समय": {
+      "en": "Preferred Time",
+      "hi": "पसंदीदा समय"
+    },
+    "Credentials & expertise": {
+      "en": "Credentials & expertise",
+      "hi": "योग्यता और विशेषज्ञता"
+    },
+    "योग्यता और विशेषज्ञता": {
+      "en": "Credentials & expertise",
+      "hi": "योग्यता और विशेषज्ञता"
+    },
+    "Verified by Astro Jyotish": {
+      "en": "Verified by Astro Jyotish",
+      "hi": "Astro Jyotish द्वारा सत्यापित"
+    },
+    "एस्ट्रो ज्योतिष द्वारा सत्यापित": {
+      "en": "Verified by Astro Jyotish",
+      "hi": "एस्ट्रो ज्योतिष द्वारा सत्यापित"
+    },
+    "Human astrologer": {
+      "en": "Human astrologer",
+      "hi": "मानव ज्योतिषी"
+    },
+    "मानव ज्योतिषी": {
+      "en": "Human astrologer",
+      "hi": "मानव ज्योतिषी"
+    },
+    "AI astrologer": {
+      "en": "AI astrologer",
+      "hi": "एआई ज्योतिषी"
+    },
+    "एआई ज्योतिषी": {
+      "en": "AI astrologer",
+      "hi": "एआई ज्योतिषी"
+    },
+    "Personal one-to-one consultation with a human astrologer.": {
+      "en": "Personal one-to-one consultation with a human astrologer.",
+      "hi": "मानव ज्योतिषी के साथ व्यक्तिगत परामर्श।"
+    },
+    "मानव ज्योतिषी के साथ व्यक्तिगत परामर्श।": {
+      "en": "Personal one-to-one consultation with a human astrologer.",
+      "hi": "मानव ज्योतिषी के साथ व्यक्तिगत परामर्श।"
+    },
+    "This is an AI-guided consultation. Responses are generated by an AI persona, not by a human astrologer.": {
+      "en": "This is an AI-guided consultation. Responses are generated by an AI persona, not by a human astrologer.",
+      "hi": "यह एआई-आधारित परामर्श है। उत्तर एआई पात्र द्वारा बनते हैं, किसी मानव ज्योतिषी द्वारा नहीं।"
+    },
+    "यह एआई-आधारित परामर्श है। उत्तर एआई पात्र द्वारा बनते हैं, किसी मानव ज्योतिषी द्वारा नहीं।": {
+      "en": "This is an AI-guided consultation. Responses are generated by an AI persona, not by a human astrologer.",
+      "hi": "यह एआई-आधारित परामर्श है। उत्तर एआई पात्र द्वारा बनते हैं, किसी मानव ज्योतिषी द्वारा नहीं।"
+    },
+    "{n} वर्षों का अनुभव": {
+      "en": "{n} years of experience",
+      "hi": "{n} वर्षों का अनुभव"
+    },
+    "{n} consultations recorded": {
+      "en": "{n} consultations recorded",
+      "hi": "{n} परामर्श दर्ज"
+    },
+    "{n} परामर्श दर्ज": {
+      "en": "{n} consultations recorded",
+      "hi": "{n} परामर्श दर्ज"
+    },
+    "Rated {r}/5 from {n} reviews": {
+      "en": "Rated {r}/5 from {n} reviews",
+      "hi": "{n} समीक्षाओं से {r}/5 रेटिंग"
+    },
+    "{n} समीक्षाओं से {r}/5 रेटिंग": {
+      "en": "Rated {r}/5 from {n} reviews",
+      "hi": "{n} समीक्षाओं से {r}/5 रेटिंग"
+    },
+    "Speaks {list}": {
+      "en": "Speaks {list}",
+      "hi": "{list} में बात करते हैं"
+    },
+    "{list} में बात करते हैं": {
+      "en": "Speaks {list}",
+      "hi": "{list} में बात करते हैं"
+    },
+    "Focus areas: {list}": {
+      "en": "Focus areas: {list}",
+      "hi": "विशेषज्ञता: {list}"
+    },
+    "विशेषज्ञता: {list}": {
+      "en": "Focus areas: {list}",
+      "hi": "विशेषज्ञता: {list}"
+    },
+    "Why consult this expert?": {
+      "en": "Why consult this expert?",
+      "hi": "इन विशेषज्ञ से परामर्श क्यों लें?"
+    },
+    "इन विशेषज्ञ से परामर्श क्यों लें?": {
+      "en": "Why consult this expert?",
+      "hi": "इन विशेषज्ञ से परामर्श क्यों लें?"
+    },
+    "More details will appear as this expert completes consultations.": {
+      "en": "More details will appear as this expert completes consultations.",
+      "hi": "जैसे-जैसे परामर्श पूरे होंगे, अधिक जानकारी यहाँ दिखेगी।"
+    },
+    "जैसे-जैसे परामर्श पूरे होंगे, अधिक जानकारी यहाँ दिखेगी।": {
+      "en": "More details will appear as this expert completes consultations.",
+      "hi": "जैसे-जैसे परामर्श पूरे होंगे, अधिक जानकारी यहाँ दिखेगी।"
+    },
+    "Client reviews": {
+      "en": "Client reviews",
+      "hi": "ग्राहक समीक्षाएँ"
+    },
+    "ग्राहक समीक्षाएँ": {
+      "en": "Client reviews",
+      "hi": "ग्राहक समीक्षाएँ"
+    },
+    "No client reviews yet.": {
+      "en": "No client reviews yet.",
+      "hi": "अभी कोई ग्राहक समीक्षा नहीं है।"
+    },
+    "अभी कोई ग्राहक समीक्षा नहीं है।": {
+      "en": "No client reviews yet.",
+      "hi": "अभी कोई ग्राहक समीक्षा नहीं है।"
+    },
+    "About": {
+      "en": "About",
+      "hi": "परिचय"
+    },
+    "परिचय": {
+      "en": "About",
+      "hi": "परिचय"
+    },
+    "भाषाएँ": {
+      "en": "Languages",
+      "hi": "भाषाएँ"
+    },
+    "Appointment modes": {
+      "en": "Appointment modes",
+      "hi": "अपॉइंटमेंट के प्रकार"
+    },
+    "अपॉइंटमेंट के प्रकार": {
+      "en": "Appointment modes",
+      "hi": "अपॉइंटमेंट के प्रकार"
+    },
+    "Specialisations": {
+      "en": "Specialisations",
+      "hi": "विशेषज्ञता के क्षेत्र"
+    },
+    "विशेषज्ञता के क्षेत्र": {
+      "en": "Specialisations",
+      "hi": "विशेषज्ञता के क्षेत्र"
+    },
+    "Rate per minute": {
+      "en": "Rate per minute",
+      "hi": "प्रति मिनट शुल्क"
+    },
+    "प्रति मिनट शुल्क": {
+      "en": "Rate per minute",
+      "hi": "प्रति मिनट शुल्क"
+    },
+    "Free": {
+      "en": "Free",
+      "hi": "निःशुल्क"
+    },
+    "निःशुल्क": {
+      "en": "Free",
+      "hi": "निःशुल्क"
+    },
+    "/ मिनट": {
+      "en": "/ min",
+      "hi": "/ मिनट"
+    },
+    "Estimated session cost": {
+      "en": "Estimated session cost",
+      "hi": "सत्र का अनुमानित शुल्क"
+    },
+    "सत्र का अनुमानित शुल्क": {
+      "en": "Estimated session cost",
+      "hi": "सत्र का अनुमानित शुल्क"
+    },
+    "{n} min": {
+      "en": "{n} min",
+      "hi": "{n} मिनट"
+    },
+    "{n} मिनट": {
+      "en": "{n} min",
+      "hi": "{n} मिनट"
+    },
+    "Your wallet balance": {
+      "en": "Your wallet balance",
+      "hi": "आपके वॉलेट में राशि"
+    },
+    "आपके वॉलेट में राशि": {
+      "en": "Your wallet balance",
+      "hi": "आपके वॉलेट में राशि"
+    },
+    "Sign in to see your wallet balance and book.": {
+      "en": "Sign in to see your wallet balance and book.",
+      "hi": "वॉलेट राशि देखने और बुक करने के लिए साइन इन करें।"
+    },
+    "वॉलेट राशि देखने और बुक करने के लिए साइन इन करें।": {
+      "en": "Sign in to see your wallet balance and book.",
+      "hi": "वॉलेट राशि देखने और बुक करने के लिए साइन इन करें।"
+    },
+    "Your balance is ₹{n} short for a {m}-minute session.": {
+      "en": "Your balance is ₹{n} short for a {m}-minute session.",
+      "hi": "{m} मिनट के सत्र के लिए आपकी राशि ₹{n} कम है।"
+    },
+    "{m} मिनट के सत्र के लिए आपकी राशि ₹{n} कम है।": {
+      "en": "Your balance is ₹{n} short for a {m}-minute session.",
+      "hi": "{m} मिनट के सत्र के लिए आपकी राशि ₹{n} कम है।"
+    },
+    "Wallet balance ₹{b} covers this session.": {
+      "en": "Wallet balance ₹{b} covers this session.",
+      "hi": "वॉलेट में ₹{b} हैं, जो इस सत्र के लिए पर्याप्त हैं।"
+    },
+    "वॉलेट में ₹{b} हैं, जो इस सत्र के लिए पर्याप्त हैं।": {
+      "en": "Wallet balance ₹{b} covers this session.",
+      "hi": "वॉलेट में ₹{b} हैं, जो इस सत्र के लिए पर्याप्त हैं।"
+    },
+    "Balance ₹{b}. Add ₹{n} more to confirm.": {
+      "en": "Balance ₹{b}. Add ₹{n} more to confirm.",
+      "hi": "राशि ₹{b}। पुष्टि के लिए ₹{n} और जोड़ें।"
+    },
+    "राशि ₹{b}। पुष्टि के लिए ₹{n} और जोड़ें।": {
+      "en": "Balance ₹{b}. Add ₹{n} more to confirm.",
+      "hi": "राशि ₹{b}। पुष्टि के लिए ₹{n} और जोड़ें।"
+    },
+    "Book an appointment": {
+      "en": "Book an appointment",
+      "hi": "अपॉइंटमेंट बुक करें"
+    },
+    "अपॉइंटमेंट बुक करें": {
+      "en": "Book an appointment",
+      "hi": "अपॉइंटमेंट बुक करें"
+    },
+    "Start consultation now": {
+      "en": "Start consultation now",
+      "hi": "अभी परामर्श शुरू करें"
+    },
+    "अभी परामर्श शुरू करें": {
+      "en": "Start consultation now",
+      "hi": "अभी परामर्श शुरू करें"
+    },
+    "Attach birth chart": {
+      "en": "Attach birth chart",
+      "hi": "जन्म कुंडली जोड़ें"
+    },
+    "जन्म कुंडली जोड़ें": {
+      "en": "Attach birth chart",
+      "hi": "जन्म कुंडली जोड़ें"
+    },
+    "Currently offline. You can still book a future appointment.": {
+      "en": "Currently offline. You can still book a future appointment.",
+      "hi": "अभी ऑफ़लाइन हैं। आप आगे का अपॉइंटमेंट बुक कर सकते हैं।"
+    },
+    "अभी ऑफ़लाइन हैं। आप आगे का अपॉइंटमेंट बुक कर सकते हैं।": {
+      "en": "Currently offline. You can still book a future appointment.",
+      "hi": "अभी ऑफ़लाइन हैं। आप आगे का अपॉइंटमेंट बुक कर सकते हैं।"
+    },
+    "In a consultation right now. Book a later slot or try again shortly.": {
+      "en": "In a consultation right now. Book a later slot or try again shortly.",
+      "hi": "अभी परामर्श में हैं। बाद का समय बुक करें या कुछ देर में प्रयास करें।"
+    },
+    "अभी परामर्श में हैं। बाद का समय बुक करें या कुछ देर में प्रयास करें।": {
+      "en": "In a consultation right now. Book a later slot or try again shortly.",
+      "hi": "अभी परामर्श में हैं। बाद का समय बुक करें या कुछ देर में प्रयास करें।"
+    },
+    "Online now": {
+      "en": "Online now",
+      "hi": "अभी ऑनलाइन"
+    },
+    "अभी ऑनलाइन": {
+      "en": "Online now",
+      "hi": "अभी ऑनलाइन"
+    },
+    "In a consultation": {
+      "en": "In a consultation",
+      "hi": "परामर्श में व्यस्त"
+    },
+    "परामर्श में व्यस्त": {
+      "en": "In a consultation",
+      "hi": "परामर्श में व्यस्त"
+    },
+    "ऑफ़लाइन": {
+      "en": "Offline",
+      "hi": "ऑफ़लाइन"
+    },
+    "Free cancellation until the appointment starts; the full fee returns to your wallet. Once it has started, it cannot be cancelled.": {
+      "en": "Free cancellation until the appointment starts; the full fee returns to your wallet. Once it has started, it cannot be cancelled.",
+      "hi": "अपॉइंटमेंट शुरू होने तक निःशुल्क रद्द करें; पूरा शुल्क वॉलेट में लौटता है। शुरू होने के बाद रद्द नहीं हो सकता।"
+    },
+    "अपॉइंटमेंट शुरू होने तक निःशुल्क रद्द करें; पूरा शुल्क वॉलेट में लौटता है। शुरू होने के बाद रद्द नहीं हो सकता।": {
+      "en": "Free cancellation until the appointment starts; the full fee returns to your wallet. Once it has started, it cannot be cancelled.",
+      "hi": "अपॉइंटमेंट शुरू होने तक निःशुल्क रद्द करें; पूरा शुल्क वॉलेट में लौटता है। शुरू होने के बाद रद्द नहीं हो सकता।"
+    },
+    "booked": {
+      "en": "booked",
+      "hi": "बुक है"
+    },
+    "बुक है": {
+      "en": "booked",
+      "hi": "बुक है"
+    },
+    "passed": {
+      "en": "passed",
+      "hi": "बीत गया"
+    },
+    "बीत गया": {
+      "en": "passed",
+      "hi": "बीत गया"
+    },
+    "No free slots on this date. Please choose another date.": {
+      "en": "No free slots on this date. Please choose another date.",
+      "hi": "इस तारीख पर कोई खाली समय नहीं है। कृपया दूसरी तारीख चुनें।"
+    },
+    "इस तारीख पर कोई खाली समय नहीं है। कृपया दूसरी तारीख चुनें।": {
+      "en": "No free slots on this date. Please choose another date.",
+      "hi": "इस तारीख पर कोई खाली समय नहीं है। कृपया दूसरी तारीख चुनें।"
+    },
+    "We could not load this profile.": {
+      "en": "We could not load this profile.",
+      "hi": "यह प्रोफ़ाइल लोड नहीं हो सकी।"
+    },
+    "यह प्रोफ़ाइल लोड नहीं हो सकी।": {
+      "en": "We could not load this profile.",
+      "hi": "यह प्रोफ़ाइल लोड नहीं हो सकी।"
+    },
+    "Astrologer not found": {
+      "en": "Astrologer not found",
+      "hi": "ज्योतिषी नहीं मिले"
+    },
+    "ज्योतिषी नहीं मिले": {
+      "en": "Astrologer not found",
+      "hi": "ज्योतिषी नहीं मिले"
+    },
+    "This profile does not exist or is not available right now.": {
+      "en": "This profile does not exist or is not available right now.",
+      "hi": "यह प्रोफ़ाइल मौजूद नहीं है या अभी उपलब्ध नहीं है।"
+    },
+    "यह प्रोफ़ाइल मौजूद नहीं है या अभी उपलब्ध नहीं है।": {
+      "en": "This profile does not exist or is not available right now.",
+      "hi": "यह प्रोफ़ाइल मौजूद नहीं है या अभी उपलब्ध नहीं है।"
+    },
+    "Browse all astrologers": {
+      "en": "Browse all astrologers",
+      "hi": "सभी ज्योतिषी देखें"
+    },
+    "सभी ज्योतिषी देखें": {
+      "en": "Browse all astrologers",
+      "hi": "सभी ज्योतिषी देखें"
+    },
+    "Similar astrologers": {
+      "en": "Similar astrologers",
+      "hi": "मिलते-जुलते ज्योतिषी"
+    },
+    "मिलते-जुलते ज्योतिषी": {
+      "en": "Similar astrologers",
+      "hi": "मिलते-जुलते ज्योतिषी"
+    },
+    "देखें": {
+      "en": "View",
+      "hi": "देखें"
+    },
+    "Loading astrologer profile…": {
+      "en": "Loading astrologer profile…",
+      "hi": "ज्योतिषी की प्रोफ़ाइल लोड हो रही है…"
+    },
+    "ज्योतिषी की प्रोफ़ाइल लोड हो रही है…": {
+      "en": "Loading astrologer profile…",
+      "hi": "ज्योतिषी की प्रोफ़ाइल लोड हो रही है…"
+    },
+    "Consultation mode": {
+      "en": "Consultation mode",
+      "hi": "परामर्श का प्रकार"
+    },
+    "परामर्श का प्रकार": {
+      "en": "Consultation mode",
+      "hi": "परामर्श का प्रकार"
+    },
+    "Your journey": {
+      "en": "Your journey",
+      "hi": "आपकी यात्रा"
+    },
+    "आपकी यात्रा": {
+      "en": "Your journey",
+      "hi": "आपकी यात्रा"
+    },
+    "From guidance to action, in four steps": {
+      "en": "From guidance to action, in four steps",
+      "hi": "मार्गदर्शन से कर्म तक, चार चरणों में"
+    },
+    "मार्गदर्शन से कर्म तक, चार चरणों में": {
+      "en": "From guidance to action, in four steps",
+      "hi": "मार्गदर्शन से कर्म तक, चार चरणों में"
+    },
+    "Speak with an astrologer, understand your chart, perform a puja and choose supportive items, all in one place.": {
+      "en": "Speak with an astrologer, understand your chart, perform a puja and choose supportive items, all in one place.",
+      "hi": "ज्योतिषी से बात करें, कुंडली समझें, पूजा करवाएँ और सहायक सामग्री चुनें, सब एक ही जगह।"
+    },
+    "ज्योतिषी से बात करें, कुंडली समझें, पूजा करवाएँ और सहायक सामग्री चुनें, सब एक ही जगह।": {
+      "en": "Speak with an astrologer, understand your chart, perform a puja and choose supportive items, all in one place.",
+      "hi": "ज्योतिषी से बात करें, कुंडली समझें, पूजा करवाएँ और सहायक सामग्री चुनें, सब एक ही जगह।"
+    },
+    "Consult an astrologer": {
+      "en": "Consult an astrologer",
+      "hi": "ज्योतिषी से परामर्श"
+    },
+    "ज्योतिषी से परामर्श": {
+      "en": "Consult an astrologer",
+      "hi": "ज्योतिषी से परामर्श"
+    },
+    "Chat, call or book a time with an astrologer for your question.": {
+      "en": "Chat, call or book a time with an astrologer for your question.",
+      "hi": "अपने प्रश्न के लिए ज्योतिषी से चैट, कॉल या समय बुक करें।"
+    },
+    "अपने प्रश्न के लिए ज्योतिषी से चैट, कॉल या समय बुक करें।": {
+      "en": "Chat, call or book a time with an astrologer for your question.",
+      "hi": "अपने प्रश्न के लिए ज्योतिषी से चैट, कॉल या समय बुक करें।"
+    },
+    "Kundli & Vedic tools": {
+      "en": "Kundli & Vedic tools",
+      "hi": "कुंडली और वैदिक साधन"
+    },
+    "कुंडली और वैदिक साधन": {
+      "en": "Kundli & Vedic tools",
+      "hi": "कुंडली और वैदिक साधन"
+    },
+    "Birth chart, Kundli matching, Panchang, Dosha and Sade Sati checks.": {
+      "en": "Birth chart, Kundli matching, Panchang, Dosha and Sade Sati checks.",
+      "hi": "जन्म कुंडली, कुंडली मिलान, पंचांग, दोष और साढ़ेसाती की जाँच।"
+    },
+    "जन्म कुंडली, कुंडली मिलान, पंचांग, दोष और साढ़ेसाती की जाँच।": {
+      "en": "Birth chart, Kundli matching, Panchang, Dosha and Sade Sati checks.",
+      "hi": "जन्म कुंडली, कुंडली मिलान, पंचांग, दोष और साढ़ेसाती की जाँच।"
+    },
+    "Open tools": {
+      "en": "Open tools",
+      "hi": "साधन खोलें"
+    },
+    "साधन खोलें": {
+      "en": "Open tools",
+      "hi": "साधन खोलें"
+    },
+    "Book a sankalp puja at a temple and follow its progress.": {
+      "en": "Book a sankalp puja at a temple and follow its progress.",
+      "hi": "मंदिर में संकल्प पूजा बुक करें और उसकी प्रगति देखें।"
+    },
+    "मंदिर में संकल्प पूजा बुक करें और उसकी प्रगति देखें।": {
+      "en": "Book a sankalp puja at a temple and follow its progress.",
+      "hi": "मंदिर में संकल्प पूजा बुक करें और उसकी प्रगति देखें।"
+    },
+    "Rudraksha, gemstones and yantras with clear product details.": {
+      "en": "Rudraksha, gemstones and yantras with clear product details.",
+      "hi": "रुद्राक्ष, रत्न और यंत्र, स्पष्ट सामग्री विवरण के साथ।"
+    },
+    "रुद्राक्ष, रत्न और यंत्र, स्पष्ट सामग्री विवरण के साथ।": {
+      "en": "Rudraksha, gemstones and yantras with clear product details.",
+      "hi": "रुद्राक्ष, रत्न और यंत्र, स्पष्ट सामग्री विवरण के साथ।"
+    },
+    "Shop Astro Mall": {
+      "en": "Shop Astro Mall",
+      "hi": "एस्ट्रो मॉल देखें"
+    },
+    "Only clients who have consulted this astrologer can post a review, once.": {
+      "en": "Only clients who have consulted this astrologer can post a review, once.",
+      "hi": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने इन ज्योतिषी से परामर्श लिया हो, एक बार।"
+    },
+    "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने इन ज्योतिषी से परामर्श लिया हो, एक बार।": {
+      "en": "Only clients who have consulted this astrologer can post a review, once.",
+      "hi": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने इन ज्योतिषी से परामर्श लिया हो, एक बार।"
+    },
+    "Your rating": {
+      "en": "Your rating",
+      "hi": "आपकी रेटिंग"
+    },
+    "आपकी रेटिंग": {
+      "en": "Your rating",
+      "hi": "आपकी रेटिंग"
+    },
+    "Your review": {
+      "en": "Your review",
+      "hi": "आपकी समीक्षा"
+    },
+    "आपकी समीक्षा": {
+      "en": "Your review",
+      "hi": "आपकी समीक्षा"
+    },
+    "Post review": {
+      "en": "Post review",
+      "hi": "समीक्षा भेजें"
+    },
+    "Thank you! Your review has been posted.": {
+      "en": "Thank you! Your review has been posted.",
+      "hi": "धन्यवाद! आपकी समीक्षा जुड़ गई है।"
+    },
+    "धन्यवाद! आपकी समीक्षा जुड़ गई है।": {
+      "en": "Thank you! Your review has been posted.",
+      "hi": "धन्यवाद! आपकी समीक्षा जुड़ गई है।"
+    },
+    "Your data": {
+      "en": "Your data",
+      "hi": "आपका डेटा"
+    },
+    "आपका डेटा": {
+      "en": "Your data",
+      "hi": "आपका डेटा"
+    },
+    "Download my data (JSON)": {
+      "en": "Download my data (JSON)",
+      "hi": "मेरा डेटा डाउनलोड करें (JSON)"
+    },
+    "मेरा डेटा डाउनलोड करें (JSON)": {
+      "en": "Download my data (JSON)",
+      "hi": "मेरा डेटा डाउनलोड करें (JSON)"
+    },
+    "Sign in to download or delete your data.": {
+      "en": "Sign in to download or delete your data.",
+      "hi": "अपना डेटा डाउनलोड या हटाने के लिए साइन इन करें।"
+    },
+    "अपना डेटा डाउनलोड या हटाने के लिए साइन इन करें।": {
+      "en": "Sign in to download or delete your data.",
+      "hi": "अपना डेटा डाउनलोड या हटाने के लिए साइन इन करें।"
+    },
+    "Deleting removes your profile, saved charts, chats and wishlist. Payment, order and booking records are kept without personal details. This cannot be undone.": {
+      "en": "Deleting removes your profile, saved charts, chats and wishlist. Payment, order and booking records are kept without personal details. This cannot be undone.",
+      "hi": "हटाने पर आपकी प्रोफ़ाइल, सहेजी कुंडली, चैट और विशलिस्ट मिट जाएँगी। भुगतान, ऑर्डर और बुकिंग के रिकॉर्ड व्यक्तिगत जानकारी के बिना रखे जाते हैं। इसे वापस नहीं किया जा सकता।"
+    },
+    "हटाने पर आपकी प्रोफ़ाइल, सहेजी कुंडली, चैट और विशलिस्ट मिट जाएँगी। भुगतान, ऑर्डर और बुकिंग के रिकॉर्ड व्यक्तिगत जानकारी के बिना रखे जाते हैं। इसे वापस नहीं किया जा सकता।": {
+      "en": "Deleting removes your profile, saved charts, chats and wishlist. Payment, order and booking records are kept without personal details. This cannot be undone.",
+      "hi": "हटाने पर आपकी प्रोफ़ाइल, सहेजी कुंडली, चैट और विशलिस्ट मिट जाएँगी। भुगतान, ऑर्डर और बुकिंग के रिकॉर्ड व्यक्तिगत जानकारी के बिना रखे जाते हैं। इसे वापस नहीं किया जा सकता।"
+    },
+    "Confirm with your password": {
+      "en": "Confirm with your password",
+      "hi": "अपने पासवर्ड से पुष्टि करें"
+    },
+    "अपने पासवर्ड से पुष्टि करें": {
+      "en": "Confirm with your password",
+      "hi": "अपने पासवर्ड से पुष्टि करें"
+    },
+    "I understand any wallet balance will be forfeited": {
+      "en": "I understand any wallet balance will be forfeited",
+      "hi": "मैं समझता/समझती हूँ कि वॉलेट की शेष राशि समाप्त हो जाएगी"
+    },
+    "मैं समझता/समझती हूँ कि वॉलेट की शेष राशि समाप्त हो जाएगी": {
+      "en": "I understand any wallet balance will be forfeited",
+      "hi": "मैं समझता/समझती हूँ कि वॉलेट की शेष राशि समाप्त हो जाएगी"
+    },
+    "Delete my account": {
+      "en": "Delete my account",
+      "hi": "मेरा खाता हटाएँ"
+    },
+    "मेरा खाता हटाएँ": {
+      "en": "Delete my account",
+      "hi": "मेरा खाता हटाएँ"
+    },
+    "Delete your account permanently?": {
+      "en": "Delete your account permanently?",
+      "hi": "क्या आप अपना खाता हमेशा के लिए हटाना चाहते हैं?"
+    },
+    "क्या आप अपना खाता हमेशा के लिए हटाना चाहते हैं?": {
+      "en": "Delete your account permanently?",
+      "hi": "क्या आप अपना खाता हमेशा के लिए हटाना चाहते हैं?"
+    },
+    "Search": {
+      "en": "Search",
+      "hi": "खोजें"
+    },
+    "खोजें": {
+      "en": "Search",
+      "hi": "खोजें"
+    },
+    "Search astrologers, temples or products": {
+      "en": "Search astrologers, temples or products",
+      "hi": "ज्योतिषी, मंदिर या सामग्री खोजें"
+    },
+    "ज्योतिषी, मंदिर या सामग्री खोजें": {
+      "en": "Search astrologers, temples or products",
+      "hi": "ज्योतिषी, मंदिर या सामग्री खोजें"
+    },
+    "Type at least two letters. Press / anywhere to open search.": {
+      "en": "Type at least two letters. Press / anywhere to open search.",
+      "hi": "कम से कम दो अक्षर लिखें। कहीं भी / दबाकर खोज खोलें।"
+    },
+    "कम से कम दो अक्षर लिखें। कहीं भी / दबाकर खोज खोलें।": {
+      "en": "Type at least two letters. Press / anywhere to open search.",
+      "hi": "कम से कम दो अक्षर लिखें। कहीं भी / दबाकर खोज खोलें।"
+    },
+    "ज्योतिषी": {
+      "en": "Astrologers",
+      "hi": "ज्योतिषी"
+    },
+    "Nothing matches your search.": {
+      "en": "Nothing matches your search.",
+      "hi": "आपकी खोज से कुछ नहीं मिला।"
+    },
+    "आपकी खोज से कुछ नहीं मिला।": {
+      "en": "Nothing matches your search.",
+      "hi": "आपकी खोज से कुछ नहीं मिला।"
+    },
+    "How Astro Jyotish works": {
+      "en": "How Astro Jyotish works",
+      "hi": "एस्ट्रो ज्योतिष कैसे काम करता है"
+    },
+    "एस्ट्रो ज्योतिष कैसे काम करता है": {
+      "en": "How Astro Jyotish works",
+      "hi": "एस्ट्रो ज्योतिष कैसे काम करता है"
+    },
+    "Plain facts about the service, so you know what to expect.": {
+      "en": "Plain facts about the service, so you know what to expect.",
+      "hi": "सेवा के बारे में सीधी जानकारी, ताकि आपको पता रहे क्या अपेक्षा रखनी है।"
+    },
+    "सेवा के बारे में सीधी जानकारी, ताकि आपको पता रहे क्या अपेक्षा रखनी है।": {
+      "en": "Plain facts about the service, so you know what to expect.",
+      "hi": "सेवा के बारे में सीधी जानकारी, ताकि आपको पता रहे क्या अपेक्षा रखनी है।"
+    },
+    "{all} astrologers listed: {human} human and {ai} AI-guided. Each profile says which kind it is.": {
+      "en": "{all} astrologers listed: {human} human and {ai} AI-guided. Each profile says which kind it is.",
+      "hi": "{all} ज्योतिषी सूचीबद्ध: {human} मानव और {ai} एआई-आधारित। हर प्रोफ़ाइल में बताया गया है कि कौन सा प्रकार है।"
+    },
+    "{all} ज्योतिषी सूचीबद्ध: {human} मानव और {ai} एआई-आधारित। हर प्रोफ़ाइल में बताया गया है कि कौन सा प्रकार है।": {
+      "en": "{all} astrologers listed: {human} human and {ai} AI-guided. Each profile says which kind it is.",
+      "hi": "{all} ज्योतिषी सूचीबद्ध: {human} मानव और {ai} एआई-आधारित। हर प्रोफ़ाइल में बताया गया है कि कौन सा प्रकार है।"
+    },
+    "AI astrologers are always labelled as AI.": {
+      "en": "AI astrologers are always labelled as AI.",
+      "hi": "एआई ज्योतिषी हमेशा एआई के रूप में दर्शाए जाते हैं।"
+    },
+    "एआई ज्योतिषी हमेशा एआई के रूप में दर्शाए जाते हैं।": {
+      "en": "AI astrologers are always labelled as AI.",
+      "hi": "एआई ज्योतिषी हमेशा एआई के रूप में दर्शाए जाते हैं।"
+    },
+    "A cancelled appointment before it starts is refunded in full to your wallet.": {
+      "en": "A cancelled appointment before it starts is refunded in full to your wallet.",
+      "hi": "शुरू होने से पहले रद्द किए गए अपॉइंटमेंट का पूरा शुल्क आपके वॉलेट में लौटाया जाता है।"
+    },
+    "शुरू होने से पहले रद्द किए गए अपॉइंटमेंट का पूरा शुल्क आपके वॉलेट में लौटाया जाता है।": {
+      "en": "A cancelled appointment before it starts is refunded in full to your wallet.",
+      "hi": "शुरू होने से पहले रद्द किए गए अपॉइंटमेंट का पूरा शुल्क आपके वॉलेट में लौटाया जाता है।"
+    },
+    "Only clients who have consulted an astrologer can review them.": {
+      "en": "Only clients who have consulted an astrologer can review them.",
+      "hi": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने ज्योतिषी से परामर्श लिया हो।"
+    },
+    "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने ज्योतिषी से परामर्श लिया हो।": {
+      "en": "Only clients who have consulted an astrologer can review them.",
+      "hi": "केवल वही ग्राहक समीक्षा लिख सकते हैं जिन्होंने ज्योतिषी से परामर्श लिया हो।"
+    },
+    "You can download or delete your personal data any time from Privacy & account controls.": {
+      "en": "You can download or delete your personal data any time from Privacy & account controls.",
+      "hi": "आप गोपनीयता और खाते के नियंत्रण से अपना व्यक्तिगत डेटा कभी भी डाउनलोड या हटा सकते हैं।"
+    },
+    "आप गोपनीयता और खाते के नियंत्रण से अपना व्यक्तिगत डेटा कभी भी डाउनलोड या हटा सकते हैं।": {
+      "en": "You can download or delete your personal data any time from Privacy & account controls.",
+      "hi": "आप गोपनीयता और खाते के नियंत्रण से अपना व्यक्तिगत डेटा कभी भी डाउनलोड या हटा सकते हैं।"
+    },
+    "Verified astrologer": {
+      "en": "Verified astrologer",
+      "hi": "सत्यापित ज्योतिषी"
+    },
+    "सत्यापित ज्योतिषी": {
+      "en": "Verified astrologers",
+      "hi": "सत्यापित ज्योतिषी"
+    },
+    "Instant guidance": {
+      "en": "Instant guidance",
+      "hi": "तुरंत मार्गदर्शन"
+    },
+    "तुरंत मार्गदर्शन": {
+      "en": "Instant guidance",
+      "hi": "तुरंत मार्गदर्शन"
+    },
+    "This is an automated guidance service, not a consultation with a human astrologer.": {
+      "en": "This is an automated guidance service, not a consultation with a human astrologer.",
+      "hi": "यह स्वचालित मार्गदर्शन सेवा है, किसी मानव ज्योतिषी के साथ परामर्श नहीं।"
+    },
+    "यह स्वचालित मार्गदर्शन सेवा है, किसी मानव ज्योतिषी के साथ परामर्श नहीं।": {
+      "en": "This is an automated guidance service, not a consultation with a human astrologer.",
+      "hi": "यह स्वचालित मार्गदर्शन सेवा है, किसी मानव ज्योतिषी के साथ परामर्श नहीं।"
+    },
+    "{all} profiles listed: {human} verified astrologers and {ai} instant guidance services. Each profile clearly shows its type.": {
+      "en": "{all} profiles listed: {human} verified astrologers and {ai} instant guidance services. Each profile clearly shows its type.",
+      "hi": "{all} प्रोफ़ाइल सूचीबद्ध हैं: {human} सत्यापित ज्योतिषी और {ai} तुरंत मार्गदर्शन सेवाएँ। हर प्रोफ़ाइल में उसका प्रकार स्पष्ट है।"
+    },
+    "{all} प्रोफ़ाइल सूचीबद्ध हैं: {human} सत्यापित ज्योतिषी और {ai} तुरंत मार्गदर्शन सेवाएँ। हर प्रोफ़ाइल में उसका प्रकार स्पष्ट है।": {
+      "en": "{all} profiles listed: {human} verified astrologers and {ai} instant guidance services. Each profile clearly shows its type.",
+      "hi": "{all} प्रोफ़ाइल सूचीबद्ध हैं: {human} सत्यापित ज्योतिषी और {ai} तुरंत मार्गदर्शन सेवाएँ। हर प्रोफ़ाइल में उसका प्रकार स्पष्ट है।"
+    },
+    "Instant guidance services are clearly marked.": {
+      "en": "Instant guidance services are clearly marked.",
+      "hi": "तुरंत मार्गदर्शन सेवाएँ स्पष्ट रूप से दर्शाई जाती हैं।"
+    },
+    "तुरंत मार्गदर्शन सेवाएँ स्पष्ट रूप से दर्शाई जाती हैं।": {
+      "en": "Instant guidance services are clearly marked.",
+      "hi": "तुरंत मार्गदर्शन सेवाएँ स्पष्ट रूप से दर्शाई जाती हैं।"
+    },
+    "Your day, personalised": {
+      "en": "Your day, personalised",
+      "hi": "आपका दिन, आपके लिए"
+    },
+    "आपका दिन, आपके लिए": {
+      "en": "Your day, personalised",
+      "hi": "आपका दिन, आपके लिए"
+    },
+    "Today's cosmic brief": {
+      "en": "Today's cosmic brief",
+      "hi": "आज का ज्योतिष सार"
+    },
+    "आज का ज्योतिष सार": {
+      "en": "Today's cosmic brief",
+      "hi": "आज का ज्योतिष सार"
+    },
+    "Prepared for {name} · {sign} Moon": {
+      "en": "Prepared for {name} · {sign} Moon",
+      "hi": "{name} के लिए · {sign} चंद्र राशि"
+    },
+    "{name} के लिए · {sign} चंद्र राशि": {
+      "en": "Prepared for {name} · {sign} Moon",
+      "hi": "{name} के लिए · {sign} चंद्र राशि"
+    },
+    "Day energy": {
+      "en": "Day energy",
+      "hi": "आज की ऊर्जा"
+    },
+    "आज की ऊर्जा": {
+      "en": "Day energy",
+      "hi": "आज की ऊर्जा"
+    },
+    "Excellent": {
+      "en": "Excellent",
+      "hi": "अति उत्तम"
+    },
+    "अति उत्तम": {
+      "en": "Excellent",
+      "hi": "अति उत्तम"
+    },
+    "Good": {
+      "en": "Good",
+      "hi": "शुभ"
+    },
+    "शुभ": {
+      "en": "Good",
+      "hi": "शुभ"
+    },
+    "Balanced": {
+      "en": "Balanced",
+      "hi": "सामान्य"
+    },
+    "सामान्य": {
+      "en": "Balanced",
+      "hi": "सामान्य"
+    },
+    "Go gently": {
+      "en": "Go gently",
+      "hi": "संयम रखें"
+    },
+    "संयम रखें": {
+      "en": "Go gently",
+      "hi": "संयम रखें"
+    },
+    "नक्षत्र": {
+      "en": "Nakshatra",
+      "hi": "नक्षत्र"
+    },
+    "Chandra Bala": {
+      "en": "Chandra Bala",
+      "hi": "चंद्र बल"
+    },
+    "चंद्र बल": {
+      "en": "Chandra Bala",
+      "hi": "चंद्र बल"
+    },
+    "Tara Bala": {
+      "en": "Tara Bala",
+      "hi": "तारा बल"
+    },
+    "तारा बल": {
+      "en": "Tara Bala",
+      "hi": "तारा बल"
+    },
+    "Running period": {
+      "en": "Running period",
+      "hi": "चल रही दशा"
+    },
+    "चल रही दशा": {
+      "en": "Running period",
+      "hi": "चल रही दशा"
+    },
+    "Favourable": {
+      "en": "Favourable",
+      "hi": "अनुकूल"
+    },
+    "अनुकूल": {
+      "en": "Favourable",
+      "hi": "अनुकूल"
+    },
+    "Needs care": {
+      "en": "Needs care",
+      "hi": "सावधानी"
+    },
+    "सावधानी": {
+      "en": "Needs care",
+      "hi": "सावधानी"
+    },
+    "House {n} from your Moon": {
+      "en": "House {n} from your Moon",
+      "hi": "आपके चंद्र से {n}वाँ भाव"
+    },
+    "आपके चंद्र से {n}वाँ भाव": {
+      "en": "House {n} from your Moon",
+      "hi": "आपके चंद्र से {n}वाँ भाव"
+    },
+    "{planet} Mahadasha until {date}": {
+      "en": "{planet} Mahadasha until {date}",
+      "hi": "{planet} महादशा {date} तक"
+    },
+    "{planet} महादशा {date} तक": {
+      "en": "{planet} Mahadasha until {date}",
+      "hi": "{planet} महादशा {date} तक"
+    },
+    "Shani Sade Sati is active": {
+      "en": "Shani Sade Sati is active",
+      "hi": "शनि साढ़ेसाती चल रही है"
+    },
+    "शनि साढ़ेसाती चल रही है": {
+      "en": "Shani Sade Sati is active",
+      "hi": "शनि साढ़ेसाती चल रही है"
+    },
+    "Shani Dhaiya is active": {
+      "en": "Shani Dhaiya is active",
+      "hi": "शनि ढैया चल रही है"
+    },
+    "शनि ढैया चल रही है": {
+      "en": "Shani Dhaiya is active",
+      "hi": "शनि ढैया चल रही है"
+    },
+    "Best window": {
+      "en": "Best window",
+      "hi": "शुभ समय"
+    },
+    "Avoid new beginnings": {
+      "en": "Avoid new beginnings",
+      "hi": "नया कार्य टालें"
+    },
+    "नया कार्य टालें": {
+      "en": "Avoid new beginnings",
+      "hi": "नया कार्य टालें"
+    },
+    "Lucky for you": {
+      "en": "Lucky for you",
+      "hi": "आपके लिए शुभ"
+    },
+    "आपके लिए शुभ": {
+      "en": "Lucky for you",
+      "hi": "आपके लिए शुभ"
+    },
+    "Colour": {
+      "en": "Colour",
+      "hi": "रंग"
+    },
+    "रंग": {
+      "en": "Colour",
+      "hi": "रंग"
+    },
+    "अंक": {
+      "en": "Number",
+      "hi": "अंक"
+    },
+    "Seva of the day": {
+      "en": "Seva of the day",
+      "hi": "आज की सेवा"
+    },
+    "आज की सेवा": {
+      "en": "Seva of the day",
+      "hi": "आज की सेवा"
+    },
+    "Book this seva": {
+      "en": "Book this seva",
+      "hi": "यह सेवा बुक करें"
+    },
+    "यह सेवा बुक करें": {
+      "en": "Book this seva",
+      "hi": "यह सेवा बुक करें"
+    },
+    "Focus areas": {
+      "en": "Focus areas",
+      "hi": "आज के क्षेत्र"
+    },
+    "आज के क्षेत्र": {
+      "en": "Focus areas",
+      "hi": "आज के क्षेत्र"
+    },
+    "Love": {
+      "en": "Love",
+      "hi": "प्रेम"
+    },
+    "प्रेम": {
+      "en": "Love",
+      "hi": "प्रेम"
+    },
+    "Finance": {
+      "en": "Finance",
+      "hi": "धन"
+    },
+    "धन": {
+      "en": "Finance",
+      "hi": "धन"
+    },
+    "Health": {
+      "en": "Health",
+      "hi": "स्वास्थ्य"
+    },
+    "स्वास्थ्य": {
+      "en": "Health",
+      "hi": "स्वास्थ्य"
+    },
+    "{n} remedies waiting today": {
+      "en": "{n} remedies waiting today",
+      "hi": "आज {n} उपाय बाकी हैं"
+    },
+    "आज {n} उपाय बाकी हैं": {
+      "en": "{n} remedies waiting today",
+      "hi": "आज {n} उपाय बाकी हैं"
+    },
+    "No remedies pending today": {
+      "en": "No remedies pending today",
+      "hi": "आज कोई उपाय बाकी नहीं"
+    },
+    "आज कोई उपाय बाकी नहीं": {
+      "en": "No remedies pending today",
+      "hi": "आज कोई उपाय बाकी नहीं"
+    },
+    "Open remedy tracker": {
+      "en": "Open remedy tracker",
+      "hi": "उपाय ट्रैकर खोलें"
+    },
+    "उपाय ट्रैकर खोलें": {
+      "en": "Open remedy tracker",
+      "hi": "उपाय ट्रैकर खोलें"
+    },
+    "Make this brief personal": {
+      "en": "Make this brief personal",
+      "hi": "इसे अपना बनाइए"
+    },
+    "इसे अपना बनाइए": {
+      "en": "Make this brief personal",
+      "hi": "इसे अपना बनाइए"
+    },
+    "Add your birth details to see Chandra Bala, Tara Bala, your running dasha and a day score built for you.": {
+      "en": "Add your birth details to see Chandra Bala, Tara Bala, your running dasha and a day score built for you.",
+      "hi": "जन्म विवरण जोड़ें और अपना चंद्र बल, तारा बल, चल रही दशा और दिन का स्कोर देखें।"
+    },
+    "जन्म विवरण जोड़ें और अपना चंद्र बल, तारा बल, चल रही दशा और दिन का स्कोर देखें।": {
+      "en": "Add your birth details to see Chandra Bala, Tara Bala, your running dasha and a day score built for you.",
+      "hi": "जन्म विवरण जोड़ें और अपना चंद्र बल, तारा बल, चल रही दशा और दिन का स्कोर देखें।"
+    },
+    "Add birth details": {
+      "en": "Add birth details",
+      "hi": "जन्म विवरण जोड़ें"
+    },
+    "जन्म विवरण जोड़ें": {
+      "en": "Add birth details",
+      "hi": "जन्म विवरण जोड़ें"
+    },
+    "Traditional Vedic guidance for reflection, not a prediction.": {
+      "en": "Traditional Vedic guidance for reflection, not a prediction.",
+      "hi": "पारंपरिक वैदिक मार्गदर्शन, भविष्यवाणी नहीं।"
+    },
+    "पारंपरिक वैदिक मार्गदर्शन, भविष्यवाणी नहीं।": {
+      "en": "Traditional Vedic guidance for reflection, not a prediction.",
+      "hi": "पारंपरिक वैदिक मार्गदर्शन, भविष्यवाणी नहीं।"
+    },
+    "My remedies": {
+      "en": "My remedies",
+      "hi": "मेरे उपाय"
+    },
+    "मेरे उपाय": {
+      "en": "My remedies",
+      "hi": "मेरे उपाय"
+    },
+    "Follow mantras, fasts and daily practices with a streak that keeps you consistent.": {
+      "en": "Follow mantras, fasts and daily practices with a streak that keeps you consistent.",
+      "hi": "मंत्र, व्रत और दैनिक साधना को स्ट्रीक के साथ नियमित रखें।"
+    },
+    "मंत्र, व्रत और दैनिक साधना को स्ट्रीक के साथ नियमित रखें।": {
+      "en": "Follow mantras, fasts and daily practices with a streak that keeps you consistent.",
+      "hi": "मंत्र, व्रत और दैनिक साधना को स्ट्रीक के साथ नियमित रखें।"
+    },
+    "Done today": {
+      "en": "Done today",
+      "hi": "आज पूरा"
+    },
+    "आज पूरे": {
+      "en": "Done today",
+      "hi": "आज पूरे"
+    },
+    "Best streak": {
+      "en": "Best streak",
+      "hi": "सर्वश्रेष्ठ स्ट्रीक"
+    },
+    "सर्वश्रेष्ठ स्ट्रीक": {
+      "en": "Best streak",
+      "hi": "सर्वश्रेष्ठ स्ट्रीक"
+    },
+    "Add a remedy": {
+      "en": "Add a remedy",
+      "hi": "उपाय जोड़ें"
+    },
+    "उपाय जोड़ें": {
+      "en": "Add a remedy",
+      "hi": "उपाय जोड़ें"
+    },
+    "Save remedy": {
+      "en": "Save remedy",
+      "hi": "उपाय सहेजें"
+    },
+    "उपाय सहेजें": {
+      "en": "Save remedy",
+      "hi": "उपाय सहेजें"
+    },
+    "Remedy": {
+      "en": "Remedy",
+      "hi": "उपाय"
+    },
+    "e.g. Hanuman Chalisa": {
+      "en": "e.g. Hanuman Chalisa",
+      "hi": "जैसे हनुमान चालीसा"
+    },
+    "जैसे हनुमान चालीसा": {
+      "en": "e.g. Hanuman Chalisa",
+      "hi": "जैसे हनुमान चालीसा"
+    },
+    "Type": {
+      "en": "Type",
+      "hi": "प्रकार"
+    },
+    "प्रकार": {
+      "en": "Type",
+      "hi": "प्रकार"
+    },
+    "How often": {
+      "en": "How often",
+      "hi": "कितनी बार"
+    },
+    "कितनी बार": {
+      "en": "How often",
+      "hi": "कितनी बार"
+    },
+    "Day": {
+      "en": "Day",
+      "hi": "दिन"
+    },
+    "दिन": {
+      "en": "Day",
+      "hi": "दिन"
+    },
+    "For how many days (optional)": {
+      "en": "For how many days (optional)",
+      "hi": "कितने दिन (वैकल्पिक)"
+    },
+    "कितने दिन (वैकल्पिक)": {
+      "en": "For how many days (optional)",
+      "hi": "कितने दिन (वैकल्पिक)"
+    },
+    "Notes (optional)": {
+      "en": "Notes (optional)",
+      "hi": "टिप्पणी (वैकल्पिक)"
+    },
+    "टिप्पणी (वैकल्पिक)": {
+      "en": "Notes (optional)",
+      "hi": "टिप्पणी (वैकल्पिक)"
+    },
+    "Mantra / path": {
+      "en": "Mantra / path",
+      "hi": "मंत्र / पाठ"
+    },
+    "मंत्र / पाठ": {
+      "en": "Mantra / path",
+      "hi": "मंत्र / पाठ"
+    },
+    "व्रत": {
+      "en": "Fast",
+      "hi": "व्रत"
+    },
+    "Donation": {
+      "en": "Donation",
+      "hi": "दान"
+    },
+    "अन्य": {
+      "en": "Other",
+      "hi": "अन्य"
+    },
+    "Every day": {
+      "en": "Every day",
+      "hi": "प्रतिदिन"
+    },
+    "प्रतिदिन": {
+      "en": "Every day",
+      "hi": "प्रतिदिन"
+    },
+    "Every week": {
+      "en": "Every week",
+      "hi": "प्रति सप्ताह"
+    },
+    "प्रति सप्ताह": {
+      "en": "Every week",
+      "hi": "प्रति सप्ताह"
+    },
+    "One time": {
+      "en": "One time",
+      "hi": "एक बार"
+    },
+    "एक बार": {
+      "en": "One time",
+      "hi": "एक बार"
+    },
+    "Monday": {
+      "en": "Monday",
+      "hi": "सोमवार"
+    },
+    "सोमवार": {
+      "en": "Monday",
+      "hi": "सोमवार"
+    },
+    "Tuesday": {
+      "en": "Tuesday",
+      "hi": "मंगलवार"
+    },
+    "मंगलवार": {
+      "en": "Tuesday",
+      "hi": "मंगलवार"
+    },
+    "Wednesday": {
+      "en": "Wednesday",
+      "hi": "बुधवार"
+    },
+    "बुधवार": {
+      "en": "Wednesday",
+      "hi": "बुधवार"
+    },
+    "Thursday": {
+      "en": "Thursday",
+      "hi": "गुरुवार"
+    },
+    "गुरुवार": {
+      "en": "Thursday",
+      "hi": "गुरुवार"
+    },
+    "Friday": {
+      "en": "Friday",
+      "hi": "शुक्रवार"
+    },
+    "शुक्रवार": {
+      "en": "Friday",
+      "hi": "शुक्रवार"
+    },
+    "Saturday": {
+      "en": "Saturday",
+      "hi": "शनिवार"
+    },
+    "शनिवार": {
+      "en": "Saturday",
+      "hi": "शनिवार"
+    },
+    "Sunday": {
+      "en": "Sunday",
+      "hi": "रविवार"
+    },
+    "रविवार": {
+      "en": "Sunday",
+      "hi": "रविवार"
+    },
+    "Mark done": {
+      "en": "Mark done",
+      "hi": "पूरा किया"
+    },
+    "पूरा किया": {
+      "en": "Mark done",
+      "hi": "पूरा किया"
+    },
+    "आज पूरा": {
+      "en": "Done today",
+      "hi": "आज पूरा"
+    },
+    "Undo": {
+      "en": "Undo",
+      "hi": "वापस"
+    },
+    "वापस": {
+      "en": "Undo",
+      "hi": "वापस"
+    },
+    "Not due today": {
+      "en": "Not due today",
+      "hi": "आज नहीं"
+    },
+    "आज नहीं": {
+      "en": "Not due today",
+      "hi": "आज नहीं"
+    },
+    "{n}-day streak": {
+      "en": "{n}-day streak",
+      "hi": "{n} दिन की स्ट्रीक"
+    },
+    "{n} दिन की स्ट्रीक": {
+      "en": "{n}-day streak",
+      "hi": "{n} दिन की स्ट्रीक"
+    },
+    "{n}-week streak": {
+      "en": "{n}-week streak",
+      "hi": "{n} सप्ताह की स्ट्रीक"
+    },
+    "{n} सप्ताह की स्ट्रीक": {
+      "en": "{n}-week streak",
+      "hi": "{n} सप्ताह की स्ट्रीक"
+    },
+    "{done} of {total} days": {
+      "en": "{done} of {total} days",
+      "hi": "{total} में से {done} दिन"
+    },
+    "{total} में से {done} दिन": {
+      "en": "{done} of {total} days",
+      "hi": "{total} में से {done} दिन"
+    },
+    "संपूर्ण": {
+      "en": "Completed",
+      "hi": "संपूर्ण"
+    },
+    "Advised by {name}": {
+      "en": "Advised by {name}",
+      "hi": "{name} द्वारा सुझाया"
+    },
+    "{name} द्वारा सुझाया": {
+      "en": "Advised by {name}",
+      "hi": "{name} द्वारा सुझाया"
+    },
+    "From your astrologer": {
+      "en": "From your astrologer",
+      "hi": "आपके ज्योतिषी से"
+    },
+    "आपके ज्योतिषी से": {
+      "en": "From your astrologer",
+      "hi": "आपके ज्योतिषी से"
+    },
+    "Suggested": {
+      "en": "Suggested",
+      "hi": "सुझाव"
+    },
+    "सुझाव": {
+      "en": "Suggested",
+      "hi": "सुझाव"
+    },
+    "Shop": {
+      "en": "Shop",
+      "hi": "खरीदें"
+    },
+    "खरीदें": {
+      "en": "Shop",
+      "hi": "खरीदें"
+    },
+    "Suggested for you": {
+      "en": "Suggested for you",
+      "hi": "आपके लिए सुझाव"
+    },
+    "आपके लिए सुझाव": {
+      "en": "Suggested for you",
+      "hi": "आपके लिए सुझाव"
+    },
+    "Based on your Moon sign and traditional practice. Tap to start following.": {
+      "en": "Based on your Moon sign and traditional practice. Tap to start following.",
+      "hi": "आपकी चंद्र राशि और परंपरा पर आधारित। शुरू करने के लिए दबाएँ।"
+    },
+    "आपकी चंद्र राशि और परंपरा पर आधारित। शुरू करने के लिए दबाएँ।": {
+      "en": "Based on your Moon sign and traditional practice. Tap to start following.",
+      "hi": "आपकी चंद्र राशि और परंपरा पर आधारित। शुरू करने के लिए दबाएँ।"
+    },
+    "Follow": {
+      "en": "Follow",
+      "hi": "अपनाएँ"
+    },
+    "अपनाएँ": {
+      "en": "Follow",
+      "hi": "अपनाएँ"
+    },
+    "No remedies yet": {
+      "en": "No remedies yet",
+      "hi": "अभी कोई उपाय नहीं"
+    },
+    "अभी कोई उपाय नहीं": {
+      "en": "No remedies yet",
+      "hi": "अभी कोई उपाय नहीं"
+    },
+    "Add one of your own, or start from a suggestion below.": {
+      "en": "Add one of your own, or start from a suggestion below.",
+      "hi": "अपना उपाय जोड़ें या नीचे के सुझाव से शुरू करें।"
+    },
+    "अपना उपाय जोड़ें या नीचे के सुझाव से शुरू करें।": {
+      "en": "Add one of your own, or start from a suggestion below.",
+      "hi": "अपना उपाय जोड़ें या नीचे के सुझाव से शुरू करें।"
+    },
+    "Add remedies to tracker": {
+      "en": "Add remedies to tracker",
+      "hi": "उपाय ट्रैकर में जोड़ें"
+    },
+    "उपाय ट्रैकर में जोड़ें": {
+      "en": "Add remedies to tracker",
+      "hi": "उपाय ट्रैकर में जोड़ें"
+    },
+    "{n} remedies added to your tracker": {
+      "en": "{n} remedies added to your tracker",
+      "hi": "{n} उपाय आपके ट्रैकर में जुड़े"
+    },
+    "{n} उपाय आपके ट्रैकर में जुड़े": {
+      "en": "{n} remedies added to your tracker",
+      "hi": "{n} उपाय आपके ट्रैकर में जुड़े"
+    },
+    "This consultation has no remedies to add.": {
+      "en": "This consultation has no remedies to add.",
+      "hi": "इस परामर्श में जोड़ने योग्य उपाय नहीं हैं।"
+    },
+    "इस परामर्श में जोड़ने योग्य उपाय नहीं हैं।": {
+      "en": "This consultation has no remedies to add.",
+      "hi": "इस परामर्श में जोड़ने योग्य उपाय नहीं हैं।"
+    },
+    "Remedies": {
+      "en": "Remedies",
+      "hi": "उपाय"
+    },
+    "Remedies are traditional practices. Consult your astrologer before wearing gemstones.": {
+      "en": "Remedies are traditional practices. Consult your astrologer before wearing gemstones.",
+      "hi": "उपाय पारंपरिक साधनाएँ हैं। रत्न धारण से पहले ज्योतिषी से परामर्श लें।"
+    },
+    "उपाय पारंपरिक साधनाएँ हैं। रत्न धारण से पहले ज्योतिषी से परामर्श लें।": {
+      "en": "Remedies are traditional practices. Consult your astrologer before wearing gemstones.",
+      "hi": "उपाय पारंपरिक साधनाएँ हैं। रत्न धारण से पहले ज्योतिषी से परामर्श लें।"
+    },
+    "Gifts & Festival Packs": {
+      "en": "Gifts & Festival Packs",
+      "hi": "उपहार एवं त्योहार पैक"
+    },
+    "उपहार एवं त्योहार पैक": {
+      "en": "Gifts & Festival Packs",
+      "hi": "उपहार एवं त्योहार पैक"
+    },
+    "Send blessings as wallet credit, or bring home a ready festival set.": {
+      "en": "Send blessings as wallet credit, or bring home a ready festival set.",
+      "hi": "आशीर्वाद वॉलेट क्रेडिट के रूप में भेजें, या त्योहार का तैयार सेट घर लाएँ।"
+    },
+    "आशीर्वाद वॉलेट क्रेडिट के रूप में भेजें, या त्योहार का तैयार सेट घर लाएँ।": {
+      "en": "Send blessings as wallet credit, or bring home a ready festival set.",
+      "hi": "आशीर्वाद वॉलेट क्रेडिट के रूप में भेजें, या त्योहार का तैयार सेट घर लाएँ।"
+    },
+    "Gift cards": {
+      "en": "Gift cards",
+      "hi": "गिफ्ट कार्ड"
+    },
+    "गिफ्ट कार्ड": {
+      "en": "Gift cards",
+      "hi": "गिफ्ट कार्ड"
+    },
+    "Festival packs": {
+      "en": "Festival packs",
+      "hi": "त्योहार पैक"
+    },
+    "त्योहार पैक": {
+      "en": "Festival packs",
+      "hi": "त्योहार पैक"
+    },
+    "Choose an amount": {
+      "en": "Choose an amount",
+      "hi": "राशि चुनें"
+    },
+    "राशि चुनें": {
+      "en": "Choose an amount",
+      "hi": "राशि चुनें"
+    },
+    "Choose a style": {
+      "en": "Choose a style",
+      "hi": "शैली चुनें"
+    },
+    "शैली चुनें": {
+      "en": "Choose a style",
+      "hi": "शैली चुनें"
+    },
+    "Diwali": {
+      "en": "Diwali",
+      "hi": "दीवाली"
+    },
+    "दीवाली": {
+      "en": "Diwali",
+      "hi": "दीवाली"
+    },
+    "Blessing": {
+      "en": "Blessing",
+      "hi": "आशीर्वाद"
+    },
+    "आशीर्वाद": {
+      "en": "Blessing",
+      "hi": "आशीर्वाद"
+    },
+    "Wedding": {
+      "en": "Wedding",
+      "hi": "विवाह"
+    },
+    "Recipient name": {
+      "en": "Recipient name",
+      "hi": "पाने वाले का नाम"
+    },
+    "पाने वाले का नाम": {
+      "en": "Recipient name",
+      "hi": "पाने वाले का नाम"
+    },
+    "e.g. Anita": {
+      "en": "e.g. Anita",
+      "hi": "जैसे अनिता"
+    },
+    "जैसे अनिता": {
+      "en": "e.g. Anita",
+      "hi": "जैसे अनिता"
+    },
+    "Your message": {
+      "en": "Your message",
+      "hi": "आपका संदेश"
+    },
+    "आपका संदेश": {
+      "en": "Your message",
+      "hi": "आपका संदेश"
+    },
+    "Wishing you peace and prosperity": {
+      "en": "Wishing you peace and prosperity",
+      "hi": "आपको शांति और समृद्धि की शुभकामनाएँ"
+    },
+    "आपको शांति और समृद्धि की शुभकामनाएँ": {
+      "en": "Wishing you peace and prosperity",
+      "hi": "आपको शांति और समृद्धि की शुभकामनाएँ"
+    },
+    "Wishing you peace and prosperity.": {
+      "en": "Wishing you peace and prosperity.",
+      "hi": "आपको शांति और समृद्धि की शुभकामनाएँ।"
+    },
+    "आपको शांति और समृद्धि की शुभकामनाएँ।": {
+      "en": "Wishing you peace and prosperity.",
+      "hi": "आपको शांति और समृद्धि की शुभकामनाएँ।"
+    },
+    "Buy with wallet · {amount}": {
+      "en": "Buy with wallet · {amount}",
+      "hi": "वॉलेट से खरीदें · {amount}"
+    },
+    "वॉलेट से खरीदें · {amount}": {
+      "en": "Buy with wallet · {amount}",
+      "hi": "वॉलेट से खरीदें · {amount}"
+    },
+    "Creating your gift...": {
+      "en": "Creating your gift...",
+      "hi": "उपहार बन रहा है..."
+    },
+    "उपहार बन रहा है...": {
+      "en": "Creating your gift...",
+      "hi": "उपहार बन रहा है..."
+    },
+    "Paid from your wallet. The code is ready instantly.": {
+      "en": "Paid from your wallet. The code is ready instantly.",
+      "hi": "भुगतान आपके वॉलेट से होगा। कोड तुरंत मिलेगा।"
+    },
+    "भुगतान आपके वॉलेट से होगा। कोड तुरंत मिलेगा।": {
+      "en": "Paid from your wallet. The code is ready instantly.",
+      "hi": "भुगतान आपके वॉलेट से होगा। कोड तुरंत मिलेगा।"
+    },
+    "Your gift card is ready": {
+      "en": "Your gift card is ready",
+      "hi": "आपका गिफ्ट कार्ड तैयार है"
+    },
+    "आपका गिफ्ट कार्ड तैयार है": {
+      "en": "Your gift card is ready",
+      "hi": "आपका गिफ्ट कार्ड तैयार है"
+    },
+    "Copy code": {
+      "en": "Copy code",
+      "hi": "कोड कॉपी करें"
+    },
+    "कोड कॉपी करें": {
+      "en": "Copy code",
+      "hi": "कोड कॉपी करें"
+    },
+    "कोड कॉपी हुआ": {
+      "en": "Code copied",
+      "hi": "कोड कॉपी हुआ"
+    },
+    "WhatsApp पर भेजें": {
+      "en": "Share on WhatsApp",
+      "hi": "WhatsApp पर भेजें"
+    },
+    "Send another": {
+      "en": "Send another",
+      "hi": "एक और भेजें"
+    },
+    "एक और भेजें": {
+      "en": "Send another",
+      "hi": "एक और भेजें"
+    },
+    "A gift for you from Astro Jyotish: {amount} wallet credit. Redeem code {code} at {url}/gifts": {
+      "en": "A gift for you from Astro Jyotish: {amount} wallet credit. Redeem code {code} at {url}/gifts",
+      "hi": "Astro Jyotish की ओर से आपके लिए उपहार: {amount} वॉलेट क्रेडिट। कोड {code} यहाँ रिडीम करें: {url}/gifts"
+    },
+    "Astro Jyotish की ओर से आपके लिए उपहार: {amount} वॉलेट क्रेडिट। कोड {code} यहाँ रिडीम करें: {url}/gifts": {
+      "en": "A gift for you from Astro Jyotish: {amount} wallet credit. Redeem code {code} at {url}/gifts",
+      "hi": "Astro Jyotish की ओर से आपके लिए उपहार: {amount} वॉलेट क्रेडिट। कोड {code} यहाँ रिडीम करें: {url}/gifts"
+    },
+    "Have a gift card?": {
+      "en": "Have a gift card?",
+      "hi": "क्या आपके पास गिफ्ट कार्ड है?"
+    },
+    "क्या आपके पास गिफ्ट कार्ड है?": {
+      "en": "Have a gift card?",
+      "hi": "क्या आपके पास गिफ्ट कार्ड है?"
+    },
+    "AJ-XXXX-XXXX-XXXX": {
+      "en": "AJ-XXXX-XXXX-XXXX",
+      "hi": "AJ-XXXX-XXXX-XXXX"
+    },
+    "Redeem": {
+      "en": "Redeem",
+      "hi": "रिडीम करें"
+    },
+    "रिडीम करें": {
+      "en": "Redeem",
+      "hi": "रिडीम करें"
+    },
+    "{amount} added to your wallet": {
+      "en": "{amount} added to your wallet",
+      "hi": "{amount} आपके वॉलेट में जुड़े"
+    },
+    "{amount} आपके वॉलेट में जुड़े": {
+      "en": "{amount} added to your wallet",
+      "hi": "{amount} आपके वॉलेट में जुड़े"
+    },
+    "Gifts you sent": {
+      "en": "Gifts you sent",
+      "hi": "आपके भेजे उपहार"
+    },
+    "आपके भेजे उपहार": {
+      "en": "Gifts you sent",
+      "hi": "आपके भेजे उपहार"
+    },
+    "Gifts you received": {
+      "en": "Gifts you received",
+      "hi": "आपको मिले उपहार"
+    },
+    "आपको मिले उपहार": {
+      "en": "Gifts you received",
+      "hi": "आपको मिले उपहार"
+    },
+    "Not used yet": {
+      "en": "Not used yet",
+      "hi": "उपयोग नहीं हुआ"
+    },
+    "उपयोग नहीं हुआ": {
+      "en": "Not used yet",
+      "hi": "उपयोग नहीं हुआ"
+    },
+    "रिडीम हुआ": {
+      "en": "Redeemed",
+      "hi": "रिडीम हुआ"
+    },
+    "You have not sent a gift yet.": {
+      "en": "You have not sent a gift yet.",
+      "hi": "आपने अभी कोई उपहार नहीं भेजा।"
+    },
+    "आपने अभी कोई उपहार नहीं भेजा।": {
+      "en": "You have not sent a gift yet.",
+      "hi": "आपने अभी कोई उपहार नहीं भेजा।"
+    },
+    "Sign in to send or redeem a gift card": {
+      "en": "Sign in to send or redeem a gift card",
+      "hi": "गिफ्ट कार्ड भेजने या रिडीम करने के लिए साइन इन करें"
+    },
+    "गिफ्ट कार्ड भेजने या रिडीम करने के लिए साइन इन करें": {
+      "en": "Sign in to send or redeem a gift card",
+      "hi": "गिफ्ट कार्ड भेजने या रिडीम करने के लिए साइन इन करें"
+    },
+    "For {name}": {
+      "en": "For {name}",
+      "hi": "{name} के लिए"
+    },
+    "{name} के लिए": {
+      "en": "For {name}",
+      "hi": "{name} के लिए"
+    },
+    "Astro Jyotish Gift Card": {
+      "en": "Astro Jyotish Gift Card",
+      "hi": "Astro Jyotish गिफ्ट कार्ड"
+    },
+    "Astro Jyotish गिफ्ट कार्ड": {
+      "en": "Astro Jyotish Gift Card",
+      "hi": "Astro Jyotish गिफ्ट कार्ड"
+    },
+    "With blessings": {
+      "en": "With blessings",
+      "hi": "शुभकामनाओं सहित"
+    },
+    "शुभकामनाओं सहित": {
+      "en": "With blessings",
+      "hi": "शुभकामनाओं सहित"
+    },
+    "{n} days to go": {
+      "en": "{n} days to go",
+      "hi": "{n} दिन शेष"
+    },
+    "{n} दिन शेष": {
+      "en": "{n} days to go",
+      "hi": "{n} दिन शेष"
+    },
+    "Available all year": {
+      "en": "Available all year",
+      "hi": "पूरे वर्ष उपलब्ध"
+    },
+    "पूरे वर्ष उपलब्ध": {
+      "en": "Available all year",
+      "hi": "पूरे वर्ष उपलब्ध"
+    },
+    "In this pack": {
+      "en": "In this pack",
+      "hi": "इस पैक में"
+    },
+    "इस पैक में": {
+      "en": "In this pack",
+      "hi": "इस पैक में"
+    },
+    "Items worth {amount}": {
+      "en": "Items worth {amount}",
+      "hi": "सामग्री का मूल्य {amount}"
+    },
+    "सामग्री का मूल्य {amount}": {
+      "en": "Items worth {amount}",
+      "hi": "सामग्री का मूल्य {amount}"
+    },
+    "Save up to {amount} with {code}": {
+      "en": "Save up to {amount} with {code}",
+      "hi": "{code} से {amount} तक बचाएँ"
+    },
+    "{code} से {amount} तक बचाएँ": {
+      "en": "Save up to {amount} with {code}",
+      "hi": "{code} से {amount} तक बचाएँ"
+    },
+    "Add all to cart": {
+      "en": "Add all to cart",
+      "hi": "सब कार्ट में जोड़ें"
+    },
+    "सब कार्ट में जोड़ें": {
+      "en": "Add all to cart",
+      "hi": "सब कार्ट में जोड़ें"
+    },
+    "Pack added to your cart. Use code {code} at checkout.": {
+      "en": "Pack added to your cart. Use code {code} at checkout.",
+      "hi": "पैक कार्ट में जुड़ा। चेकआउट पर कोड {code} लगाएँ।"
+    },
+    "पैक कार्ट में जुड़ा। चेकआउट पर कोड {code} लगाएँ।": {
+      "en": "Pack added to your cart. Use code {code} at checkout.",
+      "hi": "पैक कार्ट में जुड़ा। चेकआउट पर कोड {code} लगाएँ।"
+    },
+    "Add a seva at {name}": {
+      "en": "Add a seva at {name}",
+      "hi": "{name} में सेवा जोड़ें"
+    },
+    "{name} में सेवा जोड़ें": {
+      "en": "Add a seva at {name}",
+      "hi": "{name} में सेवा जोड़ें"
+    },
+    "No festival packs are available right now.": {
+      "en": "No festival packs are available right now.",
+      "hi": "अभी कोई त्योहार पैक उपलब्ध नहीं है।"
+    },
+    "अभी कोई त्योहार पैक उपलब्ध नहीं है।": {
+      "en": "No festival packs are available right now.",
+      "hi": "अभी कोई त्योहार पैक उपलब्ध नहीं है।"
+    },
+    "Your Premium benefits": {
+      "en": "Your Premium benefits",
+      "hi": "आपके प्रीमियम लाभ"
+    },
+    "आपके प्रीमियम लाभ": {
+      "en": "Your Premium benefits",
+      "hi": "आपके प्रीमियम लाभ"
+    },
+    "{n}% off appointments": {
+      "en": "{n}% off appointments",
+      "hi": "अपॉइंटमेंट पर {n}% छूट"
+    },
+    "अपॉइंटमेंट पर {n}% छूट": {
+      "en": "{n}% off appointments",
+      "hi": "अपॉइंटमेंट पर {n}% छूट"
+    },
+    "Priority booking badge": {
+      "en": "Priority booking badge",
+      "hi": "प्राथमिकता बुकिंग"
+    },
+    "प्राथमिकता बुकिंग": {
+      "en": "Priority booking badge",
+      "hi": "प्राथमिकता बुकिंग"
+    },
+    "{amount} wallet bonus every month": {
+      "en": "{amount} wallet bonus every month",
+      "hi": "हर माह {amount} वॉलेट बोनस"
+    },
+    "हर माह {amount} वॉलेट बोनस": {
+      "en": "{amount} wallet bonus every month",
+      "hi": "हर माह {amount} वॉलेट बोनस"
+    },
+    "Saved on appointments: {amount}": {
+      "en": "Saved on appointments: {amount}",
+      "hi": "अपॉइंटमेंट पर बचत: {amount}"
+    },
+    "अपॉइंटमेंट पर बचत: {amount}": {
+      "en": "Saved on appointments: {amount}",
+      "hi": "अपॉइंटमेंट पर बचत: {amount}"
+    },
+    "Claim this month's {amount}": {
+      "en": "Claim this month's {amount}",
+      "hi": "इस माह का {amount} पाएँ"
+    },
+    "इस माह का {amount} पाएँ": {
+      "en": "Claim this month's {amount}",
+      "hi": "इस माह का {amount} पाएँ"
+    },
+    "This month's bonus is claimed": {
+      "en": "This month's bonus is claimed",
+      "hi": "इस माह का बोनस ले लिया गया"
+    },
+    "इस माह का बोनस ले लिया गया": {
+      "en": "This month's bonus is claimed",
+      "hi": "इस माह का बोनस ले लिया गया"
+    },
+    "Premium members get {n}% off appointments, priority booking and a monthly wallet bonus.": {
+      "en": "Premium members get {n}% off appointments, priority booking and a monthly wallet bonus.",
+      "hi": "प्रीमियम सदस्यों को अपॉइंटमेंट पर {n}% छूट, प्राथमिकता बुकिंग और मासिक वॉलेट बोनस मिलता है।"
+    },
+    "प्रीमियम सदस्यों को अपॉइंटमेंट पर {n}% छूट, प्राथमिकता बुकिंग और मासिक वॉलेट बोनस मिलता है।": {
+      "en": "Premium members get {n}% off appointments, priority booking and a monthly wallet bonus.",
+      "hi": "प्रीमियम सदस्यों को अपॉइंटमेंट पर {n}% छूट, प्राथमिकता बुकिंग और मासिक वॉलेट बोनस मिलता है।"
+    },
+    "Your invites": {
+      "en": "Your invites",
+      "hi": "आपके आमंत्रण"
+    },
+    "आपके आमंत्रण": {
+      "en": "Your invites",
+      "hi": "आपके आमंत्रण"
+    },
+    "Joined": {
+      "en": "Joined",
+      "hi": "जुड़े"
+    },
+    "जुड़े": {
+      "en": "Joined",
+      "hi": "जुड़े"
+    },
+    "First order done": {
+      "en": "First order done",
+      "hi": "पहला ऑर्डर पूरा"
+    },
+    "पहला ऑर्डर पूरा": {
+      "en": "First order done",
+      "hi": "पहला ऑर्डर पूरा"
+    },
+    "Points earned": {
+      "en": "Points earned",
+      "hi": "अर्जित पॉइंट"
+    },
+    "अर्जित पॉइंट": {
+      "en": "Points earned",
+      "hi": "अर्जित पॉइंट"
+    },
+    "Invite milestones": {
+      "en": "Invite milestones",
+      "hi": "आमंत्रण पड़ाव"
+    },
+    "आमंत्रण पड़ाव": {
+      "en": "Invite milestones",
+      "hi": "आमंत्रण पड़ाव"
+    },
+    "{n} friends · +{pts} points": {
+      "en": "{n} friends · +{pts} points",
+      "hi": "{n} मित्र · +{pts} पॉइंट"
+    },
+    "{n} मित्र · +{pts} पॉइंट": {
+      "en": "{n} friends · +{pts} points",
+      "hi": "{n} मित्र · +{pts} पॉइंट"
+    },
+    "Ordered": {
+      "en": "Ordered",
+      "hi": "ऑर्डर किया"
+    },
+    "ऑर्डर किया": {
+      "en": "Ordered",
+      "hi": "ऑर्डर किया"
+    },
+    "Waiting for first order": {
+      "en": "Waiting for first order",
+      "hi": "पहले ऑर्डर की प्रतीक्षा"
+    },
+    "पहले ऑर्डर की प्रतीक्षा": {
+      "en": "Waiting for first order",
+      "hi": "पहले ऑर्डर की प्रतीक्षा"
+    },
+    "Share your code to see your friends here.": {
+      "en": "Share your code to see your friends here.",
+      "hi": "अपना कोड साझा करें, मित्र यहाँ दिखेंगे।"
+    },
+    "अपना कोड साझा करें, मित्र यहाँ दिखेंगे।": {
+      "en": "Share your code to see your friends here.",
+      "hi": "अपना कोड साझा करें, मित्र यहाँ दिखेंगे।"
+    },
+    "Send a gift card": {
+      "en": "Send a gift card",
+      "hi": "गिफ्ट कार्ड भेजें"
+    },
+    "गिफ्ट कार्ड भेजें": {
+      "en": "Send a gift card",
+      "hi": "गिफ्ट कार्ड भेजें"
+    },
+    "Why you can trust this astrologer": {
+      "en": "Why you can trust this astrologer",
+      "hi": "इन ज्योतिषी पर भरोसा क्यों करें"
+    },
+    "इन ज्योतिषी पर भरोसा क्यों करें": {
+      "en": "Why you can trust this astrologer",
+      "hi": "इन ज्योतिषी पर भरोसा क्यों करें"
+    },
+    "Astro Jyotish द्वारा सत्यापित": {
+      "en": "Verified by Astro Jyotish",
+      "hi": "Astro Jyotish द्वारा सत्यापित"
+    },
+    "Years of experience": {
+      "en": "Years of experience",
+      "hi": "वर्षों का अनुभव"
+    },
+    "वर्षों का अनुभव": {
+      "en": "Years of practice",
+      "hi": "वर्षों का अनुभव"
+    },
+    "Clients who came back": {
+      "en": "Clients who came back",
+      "hi": "दोबारा आने वाले ग्राहक"
+    },
+    "दोबारा आने वाले ग्राहक": {
+      "en": "Clients who came back",
+      "hi": "दोबारा आने वाले ग्राहक"
+    },
+    "Typical first reply": {
+      "en": "Typical first reply",
+      "hi": "पहला उत्तर, सामान्यतः"
+    },
+    "पहला उत्तर, सामान्यतः": {
+      "en": "Typical first reply",
+      "hi": "पहला उत्तर, सामान्यतः"
+    },
+    "Average session": {
+      "en": "Average session",
+      "hi": "औसत सत्र"
+    },
+    "औसत सत्र": {
+      "en": "Average session",
+      "hi": "औसत सत्र"
+    },
+    "{n} sec": {
+      "en": "{n} sec",
+      "hi": "{n} सेकंड"
+    },
+    "{n} सेकंड": {
+      "en": "{n} sec",
+      "hi": "{n} सेकंड"
+    },
+    "Rating breakdown": {
+      "en": "Rating breakdown",
+      "hi": "रेटिंग विवरण"
+    },
+    "रेटिंग विवरण": {
+      "en": "Rating breakdown",
+      "hi": "रेटिंग विवरण"
+    },
+    "{n} reviews from clients who consulted this astrologer": {
+      "en": "{n} reviews from clients who consulted this astrologer",
+      "hi": "{n} समीक्षाएँ उन ग्राहकों की जिन्होंने परामर्श लिया"
+    },
+    "{n} समीक्षाएँ उन ग्राहकों की जिन्होंने परामर्श लिया": {
+      "en": "{n} reviews from clients who consulted this astrologer",
+      "hi": "{n} समीक्षाएँ उन ग्राहकों की जिन्होंने परामर्श लिया"
+    },
+    "More figures will appear as more consultations are completed.": {
+      "en": "More figures will appear as more consultations are completed.",
+      "hi": "अधिक परामर्श पूरे होने पर और आँकड़े दिखेंगे।"
+    },
+    "अधिक परामर्श पूरे होने पर और आँकड़े दिखेंगे।": {
+      "en": "More figures will appear as more consultations are completed.",
+      "hi": "अधिक परामर्श पूरे होने पर और आँकड़े दिखेंगे।"
+    },
+    "On Astro Jyotish since {date}": {
+      "en": "On Astro Jyotish since {date}",
+      "hi": "Astro Jyotish पर {date} से"
+    },
+    "Astro Jyotish पर {date} से": {
+      "en": "On Astro Jyotish since {date}",
+      "hi": "Astro Jyotish पर {date} से"
+    },
+    "Install Astro Jyotish": {
+      "en": "Install Astro Jyotish",
+      "hi": "Astro Jyotish इंस्टॉल करें"
+    },
+    "Astro Jyotish इंस्टॉल करें": {
+      "en": "Install Astro Jyotish",
+      "hi": "Astro Jyotish इंस्टॉल करें"
+    },
+    "Add it to your home screen for one-tap access to your daily brief and remedies.": {
+      "en": "Add it to your home screen for one-tap access to your daily brief and remedies.",
+      "hi": "होम स्क्रीन पर जोड़ें और रोज़ का सार व उपाय एक टैप में खोलें।"
+    },
+    "होम स्क्रीन पर जोड़ें और रोज़ का सार व उपाय एक टैप में खोलें।": {
+      "en": "Add it to your home screen for one-tap access to your daily brief and remedies.",
+      "hi": "होम स्क्रीन पर जोड़ें और रोज़ का सार व उपाय एक टैप में खोलें।"
+    },
+    "Install": {
+      "en": "Install",
+      "hi": "इंस्टॉल करें"
+    },
+    "इंस्टॉल करें": {
+      "en": "Install",
+      "hi": "इंस्टॉल करें"
+    },
+    "Not now": {
+      "en": "Not now",
+      "hi": "अभी नहीं"
+    },
+    "अभी नहीं": {
+      "en": "Not now",
+      "hi": "अभी नहीं"
+    },
+    "On iPhone, tap Share, then \"Add to Home Screen\".": {
+      "en": "On iPhone, tap Share, then \"Add to Home Screen\".",
+      "hi": "iPhone पर Share दबाएँ, फिर \"Add to Home Screen\" चुनें।"
+    },
+    "iPhone पर Share दबाएँ, फिर \"Add to Home Screen\" चुनें।": {
+      "en": "On iPhone, tap Share, then \"Add to Home Screen\".",
+      "hi": "iPhone पर Share दबाएँ, फिर \"Add to Home Screen\" चुनें।"
+    },
+    "A new version is ready.": {
+      "en": "A new version is ready.",
+      "hi": "नया संस्करण तैयार है।"
+    },
+    "नया संस्करण तैयार है।": {
+      "en": "A new version is ready.",
+      "hi": "नया संस्करण तैयार है।"
+    },
+    "रीफ़्रेश": {
+      "en": "Refresh",
+      "hi": "रीफ़्रेश"
+    },
+    "You are offline. Some features need a connection.": {
+      "en": "You are offline. Some features need a connection.",
+      "hi": "आप ऑफ़लाइन हैं। कुछ सुविधाओं के लिए इंटरनेट चाहिए।"
+    },
+    "आप ऑफ़लाइन हैं। कुछ सुविधाओं के लिए इंटरनेट चाहिए।": {
+      "en": "You are offline. Some features need a connection.",
+      "hi": "आप ऑफ़लाइन हैं। कुछ सुविधाओं के लिए इंटरनेट चाहिए।"
+    },
+    "Back online": {
+      "en": "Back online",
+      "hi": "फिर से ऑनलाइन"
+    },
+    "फिर से ऑनलाइन": {
+      "en": "Back online",
+      "hi": "फिर से ऑनलाइन"
+    },
+    "Trust": {
+      "en": "Trust",
+      "hi": "भरोसा"
+    },
+    "भरोसा": {
+      "en": "Trust",
+      "hi": "भरोसा"
+    },
+    "Book": {
+      "en": "Book",
+      "hi": "बुकिंग"
+    },
+    "बुकिंग": {
+      "en": "Book",
+      "hi": "बुकिंग"
+    },
+    "रेटिंग": {
+      "en": "Rating",
+      "hi": "रेटिंग"
+    },
+    "Years of practice": {
+      "en": "Years of practice",
+      "hi": "वर्षों का अनुभव"
+    },
+    "सहेजा गया": {
+      "en": "Saved",
+      "hi": "सहेजा गया"
+    },
+    "Profile link copied": {
+      "en": "Profile link copied",
+      "hi": "प्रोफ़ाइल लिंक कॉपी हुआ"
+    },
+    "प्रोफ़ाइल लिंक कॉपी हुआ": {
+      "en": "Profile link copied",
+      "hi": "प्रोफ़ाइल लिंक कॉपी हुआ"
+    },
+    "Sign in to save astrologers": {
+      "en": "Sign in to save astrologers",
+      "hi": "ज्योतिषी सहेजने के लिए साइन इन करें"
+    },
+    "ज्योतिषी सहेजने के लिए साइन इन करें": {
+      "en": "Sign in to save astrologers",
+      "hi": "ज्योतिषी सहेजने के लिए साइन इन करें"
+    },
+    "Next available slots": {
+      "en": "Next available slots",
+      "hi": "अगले उपलब्ध समय"
+    },
+    "अगले उपलब्ध समय": {
+      "en": "Next available slots",
+      "hi": "अगले उपलब्ध समय"
+    },
+    "No free slots this week. You can still start a chat.": {
+      "en": "No free slots this week. You can still start a chat.",
+      "hi": "इस सप्ताह कोई खाली समय नहीं। आप चैट शुरू कर सकते हैं।"
+    },
+    "इस सप्ताह कोई खाली समय नहीं। आप चैट शुरू कर सकते हैं।": {
+      "en": "No free slots this week. You can still start a chat.",
+      "hi": "इस सप्ताह कोई खाली समय नहीं। आप चैट शुरू कर सकते हैं।"
+    },
+    "Premium price {price} for 15 min · you save {save}": {
+      "en": "Premium price {price} for 15 min · you save {save}",
+      "hi": "प्रीमियम मूल्य 15 मिनट के {price} · आपकी बचत {save}"
+    },
+    "प्रीमियम मूल्य 15 मिनट के {price} · आपकी बचत {save}": {
+      "en": "Premium price {price} for 15 min · you save {save}",
+      "hi": "प्रीमियम मूल्य 15 मिनट के {price} · आपकी बचत {save}"
+    },
+    "Premium members save {n}% on appointments.": {
+      "en": "Premium members save {n}% on appointments.",
+      "hi": "प्रीमियम सदस्य अपॉइंटमेंट पर {n}% बचाते हैं।"
+    },
+    "प्रीमियम सदस्य अपॉइंटमेंट पर {n}% बचाते हैं।": {
+      "en": "Premium members save {n}% on appointments.",
+      "hi": "प्रीमियम सदस्य अपॉइंटमेंट पर {n}% बचाते हैं।"
+    },
+    "See Premium": {
+      "en": "See Premium",
+      "hi": "प्रीमियम देखें"
+    },
+    "प्रीमियम देखें": {
+      "en": "See Premium",
+      "hi": "प्रीमियम देखें"
+    },
+    "Astrologers like this": {
+      "en": "Astrologers like this",
+      "hi": "ऐसे ही अन्य ज्योतिषी"
+    },
+    "ऐसे ही अन्य ज्योतिषी": {
+      "en": "Astrologers like this",
+      "hi": "ऐसे ही अन्य ज्योतिषी"
+    },
+    "out of 5": {
+      "en": "out of 5",
+      "hi": "5 में से"
+    },
+    "5 में से": {
+      "en": "out of 5",
+      "hi": "5 में से"
+    },
+    "{n} written reviews shown": {
+      "en": "{n} written reviews shown",
+      "hi": "{n} लिखित समीक्षाएँ"
+    },
+    "{n} लिखित समीक्षाएँ": {
+      "en": "{n} written reviews shown",
+      "hi": "{n} लिखित समीक्षाएँ"
+    },
+    "/मिनट": {
+      "en": "/min",
+      "hi": "/मिनट"
+    },
+    "View profile": {
+      "en": "View profile",
+      "hi": "प्रोफ़ाइल देखें"
+    },
+    "प्रोफ़ाइल देखें": {
+      "en": "View profile",
+      "hi": "प्रोफ़ाइल देखें"
+    },
+    "Tap a time to book": {
+      "en": "Tap a time to book",
+      "hi": "बुक करने के लिए समय चुनें"
+    },
+    "बुक करने के लिए समय चुनें": {
+      "en": "Tap a time to book",
+      "hi": "बुक करने के लिए समय चुनें"
+    },
+    "चैट": {
+      "en": "Chat",
+      "hi": "चैट"
+    },
+    "कॉल": {
+      "en": "Call",
+      "hi": "कॉल"
+    },
+    "उच्च रेटिंग": {
+      "en": "Top rated",
+      "hi": "उच्च रेटिंग"
+    },
+    "Most consulted": {
+      "en": "Most consulted",
+      "hi": "सर्वाधिक परामर्श"
+    },
+    "सर्वाधिक परामर्श": {
+      "en": "Most consulted",
+      "hi": "सर्वाधिक परामर्श"
+    },
+    "Featured": {
+      "en": "Featured",
+      "hi": "विशेष"
+    },
+    "विशेष": {
+      "en": "Featured",
+      "hi": "विशेष"
+    },
+    "New": {
+      "en": "New",
+      "hi": "नए"
+    },
+    "नए": {
+      "en": "New",
+      "hi": "नए"
+    },
+    "{n} consults": {
+      "en": "{n} consults",
+      "hi": "{n} परामर्श"
+    },
+    "{n} परामर्श": {
+      "en": "{n} consults",
+      "hi": "{n} परामर्श"
+    },
+    "{n} yrs": {
+      "en": "{n} yrs",
+      "hi": "{n} वर्ष"
+    },
+    "{n} वर्ष": {
+      "en": "{n} yrs",
+      "hi": "{n} वर्ष"
+    },
+    "Available now · instant replies": {
+      "en": "Available now · instant replies",
+      "hi": "अभी उपलब्ध · तुरंत उत्तर"
+    },
+    "अभी उपलब्ध · तुरंत उत्तर": {
+      "en": "Available now · instant replies",
+      "hi": "अभी उपलब्ध · तुरंत उत्तर"
+    },
+    "Busy right now": {
+      "en": "Busy right now",
+      "hi": "अभी व्यस्त"
+    },
+    "अभी व्यस्त": {
+      "en": "Busy right now",
+      "hi": "अभी व्यस्त"
+    },
+    "Next free: {when}": {
+      "en": "Next free: {when}",
+      "hi": "अगला समय: {when}"
+    },
+    "अगला समय: {when}": {
+      "en": "Next free: {when}",
+      "hi": "अगला समय: {when}"
+    },
+    "Listen to voice intro": {
+      "en": "Listen to voice intro",
+      "hi": "स्वर परिचय सुनें"
+    },
+    "स्वर परिचय सुनें": {
+      "en": "Listen to voice intro",
+      "hi": "स्वर परिचय सुनें"
+    },
+    "Save astrologer": {
+      "en": "Save astrologer",
+      "hi": "ज्योतिषी सहेजें"
+    },
+    "ज्योतिषी सहेजें": {
+      "en": "Save astrologer",
+      "hi": "ज्योतिषी सहेजें"
+    },
+    "All": {
+      "en": "All",
+      "hi": "सभी"
+    },
+    "सभी": {
+      "en": "All",
+      "hi": "सभी"
+    },
+    "Verified astrologers": {
+      "en": "Verified astrologers",
+      "hi": "सत्यापित ज्योतिषी"
+    },
+    "Marriage": {
+      "en": "Marriage",
+      "hi": "विवाह"
+    },
+    "कुंडली": {
+      "en": "Kundli",
+      "hi": "कुंडली"
+    },
+    "{n} astrologers": {
+      "en": "{n} astrologers",
+      "hi": "{n} ज्योतिषी"
+    },
+    "{n} ज्योतिषी": {
+      "en": "{n} astrologers",
+      "hi": "{n} ज्योतिषी"
+    },
+    "Consultation packages": {
+      "en": "Consultation packages",
+      "hi": "परामर्श पैकेज"
+    },
+    "परामर्श पैकेज": {
+      "en": "Consultation packages",
+      "hi": "परामर्श पैकेज"
+    },
+    "Choose a length. You pick the date and time while booking.": {
+      "en": "Choose a length. You pick the date and time while booking.",
+      "hi": "अवधि चुनें। तारीख और समय बुकिंग के समय चुनें।"
+    },
+    "अवधि चुनें। तारीख और समय बुकिंग के समय चुनें।": {
+      "en": "Choose a length. You pick the date and time while booking.",
+      "hi": "अवधि चुनें। तारीख और समय बुकिंग के समय चुनें।"
+    },
+    "Quick answer": {
+      "en": "Quick answer",
+      "hi": "त्वरित उत्तर"
+    },
+    "त्वरित उत्तर": {
+      "en": "Quick answer",
+      "hi": "त्वरित उत्तर"
+    },
+    "One focused question: a decision, a timing, a yes or no.": {
+      "en": "One focused question: a decision, a timing, a yes or no.",
+      "hi": "एक केंद्रित प्रश्न: निर्णय, समय या हाँ/ना।"
+    },
+    "एक केंद्रित प्रश्न: निर्णय, समय या हाँ/ना।": {
+      "en": "One focused question: a decision, a timing, a yes or no.",
+      "hi": "एक केंद्रित प्रश्न: निर्णय, समय या हाँ/ना।"
+    },
+    "Standard reading": {
+      "en": "Standard reading",
+      "hi": "सामान्य परामर्श"
+    },
+    "सामान्य परामर्श": {
+      "en": "Standard reading",
+      "hi": "सामान्य परामर्श"
+    },
+    "A walk through your kundli and two or three questions.": {
+      "en": "A walk through your kundli and two or three questions.",
+      "hi": "आपकी कुंडली का विश्लेषण और दो-तीन प्रश्न।"
+    },
+    "आपकी कुंडली का विश्लेषण और दो-तीन प्रश्न।": {
+      "en": "A walk through your kundli and two or three questions.",
+      "hi": "आपकी कुंडली का विश्लेषण और दो-तीन प्रश्न।"
+    },
+    "Deep dive": {
+      "en": "Deep dive",
+      "hi": "विस्तृत विश्लेषण"
+    },
+    "विस्तृत विश्लेषण": {
+      "en": "Deep dive",
+      "hi": "विस्तृत विश्लेषण"
+    },
+    "Dasha, transits and remedies in detail.": {
+      "en": "Dasha, transits and remedies in detail.",
+      "hi": "दशा, गोचर और उपाय विस्तार से।"
+    },
+    "दशा, गोचर और उपाय विस्तार से।": {
+      "en": "Dasha, transits and remedies in detail.",
+      "hi": "दशा, गोचर और उपाय विस्तार से।"
+    },
+    "अनुशंसित": {
+      "en": "Recommended",
+      "hi": "अनुशंसित"
+    },
+    "Book {n} min": {
+      "en": "Book {n} min",
+      "hi": "{n} मिनट बुक करें"
+    },
+    "{n} मिनट बुक करें": {
+      "en": "Book {n} min",
+      "hi": "{n} मिनट बुक करें"
+    },
+    "{n} free": {
+      "en": "{n} free",
+      "hi": "{n} खाली"
+    },
+    "{n} खाली": {
+      "en": "{n} free",
+      "hi": "{n} खाली"
+    },
+    "Full": {
+      "en": "Full",
+      "hi": "भरा"
+    },
+    "भरा": {
+      "en": "Full",
+      "hi": "भरा"
+    },
+    "Pick a time": {
+      "en": "Pick a time",
+      "hi": "समय चुनें"
+    },
+    "समय चुनें": {
+      "en": "Pick a time",
+      "hi": "समय चुनें"
+    },
+    "Download PDF report": {
+      "en": "Download PDF report",
+      "hi": "PDF रिपोर्ट डाउनलोड करें"
+    },
+    "PDF रिपोर्ट डाउनलोड करें": {
+      "en": "Download PDF report",
+      "hi": "PDF रिपोर्ट डाउनलोड करें"
+    },
+    "Preparing PDF...": {
+      "en": "Preparing PDF...",
+      "hi": "PDF बन रही है..."
+    },
+    "PDF बन रही है...": {
+      "en": "Preparing PDF...",
+      "hi": "PDF बन रही है..."
+    },
+    "Could not create the PDF. Please try again.": {
+      "en": "Could not create the PDF. Please try again.",
+      "hi": "PDF नहीं बन सकी। कृपया फिर प्रयास करें।"
+    },
+    "PDF नहीं बन सकी। कृपया फिर प्रयास करें।": {
+      "en": "Could not create the PDF. Please try again.",
+      "hi": "PDF नहीं बन सकी। कृपया फिर प्रयास करें।"
+    },
+    "Guidance, chosen with clarity": {
+      "en": "Guidance, chosen with clarity",
+      "hi": "स्पष्टता के साथ चुना गया मार्गदर्शन"
+    },
+    "स्पष्टता के साथ चुना गया मार्गदर्शन": {
+      "en": "Guidance, chosen with clarity",
+      "hi": "स्पष्टता के साथ चुना गया मार्गदर्शन"
+    },
+    "Filters": {
+      "en": "Filters",
+      "hi": "फ़िल्टर"
+    },
+    "फ़िल्टर": {
+      "en": "Filters",
+      "hi": "फ़िल्टर"
+    },
+    "Verified profiles": {
+      "en": "Verified profiles",
+      "hi": "सत्यापित प्रोफ़ाइल"
+    },
+    "सत्यापित प्रोफ़ाइल": {
+      "en": "Verified profiles",
+      "hi": "सत्यापित प्रोफ़ाइल"
+    },
+    "Credentials shown clearly": {
+      "en": "Credentials shown clearly",
+      "hi": "प्रमाण-पत्र स्पष्ट रूप से देखें"
+    },
+    "प्रमाण-पत्र स्पष्ट रूप से देखें": {
+      "en": "Credentials shown clearly",
+      "hi": "प्रमाण-पत्र स्पष्ट रूप से देखें"
+    },
+    "Clear rates": {
+      "en": "Clear rates",
+      "hi": "स्पष्ट शुल्क"
+    },
+    "स्पष्ट शुल्क": {
+      "en": "Clear rates",
+      "hi": "स्पष्ट शुल्क"
+    },
+    "See the fee before you start": {
+      "en": "See the fee before you start",
+      "hi": "शुरू करने से पहले शुल्क देखें"
+    },
+    "शुरू करने से पहले शुल्क देखें": {
+      "en": "See the fee before you start",
+      "hi": "शुरू करने से पहले शुल्क देखें"
+    },
+    "Live availability": {
+      "en": "Live availability",
+      "hi": "वर्तमान उपलब्धता"
+    },
+    "वर्तमान उपलब्धता": {
+      "en": "Live availability",
+      "hi": "वर्तमान उपलब्धता"
+    },
+    "Find the next suitable time": {
+      "en": "Find the next suitable time",
+      "hi": "अगला उपयुक्त समय देखें"
+    },
+    "अगला उपयुक्त समय देखें": {
+      "en": "Find the next suitable time",
+      "hi": "अगला उपयुक्त समय देखें"
+    },
+    "Explore specialists": {
+      "en": "Explore specialists",
+      "hi": "विशेषज्ञों को देखें"
+    },
+    "विशेषज्ञों को देखें": {
+      "en": "Explore specialists",
+      "hi": "विशेषज्ञों को देखें"
+    },
+    "Find the right astrologer for your concern": {
+      "en": "Find the right astrologer for your concern",
+      "hi": "अपनी समस्या के लिए सही ज्योतिषी चुनें"
+    },
+    "अपनी समस्या के लिए सही ज्योतिषी चुनें": {
+      "en": "Find the right astrologer for your concern",
+      "hi": "अपनी समस्या के लिए सही ज्योतिषी चुनें"
+    },
+    "Compare expertise, language, availability and fee before you connect.": {
+      "en": "Compare expertise, language, availability and fee before you connect.",
+      "hi": "परामर्श से पहले विशेषज्ञता, भाषा, उपलब्धता और शुल्क की तुलना करें।"
+    },
+    "परामर्श से पहले विशेषज्ञता, भाषा, उपलब्धता और शुल्क की तुलना करें।": {
+      "en": "Compare expertise, language, availability and fee before you connect.",
+      "hi": "परामर्श से पहले विशेषज्ञता, भाषा, उपलब्धता और शुल्क की तुलना करें।"
+    },
+    "Gau Sewa": {
+      "en": "Gau Sewa",
+      "hi": "गौ सेवा"
+    },
+    "Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give once.": {
+      "en": "Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give once.",
+      "hi": "गौशाला में गायों की देखभाल में सहयोग करें। चारा, चिकित्सा या सामान्य सेवा चुनें और एक बार दान करें।"
+    },
+    "Contribute": {
+      "en": "Contribute",
+      "hi": "योगदान दें"
+    },
+    "Support the care of cows through a gaushala: fodder, medical help and everyday seva.": {
+      "en": "Support the care of cows through a gaushala: fodder, medical help and everyday seva.",
+      "hi": "गौशाला के माध्यम से गायों की देखभाल में सहयोग करें: चारा, चिकित्सा और दैनिक सेवा।"
+    },
+    "Donate now": {
+      "en": "Donate now",
+      "hi": "अभी दान करें"
+    },
+    "Cows resting at a gaushala": {
+      "en": "Cows resting at a gaushala",
+      "hi": "गौशाला में विश्राम करती गायें"
+    },
+    "Choose how your donation is used": {
+      "en": "Choose how your donation is used",
+      "hi": "चुनें कि आपका दान कैसे उपयोग हो"
+    },
+    "Chaara Seva": {
+      "en": "Chaara Seva",
+      "hi": "चारा सेवा"
+    },
+    "Fodder and feed for the cows.": {
+      "en": "Fodder and feed for the cows.",
+      "hi": "गायों के लिए चारा और दाना।"
+    },
+    "Chikitsa Sahayata": {
+      "en": "Chikitsa Sahayata",
+      "hi": "चिकित्सा सहायता"
+    },
+    "Medicines and treatment for sick or injured cows.": {
+      "en": "Medicines and treatment for sick or injured cows.",
+      "hi": "बीमार या घायल गायों के लिए दवा और उपचार।"
+    },
+    "General Seva": {
+      "en": "General Seva",
+      "hi": "सामान्य सेवा"
+    },
+    "Used wherever the gaushala needs it most.": {
+      "en": "Used wherever the gaushala needs it most.",
+      "hi": "जहाँ गौशाला को सबसे अधिक आवश्यकता हो, वहाँ उपयोग।"
+    },
+    "About the gaushala": {
+      "en": "About the gaushala",
+      "hi": "गौशाला के बारे में"
+    },
+    "Gaushala details coming soon": {
+      "en": "Gaushala details coming soon",
+      "hi": "गौशाला का विवरण जल्द आएगा"
+    },
+    "We are still setting up the gaushala details. They will appear here once confirmed.": {
+      "en": "We are still setting up the gaushala details. They will appear here once confirmed.",
+      "hi": "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि के बाद यह यहाँ दिखेगा।"
+    },
+    "Make a donation": {
+      "en": "Make a donation",
+      "hi": "दान करें"
+    },
+    "Amount": {
+      "en": "Amount",
+      "hi": "राशि"
+    },
+    "Other amount (₹)": {
+      "en": "Other amount (₹)",
+      "hi": "अन्य राशि (₹)"
+    },
+    "Your name": {
+      "en": "Your name",
+      "hi": "आपका नाम"
+    },
+    "Full name": {
+      "en": "Full name",
+      "hi": "पूरा नाम"
+    },
+    "Email (optional)": {
+      "en": "Email (optional)",
+      "hi": "ईमेल (वैकल्पिक)"
+    },
+    "Your receipt is emailed only if email is set up. You can always download it here.": {
+      "en": "Your receipt is emailed only if email is set up. You can always download it here.",
+      "hi": "ईमेल सेवा चालू होने पर ही रसीद ईमेल की जाती है। आप इसे यहाँ से हमेशा डाउनलोड कर सकते हैं।"
+    },
+    "Keep my name out of public updates": {
+      "en": "Keep my name out of public updates",
+      "hi": "सार्वजनिक अपडेट में मेरा नाम गुप्त रखें"
+    },
+    "Who receives your donation": {
+      "en": "Who receives your donation",
+      "hi": "आपका दान किसे मिलेगा"
+    },
+    "Beneficiary: {name}": {
+      "en": "Beneficiary: {name}",
+      "hi": "लाभार्थी: {name}"
+    },
+    "Payments are processed securely by Razorpay. This is a one-time donation. The receipt acknowledges your payment and is not a tax exemption certificate.": {
+      "en": "Payments are processed securely by Razorpay. This is a one-time donation. The receipt acknowledges your payment and is not a tax exemption certificate.",
+      "hi": "भुगतान Razorpay द्वारा सुरक्षित रूप से संसाधित होता है। यह एक बार का दान है। रसीद आपके भुगतान की पावती है, कर छूट प्रमाणपत्र नहीं।"
+    },
+    "Donate": {
+      "en": "Donate",
+      "hi": "दान करें"
+    },
+    "Donate ₹{amount}": {
+      "en": "Donate ₹{amount}",
+      "hi": "₹{amount} दान करें"
+    },
+    "Starting payment…": {
+      "en": "Starting payment…",
+      "hi": "भुगतान शुरू हो रहा है…"
+    },
+    "Enter an amount between ₹{min} and ₹{max}.": {
+      "en": "Enter an amount between ₹{min} and ₹{max}.",
+      "hi": "₹{min} से ₹{max} के बीच राशि दर्ज करें।"
+    },
+    "Enter a whole number of rupees.": {
+      "en": "Enter a whole number of rupees.",
+      "hi": "रुपये की पूर्ण संख्या दर्ज करें।"
+    },
+    "Please enter your name.": {
+      "en": "Please enter your name.",
+      "hi": "कृपया अपना नाम दर्ज करें।"
+    },
+    "Enter a valid email address or leave it blank.": {
+      "en": "Enter a valid email address or leave it blank.",
+      "hi": "सही ईमेल पता दर्ज करें या खाली छोड़ें।"
+    },
+    "Donations are not open yet": {
+      "en": "Donations are not open yet",
+      "hi": "दान अभी शुरू नहीं हुआ है"
+    },
+    "Online donations are not available right now.": {
+      "en": "Online donations are not available right now.",
+      "hi": "ऑनलाइन दान अभी उपलब्ध नहीं है।"
+    },
+    "The gaushala details are still being set up. Donations will open once they are confirmed.": {
+      "en": "The gaushala details are still being set up. Donations will open once they are confirmed.",
+      "hi": "गौशाला का विवरण अभी तैयार किया जा रहा है। पुष्टि होते ही दान शुरू होगा।"
+    },
+    "Gau Sewa could not be loaded right now.": {
+      "en": "Gau Sewa could not be loaded right now.",
+      "hi": "गौ सेवा अभी लोड नहीं हो सकी।"
+    },
+    "Loading…": {
+      "en": "Loading…",
+      "hi": "लोड हो रहा है…"
+    },
+    "The payment window was closed. No donation has been recorded.": {
+      "en": "The payment window was closed. No donation has been recorded.",
+      "hi": "भुगतान विंडो बंद हो गई। कोई दान दर्ज नहीं हुआ।"
+    },
+    "Confirming your payment…": {
+      "en": "Confirming your payment…",
+      "hi": "आपका भुगतान सत्यापित हो रहा है…"
+    },
+    "Payment is being confirmed": {
+      "en": "Payment is being confirmed",
+      "hi": "भुगतान की पुष्टि हो रही है"
+    },
+    "The payment provider has not confirmed this payment yet. This page checks again automatically, and you can open the receipt link later.": {
+      "en": "The payment provider has not confirmed this payment yet. This page checks again automatically, and you can open the receipt link later.",
+      "hi": "भुगतान प्रदाता ने अभी इस भुगतान की पुष्टि नहीं की है। यह पृष्ठ अपने आप फिर जाँच करेगा, और आप रसीद लिंक बाद में भी खोल सकते हैं।"
+    },
+    "Payment did not go through": {
+      "en": "Payment did not go through",
+      "hi": "भुगतान पूरा नहीं हुआ"
+    },
+    "No donation was recorded. You can try again.": {
+      "en": "No donation was recorded. You can try again.",
+      "hi": "कोई दान दर्ज नहीं हुआ। आप फिर प्रयास कर सकते हैं।"
+    },
+    "Thank you for your donation": {
+      "en": "Thank you for your donation",
+      "hi": "आपके दान के लिए धन्यवाद"
+    },
+    "Your payment has been confirmed.": {
+      "en": "Your payment has been confirmed.",
+      "hi": "आपके भुगतान की पुष्टि हो गई है।"
+    },
+    "This donation was refunded": {
+      "en": "This donation was refunded",
+      "hi": "यह दान वापस कर दिया गया"
+    },
+    "Donation reference": {
+      "en": "Donation reference",
+      "hi": "दान संदर्भ"
+    },
+    "Purpose": {
+      "en": "Purpose",
+      "hi": "उद्देश्य"
+    },
+    "Recipient": {
+      "en": "Recipient",
+      "hi": "प्राप्तकर्ता"
+    },
+    "Payment status": {
+      "en": "Payment status",
+      "hi": "भुगतान की स्थिति"
+    },
+    "Pending": {
+      "en": "Pending",
+      "hi": "लंबित"
+    },
+    "Successful": {
+      "en": "Successful",
+      "hi": "सफल"
+    },
+    "Failed": {
+      "en": "Failed",
+      "hi": "असफल"
+    },
+    "Download receipt": {
+      "en": "Download receipt",
+      "hi": "रसीद डाउनलोड करें"
+    },
+    "This receipt acknowledges your payment. It is not a tax exemption certificate.": {
+      "en": "This receipt acknowledges your payment. It is not a tax exemption certificate.",
+      "hi": "यह रसीद आपके भुगतान की पावती है। यह कर छूट प्रमाणपत्र नहीं है।"
+    },
+    "Keep this page's link: anyone who has it can view this receipt.": {
+      "en": "Keep this page's link: anyone who has it can view this receipt.",
+      "hi": "इस पृष्ठ का लिंक सहेज लें: जिसके पास यह लिंक होगा वह इस रसीद को देख सकता है।"
+    },
+    "This receipt link is not valid.": {
+      "en": "This receipt link is not valid.",
+      "hi": "यह रसीद लिंक मान्य नहीं है।"
+    },
+    "Back to Gau Sewa": {
+      "en": "Back to Gau Sewa",
+      "hi": "गौ सेवा पर वापस जाएँ"
+    },
+    "Donate again": {
+      "en": "Donate again",
+      "hi": "फिर से दान करें"
+    },
+    "Seva updates": {
+      "en": "Seva updates",
+      "hi": "सेवा अपडेट"
+    },
+    "No updates have been published yet.": {
+      "en": "No updates have been published yet.",
+      "hi": "अभी तक कोई अपडेट प्रकाशित नहीं हुआ है।"
+    },
+    "My Donations": {
+      "en": "My Donations",
+      "hi": "मेरे दान"
+    },
+    "Your Gau Sewa donations and receipts.": {
+      "en": "Your Gau Sewa donations and receipts.",
+      "hi": "आपके गौ सेवा दान और रसीदें।"
+    },
+    "You have not made any Gau Sewa donations yet.": {
+      "en": "You have not made any Gau Sewa donations yet.",
+      "hi": "आपने अभी तक कोई गौ सेवा दान नहीं किया है।"
+    },
+    "Donate to Gau Sewa": {
+      "en": "Donate to Gau Sewa",
+      "hi": "गौ सेवा में दान करें"
+    },
+    "Receipt": {
+      "en": "Receipt",
+      "hi": "रसीद"
+    },
+    "Sacred seva, from home": {
+      "en": "Sacred seva, from home",
+      "hi": "घर बैठे पावन सेवा"
+    },
+    "घर बैठे पावन सेवा": {
+      "en": "Sacred seva, from home",
+      "hi": "घर बैठे पावन सेवा"
+    },
+    "Video proof": {
+      "en": "Video proof",
+      "hi": "वीडियो प्रमाण"
+    },
+    "वीडियो प्रमाण": {
+      "en": "Video proof",
+      "hi": "वीडियो प्रमाण"
+    },
+    "Temple priests": {
+      "en": "Temple priests",
+      "hi": "मंदिर के पुजारी"
+    },
+    "मंदिर के पुजारी": {
+      "en": "Temple priests",
+      "hi": "मंदिर के पुजारी"
+    },
+    "Prasad at home": {
+      "en": "Prasad at home",
+      "hi": "घर तक प्रसाद"
+    },
+    "घर तक प्रसाद": {
+      "en": "Prasad at home",
+      "hi": "घर तक प्रसाद"
+    },
+    "🪐 Shani & Hanuman": {
+      "en": "🪐 Shani & Hanuman",
+      "hi": "🪐 शनि व हनुमान"
+    },
+    "🪐 शनि व हनुमान": {
+      "en": "🪐 Shani & Hanuman",
+      "hi": "🪐 शनि व हनुमान"
+    },
+    "🏹 Ram, Krishna & Vishnu": {
+      "en": "🏹 Ram, Krishna & Vishnu",
+      "hi": "🏹 राम, कृष्ण व विष्णु"
+    },
+    "🏹 राम, कृष्ण व विष्णु": {
+      "en": "🏹 Ram, Krishna & Vishnu",
+      "hi": "🏹 राम, कृष्ण व विष्णु"
+    },
+    "Today's special seva": {
+      "en": "Today's special seva",
+      "hi": "आज की विशेष सेवा"
+    },
+    "आज की विशेष सेवा": {
+      "en": "Today's special seva",
+      "hi": "आज की विशेष सेवा"
+    },
+    "Offer this at the temple of the day": {
+      "en": "Offer this at the temple of the day",
+      "hi": "आज के मंदिर में यह अर्पित करें"
+    },
+    "आज के मंदिर में यह अर्पित करें": {
+      "en": "Offer this at the temple of the day",
+      "hi": "आज के मंदिर में यह अर्पित करें"
+    },
+    "You can donate today": {
+      "en": "You can donate today",
+      "hi": "आज आप यह चढ़ावा दे सकते हैं"
+    },
+    "आज आप यह चढ़ावा दे सकते हैं": {
+      "en": "You can donate today",
+      "hi": "आज आप यह चढ़ावा दे सकते हैं"
+    },
+    "Offer today's chadawa": {
+      "en": "Offer today's chadawa",
+      "hi": "आज का चढ़ावा अर्पित करें"
+    },
+    "आज का चढ़ावा अर्पित करें": {
+      "en": "Offer today's chadawa",
+      "hi": "आज का चढ़ावा अर्पित करें"
+    },
+    "बुक करें": {
+      "en": "Book",
+      "hi": "बुक करें"
+    },
+    "{n} sacred temples": {
+      "en": "{n} sacred temples",
+      "hi": "{n} पावन तीर्थ"
+    },
+    "{n} पावन तीर्थ": {
+      "en": "{n} sacred temples",
+      "hi": "{n} पावन तीर्थ"
+    },
+    "Sanctified, shipped to your door": {
+      "en": "Sanctified, shipped to your door",
+      "hi": "अभिमंत्रित, सीधे आपके द्वार"
+    },
+    "अभिमंत्रित, सीधे आपके द्वार": {
+      "en": "Sanctified, shipped to your door",
+      "hi": "अभिमंत्रित, सीधे आपके द्वार"
+    },
+    "Certified": {
+      "en": "Certified",
+      "hi": "प्रमाणित"
+    },
+    "प्रमाणित": {
+      "en": "Certified",
+      "hi": "प्रमाणित"
+    },
+    "Easy payment": {
+      "en": "Easy payment",
+      "hi": "आसान भुगतान"
+    },
+    "आसान भुगतान": {
+      "en": "Easy payment",
+      "hi": "आसान भुगतान"
+    },
+    "{n} sacred items": {
+      "en": "{n} sacred items",
+      "hi": "{n} पावन वस्तुएं"
+    },
+    "{n} पावन वस्तुएं": {
+      "en": "{n} sacred items",
+      "hi": "{n} पावन वस्तुएं"
+    },
+    "Cancellations & refunds": {
+      "en": "Cancellations & refunds",
+      "hi": "रद्दीकरण और वापसी"
+    },
+    "Astro Jyotish home": {
+      "en": "Astro Jyotish home",
+      "hi": "एस्ट्रो ज्योतिष मुखपृष्ठ"
+    },
+    "Search astrologers, services or topics": {
+      "en": "Search astrologers, services or topics",
+      "hi": "ज्योतिषी, सेवाएँ या विषय खोजें"
+    },
+    "Search frequently asked questions": {
+      "en": "Search frequently asked questions",
+      "hi": "अक्सर पूछे जाने वाले प्रश्न खोजें"
+    },
+    "Search astrologers": {
+      "en": "Search astrologers",
+      "hi": "ज्योतिषी खोजें"
+    },
+    "Filter by specialty": {
+      "en": "Filter by specialty",
+      "hi": "विशेषज्ञता के अनुसार छाँटें"
+    },
+    "Filter by language": {
+      "en": "Filter by language",
+      "hi": "भाषा के अनुसार छाँटें"
+    },
+    "Filter by consultation mode": {
+      "en": "Filter by consultation mode",
+      "hi": "परामर्श माध्यम के अनुसार छाँटें"
+    },
+    "Sort astrologers": {
+      "en": "Sort astrologers",
+      "hi": "ज्योतिषी क्रमबद्ध करें"
+    },
+    "Search temples and sevas": {
+      "en": "Search temples and sevas",
+      "hi": "मंदिर और सेवाएँ खोजें"
+    },
+    "Search products": {
+      "en": "Search products",
+      "hi": "सामग्री खोजें"
+    },
+    "Filter by price": {
+      "en": "Filter by price",
+      "hi": "मूल्य के अनुसार छाँटें"
+    },
+    "Sort products": {
+      "en": "Sort products",
+      "hi": "सामग्री क्रमबद्ध करें"
+    },
+    "Panchang date": {
+      "en": "Panchang date",
+      "hi": "पंचांग की तिथि"
+    },
+    "City for panchang": {
+      "en": "City for panchang",
+      "hi": "पंचांग के लिए शहर"
+    },
+    "Sacred seva at": {
+      "en": "Sacred seva at",
+      "hi": "पवित्र सेवा"
+    },
+    "India’s holy temples": {
+      "en": "India’s holy temples",
+      "hi": "भारत के पावन मंदिरों में"
     }
   }
 };

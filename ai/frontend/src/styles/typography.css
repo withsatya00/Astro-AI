@@ -39,7 +39,7 @@ p {
 }
 
 .text-purple {
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4A1B9A);
 }
 
 .text-muted {

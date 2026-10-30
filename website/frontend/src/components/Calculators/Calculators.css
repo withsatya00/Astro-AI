@@ -31,8 +31,8 @@
 
 .calc-card:hover {
   transform: translateY(-3px);
-  border-color: var(--color-purple-primary, #7439EA);
-  box-shadow: var(--shadow-md, 0 4px 16px rgba(116, 57, 234, 0.12));
+  border-color: var(--color-purple-primary, #4a1b9a);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(74, 27, 154, 0.12));
 }
 
 .calc-icon-wrap {
@@ -50,8 +50,8 @@
 }
 
 .calc-card:hover .calc-icon-wrap {
-  background: var(--color-purple-light, #F5F3FF);
-  border-color: var(--color-purple-subtle, #DDD6FE);
+  background: var(--color-purple-light, #f4eefb);
+  border-color: var(--color-purple-subtle, #e3d8f3);
   transform: scale(1.05);
 }
 
@@ -81,7 +81,7 @@
 }
 
 .calc-card:hover .calc-arrow {
-  color: var(--color-purple-primary, #7439EA);
+  color: var(--color-purple-primary, #4a1b9a);
   transform: translateX(4px);
 }
 

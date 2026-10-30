@@ -14,7 +14,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #7439EA;
+  background: #4A1B9A;
   color: #FFFFFF;
   border: none;
   cursor: pointer;
@@ -40,6 +40,6 @@
 }
 .voice-duration {
   font-size: 0.68rem;
-  color: #7439EA;
+  color: #4A1B9A;
   font-weight: 600;
 }

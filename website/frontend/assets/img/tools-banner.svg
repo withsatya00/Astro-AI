@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 680" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="78%" cy="50%" r="75%">
+      <stop offset="0" stop-color="#5b2aa8"/><stop offset=".55" stop-color="#2d1163"/><stop offset="1" stop-color="#150832"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f6d58a" stop-opacity=".45"/><stop offset="1" stop-color="#f6d58a" stop-opacity="0"/>
+    </radialGradient>
+    <g id="star"><path d="M0-7L1.6-1.6 7 0 1.6 1.6 0 7-1.6 1.6-7 0-1.6-1.6z" fill="#f6e0a8"/></g>
+  </defs>
+  <rect width="1600" height="680" fill="url(#bg)"/>
+  <circle cx="1210" cy="340" r="330" fill="url(#glow)"/>
+  <!-- zodiac wheel -->
+  <g transform="translate(1210 340)" fill="none" stroke="#e8c880" stroke-width="1.6">
+    <circle r="300" stroke-opacity=".9" stroke-width="2.4"/>
+    <circle r="255" stroke-opacity=".7"/>
+    <circle r="150" stroke-opacity=".6"/>
+    <g stroke-opacity=".45">
+      <path d="M0-300V300M-300 0H300"/>
+      <path d="M-212-212L212 212M212-212L-212 212"/>
+      <path d="M-150-260L150 260M150-260L-150 260M-260-150L260 150M260-150L-260 150" stroke-opacity=".25"/>
+    </g>
+    <!-- kundli diamond -->
+    <g stroke-opacity=".9" stroke-width="2">
+      <rect x="-106" y="-106" width="212" height="212"/>
+      <path d="M0-106L106 0 0 106-106 0z"/>
+      <path d="M-106-106L106 106M106-106L-106 106"/>
+    </g>
+    <g font-family="'Segoe UI Symbol','Noto Sans Symbols',serif" font-size="30" fill="#f6e0a8" stroke="none" text-anchor="middle" dominant-baseline="central">
+      <text x="0" y="-278">♈</text><text x="139" y="-241">♉</text><text x="241" y="-139">♊</text><text x="278" y="0">♋</text>
+      <text x="241" y="139">♌</text><text x="139" y="241">♍</text><text x="0" y="278">♎</text><text x="-139" y="241">♏</text>
+      <text x="-241" y="139">♐</text><text x="-278" y="0">♑</text><text x="-241" y="-139">♒</text><text x="-139" y="-241">♓</text>
+    </g>
+    <g font-family="'Segoe UI Symbol','Noto Sans Symbols',serif" font-size="26" fill="#fff4d6" stroke="none" text-anchor="middle" dominant-baseline="central">
+      <text x="0" y="-52">☉</text><text x="52" y="0">☽</text><text x="0" y="52">♂</text><text x="-52" y="0">☿</text>
+      <text x="-78" y="-78" font-size="20">♃</text><text x="78" y="-78" font-size="20">♀</text><text x="78" y="78" font-size="20">♄</text><text x="-78" y="78" font-size="20">☊</text>
+    </g>
+    <circle r="7" fill="#f6d58a" stroke="none"/>
+  </g>
+  <!-- scattered stars -->
+  <g opacity=".85">
+    <use href="#star" x="760" y="90"/><use href="#star" x="900" y="560" transform="scale(.8)"/><use href="#star" x="980" y="60" transform="translate(0 0) scale(1.2)"/>
+    <use href="#star" x="1540" y="110"/><use href="#star" x="1500" y="600"/><use href="#star" x="860" y="330" transform="scale(.7)"/>
+    <use href="#star" x="1120" y="640" transform="scale(.9)"/>
+  </g>
+</svg>

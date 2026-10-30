@@ -108,7 +108,7 @@
   function applyTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', t === 'dark' ? '#13111D' : '#4C1D95');
+    if (meta) meta.setAttribute('content', t === 'dark' ? '#13111D' : '#1e0b44');
     document.querySelectorAll('.pm-theme-toggle').forEach(b => {
       b.innerHTML = icon(t === 'dark' ? 'sun' : 'moon');
       b.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
@@ -140,8 +140,13 @@
     if (path === '/') return 'home';
     if (path.startsWith('/astrologer')) return 'astrologers';
     if (path.startsWith('/consultation')) return 'chat';
+    if (['/my-account', '/dashboard'].includes(path)) return 'profile';
+    if (path === '/mandir-seva' || path.startsWith('/mandir-seva/') || path === '/mandir' || path === '/chadawa') return 'seva';
+    if (path === '/astro-mall' || path.startsWith('/astro-mall/') || path === '/mall' || path === '/samagri') return 'mall';
     return '';
   }
+  const TAB_LABELS = { home: ['Home', 'मुखपृष्ठ'], astrologers: ['Astrologers', 'ज्योतिषी'], seva: ['Seva', 'सेवा'], mall: ['Mall', 'मॉल'], profile: ['Profile', 'प्रोफ़ाइल'] };
+  const tabLabel = id => TAB_LABELS[id][(window.I18n && window.I18n.currentLang) === 'hi' ? 1 : 0];
   function updateTabbar() {
     const path = currentPath();
     const inChat = path.startsWith('/consultation');
@@ -150,7 +155,8 @@
     tabbar.classList.toggle('hidden', inChat);
     document.body.classList.toggle('pm-has-tabbar', !inChat);
     const active = tabFor(path);
-    tabbar.querySelectorAll('.pm-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === active));
+    tabbar.querySelectorAll('.pm-tab').forEach(t => { t.lastElementChild.textContent = tabLabel(t.dataset.tab); });
+    tabbar.querySelectorAll('.pm-tab').forEach(t => { const selected = t.dataset.tab === active; t.classList.toggle('active', selected); if (selected) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
   }
   function go(path) { if (window.Router && Router.navigate) Router.navigate(path); else location.href = path; }
   function mountTabbar() {
@@ -159,23 +165,22 @@
     tabbar.className = 'pm-tabbar';
     tabbar.setAttribute('aria-label', 'Primary');
     tabbar.innerHTML = [
-      ['home', 'home', 'Home'], ['astrologers', 'crystal', 'Astrologers'], ['chat', 'chat', 'Chat'], ['profile', 'user', 'Profile']
-    ].map(([id, ic, label]) => `<button type="button" class="pm-tab" data-tab="${id}">${icon(ic)}<span>${label}</span></button>`).join('');
+      ['home', 'home'], ['astrologers', 'crystal'], ['seva', 'lamp'], ['mall', 'gem'], ['profile', 'user']
+    ].map(([id, ic]) => `<button type="button" class="pm-tab" data-tab="${id}">${icon(ic)}<span translate="no">${tabLabel(id)}</span></button>`).join('');
     tabbar.addEventListener('click', e => {
       const b = e.target.closest('.pm-tab');
       if (!b) return;
       const tab = b.dataset.tab;
       if (tab === 'home') go('/');
       else if (tab === 'astrologers') go('/astrologers');
-      else if (tab === 'chat') {
-        const slug = store.get('astroai_astrologer_slug');
-        go(slug ? '/consultation/' + slug : '/astrologers');
-        if (!slug) toast('Pick an astrologer to start a chat', 'info');
-      } else if (tab === 'profile' && window.App) {
+      else if (tab === 'seva') go('/mandir-seva');
+      else if (tab === 'mall') go('/astro-mall');
+      else if (tab === 'profile' && window.App) {
         App.currentUser ? App.openUserAccountModal() : App.openAuthModal('login');
       }
     });
     document.body.appendChild(tabbar);
+    window.addEventListener('astro:languagechange', updateTabbar);
     updateTabbar();
   }
   // remember the last astrologer slug so the Chat tab can resume
@@ -292,6 +297,7 @@
     const stats = document.querySelector('.trust-stats-section, .trust-stats-bar');
     if (!stats || document.getElementById('pm-live-strip')) return;
     const byId = await loadDirectory();
+    if (document.getElementById('pm-live-strip')) return; // another call finished first
     const list = [...new Set(byId.values())];
     if (!list.length) return;
     const online = list.filter(a => a.availability === 'online').length;

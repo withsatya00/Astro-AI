@@ -346,8 +346,12 @@ def test_wallet_order_with_coupon_and_refund(client):
     expected = round(p["price"] - min(p["price"] * 0.10, 200), 2)
     assert order["total_price"] == pytest.approx(expected) and order["discount_amount"] == pytest.approx(p["price"] - expected)
     assert _balance(uid) == pytest.approx(50000.0 - expected)
+    ledger = client.get('/api/v1/wallet', headers=auth).json()['transactions']
+    assert any(t['type'] == 'debit' and t['amount'] == pytest.approx(-expected) and 'Astro Mall' in t['description'] for t in ledger)
     assert client.post(f"/api/v1/marketplace/orders/{order['id']}/cancel", headers=auth).status_code == 200
     assert _balance(uid) == pytest.approx(50000.0)
+    ledger = client.get('/api/v1/wallet', headers=auth).json()['transactions']
+    assert any(t['type'] == 'refund' and t['amount'] == pytest.approx(expected) for t in ledger)
 
 
 def test_gemstone_options_ack_and_price(client):
@@ -697,3 +701,42 @@ def test_today_suggestions_and_remedies(client):
     shop = client.get("/api/v1/marketplace/suggestions", headers=auth).json()
     assert shop["suggestion"]["lord"] == "Mercury" and any("पन्ना" in p["title"] for p in shop["products"])
     assert client.get("/api/v1/mandir/suggestions", headers=auth).json()["temple"]["slug"] == "siddhivinayak-mumbai"
+
+
+def test_admin_can_edit_temple_and_seva(client, admin):
+    plain = _make_user()[1]
+    assert client.post("/api/v1/shop-admin/temples", json={}, headers=plain).status_code == 403
+    made = client.post("/api/v1/shop-admin/temples", headers=admin, json={
+        "name": "Test Dham Aarti", "deity": "Shiv", "city": "Ujjain", "state": "MP", "description": "A test temple."})
+    assert made.status_code == 200, made.text
+    slug = made.json()["slug"]
+    # Temples with no seva yet are still created; add one and change it.
+    seva = client.post("/api/v1/shop-admin/offerings", headers=admin, json={
+        "temple_slug": slug, "title": "Test Abhishek", "description": "Milk abhishek", "category": "abhishek", "price": 501})
+    assert seva.status_code == 200, seva.text
+    assert client.post("/api/v1/shop-admin/offerings", headers=admin, json={
+        "temple_slug": slug, "title": "Bad", "description": "x", "category": "nope", "price": 10}).status_code == 400
+    oid = seva.json()["id"]
+    assert client.patch(f"/api/v1/shop-admin/offerings/{oid}", headers=admin, json={"price": 751}).status_code == 200
+    listed = client.get("/api/v1/shop-admin/offerings", params={"temple_slug": slug}, headers=admin).json()["offerings"]
+    assert listed[0]["price"] == 751
+    public = client.get(f"/api/v1/mandir/temples/{slug}?lang=en").json()
+    assert public["offerings"][0]["price"] == 751
+    assert client.patch(f"/api/v1/shop-admin/temples/{slug}", headers=admin, json={
+        "description": "Updated text", "aarti_timings": [{"name": "Sandhya Aarti", "time": "07:00 PM"}]}).status_code == 200
+    row = [t for t in client.get("/api/v1/shop-admin/temples", headers=admin).json()["temples"] if t["slug"] == slug][0]
+    assert row["description"] == "Updated text" and row["aarti_timings"][0]["time"] == "07:00 PM"
+    # Hiding a temple removes it from the public list
+    client.patch(f"/api/v1/shop-admin/temples/{slug}", headers=admin, json={"is_active": False})
+    assert client.get(f"/api/v1/mandir/temples/{slug}?lang=en").status_code == 404
+
+
+def test_admin_summary_and_csv_export_are_admin_only(client, admin):
+    plain = _make_user()[1]
+    for path in ("/api/v1/shop-admin/summary", "/api/v1/shop-admin/export/seva-bookings.csv"):
+        assert client.get(path).status_code == 403
+        assert client.get(path, headers=plain).status_code == 403
+    data = client.get("/api/v1/shop-admin/summary", headers=admin).json()
+    assert {"seva_bookings_today", "orders_to_ship", "low_stock_products", "wallet_credits_today"} <= set(data)
+    csv_res = client.get("/api/v1/shop-admin/export/seva-bookings.csv", headers=admin)
+    assert csv_res.status_code == 200 and csv_res.text.startswith("booking_number,")

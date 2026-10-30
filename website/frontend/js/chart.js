@@ -64,14 +64,14 @@ const ChartViewer = {
     return `
       <svg class="${isCompact ? 'kundali-svg-compact' : 'kundali-svg'}" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <!-- Outer Box -->
-        <rect x="8" y="8" width="384" height="384" fill="#ffffff" stroke="#c4b5fd" stroke-width="1.5" rx="6" />
+        <rect x="8" y="8" width="384" height="384" fill="#ffffff" stroke="#d8c6e3" stroke-width="1.5" rx="6" />
         
         <!-- Diagonals -->
-        <line x1="8" y1="8" x2="392" y2="392" stroke="#ddd6fe" stroke-width="1.2" />
-        <line x1="392" y1="8" x2="8" y2="392" stroke="#ddd6fe" stroke-width="1.2" />
+        <line x1="8" y1="8" x2="392" y2="392" stroke="#e3d8f3" stroke-width="1.2" />
+        <line x1="392" y1="8" x2="8" y2="392" stroke="#e3d8f3" stroke-width="1.2" />
         
         <!-- Central Inner Diamond -->
-        <polygon points="200,8 392,200 200,392 8,200" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5" />
+        <polygon points="200,8 392,200 200,392 8,200" fill="#f4eefb" stroke="#bca4ca" stroke-width="1.5" />
         
         <!-- House and Planet Text Labels -->
         ${planetTexts}
@@ -436,7 +436,7 @@ https://astrojyotish.ai`;
           <div style="font-size: 0.8rem; color: #334155;">${kujaStr}</div>
         </div>
         <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: var(--radius-sm); padding: 0.85rem;">
-          <div style="font-size: 0.82rem; font-weight: 700; color: #4338CA; margin-bottom: 0.35rem;">🪐 Shani Sade Sati / Dhaiya Status</div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #1e0b44; margin-bottom: 0.35rem;">🪐 Shani Sade Sati / Dhaiya Status</div>
           <div style="font-size: 0.8rem; color: #334155;">${sadeSatiStr}</div>
         </div>
       </div>
@@ -445,11 +445,11 @@ https://astrojyotish.ai`;
       <div class="grounded-section-title">
         <span>⏳</span> Active Vimshottari Mahadasha
       </div>
-      <div style="background: #F3E8FF; border: 1px solid #D8B4FE; border-radius: var(--radius-sm); padding: 0.85rem; margin-bottom: 1.25rem;">
-        <div style="font-size: 0.85rem; font-weight: 700; color: #6B21A8; margin-bottom: 0.25rem;">
+      <div style="background: #F3E8FF; border: 1px solid #dcc8e7; border-radius: var(--radius-sm); padding: 0.85rem; margin-bottom: 1.25rem;">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #352343; margin-bottom: 0.25rem;">
           Currently Running: ${dasha.active_planet || 'Planetary'} Mahadasha
         </div>
-        <div style="font-size: 0.78rem; color: #581C87;">
+        <div style="font-size: 0.78rem; color: #1e0b44;">
           Period: ${dasha.start_date || '-'} to ${dasha.end_date || '-'} (${dasha.duration_years || '-'} Years)
         </div>
       </div>

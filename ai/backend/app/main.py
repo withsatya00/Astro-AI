@@ -42,6 +42,8 @@ async def add_timing_and_security(request: Request, call_next):
     return response
 
 API_V1_PREFIX = "/api/v1"
+from website.backend.app.api import advanced
+app.include_router(advanced.router, prefix=API_V1_PREFIX)
 app.include_router(health.router, prefix=API_V1_PREFIX)
 app.include_router(auth.router, prefix=API_V1_PREFIX)
 app.include_router(chat.router, prefix=API_V1_PREFIX)

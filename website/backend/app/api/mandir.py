@@ -29,11 +29,13 @@ from packages.core.pricing import (
     EARN_PER_RUPEES, active_membership, apply_totals, award_points, compute_totals, maybe_reward_referral, refund_points
 )
 from website.backend.app import catalog_i18n
+from website.backend.app.temples_more import MORE_TEMPLES
+from website.backend.app.temple_items import seed_temple_items
 from packages.core.remedies import WEEKDAY_SEVA, remedy_for_sign, normalize_sign, tithi_special
 
 router = APIRouter(prefix="/mandir", tags=["Mandir Seva & E-Chadawa"])
 
-# ----------------- Seed Data with 11 Famous Holy Temples -----------------
+# ----------------- Seed Data: famous holy temples (more in temples_more.py) -----------------
 INITIAL_TEMPLES = [
     {
         "name": "श्री महाकालेश्वर ज्योतिर्लिंग, उज्जैन",
@@ -435,6 +437,7 @@ INITIAL_TEMPLES = [
 ]
 
 
+INITIAL_TEMPLES.extend(MORE_TEMPLES)
 catalog_i18n.register_temples(INITIAL_TEMPLES)
 
 
@@ -458,6 +461,7 @@ def seed_temples_if_empty(db: Session):
                     offering = TempleOffering(temple_id=temple.id, **o_data)
                     db.add(offering)
         db.commit()
+        seed_temple_items(db)
     except Exception as e:
         db.rollback()
         print(f"[Seed Temples Notice] {e}")
@@ -512,7 +516,7 @@ def seed_packages_and_coupons(db: Session):
             if db.query(SevaPackage).filter(SevaPackage.slug == p["slug"]).first():
                 continue
             temple = db.query(Temple).filter(Temple.slug == p["temple"]).first()
-            offerings = sorted(temple.offerings, key=lambda o: o.created_at or utc_now()) if temple else []
+            offerings = sorted([o for o in temple.offerings if o.category not in CATALOG_ONLY], key=lambda o: o.created_at or utc_now()) if temple else []
             if len(offerings) <= p["offering_index"]:
                 continue
             db.add(SevaPackage(slug=p["slug"], offering_id=offerings[p["offering_index"]].id, title=p["title"], title_en=p["title_en"],
@@ -526,6 +530,7 @@ def seed_packages_and_coupons(db: Session):
 
 # ----------------- Request Schemas -----------------
 BOOKING_FLOW = ["PAID", "SANKALP_SCHEDULED", "VIDEO_UPLOADED", "COMPLETED"]
+CATALOG_ONLY = ("item", "puja_tier")
 PRASAD_FEE = 99.0
 
 
@@ -583,12 +588,19 @@ def _is_hi(lang: Optional[str]) -> bool:
 
 
 def _offering_dict(o: TempleOffering, lang: Optional[str] = None) -> Dict[str, Any]:
-    en = catalog_i18n.offering_en(o.title) if catalog_i18n.is_en(lang) else None
+    english = catalog_i18n.is_en(lang)
+    en = catalog_i18n.offering_en(o.title) if english else None
+    if english and not en and o.title_en:
+        en = (o.title_en, o.description_en or o.description)
     return {
         "id": o.id,
         "title": en[0] if en else o.title,
         "description": en[1] if en else o.description,
         "category": o.category,
+        "emoji": o.emoji,
+        "popular": bool(o.popular),
+        "sort_order": o.sort_order or 0,
+        "max_members": o.max_members or 1,
         "price": o.price,
         "has_prasad_delivery": o.has_prasad_delivery,
         "delivery_fee": o.delivery_fee,
@@ -625,7 +637,15 @@ def _booking_dict(b: ChadawaBooking, lang: Optional[str] = None, db: Optional[Se
     if db is not None and b.priest_id:
         row = db.query(Priest).filter(Priest.id == b.priest_id).first()
         priest = _priest_dict(row, lang) if row else None
+    chadhava_order = None
+    if db is not None:
+        from packages.database.chadhava import ChadhavaOrder
+        chadhava_order = db.query(ChadhavaOrder).filter_by(booking_id=b.id).first()
     return {
+        "chadhava_order_id": chadhava_order.id if chadhava_order else None,
+        "service_status": chadhava_order.service_status if chadhava_order else None,
+        "payment_status": chadhava_order.payment_status if chadhava_order else None,
+        "offering_items": chadhava_order.snapshot.get("items", []) if chadhava_order else [],
         "id": b.id,
         "booking_number": b.booking_number,
         "temple_name": temple_name,
@@ -665,7 +685,8 @@ def _new_certificate_code() -> str:
 
 def _offering_or_404(db: Session, offering_id: str) -> TempleOffering:
     offering = db.query(TempleOffering).filter(TempleOffering.id == offering_id, TempleOffering.is_active == True).first()  # noqa: E712
-    if not offering:
+    # Single items and puja tiers are only sold through dated chadhava/puja events.
+    if not offering or offering.category in CATALOG_ONLY:
         raise HTTPException(status_code=404, detail="Offering not found")
     return offering
 
@@ -700,7 +721,7 @@ def get_temples(
 
     results = []
     for t in query.all():
-        offerings_data = [_offering_dict(o, lang) for o in t.offerings if o.is_active]
+        offerings_data = [_offering_dict(o, lang) for o in t.offerings if o.is_active and o.category not in CATALOG_ONLY]
         min_price = min([o["price"] for o in offerings_data]) if offerings_data else 51.0
         fields = _temple_fields(t, lang)
         results.append({
@@ -718,6 +739,7 @@ def get_temples(
             "has_live": bool(t.live_url),
             "starting_price": min_price,
             "offerings": offerings_data,
+            "tiers": [_offering_dict(o, lang) for o in sorted(t.offerings, key=lambda x: x.sort_order or 0) if o.is_active and o.category == "puja_tier"],
         })
     return {"temples": results, "total": len(results)}
 
@@ -730,7 +752,7 @@ def get_temple_details(temple_id_or_slug: str, lang: Optional[str] = None, db: S
     temple = db.query(Temple).filter(
         (Temple.id == temple_id_or_slug) | (Temple.slug == temple_id_or_slug)
     ).first()
-    if not temple:
+    if not temple or not temple.is_active:
         raise HTTPException(status_code=404, detail="Temple not found")
     fields = _temple_fields(temple, lang)
     english = catalog_i18n.is_en(lang)
@@ -753,7 +775,8 @@ def get_temple_details(temple_id_or_slug: str, lang: Optional[str] = None, db: S
         "aarti_timings": _aarti(temple),
         "priests": [_priest_dict(p, lang) for p in priests],
         "packages": [_package_dict(pk, english) for pk in packages],
-        "offerings": [_offering_dict(o, lang) for o in temple.offerings if o.is_active],
+        "offerings": [_offering_dict(o, lang) for o in temple.offerings if o.is_active and o.category not in CATALOG_ONLY],
+        "items": [_offering_dict(o, lang) for o in sorted(temple.offerings, key=lambda x: (not x.popular, x.sort_order or 0)) if o.is_active and o.category == "item"],
     }
 
 
@@ -904,6 +927,13 @@ def cancel_my_booking(
 ):
     """Cancels a booking that has not been scheduled yet; refunds the wallet and any points used."""
     booking = _own_booking(db, booking_id, user)
+    from packages.database.chadhava import ChadhavaOrder
+    order = db.query(ChadhavaOrder).filter_by(booking_id=booking.id).first()
+    if order:
+        from website.backend.app.api.chadhava import cancel
+        cancel(order.id, db, user)
+        db.refresh(booking)
+        return {"success": True, "booking": _booking_dict(booking, lang, db)}
     if booking.status != "PAID":
         raise HTTPException(status_code=409, detail="Booking can no longer be cancelled")
     booking.status = "CANCELLED"
@@ -1126,6 +1156,9 @@ def admin_update_booking(
     booking = db.query(ChadawaBooking).filter(ChadawaBooking.id == booking_id).first()
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
+    from packages.database.chadhava import ChadhavaOrder
+    if db.query(ChadhavaOrder).filter_by(booking_id=booking.id).first():
+        raise HTTPException(409, "Manage this event booking in the Chadhava temple-team dashboard")
     status = req.status.upper()
     if status not in BOOKING_FLOW:
         raise HTTPException(status_code=400, detail=f"Status must be one of {BOOKING_FLOW}")

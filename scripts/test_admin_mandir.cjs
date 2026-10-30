@@ -1,0 +1,56 @@
+// Admin edits Mandir Seva content end to end (needs QA_DB, see test_expert_booking.cjs).
+const {chromium} = require('@playwright/test');
+const assert = require('node:assert/strict');
+const {execFileSync} = require('node:child_process');
+const API = 'http://127.0.0.1:8012/api/v1';
+(async () => {
+  const browser = await chromium.launch({headless: true, channel: 'msedge'});
+  try {
+    const page = await browser.newPage({viewport: {width: 1440, height: 1000}});
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await page.addInitScript(() => { window.__API_BASE__ = 'http://127.0.0.1:8012/api/v1'; });
+    await page.goto('http://localhost:3100/', {waitUntil: 'networkidle'});
+    const email = `adminm-${Date.now()}@test.in`;
+    const reg = await (await page.request.post(API + '/auth/register', {data: {email, password: 'Premium-QA-123!', full_name: 'Admin QA'}})).json();
+    execFileSync('python', ['-c', `import sqlite3,sys;c=sqlite3.connect(sys.argv[1]);c.execute("update users set role='admin' where email=?",(sys.argv[2],));c.commit()`, process.env.QA_DB, email]);
+    await page.evaluate(async t => { localStorage.setItem('astro_access_token', t); await window.App.checkUserSession(); }, reg.access_token);
+    await page.evaluate(() => window.Router.navigate('/admin'));
+    await page.waitForSelector('#admin-summary .admin-tile');
+    assert.ok(await page.locator('#admin-summary .admin-tile').count() >= 6, 'admin overview tiles');
+    assert.equal(await page.locator('#admin-summary [data-export]').count(), 1);
+    await page.click('#admin-tabs [data-tab="temples"]');
+    await page.waitForSelector('#temple-form');
+    const name = `QA Dham ${Date.now()}`;
+    await page.fill('#temple-form [name=name]', name);
+    await page.fill('#temple-form [name=deity]', 'Shiv');
+    await page.fill('#temple-form [name=city]', 'Kashi');
+    await page.fill('#temple-form [name=state]', 'UP');
+    await page.fill('#temple-form [name=description]', 'QA temple');
+    await page.click('#temple-form button[type=submit]');
+    const card = page.locator('.admin-card', {hasText: name}).first();
+    await card.waitFor();
+    await card.locator('[data-field=aarti]').fill('Mangla Aarti | 04:30 AM');
+    await card.locator('[data-action=temple-save]').click();
+    await page.waitForTimeout(600);
+    const card2 = page.locator('.admin-card', {hasText: name}).first();
+    await card2.locator('[data-action=temple-sevas]').click();
+    const sevas = card2.locator('.admin-sevas');
+    await sevas.locator('[data-field=title]').last().fill('QA Rudrabhishek');
+    await sevas.locator('[data-field=price]').last().fill('1101');
+    await sevas.locator('[data-field=description]').last().fill('QA seva');
+    await sevas.locator('[data-action=seva-add]').click();
+    await sevas.locator('[data-action=seva-save]').waitFor();
+    await sevas.locator('[data-field=price]').first().fill('1251');
+    await sevas.locator('[data-action=seva-save]').first().click();
+    await page.waitForTimeout(800);
+    const list = await (await page.request.get(API + '/mandir/temples?lang=en')).json();
+    const t = list.temples.find(x => x.name === name);
+    assert.ok(t, 'new temple is public');
+    const detail = await (await page.request.get(`${API}/mandir/temples/${t.slug}?lang=en`)).json();
+    assert.equal(detail.offerings[0].price, 1251);
+    assert.match(JSON.stringify(detail.aarti_timings), /04:30 AM/);
+    assert.deepEqual(errors, []);
+    console.log('PASS admin: add temple, edit aarti timing, add/edit seva price, visible on public site');
+  } finally { await browser.close(); }
+})().catch(e => { console.error(e); process.exit(1); });

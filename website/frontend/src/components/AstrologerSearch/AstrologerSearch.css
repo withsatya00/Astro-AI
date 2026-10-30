@@ -23,8 +23,8 @@
 
 .search-main-input-box:focus-within {
   background: #FFFFFF;
-  border-color: var(--color-purple-primary, #7439EA);
-  box-shadow: 0 0 0 3px rgba(116, 57, 234, 0.12);
+  border-color: var(--color-purple-primary, #4a1b9a);
+  box-shadow: 0 0 0 3px rgba(74, 27, 154, 0.12);
 }
 
 .search-main-input-box .search-icon {
@@ -62,7 +62,7 @@
 }
 
 .filter-select-wrapper:hover {
-  border-color: var(--color-purple-subtle, #DDD6FE);
+  border-color: var(--color-purple-subtle, #e3d8f3);
 }
 
 .filter-select {

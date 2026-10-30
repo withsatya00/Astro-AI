@@ -1,6 +1,6 @@
 /**
  * Astro Jyotish Design System Tokens
- * Palette: Deep Navy, Vivid Royal Purple, Warm Cream/Ivory, Saffron Gold.
+ * Palette: Logo Violet (deep #1e0b44, primary #4a1b9a), Warm Cream/Ivory, Gold highlights.
  */
 
 :root {
@@ -15,12 +15,21 @@
   --bg-subtle: #F8F5EE;
 
   /* Brand Primary & Accents */
-  --color-purple-primary: #7439EA;
-  --color-purple-hover: #5B21B6;
-  --color-purple-deep: #4C1D95;
-  --color-purple-light: #F5F3FF;
-  --color-purple-subtle: #DDD6FE;
-  --color-purple-glow: rgba(116, 57, 234, 0.2);
+  --brand-primary: #4a1b9a;
+  --brand-hover: #3b1580;
+  --brand-deep: #1e0b44;
+  --brand-highlight: #6b3fc4;
+  --brand-soft: #f4eefb;
+  --brand-focus: #8b6bd9;
+  --brand-action: #4a1b9a; /* flat: buttons do not use gradients */
+  --brand-banner: linear-gradient(125deg, #1e0b44 0%, #2d1170 62%, #4a1b9a 100%);
+  /* Compatibility names keep older components on the shared brand palette. */
+  --color-purple-primary: var(--brand-primary);
+  --color-purple-hover: var(--brand-hover);
+  --color-purple-deep: var(--brand-deep);
+  --color-purple-light: #f4eefb;
+  --color-purple-subtle: #e3d8f3;
+  --color-purple-glow: rgba(74, 27, 154, 0.2);
 
   /* Deep Navy (Typography & Headers) */
   --color-navy-main: #211D50;
@@ -39,14 +48,14 @@
   /* Text & Foreground */
   --text-primary: #211D50;
   --text-secondary: #53627A;
-  --text-muted: #7E8FA6;
+  --text-muted: #5F6F86; /* AA (4.5:1) on white and ivory */
   --text-light: #94A3B8;
   --text-inverted: #FFFFFF;
 
   /* Borders & Dividers */
   --border-subtle: #E7E2D8;
   --border-card: #EFE9DD;
-  --border-focus: #7439EA;
+  --border-focus: var(--brand-focus);
   --border-gold: #FCD34D;
 
   /* Functional Status */
@@ -92,7 +101,7 @@
   --shadow-md: 0 4px 16px rgba(33, 29, 80, 0.08);
   --shadow-lg: 0 10px 30px rgba(33, 29, 80, 0.10);
   --shadow-xl: 0 20px 40px rgba(33, 29, 80, 0.14);
-  --shadow-glow: 0 0 20px rgba(116, 57, 234, 0.25);
+  --shadow-glow: 0 0 20px rgba(74, 27, 154, 0.25);
   --shadow-gold: 0 4px 16px rgba(232, 173, 53, 0.25);
 
   /* Container & Layout */
@@ -114,5 +123,4 @@
   --primary-violet-light: var(--color-purple-light);
   --color-gold: var(--color-gold-primary);
   --text-main: var(--text-primary);
-  --text-muted: var(--text-muted);
 }

@@ -4,6 +4,9 @@ import { currentLang } from '../../utils/shop-i18n.js';
 import { CartStore } from '../../utils/cart-store.js';
 import { CartDrawer } from '../../components/shop/CartDrawer.js';
 import { CheckoutModal } from '../../components/shop/CheckoutModal.js';
+import { Discovery } from '../../components/shop/Discovery.js';
+import { x } from '../../utils/experience.js';
+import { servicePanel } from '../../components/ServiceInfo.js';
 
 const svg = (d, extra = '') => `<svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${d}</svg>`;
 const IC = {
@@ -55,22 +58,37 @@ export class ProductPageComponent {
 
   static async open(id, keepState = false) {
     if (!this.root) return;
+    const request = this.openRequest = (this.openRequest || 0) + 1;
     this.id = id;
     if (!keepState) { this.chosen = {}; this.qty = 1; this.image = 0; }
     this.root.innerHTML = `<div class="shop-page pp"><div class="pp-skel"><div class="pp-skel__img"></div><div class="pp-skel__txt"><i></i><i></i><i></i><i></i></div></div></div>`;
     window.scrollTo({ top: 0 });
     try {
-      const [product, reviews, related] = await Promise.all([
+      const [product, reviews, related, catalog] = await Promise.all([
         api(`/api/v1/marketplace/products/${encodeURIComponent(id)}?lang=${this.lang}`),
         api(`/api/v1/marketplace/products/${encodeURIComponent(id)}/reviews`).catch(() => ({ reviews: [] })),
-        api(`/api/v1/marketplace/products/${encodeURIComponent(id)}/related?lang=${this.lang}`).catch(() => ({ products: [] }))
+        api(`/api/v1/marketplace/products/${encodeURIComponent(id)}/related?lang=${this.lang}`).catch(() => ({ products: [] })),
+        api(`/api/v1/marketplace/products?lang=${this.lang}`).catch(() => ({ products: [] }))
       ]);
+      if (request !== this.openRequest) return;
       this.product = product;
       (product.options || []).forEach(g => { if (!this.chosen[g.key]) this.chosen[g.key] = (g.values.find(v => !v.price_delta) || g.values[0]).value; });
       await CartStore.init();
+      if (request !== this.openRequest) return;
+      Discovery.visit(id);
+      window.Seo?.entity({
+        title: `${product.title} | Astro Mall`, description: String(product.description || '').slice(0, 155),
+        data: { '@context': 'https://schema.org', '@type': 'Product', name: product.title, description: product.description || undefined,
+          image: product.image_url ? [mediaUrl(product.image_url)] : undefined,
+          offers: { '@type': 'Offer', priceCurrency: 'INR', price: product.price, availability: product.in_stock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' },
+          ...(product.review_count ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: product.rating, reviewCount: product.review_count } } : {}) }
+      });
       this.render(product, reviews.reviews, related.products);
+      Discovery.shelf(this.root.querySelector('[data-recent-shelf]'), catalog.products, id);
     } catch (err) {
-      this.root.innerHTML = `<div class="shop-page"><div class="shop-empty"><b>${esc(t('pp.notFound'))}</b>${esc(err.message)}<br><br><a class="shop-btn shop-btn--line" href="/astro-mall">${esc(t('pp.backToMall'))}</a></div></div>`;
+      if (request !== this.openRequest) return;
+      this.root.innerHTML = `<div class="shop-page"><div class="shop-empty"><b>${esc(t('pp.notFound'))}</b>${esc(err.message)}<br><br><button type="button" class="shop-btn shop-btn--gold" id="pp-retry">${esc(x('retry'))}</button> <a class="shop-btn shop-btn--line" href="/astro-mall">${esc(t('pp.backToMall'))}</a></div></div>`;
+      this.root.querySelector('#pp-retry').onclick = () => this.open(id, true);
     }
   }
 
@@ -99,16 +117,18 @@ export class ProductPageComponent {
             <img id="pp-main-img" src="${esc(mediaUrl(images[this.image] || images[0]))}" alt="${esc(p.title)}" decoding="async">
             ${p.has_lab_certificate ? `<span class="pp-badge">${IC.shield} ${esc(t('ml.certificate'))}</span>` : ''}
             <button type="button" class="pp-round pp-share" id="pp-share" aria-label="${esc(t('pp.share'))}">${IC.share}</button>
-            ${images.length > 1 ? `<button type="button" class="pp-nav pp-nav--prev" data-step="-1" aria-label="Previous">${IC.left}</button><button type="button" class="pp-nav pp-nav--next" data-step="1" aria-label="Next">${IC.right}</button>
+            ${images.length > 1 ? `<button type="button" class="pp-nav pp-nav--prev" data-step="-1" aria-label="${esc(x('previous'))}">${IC.left}</button><button type="button" class="pp-nav pp-nav--next" data-step="1" aria-label="${esc(x('next'))}">${IC.right}</button>
             <div class="pp-dots">${images.map((_, i) => `<i class="${i === this.image ? 'is-on' : ''}"></i>`).join('')}</div>` : ''}
             <span class="pp-zoomhint">${IC.zoom} ${esc(t('pp.zoom'))}</span>
           </div>
-          ${images.length > 1 ? `<div class="pp-thumbs">${images.map((u, i) => `<button type="button" class="${i === this.image ? 'is-on' : ''}" data-thumb="${i}" aria-label="Photo ${i + 1}"><img src="${esc(mediaUrl(u))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+          ${images.length > 1 ? `<div class="pp-thumbs">${images.map((u, i) => `<button type="button" class="${i === this.image ? 'is-on' : ''}" data-thumb="${i}" aria-pressed="${i === this.image}" aria-label="${esc(x('photo'))} ${i + 1}"><img src="${esc(mediaUrl(u))}" alt="" loading="lazy"></button>`).join('')}</div>` : ''}
+          <p class="exp-photo-count" id="pp-photo-count" translate="no">${esc(x('photo'))} ${this.image + 1} / ${images.length}</p>
         </div>
 
         <div class="pp-info">
           <div class="pp-eyebrow">${esc(catName)}</div>
           <h1 class="pp-title">${esc(p.title)}</h1>
+          <div class="exp-product-tools" translate="no">${Discovery.button(p.id)}<button class="exp-text-button" type="button" data-open-compare>${esc(x('compare'))} (${Discovery.compare.length}/3)</button></div>
           <div class="pp-meta">
             <a href="#pp-reviews" class="pp-rating">${p.review_count ? `<b>${stars(p.rating)}</b> <span>${p.rating}</span> <small>(${p.review_count})</small>` : `<span class="pp-new">${esc(t('ml.new'))}</span>`}</a>
             <span class="pp-seller">${IC.store} ${esc(p.seller.name)} ${p.seller.verified ? `<span class="shop-pill shop-pill--ok">${IC.check} ${esc(t('pp.verifiedSeller'))}</span>` : ''}</span>
@@ -136,10 +156,11 @@ export class ProductPageComponent {
             <form class="pp-pin__f" id="pp-pin-form" novalidate><input class="shop-input" id="pp-pin" inputmode="numeric" maxlength="6" autocomplete="postal-code" placeholder="${esc(t('pp.pin.ph'))}"><button type="submit" class="shop-btn shop-btn--line">${esc(t('pp.pin.btn'))}</button></form>
             <p class="pp-pin__r" id="pp-pin-res" aria-live="polite"></p>
           </div>
+          <details class="exp-policy" translate="no"><summary>${esc(x('returns'))}</summary><p>${esc(p.return_policy.text)}</p><strong>${esc(x('delivery'))}</strong><p>${esc(x('deliveryNote'))}</p></details>
 
           <div class="pp-trust">
-            <div>${IC.shield}<b>${esc(t('pp.trust.cert'))}</b><small>${esc(t('pp.trust.certSub'))}</small></div>
-            <div>${IC.om}<b>${esc(t('pp.trust.energ'))}</b><small>${esc(t('pp.trust.energSub'))}</small></div>
+            ${p.has_lab_certificate ? `<div>${IC.shield}<b>${esc(p.has_lab_certificate ? t('pp.trust.cert') : x('certified'))}</b><small>${esc(p.has_lab_certificate ? t('pp.trust.certSub') : x('no'))}</small></div>` : ''}
+            ${p.is_energized ? `<div>${IC.om}<b>${esc(p.is_energized ? t('pp.trust.energ') : x('energized'))}</b><small>${esc(p.is_energized ? t('pp.trust.energSub') : x('no'))}</small></div>` : ''}
             <div>${IC.lock}<b>${esc(t('pp.trust.pay'))}</b><small>${esc(t('pp.trust.paySub'))}</small></div>
             <div>${IC.undo}<b>${esc(t('pp.trust.ret'))}</b><small>${esc(t('pp.trust.retSub', { days: p.return_policy.days }))}</small></div>
           </div>
@@ -171,12 +192,14 @@ export class ProductPageComponent {
             : `<p class="shop-hint" style="font-size:.85rem">${esc(t('ml.noReviews'))}</p>`}</div>
       </section>
 
+      ${servicePanel('product')}
+      <div data-recent-shelf></div>
       ${related.length ? `<section class="pp-related"><h2>${esc(t('pp.related'))}</h2><div class="shop-grid">${related.map(r => `
         <article class="shop-card"><a class="shop-card__media" href="/astro-mall/product/${esc(r.id)}"><img src="${esc(mediaUrl(r.image_url))}" alt="${esc(r.title)}" loading="lazy"></a>
         <div class="shop-card__body"><h3 class="shop-card__title"><a href="/astro-mall/product/${esc(r.id)}">${esc(r.title)}</a></h3><div class="shop-card__foot"><div class="shop-price">${money(r.price)}</div></div></div></article>`).join('')}</div></section>` : ''}
     </div>
     <div class="pp-buybar"><div class="pp-buybar__p"><div class="shop-price" id="pp-bar-price"></div></div><button type="button" class="shop-btn shop-btn--line" id="pp-add-2" ${p.in_stock ? '' : 'disabled'}>${IC.cart} ${esc(t('pp.bar.add'))}</button><button type="button" class="shop-btn shop-btn--gold" id="pp-buy-2" ${p.in_stock ? '' : 'disabled'}>${esc(t('ml.buyNow'))}</button></div>
-    <div class="pp-lightbox" id="pp-lb" hidden><button type="button" class="pp-lb__x" aria-label="${esc(t('close'))}">&times;</button><button type="button" class="pp-nav pp-nav--prev" data-lbstep="-1" aria-label="Previous">${IC.left}</button><img alt=""><button type="button" class="pp-nav pp-nav--next" data-lbstep="1" aria-label="Next">${IC.right}</button></div>`;
+    <div class="pp-lightbox" id="pp-lb" hidden><button type="button" class="pp-lb__x" aria-label="${esc(t('close'))}">&times;</button><button type="button" class="pp-nav pp-nav--prev" data-lbstep="-1" aria-label="${esc(x('previous'))}">${IC.left}</button><img alt=""><button type="button" class="pp-nav pp-nav--next" data-lbstep="1" aria-label="${esc(x('next'))}">${IC.right}</button></div>`;
 
     this.bind();
     this.paintPrice();
@@ -190,7 +213,9 @@ export class ProductPageComponent {
     const r = this.root;
     const main = r.querySelector('#pp-main-img');
     if (main) main.src = mediaUrl(imgs[this.image]);
-    r.querySelectorAll('[data-thumb]').forEach(x => x.classList.toggle('is-on', +x.getAttribute('data-thumb') === this.image));
+    r.querySelectorAll('[data-thumb]').forEach(button => { const selected = +button.dataset.thumb === this.image; button.classList.toggle('is-on', selected); button.setAttribute('aria-pressed', String(selected)); });
+    const count = r.querySelector('#pp-photo-count');
+    if (count) count.textContent = `${x('photo')} ${this.image + 1} / ${imgs.length}`;
     r.querySelectorAll('.pp-dots i').forEach((d, n) => d.classList.toggle('is-on', n === this.image));
     const lb = r.querySelector('#pp-lb img');
     if (lb) lb.src = mediaUrl(imgs[this.image]);
@@ -251,8 +276,18 @@ export class ProductPageComponent {
       img.classList.add('is-zoom');
     });
     stage.addEventListener('mouseleave', () => img.classList.remove('is-zoom'));
-    const openLb = () => { lb.querySelector('img').src = mediaUrl(this.images[this.image]); lb.hidden = false; document.body.style.overflow = 'hidden'; };
-    const closeLb = () => { lb.hidden = true; document.body.style.overflow = ''; };
+    let galleryFocus;
+    const openLb = () => { galleryFocus = document.activeElement; lb.querySelector('img').src = mediaUrl(this.images[this.image]); lb.querySelector('img').alt = this.product.title; lb.hidden = false; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', this.product.title); document.body.style.overflow = 'hidden'; lb.querySelector('button').focus(); };
+    const closeLb = () => { lb.hidden = true; document.body.style.overflow = ''; galleryFocus?.focus(); };
+    lb.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.stopPropagation(); closeLb(); }
+      if (e.key === 'Tab') {
+        const buttons = [...lb.querySelectorAll('button')];
+        const first = buttons[0], last = buttons[buttons.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
     stage.addEventListener('click', (e) => { if (stage.dataset.swiped || e.target.closest('button')) return; openLb(); });
     stage.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') openLb();

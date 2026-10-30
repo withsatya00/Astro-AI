@@ -5,7 +5,9 @@
 
 import { NavbarComponent } from '../components/Navbar/Navbar.js';
 import { GlobalFooterComponent } from '../components/GlobalFooter/GlobalFooter.js';
-import { AstrologerCardComponent } from '../components/AstrologerCard/AstrologerCard.js?v=r2';
+import { AstrologerCardComponent } from '../components/AstrologerCard/AstrologerCard.js?v=r4';
+import { Favourites } from '../components/premium/Favourites.js?v=r1';
+import { DirectoryChips } from '../components/premium/DirectoryChips.js?v=r1';
 import { HomePageComponent } from '../pages/HomePage/HomePage.js';
 import { DirectoryPageComponent } from '../pages/DirectoryPage/DirectoryPage.js';
 import { ProfilePageComponent } from '../pages/ProfilePage/ProfilePage.js';
@@ -14,16 +16,25 @@ import { CalculatorsPageComponent } from '../pages/CalculatorsPage/CalculatorsPa
 import { PanchangPageComponent } from '../pages/PanchangPage/PanchangPage.js';
 import { ConsultationPageComponent } from '../pages/ConsultationPage/ConsultationPage.js';
 import { ModalsComponent } from '../pages/Modals/Modals.js';
-import { MandirSevaPageComponent } from '../pages/MandirSevaPage/MandirSevaPage.js?v=r16';
+import { MandirSevaPageComponent } from '../pages/MandirSevaPage/MandirSevaPage.js?v=r18';
 import { AstroMallPageComponent } from '../pages/AstroMallPage/AstroMallPage.js?v=r16';
 import { AdminPageComponent } from '../pages/AdminPage/AdminPage.js?v=r16';
 import { ProductPageComponent } from '../pages/ProductPage/ProductPage.js?v=r23';
 import { TemplePageComponent } from '../pages/TemplePage/TemplePage.js?v=r23';
-import { RewardsPageComponent } from '../pages/RewardsPage/RewardsPage.js?v=r23';
+import { RewardsPageComponent } from '../pages/RewardsPage/RewardsPage.js?v=r24';
 import { SellerPageComponent } from '../pages/SellerPage/SellerPage.js?v=r23';
 import { VerifyPageComponent } from '../pages/VerifyPage/VerifyPage.js?v=r23';
 import { NotificationBell } from '../components/NotificationBell/NotificationBell.js?v=r16';
 import { ChadawaModal } from '../components/ChadawaModal/ChadawaModal.js?v=r16';
+import { DashboardPageComponent } from '../pages/DashboardPage/DashboardPage.js?v=r24';
+import { GiftsPageComponent } from '../pages/GiftsPage/GiftsPage.js?v=r24';
+import { GauSewaPageComponent } from '../pages/GauSewaPage/GauSewaPage.js?v=2';
+import { PwaInstall } from '../components/premium/PwaInstall.js?v=r24';
+import { Discovery } from '../components/shop/Discovery.js';
+import { CartStore } from '../utils/cart-store.js';
+import { ServiceInfo } from '../components/ServiceInfo.js';
+import { GlobalSearch } from '../components/GlobalSearch.js';
+import { initMediaUI } from '../utils/media-ui.js';
 
 // Shared toast entry point used by the Mandir Seva, Astro Mall and Admin pages.
 if (!window.Toast) {
@@ -48,6 +59,14 @@ export class Bootstrap {
     try {
       // 1. Mount Global Navbar
       await NavbarComponent.mount('#site-navbar-mount');
+      DashboardPageComponent.mount('#view-dashboard');
+      Discovery.init();
+      ServiceInfo.init();
+      GlobalSearch.init();
+      initMediaUI();
+      PwaInstall.init();
+      Favourites.init();
+      window.addEventListener('astro:authchange', () => CartStore.sync());
 
       // 2. Concurrently mount all Page Views (each loads its own template & child components)
       await Promise.all([
@@ -65,11 +84,17 @@ export class Bootstrap {
         TemplePageComponent.mount('#view-temple'),
         RewardsPageComponent.mount('#view-rewards'),
         SellerPageComponent.mount('#view-seller'),
-        VerifyPageComponent.mount('#view-verify')
+        VerifyPageComponent.mount('#view-verify'),
+        GiftsPageComponent.mount('#view-gifts'),
+        GauSewaPageComponent.mount('#view-gau-sewa')
       ]);
+
+      DirectoryChips.init();
+      window.DirectoryChips = DirectoryChips;
 
       // 3. Mount Global Footer
       await GlobalFooterComponent.mount('#site-footer-mount');
+      window.dispatchEvent(new Event('astro:componentsmounted'));
 
       // 4. Mount Global Modals
       await ModalsComponent.mount('#modals-container');

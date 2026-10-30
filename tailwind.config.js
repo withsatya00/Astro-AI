@@ -13,8 +13,8 @@ module.exports = {
           light: '#2E2870'
         },
         'astro-purple': {
-          DEFAULT: '#7439EA',
-          dark: '#5B21B6',
+          DEFAULT: '#4A1B9A',
+          dark: '#3B1580',
           light: '#F5F3FF',
           subtle: '#DDD6FE'
         },

@@ -18,7 +18,7 @@
 .dyn-chip {
   background: #FFFFFF;
   border: 1px solid #DDD6FE;
-  color: #7439EA;
+  color: #4A1B9A;
   border-radius: 999px;
   padding: 0.32rem 0.85rem;
   font-size: 0.78rem;
@@ -33,7 +33,7 @@
 }
 .dyn-chip:hover {
   background: #F5F3FF;
-  border-color: #7439EA;
+  border-color: #4A1B9A;
   transform: translateY(-1px);
   box-shadow: 0 3px 8px rgba(116, 57, 234, 0.16);
 }

@@ -69,3 +69,4 @@ website/.cache/tts/
 
 # Admin-uploaded sankalp proof videos
 storage/uploads/
+storage/private/

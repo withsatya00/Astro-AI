@@ -1,0 +1,114 @@
+/* Final service polish: restrained navigation, readable details and separate payment/booking flows. */
+.top-promo-bar { min-height: 28px; padding-block: 4px; background: #34213f; }
+.top-promo-bar .animate-pulse { animation: none; background: #e9d2aa; color: #382444; }
+.ephemeris-ticker-bar { padding-block: 2px; min-height: 22px; font-size: 10px; box-shadow: none; opacity: .92; }
+.ephemeris-title-tag { background: transparent; border: 0; }
+.site-navbar { box-shadow: 0 2px 12px #29203905; }
+#nav-badge-mandir, #nav-badge-mall { display: none; }
+.site-nav-link { font-size: .87rem; font-weight: 600; }
+.shop-page .shop-card__title { font-family: var(--font-sans); text-transform: none; font-size: 1rem; letter-spacing: -.015em; line-height: 1.5; }
+.shop-card__text { font-size: .82rem; line-height: 1.7; }
+.shop-hint { font-size: .78rem; }
+.shop-price, .pp-price, .wallet-amount { font-family: var(--font-sans); font-variant-numeric: tabular-nums; letter-spacing: -.035em; }
+.mall-page .shop-card__media, .pp-related .shop-card__media { aspect-ratio: 1; padding: 22px; background: #f5f0e7; }
+.mall-page .shop-card__media img, .pp-related .shop-card__media img, .pp-stage > img { object-fit: contain; object-position: center; }
+.pp-related .shop-card__media::after { display: none; }
+.pp-stage > img { padding: 16px; }
+.media-failed { position: relative; }
+.media-failed > img { opacity: 0; }
+.media-fallback { display: grid; place-items: center; position: absolute; inset: 0; padding: 18px; color: #726779; background: #eee8df; font: 600 .8rem var(--font-sans); text-align: center; }
+.exp-mini-card a { position: relative; display: block; }
+.exp-mini-card .media-fallback { bottom: auto; width: 100%; aspect-ratio: 1; }
+.consultation-record { display: flex; align-items: center; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--exp-line); }
+.consultation-record:last-child { border: 0; }
+.consultation-avatar { position: relative; width: 48px; height: 48px; border-radius: 16px; overflow: hidden; flex: none; display: grid; place-items: center; background: var(--exp-soft); color: var(--exp-gold); }
+.consultation-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.consultation-content { flex: 1; min-width: 0; }
+.consultation-content > small { display: block; color: var(--exp-muted); font-size: .7rem; line-height: 1.5; }
+.consultation-content h3 { font-family: var(--font-sans); text-transform: none; font-size: .86rem; line-height: 1.6; letter-spacing: -.015em; margin: 6px 0; overflow-wrap: anywhere; }
+.consultation-meta { display: flex; align-items: center; gap: 10px; color: var(--exp-muted); font-size: .7rem; }
+.consultation-record .shop-btn { font-size: .7rem; padding: 8px 10px; flex: none; }
+.exp-account-activity .consultation-record { flex-wrap: wrap; }
+.exp-account-activity .consultation-record > a { margin-left: 62px; }
+.service-info { border: 1px solid var(--exp-line); border-radius: 20px; background: var(--exp-card); padding: 24px; margin: 24px 0; }
+.service-info h2 { font-family: var(--font-sans); font-size: 1.05rem; text-transform: none; margin: 0 0 18px; }
+.service-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.service-info details { padding: 16px; border: 1px solid var(--exp-line); border-radius: 12px; }
+.service-info summary { color: var(--exp-ink); font-size: .82rem; font-weight: 700; cursor: pointer; }
+.service-info p { font-size: .8rem; color: var(--exp-muted); margin-bottom: 0; }
+.service-info a { font-size: .8rem; color: var(--exp-gold); overflow-wrap: anywhere; }
+.service-dialog { max-width: 580px; }
+.service-dialog-actions { margin-top: 24px; }
+.footer-info-link { color: inherit; font: inherit; padding: 0; border: 0; background: none; cursor: pointer; text-align: start; line-height: inherit; }
+.footer-info-link:hover { color: #fff; }
+.wallet-panel { width: min(720px, calc(100vw - 24px)); max-width: 720px; max-height: 90dvh; border-radius: 24px; border: 1px solid var(--exp-line); background: var(--exp-paper); }
+.wallet-panel .modal-header, .appointments-panel .modal-header { padding: 24px; border-bottom: 1px solid var(--exp-line); align-items: flex-start; }
+.wallet-panel .modal-header, .appointments-panel .modal-header { background: var(--exp-card); border-radius: 24px 24px 0 0; }
+.wallet-panel .wallet-transaction small { color: var(--exp-muted); line-height: 1.6; }
+.wallet-panel .modal-header .btn-icon, .appointments-panel .modal-header .btn-icon { color: var(--exp-ink); min-width: 44px; min-height: 44px; }
+.wallet-panel #wallet-history-filters .shop-chip { background: var(--exp-card); color: var(--exp-ink); border-color: var(--exp-line); min-height: 44px; }
+.wallet-panel #wallet-history-filters .shop-chip[aria-pressed="true"] { background: #6b3fc4; color: #fff; border-color: #6b3fc4; }
+.wallet-panel .modal-header h3, .appointments-panel .modal-header h3 { font: 700 1.4rem var(--font-sans); color: var(--exp-ink); letter-spacing: -.035em; text-transform: none; }
+.wallet-panel .modal-header p, .appointments-panel .modal-header p { font-size: .8rem; color: var(--exp-muted); margin: 8px 0 0; }
+.wallet-panel .modal-body { padding: 24px !important; }
+.wallet-panel .wallet-balance-card { display: block; margin: 0; padding: 24px; border-radius: 20px; background: linear-gradient(125deg, #33213d, #21172c); border: 1px solid #614c65; }
+.wallet-panel .wallet-balance-info { gap: 8px; }
+.wallet-panel .wallet-label { font-size: .75rem; color: #d7cddd; }
+.wallet-panel .wallet-amount { color: #fff7e7; font-size: 2.8rem; font-weight: 600; }
+.wallet-panel .wallet-note { font-size: .68rem; color: #c9bdce; }
+.wallet-panel .wallet-recharge-strip { margin-top: 24px; padding-top: 18px; border-top: 1px solid #ffffff20; }
+.wallet-panel .wallet-recharge-strip > span { color: #d7cddd !important; display: block; margin-bottom: 10px; }
+.wallet-panel .recharge-presets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.wallet-panel .btn-preset-recharge { min-height: 44px; border: 1px solid #ffffff35; background: #ffffff10; color: #fff1d9; border-radius: 10px; font-size: .85rem; }
+.wallet-panel .btn-preset-recharge:hover { background: #eed7ac; color: #38253c; }
+.wallet-panel .btn-preset-recharge:disabled { opacity: .5; cursor: wait; }
+.wallet-panel .wallet-history { border: 0; background: none; padding: 0; margin: 24px 0; }
+.wallet-panel .wallet-history h3 { font: 700 .95rem var(--font-sans); text-transform: none; color: var(--exp-ink); }
+.wallet-panel #wallet-transaction-list { max-height: 300px; }
+.wallet-panel .wallet-summary > div { background: var(--exp-card); }
+.wallet-footer-action { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid var(--exp-line); color: var(--exp-muted); font-size: .75rem; }
+.wallet-footer-action .shop-btn { font-size: .72rem; }
+.appointments-panel { width: min(760px, calc(100vw - 24px)); max-width: 760px; max-height: 90dvh; border-radius: 24px; }
+.appointments-panel .modal-body { padding: 24px; }
+.appointments-panel .form-label, .appointments-panel .sidebar-section-title { color: var(--exp-ink); }
+.appointments-panel .form-input, .appointments-panel .form-select { background: var(--exp-card); border-color: var(--exp-line); color: var(--exp-ink); min-height: 44px; }
+.appointment-record { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 18px; margin: 12px 0; border: 1px solid var(--exp-line); border-radius: 14px; background: var(--exp-card); }
+.appointment-record h4 { font: 700 .95rem var(--font-sans); text-transform: none; color: var(--exp-ink); margin: 0 0 8px; }
+.appointment-record p, .appointment-record small { color: var(--exp-muted); font-size: .75rem; }
+.appointment-record > div:last-child { display: grid; gap: 12px; justify-items: end; }
+.appointment-record strong { color: var(--exp-gold); }
+.appointment-record .shop-btn { font-size: .7rem; }
+.pm-tabbar .pm-tab { min-height: 44px; }
+@media (max-width: 768px) {
+  .top-promo-bar { font-size: 10px; padding-block: 3px; }
+  .ephemeris-ticker-bar { display: none; }
+  .site-navbar .btn-nav-ambience { display: none; }
+  .service-info { padding: 18px; }
+  .service-info-grid { grid-template-columns: 1fr; }
+  .consultation-record { gap: 12px; flex-wrap: wrap; }
+  .consultation-record > a { margin-left: 60px; }
+  .wallet-panel .modal-body, .appointments-panel .modal-body { padding: 16px !important; }
+  .wallet-panel .modal-header, .appointments-panel .modal-header { padding: 20px; }
+  .wallet-panel .wallet-balance-card { padding: 20px; }
+  .wallet-panel .recharge-presets { gap: 6px; }
+  .wallet-panel .btn-preset-recharge { font-size: .78rem; padding: 8px 4px; }
+  .wallet-footer-action { align-items: flex-start; flex-direction: column; }
+  .appointment-record { align-items: start; flex-direction: column; }
+  .appointment-record > div:last-child { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+  body.pm-has-tabbar { --mobile-tabbar-space: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  body.pm-has-tabbar #app-root { padding-bottom: var(--mobile-tabbar-space); }
+  body.pm-has-tabbar .pp-buybar { bottom: var(--mobile-tabbar-space); }
+  html { scroll-padding-bottom: 150px; }
+  button, a, input, select, textarea { scroll-margin-block: 90px; }
+  .pm-tabbar { padding-bottom: calc(5px + env(safe-area-inset-bottom, 0px)); }
+}
+html[data-theme="dark"] .wallet-panel { background: var(--exp-paper); }
+html[data-theme="dark"] .wallet-credit { color: #7dd3a8; }
+html[data-theme="dark"] .wallet-debit { color: #f6a5a5; }
+
+/* Consistency layer: one keyboard focus ring and one reduced-motion rule for the whole site. Looks are unchanged for mouse and touch users. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline: 2px solid #4a1b9a; outline-offset: 2px; }
+html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline-color: #e9bc72; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

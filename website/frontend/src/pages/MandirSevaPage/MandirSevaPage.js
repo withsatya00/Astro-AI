@@ -1,16 +1,39 @@
 import { loadTemplate } from '../../utils/templateLoader.js';
 import { esc, money, toast, api, postJson, openModal, closeModal, wireDismiss, showCredits, hoistOverlays, mediaUrl, t, applyI18n, goTo, requireLogin, downloadFile, isSignedIn } from '../../utils/shop.js';
 import { currentLang } from '../../utils/shop-i18n.js';
+import { bookingTimeline, skeleton } from '../../utils/experience.js';
+import { ChadhavaExperience } from '../../components/ChadhavaExperience.js';
 
 const CATEGORY_SLUGS = {
-  shiva: ['mahakaleshwar-ujjain', 'kashi-vishwanath-varanasi', 'somnath-jyotirlinga-gujarat', 'kedarnath-dham-uttarakhand'],
-  shakti: ['vaishno-devi-katra', 'kamakhya-devi-assam'],
-  shani: ['shani-shingnapur'],
+  shiva: ['mahakaleshwar-ujjain', 'kashi-vishwanath-varanasi', 'somnath-jyotirlinga-gujarat', 'kedarnath-dham-uttarakhand', 'trimbakeshwar-nashik',
+    'baidyanath-deoghar', 'mallikarjuna-srisailam', 'omkareshwar-madhya-pradesh', 'bhimashankar-maharashtra', 'ramanathaswamy-rameswaram', 'brihadeeswara-thanjavur'],
+  shakti: ['vaishno-devi-katra', 'kamakhya-devi-assam', 'meenakshi-amman-madurai', 'mahalakshmi-kolhapur', 'kalighat-kali-kolkata', 'mansa-devi-haridwar'],
+  shani: ['shani-shingnapur', 'sankat-mochan-hanuman-varanasi'],
   ganesh: ['siddhivinayak-mumbai'],
-  ram_krishna: ['ram-janmabhoomi-ayodhya', 'tirupati-balaji-andhra', 'jagannath-temple-puri']
+  ram_krishna: ['ram-janmabhoomi-ayodhya', 'tirupati-balaji-andhra', 'jagannath-temple-puri', 'badrinath-dham-uttarakhand', 'dwarkadhish-dwarka',
+    'banke-bihari-vrindavan', 'krishna-janmabhoomi-mathura', 'khatu-shyam-rajasthan', 'padmanabhaswamy-thiruvananthapuram']
 };
 
-const STEPS = ['PAID', 'SANKALP_SCHEDULED', 'VIDEO_UPLOADED', 'COMPLETED'];
+// Short [English, Hindi] label shown on each temple card, by category.
+const CATEGORY_LABEL = {
+  shiva: ['Jyotirlinga / Shiva', 'ज्योतिर्लिंग / शिव'], shakti: ['Shakti Peeth', 'शक्तिपीठ'], shani: ['Shani / Hanuman', 'शनि / हनुमान'],
+  ganesh: ['Ganesh', 'गणेश'], ram_krishna: ['Ram / Krishna / Vishnu', 'राम / कृष्ण / विष्णु']
+};
+
+// What a devotee can offer on each weekday: [emoji, English, Hindi] items for that day's deity.
+const WEEKDAY_OFFER = {
+  Monday: { icon: '🔱', items: [['💧', 'Jal & raw milk', 'जल व कच्चा दूध'], ['🍃', 'Belpatra', 'बेलपत्र'], ['🌼', 'Dhatura & white flowers', 'धतूरा व सफेद पुष्प'], ['🕉️', 'Bhasma', 'भस्म']] },
+  Tuesday: { icon: '🚩', items: [['🔴', 'Sindoor & chola', 'सिंदूर व चोला'], ['🟠', 'Boondi laddu', 'बूंदी के लड्डू'], ['🌺', 'Red flowers', 'लाल पुष्प'], ['🍯', 'Gud & chana', 'गुड़ व चना']] },
+  Wednesday: { icon: '🐘', items: [['🌿', 'Durva grass (21)', 'दूर्वा (21)'], ['🟡', 'Modak & laddu', 'मोदक व लड्डू'], ['🫛', 'Green moong', 'हरी मूंग'], ['🌺', 'Red hibiscus', 'लाल गुड़हल']] },
+  Thursday: { icon: '🪷', items: [['🌼', 'Yellow flowers', 'पीले पुष्प'], ['🟡', 'Chana dal & haldi', 'चना दाल व हल्दी'], ['🍌', 'Banana', 'केला'], ['🌿', 'Tulsi dal', 'तुलसी दल']] },
+  Friday: { icon: '🪔', items: [['🍚', 'Kheer & mishri', 'खीर व मिश्री'], ['🌸', 'White flowers', 'सफेद पुष्प'], ['🧣', 'Red chunari', 'लाल चुनरी'], ['🔴', 'Kumkum', 'कुमकुम']] },
+  Saturday: { icon: '🪐', items: [['🛢️', 'Mustard oil', 'सरसों का तेल'], ['⚫', 'Black sesame (til)', 'काले तिल'], ['🪔', 'Sesame oil lamp', 'तिल के तेल का दीप'], ['🖤', 'Black cloth', 'काला वस्त्र']] },
+  Sunday: { icon: '🏹', items: [['💧', 'Jal to Surya (arghya)', 'सूर्य को अर्घ्य जल'], ['🌺', 'Red flowers', 'लाल पुष्प'], ['🌾', 'Wheat & gud', 'गेहूं व गुड़'], ['🌿', 'Tulsi dal', 'तुलसी दल']] }
+};
+
+const WEEKDAY_HI = { Monday: 'सोमवार', Tuesday: 'मंगलवार', Wednesday: 'बुधवार', Thursday: 'गुरुवार', Friday: 'शुक्रवार', Saturday: 'शनिवार', Sunday: 'रविवार' };
+const WEEKDAY_EN = Object.keys(WEEKDAY_HI);
+
 
 // Panchang names arrive as "Dwitiya (द्वितीया)"; show only the part in the site's language.
 const pickLang = (text, lang) => {
@@ -38,11 +61,16 @@ export class MandirSevaPageComponent {
     if (!target) return null;
     target.innerHTML = await loadTemplate(this.templatePath);
     this.root = target;
+    // DashboardPage imports this module by a different URL, which creates a second, never-mounted copy of the class;
+    // the router and other pages must talk to the copy that actually owns the page.
+    window.MandirSevaPageComponent = this;
     this.overlay = hoistOverlays(target, 'mandir');
     this.initEvents();
     this.applyLanguage();
     await this.loadTemples();
     this.loadExtras();
+    this.applyMode();
+    ChadhavaExperience.mount(target.querySelector('[data-puja-hub]'), 'puja').then(() => {this.renderHome();this.applyMode();});
     return target;
   }
 
@@ -52,6 +80,65 @@ export class MandirSevaPageComponent {
   static applyLanguage() {
     applyI18n(this.root);
     applyI18n(this.overlay);
+    this.renderHome();
+    this.renderHeads();
+  }
+
+  // ---------------- Chadhava / Puja entry ----------------
+  // /mandir-seva = choose Chadhava or Puja, /mandir-seva/chadhava = all temples, /mandir-seva/puja = puja listing.
+  static modeFromPath() {
+    const path = location.pathname.replace(/\/+$/, '');
+    return path === '/mandir-seva/chadhava' ? 'chadhava' : path === '/mandir-seva/puja' ? 'puja' : 'home';
+  }
+
+  static setMode(mode) { this.mode = mode; this.applyMode(); }
+
+  static applyMode() {
+    if (!this.root) return;
+    const mode = this.mode || this.modeFromPath();
+    this.mode = mode;
+    this.root.querySelectorAll('[data-mode]').forEach(el => { el.hidden = el.dataset.mode !== mode; });
+    if(ChadhavaExperience.events&&['puja','chadhava'].includes(mode)){
+      const hub=this.root.querySelector(mode==='puja'?'[data-puja-hub]':'[data-chadhava-hub]');
+      ChadhavaExperience.root=hub;ChadhavaExperience.fixedKind=mode;ChadhavaExperience.tab=mode;
+      if(mode==='chadhava'&&!hub.dataset.wired){hub.dataset.wired='true';hub.addEventListener('click',event=>ChadhavaExperience.click(event));}
+      ChadhavaExperience.hub(ChadhavaExperience.access||{});
+    }
+    this.renderHeads();
+    this.renderHome();
+    window.scrollTo({ top: 0 });
+  }
+
+  static renderHome() {
+    const box = this.$('mandir-choose');
+    if (!box) return;
+    const hi = this.lang === 'hi';
+    const pujas = (ChadhavaExperience.events || []).filter(e => e.kind === 'puja').length;
+    const temples = this.templesData.length;
+    const card = (go, img, tag, title, sub, meta, cta) => `<a class="mandir-choice" href="${go}" data-go="${go}" style="--bg:url('${img}')"><span class="mandir-choice__tag">${esc(tag)}</span><span class="mandir-choice__body"><h2>${esc(title)}</h2><p>${esc(sub)}</p><span class="mandir-choice__foot"><small>${esc(meta)}</small><span class="mandir-choice__cta">${esc(cta)} <i aria-hidden="true">→</i></span></span></span></a>`;
+    box.innerHTML = `<p class="mandir-eyebrow">${esc(hi ? 'अपनी सेवा चुनें' : 'Choose your seva')}</p><h2 class="mandir-choose__title">${esc(hi ? 'आप क्या करना चाहते हैं?' : 'What would you like to do?')}</h2><div class="mandir-choose__grid">`
+      + card('/mandir-seva/puja', '/assets/img/temples/mahakaleshwar-ujjain.jpg', hi ? 'संकल्प सहित' : 'With sankalp', hi ? 'पूजा' : 'Puja', hi ? 'मंदिर के पुजारियों से अपने और परिवार के नाम व गोत्र से पूजा कराएं, और पूजा का वीडियो पाएं।' : 'Have a puja performed by temple priests in your and your family’s name and gotra, and receive its video.',
+        pujas ? (hi ? `${pujas} आगामी पूजा` : `${pujas} upcoming pujas`) : '', hi ? 'पूजा देखें' : 'View pujas')
+      + card('/mandir-seva/chadhava', '/assets/img/mandir-banner.webp', hi ? '₹5 से शुरू' : 'From \u20b95', hi ? 'चढ़ावा' : 'Chadhava', hi ? 'भारत के किसी भी प्रसिद्ध मंदिर में फूल, दीपक, भोग जैसा कुछ भी अपने नाम से चढ़ाएं। ₹5 से शुरू।' : 'Offer a flower, a diya or a full bhog at any famous temple across India, in your name. From ₹5.',
+        temples ? (hi ? `${temples} मंदिर` : `${temples} temples`) : '', hi ? 'मंदिर चुनें' : 'Choose a temple')
+      + '</div>';
+  }
+
+  static renderHeads() {
+    const hi = this.lang === 'hi';
+    // Same photographic banner as the Astrologers, Gau Sewa and Astro Mall pages (service-banners.css).
+    const banner = (id, img, eyebrow, title, sub, actions) => {
+      const el = this.$(id);
+      if (el) el.innerHTML = `<div class="service-banner service-banner--mandir"><figure class="service-banner__art"><img src="${img}" alt="" fetchpriority="high"><figcaption>${esc(hi ? 'प्रतीकात्मक चित्र' : 'Illustrative image')}</figcaption></figure><div class="mandir-hero__copy service-banner__copy"><p class="mandir-hero__eyebrow">${esc(eyebrow)}</p><h1>${esc(title)}</h1><p>${esc(sub)}</p>${actions || ''}</div></div>`;
+    };
+    banner('mandir-chadhava-head', '/assets/img/mandir-banner.webp', hi ? 'चढ़ावा सेवा' : 'Chadhava seva', hi ? 'चढ़ावा: मंदिर चुनें' : 'Chadhava offerings & temple sevas',
+      hi ? 'देश के प्रसिद्ध मंदिर। मंदिर चुनें, अपनी श्रद्धा से चढ़ावा चुनें और अपने नाम से अर्पित करें।' : 'Famous temples across India. Pick a temple, choose what to offer and it is placed there in your name.',
+      `<div class="shop-hero__actions"><a class="shop-btn shop-btn--gold ch-green" href="#temples-head" data-scroll="#temples-head">${esc(hi ? 'अभी देखें' : 'View now')}</a><a class="shop-btn shop-btn--ghost" href="#" data-scroll=".ch-how">${esc(hi ? 'यह कैसे काम करता है?' : 'How it works?')}</a></div>`);
+    banner('mandir-puja-head', '/assets/img/temples/kashi-vishwanath-varanasi.jpg', hi ? 'पूजा सेवा' : 'Puja seva', hi ? 'पूजा बुक करें' : 'Book a puja',
+      hi ? 'मंदिर की आगामी पूजा चुनें, पैकेज लें और अपने परिवार के नाम से संकल्प कराएं।' : 'Pick an upcoming temple puja, choose a package and have the sankalp made in your family’s names.',
+      `<div class="shop-hero__actions"><a class="shop-btn shop-btn--gold ch-green" href="#puja-list" data-scroll=".ch-puja-catalogue">${esc(hi ? 'अभी देखें' : 'View pujas')}</a></div>`);
+    const thead = this.$('temples-head');
+    if (thead) thead.innerHTML = `<h2>${esc(hi ? 'श्रद्धा से चढ़ावा अर्पित करें' : 'Upcoming Chadhava Offerings')}</h2><p>${esc(hi ? 'देशभर के प्रसिद्ध मंदिरों में अपने नाम और गोत्र से चढ़ावा अर्पित करें। सेवा का वीडियो आपकी बुकिंग में मिलेगा।' : 'Experience the divine through chadhava at renowned temples across India. Offer in your name and gotra, and receive the seva video in your bookings.')}</p>`;
   }
 
   static initEvents() {
@@ -78,13 +165,21 @@ export class MandirSevaPageComponent {
       if (btn) this.openBookingModal(btn.getAttribute('data-book'));
       const more = e.target.closest('[data-temple]');
       if (more) goTo(`/mandir-seva/${more.getAttribute('data-temple')}`);
+      // The whole card opens the temple page (links and the button handle themselves).
+      const card = e.target.closest('[data-card-href]');
+      if (card && !more && !e.target.closest('a, button')) goTo(card.getAttribute('data-card-href'));
     });
     this.root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-orders]')) { ChadhavaExperience.orders(); return; }
+      const scroll = e.target.closest('[data-scroll]');
+      if (scroll) { e.preventDefault(); this.root.querySelector(scroll.dataset.scroll)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+      const go = e.target.closest('[data-go]');
+      if (go && !e.metaKey && !e.ctrlKey) { e.preventDefault(); goTo(go.dataset.go); return; }
       const open = e.target.closest('[data-open-slug]');
       if (open) this.openBookingModal(open.getAttribute('data-open-slug'));
     });
 
-    this.$('btn-view-my-bookings').addEventListener('click', () => { if (requireLogin('auth.neededBookings')) this.openMyBookings(); });
+    this.$('btn-view-my-bookings').addEventListener('click', () => ChadhavaExperience.orders());
     this.$('btn-rewards').addEventListener('click', () => { if (requireLogin('auth.neededRewards')) goTo('/rewards'); });
     this.$('mandir-packages-list').addEventListener('click', (e) => { const b = e.target.closest('[data-package]'); if (b) this.openPackage(b.getAttribute('data-package')); });
     this.overlay.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', () => closeModal(this.$(b.getAttribute('data-close-modal')))));
@@ -105,11 +200,19 @@ export class MandirSevaPageComponent {
   // ---------------- catalog ----------------
   static async loadTemples() {
     const loading = this.$('mandir-loading-state');
+    const request = this.catalogRequest = (this.catalogRequest || 0) + 1;
+    loading.style.display = '';
+    loading.innerHTML = skeleton(3);
+    this.$('temples-grid').style.display = 'none';
+    this.$('mandir-empty-state').style.display = 'none';
     try {
       const res = await api(`/api/v1/mandir/temples?lang=${this.lang}`);
+      if (request !== this.catalogRequest) return;
       this.templesData = res.temples || [];
       this.renderTemples();
+      this.renderHome();
     } catch (err) {
+      if (request !== this.catalogRequest) return;
       loading.style.display = '';
       loading.innerHTML = `<p>${esc(err.message)}</p><button type="button" class="shop-btn shop-btn--line shop-btn--sm" id="mandir-retry">${esc(t('retry'))}</button>`;
       this.$('mandir-retry').addEventListener('click', () => { loading.innerHTML = '<div class="shop-spinner"></div>'; this.loadTemples(); });
@@ -117,9 +220,9 @@ export class MandirSevaPageComponent {
   }
 
   static loadExtras() {
-    this.renderToday();
-    this.renderSuggestion();
-    this.loadPackages();
+    this.$('mandir-today').hidden = true;
+    this.$('mandir-suggest').hidden = true;
+    // New bookings use confirmed dated events; retain legacy package APIs/history.
   }
 
   // ---------------- packages ----------------
@@ -228,16 +331,26 @@ export class MandirSevaPageComponent {
     const box = this.$('mandir-today');
     try {
       const d = await api(`/api/v1/mandir/today?lang=${this.lang}`);
-      const items = [];
-      if (d.special && d.special.temple) items.push({ temple: d.special.temple, label: `${d.special.name}: ${d.special.note}` });
-      if (d.weekday_temple) items.push({ temple: d.weekday_temple, label: `${t('md.deityOfDay')}: ${d.weekday_deity}` });
+      const hi = this.lang === 'hi';
+      const temple = d.weekday_temple;
+      if (!temple) { box.hidden = true; return; }
+      const day = WEEKDAY_EN.includes(d.weekday) ? d.weekday : WEEKDAY_EN[(new Date().getDay() + 6) % 7];
+      const offer = WEEKDAY_OFFER[day];
+      const special = d.special && d.special.temple ? d.special : null;
       box.innerHTML = `
-        <h3>${esc(t('md.today'))}${d.date_iso ? ' - ' + esc(longDate(d.date_iso, this.lang)) : ''}</h3>
-        ${d.tithi && d.tithi.name ? `<p>${esc(t('md.tithi'))}: <strong>${esc(pickLang(d.tithi.name, this.lang))}</strong>${d.tithi.paksha ? ' (' + esc(pickLang(d.tithi.paksha, this.lang)) + ')' : ''}</p>` : ''}
-        <div class="shop-suggest__items">${items.map(i => `
-          <button type="button" class="shop-suggest__item" data-open-slug="${esc(i.temple.slug)}">
-            <img src="${esc(i.temple.image_url)}" alt="" loading="lazy"><span>${esc(i.label)}<br><small>${esc(i.temple.name)}</small></span>
-          </button>`).join('')}</div>`;
+        <div class="mt-today__media"><img src="${esc(temple.image_url)}" alt="${esc(temple.name)}" loading="lazy"></div>
+        <div class="mt-today__body">
+          <span class="mt-today__badge"><i></i>${esc(t('md.todayBadge'))}</span>
+          <h2 class="mt-today__title"><span>${offer.icon}</span> ${esc(hi ? WEEKDAY_HI[day] : day)} <em>${esc(d.weekday_deity)}</em></h2>
+          <p class="mt-today__meta">${d.date_iso ? esc(longDate(d.date_iso, this.lang)) : ''}${d.tithi && d.tithi.name ? ` · ${esc(t('md.tithi'))}: <strong>${esc(pickLang(d.tithi.name, this.lang))}</strong>${d.tithi.paksha ? ' (' + esc(pickLang(d.tithi.paksha, this.lang)) + ')' : ''}` : ''}</p>
+          <p class="mt-today__lead">${esc(t('md.todayLead'))}: <b>${esc(temple.name)}</b></p>
+          <p class="mt-today__label">${esc(t('md.canOffer'))}</p>
+          <ul class="mt-today__items">${offer.items.map(i => `<li><span>${i[0]}</span>${esc(hi ? i[2] : i[1])}</li>`).join('')}</ul>
+          <div class="mt-today__cta">
+            <button type="button" class="shop-btn shop-btn--gold" data-open-slug="${esc(temple.slug)}">🪔 ${esc(t('md.offerNow'))}${temple.starting_price ? ` · ${esc(t('md.startsFrom'))} ${money(temple.starting_price)}` : ''}</button>
+            ${special ? `<button type="button" class="mt-today__special" data-open-slug="${esc(special.temple.slug)}"><img src="${esc(special.temple.image_url)}" alt="" loading="lazy"><span>${esc(special.name)}<small>${esc(special.temple.name)}</small></span></button>` : ''}
+          </div>
+        </div>`;
       box.hidden = false;
     } catch (e) { box.hidden = true; }
   }
@@ -270,40 +383,40 @@ export class MandirSevaPageComponent {
     const empty = this.$('mandir-empty-state');
     this.$('mandir-loading-state').style.display = 'none';
     const list = this.templesData.filter(x => this.matches(x));
-    empty.style.display = list.length || !this.templesData.length ? 'none' : 'block';
+    const badge = this.$('mandir-count-badge');
+    if (badge) { badge.textContent = t('md.count', { n: this.templesData.length }); badge.hidden = !this.templesData.length; }
+    empty.style.display = list.length ? 'none' : 'block';
     grid.style.display = list.length ? 'grid' : 'none';
     grid.innerHTML = list.map(x => this.card(x)).join('');
   }
 
   static card(temple) {
-    const offers = (temple.offerings || []).slice(0, 3);
+    const cat = Object.keys(CATEGORY_SLUGS).find(k => CATEGORY_SLUGS[k].includes(temple.slug));
+    const label = cat ? CATEGORY_LABEL[cat][this.lang === 'hi' ? 1 : 0] : '';
+    const url = `/mandir-seva/${esc(temple.slug)}`;
+    // Essentials only: where, who, from what price. Everything else is on the temple page.
     return `
-    <article class="shop-card">
-      <div class="shop-card__media">
+    <article class="shop-card mt-card" data-card-href="${url}">
+      <a class="shop-card__media" href="${url}">
         <img src="${esc(temple.image_url)}" alt="${esc(temple.name)}" loading="lazy">
         <span class="shop-card__tag shop-card__tag--tl">${esc(temple.has_live ? t('md.liveDarshan') : t('md.bookingOpen'))}</span>
-        <span class="shop-card__tag shop-card__tag--bl">📍 ${esc(temple.city)}, ${esc(temple.state)}</span>
-      </div>
+        ${label ? `<span class="mt-card__cat">${esc(label)}</span>` : ''}
+      </a>
       <div class="shop-card__body">
         <span class="shop-card__eyebrow">🕉️ ${esc(temple.deity)}</span>
-        <h3 class="shop-card__title"><a href="/mandir-seva/${esc(temple.slug)}">${esc(temple.name)}</a></h3>
-        <p class="shop-card__text">${esc(temple.description)}</p>
-        <ul class="shop-card__list">
-          ${offers.map(o => `<li><span>${esc(o.title)}</span><b>${money(o.price)}</b></li>`).join('')}
-        </ul>
+        <h3 class="shop-card__title"><a href="${url}">${esc(temple.name)}</a></h3>
+        <p class="shop-card__location">📍 ${esc(temple.city)}, ${esc(temple.state)}</p>
         <div class="shop-card__foot">
           <div class="shop-price"><small>${esc(t('md.startsFrom'))}</small>${money(temple.starting_price)}</div>
-          <div style="display:flex;gap:6px"><button type="button" class="shop-btn shop-btn--line shop-btn--sm" data-temple="${esc(temple.slug)}">${esc(t('ml.details'))}</button>
-          <button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-book="${esc(temple.slug)}">🪔 ${esc(t('md.book'))}</button></div>
+          <span class="mt-card__actions"><button type="button" class="shop-btn shop-btn--line shop-btn--sm" data-temple="${esc(temple.slug)}">${esc(t('ml.details'))}</button><button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-book="${esc(temple.slug)}">${esc(this.lang === 'hi' ? 'चढ़ावा चढ़ाएं' : 'Offer chadhava')}</button></span>
         </div>
       </div>
     </article>`;
   }
 
   static openBookingModal(slug) {
-    if (!requireLogin('auth.neededBooking')) return;
     const temple = this.templesData.find(x => x.slug === slug || x.id === slug);
-    if (temple && window.ChadawaModal && window.ChadawaModal.open) window.ChadawaModal.open(temple);
+    if (temple) ChadhavaExperience.openForTemple(temple).catch(err => toast(err.message, 'error'));
   }
 
   // ---------------- bookings ----------------
@@ -311,12 +424,13 @@ export class MandirSevaPageComponent {
     const list = this.$('devotee-bookings-list');
     this.bookingsOpen = true;
     openModal(this.$('devotee-bookings-modal'));
-    list.innerHTML = `<div class="shop-loading"><div class="shop-spinner"></div><p>${esc(t('md.loadingBookings'))}</p></div>`;
+    list.innerHTML = skeleton(2);
     let bookings;
     try {
       bookings = (await api(`/api/v1/mandir/chadawa/my-bookings?lang=${this.lang}`)).bookings || [];
     } catch (err) {
-      list.innerHTML = `<div class="shop-empty"><b>${esc(t('md.loadFail'))}</b>${esc(err.message)}</div>`;
+      list.innerHTML = `<div class="shop-empty"><b>${esc(t('md.loadFail'))}</b>${esc(err.message)}<br><button type="button" class="shop-btn shop-btn--line" id="mandir-bookings-retry">${esc(t('retry'))}</button></div>`;
+      this.$('mandir-bookings-retry').onclick = () => this.openMyBookings();
       return;
     }
     if (!bookings.length) {
@@ -324,6 +438,11 @@ export class MandirSevaPageComponent {
       return;
     }
     list.innerHTML = bookings.map(b => this.bookingCard(b)).join('');
+    list.querySelectorAll('[data-chadhava-order]').forEach(btn => btn.addEventListener('click', async () => {
+      closeModal(this.$('devotee-bookings-modal'));
+      try { ChadhavaExperience.showOrder(await api('/api/v1/mandir/chadhava/orders/' + encodeURIComponent(btn.dataset.chadhavaOrder))); }
+      catch (err) { toast(err.message, 'error'); }
+    }));
     list.querySelectorAll('[data-play]').forEach(btn => btn.addEventListener('click',
       () => this.playVideoProof(btn.getAttribute('data-title'), btn.getAttribute('data-play'))));
     list.querySelectorAll('[data-cancel]').forEach(btn => btn.addEventListener('click', () => this.cancelBooking(btn.getAttribute('data-cancel'))));
@@ -334,11 +453,8 @@ export class MandirSevaPageComponent {
   }
 
   static bookingCard(b) {
+    if (b.chadhava_order_id) return `<article class="shop-record"><strong>${esc(b.temple_name)}</strong><p>${esc(b.booking_number)} · ${esc(b.devotee_name)}</p><p>${(b.offering_items || []).map(i => `${esc(i.title)} × ${i.quantity}`).join(' · ')}</p><p>${esc(b.payment_status)} · ${esc(b.service_status)}</p><button type="button" class="shop-btn shop-btn--gold" data-chadhava-order="${esc(b.chadhava_order_id)}">${esc(currentLang() === 'hi' ? 'स्थिति और वीडियो देखें' : 'View tracking & video')}</button></article>`;
     const cancelled = b.status === 'CANCELLED';
-    const reached = STEPS.indexOf(b.status);
-    const steps = cancelled
-      ? `<span class="shop-pill shop-pill--off">${esc(t('md.cancelledRefunded'))}</span>`
-      : `<div class="shop-steps">${STEPS.map((s, i) => `<span class="shop-pill ${i <= reached ? 'shop-pill--ok' : ''}">${i <= reached ? '✓ ' : ''}${esc(t('step.' + s))}</span>`).join('')}</div>`;
     return `
     <div class="shop-record">
       <div class="shop-record__top"><span class="shop-record__id">${esc(b.booking_number)}</span><span class="shop-pill">${esc(t('md.paidAmount', { amount: money(b.amount_paid) }))}</span></div>
@@ -352,7 +468,7 @@ export class MandirSevaPageComponent {
         ${b.package_ref ? `<br><span class="shop-pill shop-pill--warn">${esc(t('pk.part'))}</span>` : ''}
         ${b.discount_amount ? `<br>${esc(t('or.saved', { amount: money(b.discount_amount) }))}` : ''}
       </div>
-      ${steps}
+      ${bookingTimeline(b)}
       <div class="shop-record__actions">
         ${b.video_proof_url ? `<button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-play="${esc(b.video_proof_url)}" data-title="${esc(b.temple_name)}">📹 ${esc(t('md.watch'))}</button>`
           : (cancelled ? '' : `<span class="shop-hint" style="margin:0">${esc(t('md.videoLater'))}</span>`)}

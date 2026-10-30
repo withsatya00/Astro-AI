@@ -189,7 +189,7 @@
           <select id="modal-agent-tool-select" class="form-select"></select>
         </div>
 
-        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: var(--lavender-soft); border: 1px solid var(--lavender-border); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #4338ca;">
+        <div id="modal-agent-tool-desc" style="font-size: 0.8rem; background: var(--lavender-soft); border: 1px solid var(--lavender-border); padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; color: #1e0b44;">
           Loading tool documentation...
         </div>
 
@@ -228,7 +228,7 @@
         <form id="form-kundali-milan">
           <div class="milan-cards-grid">
             <!-- Groom Card -->
-            <div style="background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%); border: 1.5px solid #C7D2FE; border-radius: 16px; padding: 1.15rem; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.05);">
+            <div style="background: linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%); border: 1.5px solid #C7D2FE; border-radius: 16px; padding: 1.15rem; box-shadow: 0 4px 14px rgba(81, 50, 100, 0.05);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E0E7FF;">
                 <h4 style="font-size: 0.95rem; color: #1E3A8A; margin: 0; display: flex; align-items: center; gap: 0.4rem; font-weight: 700;">
                   <span>🤵</span> <span>Groom Details (वर का विवरण)</span>
@@ -398,7 +398,11 @@
           </div>
 
           <!-- Share Result CTA -->
-          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;">
+            <button type="button" class="btn-tool" id="btn-download-milan-pdf" style="background: #f1ebf5; color: #1e0b44; border-color: #d8c6e3; font-weight: 600;">
+              <span>📄</span>
+              <span id="btn-download-milan-pdf-label">Download PDF report</span>
+            </button>
             <button type="button" class="btn-tool" id="btn-share-milan-whatsapp" style="background: #DCFCE7; color: #166534; border-color: #86EFAC; font-weight: 600;">
               <span>💬</span>
               <span>Share Milan Report on WhatsApp</span>
@@ -1484,14 +1488,14 @@
        MODAL 14: WALLET & APPOINTMENTS BOOKING SYSTEM
        ==================================================================== -->
   <div class="modal-overlay" id="modal-wallet-bookings">
-    <div class="modal-card" style="max-width: 820px; max-height: 90vh;">
+    <div class="modal-card wallet-panel">
       <div class="modal-header">
         <div>
           <h3 style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-            <span>👛</span> Astro Jyotish Wallet & Appointment Desk
+            <span data-i18n="exp.wallet">Wallet</span>
           </h3>
           <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
-            Manage prepaid consultation credits, book appointments with verified human scholars, and track receipts.
+            <span data-i18n="exp.walletIntro">Your balance and every payment, clearly organised.</span>
           </p>
         </div>
         <button class="btn-icon modal-close">✕</button>
@@ -1501,12 +1505,12 @@
         <!-- Wallet Balance Card -->
         <div class="wallet-balance-card">
           <div class="wallet-balance-info">
-            <span class="wallet-label">Available Balance (उपलब्ध बैलेंस)</span>
-            <span class="wallet-amount" id="modal-wallet-amount">₹250.00</span>
-            <span class="wallet-note">Instant test wallet enabled • Zero bank fees</span>
+            <span class="wallet-label"><span data-i18n="exp.balance">Available balance</span></span>
+            <span class="wallet-amount" id="modal-wallet-amount">₹0.00</span>
+            <span class="wallet-note"><span data-i18n="exp.testCreditNote">Test credits · no bank payment is collected</span></span>
           </div>
           <div class="wallet-recharge-strip">
-            <span style="font-size: 0.8rem; font-weight: 600; color: #1E293B;">Quick Top-Up:</span>
+            <span style="font-size: 0.8rem; font-weight: 600; color: #1E293B;"><span data-i18n="exp.topUp">Add funds</span></span>
             <div class="recharge-presets">
               <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(100)">+₹100</button>
               <button type="button" class="btn-preset-recharge" onclick="App.rechargeWallet(250)">+₹250</button>
@@ -1516,7 +1520,18 @@
           </div>
         </div>
 
-        <!-- Appointment Booking Form (for Real Human Scholars) -->
+        <section class="wallet-history" aria-labelledby="wallet-history-title">
+          <h3 id="wallet-history-title">Wallet transaction history</h3>
+          <div id="wallet-history-summary" class="wallet-summary" translate="no"></div>
+          <div id="wallet-history-filters" class="shop-chips" translate="no"></div>
+          <div id="wallet-transaction-list" aria-live="polite">No transactions yet. Recharges and payments will appear here.</div>
+        </section>
+        <div class="wallet-footer-action"><span data-i18n="exp.appointmentsHint">Looking for an astrologer appointment?</span><button type="button" class="shop-btn shop-btn--line" onclick="App.openAppointmentsModal()" data-i18n="exp.manageAppointments">Manage appointments</button></div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal-overlay" id="modal-appointments"><div class="modal-card appointments-panel"><div class="modal-header"><div><h3 data-i18n="exp.sessions">Appointments</h3><p data-i18n="exp.appointmentsIntro">Book and manage a scheduled consultation.</p></div><button type="button" class="btn-icon modal-close" data-i18n-title="exp.close" aria-label="Close">✕</button></div><div class="modal-body">        <!-- Appointment Booking Form (for Real Human Scholars) -->
         <div class="booking-section-box">
           <div class="sidebar-section-title" style="margin-bottom: 0.75rem;">
             <span>📅</span> Book a 1-on-1 Session with a Certified Human Scholar
@@ -1526,7 +1541,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
               <div class="form-group">
                 <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Select Astrologer Scholar <span class="req">*</span></label>
-                <select id="booking-astrologer-select" class="form-select" required>
+                <select id="booking-astrologer-select" class="form-select" onchange="App.updateBookingFeePreview()" required>
                   <option value="">-- Choose Verified Astrologer --</option>
                   <!-- Populated dynamically -->
                 </select>
@@ -1535,9 +1550,9 @@
               <div class="form-group">
                 <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Consultation Mode <span class="req">*</span></label>
                 <select id="booking-mode-select" class="form-select" onchange="App.updateBookingFeePreview()">
-                  <option value="chat">Text Chat Session (₹15/min)</option>
-                  <option value="call" selected>Direct Audio Call (₹20/min)</option>
-                  <option value="video">Live Video Consultation (₹30/min)</option>
+                  <option value="chat">Text Chat Session</option>
+                  <option value="call" selected>Direct Audio Call</option>
+                  <option value="video">Live Video Consultation</option>
                 </select>
               </div>
 
@@ -1547,13 +1562,13 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Available Time Slot <span class="req">*</span></label>
+                <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Preferred Time <span class="req">*</span></label>
                 <select id="booking-slot-select" class="form-select" required>
-                  <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM (Morning Shubh Slot)</option>
-                  <option value="11:30 AM - 12:00 PM">11:30 AM - 12:00 PM (Abhijit Muhurat)</option>
+                  <option value="10:00 AM - 10:30 AM">10:00 AM - 10:30 AM</option>
+                  <option value="11:30 AM - 12:00 PM">11:30 AM - 12:00 PM</option>
                   <option value="02:30 PM - 03:00 PM">02:30 PM - 03:00 PM (Afternoon)</option>
                   <option value="04:30 PM - 05:00 PM">04:30 PM - 05:00 PM (Late Afternoon)</option>
-                  <option value="06:30 PM - 07:00 PM">06:30 PM - 07:00 PM (Sandhya Slot)</option>
+                  <option value="06:30 PM - 07:00 PM">06:30 PM - 07:00 PM</option>
                 </select>
               </div>
 
@@ -1569,20 +1584,24 @@
 
               <div class="form-group" style="display: flex; flex-direction: column; justify-content: flex-end;">
                 <div style="background: #F1F5F9; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.82rem;">
-                  <div>Estimated Fee: <strong id="booking-fee-preview" style="color: #7E22CE; font-size: 1rem;">₹600</strong></div>
+                  <div>Estimated Fee: <strong id="booking-fee-preview" style="color: #4a1b9a; font-size: 1rem;">₹600</strong></div>
                   <span style="font-size: 0.72rem; color: #64748B;">Deducted from your wallet upon confirmation</span>
                 </div>
               </div>
             </div>
+
+            <div id="booking-wallet-note" class="exp-booking-note" aria-live="polite"></div>
+            <p id="booking-slot-note" class="exp-booking-note" aria-live="polite" hidden></p>
 
             <div class="form-group" style="margin-bottom: 1rem;">
               <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Primary Query / Brief Concern</label>
               <input type="text" id="booking-notes-input" class="form-input" placeholder="e.g. Navamsha D9 marriage timing, career transition dasha" />
             </div>
 
-            <button type="submit" class="btn-hero-primary" id="btn-submit-booking" style="width: 100%; justify-content: center; padding: 0.65rem;">
+            <button type="submit" class="btn-hero-primary" id="btn-submit-appointment" style="width: 100%; justify-content: center; padding: 0.65rem;">
               <span>🗓️</span> <span>Confirm & Reserve Appointment</span>
             </button>
+            <p id="booking-cancel-rule" class="exp-booking-rule"></p>
           </form>
         </div>
 
@@ -1594,10 +1613,7 @@
               Loading appointments...
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </div></div></div></div>
 
   <!-- ====================================================================
        MODAL 15: MULTILINGUAL JYOTISH GLOSSARY
@@ -1667,7 +1683,7 @@
           </div>
           <div class="flex justify-between items-center text-gray-700">
             <span class="font-semibold text-[#53627A]">वैदिक मुहर:</span>
-            <span class="font-bold text-[#7439EA]">काशी विद्यापीठ प्रमाणित</span>
+            <span class="font-bold text-[#4a1b9a]">काशी विद्यापीठ प्रमाणित</span>
           </div>
         </div>
 

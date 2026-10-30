@@ -3,7 +3,7 @@
 // so duplicates are NOT replaced (that made real photos show up as initials on the home page).
 (function () {
   const PORTRAIT = /assets\/portraits\/(?:individual\/)?([a-z0-9-]+)\.(?:jpg|webp|png|svg)/i;
-  const FALLBACK_BG = ['#7C3AED', '#B45309', '#0F766E', '#BE185D', '#1D4ED8', '#4D7C0F'];
+  const FALLBACK_BG = ['#4a1b9a', '#B45309', '#0F766E', '#BE185D', '#1D4ED8', '#4D7C0F'];
 
   function initialsAvatar(name, seed) {
     const letters = (name || '?').replace(/^(pt|dr|acharya|vidushi|jyotishi)\.?\s+/i, '').trim().split(/\s+/)

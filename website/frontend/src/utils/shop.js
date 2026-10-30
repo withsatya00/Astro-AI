@@ -23,13 +23,17 @@ export const mediaUrl = (u) => (u && u.startsWith('/uploads/') ? backendOrigin()
 /** fetch + JSON against the backend. Throws an Error carrying the server's message and status. */
 export async function api(url, options) {
   const target = url.startsWith('/api/') ? backendOrigin() + url : url;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
   let res;
   try {
-    res = await fetch(target, options);
+    res = await fetch(target, { ...options, signal: options?.signal || controller.signal });
   } catch (e) {
     const err = new Error(translateError('Could not reach the server. Please check that the backend is running and try again.'));
     err.status = 0;
     throw err;
+  } finally {
+    clearTimeout(timeout);
   }
   const text = await res.text();
   let json = null;

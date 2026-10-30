@@ -1,26 +1,41 @@
-<div class="directory-page-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 text-center">
-  <div class="directory-title-row flex items-center justify-center gap-3 mb-3 flex-wrap">
-    <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="dir_page_heading">Vedic Astrologer Directory</h1>
-    <span class="directory-badge inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300 shadow-sm" id="directory-total-badge">30+ Certified Astrologers</span>
+<section class="directory-page-header directory-masthead max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-6">
+  <div class="directory-masthead__inner service-banner service-banner--astrologers">
+    <figure class="service-banner__art"><img src="/assets/img/astrologers-banner.webp" alt="" fetchpriority="high"><figcaption data-i18n="gs_illustrative">Illustrative image</figcaption></figure>
+    <div class="directory-masthead__copy service-banner__copy">
+      <p class="directory-eyebrow" data-i18n="dir.eyebrow">Guidance, chosen with clarity</p>
+      <div class="directory-title-row flex items-center gap-3 mb-3 flex-wrap">
+        <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="dir_page_heading">Vedic Astrologer Directory</h1>
+        <span class="directory-badge" id="directory-total-badge">30+ Certified Astrologers</span>
+      </div>
+      <p class="directory-subtitle" data-i18n="dir_page_subtitle">Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.</p>
+    </div>
   </div>
-  <p class="directory-subtitle text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed" data-i18n="dir_page_subtitle">Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.</p>
-</div>
+    <div class="directory-trust-grid service-benefits" aria-label="Directory benefits">
+      <div><span aria-hidden="true">✓</span><p><b data-i18n="dir.trust.verified">Verified profiles</b><small data-i18n="dir.trust.verifiedSub">Credentials shown clearly</small></p></div>
+      <div><span aria-hidden="true">₹</span><p><b data-i18n="dir.trust.rates">Clear rates</b><small data-i18n="dir.trust.ratesSub">See the fee before you start</small></p></div>
+      <div><span aria-hidden="true">◷</span><p><b data-i18n="dir.trust.availability">Live availability</b><small data-i18n="dir.trust.availabilitySub">Find the next suitable time</small></p></div>
+    </div>
+</section>
 
 <!-- Search & Filter Controls Toolbar -->
-<div class="directory-toolbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 space-y-4">
+<section class="directory-toolbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 space-y-4" aria-label="Find an astrologer">
   <div class="dir-search-row flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
     <div class="dir-search-box flex-1 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
       <span class="text-slate-400">🔍</span>
-      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search astrologer or topic..." oninput="App.onDirectorySearchInput(event)" />
+      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search astrologer or topic..." oninput="App.onDirectorySearchInput(event)" aria-label="Search astrologers"/>
     </div>
+    <button type="button" class="dir-mobile-filter-toggle" id="dir-mobile-filter-toggle" aria-expanded="false" aria-controls="dir-filters-panel" onclick="App.toggleDirectoryFilters()">
+      <span aria-hidden="true">☷</span> <span data-i18n="dir.filters">Filters</span>
+    </button>
     <button type="button" class="btn-clear-filters px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 text-xs font-semibold shrink-0 transition-colors" onclick="App.clearDirectoryFilters()">
       <span data-i18n="dir_btn_clear">Clear Filters</span>
     </button>
   </div>
 
+  <div class="dir-filters-panel" id="dir-filters-panel">
   <div class="dir-filters-row grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
     <!-- Specialty / Concern Filter -->
-    <select id="dir-filter-specialty" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+    <select id="dir-filter-specialty" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by specialty">
       <option value="">All Specialties / Concerns</option>
       <option value="Career">💼 Career & Business</option>
       <option value="Marriage">💍 Love & Marriage</option>
@@ -35,7 +50,7 @@
     </select>
 
     <!-- Language Filter -->
-    <select id="dir-filter-language" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+    <select id="dir-filter-language" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by language">
       <option value="">All Spoken Languages</option>
       <option value="Hindi">🇮🇳 Hindi (हिन्दी)</option>
       <option value="English">🇬🇧 English</option>
@@ -48,20 +63,21 @@
     </select>
 
     <!-- Consultation Mode Filter -->
-    <select id="dir-filter-mode" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+    <select id="dir-filter-mode" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by consultation mode">
       <option value="all">All Modes</option>
-      <option value="ai">Instant & Free Consultations</option>
-      <option value="human">Certified Human Scholars</option>
+      <option value="ai">Instant guidance</option>
+      <option value="human">Verified astrologers</option>
       <option value="online">Online Now</option>
     </select>
 
     <!-- Sort Option -->
-    <select id="dir-filter-sort" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()">
+    <select id="dir-filter-sort" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Sort astrologers">
       <option value="popular">Sort: Most Popular</option>
       <option value="experience">Sort: Highest Experience</option>
       <option value="rating">Sort: Highest Rated</option>
       <option value="name">Sort: Name (A-Z)</option>
     </select>
+  </div>
   </div>
 
   <!-- Active Filter Chips Strip -->
@@ -69,11 +85,18 @@
     <span class="text-xs text-slate-500 font-semibold">Active Filters:</span>
     <div id="dir-active-chips-content" class="flex gap-1.5 flex-wrap"></div>
   </div>
-</div>
+</section>
 
-<!-- 30+ Astrologers Cards Grid -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+<!-- Quick filter chips (sticky): a direct child of the page so it can stay in view over the grid -->
+<div id="dir-quick-chips" class="dir-chips max-w-7xl mx-auto"></div>
+
+<!-- Astrologer cards: live data is rendered by App.loadAstrologerDirectory -->
+<section class="directory-results max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16" aria-live="polite">
+  <div class="directory-results__head">
+    <div><p class="directory-eyebrow" data-i18n="dir.resultsEyebrow">Explore specialists</p><h2 data-i18n="dir.resultsTitle">Find the right astrologer for your concern</h2></div>
+    <p data-i18n="dir.resultsNote">Compare expertise, language, availability and fee before you connect.</p>
+  </div>
   <div class="astrologers-grid-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full" id="directory-page-cards-grid">
     <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
   </div>
-</div>
+</section>

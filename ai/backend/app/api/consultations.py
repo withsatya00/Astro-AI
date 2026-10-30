@@ -10,6 +10,9 @@ from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any
 import json
 import re
+import time
+from packages.core.advanced import memory_context, quality_data
+from packages.database.advanced import QualityEvent
 
 from packages.database.session import get_db
 from packages.database.models import (
@@ -650,6 +653,8 @@ async def stream_consultation_message(
         )
 
     async def sse_event_generator():
+        turn_started = time.perf_counter()
+        first_token_ms = None
         yield f"data: {json.dumps({'event': 'session', 'consultation_id': c_id, 'chart_id': consultation.chart_id, 'astrologer_id': a_id, 'astrologer_name': astro.name})}\n\n"
 
         full_collected = ""
@@ -664,15 +669,22 @@ async def stream_consultation_message(
             astrologer_id=persona_key,
             force_demo_mode=payload.get("force_demo_mode", False),
             image_base64=payload.get("image_base64"),
-            call_mode=bool(payload.get("call_mode"))
+            call_mode=bool(payload.get("call_mode")),
+            approved_memory=memory_context(db, owner.user_id, consultation.chart_id)
         ):
             if chunk["type"] == "delta":
+                if first_token_ms is None:
+                    first_token_ms = (time.perf_counter() - turn_started) * 1000
                 full_collected += chunk["text"]
                 yield f"data: {json.dumps({'event': 'delta', 'text': chunk['text']})}\n\n"
             elif chunk["type"] == "done":
                 final_meta = chunk
 
         # Persist assistant response to DB
+        diagnostics = quality_data(full_collected, citations, final_meta.get("calculated_data_used"), final_meta.get("is_demo_mode"), final_meta.get("token_usage"), chart_data)
+        diagnostics["first_token_ms"] = first_token_ms
+        db.add(QualityEvent(consultation_id=c_id, user_id=owner.user_id,
+                           latency_ms=(time.perf_counter() - turn_started) * 1000, data=diagnostics))
         asst_msg = ChatMessage(
             id=generate_uuid(),
             session_id=c_id,

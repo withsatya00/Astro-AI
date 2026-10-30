@@ -15,6 +15,7 @@ export const CartStore = {
   items: [],      // [{ product_id, quantity, options }]
   wish: [],       // [product_id]
   _signed: null,
+  _identity: null,
   _timer: null,
 
   _emit() { window.dispatchEvent(new CustomEvent('astro:cart')); },
@@ -29,6 +30,11 @@ export const CartStore = {
   /** Loads the cart: from the account when signed in (merging anything added while signed out), otherwise from this browser. */
   async init() {
     const signed = isSignedIn();
+    const identity = signed ? localStorage.getItem('astro_access_token') : '';
+    const request = this._request = (this._request || 0) + 1;
+    clearTimeout(this._timer);
+    if (identity !== this._identity) { this.items = []; this.wish = []; }
+    this._identity = identity;
     this._signed = signed;
     const local = this.localItems();
     const localWish = read(LS_WISH);
@@ -38,23 +44,27 @@ export const CartStore = {
         : await api('/api/v1/cart');
       const wish = localWish.length ? await api('/api/v1/wishlist/merge', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_ids: localWish }) })
         : await api('/api/v1/wishlist');
+      if (request !== this._request || (localStorage.getItem('astro_access_token') || '') !== identity) return;
       this.items = merged.items;
       this.wish = wish.product_ids;
       write(LS_CART, []); write(LS_OLD_CART, []); write(LS_WISH, []);
     } catch (e) {
+      if (request !== this._request) return;
       this.items = local; this.wish = localWish;
     }
     this._emit();
   },
 
   /** Call before showing the cart: picks up a sign-in or sign-out that happened since the last load. */
-  async sync() { if (isSignedIn() !== this._signed) await this.init(); },
+  async sync() { if ((localStorage.getItem('astro_access_token') || '') !== this._identity) await this.init(); },
 
   _persist() {
     this._emit();
     if (!isSignedIn()) { write(LS_CART, this.items); write(LS_WISH, this.wish); return; }
     clearTimeout(this._timer);
+    const identity = this._identity;
     this._timer = setTimeout(() => {
+      if ((localStorage.getItem('astro_access_token') || '') !== identity) return;
       api('/api/v1/cart', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: this.items }) }).catch(() => {});
       api('/api/v1/wishlist', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_ids: this.wish }) }).catch(() => {});
     }, 400);

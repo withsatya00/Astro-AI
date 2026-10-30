@@ -1,0 +1,18 @@
+{
+  "tool": "Built-in imagegen",
+  "usage": "Conceptual banner artwork; not a photograph of a listed astrologer, partner temple or actual stocked product.",
+  "assets": [
+    {
+      "file": "astrologers-banner.webp",
+      "prompt": "Use case: photorealistic-natural. Create a wide cinematic website hero photograph for an Indian Vedic astrologer directory, matching a premium plum and warm gold website. An experienced Indian male Vedic scholar in a simple ivory kurta and warm saffron shawl seated on the RIGHT HALF at an antique wooden desk, studying a traditional geometric kundli birth chart, brass armillary sphere and old books nearby. Warm window light, elegant sandstone study, natural dignified authentic expression, editorial high end photography, realistic human anatomy, quiet uncluttered LEFT HALF in shadow for overlay text. Landscape panorama 2.5:1 composition. No lettering, no watermark, no logos, no UI. Conceptual photo, do not represent a real identifiable person or fabricated certification. Subject's face entirely visible within upper right middle area, not at the edge."
+    },
+    {
+      "file": "mandir-banner.webp",
+      "prompt": "Use case: photorealistic-natural. Wide cinematic premium Indian temple seva website hero photograph, landscape panorama 2.5:1. On the RIGHT HALF a beautiful detailed carved sandstone Hindu temple mandapa with a brass aarti diya tray holding small warm flames, fresh marigold flowers and a brass bell in the foreground. Soft golden sunrise, subtle incense atmosphere, intricate authentic Indian temple architecture, dignified serene devotional mood, high end editorial travel photography. LEFT HALF is calm dark stone architectural negative space for text overlay. Show one coherent fictional temple scene, not a collage or landmark replica. Warm gold, ivory stone and muted plum shadows. No cow, no people, no text, no logo, no watermark, no UI. Keep temple and offering tray readable on right half in a short website banner crop."
+    },
+    {
+      "file": "mall-banner.webp",
+      "prompt": "Use case: product-mockup. Wide cinematic premium Indian spiritual products website hero photograph, landscape panorama 2.5:1. Elegant carefully styled STILL LIFE on the RIGHT HALF: a genuine textured rudraksha mala in an open ivory lined wooden presentation box, a small brass Sri Yantra with accurate geometric triangular engraving, two polished loose gemstones, a brass diya and subtle marigold petals, on warm sandstone with soft cream silk. High end artisan product photography, fine material details, soft golden side lighting, warm gold and ivory with deep plum shadows. The LEFT HALF is clean dark plum toned shadow negative space for website text. No cow, no hands, no people, no lettering, no label, no logo, no watermark, no UI. Keep all products composed together at mid right with generous margins for a short banner crop."
+    }
+  ]
+}

@@ -4,6 +4,8 @@ import { currentLang } from '../../utils/shop-i18n.js';
 import { CartStore } from '../../utils/cart-store.js';
 import { CartDrawer } from '../../components/shop/CartDrawer.js';
 import { OrdersModal } from '../../components/shop/OrdersModal.js';
+import { Discovery } from '../../components/shop/Discovery.js';
+import { skeleton } from '../../utils/experience.js';
 
 export class AstroMallPageComponent {
   static templatePath = '/src/pages/AstroMallPage/AstroMallPage.html';
@@ -42,15 +44,28 @@ export class AstroMallPageComponent {
   /** Router entry: refresh the cart/wishlist (sign-in may have changed) and the catalog. */
   static async loadProducts() {
     const loading = this.$('mall-loading-state');
+    const request = this.catalogRequest = (this.catalogRequest || 0) + 1;
+    loading.style.display = '';
+    loading.innerHTML = skeleton(4);
+    this.$('products-grid').style.display = 'none';
+    this.$('mall-empty-state').style.display = 'none';
+    this.$('products-grid').setAttribute('aria-busy', 'true');
     try {
       const res = await api(`/api/v1/marketplace/products?sort_by=${encodeURIComponent(this.sortBy)}&lang=${this.lang}`);
+      if (request !== this.catalogRequest) return;
       this.productsData = res.products || [];
+      Discovery.catalog = this.productsData;
       CartStore.reconcile(this.productsData);
       this.render();
+      Discovery.shelf(this.$('mall-recent-shelf'), this.productsData);
+      Discovery.paintButtons();
     } catch (err) {
+      if (request !== this.catalogRequest) return;
       loading.style.display = '';
       loading.innerHTML = `<p>${esc(err.message)}</p><button type="button" class="shop-btn shop-btn--line shop-btn--sm" id="mall-retry">${esc(t('retry'))}</button>`;
       this.$('mall-retry').addEventListener('click', () => { loading.innerHTML = '<div class="shop-spinner"></div>'; this.loadProducts(); });
+    } finally {
+      if (request === this.catalogRequest) this.$('products-grid').setAttribute('aria-busy', 'false');
     }
   }
 
@@ -82,7 +97,12 @@ export class AstroMallPageComponent {
 
     this.$('products-grid').addEventListener('click', (e) => {
       const act = e.target.closest('[data-act]');
-      if (!act) return;
+      if (!act) {
+        // The whole card opens the product page; links and buttons keep their own behaviour.
+        const card = e.target.closest('[data-card-href]');
+        if (card && !e.target.closest('a, button')) goTo(card.getAttribute('data-card-href'));
+        return;
+      }
       const id = act.getAttribute('data-id');
       const kind = act.getAttribute('data-act');
       if (kind === 'wish') { CartStore.toggleWish(id); this.render(); }
@@ -90,7 +110,7 @@ export class AstroMallPageComponent {
       else if (kind === 'details') goTo(`/astro-mall/product/${id}`);
     });
     this.$('btn-view-mall-orders').addEventListener('click', () => OrdersModal.open());
-    this.$('btn-rewards').addEventListener('click', () => { if (requireLogin('auth.neededRewards')) goTo('/rewards'); });
+    this.$('mall-btn-rewards').addEventListener('click', () => { if (requireLogin('auth.neededRewards')) goTo('/rewards'); });
     this.$('btn-pandit-sell-item').addEventListener('click', () => { if (requireLogin('auth.neededSeller')) goTo('/seller'); });
     this.root.querySelectorAll('[data-open-credits]').forEach(b => b.addEventListener('click',
       () => showCredits(this.$('mall-credits-modal'), this.$('mall-credits-list'), 'products')));
@@ -121,7 +141,9 @@ export class AstroMallPageComponent {
     const grid = this.$('products-grid');
     this.$('mall-loading-state').style.display = 'none';
     const list = this.filtered();
-    this.$('mall-empty-state').style.display = list.length || !this.productsData.length ? 'none' : 'block';
+    const badge = this.$('mall-count-badge');
+    if (badge) { badge.textContent = t('ml.count', { n: this.productsData.length }); badge.hidden = !this.productsData.length; }
+    this.$('mall-empty-state').style.display = list.length ? 'none' : 'block';
     grid.style.display = list.length ? 'grid' : 'none';
     grid.innerHTML = list.map(p => this.card(p)).join('');
     this.$('wishlist-count').textContent = CartStore.wish.length ? `(${CartStore.wish.length})` : '';
@@ -143,7 +165,7 @@ export class AstroMallPageComponent {
     const stock = !p.in_stock ? `<span class="shop-pill shop-pill--off">${esc(t('ml.outOfStock'))}</span>`
       : (p.stock <= 5 ? `<span class="shop-pill shop-pill--warn">${esc(t('ml.onlyLeft', { n: p.stock }))}</span>` : '');
     return `
-    <article class="shop-card">
+    <article class="shop-card ml-card" data-card-href="${url}">
       <a class="shop-card__media" href="${url}">
         <img src="${esc(mediaUrl(p.image_url))}" alt="${esc(p.title)}" loading="lazy">
         ${p.is_energized ? `<span class="shop-card__tag shop-card__tag--tl">✨ ${esc(t('ml.energized'))}</span>` : ''}
@@ -154,12 +176,11 @@ export class AstroMallPageComponent {
         <span class="shop-card__eyebrow">👳 ${esc(p.seller_name)}</span>
         <h3 class="shop-card__title" title="${esc(p.title)}"><a href="${url}">${esc(p.title)}</a></h3>
         ${this.ratingHtml(p)}
-        <p class="shop-card__text">${esc(p.description)}</p>
         <div class="shop-card__foot"><div class="shop-price">${this.priceHtml(p)}</div>${stock}</div>
         <div class="shop-card__actions">
           <button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-act="add" data-id="${esc(p.id)}" ${p.in_stock ? '' : 'disabled'}>🛒 ${esc(t(p.has_options ? 'ml.chooseOpts' : 'ml.addToCart'))}</button>
-          <button type="button" class="shop-btn shop-btn--line shop-btn--sm" data-act="details" data-id="${esc(p.id)}">${esc(t('ml.details'))}</button>
         </div>
+        ${Discovery.button(p.id)}
       </div>
     </article>`;
   }

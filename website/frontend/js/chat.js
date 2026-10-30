@@ -1120,6 +1120,30 @@ var ChatController = {
     return `<span>${avatar}</span>`;
   },
 
+  attachReadingEvidence(row, citations = [], grounded = false) {
+    const bubble = row?.querySelector('.message-bubble');
+    if (!bubble || bubble.querySelector('[data-reading-evidence]')) return;
+    const details = document.createElement('details'); details.dataset.readingEvidence = '';
+    details.style.cssText = 'margin-top:12px;padding:10px;border:1px solid #b88a4844;border-radius:10px;font-size:13px';
+    const title = document.createElement('summary');
+    title.textContent = this.currentLanguage === 'hi' ? 'इस व्याख्या का आधार' : 'Why this reading?';
+    details.append(title);
+    const status = document.createElement('p');
+    status.textContent = grounded ? 'Calculated chart data was supplied. Interpretations are traditional guidance.' : 'No verified chart grounding was reported for this response.';
+    details.append(status);
+    for (const citation of Array.isArray(citations) ? citations : []) {
+      const item = document.createElement('blockquote');
+      const source = document.createElement('strong');
+      source.textContent = String(citation.source_title || citation.source || citation.title || 'Retrieved source') + (citation.page_number || citation.page ? ` · p. ${citation.page_number || citation.page}` : '');
+      const excerpt = document.createElement('p');
+      excerpt.textContent = String(citation.excerpt || citation.text || citation.content || 'No excerpt available');
+      item.append(source, excerpt); details.append(item);
+    }
+    if (!citations?.length) { const note = document.createElement('p'); note.textContent = 'No classical source excerpts were retrieved for this response.'; details.append(note); }
+    const link = document.createElement('a'); link.href = '/dashboard'; link.textContent = 'Inspect planetary placements in Advanced tools'; details.append(link);
+    bubble.append(details);
+  },
+
   appendMessage(role, text, citations = [], isDemo = false, chartSvg = null, imagePreview = null, options = {}) {
     const box = document.getElementById('chat-messages-container');
     if (!box) return null;
@@ -1227,6 +1251,7 @@ var ChatController = {
       `;
     }
 
+    if (role === 'assistant' && citations.length) this.attachReadingEvidence(row, citations, Boolean(chartSvg));
     const sentinel = document.getElementById('chat-bottom-sentinel');
     if (sentinel) {
       box.insertBefore(row, sentinel);
@@ -1325,20 +1350,20 @@ https://astrojyotish.ai`;
       };
       recognition.onend = () => {
         if (micBtn) {
-          micBtn.style.color = '#6D28D9';
+          micBtn.style.color = '#1e0b44';
           micBtn.style.transform = 'none';
         }
       };
       recognition.onerror = () => {
         if (micBtn) {
-          micBtn.style.color = '#6D28D9';
+          micBtn.style.color = '#1e0b44';
           micBtn.style.transform = 'none';
         }
       };
       recognition.start();
     } catch (err) {
       if (micBtn) {
-        micBtn.style.color = '#6D28D9';
+        micBtn.style.color = '#1e0b44';
         micBtn.style.transform = 'none';
       }
       App.showToast('Could not start microphone: ' + err.message, 'warning');
@@ -1378,7 +1403,7 @@ https://astrojyotish.ai`;
         <div style="font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; color: #FCD34D; font-weight: 800; margin-bottom: 1rem;">
           📞 Private Vedic Audio Consultation
         </div>
-        <div style="width: 104px; height: 104px; margin: 0 auto 1.25rem; border-radius: 50%; overflow: hidden; border: 3px solid #F59E0B; box-shadow: 0 0 25px rgba(245, 158, 11, 0.45); display: flex; align-items: center; justify-content: center; background: #312E81;">
+        <div style="width: 104px; height: 104px; margin: 0 auto 1.25rem; border-radius: 50%; overflow: hidden; border: 3px solid #F59E0B; box-shadow: 0 0 25px rgba(245, 158, 11, 0.45); display: flex; align-items: center; justify-content: center; background: #1e0b44;">
           ${this.renderAvatar(currentAstrologer.avatar, currentAstrologer.name, 'w-full h-full object-cover')}
         </div>
         <h3 style="font-family: var(--font-serif); font-size: 1.45rem; margin: 0 0 0.35rem; color: #FFFFFF;">${currentAstrologer.name}</h3>
@@ -1536,7 +1561,7 @@ https://astrojyotish.ai`;
         <p class="font-serif font-bold text-lg mt-3" style="color:#1E1B4B;">Couldn't open the consultation</p>
         <p class="text-sm mt-1 mb-5" style="color:#64748B;">${message || 'Please check your connection and try again.'}</p>
         <div class="flex items-center gap-3">
-          <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] cursor-pointer" onclick="ChatController.startConsultationWith(decodeURIComponent('${safeId}'))">Try again</button>
+          <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] cursor-pointer" onclick="ChatController.startConsultationWith(decodeURIComponent('${safeId}'))">Try again</button>
           <a href="/astrologers" data-nav-link class="py-2.5 px-5 rounded-full text-[#1E1B4B] font-semibold text-sm border border-[#E7E2D8] bg-white no-underline">All astrologers</a>
         </div>
       </div>`;
@@ -1687,7 +1712,7 @@ https://astrojyotish.ai`;
               <div class="w-16 h-16 rounded-2xl bg-[#FFFBEB] border border-[#FCD34D] flex items-center justify-center text-3xl mb-4 shadow-sm">🪐</div>
               <h2 class="text-xl sm:text-2xl font-serif font-bold text-[#1E1B4B] mb-2">Couldn't open the consultation</h2>
               <p class="text-sm text-[#64748B] max-w-md mb-6 leading-relaxed">The connection was interrupted. Your astrologer is available — please try again.</p>
-              <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] cursor-pointer" onclick="ChatController.resumeConsultationById(decodeURIComponent('${encodeURIComponent(consultationId)}'))">Try again</button>
+              <button type="button" class="py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] cursor-pointer" onclick="ChatController.resumeConsultationById(decodeURIComponent('${encodeURIComponent(consultationId)}'))">Try again</button>
             </div>`;
         }
         return;
@@ -1714,7 +1739,7 @@ https://astrojyotish.ai`;
               The astrologer profile or consultation session "<strong>${decodeURIComponent(consultationId)}</strong>" was not found. Please choose an active Vedic astrologer from our verified directory.
             </p>
             <div class="flex items-center gap-3">
-              <a href="/astrologers" data-nav-link class="btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all no-underline">
+              <a href="/astrologers" data-nav-link class="btn-primary-purple py-2.5 px-6 rounded-full text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all no-underline">
                 View Astrologers Directory →
               </a>
               <a href="/" data-nav-link class="py-2.5 px-5 rounded-full text-[#1E1B4B] font-semibold text-sm border border-[#E7E2D8] bg-white hover:bg-[#FAF8F2] shadow-2xs transition-all no-underline">
@@ -1749,7 +1774,7 @@ https://astrojyotish.ai`;
         this.selectedAstrologer = data.astrologer.slug || data.astrologer.id;
         const nameEl = document.getElementById('topbar-astrologer-name');
         if (nameEl) {
-          nameEl.innerHTML = `${data.astrologer.name} <span class="card-type-tag tag-specialty" style="font-size:0.65rem; margin-left:0.35rem; background: #FAF5FF; border: 1px solid #DDD6FE; color: #7C3AED; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">Vedic Consultation</span> <span style="font-size: 0.72rem; color: #F59E0B;">✦</span>`;
+          nameEl.innerHTML = `${data.astrologer.name} <span class="card-type-tag tag-specialty" style="font-size:0.65rem; margin-left:0.35rem; background: #faf6fb; border: 1px solid #e3d8f3; color: #4a1b9a; padding: 2px 8px; border-radius: 9999px; font-weight: 700;">Vedic Consultation</span> <span style="font-size: 0.72rem; color: #F59E0B;">✦</span>`;
         }
         const metaEl = document.getElementById('topbar-astrologer-meta');
         if (metaEl) {
@@ -1928,7 +1953,7 @@ https://astrojyotish.ai`;
       this.isVoicePlaying = false;
       bars.forEach(b => b.classList.remove('playing'));
       if (icon) icon.textContent = '▶';
-      if (btn) btn.style.background = 'linear-gradient(135deg, #7439EA, #5B21B6)';
+      if (btn) btn.style.background = 'linear-gradient(135deg, #4a1b9a, #1e0b44)';
       return;
     }
 
@@ -1955,7 +1980,7 @@ https://astrojyotish.ai`;
         this.isVoicePlaying = false;
         bars.forEach(b => b.classList.remove('playing'));
         if (icon) icon.textContent = '▶';
-        if (btn) btn.style.background = 'linear-gradient(135deg, #7439EA, #5B21B6)';
+        if (btn) btn.style.background = 'linear-gradient(135deg, #4a1b9a, #1e0b44)';
         if (durationLabel) durationLabel.textContent = '0:24';
       }
     }, 1000);
@@ -2477,6 +2502,7 @@ https://astrojyotish.ai`;
             // Do not force bottom scroll so user comfortably reads from the start of the response
           },
           (doneData) => {
+            this.attachReadingEvidence(streamRow, doneData.citations || [], doneData.calculated_data_used);
             void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             if (doneData.consultation_id) {
@@ -2593,6 +2619,7 @@ https://astrojyotish.ai`;
             // Do not force bottom scroll so user comfortably reads from the start of the response
           },
           (doneData) => {
+            this.attachReadingEvidence(streamRow, doneData.citations || [], doneData.calculated_data_used);
             void this.adoptChatChart(doneData.chart_id);
             isStreamDone = true;
             this.currentSessionId = doneData.session_id;
@@ -2741,7 +2768,7 @@ https://astrojyotish.ai`;
     const planetsHtml = planets.map(p => `
       <div class="kundli-graha-chip flex items-center justify-between p-2 bg-white rounded-lg border border-[#E7E2D8] text-xs">
         <span class="font-bold text-[#1E1B4B]">${p.name}</span>
-        <span class="text-[#7439EA] font-semibold">${p.sign || 'Aries'}</span>
+        <span class="text-[#4a1b9a] font-semibold">${p.sign || 'Aries'}</span>
         <span class="text-[#B45309] font-bold">H${p.house || 1}</span>
         ${p.is_retrograde ? '<span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800 font-bold">व</span>' : ''}
       </div>
@@ -2755,15 +2782,15 @@ https://astrojyotish.ai`;
           </h4>
           <span class="text-xs text-[#64748B]">Lagna: ${chartData.ascendant_sign || 'Aries'} • Swiss Ephemeris Precision</span>
         </div>
-        <button type="button" class="btn-tool-sm text-xs font-bold text-[#7439EA] hover:underline cursor-pointer" onclick="window.App && window.App.openBirthModal ? window.App.openBirthModal() : null">
+        <button type="button" class="btn-tool-sm text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer" onclick="window.App && window.App.openBirthModal ? window.App.openBirthModal() : null">
           ✏️ Edit Details
         </button>
       </div>
 
-      <div class="chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#F5F3FF] rounded-xl border border-[#DDD6FE]">
-        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'd1' ? 'bg-[#7439EA] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('d1')">Lagna (D-1) लग्न</button>
-        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'd9' ? 'bg-[#7439EA] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('d9')">Navamsha (D-9) नवमांश</button>
-        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'dasha' ? 'bg-[#7439EA] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('dasha')">Dasha महादशा</button>
+      <div class="chat-kundli-tabs flex gap-1.5 mb-3 p-1 bg-[#f4eefb] rounded-xl border border-[#e3d8f3]">
+        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'd1' ? 'bg-[#4a1b9a] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('d1')">Lagna (D-1) लग्न</button>
+        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'd9' ? 'bg-[#4a1b9a] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('d9')">Navamsha (D-9) नवमांश</button>
+        <button type="button" class="kundli-tab-btn flex-1 py-1.5 px-2 rounded-lg text-xs font-bold text-center transition-all ${activeTab === 'dasha' ? 'bg-[#4a1b9a] text-white shadow-xs' : 'text-[#64748B] hover:text-[#1E1B4B]'}" onclick="ChatController.renderChatKundli('dasha')">Dasha महादशा</button>
       </div>
 
       <div class="chat-kundli-chart-area">
@@ -2772,11 +2799,11 @@ https://astrojyotish.ai`;
             <h5 class="text-xs font-bold text-[#1E1B4B] mb-2.5 flex items-center gap-1.5">
               <span>⏳</span> Vimshottari Dasha Sequence (विंशोत्तरी दशा चक्र)
             </h5>
-            <div class="dasha-step current-dasha mb-2.5 p-3 bg-[#FAF5FF] border border-[#DDD6FE] rounded-xl shadow-xs">
-              <span class="text-xs font-bold text-[#7439EA] block mb-1">● Active Mahadasha: राहु (Rahu)</span>
+            <div class="dasha-step current-dasha mb-2.5 p-3 bg-[#faf6fb] border border-[#e3d8f3] rounded-xl shadow-xs">
+              <span class="text-xs font-bold text-[#4a1b9a] block mb-1">● Active Mahadasha: राहु (Rahu)</span>
               <span class="text-[11px] text-[#64748B] block leading-relaxed">2018 – 2036 (18 वर्ष) • वर्तमान अंतरदशा: गुरु (Jupiter) till 2026</span>
               <div class="w-full bg-[#E9D5FF] h-1.5 rounded-full mt-2 overflow-hidden">
-                <div class="bg-[#7439EA] h-full rounded-full" style="width: 58%;"></div>
+                <div class="bg-[#4a1b9a] h-full rounded-full" style="width: 58%;"></div>
               </div>
             </div>
             <div class="dasha-step mb-2 p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl text-xs text-[#475569] flex justify-between items-center">
@@ -3064,6 +3091,7 @@ const CallingAgentService = {
     this.startWatchdog();
     this.reconnectAttempts = 0;
     this.callLog = { turns: [], remedies: [], pending: [] };
+    this.renderFullTranscript();
     this.loadVoiceSettings();
     this.populateAudioDevices();
     this.setConnectionState(navigator.onLine);
@@ -3972,11 +4000,27 @@ const CallingAgentService = {
       s.length > 8 && /(उपाय|मंत्र|जप|दान|पूजा|व्रत|रत्न|remed|mantra|donat|puja|fast|gemstone|upay)/i.test(s));
   },
 
+  renderFullTranscript() {
+    const el = document.getElementById('call-full-transcript');
+    if (!el) return;
+    el.textContent = (this.callLog?.transcript || []).join('\n\n');
+    el.scrollTop = el.scrollHeight;
+  },
+
+  downloadTranscript() {
+    const text = (this.callLog?.transcript || []).join('\n\n');
+    if (!text) return;
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a'); link.href = url; link.download = 'astro-consultation-transcript.txt'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  },
+
   logCallTurn(question, answer) {
     if (!this.callLog) return;
     this.callLog.turns.push({ q: question, a: answer, at: Date.now() });
     this.callLog.transcript = this.callLog.transcript || [];
     this.callLog.transcript.push(`Astrologer: ${answer}`);
+    this.renderFullTranscript();
     for (const r of this.extractRemedies(answer)) if (!this.callLog.remedies.includes(r)) this.callLog.remedies.push(r);
   },
 
@@ -4026,6 +4070,7 @@ const CallingAgentService = {
     if (this.callLog) this.callLog.transcript = this.callLog.transcript || [];
     const logLine = (speaker, line) => { if (this.callLog) this.callLog.transcript.push(`${speaker}: ${line}`); };
     logLine('Seeker', text);
+    this.renderFullTranscript();
 
     // Sync Mini Kundli Wheel with inquiry
     this.syncBhavaWithText(text);

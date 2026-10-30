@@ -11,6 +11,30 @@ from sqlalchemy.orm import Session
 from packages.database.models import Notification, StatusEvent, User
 
 TEMPLATES: Dict[str, Dict[str, Tuple[str, str]]] = {
+    "puja_booking_open": {
+        "en": ("Puja booking is open", "{title} on {date} is now open for booking. Choose a package before the deadline."),
+        "hi": ("पूजा की बुकिंग खुल गई", "{date} की {title} की बुकिंग अब खुल गई है। समय सीमा से पहले पैकेज चुनें।")},
+    "chadhava_cancelled": {
+        "en": ("Chadhava cancelled", "{ref} was cancelled. Check your booking for the current refund status."),
+        "hi": ("चढ़ावा रद्द हुआ", "{ref} रद्द हो गया। रिफंड की वर्तमान स्थिति बुकिंग में देखें।")},
+    "chadhava_refunded": {
+        "en": ("Chadhava refund confirmed", "The payment provider confirmed the full refund for {ref}."),
+        "hi": ("चढ़ावा रिफंड की पुष्टि", "भुगतान प्रदाता ने {ref} के पूर्ण रिफंड की पुष्टि कर दी है।")},
+    "chadhava_performed": {
+        "en": ("Your chadhava was offered", "The temple team marked {ref} performed. Video delivery is the next step."),
+        "hi": ("आपका चढ़ावा अर्पित हुआ", "मंदिर टीम ने {ref} की सेवा पूर्ण होने की जानकारी दी है। अगला चरण वीडियो है।")},
+    "wallet_recharged": {
+        "en": ("Wallet topped up", "₹{amount} was added to your wallet (ref {ref})."),
+        "hi": ("वॉलेट में राशि जुड़ी", "आपके वॉलेट में ₹{amount} जुड़े (संदर्भ {ref})।")},
+    "donation_received": {
+        "en": ("Gau Sewa donation received", "Thank you. Your donation of ₹{amount} (ref {reference}) was confirmed."),
+        "hi": ("गौ सेवा दान प्राप्त हुआ", "धन्यवाद। आपका ₹{amount} का दान (संदर्भ {reference}) पुष्ट हो गया।")},
+    "consultation_booked": {
+        "en": ("Consultation confirmed", "Your appointment with {name} is confirmed for {when}."),
+        "hi": ("परामर्श की पुष्टि हुई", "{name} के साथ आपका अपॉइंटमेंट {when} के लिए पुष्ट हुआ।")},
+    "consultation_cancelled": {
+        "en": ("Consultation cancelled", "Your appointment with {name} was cancelled. ₹{amount} was returned to your wallet."),
+        "hi": ("परामर्श रद्द हुआ", "{name} के साथ आपका अपॉइंटमेंट रद्द हुआ। ₹{amount} आपके वॉलेट में लौटाए गए।")},
     "booking_confirmed": {
         "en": ("Sankalp booking confirmed", "{ref}: {title}. The video proof will appear in My Bookings once the sankalp is done."),
         "hi": ("संकल्प बुकिंग पुष्ट हुई", "{ref}: {title}। संकल्प पूर्ण होने पर वीडियो प्रमाण 'मेरी बुकिंग' में दिखेगा।")},
@@ -125,7 +149,7 @@ def _format(kind: str, params: Dict[str, Any], lang: str) -> Tuple[str, str]:
 
 def render(n: Notification, lang: Optional[str]) -> Tuple[str, str]:
     """Title and body of a stored notification in the requested language ('hi' or anything else for English)."""
-    if not n.kind:
+    if not n.kind or n.kind == "advanced_reminder":
         return n.title, n.body or ""
     try:
         params = json.loads(n.params or "{}")

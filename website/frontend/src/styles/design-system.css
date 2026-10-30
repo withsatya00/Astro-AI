@@ -1,0 +1,43 @@
+/* Shared primitives built only from tokens.css. New and migrated pages use these instead of page-specific copies.
+   Palette discipline: amethyst for actions, gold for highlights, everything else neutral. */
+.ds-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs);
+  min-height: 44px; padding: var(--space-sm) var(--space-lg); border: 1px solid transparent;
+  border-radius: var(--radius-md); font: 600 var(--font-body-sm)/1.2 var(--font-sans);
+  text-decoration: none; cursor: pointer; transition: background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.ds-btn--primary { background: var(--brand-action); color: var(--text-inverted); box-shadow: var(--shadow-sm); }
+.ds-btn--primary:hover { background: var(--color-purple-hover); box-shadow: var(--shadow-md); }
+.ds-btn--gold { background: var(--color-gold-soft); color: var(--color-gold-dark); border-color: var(--border-gold); }
+.ds-btn--ghost { background: transparent; color: var(--color-purple-primary); border-color: var(--color-purple-primary); }
+.ds-btn--ghost:hover { background: var(--color-purple-light); }
+.ds-btn--block { width: 100%; }
+.ds-btn:disabled, .ds-btn[aria-busy="true"] { opacity: .6; cursor: progress; }
+
+.ds-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: var(--space-lg); box-shadow: var(--shadow-sm); min-width: 0; }
+.ds-card--raised { box-shadow: var(--shadow-md); }
+
+.ds-chip {
+  display: inline-flex; align-items: center; min-height: 40px; padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-full); background: var(--bg-card);
+  color: var(--text-primary); font: 600 var(--font-body-sm)/1 var(--font-sans); cursor: pointer;
+}
+.ds-chip[aria-pressed="true"], .ds-chip.is-on { border-color: var(--color-purple-primary); background: var(--color-purple-light); color: var(--color-purple-deep); }
+
+/* Loading, empty and error states share one look on every page. */
+.ds-state { display: grid; justify-items: center; gap: var(--space-sm); text-align: center; padding: var(--space-2xl) var(--space-lg); color: var(--text-secondary); }
+.ds-state h2, .ds-state h3 { margin: 0; color: var(--text-primary); }
+.ds-state--error { color: var(--status-error); }
+.ds-state--error h2, .ds-state--error h3 { color: var(--text-primary); }
+
+.ds-skeleton { display: block; min-height: 1em; border-radius: var(--radius-sm); background: linear-gradient(90deg, var(--bg-muted) 25%, var(--bg-subtle) 50%, var(--bg-muted) 75%); background-size: 200% 100%; animation: ds-shimmer 1.4s infinite linear; }
+@keyframes ds-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+.ds-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* One keyboard focus ring for every interactive element. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline: 3px solid var(--border-focus); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

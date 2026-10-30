@@ -139,7 +139,7 @@
 
 .form-control:focus, .form-select:focus {
   border-color: var(--primary-violet);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 0 3px rgba(74, 27, 154, 0.1);
 }
 
 .quick-cities {
@@ -377,7 +377,7 @@
 .astrologer-select-chip.active {
   background: var(--lavender-soft);
   border-color: var(--primary-violet);
-  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 1px 4px rgba(74, 27, 154, 0.12);
 }
 
 .chip-avatar {
@@ -453,7 +453,7 @@
 .intake-input:focus {
   background: #FFFFFF;
   border-color: var(--primary-violet);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 0 3px rgba(74, 27, 154, 0.1);
 }
 
 .gender-toggle-group {
@@ -551,11 +551,11 @@
 
 .topic-chip.active,
 .topic-chip:has(input:checked) {
-  background: #FAF5FF;
+  background: #faf6fb;
   border-color: var(--primary-violet);
   color: var(--primary-violet);
   font-weight: 600;
-  box-shadow: 0 1px 4px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 1px 4px rgba(74, 27, 154, 0.12);
 }
 
 .intake-actions {
@@ -618,7 +618,7 @@
    AstroTalk Connected Banner (Rendered at top of chat stream)
    ========================================================================== */
 .astrotalk-connected-banner {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FAF5FF 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #faf6fb 100%);
   border: 1px solid var(--lavender-border);
   border-radius: var(--radius-md);
   padding: 0.9rem 1.15rem;
@@ -748,7 +748,7 @@
 
 .astrologer-modal-card.active {
   border-color: var(--primary-violet);
-  background: #FAF5FF;
+  background: #faf6fb;
   box-shadow: 0 0 0 1px var(--primary-violet);
 }
 
@@ -894,7 +894,7 @@
 .partner-card-header.bride .partner-title { color: #BE185D; }
 
 .milan-score-banner {
-  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+  background: linear-gradient(135deg, #1E1B4B 0%, #1e0b44 100%);
   color: #FFFFFF;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
@@ -902,8 +902,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1.25rem;
-  border: 1px solid #4338CA;
-  box-shadow: 0 4px 16px rgba(49, 46, 129, 0.2);
+  border: 1px solid #1e0b44;
+  box-shadow: 0 4px 16px rgba(36, 24, 48, 0.2);
 }
 
 .milan-score-left {
@@ -1237,7 +1237,7 @@
    MODAL 8: SHASTRIYA GROUNDED KUNDLI REPORT (CHART-TO-RAG FUSION)
    ========================================================================== */
 .grounded-hero-card {
-  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+  background: linear-gradient(135deg, #1E1B4B 0%, #1e0b44 100%);
   color: #FFFFFF;
   border-radius: var(--radius-md);
   padding: 1.25rem;
@@ -1377,7 +1377,7 @@
 .grounded-citation-source {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #4338CA;
+  color: #1e0b44;
 }
 
 .grounded-citation-section {
@@ -1390,7 +1390,7 @@
   color: #334155;
   line-height: 1.45;
   background: #FFFFFF;
-  border-left: 2.5px solid #6366F1;
+  border-left: 2.5px solid #6b3fc4;
   padding: 0.5rem 0.75rem;
   margin-top: 0.35rem;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -2009,7 +2009,7 @@ span.flatpickr-weekday {
 
 .directory-badge {
   padding: 0.35rem 0.85rem;
-  background: #EDE9FE;
+  background: #f1ebf5;
   color: var(--primary-violet);
   border-radius: 999px;
   font-size: 0.82rem;
@@ -2135,15 +2135,15 @@ span.flatpickr-weekday {
   width: 110px;
   height: 110px;
   border-radius: 24px;
-  background: linear-gradient(135deg, #FEF3C7 0%, #EDE9FE 100%);
-  border: 2px solid #DDD6FE;
+  background: linear-gradient(135deg, #FEF3C7 0%, #f1ebf5 100%);
+  border: 2px solid #e3d8f3;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3.5rem;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.12);
+  box-shadow: 0 4px 14px rgba(74, 27, 154, 0.12);
 }
 
 .profile-hero-info {
@@ -2228,10 +2228,10 @@ span.flatpickr-weekday {
 
 .profile-sidebar-card {
   background: #FFFFFF;
-  border: 1px solid #DDD6FE;
+  border: 1px solid #e3d8f3;
   border-radius: 20px;
   padding: 1.75rem;
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.06);
+  box-shadow: 0 6px 20px rgba(74, 27, 154, 0.06);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -2246,21 +2246,21 @@ span.flatpickr-weekday {
   justify-content: center;
   gap: 0.55rem;
   padding: 0.95rem;
-  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  background: linear-gradient(135deg, #4a1b9a 0%, #1e0b44 100%);
   color: #FFFFFF;
   border: none;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 14px rgba(74, 27, 154, 0.3);
   transition: all 0.2s ease;
 }
 
 .btn-profile-chat-primary:hover {
-  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  background: linear-gradient(135deg, #6b3fc4 0%, #4a1b9a 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.38);
+  box-shadow: 0 6px 18px rgba(74, 27, 154, 0.38);
 }
 
 /* Back to Directory button in Workspace */
@@ -2306,8 +2306,8 @@ span.flatpickr-weekday {
   flex-shrink: 0;
 }
 .btn-workspace-back:hover {
-  background: var(--lavender-soft, #EDE9FE);
-  border-color: var(--lavender-border, #DDD6FE);
+  background: var(--lavender-soft, #f1ebf5);
+  border-color: var(--lavender-border, #e3d8f3);
 }
 
 
@@ -2315,7 +2315,7 @@ span.flatpickr-weekday {
    WALLET & APPOINTMENT MODAL
    ========================================================================== */
 .wallet-balance-card {
-  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+  background: linear-gradient(135deg, #1E1B4B 0%, #1e0b44 100%);
   border-radius: 20px;
   padding: 1.75rem;
   color: #FFFFFF;
@@ -2395,8 +2395,8 @@ span.flatpickr-weekday {
   transition: all 0.2s ease;
 }
 .glossary-term-card:hover {
-  border-color: #C4B5FD;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.08);
+  border-color: #d8c6e3;
+  box-shadow: 0 4px 14px rgba(74, 27, 154, 0.08);
 }
 
 /* ==========================================================================
@@ -2452,11 +2452,11 @@ span.flatpickr-weekday {
 }
 
 .panchang-input-wrap .form-control:focus {
-  border-color: #7439EA;
+  border-color: #4a1b9a;
 }
 
 .btn-panchang-refresh {
-  background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%);
+  background: linear-gradient(135deg, #4a1b9a 0%, #1e0b44 100%);
   color: #FFFFFF;
   border: none;
   border-radius: 10px;
@@ -2468,12 +2468,12 @@ span.flatpickr-weekday {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.18s ease;
-  box-shadow: 0 4px 12px rgba(116, 57, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(74, 27, 154, 0.3);
 }
 
 .btn-panchang-refresh:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(116, 57, 234, 0.4);
+  box-shadow: 0 6px 16px rgba(74, 27, 154, 0.4);
 }
 
 .panchang-quick-cities-strip {
@@ -2505,9 +2505,9 @@ span.flatpickr-weekday {
 }
 
 .btn-city-chip:hover {
-  background: #EDE9FE;
-  border-color: #7439EA;
-  color: #7439EA;
+  background: #f1ebf5;
+  border-color: #4a1b9a;
+  color: #4a1b9a;
 }
 
 .panchang-status-banner {
@@ -2552,8 +2552,8 @@ span.flatpickr-weekday {
 }
 
 .ayanamsa-pill {
-  background: #EDE9FE;
-  color: #6D28D9;
+  background: #f1ebf5;
+  color: #1e0b44;
 }
 
 .precision-pill {
@@ -2624,7 +2624,7 @@ span.flatpickr-weekday {
 .pfc-sub {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #7439EA;
+  color: #4a1b9a;
 }
 
 .pfc-desc {
@@ -3495,20 +3495,20 @@ span.flatpickr-weekday {
   display: flex !important;
   align-items: center !important;
   gap: 0.85rem !important;
-  background: #F5F3FF !important;
-  border: 1px solid #DDD6FE !important;
+  background: #f4eefb !important;
+  border: 1px solid #e3d8f3 !important;
   border-radius: 18px !important;
   padding: 0.75rem 1rem !important;
   margin: 0.5rem 0 0.85rem 0 !important;
   max-width: 440px !important;
-  box-shadow: 0 2px 8px rgba(116, 57, 234, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(74, 27, 154, 0.08) !important;
 }
 .btn-voice-play {
   width: 38px !important;
   height: 38px !important;
   min-width: 38px !important;
   border-radius: 50% !important;
-  background: linear-gradient(135deg, #7439EA, #5B21B6) !important;
+  background: linear-gradient(135deg, #4a1b9a, #1e0b44) !important;
   color: #FFFFFF !important;
   border: none !important;
   display: flex !important;
@@ -3516,7 +3516,7 @@ span.flatpickr-weekday {
   justify-content: center !important;
   cursor: pointer !important;
   font-size: 0.95rem !important;
-  box-shadow: 0 3px 8px rgba(116, 57, 234, 0.3) !important;
+  box-shadow: 0 3px 8px rgba(74, 27, 154, 0.3) !important;
   transition: transform 0.15s ease !important;
   flex-shrink: 0 !important;
 }
@@ -3539,12 +3539,12 @@ span.flatpickr-weekday {
 .vbar {
   width: 3.5px !important;
   height: 6px !important;
-  background-color: #A78BFA !important;
+  background-color: #bca4ca !important;
   border-radius: 2px !important;
   transition: height 0.15s ease, background-color 0.15s ease !important;
 }
 .vbar.playing {
-  background-color: #7439EA !important;
+  background-color: #4a1b9a !important;
   animation: voiceWave 0.6s infinite ease-in-out alternate !important;
 }
 .vbar:nth-child(2) { animation-delay: 0.1s !important; }
@@ -3567,7 +3567,7 @@ span.flatpickr-weekday {
   align-items: center !important;
   justify-content: space-between !important;
   font-size: 0.72rem !important;
-  color: #6D28D9 !important;
+  color: #1e0b44 !important;
   font-weight: 600 !important;
 }
 
@@ -3580,7 +3580,7 @@ span.flatpickr-weekday {
   margin: 0.75rem 0 !important;
   max-width: 620px !important;
   box-shadow: 0 4px 20px rgba(33, 29, 80, 0.06) !important;
-  border-top: 4px solid #7439EA !important;
+  border-top: 4px solid #4a1b9a !important;
 }
 .prescription-header {
   display: flex !important;
@@ -3594,8 +3594,8 @@ span.flatpickr-weekday {
   width: 36px !important;
   height: 36px !important;
   border-radius: 10px !important;
-  background: #FAF5FF !important;
-  border: 1px solid #DDD6FE !important;
+  background: #faf6fb !important;
+  border: 1px solid #e3d8f3 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -3643,7 +3643,7 @@ span.flatpickr-weekday {
   flex-wrap: wrap !important;
 }
 .btn-prescription-action {
-  background: linear-gradient(135deg, #7439EA 0%, #5B21B6 100%) !important;
+  background: linear-gradient(135deg, #4a1b9a 0%, #1e0b44 100%) !important;
   color: #FFFFFF !important;
   border: none !important;
   font-size: 0.78rem !important;
@@ -3654,12 +3654,12 @@ span.flatpickr-weekday {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.4rem !important;
-  box-shadow: 0 2px 8px rgba(116, 57, 234, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(74, 27, 154, 0.25) !important;
   transition: all 0.15s ease !important;
 }
 .btn-prescription-action:hover {
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(116, 57, 234, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(74, 27, 154, 0.35) !important;
 }
 .btn-prescription-secondary {
   background: #FFFFFF !important;
@@ -3674,7 +3674,7 @@ span.flatpickr-weekday {
 }
 .btn-prescription-secondary:hover {
   background: #FAF8F2 !important;
-  border-color: #7439EA !important;
-  color: #7439EA !important;
+  border-color: #4a1b9a !important;
+  color: #4a1b9a !important;
 }
 

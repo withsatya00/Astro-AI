@@ -494,6 +494,12 @@ var App = {
   },
 
   openUserAccountModal() {
+    if (!this.currentUser) { this.openAuthModal('login'); return; }
+    this.closeModal('modal-user-account');
+    window.Router.navigate('/my-account');
+  },
+
+  openAccountSettings() {
     this.openModal('modal-user-account');
     if (typeof this.renderUserAccountModal === 'function') {
       this.renderUserAccountModal();
@@ -510,7 +516,8 @@ var App = {
   },
 
   openAuthModal(defaultTab = 'login') {
-    this.openUserAccountModal();
+    // openUserAccountModal() now sends signed-in users to the dashboard and calls this for guests, so open the modal directly.
+    this.openAccountSettings();
     setTimeout(() => {
       this.switchAuthTab(defaultTab === 'register' ? 'register' : 'login');
     }, 60);
@@ -564,10 +571,31 @@ var App = {
   },
 
   async openWalletModal() {
+    this.walletHistoryFilter = 'all';
     this.openModal('modal-wallet-bookings');
+    await this.refreshWalletUI();
+  },
+
+  async openAppointmentsModal(astrologerId) {
+    if (!this.currentUser) { this.openAuthModal('login'); return; }
+    this.closeModal('modal-wallet-bookings');
+    this.openModal('modal-appointments');
+    this._exp = await import('/src/utils/experience.js');
     await this.refreshWalletUI();
     await this.loadBookingsUI();
     this.populateBookingAstrologers();
+    const select = document.getElementById('booking-astrologer-select');
+    const pick = astrologerId && typeof astrologerId === 'string' ? astrologerId : '';
+    if (select && pick) {
+      if (![...select.options].some(o => o.value === pick) && this.profileAstrologer?.id === pick) {
+        const option = document.createElement('option');
+        option.value = pick; option.dataset.rate = this.profileAstrologer.price_per_minute ?? 0;
+        option.textContent = `${this.profileAstrologer.name} · ₹${this.profileAstrologer.price_per_minute ?? 0}/min`;
+        select.append(option);
+      }
+      select.value = pick;
+    }
+    this.updateBookingFeePreview();
   },
 
   openGlossaryModal(term = null) {
@@ -631,6 +659,7 @@ var App = {
         this.updateActiveProfileUI(res);
         this.closeModal('modal-birth-details');
         this.showToast(`Birth chart calculated for ${res.name}! 🪐`, 'success');
+        window.dispatchEvent(new CustomEvent('astro:profileschange'));
         this.loadSavedProfiles();
       } catch (err) {
         this.showToast(`Calculation failed: ${err.message}`, 'error');
@@ -1036,7 +1065,7 @@ var App = {
           if (meta) {
             meta.innerHTML = `
               <span class="shortcut-badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">STATUS: ${res.status.toUpperCase()}</span>
-              <span class="shortcut-badge" style="background: rgba(124, 58, 237, 0.2); color: #c4b5fd;">LATENCY: ${res.duration_ms}ms</span>
+              <span class="shortcut-badge" style="background: rgba(74, 27, 154, 0.2); color: #d8c6e3;">LATENCY: ${res.duration_ms}ms</span>
             `;
           }
 
@@ -1138,6 +1167,30 @@ var App = {
       });
     }
 
+    const btnMilanPdf = document.getElementById('btn-download-milan-pdf');
+    if (btnMilanPdf) {
+      btnMilanPdf.addEventListener('click', async () => {
+        if (!this.lastMilanPayload) { this.showToast('Please calculate Milan first!', 'warning'); return; }
+        const { px } = await import('/src/utils/premium-copy.js');
+        const label = document.getElementById('btn-download-milan-pdf-label');
+        btnMilanPdf.disabled = true;
+        if (label) label.textContent = px('mp.preparing');
+        try {
+          const res = await fetch('/api/v1/charts/milan/pdf', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.lastMilanPayload) });
+          if (!res.ok) throw new Error('pdf');
+          const url = URL.createObjectURL(await res.blob());
+          const a = Object.assign(document.createElement('a'), { href: url, download: 'Kundali_Milan_Report.pdf' });
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+        } catch (err) {
+          this.showToast(px('mp.failed'), 'error');
+        } finally {
+          btnMilanPdf.disabled = false;
+          if (label) label.textContent = px('mp.download');
+        }
+      });
+    }
+
     if (btnShareMilanWA) {
       btnShareMilanWA.addEventListener('click', () => {
         if (this.lastMilanData) {
@@ -1202,6 +1255,7 @@ var App = {
       try {
         const result = await API.calculateMilan(payload);
         this.lastMilanData = result;
+        this.lastMilanPayload = payload;
         this.renderMilanResult(result);
         this.showToast(`Kundali Milan calculated: ${result.total_score}/36 Gunas! 💍`, 'success');
       } catch (err) {
@@ -1616,7 +1670,7 @@ var App = {
       const isDhaiya = data.is_dhaiya || data.is_in_dhaiya;
       badgeEl.innerText = isSadeSati ? `Sade Sati (${data.phase_code ? data.phase_code.toUpperCase() : 'Active'})` : (isDhaiya ? 'Dhaiya Active' : 'Free');
       badgeEl.style.background = isSadeSati ? '#FDE68A' : (isDhaiya ? '#E9D5FF' : '#DCFCE7');
-      badgeEl.style.color = isSadeSati ? '#78350F' : (isDhaiya ? '#6B21A8' : '#166534');
+      badgeEl.style.color = isSadeSati ? '#78350F' : (isDhaiya ? '#352343' : '#166534');
     }
     if (explEl) {
       explEl.innerText = data.transit_impact || data.explanation || '';
@@ -1783,8 +1837,8 @@ var App = {
 
     try {
       const params = { limit: 50 };
-      if (this.directoryFilter.type === 'human') params.type = 'human';
-      else if (this.directoryFilter.type === 'ai') params.type = 'ai';
+      if (this.directoryFilter.type === 'human') params.is_ai = false;
+      else if (this.directoryFilter.type === 'ai') params.is_ai = true;
       else if (this.directoryFilter.type === 'online') params.availability = 'online';
 
       if (this.directoryFilter.specialty) params.expertise = this.directoryFilter.specialty;
@@ -1803,6 +1857,9 @@ var App = {
       const astrologers = Array.isArray(res) ? res : (res.items || []);
       this.astrologersList = astrologers;
       if (isDefaultView) this.writeAstrologerCache(astrologers);
+
+      window.DirectoryChips?.setCount(res.total || astrologers.length);
+      window.DirectoryChips?.paint();
 
       // Update badge counts
       const countBadge = document.getElementById('directory-total-badge');
@@ -1824,7 +1881,7 @@ var App = {
       if (activeFiltersStrip && activeChipsContent) {
         if (chips.length > 0) {
           activeFiltersStrip.style.display = 'flex';
-          activeChipsContent.innerHTML = chips.map(c => `<span class="specialty-pill" style="background:#EEF2FF; color:#4338CA; font-size: 0.72rem;">${c}</span>`).join('');
+          activeChipsContent.innerHTML = chips.map(c => `<span class="specialty-pill" style="background:#EEF2FF; color:#1e0b44; font-size: 0.72rem;">${c}</span>`).join('');
         } else {
           activeFiltersStrip.style.display = 'none';
         }
@@ -1888,7 +1945,7 @@ var App = {
 
     const isFemale = a.gender === 'female' || /ananya|vidushi|meera|gayatri|kalpana|pallavi|priyanka|shalini|shambhavi|sunita|aradhana|meenakshi|radhika|kavita/i.test(a.name || '');
     const honorBadgeHtml = isFemale
-      ? `<div class="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#7439EA] to-[#9333EA] text-white shadow-xs border border-[#DDD6FE]"><span>★</span><span>विदुषी रत्न</span></div>`
+      ? `<div class="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#4a1b9a] to-[#6b3fc4] text-white shadow-xs border border-[#e3d8f3]"><span>★</span><span>विदुषी रत्न</span></div>`
       : `<div class="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-[#D97706] to-[#E8AD35] text-[#1E1B4B] shadow-xs border border-[#FDE68A]"><span>★</span><span>स्वर्ण पदक</span></div>`;
 
     return `
@@ -1916,12 +1973,12 @@ var App = {
           <!-- Astrologer Info -->
           <div class="flex flex-col">
             <h3 
-              class="font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#7439EA] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1" 
+              class="font-serif font-bold text-sm sm:text-base text-[#1E1B4B] group-hover:text-[#4a1b9a] transition-colors truncate mb-0.5 cursor-pointer flex items-center gap-1" 
               onclick="window.Router ? window.Router.navigate('/astrologer/${profileSlug}') : (window.location.href='/astrologer/${profileSlug}')"
               title="${a.name}"
             >
               <span>${a.name}</span>
-              <span class="text-[#7439EA] text-xs shrink-0 font-bold" title="गुरुकुल एवं वैदिक विवि द्वारा सत्यापित">✓</span>
+              <span class="text-[#4a1b9a] text-xs shrink-0 font-bold" title="गुरुकुल एवं वैदिक विवि द्वारा सत्यापित">✓</span>
             </h3>
 
             <!-- Rating & Review Count -->
@@ -1959,7 +2016,7 @@ var App = {
           <div class="grid grid-cols-2 gap-2 w-full">
             <button 
               type="button" 
-              class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
+              class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs shadow-xs hover:shadow-md transition-all cursor-pointer"
               onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('${profileSlug}') : (window.location.href='/consultation/${profileSlug}')"
             >
               <span>💬</span>
@@ -1967,7 +2024,7 @@ var App = {
             </button>
             <button 
               type="button" 
-              class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#F5F3FF] border border-[#7439EA] text-[#7439EA] font-bold text-xs transition-colors cursor-pointer" 
+              class="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-full bg-white hover:bg-[#f4eefb] border border-[#4a1b9a] text-[#4a1b9a] font-bold text-xs transition-colors cursor-pointer" 
               onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('${profileSlug}') : window.App.startConsultationWith('${profileSlug}'))"
             >
               <span>📞</span>
@@ -1982,6 +2039,8 @@ var App = {
   async loadHomeFeatured() {
     const grid = document.getElementById('home-featured-grid');
     if (!grid) return;
+    // Show shimmering placeholders, not empty boxes, until the astrologers arrive.
+    if (!grid.querySelector('.ac-card')) grid.innerHTML = '<div class="astro-skeleton"></div>'.repeat(3);
 
     try {
       if (!this.astrologersList || this.astrologersList.length === 0) {
@@ -2012,12 +2071,8 @@ var App = {
     if (cached) {
       this.populateProfileHtml(cached);
     } else {
-      container.innerHTML = `
-        <div style="text-align: center; padding: 4rem 1rem; color: #64748B;">
-          <div style="font-size: 2.2rem; margin-bottom: 0.5rem; animation: spin 2s linear infinite;">🕉️</div>
-          <p style="font-weight: 600; color: #1E1B4B;">Loading Astrologer Profile (${slug})...</p>
-        </div>
-      `;
+      const { x, skeleton } = await import('/src/utils/experience.js');
+      container.innerHTML = `<div class="exp-profile-loading" role="status" aria-label="${x('loadingProfile')}">${skeleton(3)}</div>`;
     }
 
     try {
@@ -2033,161 +2088,98 @@ var App = {
     } catch (err) {
       if (!cached) {
         console.error('Failed to load profile for slug:', slug, err);
+        const { x, esc } = await import('/src/utils/experience.js').then(async m => ({ x: m.x, esc: (await import('/src/utils/shop.js')).esc }));
+        const missing = /not found|404/i.test(err?.message || '');
         container.innerHTML = `
-          <div style="text-align: center; padding: 4rem 1rem; color: #DC2626;">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚠️</div>
-            <h2 style="font-family: var(--font-serif); margin-bottom: 0.5rem;">Astrologer Profile Not Found</h2>
-            <p style="color: #64748B; margin-bottom: 1.5rem;">The astrologer profile "${slug}" does not exist or is currently unavailable.</p>
-            <a href="/astrologers" data-nav-link class="btn-hero-primary" style="display: inline-flex;">
-              Browse All Astrologers ➔
-            </a>
-          </div>
-        `;
+          <div class="exp-empty" role="alert">
+            <span aria-hidden="true">✧</span>
+            <h3>${esc(x(missing ? 'profileMissing' : 'profileFailed'))}</h3>
+            <p>${esc(missing ? x('profileMissingNote') : '')}</p>
+            <div class="exp-empty__actions">
+              ${missing ? '' : `<button type="button" class="shop-btn shop-btn--line" data-profile-retry>${esc(x('retry'))}</button>`}
+              <a href="/astrologers" data-nav-link class="shop-btn shop-btn--gold">${esc(x('browseAll'))}</a>
+            </div>
+          </div>`;
+        container.querySelector('[data-profile-retry]')?.addEventListener('click', () => this.renderProfilePage(slug));
       }
     }
   },
 
-  populateProfileHtml(a) {
+  async populateProfileHtml(a) {
     const container = document.getElementById('profile-page-content');
     if (!container) return;
-    const isOnline = a.availability === 'online';
-    const isBusy = a.availability === 'busy';
-    const statusText = isOnline ? '🟢 Online & Available' : (isBusy ? '🟡 In Active Consultation' : '⚪ Currently Offline');
+    const [{ x, fmt }, { esc }] = await Promise.all([import('/src/utils/experience.js'), import('/src/utils/shop.js')]);
+    const hi = window.I18n?.currentLang === 'hi';
     const isHuman = a.is_ai === false || a.type === 'human';
-    const typeLabel = isHuman ? 'Certified Vedic Scholar' : 'Vedic Astrologer';
-    const tagClass = isHuman ? 'tag-human' : 'tag-specialty';
+    this.profileAstrologer = a;
+    window.Seo?.entity({
+      title: `${(hi && a.name_hi) || a.name} – ${(hi && a.title_hi) || a.title || ''} | Astro Jyotish`,
+      description: ((hi && a.bio_hi) || a.bio || '').slice(0, 155),
+      data: { '@context': 'https://schema.org', '@type': 'Person', name: a.name, jobTitle: a.title, description: a.bio || undefined,
+        ...(Number(a.rating) > 0 && Number(a.review_count) > 0 ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: Number(a.rating).toFixed(1), reviewCount: Number(a.review_count) } } : {}) }
+    });
+    const name = (hi && a.name_hi) || a.name;
+    const title = (hi && a.title_hi) || a.title || '';
+    const bio = (hi && a.bio_hi) || a.bio || '';
+    const rate = Number(a.price_per_minute) || 0;
+    const rating = Number(a.rating) || 0;
+    const reviewCount = Number(a.review_count) || 0;
+    const consultations = Number(a.consultations_count) || 0;
+    const years = Number(a.experience_years) || 0;
+    const languages = a.languages || [];
+    const specialties = a.specialties || [];
+    const status = a.availability === 'online' ? 'statusOnline' : (a.availability === 'busy' ? 'statusBusy' : 'statusOffline');
     const portraitUrl = (window.AstrologerCardComponent && window.AstrologerCardComponent.getPortraitUrl)
       ? window.AstrologerCardComponent.getPortraitUrl(a)
-      : (a.avatar && !a.avatar.endsWith('.svg') ? a.avatar : 'assets/portraits/pt-rameshwar-dwivedi.jpg');
-    const avatarHtml = `<img src="${portraitUrl}" alt="${a.name}" class="w-full h-full object-cover object-top" onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';" />`;
+      : (a.avatar && !a.avatar.endsWith('.svg') ? a.avatar : '/assets/portraits/default-avatar.svg');
 
-    const honestDisclosure = isHuman
-      ? `<div class="consultation-disclosure-banner human-disclosure">
-           <span>✓</span> <div><strong>Verified Human Scholar:</strong> Direct personal 1-on-1 consultation with a certified Vedic astrologer.</div>
-         </div>`
-      : `<div class="consultation-disclosure-banner ai-disclosure">
-           <span>ℹ️</span> <div><strong>Consultation Transparency:</strong> Consultation service grounded in classical Parashari Shastras and Swiss Ephemeris mathematical calculations.</div>
-         </div>`;
+    // Similar astrologers: same specialties first, then anyone else, up to eight.
+    const mine = new Set((a.specialties || []).map(v => String(v).toLowerCase()));
+    const pool = (this.astrologersList || []).filter(item => item.id !== a.id);
+    const overlap = (item) => (item.specialties || []).filter(v => mine.has(String(v).toLowerCase())).length;
+    const similar = pool.map(item => [overlap(item), item]).sort((l, r) => r[0] - l[0]).slice(0, 8).map(pair => pair[1]);
+    const { ProfileView } = await import('/src/components/premium/ProfileView.js?v=r28');
+    const ctx = { hi, portraitUrl, similar, isHuman };
+    container.innerHTML = ProfileView.html(a, ctx);
+    ProfileView.bind(container, a, ctx);
+    container.querySelector('[data-review-form]')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!this.currentUser) { this.openAuthModal('login'); return; }
+      const form = e.target; const btn = form.querySelector('button'); btn.disabled = true;
+      try {
+        await API.addAstrologerReview(form.dataset.reviewForm, { rating: Number(form.rating.value), comment: form.comment.value.trim() });
+        this.showToast(x('reviewThanks'), 'success');
+        this.renderProfilePage(a.slug || a.id);
+      } catch (err) { this.showToast(err.message, 'error'); btn.disabled = false; }
+    });
+    this.renderProfileEstimate();
+    if (this.currentUser) this.refreshWalletUI();
+    if (!this._profileWalletBound) {
+      this._profileWalletBound = true;
+      window.addEventListener('astro:walletchange', () => this.renderProfileEstimate());
+    }
+  },
 
-    const specialtiesHtml = (a.specialties || []).map(s => `<span class="specialty-pill" style="font-size:0.8rem; padding:0.3rem 0.75rem;">${s}</span>`).join('');
-    const languagesHtml = (a.languages || []).join(', ');
-
-    // Similar astrologers recommendations from current list
-    const similar = (this.astrologersList || []).filter(item => item.id !== a.id).slice(0, 3);
-    const similarHtml = similar.map(s => {
-      const sPortrait = (window.AstrologerCardComponent && window.AstrologerCardComponent.getPortraitUrl)
-        ? window.AstrologerCardComponent.getPortraitUrl(s)
-        : (s.avatar || 'assets/portraits/pt-rameshwar-dwivedi.jpg');
-      return `
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;">
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <div style="width: 36px; height: 36px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
-            <img src="${sPortrait}" alt="${s.name}" class="w-full h-full object-cover object-top" onerror="this.onerror=null; this.src='/assets/portraits/default-avatar.svg';" />
-          </div>
-          <div>
-            <div style="font-size: 0.82rem; font-weight: 700; color: #1E293B;">${s.name}</div>
-            <div style="font-size: 0.72rem; color: #64748B;">${s.title || 'Vedic Astrologer'}</div>
-          </div>
-        </div>
-        <button type="button" class="btn-card-profile" style="padding: 0.25rem 0.6rem; font-size: 0.72rem;" onclick="Router.navigate('/astrologers/${s.slug || s.id}')">
-          View
-        </button>
-      </div>
-      `;
-    }).join('');
-
-    container.innerHTML = `
-      <div class="profile-hero-card">
-        <div class="profile-hero-avatar" style="overflow: hidden; border-radius: 20px;">
-          ${avatarHtml}
-        </div>
-        <div class="profile-hero-info">
-          <div class="profile-name-row">
-            <h1 class="profile-name-text">${a.name} ${a.is_verified ? '<span class="card-verified-badge" title="Verified Vedic Astrologer">✓</span>' : ''}</h1>
-            <span class="card-type-tag ${tagClass}">${typeLabel}</span>
-          </div>
-          <div class="profile-title-text">${a.title || 'Vedic Jyotishacharya'}</div>
-          <div class="profile-stats-row">
-            <span class="profile-stat-item">⭐ ${a.rating || '4.9'} Rating</span>
-            <span>•</span>
-            <span class="profile-stat-item">📜 ${a.experience_years || 15}+ Yrs Experience</span>
-            <span>•</span>
-            <span class="profile-stat-item">👥 ${(a.consultations_count || 1200).toLocaleString()}+ Consultations</span>
-            <span>•</span>
-            <span class="profile-stat-item">${statusText}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="profile-content-layout">
-        <div class="profile-main-col">
-          ${honestDisclosure}
-          <div class="profile-section-card">
-            <h3 class="profile-card-heading"><span>📜</span> <span>About & Astrological Lineage</span></h3>
-            <p class="profile-bio-text">${a.bio || 'Experienced Vedic Jyotish scholar trained in traditional classical shastras.'}</p>
-          </div>
-
-          <div class="profile-section-card">
-            <h3 class="profile-card-heading"><span>🔮</span> <span>Core Specializations</span></h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-              ${specialtiesHtml}
-            </div>
-          </div>
-
-          <div class="profile-section-card">
-            <h3 class="profile-card-heading"><span>🗣️</span> <span>Spoken Languages & Consultation Style</span></h3>
-            <p style="font-size: 0.92rem; color: #475569; margin-bottom: 0.5rem;">
-              <strong>Languages:</strong> ${languagesHtml}
-            </p>
-            <p style="font-size: 0.92rem; color: #475569;">
-              <strong>Approach:</strong> Rooted strictly in Parashari Vedic Jyotish, Swiss Ephemeris mathematical charts, and compassionate spiritual guidance.
-            </p>
-          </div>
-
-          <div class="profile-section-card">
-            <h3 class="profile-card-heading"><span>💬</span> <span>Verified Seeker Reviews</span></h3>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-              ${(a.reviews && a.reviews.length > 0) ? a.reviews.map(r => `
-                <div style="padding: 0.85rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
-                    <strong style="font-size: 0.85rem; color: #1E293B;">${r.user_name || 'Seeker'}</strong>
-                    <span style="font-size: 0.78rem; color: #F59E0B;">⭐ ${r.rating || 5}.0</span>
-                  </div>
-                  <p style="font-size: 0.82rem; color: #64748B; margin: 0;">${r.comment}</p>
-                </div>
-              `).join('') : `
-                <p style="font-size: 0.85rem; color: #94A3B8;">Verified client reviews will appear here.</p>
-              `}
-            </div>
-          </div>
-        </div>
-
-        <div class="profile-sidebar-card">
-          <div style="border-bottom: 1px solid #EDE9FE; padding-bottom: 1rem;">
-            <div style="font-size: 0.78rem; color: #64748B; text-transform: uppercase; font-weight: 700; margin-bottom: 0.25rem;">Consultation Rate</div>
-            <div style="display: flex; align-items: baseline; gap: 0.4rem;">
-              <span style="font-size: 1.75rem; font-weight: 800; color: #059669;">${a.price_per_minute === 0 ? 'Free' : '₹' + a.price_per_minute}</span>
-              <span style="font-size: 0.8rem; color: #64748B;">${a.price_per_minute === 0 ? 'Instant Consultation' : '/ min'}</span>
-            </div>
-          </div>
-
-          <button type="button" class="btn-profile-chat-primary" onclick="ChatController.startConsultationWith('${a.id}')">
-            <span>✨</span> <span>Start Consultation Now</span>
-          </button>
-
-          <button type="button" class="btn-hero-secondary" onclick="App.openBirthModal()" style="font-size: 0.85rem; justify-content: center; padding: 0.65rem;">
-            <span>🪐</span> <span>Attach Janam Kundli</span>
-          </button>
-
-          <div style="margin-top: 0.5rem;">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #1E293B; margin-bottom: 0.65rem;">Similar Astrologers</div>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-              ${similarHtml}
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
+  /** Per-duration cost from the expert's real rate, checked against the signed-in user's real wallet balance. */
+  async renderProfileEstimate() {
+    const box = document.getElementById('profile-wallet-estimate');
+    if (!box) return;
+    const { x, fmt } = await import('/src/utils/experience.js');
+    const { esc, money } = await import('/src/utils/shop.js');
+    const rate = Number(box.dataset.rate) || 0;
+    const rows = [15, 30, 60].map(m => `<div><span>${esc(fmt(x('minutesShort'), { n: m }))}</span><strong>${esc(money(rate * m))}</strong></div>`).join('');
+    let balanceHtml;
+    if (!this.currentUser) {
+      balanceHtml = `<p class="exp-muted">${esc(x('signInBalance'))}</p>`;
+    } else {
+      const balance = Number(this.currentWalletBalance) || 0;
+      const need = rate * 15;
+      const short = need - balance;
+      balanceHtml = `<div class="exp-balance"><span>${esc(x('yourBalance'))}</span><strong>${esc(money(balance))}</strong></div>` + (short > 0
+        ? `<p class="exp-warn" role="alert">${esc(fmt(x('lowBalance'), { n: Math.ceil(short), m: 15 }))}</p><button type="button" class="shop-btn shop-btn--gold" onclick="App.openWalletModal()">${esc(x('topUp'))}</button>`
+        : `<p class="exp-ok">${esc(fmt(x('enoughBalance'), { b: Math.floor(balance) }))}</p>`);
+    }
+    box.innerHTML = `<h4>${esc(x('estimateTitle'))}</h4><div class="exp-estimate__grid">${rows}</div>${balanceHtml}`;
   },
 
   handleHeroSearch(event) {
@@ -2257,6 +2249,14 @@ var App = {
     this.loadAstrologerDirectory();
   },
 
+  toggleDirectoryFilters() {
+    const panel = document.getElementById('dir-filters-panel');
+    const button = document.getElementById('dir-mobile-filter-toggle');
+    if (!panel || !button) return;
+    const open = panel.classList.toggle('is-open');
+    button.setAttribute('aria-expanded', String(open));
+  },
+
   clearDirectoryFilters() {
     this.directoryFilter = { type: 'all', specialty: '', language: '', sort: 'popular', q: '' };
     const search = document.getElementById('dir-page-search-input');
@@ -2269,6 +2269,8 @@ var App = {
     if (lang) lang.value = '';
     if (mode) mode.value = 'all';
     if (sort) sort.value = 'popular';
+    document.getElementById('dir-filters-panel')?.classList.remove('is-open');
+    document.getElementById('dir-mobile-filter-toggle')?.setAttribute('aria-expanded', 'false');
     this.loadAstrologerDirectory();
   },
 
@@ -2356,7 +2358,7 @@ var App = {
                 ${a.is_verified ? '<span class="card-verified-badge" style="font-size: 0.72rem; padding: 0.15rem 0.5rem; background: #DCFCE7; color: #15803D; border-radius: 9999px; font-weight: 700;" title="Verified Astrologer">✓ Verified</span>' : ''}
               </h3>
               <p style="font-size: 0.82rem; color: #64748B; margin: 0 0 0.4rem 0;">
-                ${a.title} • <span style="font-weight: 700; color: #7439EA;">${typeLabel}</span>
+                ${a.title} • <span style="font-weight: 700; color: #4a1b9a;">${typeLabel}</span>
               </p>
               <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
                 <span class="status-pill" style="font-size: 0.72rem; padding: 0.15rem 0.5rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 9999px; display: inline-flex; align-items: center; gap: 0.35rem;">
@@ -2551,7 +2553,7 @@ var App = {
         <!-- Astrologer & Meta Bar -->
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1.15rem; background: linear-gradient(135deg, #FAF8F2 0%, #F5EFEB 100%); border: 1px solid #E7E2D8; border-radius: 14px; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 0.85rem;">
-            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #7439EA, #4C1D95); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #FFF; box-shadow: 0 4px 10px rgba(116,57,234,0.25);">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #4a1b9a, #1e0b44); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #FFF; box-shadow: 0 4px 10px rgba(74, 27, 154,0.25);">
               🕉️
             </div>
             <div>
@@ -2600,7 +2602,7 @@ var App = {
             <button type="button" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.85rem; background: #FFFFFF; border: 1px solid #D97706; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #1E1B4B; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.background='#FFFBEB'" onmouseout="this.style.background='#FFFFFF'" onclick="App.closeModal('modal-consultation-summary'); App.openKundaliMilanModal ? App.openKundaliMilanModal() : App.openModal('modal-kundali-milan');">
               <span>💍</span> <span>गुण मिलान (36 Gunas)</span>
             </button>
-            <button type="button" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.85rem; background: #FFFFFF; border: 1px solid #7439EA; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #1E1B4B; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.background='#F5F3FF'" onmouseout="this.style.background='#FFFFFF'" onclick="App.closeModal('modal-consultation-summary'); CallingAgentService ? CallingAgentService.downloadAstroDossierPDF() : ReportsController.generateQuickReport();">
+            <button type="button" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.85rem; background: #FFFFFF; border: 1px solid #4a1b9a; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #1E1B4B; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.background='#f4eefb'" onmouseout="this.style.background='#FFFFFF'" onclick="App.closeModal('modal-consultation-summary'); CallingAgentService ? CallingAgentService.downloadAstroDossierPDF() : ReportsController.generateQuickReport();">
               <span>📑</span> <span>कुण्डली PDF रिपोर्ट</span>
             </button>
             <button type="button" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.85rem; background: #FFFFFF; border: 1px solid #0284C7; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #1E1B4B; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.background='#F0F9FF'" onmouseout="this.style.background='#FFFFFF'" onclick="App.closeModal('modal-consultation-summary'); App.openSadeSatiModal ? App.openSadeSatiModal() : null;">
@@ -2621,7 +2623,7 @@ var App = {
               <option value="3">⭐⭐⭐ संतोषजनक (Satisfactory)</option>
             </select>
             <input type="text" name="feedback" placeholder="ज्योतिषी के परामर्श पर अपना अनुभव लिखें..." style="flex: 1; min-width: 180px; padding: 0.45rem 0.85rem; border: 1px solid #E7E2D8; border-radius: 8px; font-size: 0.8rem; background: #FFFFFF; outline: none;">
-            <button type="submit" style="padding: 0.45rem 1.15rem; background: linear-gradient(135deg, #7439EA, #5B21B6); color: #FFF; font-weight: 800; font-size: 0.8rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(116,57,234,0.3);">
+            <button type="submit" style="padding: 0.45rem 1.15rem; background: linear-gradient(135deg, #4a1b9a, #1e0b44); color: #FFF; font-weight: 800; font-size: 0.8rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(74, 27, 154,0.3);">
               प्रस्तुत करें (Submit)
             </button>
           </form>
@@ -2689,6 +2691,7 @@ var App = {
   },
 
   updateAuthUI() {
+    window.dispatchEvent(new CustomEvent('astro:authchange'));
     const authBtn = document.getElementById('btn-nav-auth');
     const registerBtn = document.getElementById('btn-nav-register');
     const sidebarUserName = document.getElementById('sidebar-user-name');
@@ -2705,7 +2708,7 @@ var App = {
         authBtn.classList.add('logged-in');
         authBtn.innerHTML = `
           <div class="nav-user-pill flex items-center gap-1.5 font-bold text-xs">
-            <span class="user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#7439EA] to-[#4C1D95] text-white flex items-center justify-center text-[10px] shadow-xs">${initial}</span>
+            <span class="user-avatar-badge w-5 h-5 rounded-full bg-gradient-to-br from-[#4a1b9a] to-[#1e0b44] text-white flex items-center justify-center text-[10px] shadow-xs">${initial}</span>
             <span class="nav-user-name text-[#1E1B4B]">${firstName}</span>
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           </div>
@@ -2730,7 +2733,7 @@ var App = {
 
       if (mobileNavAuth) {
         mobileNavAuth.innerHTML = `
-          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs rounded-xl shadow-xs cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openUserAccountModal();">
+          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-[#faf6fb] border border-[#e3d8f3] text-[#4a1b9a] font-bold text-xs rounded-xl shadow-xs cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openUserAccountModal();">
             <span>👤</span> <span>${firstName} (Profile)</span>
           </button>
           <button type="button" class="py-2.5 px-3 bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs rounded-xl border border-red-200 cursor-pointer" onclick="App.handleLogout();" title="Logout">
@@ -2766,10 +2769,10 @@ var App = {
 
       if (mobileNavAuth) {
         mobileNavAuth.innerHTML = `
-          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#7439EA] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openAuthModal('login');">
+          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openAuthModal('login');">
             <span>👤</span> <span>Sign In</span>
           </button>
-          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#7439EA] to-[#5B21B6] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openAuthModal('register');">
+          <button type="button" class="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer" onclick="document.getElementById('mobile-nav-drawer')?.classList.add('translate-x-full'); document.getElementById('mobile-nav-backdrop')?.classList.add('hidden'); App.openAuthModal('register');">
             <span>✨</span> <span>Register</span>
           </button>
         `;
@@ -2804,11 +2807,11 @@ var App = {
               <label class="form-label font-bold text-xs text-[#1E1B4B] mb-1 block">Password (पासवर्ड)</label>
               <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required autocomplete="off" value="">
             </div>
-            <button type="submit" class="btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <button type="submit" class="btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
               <span>Sign In to Astro Jyotish</span> <span>➔</span>
             </button>
             <p class="text-xs text-center text-[#64748B] mt-3">
-              Don't have an account yet? <a href="javascript:void(0)" onclick="App.switchAuthTab('register')" class="text-[#7439EA] font-bold hover:underline">Register Free</a>
+              Don't have an account yet? <a href="javascript:void(0)" onclick="App.switchAuthTab('register')" class="text-[#4a1b9a] font-bold hover:underline">Register Free</a>
             </p>
           </form>
         </div>
@@ -2832,11 +2835,11 @@ var App = {
               <label class="form-label font-bold text-xs text-[#1E1B4B] mb-1 block">Phone Number (मोबाइल नंबर - Optional)</label>
               <input type="tel" id="reg-phone" class="form-control" placeholder="+91 9876543210">
             </div>
-            <button type="submit" class="btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#7439EA] to-[#5B21B6] hover:from-[#5B21B6] hover:to-[#4C1D95] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <button type="submit" class="btn-primary-purple w-full py-2.5 px-4 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
               <span>Create Free Account (निःशुल्क पंजीकरण)</span> <span>➔</span>
             </button>
             <p class="text-xs text-center text-[#64748B] mt-3">
-              Already have an account? <a href="javascript:void(0)" onclick="App.switchAuthTab('login')" class="text-[#7439EA] font-bold hover:underline">Sign In</a>
+              Already have an account? <a href="javascript:void(0)" onclick="App.switchAuthTab('login')" class="text-[#4a1b9a] font-bold hover:underline">Sign In</a>
             </p>
           </form>
         </div>
@@ -2880,7 +2883,7 @@ var App = {
             <span class="text-3xl mb-2 block">🪐</span>
             <p class="text-sm font-semibold text-[#1E1B4B] mb-1">No saved Kundli profiles yet</p>
             <p class="text-xs text-[#64748B] mb-3">Create your personal or family birth charts to get instant astrological insights.</p>
-            <button type="button" class="btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#FAF5FF] border border-[#DDD6FE] text-[#7439EA] font-bold text-xs hover:bg-[#F3E8FF]" onclick="App.closeModal('modal-user-account'); App.openBirthModal();">
+            <button type="button" class="btn-tool-sm inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#faf6fb] border border-[#e3d8f3] text-[#4a1b9a] font-bold text-xs hover:bg-[#F3E8FF]" onclick="App.closeModal('modal-user-account'); App.openBirthModal();">
               <span>+ Add First Kundli Profile</span>
             </button>
           </div>
@@ -2930,7 +2933,7 @@ var App = {
 
             <!-- Active Kundli Card -->
             <div class="user-stat-card kundli-stat-card" onclick="App.closeModal('modal-user-account'); App.openBirthModal();" title="Click to Switch or Update Chart">
-              <div class="stat-icon-wrap bg-[#EDE9FE] text-[#7439EA] shrink-0">🪐</div>
+              <div class="stat-icon-wrap bg-[#f1ebf5] text-[#4a1b9a] shrink-0">🪐</div>
               <div class="stat-info min-w-0 flex-1">
                 <span class="stat-label">Active Janam Kundli</span>
                 <strong class="stat-value-sm" title="${currentChartName}">${currentChartName}</strong>
@@ -3027,6 +3030,7 @@ var App = {
       const res = await API.login({ email, password });
       this.currentUser = res.user;
       this.updateAuthUI();
+      await this.refreshWalletUI();
       this.showToast(`Welcome back, ${res.user.full_name}! ✨`, 'success');
       this.renderUserAccountModal();
       await this.loadSavedProfiles();
@@ -3060,6 +3064,7 @@ var App = {
       });
       this.currentUser = res.user;
       this.updateAuthUI();
+      await this.refreshWalletUI();
       this.showToast(`Account created! Welcome, ${res.user.full_name}! ✨`, 'success');
       this.renderUserAccountModal();
       await this.loadSavedProfiles();
@@ -3075,6 +3080,10 @@ var App = {
   handleLogout() {
     API.logout();
     this.currentUser = null;
+    this.currentWalletBalance = 0;
+    this.walletTransactions = [];
+    this.renderWalletHistory();
+    this.refreshWalletUI();
     this.updateAuthUI();
     this.showToast('You have been logged out.', 'info');
     this.renderUserAccountModal();
@@ -3247,10 +3256,10 @@ var App = {
     try {
       const data = await API.getHoroscope(this.currentHoroscopeSign, this.currentHoroscopeTimeframe);
       const personalizeCta = this.currentChart
-        ? `<div style="background: #F3E8FF; border: 1px solid #D8B4FE; border-radius: 12px; padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;">
+        ? `<div style="background: #F3E8FF; border: 1px solid #dcc8e7; border-radius: 12px; padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem;">
              <div>
-               <strong style="color: #6B21A8;">Personalize with your Birth Chart (${this.currentChart.name})</strong>
-               <p style="font-size: 0.8rem; color: #7E22CE; margin: 0;">Synthesize transit Gochara with your natal Lagna and active Vimshottari Dasha.</p>
+               <strong style="color: #352343;">Personalize with your Birth Chart (${this.currentChart.name})</strong>
+               <p style="font-size: 0.8rem; color: #4a1b9a; margin: 0;">Synthesize transit Gochara with your natal Lagna and active Vimshottari Dasha.</p>
              </div>
              <button type="button" class="btn-hero-primary" style="padding: 0.45rem 1rem; font-size: 0.8rem;" onclick="App.synthesizePersonalizedHoroscope('${this.currentChart.id}')">
                Synthesize Janam Kundli ➔
@@ -3328,7 +3337,7 @@ var App = {
             </div>
             <div class="lucky-item" style="flex: 2; min-width: 200px;">
               <span class="lucky-label">Vedic Remedy (शास्त्रीय उपाय):</span>
-              <strong class="lucky-val" style="color: #7E22CE;">${remedy}</strong>
+              <strong class="lucky-val" style="color: #4a1b9a;">${remedy}</strong>
             </div>
           </div>
 
@@ -3358,24 +3367,24 @@ var App = {
       this.showToast(`Synthesized transit forecast for ${res.name}! ✨`, 'success');
 
       const synthBox = document.createElement('div');
-      synthBox.style.cssText = 'background: #FAF5FF; border: 2px solid #C084FC; border-radius: 14px; padding: 1.25rem; margin-top: 1.5rem;';
+      synthBox.style.cssText = 'background: #faf6fb; border: 2px solid #c9afd7; border-radius: 14px; padding: 1.25rem; margin-top: 1.5rem;';
       synthBox.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <h4 style="margin: 0; color: #581C87; font-size: 1.05rem;">🪐 Chart-Specific Synthesis for ${res.name}</h4>
-          <span class="shortcut-badge" style="background: #E9D5FF; color: #6B21A8; font-size: 0.75rem; font-weight: 700;">
+          <h4 style="margin: 0; color: #1e0b44; font-size: 1.05rem;">🪐 Chart-Specific Synthesis for ${res.name}</h4>
+          <span class="shortcut-badge" style="background: #E9D5FF; color: #352343; font-size: 0.75rem; font-weight: 700;">
             Lagna: ${res.ascendant_sign} • Moon: ${res.moon_sign}
           </span>
         </div>
-        <p style="font-size: 0.88rem; color: #4C1D95; line-height: 1.6; margin-bottom: 1rem;">
+        <p style="font-size: 0.88rem; color: #1e0b44; line-height: 1.6; margin-bottom: 1rem;">
           ${p.personal_synthesis || 'Cosmic transit energies interact directly with your natal Lagna and planetary house placements.'}
         </p>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.82rem;">
           <div style="background: white; border: 1px solid #E9D5FF; border-radius: 8px; padding: 0.65rem;">
-            <strong style="color: #6B21A8;">Lagna House Gochara:</strong>
+            <strong style="color: #352343;">Lagna House Gochara:</strong>
             <p style="margin: 0.2rem 0 0 0; color: #64748B;">${p.lagna_transit || 'Transit enhances confidence, presence, and personal clarity.'}</p>
           </div>
           <div style="background: white; border: 1px solid #E9D5FF; border-radius: 8px; padding: 0.65rem;">
-            <strong style="color: #6B21A8;">Active Vimshottari Alignment:</strong>
+            <strong style="color: #352343;">Active Vimshottari Alignment:</strong>
             <p style="margin: 0.2rem 0 0 0; color: #64748B;">${p.dasha_influence || 'Planetary period supports disciplined action and spiritual alignment.'}</p>
           </div>
         </div>
@@ -3635,9 +3644,9 @@ var App = {
             <div class="result-stat-card"><span class="stat-label">Pythagorean Total</span><strong class="stat-val">${pythDestiny}</strong><span class="stat-sub">Expression / Destiny</span></div>
             <div class="result-stat-card"><span class="stat-label">Soul Urge (आत्मीय इच्छा)</span><strong class="stat-val">${soulUrge}</strong><span class="stat-sub">Personality No.: ${pers}</span></div>
           </div>
-          <div style="background: rgba(109, 40, 217, 0.07); border: 1px solid rgba(109, 40, 217, 0.2); border-radius: 12px; padding: 1.1rem; margin-top: 1rem;">
+          <div style="background: rgba(30, 11, 68, 0.07); border: 1px solid rgba(30, 11, 68, 0.2); border-radius: 12px; padding: 1.1rem; margin-top: 1rem;">
             <strong>✨ नामांक ऊर्जा (Vibration Significance):</strong> ${vibration}
-            ${res.lucky_gemstone ? `<div style="margin-top: 0.5rem; font-size: 0.88rem; color: #581C87;"><strong>भाग्यशाली रत्न:</strong> ${res.lucky_gemstone} &nbsp; | &nbsp; <strong>शुभ रंग:</strong> ${res.lucky_colors || 'Green, Yellow'}</div>` : ''}
+            ${res.lucky_gemstone ? `<div style="margin-top: 0.5rem; font-size: 0.88rem; color: #1e0b44;"><strong>भाग्यशाली रत्न:</strong> ${res.lucky_gemstone} &nbsp; | &nbsp; <strong>शुभ रंग:</strong> ${res.lucky_colors || 'Green, Yellow'}</div>` : ''}
           </div>
         `;
       } else if (calcName === 'mangal-dosha') {
@@ -3719,7 +3728,7 @@ var App = {
           <div class="result-grid-3">
             <div class="result-stat-card"><span class="stat-label">Nakshatra Lord (स्वामी)</span><strong class="stat-val">${lord}</strong><span class="stat-sub">Deity: ${deity}</span></div>
             <div class="result-stat-card"><span class="stat-label">Gana & Nadi (गण/नाड़ी)</span><strong class="stat-val">${gana}</strong><span class="stat-sub">नाड़ी: ${nadi}</span></div>
-            <div class="result-stat-card"><span class="stat-label">Baby Naming Syllable</span><strong class="stat-val" style="color: #7E22CE; font-size: 1.4rem;">"${syllable}"</strong><span class="stat-sub">नाम अक्षर</span></div>
+            <div class="result-stat-card"><span class="stat-label">Baby Naming Syllable</span><strong class="stat-val" style="color: #4a1b9a; font-size: 1.4rem;">"${syllable}"</strong><span class="stat-sub">नाम अक्षर</span></div>
           </div>
           <p style="margin-top: 1rem; line-height: 1.6; color: #334155; background: #F8FAFC; padding: 1rem; border-radius: 10px; border: 1px solid #E2E8F0;">
             <strong>✨ नक्षत्र वैशिष्ट्य:</strong> ${nature}
@@ -3747,7 +3756,7 @@ var App = {
             <div class="result-stat-card"><span class="stat-label">Atmakaraka (AK) - आत्मा का राजा</span><strong class="stat-val">${akPlanet} in ${akSign}</strong><span class="stat-sub">${akDegree}° • Highest Longitude</span></div>
             <div class="result-stat-card"><span class="stat-label">Darakaraka (DK) - जीवनसाथी कारक</span><strong class="stat-val">${dkPlanet} in ${dkSign}</strong><span class="stat-sub">${dkDegree}° • Spouse / Partner</span></div>
           </div>
-          <div style="background: rgba(109, 40, 217, 0.06); border: 1px solid rgba(109, 40, 217, 0.2); border-radius: 12px; padding: 1.1rem; margin-top: 1rem;">
+          <div style="background: rgba(30, 11, 68, 0.06); border: 1px solid rgba(30, 11, 68, 0.2); border-radius: 12px; padding: 1.1rem; margin-top: 1rem;">
             <strong>✨ आध्यात्मिक महत्ता (Jaimini Sutras):</strong>
             <p style="margin: 0.4rem 0 0 0; line-height: 1.6; color: #1E293B;">${summary}</p>
           </div>
@@ -3952,7 +3961,7 @@ var App = {
         resHtml = `
           <div class="result-header">
             <h4>⏳ Vimshottari Mahadasha Timeline (120-Year Cycle)</h4>
-            <span class="result-badge" style="background: #7C3AED; color: white;">Active Dasha: Jupiter (बृहस्पति)</span>
+            <span class="result-badge" style="background: #4a1b9a; color: white;">Active Dasha: Jupiter (बृहस्पति)</span>
           </div>
           <div class="result-grid-3">
             <div class="result-stat-card"><span class="stat-label">वर्तमान महादशा</span><strong class="stat-val">Jupiter (गुरु)</strong><span class="stat-sub">ज्ञान, धर्म व भाग्य वृद्धि</span></div>
@@ -4038,7 +4047,24 @@ var App = {
         const el = document.getElementById(id);
         if (el) el.innerText = amountStr;
       });
+      this.walletTransactions = data.transactions || [];
+      this.walletIsTest = data.is_test_mode !== false && data.payments_available !== false;
+      this.walletPaymentsAvailable = data.payments_available !== false;
+      document.querySelectorAll('#modal-wallet-bookings .btn-preset-recharge').forEach(b => { b.disabled = !this.walletPaymentsAvailable; b.title = this.walletPaymentsAvailable ? '' : 'Online payments are not available right now.'; });
+      document.querySelectorAll('.wallet-note').forEach(n => { n.hidden = !this.walletIsTest; });
+      this.renderWalletHistory();
+      window.dispatchEvent(new CustomEvent('astro:walletchange', {detail: data}));
     } catch (err) {
+      const history = document.getElementById('wallet-transaction-list');
+      if (history) {
+        const hi = window.I18n?.currentLang === 'hi';
+        history.replaceChildren();
+        const message = document.createElement('p'); message.textContent = hi ? 'इतिहास लोड नहीं हुआ।' : 'Could not load history.';
+        const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'shop-btn shop-btn--line'; retry.textContent = hi ? 'दोबारा प्रयास करें' : 'Try again'; retry.onclick = () => this.refreshWalletUI();
+        history.append(message, retry);
+      }
+      const amount = document.getElementById('modal-wallet-amount'); if (amount) amount.textContent = '—';
+      ['wallet-history-summary', 'wallet-history-filters'].forEach(id => { const el = document.getElementById(id); if (el) el.hidden = true; });
       console.warn('Could not refresh wallet UI:', err);
     }
   },
@@ -4051,16 +4077,97 @@ var App = {
     if (navBalance && navBalance.innerText.trim()) {
       return navBalance.innerText.trim();
     }
-    return '₹350.00';
+    return '₹0.00';
+  },
+
+  renderWalletHistory() {
+    const list = document.getElementById('wallet-transaction-list');
+    if (!list) return;
+    ['wallet-history-summary', 'wallet-history-filters'].forEach(id => { const el = document.getElementById(id); if (el) el.hidden = false; });
+    const hi = window.I18n?.currentLang === 'hi';
+    const heading = document.getElementById('wallet-history-title');
+    if (heading) heading.textContent = hi ? 'वॉलेट लेनदेन का इतिहास' : 'Wallet transaction history';
+    list.replaceChildren();
+    const transactions = this.walletTransactions || [];
+    const summary = document.getElementById('wallet-history-summary');
+    if (summary) {
+      summary.replaceChildren();
+      const totals = [
+        [hi ? 'कुल राशि जोड़ी' : 'Total added', transactions.filter(tx => tx.type !== 'refund' && Number(tx.amount) > 0).reduce((sum, tx) => sum + Number(tx.amount), 0), 'wallet-credit'],
+        [hi ? 'कुल राशि कटी' : 'Total deducted', transactions.filter(tx => Number(tx.amount) < 0 || tx.type === 'debit').reduce((sum, tx) => sum + Math.abs(Number(tx.amount)), 0), 'wallet-debit'],
+        [hi ? 'कुल रिफंड' : 'Total refunded', transactions.filter(tx => tx.type === 'refund').reduce((sum, tx) => sum + Math.abs(Number(tx.amount)), 0), 'wallet-credit']
+      ];
+      totals.forEach(([label, total, tone]) => {
+        const card = document.createElement('div');
+        const caption = document.createElement('small'); caption.textContent = label;
+        const amount = document.createElement('strong'); amount.className = tone; amount.textContent = `₹${total.toLocaleString(hi ? 'hi-IN' : 'en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        card.append(caption, amount); summary.append(card);
+      });
+    }
+    const filters = document.getElementById('wallet-history-filters');
+    if (filters) {
+      filters.replaceChildren();
+      [['all', hi ? 'सभी' : 'All'], ['credit', hi ? 'जोड़ी गई राशि' : 'Added'], ['debit', hi ? 'कटी हुई राशि' : 'Deducted'], ['refund', hi ? 'रिफंड' : 'Refunds']].forEach(([key, label]) => {
+        const button = document.createElement('button'); button.type = 'button'; button.className = 'shop-chip'; button.textContent = label;
+        button.setAttribute('aria-pressed', String((this.walletHistoryFilter || 'all') === key));
+        button.classList.toggle('is-active', (this.walletHistoryFilter || 'all') === key);
+        button.onclick = () => { this.walletHistoryFilter = key; this.renderWalletHistory(); };
+        filters.append(button);
+      });
+    }
+    if (!transactions.length) {
+      list.textContent = hi ? 'अभी कोई लेनदेन नहीं है। रिचार्ज और भुगतान यहाँ दिखेंगे।' : 'No transactions yet. Recharges and payments will appear here.';
+      return;
+    }
+    const shown = transactions.filter(tx => !this.walletHistoryFilter || this.walletHistoryFilter === 'all' || (this.walletHistoryFilter === 'debit' ? tx.type === 'debit' || Number(tx.amount) < 0 : this.walletHistoryFilter === 'refund' ? tx.type === 'refund' : Number(tx.amount) > 0 && tx.type !== 'refund'));
+    if (!shown.length) list.textContent = hi ? 'इस श्रेणी में कोई लेनदेन नहीं है।' : 'No transactions in this category.';
+    shown.forEach(tx => {
+      const row = document.createElement('article');
+      row.className = 'wallet-transaction';
+      const detail = document.createElement('div');
+      const title = document.createElement('strong');
+      let description = tx.description || '';
+      if (hi) {
+        description = description
+          .replace(/^Wallet Recharge via (.+)$/, '$1 से वॉलेट रिचार्ज')
+          .replace(/^Astro Mall order \((\d+) item\(s\)\)$/, 'एस्ट्रो मॉल ऑर्डर ($1 सामग्री)')
+          .replace(/^Mandir Seva: /, 'मंदिर सेवा: ')
+          .replace(/^Package: /, 'पैकेज: ')
+          .replace(/^Appointment with (.+) \((\d+)m (CHAT|CALL|VIDEO)\)$/, (_, name, minutes, mode) => `${name} के साथ अपॉइंटमेंट (${minutes} मिनट ${{CHAT: 'लिखित परामर्श', CALL: 'ऑडियो कॉल', VIDEO: 'वीडियो कॉल'}[mode]})`)
+          .replace(/^Refund for cancelled booking #/, 'रद्द बुकिंग का रिफंड #');
+      }
+      title.textContent = window.I18n?.text(description) || description || (hi ? 'लेनदेन' : 'Transaction');
+      const meta = document.createElement('small');
+      const date = tx.created_at ? new Date(tx.created_at) : null;
+      meta.textContent = [date && !isNaN(date) ? date.toLocaleString(hi ? 'hi-IN' : 'en-IN') : '', tx.reference_id || tx.id].filter(Boolean).join(' · ');
+      detail.append(title, meta);
+      const amount = document.createElement('span');
+      const debit = tx.type === 'debit' || Number(tx.amount) < 0;
+      amount.className = debit ? 'wallet-debit' : 'wallet-credit';
+      amount.textContent = `${debit ? '−' : '+'}₹${Math.abs(Number(tx.amount)).toFixed(2)}`;
+      row.append(detail, amount);
+      list.append(row);
+    });
   },
 
   async rechargeWallet(amount) {
+    if (!localStorage.getItem('astro_access_token')) {
+      this.openAuthModal('login');
+      return;
+    }
+    if (this.walletRechargePending) return;
+    this.walletRechargePending = true;
+    const buttons = [...document.querySelectorAll('#modal-wallet-bookings .btn-preset-recharge')];
+    buttons.forEach(button => { button.disabled = true; });
     try {
       const res = await API.rechargeWallet(amount, 'UPI');
       this.showToast(`Recharge successful! +₹${amount} added to your wallet 👛`, 'success');
       await this.refreshWalletUI();
     } catch (err) {
       this.showToast(`Recharge failed: ${err.message}`, 'error');
+    } finally {
+      this.walletRechargePending = false;
+      buttons.forEach(button => { button.disabled = false; });
     }
   },
 
@@ -4069,11 +4176,9 @@ var App = {
     if (!select) return;
 
     const humans = (this.astrologersList || []).filter(a => a.is_ai === false || a.type === 'human');
-    select.innerHTML = '<option value="">-- Choose Verified Astrologer --</option>' + humans.map(a => `
-      <option value="${a.id}" data-rate="${a.price_per_minute || 20}">
-        ${a.name} (${a.title || 'Vedic Scholar'}) - ₹${a.price_per_minute || 20}/min
-      </option>
-    `).join('');
+    select.replaceChildren();
+    const placeholder = document.createElement('option'); placeholder.value = ''; placeholder.textContent = window.I18n?.currentLang === 'hi' ? 'ज्योतिषी चुनें' : 'Choose an astrologer'; select.append(placeholder);
+    humans.forEach(a => { const option = document.createElement('option'); option.value = a.id; option.dataset.rate = a.price_per_minute ?? 0; option.textContent = `${a.name} · ₹${a.price_per_minute ?? 0}/min`; select.append(option); });
 
     const dateInput = document.getElementById('booking-date-input');
     if (dateInput && !dateInput.value) {
@@ -4081,6 +4186,8 @@ var App = {
       tomorrow.setDate(tomorrow.getDate() + 1);
       dateInput.value = tomorrow.toISOString().split('T')[0];
     }
+    if (dateInput && !dateInput.dataset.slotsBound) { dateInput.dataset.slotsBound = '1'; dateInput.addEventListener('change', () => this.refreshBookingSlots()); }
+    if (dateInput) { const now = new Date(); dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`; }
     this.updateBookingFeePreview();
   },
 
@@ -4091,15 +4198,86 @@ var App = {
     if (!feeEl) return;
 
     const opt = select?.selectedOptions?.[0];
-    const rate = opt ? parseFloat(opt.getAttribute('data-rate') || 20) : 20;
+    const rate = opt ? parseFloat(opt.getAttribute('data-rate') || 0) : 0;
     const dur = durationSelect ? parseInt(durationSelect.value || 30) : 30;
     const total = rate * dur;
     feeEl.innerText = `₹${total}`;
+    this.renderBookingWalletNote(total);
+    this.refreshBookingSlots();
+  },
+
+  /** Real wallet balance vs the fee: low-balance warning with a recharge shortcut. */
+  renderBookingWalletNote(total) {
+    const note = document.getElementById('booking-wallet-note');
+    const exp = this._exp;
+    if (!note || !exp) return;
+    const { x, fmt } = exp;
+    const rule = document.getElementById('booking-cancel-rule');
+    if (rule) rule.textContent = x('cancelRule');
+    const balance = Number(this.currentWalletBalance) || 0;
+    const short = Math.ceil(total - balance);
+    const button = document.getElementById('btn-submit-appointment');
+    if (!(total > 0)) { note.className = 'exp-booking-note'; note.textContent = ''; if (button) button.disabled = !!this.bookingSubmitting; return; }
+    if (short > 0) {
+      note.className = 'exp-booking-note exp-booking-note--warn';
+      note.replaceChildren();
+      const text = document.createElement('span'); text.textContent = fmt(x('shortBalance'), { b: Math.floor(balance), n: short });
+      const add = document.createElement('button'); add.type = 'button'; add.className = 'shop-btn shop-btn--gold'; add.textContent = x('topUp');
+      add.onclick = () => this.openWalletModal();
+      note.append(text, add);
+    } else {
+      note.className = 'exp-booking-note exp-booking-note--ok';
+      note.textContent = fmt(x('enoughBalance'), { b: Math.floor(balance) });
+    }
+    if (button) button.disabled = !!this.bookingSubmitting || short > 0;
+  },
+
+  /** Disables time slots that already passed or that overlap another appointment this astrologer has. */
+  async refreshBookingSlots() {
+    const slotSelect = document.getElementById('booking-slot-select');
+    const astrologerId = document.getElementById('booking-astrologer-select')?.value;
+    const date = document.getElementById('booking-date-input')?.value;
+    const exp = this._exp;
+    if (!slotSelect || !exp) return;
+    const duration = parseInt(document.getElementById('booking-duration-select')?.value || 30);
+    let busy = [];
+    if (astrologerId) {
+      const cache = this._busyCache || (this._busyCache = {});
+      if (!cache[astrologerId] || Date.now() - cache[astrologerId].at > 15000) {
+        try { cache[astrologerId] = { at: Date.now(), busy: await API.getBusySlots(astrologerId) }; } catch (e) { cache[astrologerId] = { at: Date.now(), busy: [] }; }
+      }
+      busy = cache[astrologerId].busy.map(b => [new Date(b.start).getTime(), new Date(b.end).getTime()]);
+    }
+    let firstFree = null;
+    [...slotSelect.options].forEach(option => {
+      const m = option.value.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      option.dataset.label = option.dataset.label || option.textContent;
+      option.textContent = option.dataset.label;
+      let reason = '';
+      if (m && date) {
+        const hour = Number(m[1]) % 12 + (m[3].toUpperCase() === 'PM' ? 12 : 0);
+        const start = new Date(`${date}T${String(hour).padStart(2, '0')}:${m[2]}:00+05:30`).getTime();
+        const end = start + duration * 60000;
+        if (start <= Date.now()) reason = exp.x('slotPast');
+        else if (busy.some(([s, e]) => start < e && s < end)) reason = exp.x('slotTaken');
+      }
+      option.disabled = !!reason;
+      if (reason) option.textContent = `${option.dataset.label} (${reason})`;
+      else if (!firstFree) firstFree = option;
+    });
+    if (slotSelect.selectedOptions[0]?.disabled && firstFree) slotSelect.value = firstFree.value;
+    const note = document.getElementById('booking-slot-note');
+    if (note) { note.hidden = !!firstFree; note.textContent = firstFree ? '' : exp.x('noSlots'); }
+    const button = document.getElementById('btn-submit-appointment');
+    if (button && !firstFree) button.disabled = true;
   },
 
   async handleBookingSubmit(event) {
     if (event) event.preventDefault();
-    const btn = document.getElementById('btn-submit-booking');
+    if (!this.currentUser) { this.openAuthModal('login'); return; }
+    if (this.bookingSubmitting) return;
+    this.bookingSubmitting = true;
+    const btn = document.getElementById('btn-submit-appointment');
     if (btn) btn.disabled = true;
 
     try {
@@ -4116,23 +4294,32 @@ var App = {
         return;
       }
 
+      const match = String(slot || '').match(/^(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!scheduledDate || !match) throw new Error(window.I18n?.currentLang === 'hi' ? 'तारीख और समय चुनें।' : 'Choose a date and time.');
+      const hour = Number(match[1]) % 12 + (match[3].toUpperCase() === 'PM' ? 12 : 0);
+      const scheduledAt = `${scheduledDate}T${String(hour).padStart(2, '0')}:${match[2]}:00+05:30`;
+      if (new Date(scheduledAt) <= new Date()) throw new Error(window.I18n?.currentLang === 'hi' ? 'भविष्य की तारीख और समय चुनें।' : 'Choose a future date and time.');
       const res = await API.createBooking({
         astrologer_id: astrologerId,
-        consultation_type: consultationType,
-        scheduled_date: scheduledDate,
-        time_slot: slot,
+        mode: consultationType,
+        scheduled_at: scheduledAt,
+        user_name: this.currentUser.full_name || this.currentUser.email,
+        user_phone: this.currentUser.phone || null,
         duration_minutes: duration,
         notes
       });
 
+      this._busyCache = {};
       this.showToast(`Appointment confirmed with ${res.astrologer_name}! 🗓️`, 'success');
       await this.refreshWalletUI();
       await this.loadBookingsUI();
+      window.dispatchEvent(new CustomEvent('astro:ordersChanged'));
       document.getElementById('form-book-appointment')?.reset();
       this.populateBookingAstrologers();
     } catch (err) {
       this.showToast(`Booking failed: ${err.message}`, 'error');
     } finally {
+      this.bookingSubmitting = false;
       if (btn) btn.disabled = false;
     }
   },
@@ -4140,57 +4327,35 @@ var App = {
   async loadBookingsUI() {
     const list = document.getElementById('wallet-bookings-list');
     if (!list) return;
-
+    const { x, skeleton, errorState, statusText } = await import('/src/utils/experience.js');
+    const { esc, money } = await import('/src/utils/shop.js');
+    const request = this.bookingsRequest = (this.bookingsRequest || 0) + 1;
+    list.innerHTML = skeleton(2);
     try {
       const bookings = await API.getBookings();
-      if (!bookings || bookings.length === 0) {
-        list.innerHTML = `
-          <div style="text-align: center; padding: 2rem 1rem; color: #64748B; background: #F8FAFC; border-radius: 12px; border: 1px dashed #CBD5E1;">
-            <p style="margin: 0;">No active appointments scheduled. Book a 1-on-1 session above!</p>
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = bookings.map(b => {
-        const isScheduled = b.status === 'scheduled';
-        return `
-          <div style="background: white; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
-            <div>
-              <div style="font-weight: 700; color: #1E293B; font-size: 0.95rem;">
-                ${b.astrologer_name} <span class="shortcut-badge" style="background: ${isScheduled ? '#DCFCE7' : '#F1F5F9'}; color: ${isScheduled ? '#166534' : '#64748B'}; font-size: 0.72rem;">${b.status.toUpperCase()}</span>
-              </div>
-              <div style="font-size: 0.8rem; color: #64748B; margin-top: 0.2rem;">
-                📅 ${b.scheduled_date} • ⏰ ${b.time_slot} • ⏱️ ${b.duration_minutes} Mins • 🏷️ ${b.consultation_type.toUpperCase()}
-              </div>
-              <div style="font-size: 0.8rem; color: #7E22CE; font-weight: 600; margin-top: 0.2rem;">
-                Fee: ₹${b.total_fee}
-              </div>
-            </div>
-            ${isScheduled ? `
-              <button type="button" class="btn-tool" onclick="App.cancelBooking('${b.id}')" style="background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; padding: 0.4rem 0.85rem; font-size: 0.78rem;">
-                Cancel & Refund
-              </button>
-            ` : ''}
-          </div>
-        `;
-      }).join('');
+      if (request !== this.bookingsRequest) return;
+      if (!bookings?.length) { list.innerHTML = '<div class="exp-empty"><h3>' + esc(x('empty')) + '</h3><p>' + esc(x('appointmentsIntro')) + '</p></div>'; return; }
+      list.innerHTML = bookings.map(b => '<article class="appointment-record"><div><h4>' + esc(b.astrologer_name) + '</h4><span class="shop-pill">' + esc(statusText(b.status)) + '</span><p>' + esc(new Date(b.scheduled_at).toLocaleString(window.I18n?.currentLang === 'hi' ? 'hi-IN' : 'en-IN')) + '</p><small>' + esc(b.duration_minutes) + ' min &middot; ' + esc(x('mode' + b.mode)) + '</small></div><div><strong>' + money(b.total_amount) + '</strong>' + (b.can_cancel ? '<button type="button" class="shop-btn shop-btn--line" data-cancel-appointment="' + esc(b.id) + '">' + esc(x('cancelAppointment')) + '</button>' : '') + '</div></article>').join('');
+      list.querySelectorAll('[data-cancel-appointment]').forEach(button => button.onclick = () => this.cancelBooking(button.dataset.cancelAppointment));
     } catch (err) {
-      console.warn('Could not load bookings:', err);
+      if (request !== this.bookingsRequest) return;
+      list.innerHTML = errorState(); list.querySelector('[data-exp-retry]').onclick = () => this.loadBookingsUI();
     }
   },
 
   async cancelBooking(bookingId) {
-    if (!confirm('Are you sure you want to cancel this appointment? The fee will be refunded to your wallet balance.')) return;
+    if (!confirm(window.I18n?.currentLang === 'hi' ? 'क्या आप यह अपॉइंटमेंट रद्द करना चाहते हैं? शुल्क आपके वॉलेट में लौटा दिया जाएगा।' : 'Are you sure you want to cancel this appointment? The fee will be refunded to your wallet balance.')) return;
 
     try {
       const res = await API.cancelBooking(bookingId);
       this.showToast(res.message || 'Appointment cancelled and fee refunded to wallet! 💰', 'success');
+      this._busyCache = {};
       await this.refreshWalletUI();
       await this.loadBookingsUI();
     } catch (err) {
       this.showToast(`Cancellation failed: ${err.message}`, 'error');
     }
+    window.dispatchEvent(new CustomEvent('astro:ordersChanged'));
   },
 
   // =========================================================================
@@ -4227,9 +4392,9 @@ var App = {
       <div class="glossary-term-card">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem;">
           <h4 style="margin: 0; color: #1E1B4B; font-size: 1rem;">${t.term}</h4>
-          <span class="shortcut-badge" style="background: #EDE9FE; color: #6D28D9; font-size: 0.7rem;">${t.category}</span>
+          <span class="shortcut-badge" style="background: #f1ebf5; color: #1e0b44; font-size: 0.7rem;">${t.category}</span>
         </div>
-        <div style="font-size: 0.8rem; font-weight: 600; color: #7E22CE; margin-bottom: 0.4rem;">
+        <div style="font-size: 0.8rem; font-weight: 600; color: #4a1b9a; margin-bottom: 0.4rem;">
           ${t.meaning}
         </div>
         <p style="font-size: 0.82rem; color: #475569; margin: 0; line-height: 1.5;">

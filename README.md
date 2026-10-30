@@ -1,5 +1,9 @@
 # AstroAI Agent
 
+Mandir Sewa now supports event-based chadhava: see [Chadhava booking, payments and temple-team setup](docs/CHADHAVA_FLOW.md).
+
+Advanced tools: see [Advanced Workspace setup and capabilities](docs/ADVANCED_WORKSPACE.md) for the timeline, family vault, consent-based memory, evidence, muhurat shortlist, birth-time explorer, voice transcript, reminders, staff workbench and AI quality dashboard.
+
 > **Production-Ready AI Astrology Agent & Kundali Consultation Platform**  
 > Powered by NASA JPL Swiss Ephemeris (`pyswisseph`), FastAPI, Google GenAI SDK, and Classical Vedic RAG.
 
@@ -221,6 +225,32 @@ AstroAI/
 ```
 
 ---
+
+## 🐄 Gau Sewa Donations
+
+One-time donations to a gaushala at `/gau-sewa`, paid through Razorpay and kept separate from the wallet (a donation never credits wallet balance).
+
+**Database:** new tables `gaushalas`, `gau_seva_updates`, `donations`, `payment_webhook_events`. They are created automatically by `init_db()` on startup (`create_all`); no manual migration or column changes are needed.
+
+**Environment variables** (backend only; never commit values):
+
+| Variable | Purpose |
+| --- | --- |
+| `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | Same keys the wallet uses. Without them donations stay closed. |
+| `RAZORPAY_WEBHOOK_SECRET` | Signing secret for the donation webhook. Without it the webhook endpoint returns 503. |
+| `SITE_URL` | Public site origin, used for the receipt link in emails. |
+| `SMTP_HOST`, `SMTP_FROM` (+ `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`) | Optional. The receipt is emailed only when `SMTP_HOST` and `SMTP_FROM` are set and the donor gave an email; otherwise the receipt is still downloadable. |
+
+**Razorpay webhook setup:** in the Razorpay dashboard add a webhook to `https://<your-domain>/api/v1/gau-sewa/webhook`, set the same secret as `RAZORPAY_WEBHOOK_SECRET`, and enable `payment.captured`, `payment.failed`, `order.paid`, `refund.processed` (and `refund.created`). Deliveries are idempotent (event id + guarded status change).
+
+**Before real donations can be taken:**
+1. Set the Razorpay keys (and the webhook secret) in the server environment.
+2. Sign in as an admin, open **Admin > Gau Sewa**, add the real gaushala (name, location, introduction, photos), fill in the **beneficiary name** and the note on how funds reach the gaushala, and switch **Donations on**. Collection stays closed until this is done.
+3. Publish seva updates only from real, verified information. No sample gaushala, numbers or updates are shipped.
+
+**Behaviour:** amounts are whole rupees (₹11 to ₹1,00,000) converted to integer paise on the server. A donation becomes `SUCCESS` only after the server verifies the signature and Razorpay reports the payment as `captured` for the stored order, amount and currency. States: `PENDING`, `SUCCESS`, `FAILED`, `REFUNDED`. There is no admin action that marks a payment paid. Receipts are for guests and users via an unguessable token link; signed-in users also see **My Donations** in their account. Receipts state they are not tax exemption certificates. Public APIs never return donor details.
+
+**Tests:** `python -m pytest website/backend/tests/test_gau_sewa.py`.
 
 ## 📜 Ethical & Astrological Notice
 

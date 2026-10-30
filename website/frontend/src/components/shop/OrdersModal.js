@@ -1,6 +1,7 @@
 // "My orders": status, tracking timeline, cancel, return request and reviews.
 import { esc, money, toast, api, postJson, openModal, closeModal, ensureOverlay, mediaUrl, t, applyI18n, requireLogin, goTo, fmtDateTime } from '../../utils/shop.js';
 import { currentLang } from '../../utils/shop-i18n.js';
+import { skeleton, errorState } from '../../utils/experience.js';
 
 const TONES = { PLACED: 'warn', PAID: 'ok', ENERGIZING: 'warn', DISPATCHED: 'ok', DELIVERED: 'ok', CANCELLED: 'off', RETURN_REQUESTED: 'warn' };
 
@@ -78,9 +79,9 @@ export const OrdersModal = {
     if (!requireLogin('auth.neededOrders')) return;
     const list = this.$('orders-list');
     openModal(this.$('orders-modal'));
-    list.innerHTML = `<div class="shop-loading"><div class="shop-spinner"></div><p>${esc(t('or.loading'))}</p></div>`;
+    list.innerHTML = skeleton(2);
     try { this.orders = (await api(`/api/v1/marketplace/my-orders?lang=${currentLang()}`)).orders || []; }
-    catch (err) { list.innerHTML = `<div class="shop-empty"><b>${esc(t('or.loadFail'))}</b>${esc(err.message)}</div>`; return; }
+    catch (err) { list.innerHTML = errorState(); list.querySelector('[data-exp-retry]').onclick = () => this.open(); return; }
     if (!this.orders.length) { list.innerHTML = `<div class="shop-empty"><b>${esc(t('or.none.title'))}</b>${esc(t('or.none.sub'))}</div>`; return; }
     list.innerHTML = this.orders.map(o => `
       <div class="shop-record">

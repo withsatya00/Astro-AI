@@ -160,7 +160,7 @@
       <!-- Interactive Real-Time Kundli Drawer Panel (Recommended Feature) -->
       <div class="consultation-kundli-panel" id="consultation-kundli-panel" style="display: none;">
         <div class="kundli-panel-card max-w-xl mx-auto bg-white rounded-2xl shadow-xl border border-[#E7E2D8] p-4 sm:p-5 relative my-2">
-          <button type="button" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-[#F5F3FF] hover:bg-[#EDE9FE] text-[#7439EA] font-bold flex items-center justify-center cursor-pointer transition-all" onclick="ChatController.toggleKundliSheet()" title="Close Kundli Panel">✕</button>
+          <button type="button" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-[#f4eefb] hover:bg-[#f1ebf5] text-[#4a1b9a] font-bold flex items-center justify-center cursor-pointer transition-all" onclick="ChatController.toggleKundliSheet()" title="Close Kundli Panel">✕</button>
           <div id="chat-kundli-content">
             <!-- Dynamically rendered by ChatController.renderChatKundli() -->
           </div>
@@ -391,7 +391,7 @@
             <button class="btn-tool" id="btn-download-kundli-png" title="Download Lagna Kundli as PNG image" style="flex: 1; min-width: 70px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #F8FAFC;">
               <span data-i18n="btn_download_png">📥 PNG</span>
             </button>
-            <button class="btn-tool" id="btn-context-kundli-pdf" onclick="ReportsController.generateQuickReport()" title="Download Full Kundali PDF Dossier" style="flex: 1; min-width: 70px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #EEF2FF; color: #4338CA; border-color: #C7D2FE;">
+            <button class="btn-tool" id="btn-context-kundli-pdf" onclick="ReportsController.generateQuickReport()" title="Download Full Kundali PDF Dossier" style="flex: 1; min-width: 70px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #EEF2FF; color: #1e0b44; border-color: #C7D2FE;">
               <span data-i18n="btn_download_pdf">📑 PDF</span>
             </button>
             <button class="btn-tool" id="btn-context-export-consultation" onclick="ReportsController.exportConsultationDocument()" title="Export Certified Consultation Record" style="flex: 1; min-width: 75px; padding: 0.28rem 0.35rem; font-size: 0.72rem; justify-content: center; background: #FEF3C7; color: #92400E; border-color: #FDE68A;">
@@ -564,6 +564,12 @@
             <div class="calling-captions-box" id="call-captions-box">
               <div class="caption-line user-caption" id="call-user-transcript"></div>
               <div class="caption-line pandit-caption" id="call-pandit-transcript" aria-live="polite"></div>
+              <details style="text-align:left;margin-top:8px">
+                <summary>Live transcript</summary>
+                <div id="call-full-transcript" role="log" aria-live="polite" aria-label="Call transcript" translate="no" style="max-height:160px;overflow:auto;white-space:pre-wrap;font-size:13px;line-height:1.6"></div>
+                <button type="button" onclick="CallingAgentService.downloadTranscript()">Download transcript</button>
+                <button type="button" onclick="CallingAgentService.interrupt()">Interrupt and speak</button>
+              </details>
             </div>
 
             <!-- Voice & connection settings -->

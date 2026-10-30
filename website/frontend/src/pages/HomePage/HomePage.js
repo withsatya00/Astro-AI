@@ -12,6 +12,7 @@ import { FeaturedAstrologersComponent } from '../../components/FeaturedAstrologe
 import { FeatureShortcutsComponent } from '../../components/FeatureShortcuts/FeatureShortcuts.js';
 import { DailyHoroscopeComponent } from '../../components/DailyHoroscope/DailyHoroscope.js';
 import { PanchangPreviewComponent } from '../../components/PanchangPreview/PanchangPreview.js';
+import { TrustPanel } from '../../components/TrustPanel.js';
 import { WhyChooseComponent } from '../../components/WhyChoose/WhyChoose.js';
 import { TestimonialsComponent } from '../../components/Testimonials/Testimonials.js';
 import { FAQAccordionComponent } from '../../components/FAQAccordion/FAQAccordion.js';
@@ -43,6 +44,7 @@ export class HomePageComponent {
       TestimonialsComponent.mount('#mount-testimonials'),
       FAQAccordionComponent.mount('#mount-faq')
     ]);
+    TrustPanel.init();
 
     return target;
   }

@@ -1,5 +1,10 @@
 // More strings for sign-in prompts, product page, temple page, checkout offers, packages, rewards, seller dashboard and verification.
 export const EXTRA = [
+  ['ch.heroTitle', 'Bring the temple <em>to your doorstep</em>', 'मंदिर की सेवा <em>अब आपके द्वार</em>'],
+  ['ch.heroSub', 'Book a temple puja or offer chadhava in your name and gotra, and receive the recorded video of your seva.', 'मंदिर में अपने नाम और गोत्र से पूजा बुक करें या चढ़ावा चढ़ाएं, और सेवा का वीडियो पाएं।'],
+  ['ch.videoTrust', 'Recorded offering from your booked event', 'आपके बुक किए कार्यक्रम के चढ़ावे का वीडियो'],
+  ['ch.updatesTitle', 'Booking updates', 'बुकिंग अपडेट'],
+  ['ch.updatesSub', 'Separate payment, seva and refund tracking', 'भुगतान, सेवा और रिफंड की अलग स्थिति'],
   // ---------- sign-in prompts ----------
   ['auth.needed', 'Please sign in to continue.', 'आगे बढ़ने के लिए कृपया साइन इन करें।'],
   ['auth.neededOrder', 'Please sign in to place your order.', 'ऑर्डर करने के लिए कृपया साइन इन करें।'],
@@ -96,6 +101,16 @@ export const EXTRA = [
   ['tp.back', 'Back to Mandir Seva', 'मंदिर सेवा पर लौटें'],
   ['tp.bookSeva', 'Book a seva', 'सेवा बुक करें'],
   ['tp.about', 'About this temple', 'इस तीर्थ के बारे में'],
+  ['tp.facts', 'At a glance', 'एक नज़र में'],
+  ['tp.deity', 'Deity', 'देवता'],
+  ['tp.location', 'Location', 'स्थान'],
+  ['tp.sevaCount', 'Sevas offered', 'उपलब्ध सेवाएँ'],
+  ['tp.priceRange', 'Seva price range', 'सेवा का मूल्य'],
+  ['tp.videoProof', 'Video proof', 'वीडियो प्रमाण'],
+  ['tp.prasadDelivery', 'Prasad delivery', 'प्रसाद की डिलीवरी'],
+  ['tp.yes', 'Available', 'उपलब्ध'],
+  ['tp.no', 'Not available', 'उपलब्ध नहीं'],
+  ['tp.significance', 'Significance', 'महत्व'],
   ['tp.live', 'Live darshan', 'लाइव दर्शन'],
   ['tp.noLive', 'A live darshan link has not been added for this temple yet.', 'इस तीर्थ का लाइव दर्शन लिंक अभी जोड़ा नहीं गया है।'],
   ['tp.sevas', 'Sevas you can book', 'बुक की जा सकने वाली सेवाएं'],

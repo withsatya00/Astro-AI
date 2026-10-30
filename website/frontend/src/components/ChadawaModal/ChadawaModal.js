@@ -124,6 +124,10 @@ export class ChadawaModal {
   }
 
   static open(temple) {
+    if (window.ChadhavaExperience) {
+      window.ChadhavaExperience.openForTemple(temple).catch(err => toast(err.message, 'error'));
+      return;
+    }
     this.currentTemple = temple;
     this.isPrasadIncluded = false;
     this.coupon = '';

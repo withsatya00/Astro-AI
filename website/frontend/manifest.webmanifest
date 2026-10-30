@@ -1,0 +1,24 @@
+{
+  "id": "/",
+  "name": "Astro Jyotish",
+  "short_name": "Astro Jyotish",
+  "description": "Vedic astrology consultations, Kundli tools, Mandir Seva and Astro Mall.",
+  "lang": "en-IN",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFDF8",
+  "theme_color": "#1e0b44",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Today's brief", "short_name": "Brief", "url": "/dashboard", "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Kundli Milan", "short_name": "Milan", "url": "/kundali-milan", "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Aaj Ka Panchang", "short_name": "Panchang", "url": "/panchang", "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Gifts & Festival Packs", "short_name": "Gifts", "url": "/gifts", "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}
