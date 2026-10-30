@@ -1,18 +1,18 @@
 /* Premium astrologer card (.ac2). Uses the --exp-* tokens, so dark mode follows the rest of the site. */
 .ac2 { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 22px; background: var(--exp-card, #fff); border: 1px solid var(--exp-line, #e8dfd1);
   box-shadow: var(--exp-shadow, 0 12px 40px -24px #35214140); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; min-width: 0; content-visibility: auto; contain-intrinsic-size: auto 330px; }
-.ac2:hover { transform: translateY(-4px); border-color: var(--exp-gold, #986724); box-shadow: 0 22px 44px -26px #1e0b4488; }
+.ac2:hover { transform: translateY(-4px); border-color: var(--exp-gold, #986724); box-shadow: 0 22px 44px -26px #3e0b1888; }
 .ac2.is-online::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; border-radius: 22px 22px 0 0; background: linear-gradient(90deg, #bca4ca, #e9bc72); }
 .ac2-heart { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--exp-line, #e8dfd1); background: var(--exp-paper, #fffdf8); color: var(--exp-muted, #706879); font-size: 1.05rem; cursor: pointer; display: grid; place-items: center; transition: transform .15s, color .15s, background .15s; z-index: 2; }
 .ac2-heart:hover { transform: scale(1.1); color: #be185d; } .ac2-heart.is-on { color: #be185d; background: #fdf2f8; border-color: #fbcfe8; }
 .ac2-top { display: flex; gap: 14px; align-items: flex-start; padding-right: 42px; }
-.ac2-photo { position: relative; flex: 0 0 auto; width: 76px; height: 76px; padding: 3px; border: 0; border-radius: 50%; cursor: pointer; background: conic-gradient(from 200deg, #e9bc72, #6b3fc4, #e9bc72); }
+.ac2-photo { position: relative; flex: 0 0 auto; width: 76px; height: 76px; padding: 3px; border: 0; border-radius: 50%; cursor: pointer; background: conic-gradient(from 200deg, #e9bc72, #862b3e, #e9bc72); }
 .ac2-photo img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid var(--exp-card, #fff); background: var(--exp-soft, #f6f0e5); display: block; }
 .ac2-dot { position: absolute; right: 2px; bottom: 2px; width: 15px; height: 15px; border-radius: 50%; border: 2.5px solid var(--exp-card, #fff); background: #94a3b8; }
 .ac2-dot--online { background: #bca4ca; } .ac2-dot--busy { background: #f59e0b; }
 .ac2-id { min-width: 0; flex: 1; }
 .ac2-name { margin: 0; display: flex; align-items: center; gap: 6px; font-size: 1.02rem; line-height: 1.25; font-weight: 800; color: var(--exp-ink, #292039); cursor: pointer; font-family: var(--font-serif, Georgia, serif); }
-.ac2-verified { flex: 0 0 auto; width: 17px; height: 17px; border-radius: 50%; background: #4a1b9a; color: #fff; display: grid; place-items: center; } .ac2-verified .ac2-ic { width: 10px; height: 10px; }
+.ac2-verified { flex: 0 0 auto; width: 17px; height: 17px; border-radius: 50%; background: #650f23; color: #fff; display: grid; place-items: center; } .ac2-verified .ac2-ic { width: 10px; height: 10px; }
 .ac2-title { margin: 3px 0 6px; font-size: .78rem; line-height: 1.4; color: var(--exp-muted, #706879); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .ac2-rating { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; font-size: .8rem; color: var(--exp-ink, #292039); }
 .ac2-star { color: #f59e0b; display: inline-flex; } .ac2-star .ac2-ic { width: 14px; height: 14px; }
@@ -20,17 +20,17 @@
 .ac2-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--exp-muted, #706879); opacity: .6; }
 .ac2-badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .ac2-badge { padding: 3px 10px; border-radius: 999px; font-size: .66rem; font-weight: 800; letter-spacing: .02em; border: 1px solid transparent; }
-.ac2-badge--human { background: #f4eefb; color: #1e0b44; border-color: #e8ddef; } .ac2-badge--ai { background: #f4eefb; color: #1e0b44; border-color: #e3d8f3; }
-.ac2-badge--gold { background: #fef3c7; color: #92400e; border-color: #fde68a; } .ac2-badge--violet { background: #f1ebf5; color: #1e0b44; border-color: #d8c6e3; } .ac2-badge--green { background: #f4eefb; color: #1e0b44; border-color: #e9bc72; }
-html[data-theme="dark"] .ac2-badge--human { background: #1e0b4455; color: #d8c6e3; border-color: #1e0b44; } html[data-theme="dark"] .ac2-badge--ai { background: #1e0b4455; color: #d8c6e3; border-color: #1e0b44; }
-html[data-theme="dark"] .ac2-badge--gold { background: #78350f55; color: #fcd34d; border-color: #92400e; } html[data-theme="dark"] .ac2-badge--violet { background: #1e0b4466; color: #e3d8f3; border-color: #1e0b44; } html[data-theme="dark"] .ac2-badge--green { background: #1e0b4455; color: #e9bc72; border-color: #1e0b44; }
+.ac2-badge--human { background: #faeef0; color: #3e0b18; border-color: #e8ddef; } .ac2-badge--ai { background: #faeef0; color: #3e0b18; border-color: #edd9dc; }
+.ac2-badge--gold { background: #fef3c7; color: #92400e; border-color: #fde68a; } .ac2-badge--violet { background: #f1ebf5; color: #3e0b18; border-color: #d8c6e3; } .ac2-badge--green { background: #faeef0; color: #3e0b18; border-color: #e9bc72; }
+html[data-theme="dark"] .ac2-badge--human { background: #3e0b1855; color: #d8c6e3; border-color: #3e0b18; } html[data-theme="dark"] .ac2-badge--ai { background: #3e0b1855; color: #d8c6e3; border-color: #3e0b18; }
+html[data-theme="dark"] .ac2-badge--gold { background: #78350f55; color: #fcd34d; border-color: #92400e; } html[data-theme="dark"] .ac2-badge--violet { background: #3e0b1866; color: #edd9dc; border-color: #3e0b18; } html[data-theme="dark"] .ac2-badge--green { background: #3e0b1855; color: #e9bc72; border-color: #3e0b18; }
 .ac2-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .ac2-chip { padding: 4px 11px; border-radius: 999px; font-size: .72rem; font-weight: 600; background: var(--exp-soft, #f6f0e5); color: var(--exp-ink, #292039); border: 1px solid var(--exp-line, #e8dfd1); }
 .ac2-chip--more { color: var(--exp-muted, #706879); }
 .ac2-facts { margin: 0; font-size: .76rem; color: var(--exp-muted, #706879); }
 .ac2-status { margin: 0; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; font-size: .76rem; font-weight: 700; }
 .ac2-status i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-.ac2-status--online { color: #1e0b44; } .ac2-status--online i { animation: ac2-pulse 2s infinite; } .ac2-status--busy { color: #b45309; } .ac2-status--offline { color: var(--exp-muted, #706879); }
+.ac2-status--online { color: #3e0b18; } .ac2-status--online i { animation: ac2-pulse 2s infinite; } .ac2-status--busy { color: #b45309; } .ac2-status--offline { color: var(--exp-muted, #706879); }
 html[data-theme="dark"] .ac2-status--online { color: #dcc6e8; } html[data-theme="dark"] .ac2-status--busy { color: #fbbf24; }
 .ac2-status em { font-style: normal; font-weight: 700; color: var(--exp-gold, #986724); margin-left: auto; font-size: .72rem; }
 @keyframes ac2-pulse { 70% { box-shadow: 0 0 0 6px #bca4ca00; } 0% { box-shadow: 0 0 0 0 #bca4ca88; } }
@@ -39,10 +39,10 @@ html[data-theme="dark"] .ac2-status--online { color: #dcc6e8; } html[data-theme=
 .ac2-actions { display: flex; gap: 8px; align-items: center; }
 .ac2-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 42px; border-radius: 13px; border: 1px solid var(--exp-line, #e8dfd1); background: var(--exp-paper, #fffdf8); color: var(--exp-ink, #292039); font: inherit; font-weight: 800; font-size: .84rem; cursor: pointer; transition: transform .15s, background .15s, border-color .15s; }
 .ac2-btn:hover { transform: translateY(-2px); border-color: var(--exp-gold, #986724); }
-.ac2-btn--chat { padding: 0 20px; border: 0; color: #fff; background: var(--brand-action); box-shadow: 0 8px 18px -10px #1e0b44; } .ac2-btn--chat:hover { background: var(--brand-hover); }
+.ac2-btn--chat { padding: 0 20px; border: 0; color: #fff; background: var(--brand-action); box-shadow: 0 8px 18px -10px #3e0b18; } .ac2-btn--chat:hover { background: var(--brand-hover); }
 .ac2-btn--icon { width: 42px; padding: 0; }
 .ac2-ic { width: 17px; height: 17px; flex: 0 0 auto; }
-.ac2 button:focus-visible { outline: 3px solid #6b3fc4; outline-offset: 2px; }
+.ac2 button:focus-visible { outline: 3px solid #862b3e; outline-offset: 2px; }
 @media (max-width: 420px) { .ac2 { padding: 16px; } .ac2-btn--chat { padding: 0 14px; } .ac2-btn--icon { width: 40px; } }
 @media (prefers-reduced-motion: reduce) { .ac2, .ac2-btn, .ac2-heart { transition: none; } .ac2-status--online i { animation: none; } }
 

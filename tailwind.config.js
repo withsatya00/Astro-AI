@@ -8,34 +8,34 @@ module.exports = {
     extend: {
       colors: {
         'astro-navy': {
-          DEFAULT: '#1E1B4B',
-          dark: '#141236',
-          light: '#2E2870'
+          DEFAULT: '#34251F',
+          dark: '#3E0B18',
+          light: '#59463E'
         },
         'astro-purple': {
-          DEFAULT: '#4A1B9A',
-          dark: '#3B1580',
-          light: '#F5F3FF',
-          subtle: '#DDD6FE'
+          DEFAULT: '#650F23',
+          dark: '#4E0B1B',
+          light: '#FAEEF0',
+          subtle: '#EDD9DC'
         },
         'astro-gold': {
-          DEFAULT: '#F59E0B',
-          dark: '#B45309',
-          light: '#FFFBEB',
-          border: '#FCD34D'
+          DEFAULT: '#D5AA51',
+          dark: '#87601F',
+          light: '#FFF9EF',
+          border: '#E8D7BA'
         },
-        'astro-surface': '#FAF8F2',
-        'astro-cream': '#FFFDF7',
-        'astro-border': '#E7E2D8',
+        'astro-surface': '#FFFAF2',
+        'astro-cream': '#FFF9EF',
+        'astro-border': '#E8D7BA',
         'astro-border-subtle': '#F1ECE1',
         'astro-text': {
-          DEFAULT: '#211D50',
+          DEFAULT: '#34251F',
           muted: '#64748B',
           secondary: '#475569'
         }
       },
       fontFamily: {
-        serif: ['Cinzel', 'Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'Noto Serif Devanagari', 'Georgia', 'serif'],
         sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
         devanagari: ['Noto Sans Devanagari', 'sans-serif']
       },

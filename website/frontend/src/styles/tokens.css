@@ -1,6 +1,6 @@
 /**
  * Astro Jyotish Design System Tokens
- * Palette: Logo Violet (deep #1e0b44, primary #4a1b9a), Warm Cream/Ivory, Gold highlights.
+ * Palette: Deep Maroon (deep #3e0b18, primary #650f23), Warm Cream/Ivory, Gold highlights.
  */
 
 :root {
@@ -15,25 +15,25 @@
   --bg-subtle: #F8F5EE;
 
   /* Brand Primary & Accents */
-  --brand-primary: #4a1b9a;
-  --brand-hover: #3b1580;
-  --brand-deep: #1e0b44;
-  --brand-highlight: #6b3fc4;
-  --brand-soft: #f4eefb;
+  --brand-primary: #650f23;
+  --brand-hover: #4e0b1b;
+  --brand-deep: #3e0b18;
+  --brand-highlight: #862b3e;
+  --brand-soft: #faeef0;
   --brand-focus: #8b6bd9;
-  --brand-action: #4a1b9a; /* flat: buttons do not use gradients */
-  --brand-banner: linear-gradient(125deg, #1e0b44 0%, #2d1170 62%, #4a1b9a 100%);
+  --brand-action: #650f23; /* flat: buttons do not use gradients */
+  --brand-banner: linear-gradient(125deg, #3e0b18 0%, #2d1170 62%, #650f23 100%);
   /* Compatibility names keep older components on the shared brand palette. */
   --color-purple-primary: var(--brand-primary);
   --color-purple-hover: var(--brand-hover);
   --color-purple-deep: var(--brand-deep);
-  --color-purple-light: #f4eefb;
-  --color-purple-subtle: #e3d8f3;
+  --color-purple-light: #faeef0;
+  --color-purple-subtle: #edd9dc;
   --color-purple-glow: rgba(74, 27, 154, 0.2);
 
   /* Deep Navy (Typography & Headers) */
-  --color-navy-main: #211D50;
-  --color-navy-deep: #1E1B4B;
+  --color-navy-main: #34251f;
+  --color-navy-deep: #34251f;
   --color-navy-muted: #3B3673;
   --color-navy-light: #4A448C;
 
@@ -46,7 +46,7 @@
   --color-gold-border: #FDE68A;
 
   /* Text & Foreground */
-  --text-primary: #211D50;
+  --text-primary: #34251f;
   --text-secondary: #53627A;
   --text-muted: #5F6F86; /* AA (4.5:1) on white and ivory */
   --text-light: #94A3B8;

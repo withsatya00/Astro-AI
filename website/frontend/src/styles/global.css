@@ -58,5 +58,5 @@ html { accent-color: var(--brand-primary); -webkit-tap-highlight-color: rgba(74,
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-purple-subtle, #e3d8f3);
+  background: var(--color-purple-subtle, #edd9dc);
 }

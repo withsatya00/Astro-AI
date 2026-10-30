@@ -6,6 +6,7 @@ import { skeleton, x } from '../../utils/experience.js';
 import { servicePanel } from '../../components/ServiceInfo.js';
 import { ChadhavaExperience } from '../../components/ChadhavaExperience.js';
 import { loadSevaGalleries, sevaGallery, bindSevaGalleries } from '../../components/SevaGallery.js';
+import { offeringPhoto } from '../../utils/offering-images.js';
 
 export class TemplePageComponent {
   static root = null;
@@ -95,7 +96,8 @@ export class TemplePageComponent {
       <section data-temple-chadhava></section>
       <section class="tp-offers" id="tp-sevas"><h2>${esc(currentLang()==='hi'?'चढ़ावा चुनें':'Choose an offering')}</h2>
         ${d.offerings.map(o => `<article class="tp-offer"><div class="tp-offer__text"><strong>${esc(o.title)}</strong><p>${esc(o.description)}</p>${o.includes_video_proof ? `<small>📹 ${esc(t('tp.video'))}</small>` : ''}<b>${money(o.price)}</b></div>
-          <div class="tp-offer__buy"><img src="${esc(mediaUrl(d.image_url))}" alt="" loading="lazy"><button type="button" class="tp-add" data-book>+ ${esc(currentLang()==='hi'?'जोड़ें':'Add')}</button></div></article>`).join('')}
+          <div class="tp-offer__buy"><img src="${esc(mediaUrl(offeringPhoto(o).src))}" alt="${esc(o.title)}" loading="lazy" width="112" height="96"><button type="button" class="tp-add" data-book>+ ${esc(currentLang()==='hi'?'जोड़ें':'Add')}</button></div></article>`).join('')}
+        <p class="offering-photo-note">${esc(currentLang()==='hi'?'चढ़ावे के चित्र प्रतीकात्मक हैं। सेवा में शामिल सामग्री का विवरण ऊपर देखें।':'Offering photos are illustrative. Refer to each description for the included materials.')}</p>
       </section>
 
       ${reviewsSectionHtml('tp-reviews') ? `<div class="tp-reviews">${reviewsSectionHtml('tp-reviews')}</div>` : ''}

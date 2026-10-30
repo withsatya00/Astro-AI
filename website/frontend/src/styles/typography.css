@@ -5,7 +5,7 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -39,7 +39,7 @@ p {
 }
 
 .text-purple {
-  color: var(--color-purple-primary, #4a1b9a);
+  color: var(--color-purple-primary, #650f23);
 }
 
 .text-muted {

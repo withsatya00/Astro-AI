@@ -31,7 +31,7 @@
 
 .calc-card:hover {
   transform: translateY(-3px);
-  border-color: var(--color-purple-primary, #4a1b9a);
+  border-color: var(--color-purple-primary, #650f23);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(74, 27, 154, 0.12));
 }
 
@@ -50,8 +50,8 @@
 }
 
 .calc-card:hover .calc-icon-wrap {
-  background: var(--color-purple-light, #f4eefb);
-  border-color: var(--color-purple-subtle, #e3d8f3);
+  background: var(--color-purple-light, #faeef0);
+  border-color: var(--color-purple-subtle, #edd9dc);
   transform: scale(1.05);
 }
 
@@ -63,7 +63,7 @@
   font-family: var(--font-serif, serif);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   margin: 0 0 0.25rem;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .calc-card:hover .calc-arrow {
-  color: var(--color-purple-primary, #4a1b9a);
+  color: var(--color-purple-primary, #650f23);
   transform: translateX(4px);
 }
 

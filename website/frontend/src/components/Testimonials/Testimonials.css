@@ -31,7 +31,7 @@
 .testimonial-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(33, 29, 80, 0.08));
-  border-color: var(--color-purple-subtle, #e3d8f3);
+  border-color: var(--color-purple-subtle, #edd9dc);
 }
 
 .testimonial-rating {
@@ -44,7 +44,7 @@
 .testimonial-text {
   font-size: 0.95rem;
   line-height: 1.65;
-  color: var(--text-primary, #211D50);
+  color: var(--text-primary, #34251f);
   font-style: italic;
   margin: 0 0 1.5rem;
 }
@@ -73,7 +73,7 @@
   font-family: var(--font-serif, serif);
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   margin: 0 0 0.15rem;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .problem-tag {
-  color: var(--color-purple-primary, #4a1b9a);
+  color: var(--color-purple-primary, #650f23);
   font-weight: 600;
 }
 

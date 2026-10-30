@@ -1,7 +1,7 @@
 /* Premium features: daily brief, remedies tracker, gifts & festival packs, trust panel, install prompt.
    Built on the --exp-* tokens from experience.css so light and dark themes follow automatically. */
 :root {
-  --pf-plum-1: #231238; --pf-plum-2: #3a1d63; --pf-plum-3: #6b3fc4;
+  --pf-plum-1: #231238; --pf-plum-2: #3a1d63; --pf-plum-3: #862b3e;
   --pf-gold: #e9bc72; --pf-ok: #047857; --pf-warn: #b45309; --pf-bad: #b91c1c;
 }
 html[data-theme="dark"] { --pf-ok: #34d399; --pf-warn: #fbbf24; --pf-bad: #f87171; }
@@ -17,7 +17,7 @@ html[data-theme="dark"] { --pf-ok: #34d399; --pf-warn: #fbbf24; --pf-bad: #f8717
 .pf-chip--ok { color: var(--pf-ok); border-color: color-mix(in srgb, var(--pf-ok) 40%, transparent); }
 .pf-chip--warn { color: var(--pf-warn); border-color: color-mix(in srgb, var(--pf-warn) 40%, transparent); }
 .pf-input, .pf-select, .pf-textarea { width: 100%; padding: 11px 13px; border: 1px solid var(--exp-line); border-radius: 12px; background: var(--exp-paper); color: var(--exp-ink); font: inherit; font-size: .9rem; min-height: 44px; }
-.pf-input:focus, .pf-select:focus, .pf-textarea:focus { outline: 3px solid #6b3fc455; border-color: #6b3fc4; }
+.pf-input:focus, .pf-select:focus, .pf-textarea:focus { outline: 3px solid #862b3e55; border-color: #862b3e; }
 .pf-field { display: grid; gap: 6px; font-size: .78rem; font-weight: 700; color: var(--exp-muted); }
 .pf-field[hidden] { display: none; }
 .pf-skeleton { height: 160px; border-radius: 22px; background: linear-gradient(90deg, var(--exp-soft), var(--exp-card), var(--exp-soft)); background-size: 200% 100%; animation: pf-shimmer 1.4s infinite linear; }

@@ -7,7 +7,7 @@
 .dir-chip:hover { border-color: var(--exp-gold, #986724); }
 .dir-chip.is-active { background: var(--exp-ink, #292039); color: var(--exp-card, #fff); border-color: var(--exp-ink, #292039); }
 .dir-count { flex: 0 0 auto; padding-right: 8px; font-size: .78rem; font-weight: 700; color: var(--exp-muted, #706879); white-space: nowrap; }
-.dir-chip:focus-visible { outline: 3px solid #6b3fc4; outline-offset: 2px; }
+.dir-chip:focus-visible { outline: 3px solid #862b3e; outline-offset: 2px; }
 @media (max-width: 640px) { .dir-count { display: none; } }
 /* position: sticky needs every ancestor to stay overflow-visible vertically. */
 #app-views-container:has(#view-directory.active), #site-layout-outlet:has(#view-directory.active) { overflow-x: clip; overflow-y: visible; }
@@ -31,7 +31,7 @@
 
 .directory-toolbar { padding: 18px; border: 1px solid var(--exp-line, #e8dfd1); border-radius: 20px; background: var(--exp-card, #fff); box-shadow: 0 16px 38px -32px #281a3c; }
 .directory-toolbar .dir-search-box { min-height: 48px; border-color: var(--exp-line, #e8dfd1) !important; background: var(--exp-paper, #fffdf8) !important; box-shadow: none !important; }
-.directory-toolbar .dir-search-box:focus-within { border-color: #4a1b9a !important; box-shadow: 0 0 0 3px #4a1b9a18 !important; }
+.directory-toolbar .dir-search-box:focus-within { border-color: #650f23 !important; box-shadow: 0 0 0 3px #650f2318 !important; }
 .directory-toolbar .dir-filter-select { min-height: 46px; border-color: var(--exp-line, #e8dfd1) !important; background: var(--exp-paper, #fffdf8) !important; color: var(--exp-ink, #292039) !important; }
 .dir-mobile-filter-toggle { display: none; align-items: center; justify-content: center; gap: 7px; min-height: 46px; padding: 0 14px; border: 1px solid var(--exp-line, #e8dfd1); border-radius: 12px; background: var(--exp-paper, #fffdf8); color: var(--exp-ink, #292039); font: inherit; font-size: .78rem; font-weight: 800; cursor: pointer; }
 .btn-clear-filters { min-height: 46px; border-color: var(--exp-line, #e8dfd1) !important; background: transparent; }

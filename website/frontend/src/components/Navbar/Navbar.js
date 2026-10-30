@@ -36,7 +36,7 @@ export class NavbarComponent {
     setTxt('nav-mandir-puja-title', isHi ? 'पूजा' : 'Puja');
     setTxt('nav-mandir-puja-desc', isHi ? 'अपने और परिवार के नाम से मंदिर में पूजा बुक करें' : 'Book a temple puja for you and your family');
     setTxt('nav-mandir-chadhava-title', isHi ? 'चढ़ावा' : 'Chadhava');
-    setTxt('nav-mandir-chadhava-desc', isHi ? 'भारत के किसी भी मंदिर में चढ़ाएं, ₹5 से शुरू' : 'Offer at any temple across India, from \u20b95');
+    setTxt('nav-mandir-chadhava-desc', isHi ? 'मंदिर के कार्यक्रम और उपलब्ध चढ़ावा देखें' : 'Explore temple events and listed offerings');
     setTxt('nav-mobile-puja', isHi ? 'पूजा' : 'Puja');
     setTxt('nav-mobile-chadhava', isHi ? 'चढ़ावा' : 'Chadhava');
     setTxt('nav-text-mall', isHi ? 'एस्ट्रो मॉल' : 'Astro Mall');

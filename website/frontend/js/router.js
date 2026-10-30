@@ -85,6 +85,8 @@ const Router = {
   },
 
   handleRouting() {
+    window.ChadhavaExperience?.closeRouted?.();
+    window.GauSewaPageComponent?.stopPolling?.();
     let pathname = window.location.pathname || '/';
 
     // Fallback for static file serving servers where pathname may end in index.html
@@ -217,6 +219,13 @@ const Router = {
       this.updateNavbarActive('nav-link-mall');
       const id = pathname.replace('/astro-mall/product/', '').replace(/\/+$/, '');
       if (window.ProductPageComponent) setTimeout(() => window.ProductPageComponent.open(id), 30);
+    }
+    else if (/^\/mandir-seva\/(puja|chadhava)\/event\/[\w-]+\/?$/.test(pathname)) {
+      this.switchView('view-mandir');this.updateNavbarActive('nav-link-mandir');
+      const id=pathname.split('/event/')[1].replace(/\/+$/, '');
+      const kind=pathname.split('/')[2],page=window.MandirSevaPageComponent;
+      if(page){page.mode=kind;page.applyMode?.();}
+      window.ChadhavaExperience?.openEvent?.(id);
     }
     else if (/^\/mandir-seva\/puja\/[\w-]+\/?$/.test(pathname)) {
       // A puja detail page: the puja list sits behind it, the detail opens over it and has its own shareable URL.

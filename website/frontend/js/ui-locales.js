@@ -24136,6 +24136,50 @@ window.ASTRO_UI_LOCALES = {
     "India’s holy temples": {
       "en": "India’s holy temples",
       "hi": "भारत के पावन मंदिरों में"
+    },
+    "Secure payments": {
+      "en": "Secure payments",
+      "hi": "सुरक्षित भुगतान"
+    },
+    "Pay through your wallet or the supported payment options.": {
+      "en": "Pay through your wallet or the supported payment options.",
+      "hi": "वॉलेट या उपलब्ध भुगतान विकल्पों से भुगतान करें।"
+    },
+    "Private by design": {
+      "en": "Private by design",
+      "hi": "निजता का ध्यान"
+    },
+    "Your birth details stay yours. Export or delete them anytime.": {
+      "en": "Your birth details stay yours. Export or delete them anytime.",
+      "hi": "आपकी जन्म जानकारी आपके नियंत्रण में है। कभी भी निर्यात करें या हटाएं।"
+    },
+    "Chadhava": {
+      "en": "Chadhava",
+      "hi": "चढ़ावा"
+    },
+    "Explore temple events and listed offerings": {
+      "en": "Explore temple events and listed offerings",
+      "hi": "मंदिर के कार्यक्रम और उपलब्ध चढ़ावा देखें"
+    },
+    "Download transcript": {
+      "en": "Download transcript",
+      "hi": "बातचीत डाउनलोड करें"
+    },
+    "Offer chadhava at": {
+      "en": "Offer chadhava at",
+      "hi": "चढ़ावा अर्पित करें"
+    },
+    "your chosen temple": {
+      "en": "your chosen temple",
+      "hi": "अपने चुने हुए मंदिर में"
+    },
+    "Booking updates": {
+      "en": "Booking updates",
+      "hi": "बुकिंग अपडेट"
+    },
+    "Payment, seva and video tracking": {
+      "en": "Payment, seva and video tracking",
+      "hi": "भुगतान, सेवा और वीडियो की स्थिति"
     }
   }
 };

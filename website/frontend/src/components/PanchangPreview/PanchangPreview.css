@@ -43,7 +43,7 @@
   font-family: var(--font-serif, serif);
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   margin: 0 0 0.25rem;
 }
 
@@ -56,7 +56,7 @@
 .btn-full-panchang {
   background: #FFFFFF;
   border: 1.5px solid var(--border-subtle, #E7E2D8);
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   font-size: 0.85rem;
   font-weight: 700;
   padding: 0.55rem 1.15rem;
@@ -66,9 +66,9 @@
 }
 
 .btn-full-panchang:hover {
-  border-color: var(--color-purple-primary, #4a1b9a);
-  color: var(--color-purple-primary, #4a1b9a);
-  background: var(--color-purple-light, #f4eefb);
+  border-color: var(--color-purple-primary, #650f23);
+  color: var(--color-purple-primary, #650f23);
+  background: var(--color-purple-light, #faeef0);
 }
 
 .panchang-grid {
@@ -96,7 +96,7 @@
 .cell-val {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-primary, #211D50);
+  color: var(--text-primary, #34251f);
 }
 
 .panchang-cell.cell-alert {

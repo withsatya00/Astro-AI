@@ -12,7 +12,7 @@ const offerings=[
 ];
 let loggedIn=true,requests=0;
 const context={document,window,console,Date,crypto:require('node:crypto').webcrypto,
-  sevaGallery:()=>'<div class="seva-gallery"></div>',bindSevaGalleries:()=>{},
+  sevaGallery:()=>'<div class="seva-gallery"></div>',bindSevaGalleries:()=>{},sevaIcon:()=>'<svg></svg>',offeringPhoto:()=>({src:'/assets/img/offerings/basket.webp',illustrative:true}),
   currentLang:()=> 'en',esc:v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),
   money:n=>'INR '+n,mediaUrl:v=>v,requireLogin:()=>loggedIn,
   api:async(url,options)=>{

@@ -1,0 +1,35 @@
+/* Astro Mall body: maroon / cream / gold shop look (filters, cards, trust strip) to match the banner. */
+.shop-page.mall-page .service-banner--mall { margin-bottom:18px; }
+
+.mall-page .shop-toolbar { padding:14px 16px; border:1px solid #ecd9b0; border-radius:16px; background:#fffaf0; }
+.mall-page .shop-chip { padding:7px 15px; border:1.5px solid #650f23; border-radius:999px; background:#fffdf8; color:#650f23; font-size:.72rem; font-weight:700; }
+.mall-page .shop-chip:hover { background:#faeef0; }
+.mall-page .shop-chip.is-active { background:#650f23; color:#fff; }
+.mall-page .shop-input,.mall-page .shop-select { border-color:#ecd9b0; background:#fffdf8; }
+.mall-page .shop-input:focus,.mall-page .shop-select:focus { border-color:#650f23; outline:0; box-shadow:0 0 0 3px #650f2318; }
+
+.shop-page.mall-page .shop-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.shop-page.mall-page .shop-card.ml-card { display:flex; flex-direction:column; padding:0; gap:0; min-height:0; border:1px solid #ecd9b0; border-radius:14px; background:#fffdf8; box-shadow:0 6px 18px -16px #3e0b18; }
+.shop-page.mall-page .shop-card.ml-card:hover { transform:translateY(-3px); border-color:#c9a468; box-shadow:0 18px 32px -18px #650f2366; }
+.shop-page.mall-page .ml-card .shop-card__media { display:block; width:auto; height:auto; aspect-ratio:1; margin:8px 8px 0; border:1px solid #ecd9b0; border-radius:10px; background:#f6efe0; overflow:hidden; }
+.shop-page.mall-page .ml-card .shop-card__media img { border-radius:0; }
+.shop-page.mall-page .ml-card .shop-card__tag { display:inline-block; }
+.shop-page.mall-page .ml-card .shop-card__tag { color:#fff; }
+.shop-page.mall-page .ml-card .shop-card__tag--tl { background:#650f23; }
+.shop-page.mall-page .ml-card .shop-card__tag--bl { background:#3e0b18b3; }
+.shop-page.mall-page .ml-card .shop-card__body { display:flex; flex-direction:column; gap:6px; padding:12px; flex:1; }
+.shop-page.mall-page .ml-card .shop-card__eyebrow { padding:0; color:#8a5a14; font-size:.6rem; letter-spacing:.1em; }
+.shop-page.mall-page .ml-card .shop-card__title { font:600 .92rem/1.35 var(--font-serif,Georgia,serif); color:#3e0b18; min-height:2.6em; }
+.shop-page.mall-page .ml-card .shop-card__text { margin:0; }
+.shop-page.mall-page .ml-card .shop-card__foot { padding:4px 0 0; margin-top:auto; }
+.shop-page.mall-page .ml-card .shop-price { color:#3e0b18; font-weight:800; font-size:1rem; }
+.shop-page.mall-page .ml-card .shop-card__actions { display:block; margin:6px 0 0; }
+.shop-page.mall-page .ml-card .shop-card__actions .shop-btn { width:100%; justify-content:center; min-height:38px; border-radius:8px; border:0; background:#650f23; color:#fff; font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.shop-page.mall-page .ml-card .shop-card__actions .shop-btn:hover { background:#7d1a31; }
+.shop-page.mall-page .ml-card .shop-card__actions .shop-btn:disabled { background:#b9a9ad; }
+@media(max-width:1000px) { .shop-page.mall-page .shop-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:760px) { .shop-page.mall-page .shop-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } }
+@media(max-width:640px) {
+ .shop-page.mall-page .ml-card .shop-card__body { padding:9px; }
+ .shop-page.mall-page .ml-card .shop-card__title { font-size:.8rem; }
+}

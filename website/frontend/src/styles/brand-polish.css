@@ -109,9 +109,9 @@ a[class*="bg-[#78350F]"], a[class*="bg-gradient-to-r"][class*="to-[#1e0b44]"], b
 #pp-buy, #pp-buy-2, #tp-jump, #tp-jump-2 { background: var(--brand-primary) !important; background-image: none !important; color: var(--text-inverted) !important; border-color: var(--brand-primary) !important; }
 #pp-buy:hover:not(:disabled), #pp-buy-2:hover:not(:disabled), #tp-jump:hover, #tp-jump-2:hover { background: var(--brand-hover) !important; border-color: var(--brand-hover) !important; }
 a[class*="bg-[#78350F]"]:hover { background: var(--brand-hover) !important; }
-html[data-theme="dark"] .mandir-today { background: linear-gradient(135deg, #2a1658, #1e0b44) !important; border-color: #3b1580 !important; }
+html[data-theme="dark"] .mandir-today { background: linear-gradient(135deg, #2a1658, #3e0b18) !important; border-color: #4e0b1b !important; }
 html[data-theme="dark"] .mandir-today :is(.mt-today__title, .mt-today__meta, .mt-today__meta strong, .mt-today__lead, .mt-today__label, .mt-today__badge, p, b, small) { color: #efe7fb !important; }
-html[data-theme="dark"] .mandir-today .mt-today__items li { background: #2d1170 !important; color: #efe7fb !important; border-color: #4a1b9a !important; }
+html[data-theme="dark"] .mandir-today .mt-today__items li { background: #2d1170 !important; color: #efe7fb !important; border-color: #650f23 !important; }
 html[data-theme="dark"] .mandir-today .mt-today__title em { color: #cdb6ff; }
 
 /* ---------------------------------------------------------------- responsive: readable text and tappable controls

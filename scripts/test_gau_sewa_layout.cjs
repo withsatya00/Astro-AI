@@ -15,12 +15,12 @@ const assert = require('node:assert/strict');
     await page.route('**/api/v1/gau-sewa/**', route => {
       const path = new URL(route.request().url()).pathname;
       const json = path.endsWith('/config') ? { available, reason: 'payments_not_configured', min_amount: 11, max_amount: 100000, presets: [101, 501, 1100] }
-        : path.endsWith('/gaushalas') ? { gaushalas: [] }
+        : path.endsWith('/gaushalas') ? { gaushalas: available ? [{id:'layout-test-recipient',name:'Test gaushala',beneficiary_name:'Test beneficiary',accepting_donations:true}] : [] }
         : path.endsWith('/updates') ? { updates: [] } : { detail: 'Test checkout unavailable' };
       if (path.endsWith('/donations/order')) orders.push(route.request().postDataJSON());
       return route.fulfill({ status: path.endsWith('/donations/order') ? 503 : 200, json });
     });
-    await page.goto('http://localhost:3000/gau-sewa', { waitUntil: 'networkidle' });
+    await page.goto('http://localhost:3000/gau-sewa', { waitUntil: 'domcontentloaded' });
     await page.locator('#gs-custom').waitFor();
     assert.equal(await page.locator('.gs-hero-art img').evaluate(img => img.complete && img.naturalWidth > 0), true);
 
@@ -44,7 +44,7 @@ const assert = require('node:assert/strict');
     console.log('PASS custom amount is editable while unavailable; checkout stays blocked');
 
     available = true;
-    await page.reload({ waitUntil: 'networkidle' });
+    await page.reload({ waitUntil: 'domcontentloaded' });
     await page.locator('#gs-custom').fill('777');
     await page.locator('[data-gs-purpose="general"]').click();
     assert.equal(await page.locator('#gs-custom').inputValue(), '777');

@@ -21,9 +21,9 @@
 }
 
 .faq-tab-btn:hover:not(.active) {
-  background: #f4eefb;
-  border-color: #e3d8f3;
-  color: #4a1b9a;
+  background: #faeef0;
+  border-color: #edd9dc;
+  color: #650f23;
 }
 
 .faq-accordion-list {
@@ -48,8 +48,8 @@
 }
 
 .faq-item.active {
-  border-color: #4a1b9a;
-  border-left: 4.5px solid #4a1b9a;
+  border-color: #650f23;
+  border-left: 4.5px solid #650f23;
   box-shadow: 0 6px 20px rgba(74, 27, 154, 0.1);
 }
 
@@ -70,7 +70,7 @@
   font-family: 'Cinzel', 'Playfair Display', serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #1E1B4B;
+  color: #34251f;
   line-height: 1.4;
   flex: 1;
 }

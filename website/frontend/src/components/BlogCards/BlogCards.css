@@ -26,13 +26,13 @@
 }
 .blog-card:hover {
   transform: translateY(-2px);
-  border-color: #4a1b9a;
+  border-color: #650f23;
   box-shadow: 0 4px 16px rgba(74, 27, 154, 0.08);
 }
 .blog-category-badge {
-  background: #f4eefb;
-  border: 1px solid #e3d8f3;
-  color: #4a1b9a;
+  background: #faeef0;
+  border: 1px solid #edd9dc;
+  color: #650f23;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 0.2rem 0.65rem;
@@ -44,7 +44,7 @@
   font-family: var(--font-serif, serif);
   font-size: 1.15rem;
   font-weight: 700;
-  color: #211D50;
+  color: #34251f;
   line-height: 1.45;
   margin: 0 0 0.65rem;
 }
@@ -64,7 +64,7 @@
   color: #7E8FA6;
 }
 .blog-read-link {
-  color: #4a1b9a;
+  color: #650f23;
   font-weight: 700;
 }
 @media (max-width: 992px) {

@@ -47,7 +47,7 @@
 .wallet-panel .wallet-transaction small { color: var(--exp-muted); line-height: 1.6; }
 .wallet-panel .modal-header .btn-icon, .appointments-panel .modal-header .btn-icon { color: var(--exp-ink); min-width: 44px; min-height: 44px; }
 .wallet-panel #wallet-history-filters .shop-chip { background: var(--exp-card); color: var(--exp-ink); border-color: var(--exp-line); min-height: 44px; }
-.wallet-panel #wallet-history-filters .shop-chip[aria-pressed="true"] { background: #6b3fc4; color: #fff; border-color: #6b3fc4; }
+.wallet-panel #wallet-history-filters .shop-chip[aria-pressed="true"] { background: #862b3e; color: #fff; border-color: #862b3e; }
 .wallet-panel .modal-header h3, .appointments-panel .modal-header h3 { font: 700 1.4rem var(--font-sans); color: var(--exp-ink); letter-spacing: -.035em; text-transform: none; }
 .wallet-panel .modal-header p, .appointments-panel .modal-header p { font-size: .8rem; color: var(--exp-muted); margin: 8px 0 0; }
 .wallet-panel .modal-body { padding: 24px !important; }
@@ -107,7 +107,7 @@ html[data-theme="dark"] .wallet-credit { color: #7dd3a8; }
 html[data-theme="dark"] .wallet-debit { color: #f6a5a5; }
 
 /* Consistency layer: one keyboard focus ring and one reduced-motion rule for the whole site. Looks are unchanged for mouse and touch users. */
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline: 2px solid #4a1b9a; outline-offset: 2px; }
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline: 2px solid #650f23; outline-offset: 2px; }
 html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline-color: #e9bc72; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }

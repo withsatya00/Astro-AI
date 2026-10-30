@@ -1,11 +1,11 @@
-.admin-page { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; color: #1e1b4b; }
+.admin-page { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; color: #34251f; }
 .admin-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .admin-title { font-family: Georgia, serif; font-size: 1.6rem; font-weight: 800; margin: 0; }
 .admin-sub { margin: 4px 0 0; font-size: .85rem; color: #64748b; }
 .admin-notice { padding: 16px; border-radius: 12px; background: #fef3c7; border: 1px solid #fcd34d; font-size: .9rem; }
 .admin-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .admin-tab { padding: 8px 14px; border-radius: 999px; border: 1px solid #e7e2d8; background: #fff; font-weight: 700; font-size: .8rem; cursor: pointer; color: #334155; }
-.admin-tab.active { background: #4a1b9a; border-color: #4a1b9a; color: #fff; }
+.admin-tab.active { background: #650f23; border-color: #650f23; color: #fff; }
 .admin-count { margin-left: 4px; font-size: .7rem; opacity: .8; }
 .admin-filter { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: .8rem; font-weight: 700; }
 .admin-filter[hidden] { display: none; }
@@ -19,11 +19,11 @@
 .admin-badge.warn { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
 .admin-badge.off { background: #f1f5f9; color: #64748b; }
 .admin-meta { font-size: .78rem; color: #475569; line-height: 1.5; overflow-wrap: anywhere; }
-.admin-meta strong { color: #1e1b4b; }
+.admin-meta strong { color: #34251f; }
 .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding-top: 8px; border-top: 1px solid #e7e2d8; }
-.admin-btn { padding: 8px 14px; border-radius: 10px; border: 0; background: #4a1b9a; color: #fff; font-weight: 800; font-size: .75rem; cursor: pointer; }
+.admin-btn { padding: 8px 14px; border-radius: 10px; border: 0; background: #650f23; color: #fff; font-weight: 800; font-size: .75rem; cursor: pointer; }
 .admin-btn:disabled { opacity: .5; cursor: not-allowed; }
-.admin-btn-ghost { background: #fff; color: #4a1b9a; border: 1px solid #4a1b9a; }
+.admin-btn-ghost { background: #fff; color: #650f23; border: 1px solid #650f23; }
 .admin-btn-danger { background: #dc2626; }
 .admin-empty { padding: 40px 0; text-align: center; color: #64748b; font-size: .85rem; }
 .admin-actions .admin-input { flex: 1 1 160px; }

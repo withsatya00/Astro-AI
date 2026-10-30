@@ -4,22 +4,22 @@
 .gs-page .service-banner {
  position:relative; display:flex; align-items:center; isolation:isolate; overflow:hidden;
  min-height:340px; padding:30px 36px; gap:0; margin-bottom:0;
- border:1px solid #e5d9c7; border-radius:22px; background-color:#1e0b44; background-image:var(--brand-banner);
+ border:1px solid #e5d9c7; border-radius:22px; background-color:#3e0b18; background-image:var(--brand-banner);
  box-shadow:0 16px 38px -30px #281a3c70;
 }
 .service-banner .service-banner__art,
-.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:-2; background:#4a1b9a; }
+.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:-2; background:#650f23; }
 .service-banner .service-banner__art img,
 .service-banner .gs-hero-art img { display:block; width:100%; height:100%; min-height:0; max-height:none; object-fit:cover; object-position:75% 45%; }
 .directory-masthead .service-banner::after,
 .shop-page .service-banner::after,
 .gs-page .service-banner::after {
  content:''; position:absolute; inset:0; width:auto; height:auto; border:0; border-radius:0; z-index:-1; pointer-events:none;
- background:linear-gradient(90deg,#1e0b44 0%,#1e0b44f5 30%,#1e0b44d6 43%,#1e0b4450 65%,#1e0b440d 100%);
+ background:linear-gradient(90deg,#3e0b18 0%,#3e0b18f5 30%,#3e0b18d6 43%,#3e0b1850 65%,#3e0b180d 100%);
 }
 .service-banner::before,.service-banner .gs-hero-art::after { display:none; }
 .service-banner .service-banner__copy { position:relative; z-index:1; width:58%; max-width:680px; padding:0; min-width:0; }
-.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#1e0b4480; font-size:.55rem; line-height:1.5; backdrop-filter:blur(6px); }
+.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#3e0b1880; font-size:.55rem; line-height:1.5; backdrop-filter:blur(6px); }
 .service-banner .gs-illustration { position:relative; width:100%; height:100%; margin:0; }
 .service-banner .directory-eyebrow,
 .service-banner .mandir-hero__eyebrow,
@@ -40,12 +40,12 @@
 .gs-page .service-banner .gs-hero-copy > p { max-width:510px; color:#e6dcea; font-size:.83rem; line-height:1.8; margin:0 0 18px; }
 .service-banner .shop-hero__actions { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
 .service-banner .shop-btn,.gs-page .service-banner .gs-btn { min-height:42px; padding:10px 15px; font-size:.73rem; border-radius:9px; width:auto; }
-.service-banner .shop-btn--gold { color:#1e0b44; background:#f1cf8b; border-color:#f1cf8b; }
+.service-banner .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
 .service-banner .shop-btn--gold:hover { background:#ffe4a9; border-color:#ffe4a9; }
 .service-banner .shop-btn--ghost { color:#f7eedf; background:#ffffff0d; border-color:#ffffff35; }
 .gs-page .service-banner .gs-hero-caption { color:#dacbe3; margin-top:14px; font-size:.6rem; line-height:1.6; }
 .directory-masthead .service-benefits,
-.shop-page .service-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:14px 0 22px; padding:4px 0; border:1px solid var(--exp-line); border-radius:14px; background:var(--exp-card); box-shadow:0 8px 20px -20px #1e0b4470; }
+.shop-page .service-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:14px 0 22px; padding:4px 0; border:1px solid var(--exp-line); border-radius:14px; background:var(--exp-card); box-shadow:0 8px 20px -20px #3e0b1870; }
 .directory-masthead .service-benefits > div,
 .shop-page .service-benefits > div { display:flex; align-items:center; gap:11px; min-width:0; padding:12px 18px; border:0; border-radius:0; background:transparent; backdrop-filter:none; }
 .service-benefits > div + div { border-left:1px solid var(--exp-line) !important; }
@@ -59,11 +59,11 @@
 .gs-content-grid { margin-top:32px; gap:34px; }
 .gs-page h2 { font-size:clamp(1.5rem,2vw,1.8rem); font-weight:600; }
 .gs-section-kicker { font-size:.6rem; letter-spacing:.16em; }
-.gs-purpose { border-radius:15px; padding:24px; box-shadow:0 6px 22px -22px #4a1b9a60; }
-.gs-purpose.is-on { border-color:#b79ac6; background:linear-gradient(115deg,#f7f1fa,#fffdf8); box-shadow:inset 3px 0 var(--brand-primary),0 10px 24px -24px #4a1b9a; }
+.gs-purpose { border-radius:15px; padding:24px; box-shadow:0 6px 22px -22px #650f2360; }
+.gs-purpose.is-on { border-color:#b79ac6; background:linear-gradient(115deg,#f7f1fa,#fffdf8); box-shadow:inset 3px 0 var(--brand-primary),0 10px 24px -24px #650f23; }
 .gs-purpose-number { color:var(--exp-gold); }
 .gs-purpose strong { font-size:1.1rem; }
-.gs-form { border-top:3px solid #c9a468; box-shadow:0 16px 42px -28px #4a1b9a4d; }
+.gs-form { border-top:3px solid #c9a468; box-shadow:0 16px 42px -28px #650f234d; }
 .gs-form-heading { padding-bottom:18px; }
 .gs-page .gs-form-heading h2 { font-size:1.6rem; }
 .gs-donation-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; padding:16px 0; border-top:1px solid var(--gs-line); border-bottom:1px solid var(--gs-line); }
@@ -89,7 +89,7 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .directory-masthead .service-banner,.shop-page .service-banner,.gs-page .service-banner { display:flex; flex-direction:column; align-items:stretch; min-height:0; padding:0; border-radius:17px; }
  .service-banner .service-banner__art,.service-banner .gs-hero-art { position:relative; inset:auto; z-index:-2; order:-1; width:100%; height:155px; flex:none; min-height:0; max-height:none; }
  .service-banner .service-banner__art img,.service-banner .gs-hero-art img { object-position:75% 42%; min-height:0; height:100%; max-height:none; }
- .directory-masthead .service-banner::after,.shop-page .service-banner::after,.gs-page .service-banner::after { display:block; inset:0 0 auto; height:156px; background:linear-gradient(0deg,#1e0b44,transparent 55%); }
+ .directory-masthead .service-banner::after,.shop-page .service-banner::after,.gs-page .service-banner::after { display:block; inset:0 0 auto; height:156px; background:linear-gradient(0deg,#3e0b18,transparent 55%); }
  .service-banner .service-banner__copy { width:100%; max-width:none; padding:10px 20px 22px; }
  .directory-masthead .service-banner h1,.shop-page .service-banner h1,.gs-page .service-banner h1 { font-size:clamp(1.35rem,5.9vw,1.65rem); line-height:1.25; margin-bottom:12px; }
  .service-banner .directory-title-row h1 { font-size:clamp(1.35rem,5.9vw,1.65rem) !important; }
@@ -111,11 +111,53 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .gs-page .gs-section-intro { font-size:.85rem; }
  .gs-journey { padding:22px 18px; }
 }
+/* Dashboard, Gifts and Profile heroes use the same maroon / gold / serif look as the service banners. */
+.exp-dashboard-hero,.pf-hero,.pv-hero {
+ border:1px solid #e5d9c7; border-radius:22px; color:#f7eedf; background:#3e0b18; background-image:linear-gradient(110deg,#3e0b18 0%,#3e0b18f5 45%,#650f2399 100%);
+ box-shadow:0 16px 38px -30px #281a3c70;
+}
+.pv-hero::after { border-color:#efd4a033; box-shadow:0 0 0 32px #efd4a010,0 0 0 64px #efd4a008; }
+.exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { color:#efd4a0; font-size:.62rem; font-weight:700; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
+.exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-family:var(--font-serif); font-size:clamp(1.65rem,2.65vw,2.25rem); font-weight:600; letter-spacing:-.035em; line-height:1.18; color:#fffdf8 !important; }
+.exp-dashboard-hero h1 em,.pf-hero h1 em,.pv-hero h1 em { font-style:normal; color:#efd4a0; -webkit-text-fill-color:#efd4a0; }
+.exp-dashboard-hero p,.pf-hero p,.pv-title { color:#e6dcea; font-size:.83rem; line-height:1.8; }
+.pv-pill { color:#f7eedf; background:#ffffff0d; border-color:#ffffff35; }
+.exp-dashboard-hero .shop-btn--gold,.pf-hero .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
+@media(max-width:640px) {
+ .exp-dashboard-hero,.pf-hero,.pv-hero { border-radius:17px; }
+ .exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-size:clamp(1.35rem,5.9vw,1.65rem); }
+ .exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { font-size:.54rem; letter-spacing:.11em; }
+}
+/* Benefit points sit directly on the banner, under the buttons: no cards, just icon + text with a hairline above. */
+.service-banner:has(> .service-benefits) { flex-direction:column; align-items:stretch; justify-content:space-between; gap:20px; }
+.directory-masthead .service-banner > .service-benefits,
+.shop-page .service-banner > .service-benefits { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; max-width:720px; width:100%; margin:0; padding:16px 0 0; border:0; border-top:1px solid #efd4a040; border-radius:0; background:none; box-shadow:none; backdrop-filter:none; }
+.service-banner > .service-benefits > div { display:flex; align-items:center; gap:11px; min-width:0; margin:0; padding:2px 14px; border:0 !important; border-radius:0; background:none; }
+.service-banner > .service-benefits > div:first-child { padding-left:0; }
+.service-banner > .service-benefits > div + div { border-left:1px solid #efd4a02e !important; }
+.service-banner > .service-benefits > div > span { display:grid; place-items:center; flex:none; width:32px; height:32px; border:1px solid #efd4a066; border-radius:50%; background:#efd4a01f; color:#efd4a0; font-size:.8rem; }
+.service-banner > .service-benefits b { font-size:.75rem; color:#fffdf8; }
+.service-banner > .service-benefits small { text-shadow:0 1px 6px #3e0b18; font-size:.66rem; color:#e6dcea; line-height:1.5; }
+@media(max-width:1000px) and (min-width:641px) {
+ .directory-masthead .service-banner > .service-benefits,
+ .shop-page .service-banner > .service-benefits { max-width:68%; }
+ .service-banner > .service-benefits > div { padding:2px 10px; }
+ .service-banner > .service-benefits > div > span { display:none; }
+}
+@media(max-width:640px) {
+ .service-banner:has(> .service-benefits) { gap:0; }
+ .directory-masthead .service-banner > .service-benefits,
+ .shop-page .service-banner > .service-benefits { width:auto; margin:0 20px 18px; padding-top:12px; grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+ .service-banner > .service-benefits > div { flex-direction:column; align-items:center; text-align:center; gap:5px; padding:2px 4px; }
+ .service-banner > .service-benefits > div:first-child { padding-left:4px; }
+ .service-banner > .service-benefits small { display:none; }
+ .service-banner > .service-benefits b { font-size:.62rem; }
+}
 /* Vedic Tools dropdown lists every tool, so it scrolls instead of running off the screen. */
 .nav-dropdown-menu--tools{width:21rem;max-width:calc(100vw - 24px);max-height:75vh;overflow-y:auto;overscroll-behavior:contain}
-.nav-dropdown-menu--tools .nav-tool-link{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;color:#1e1b4b;text-decoration:none}
+.nav-dropdown-menu--tools .nav-tool-link{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;color:#34251f;text-decoration:none}
 .nav-dropdown-menu--tools .nav-tool-link:hover{background:#faf8f2}
-.nav-tools-toggle{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;padding:9px 12px;border:1px solid #ad865055;border-radius:10px;background:#fffdf7;color:#4a1b9a;font:700 .78rem/1 var(--font-body,'Segoe UI',sans-serif);cursor:pointer}.nav-tools-toggle:hover{background:#f4eefb}#nav-tools-more[hidden]{display:none}#nav-tools-more{margin-top:6px}
+.nav-tools-toggle{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;padding:9px 12px;border:1px solid #ad865055;border-radius:10px;background:#fffdf7;color:#650f23;font:700 .78rem/1 var(--font-body,'Segoe UI',sans-serif);cursor:pointer}.nav-tools-toggle:hover{background:#faeef0}#nav-tools-more[hidden]{display:none}#nav-tools-more{margin-top:6px}
 /* Narrow phones: keep the brand name readable next to the header icons instead of running underneath them. */
 @media (max-width: 480px) {
   .site-brand { min-width: 0; flex: 1 1 auto; gap: 8px; }

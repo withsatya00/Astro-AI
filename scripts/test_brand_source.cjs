@@ -1,4 +1,4 @@
-// Source-level brand check: the old palettes must be gone and the logo purple must come from tokens.
+// Source-level brand check: the old palettes must be gone and the shared maroon must come from tokens.
 // Run with: npm run test:brandsrc
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const FRONT = path.resolve(__dirname, '..', 'website', 'frontend');
@@ -10,9 +10,9 @@ const files = walk(FRONT).filter(f => /\.(css|js|html|webmanifest)$/.test(f) && 
 const tokens = fs.readFileSync(path.join(FRONT, 'src/styles/tokens.css'), 'utf8');
 const tok = k => (tokens.match(new RegExp(k + ': *(#[0-9a-fA-F]{6})')) || [])[1];
 
-check('tokens carry the logo purple (deep, primary, hover, soft)', () => {
-  assert.equal((tok('--brand-deep') || '').toLowerCase(), '#1e0b44');
-  assert.equal((tok('--brand-primary') || '').toLowerCase(), '#4a1b9a');
+check('tokens carry the shared maroon (deep, primary, hover, soft)', () => {
+  assert.equal((tok('--brand-deep') || '').toLowerCase(), '#3e0b18');
+  assert.equal((tok('--brand-primary') || '').toLowerCase(), '#650f23');
   assert.ok(tok('--brand-hover'), 'no --brand-hover'); assert.ok(tok('--brand-soft'), 'no --brand-soft');
 });
 
@@ -28,8 +28,8 @@ check('no legacy plum / bright-purple hex codes remain in CSS, JS, HTML or the m
 
 check('theme-color and manifest match the brand', () => {
   const html = fs.readFileSync(path.join(FRONT, 'index.html'), 'utf8');
-  assert.match(html, /name="theme-color" content="#1e0b44"/i);
-  assert.match(fs.readFileSync(path.join(FRONT, 'manifest.webmanifest'), 'utf8'), /"theme_color": *"#1e0b44"/i);
+  assert.match(html, /name="theme-color" content="#3e0b18"/i);
+  assert.match(fs.readFileSync(path.join(FRONT, 'manifest.webmanifest'), 'utf8'), /"theme_color": *"#3e0b18"/i);
 });
 
 check('compiled Tailwind contains the new brand utilities used by templates', () => {

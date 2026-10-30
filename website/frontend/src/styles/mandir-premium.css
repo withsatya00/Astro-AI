@@ -33,30 +33,30 @@
 .mt-today__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .mt-today__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, #fcd27a 100%); }
 .mt-today__body { display: grid; gap: 8px; align-content: center; padding: 26px 30px; color: #3b2743; }
-.mt-today__badge { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: #1e0b44; color: #ffe4a9; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.mt-today__badge { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: #3e0b18; color: #ffe4a9; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
 .mt-today__badge i { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 0 #f59e0b; animation: mt-pulse 1.6s infinite; }
 @keyframes mt-pulse { 70% { box-shadow: 0 0 0 9px #f59e0b00; } 100% { box-shadow: 0 0 0 0 #f59e0b00; } }
-.mt-today__title { margin: 4px 0 0; font: 800 clamp(1.5rem, 3.6vw, 2.4rem)/1.15 Georgia, "Times New Roman", serif; color: #1e0b44; letter-spacing: -.02em; }
+.mt-today__title { margin: 4px 0 0; font: 800 clamp(1.5rem, 3.6vw, 2.4rem)/1.15 Georgia, "Times New Roman", serif; color: #3e0b18; letter-spacing: -.02em; }
 .mt-today__title em { font-style: normal; color: #b45309; }
 .mt-today__meta { margin: 0; font-size: .8rem; color: #6b4a1e; }
 .mt-today__lead { margin: 4px 0 0; font-size: 1rem; color: #3b2743; }
 .mt-today__label { margin: 8px 0 0; font-size: .72rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #92400e; }
 .mt-today__items { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.mt-today__items li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid #efc36d; font-size: .9rem; font-weight: 800; color: #1e0b44; box-shadow: 0 6px 14px -10px #b45309; }
+.mt-today__items li { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid #efc36d; font-size: .9rem; font-weight: 800; color: #3e0b18; box-shadow: 0 6px 14px -10px #b45309; }
 .mt-today__items li span { font-size: 1.2rem; }
 .mt-today__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; }
-.mt-today__cta .shop-btn { padding: 14px 24px; font-size: .95rem; background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; box-shadow: 0 14px 26px -16px #1e0b44; }
+.mt-today__cta .shop-btn { padding: 14px 24px; font-size: .95rem; background: linear-gradient(135deg, #3e0b18, #862b3e); color: #ffe4a9; border-color: #3e0b18; box-shadow: 0 14px 26px -16px #3e0b18; }
 .mt-today__cta .shop-btn:hover { filter: brightness(1.15); }
 .mt-today__special { display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 5px; border-radius: 14px; border: 1px dashed #b45309; background: #ffffff99; cursor: pointer; font: inherit; text-align: left; }
 .mt-today__special img { width: 40px; height: 40px; border-radius: 10px; object-fit: cover; }
-.mt-today__special span { display: grid; font-size: .76rem; font-weight: 800; color: #1e0b44; line-height: 1.3; max-width: 220px; }
+.mt-today__special span { display: grid; font-size: .76rem; font-weight: 800; color: #3e0b18; line-height: 1.3; max-width: 220px; }
 .mt-today__special small { font-weight: 600; color: #6b4a1e; }
 
 /* ---------- temple cards ---------- */
 .mandir-page .shop-grid { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
 .mandir-page .mt-card { position: relative; border-radius: 24px; border: 1px solid #e5d9c7; background: #fffdf8; box-shadow: 0 16px 38px -28px #281a3c; transition: transform .3s, box-shadow .3s, border-color .3s; }
 .mandir-page .mt-card::before { content: ''; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #b45309, #f6dca0, #b45309); }
-.mandir-page .mt-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #4a1b9a; }
+.mandir-page .mt-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #650f23; }
 .mandir-page .mt-card .shop-card__media { aspect-ratio: 16 / 11; }
 .mandir-page .mt-card .shop-card__media::after { height: 60%; background: linear-gradient(to top, rgba(32, 18, 48, .78), transparent); }
 .mandir-page .mt-card .shop-card__tag { backdrop-filter: blur(6px); box-shadow: 0 6px 14px -8px #000; }
@@ -64,14 +64,14 @@
 .mt-card__cat { position: absolute; z-index: 2; top: 12px; right: 12px; padding: 4px 11px; border-radius: 999px; background: linear-gradient(135deg, #f6dca0, #efc36d); color: #3b2743; font-size: .66rem; font-weight: 900; letter-spacing: .03em; box-shadow: 0 6px 14px -8px #000; }
 .mandir-page .mt-card .shop-card__body { gap: 10px; padding: 18px 18px 16px; }
 .mandir-page .mt-card .shop-card__eyebrow { align-self: flex-start; padding: 3px 10px; border-radius: 999px; background: #fdf1d6; color: #92400e; letter-spacing: .03em; text-transform: none; font-size: .7rem; }
-.mandir-page .mt-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.12rem; font-weight: 800; line-height: 1.3; color: #1e0b44; }
+.mandir-page .mt-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.12rem; font-weight: 800; line-height: 1.3; color: #3e0b18; }
 .mandir-page .mt-card .shop-card__title a { color: inherit; text-decoration: none; }
 .mandir-page .mt-card .shop-card__list { margin-top: 2px; padding: 12px; border: 1px solid #f0e4cc; border-radius: 14px; background: #fbf5e8; }
 .mandir-page .mt-card .shop-card__list b { color: #92400e; }
 .mandir-page .mt-card .shop-card__foot { border-top: 0; padding-top: 6px; }
-.mandir-page .mt-card .shop-price { font-size: 1.25rem; font-weight: 900; color: #1e0b44; }
+.mandir-page .mt-card .shop-price { font-size: 1.25rem; font-weight: 900; color: #3e0b18; }
 .mt-card__btns { display: flex; gap: 6px; }
-.mandir-page .mt-card .shop-btn--gold { background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; }
+.mandir-page .mt-card .shop-btn--gold { background: linear-gradient(135deg, #3e0b18, #862b3e); color: #ffe4a9; border-color: #3e0b18; }
 
 /* ---------- dark ---------- */
 html[data-theme="dark"] :is(.mandir-page, .mall-page) .mandir-hero { border-color: #8b6bd9; background: radial-gradient(circle at 92% 10%, #6a4377 0, transparent 30%), linear-gradient(125deg, #1e1727, #33233e); }
@@ -80,7 +80,7 @@ html[data-theme="dark"] .mt-today__media::after { background: linear-gradient(90
 html[data-theme="dark"] .mt-today__body, html[data-theme="dark"] .mt-today__title, html[data-theme="dark"] .mt-today__lead { color: #fbeacb; }
 html[data-theme="dark"] .mt-today__meta, html[data-theme="dark"] .mt-today__label { color: #e9bc72; }
 html[data-theme="dark"] .mt-today__items li { background: #2a2018; color: #fbeacb; border-color: #8a6422; }
-html[data-theme="dark"] .mt-today__cta .shop-btn { background: linear-gradient(135deg, #f6dca0, #efc36d); color: #1e0b44; }
+html[data-theme="dark"] .mt-today__cta .shop-btn { background: linear-gradient(135deg, #f6dca0, #efc36d); color: #3e0b18; }
 html[data-theme="dark"] .mt-today__special { background: #2a201866; border-color: #b9842f; }
 html[data-theme="dark"] .mt-today__special span { color: #fbeacb; }
 html[data-theme="dark"] .mandir-page .mt-card { background: var(--exp-card, #241c2e); border-color: var(--exp-line, #433350); }
@@ -112,7 +112,7 @@ html[data-theme="dark"] .mandir-page .mt-card .shop-card__eyebrow { background: 
 .mall-page .shop-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
 .mall-page .ml-card { position: relative; border-radius: 24px; border: 1px solid #e5d9c7; background: #fffdf8; box-shadow: 0 16px 38px -28px #281a3c; transition: transform .3s, box-shadow .3s, border-color .3s; }
 .mall-page .ml-card::before { content: ''; position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #b45309, #f6dca0, #b45309); }
-.mall-page .ml-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #4a1b9a; }
+.mall-page .ml-card:hover { transform: translateY(-6px); border-color: #e8b04b; box-shadow: 0 30px 56px -26px #650f23; }
 .mall-page .ml-card .shop-card__media { margin: 12px 12px 0; border-radius: 18px; border: 1px solid #f0e4cc; background: radial-gradient(circle at 50% 30%, #fffaf0, #f5ead3); }
 .mall-page .ml-card .shop-card__media::after { display: none; }
 .mall-page .ml-card .shop-card__tag { backdrop-filter: blur(6px); box-shadow: 0 6px 14px -8px #000; }
@@ -121,11 +121,11 @@ html[data-theme="dark"] .mandir-page .mt-card .shop-card__eyebrow { background: 
 .mall-page .ml-card .shop-card__heart { top: 22px; right: 22px; }
 .mall-page .ml-card .shop-card__body { gap: 9px; padding: 16px 18px 18px; }
 .mall-page .ml-card .shop-card__eyebrow { align-self: flex-start; max-width: 100%; padding: 3px 10px; border-radius: 999px; background: #fdf1d6; color: #92400e; letter-spacing: .02em; text-transform: none; font-size: .7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mall-page .ml-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.05rem; font-weight: 800; color: #1e0b44; }
+.mall-page .ml-card .shop-card__title { font-family: Georgia, "Times New Roman", serif; font-size: 1.05rem; font-weight: 800; color: #3e0b18; }
 .mall-page .ml-card .shop-card__title a { color: inherit; text-decoration: none; }
 .mall-page .ml-card .shop-card__foot { margin-top: 2px; padding: 10px 12px; border: 1px solid #f0e4cc; border-radius: 14px; background: #fbf5e8; }
-.mall-page .ml-card .shop-price { font-size: 1.3rem; font-weight: 900; color: #1e0b44; }
-.mall-page .ml-card .shop-btn--gold { background: linear-gradient(135deg, #1e0b44, #6b3fc4); color: #ffe4a9; border-color: #1e0b44; }
+.mall-page .ml-card .shop-price { font-size: 1.3rem; font-weight: 900; color: #3e0b18; }
+.mall-page .ml-card .shop-btn--gold { background: linear-gradient(135deg, #3e0b18, #862b3e); color: #ffe4a9; border-color: #3e0b18; }
 html[data-theme="dark"] .mall-page .ml-card { background: var(--exp-card, #241c2e); border-color: var(--exp-line, #433350); }
 html[data-theme="dark"] .mall-page .ml-card .shop-card__media { background: #1d1626; border-color: var(--exp-line, #433350); }
 html[data-theme="dark"] .mall-page .ml-card .shop-card__title, html[data-theme="dark"] .mall-page .ml-card .shop-price { color: var(--exp-ink, #f1e9f7); }

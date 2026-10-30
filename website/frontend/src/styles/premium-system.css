@@ -5,7 +5,7 @@
  */
 
 :root {
-  --ps-ink: #1e1b4b;
+  --ps-ink: #34251f;
   --ps-muted: #5b5670;
   --ps-line: #e7e0d2;
   --ps-radius: 14px;
@@ -84,7 +84,7 @@ button:disabled, .shop-btn:disabled { cursor: not-allowed; }
 
 /* ---------- Focus: always visible for keyboard users ---------- */
 :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid #4a1b9a;
+  outline: 2px solid #650f23;
   outline-offset: 2px;
   border-radius: 6px;
 }

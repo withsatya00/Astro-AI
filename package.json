@@ -4,7 +4,7 @@
   "description": "Astro Jyotish - Vedic Astrology & AI Consultation Platform",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --minify && npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./ai/frontend/css/tailwind.css --minify",
+    "build:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --minify && npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./ai/frontend/css/tailwind.css --minify && node scripts/normalize_brand_css.cjs",
     "watch:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --watch",
     "serve:frontend": "node scripts/serve_frontend.js",
     "test:ui": "node scripts/test_frontend_regressions.cjs",
@@ -23,7 +23,8 @@
     "test:brandsrc": "node scripts/test_brand_source.cjs",
     "test:buttons": "node scripts/test_buttons_unified.cjs",
     "test:responsive": "node scripts/test_responsive_all.cjs",
-    "test:responsive-account": "node scripts/test_responsive_account.cjs"
+    "test:responsive-account": "node scripts/test_responsive_account.cjs",
+    "test:seva": "node scripts/test_seva_refresh.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

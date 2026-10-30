@@ -119,7 +119,7 @@ export class MandirSevaPageComponent {
     box.innerHTML = `<p class="mandir-eyebrow">${esc(hi ? 'अपनी सेवा चुनें' : 'Choose your seva')}</p><h2 class="mandir-choose__title">${esc(hi ? 'आप क्या करना चाहते हैं?' : 'What would you like to do?')}</h2><div class="mandir-choose__grid">`
       + card('/mandir-seva/puja', '/assets/img/temples/mahakaleshwar-ujjain.jpg', hi ? 'संकल्प सहित' : 'With sankalp', hi ? 'पूजा' : 'Puja', hi ? 'मंदिर के पुजारियों से अपने और परिवार के नाम व गोत्र से पूजा कराएं, और पूजा का वीडियो पाएं।' : 'Have a puja performed by temple priests in your and your family’s name and gotra, and receive its video.',
         pujas ? (hi ? `${pujas} आगामी पूजा` : `${pujas} upcoming pujas`) : '', hi ? 'पूजा देखें' : 'View pujas')
-      + card('/mandir-seva/chadhava', '/assets/img/mandir-banner.webp', hi ? '₹5 से शुरू' : 'From \u20b95', hi ? 'चढ़ावा' : 'Chadhava', hi ? 'भारत के किसी भी प्रसिद्ध मंदिर में फूल, दीपक, भोग जैसा कुछ भी अपने नाम से चढ़ाएं। ₹5 से शुरू।' : 'Offer a flower, a diya or a full bhog at any famous temple across India, in your name. From ₹5.',
+      + card('/mandir-seva/chadhava', '/assets/img/mandir-banner.webp', hi ? 'अपनी श्रद्धा से' : 'An offering from the heart', hi ? 'चढ़ावा' : 'Chadhava', hi ? 'फूल, दीपक या भोग अपने नाम से अर्पित करें। उपलब्ध कार्यक्रम और कीमत देखकर अपनी सेवा चुनें।' : 'Offer flowers, a diya or bhog in your name. Explore confirmed temple events and choose an offering at its listed price.',
         temples ? (hi ? `${temples} मंदिर` : `${temples} temples`) : '', hi ? 'मंदिर चुनें' : 'Choose a temple')
       + '</div>';
   }
@@ -127,9 +127,11 @@ export class MandirSevaPageComponent {
   static renderHeads() {
     const hi = this.lang === 'hi';
     // Same photographic banner as the Astrologers, Gau Sewa and Astro Mall pages (service-banners.css).
+    const tr = [['📹', 'Video proof', 'वीडियो प्रमाण', 'Video of your sankalp, with name & gotra', 'नाम और गोत्र के साथ संकल्प का वीडियो'], ['🪔', 'Temple priests', 'मंदिर के पुजारी', 'Performed by temple priests', 'मंदिर के पुरोहितों द्वारा संकल्प'], ['📦', 'Booking updates', 'बुकिंग अपडेट', 'Payment, seva and video tracking', 'भुगतान, सेवा और वीडियो ट्रैकिंग']];
+    const trust = `<div class="shop-trust service-benefits">${tr.map(r => `<div><span>${r[0]}</span><p><b>${esc(hi ? r[2] : r[1])}</b><small>${esc(hi ? r[4] : r[3])}</small></p></div>`).join('')}</div>`;
     const banner = (id, img, eyebrow, title, sub, actions) => {
       const el = this.$(id);
-      if (el) el.innerHTML = `<div class="service-banner service-banner--mandir"><figure class="service-banner__art"><img src="${img}" alt="" fetchpriority="high"><figcaption>${esc(hi ? 'प्रतीकात्मक चित्र' : 'Illustrative image')}</figcaption></figure><div class="mandir-hero__copy service-banner__copy"><p class="mandir-hero__eyebrow">${esc(eyebrow)}</p><h1>${esc(title)}</h1><p>${esc(sub)}</p>${actions || ''}</div></div>`;
+      if (el) el.innerHTML = `<div class="service-banner service-banner--mandir"><figure class="service-banner__art"><img src="${img}" alt="" fetchpriority="high"><figcaption>${esc(hi ? 'प्रतीकात्मक चित्र' : 'Illustrative image')}</figcaption></figure><div class="mandir-hero__copy service-banner__copy"><p class="mandir-hero__eyebrow">${esc(eyebrow)}</p><h1>${esc(title)}</h1><p>${esc(sub)}</p>${actions || ''}</div>${trust}</div>`;
     };
     banner('mandir-chadhava-head', '/assets/img/mandir-banner.webp', hi ? 'चढ़ावा सेवा' : 'Chadhava seva', hi ? 'चढ़ावा: मंदिर चुनें' : 'Chadhava offerings & temple sevas',
       hi ? 'देश के प्रसिद्ध मंदिर। मंदिर चुनें, अपनी श्रद्धा से चढ़ावा चुनें और अपने नाम से अर्पित करें।' : 'Famous temples across India. Pick a temple, choose what to offer and it is placed there in your name.',

@@ -1,0 +1,39 @@
+/* Home page: photographic maroon hero, maroon trust band and one heading style, matching the service banners. */
+#view-home #hero-section.hero-section { background:#3e0b18 url('/assets/img/astrologers-banner.webp') 78% 40%/cover no-repeat !important; border:0 !important; padding:0 !important; isolation:isolate !important; }
+#view-home #hero-section.hero-section::before { content:''; position:absolute !important; inset:0 !important; z-index:0 !important; background:linear-gradient(90deg,#3e0b18 0%,#3e0b18f2 34%,#3e0b18b8 52%,#3e0b1822 78%,#3e0b1800 100%) !important; }
+#view-home #hero-section > .absolute { display:none !important; }
+#view-home #hero-section .hero-container { padding-top:56px !important; padding-bottom:56px !important; }
+#view-home #hero-section .hero-right-col { visibility:hidden !important; }
+#view-home #hero-section .hero-badge-pill { color:#efd4a0 !important; background:#ffffff0d !important; border:1px solid #efd4a066 !important; box-shadow:none !important; font-size:.62rem !important; letter-spacing:.15em !important; }
+#view-home #hero-section .hero-title { color:#fffdf8 !important; font-weight:600 !important; letter-spacing:-.035em !important; }
+#view-home #hero-section .hero-title span { color:#efd4a0 !important; }
+#view-home #hero-section .hero-subtitle { color:#e6dcea !important; max-width:34rem !important; font-size:1rem !important; line-height:1.8 !important; }
+#view-home #hero-section .hero-search-bar { border:1px solid #efd4a066 !important; background:#fffdf8 !important; box-shadow:0 14px 34px -18px #000a !important; }
+#view-home #hero-section .btn-hero-search-circle,
+#view-home #hero-section .btn-hero-find { background:#650f23 !important; color:#fff !important; box-shadow:none !important; }
+#view-home #hero-section .btn-hero-find { background:#f1cf8b !important; color:#3e0b18 !important; }
+#view-home #hero-section .btn-hero-find:hover { background:#ffe4a9 !important; }
+#view-home #hero-section .btn-hero-how { background:#ffffff0d !important; color:#f7eedf !important; border:1px solid #ffffff35 !important; box-shadow:none !important; }
+#view-home #hero-section .btn-hero-how:hover { background:#ffffff1f !important; }
+#view-home #hero-section .btn-hero-how .play-icon { color:#efd4a0 !important; }
+#view-home #hero-section .trending-label { color:#efd4a0 !important; }
+#view-home #hero-section .trending-tag { background:#ffffff0d !important; color:#f7eedf !important; border-color:#ffffff35 !important; }
+#view-home #hero-section .trending-tag:hover { background:#ffffff22 !important; color:#fff !important; border-color:#efd4a0 !important; }
+
+#view-home .trust-stats-section { background:#650f23 !important; border:0 !important; padding-top:14px !important; padding-bottom:14px !important; }
+#view-home .trust-stat-item { background:transparent !important; border:0 !important; box-shadow:none !important; justify-content:center !important; }
+#view-home .trust-stat-icon { background:#efd4a01f !important; border-color:#efd4a066 !important; }
+#view-home .trust-stat-icon svg { color:#efd4a0 !important; }
+#view-home .trust-stat-number { color:#efd4a0 !important; font-size:1.35rem !important; }
+#view-home .trust-stat-label { color:#f7eedf !important; }
+
+/* One heading style for every home section. */
+#view-home section h2 { font-family:var(--font-serif) !important; color:#3e0b18 !important; font-weight:600 !important; letter-spacing:-.03em !important; }
+#view-home :is(.journey-eyebrow) { color:#8a5a14 !important; letter-spacing:.15em !important; }
+
+@media(max-width:1023px) {
+ #view-home #hero-section.hero-section { background-position:70% 20% !important; }
+ #view-home #hero-section.hero-section::before { background:linear-gradient(180deg,#3e0b18eb 0%,#3e0b18f7 55%,#3e0b18 100%) !important; }
+ #view-home #hero-section .hero-container { padding-top:40px !important; padding-bottom:40px !important; }
+ #view-home #hero-section .hero-right-col { display:none !important; }
+}

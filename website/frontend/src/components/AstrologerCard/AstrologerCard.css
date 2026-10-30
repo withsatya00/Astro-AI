@@ -14,7 +14,7 @@
 .astrologer-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md, 0 4px 16px rgba(33, 29, 80, 0.08));
-  border-color: var(--color-purple-subtle, #e3d8f3);
+  border-color: var(--color-purple-subtle, #edd9dc);
 }
 
 .card-main-row {
@@ -108,7 +108,7 @@
   font-family: var(--font-serif, serif);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   margin: 0;
   cursor: pointer;
   display: inline-flex;
@@ -117,7 +117,7 @@
 }
 
 .scholar-name:hover {
-  color: var(--color-purple-primary, #4a1b9a);
+  color: var(--color-purple-primary, #650f23);
 }
 
 .verified-check {
@@ -137,9 +137,9 @@
 }
 
 .scholar-badge.badge-ai {
-  background: var(--color-purple-light, #f4eefb);
-  color: var(--color-purple-primary, #4a1b9a);
-  border: 1px solid var(--color-purple-subtle, #e3d8f3);
+  background: var(--color-purple-light, #faeef0);
+  color: var(--color-purple-primary, #650f23);
+  border: 1px solid var(--color-purple-subtle, #edd9dc);
 }
 
 .scholar-badge.badge-human {
@@ -215,7 +215,7 @@
 .price-amount {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
 }
 
 .price-unit {
@@ -233,7 +233,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: linear-gradient(135deg, var(--color-purple-primary, #4a1b9a) 0%, var(--color-purple-hover, #1e0b44) 100%);
+  background: linear-gradient(135deg, var(--color-purple-primary, #650f23) 0%, var(--color-purple-hover, #3e0b18) 100%);
   color: #FFFFFF;
   border: none;
   font-size: 0.82rem;
@@ -262,7 +262,7 @@
   gap: 0.35rem;
   background: #FFFFFF;
   border: 1px solid var(--border-subtle, #E7E2D8);
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   font-size: 0.82rem;
   font-weight: 700;
   padding: 0.45rem 0.85rem;
@@ -333,7 +333,7 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
-  background: linear-gradient(90deg, #D97706, #E8AD35 40%, #4a1b9a);
+  background: linear-gradient(90deg, #D97706, #E8AD35 40%, #650f23);
 }
 .astrologer-card.ac-card:hover { border-color: #E3C677; }
 
@@ -353,7 +353,7 @@
 }
 .ac-badge .ac-ic { width: 10px; height: 10px; }
 .ac-badge--gold { background: linear-gradient(90deg, #E8AD35, #F3C969); color: #4A3206; }
-.ac-badge--violet { background: linear-gradient(90deg, #4a1b9a, #6b3fc4); color: #fff; }
+.ac-badge--violet { background: linear-gradient(90deg, #650f23, #862b3e); color: #fff; }
 
 .ac-status {
   position: absolute;
@@ -388,7 +388,7 @@
   padding: 3px;
   border: 0;
   border-radius: 22px;
-  background: linear-gradient(135deg, #E8AD35, #4a1b9a);
+  background: linear-gradient(135deg, #E8AD35, #650f23);
   cursor: pointer;
 }
 .ac-photo img {
@@ -409,7 +409,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #4a1b9a;
+  background: #650f23;
   color: #fff;
   border: 2px solid #fff;
 }
@@ -422,14 +422,14 @@
   font-size: 1.02rem;
   font-weight: 800;
   line-height: 1.25;
-  color: #1E1B4B;
+  color: #34251f;
   cursor: pointer;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.ac-name:hover { color: #4a1b9a; }
+.ac-name:hover { color: #650f23; }
 .ac-title {
   margin: 0 0 0.35rem;
   font-size: 12px;
@@ -439,7 +439,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.ac-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.35rem; font-size: 12px; color: #1E1B4B; }
+.ac-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.35rem; font-size: 12px; color: #34251f; }
 .ac-rating b { font-weight: 800; }
 .ac-stars { display: inline-flex; color: #F59E0B; }
 .ac-stars .ac-ic { width: 13px; height: 13px; }
@@ -460,8 +460,8 @@
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  color: #1e0b44;
-  background: #f4eefb;
+  color: #3e0b18;
+  background: #faeef0;
   border: 1px solid #E4DCFB;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -491,7 +491,7 @@
   border-top: 1px dashed #E6D9BC;
 }
 .ac-price { display: flex; align-items: baseline; gap: 0.2rem; color: #64748B; font-size: 12px; }
-.ac-price b { font-size: 1.2rem; font-weight: 800; color: #1E1B4B; }
+.ac-price b { font-size: 1.2rem; font-weight: 800; color: #34251f; }
 .ac-listen {
   display: inline-flex;
   align-items: center;
@@ -522,9 +522,9 @@
   border: 1.5px solid transparent;
 }
 .ac-btn .ac-ic { width: 16px; height: 16px; }
-.ac-btn--chat { background: linear-gradient(90deg, #4a1b9a, #1e0b44); color: #fff; box-shadow: 0 6px 14px -6px rgba(74, 27, 154, 0.6); }
-.ac-btn--call { background: #fff; color: #1e0b44; border-color: #4a1b9a; }
-.ac-btn--call:hover { background: #f4eefb; }
+.ac-btn--chat { background: linear-gradient(90deg, #650f23, #3e0b18); color: #fff; box-shadow: 0 6px 14px -6px rgba(74, 27, 154, 0.6); }
+.ac-btn--call { background: #fff; color: #3e0b18; border-color: #650f23; }
+.ac-btn--call:hover { background: #faeef0; }
 
 @media (max-width: 400px) {
   .astrologer-card.ac-card { padding-left: 0.85rem; padding-right: 0.85rem; }
@@ -539,7 +539,7 @@ html[data-theme="dark"] .astrologer-card.ac-card { background: #1C1928 !importan
 html[data-theme="dark"] .ac-name, html[data-theme="dark"] .ac-price b, html[data-theme="dark"] .ac-rating { color: #F3EEE8 !important; }
 html[data-theme="dark"] .ac-title, html[data-theme="dark"] .ac-facts, html[data-theme="dark"] .ac-price { color: #ADA6BA; }
 html[data-theme="dark"] .ac-chip { background: #2A2440; color: #e0d1e8; border-color: #3C3458; }
-html[data-theme="dark"] .ac-btn--call { background: transparent; color: #c9b1d6; border-color: #4a1b9a; }
+html[data-theme="dark"] .ac-btn--call { background: transparent; color: #c9b1d6; border-color: #650f23; }
 html[data-theme="dark"] .ac-foot { border-top-color: #3C3458; }
 html[data-theme="dark"] .ac-verified { border-color: #1C1928; }
 html[data-theme="dark"] .ac-listen { background: #2B2410; border-color: #5C4A1A; color: #F3C969; }

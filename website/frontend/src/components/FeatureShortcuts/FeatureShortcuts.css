@@ -33,7 +33,7 @@
   padding: 0.55rem 1.15rem;
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--color-navy-main, #211D50);
+  color: var(--color-navy-main, #34251f);
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -41,9 +41,9 @@
 }
 
 .shortcut-pill:hover {
-  background: var(--color-purple-light, #f4eefb);
-  border-color: var(--color-purple-primary, #4a1b9a);
-  color: var(--color-purple-primary, #4a1b9a);
+  background: var(--color-purple-light, #faeef0);
+  border-color: var(--color-purple-primary, #650f23);
+  color: var(--color-purple-primary, #650f23);
   transform: translateY(-1px);
 }
 

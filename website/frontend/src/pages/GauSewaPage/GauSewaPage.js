@@ -1,7 +1,7 @@
 // Gau Sewa: one-time donations to a gaushala, the confirmation / receipt view and published seva updates.
 // Payment success is never decided here: the browser only hands the Razorpay result to the server, which checks it with
 // Razorpay itself. This page shows whatever status the server reports.
-import { api, esc, toast, mediaUrl, downloadFile, isSignedIn } from '../../utils/shop.js';
+import { api, esc, toast, mediaUrl, downloadFile, isSignedIn, t as shopT } from '../../utils/shop.js';
 
 const PURPOSES = ['chaara', 'chikitsa', 'general'];
 const lineIcon = (path) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
@@ -14,12 +14,13 @@ const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
 /** Looks a string up in the site's translation tables (English/Hindi) and fills {placeholders}. */
 export const T = (key, vars = {}) => {
-  const text = window.I18n?.t ? window.I18n.t(key) : key;
+  const base = window.I18n?.t ? window.I18n.t(key) : key;
+  const text = base === key ? shopT(key) : base;
   return String(text).replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
 };
 const lang = () => (window.I18n?.currentLang === 'hi' ? 'hi-IN' : 'en-IN');
 const rupees = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
-const dateText = (iso) => { const d = iso ? new Date(iso) : null; return d && !isNaN(d) ? d.toLocaleDateString(lang(), { day: 'numeric', month: 'short', year: 'numeric' }) : '—'; };
+const dateText = (iso) => { const d = iso ? new Date(iso) : null; return d && !isNaN(d) ? d.toLocaleDateString(lang(), { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Asia/Kolkata' }) : '—'; };
 export const statusLabel = (s) => T('gs_status_' + String(s || '').toLowerCase());
 export const purposeLabel = (p) => T('gs_purpose_' + p);
 
@@ -28,7 +29,7 @@ export class GauSewaPageComponent {
   static config = null;
   static gaushalas = [];
   static updates = [];
-  static form = { amount: 501, custom: '', purpose: 'chaara', name: '', email: '', hide: false };
+  static form = { amount: 501, custom: '', purpose: 'chaara', name: '', email: '', hide: false, gaushalaId: null };
   static errors = {};
   static busy = false;
   static notice = null;     // { type: 'error' | 'info', text }
@@ -37,6 +38,9 @@ export class GauSewaPageComponent {
   static receiptToken = null;
   static pollTimer = null;
   static loadFailed = false;
+  static updatesFailed = false;
+  static lastChecked = null;
+  static receiptRequest = 0;
 
   static mount(container) {
     this.root = typeof container === 'string' ? document.querySelector(container) : container;
@@ -74,11 +78,13 @@ export class GauSewaPageComponent {
   static async load() {
     this.loadFailed = false;
     try {
-      const [config, gaushalas, updates] = await Promise.all([
+      const [config, gaushalas, updates] = await Promise.allSettled([
         api('/api/v1/gau-sewa/config'), api('/api/v1/gau-sewa/gaushalas'), api('/api/v1/gau-sewa/updates')]);
-      this.config = config;
-      this.gaushalas = gaushalas.gaushalas || [];
-      this.updates = updates.updates || [];
+      if(config.status==='rejected'||gaushalas.status==='rejected')throw new Error('Essential seva data unavailable');
+      this.config = config.value;
+      this.gaushalas = gaushalas.value.gaushalas || [];
+      this.updatesFailed = updates.status==='rejected';
+      this.updates = updates.status==='fulfilled' ? updates.value.updates || [] : [];
     } catch (err) {
       this.loadFailed = true;
     }
@@ -98,11 +104,11 @@ export class GauSewaPageComponent {
       return;
     }
     const focus = document.activeElement?.id;
-    this.root.innerHTML = this.frame(`${this.heroHtml()}<div class="gs-content-grid"><div class="gs-main-column">${this.purposeHtml()}${this.stepsHtml()}${this.gaushalaHtml()}${this.updatesHtml()}</div><aside class="gs-donation-column">${this.formHtml()}</aside></div>`);
+    this.root.innerHTML = this.frame(`${this.heroHtml()}<div class="gs-content-grid"><div class="gs-purpose-section">${this.purposeHtml()}</div><aside class="gs-donation-column">${this.formHtml()}</aside><div class="gs-main-column">${this.stepsHtml()}${this.gaushalaHtml()}${this.updatesHtml()}${this.faqHtml()}</div></div>`);
     if (focus && this.root.querySelector('#' + focus)) this.root.querySelector('#' + focus).focus();
   }
 
-  static primary() { return this.gaushalas.find(g => g.accepting_donations) || this.gaushalas[0] || null; }
+  static primary() { return this.gaushalas.find(g => g.id===this.form.gaushalaId&&g.accepting_donations) || this.gaushalas.find(g => g.accepting_donations) || null; }
 
   static heroHtml() {
     const g = this.primary();
@@ -140,16 +146,18 @@ export class GauSewaPageComponent {
     const cfg = this.config;
     const e = this.errors;
     const g = this.primary();
+    const recipients=this.gaushalas.filter(g=>g.accepting_donations);
+    const canDonate=cfg.available&&!!g;
     let unavailable = '';
-    if (!cfg.available) {
-      const text = cfg.reason === 'recipient_not_configured' ? T('gs_unavailable_recipient') : T('gs_unavailable_payments');
+    if (!canDonate) {
+      const text = !g || cfg.reason === 'recipient_not_configured' ? T('gs_unavailable_recipient') : T('gs_unavailable_payments');
       unavailable = `<div class="gs-notice gs-notice--info" role="status"><strong>${esc(T('gs_unavailable_title'))}</strong><p>${esc(text)}</p></div>`;
     }
     const amount = this.amount();
     const presetOn = (n) => this.form.custom === '' && this.form.amount === n;
     const field = (id, label, input, error) => `<div class="gs-field"><label for="${id}">${esc(label)}</label>${input}${error ? `<p class="gs-error" id="${id}-err" role="alert">${esc(error)}</p>` : ''}</div>`;
     return `<section class="gs-section" id="gs-donate" aria-labelledby="gs-form-h"><form class="gs-card gs-form" novalidate>
-      <div class="gs-form-heading"><span class="gs-section-kicker">${esc(T('gs_form_kicker'))}</span><h2 id="gs-form-h">${esc(T('gs_form_heading'))}</h2><p>${esc(T('gs_form_intro'))}</p></div>${unavailable}<fieldset class="gs-form-fields">
+      <div class="gs-form-heading"><span class="gs-section-kicker">${esc(T('gs_form_kicker'))}</span><h2 id="gs-form-h">${esc(T('gs_form_heading'))}</h2><p>${esc(T('gs_form_intro'))}</p></div>${unavailable}<fieldset class="gs-form-fields" ${this.busy ? 'disabled' : ''}>
       ${this.notice ? `<p class="gs-notice gs-notice--${this.notice.type}" role="${this.notice.type === 'error' ? 'alert' : 'status'}">${esc(this.notice.text)}</p>` : ''}
       <fieldset class="gs-fieldset"><legend>${esc(T('gs_amount_label'))}</legend>
         ${field('gs-custom', T('gs_amount_custom'), `<div class="gs-amount-input"><span aria-hidden="true">₹</span><input id="gs-custom" name="custom" inputmode="numeric" autocomplete="off" pattern="[0-9]*" placeholder="${esc(String(this.form.amount))}" value="${esc(this.form.custom)}" aria-describedby="gs-amount-hint${e.amount ? ' gs-custom-err' : ''}" ${e.amount ? 'aria-invalid="true"' : ''}></div>`, e.amount)}
@@ -161,22 +169,27 @@ export class GauSewaPageComponent {
       ${field('gs-email', T('gs_email_label'), `<input id="gs-email" name="email" type="email" autocomplete="email" maxlength="255" value="${esc(this.form.email)}" aria-describedby="gs-email-hint${e.email ? ' gs-email-err' : ''}" ${e.email ? 'aria-invalid="true"' : ''}>`, e.email)}
       <p class="gs-hint" id="gs-email-hint">${esc(T('gs_email_hint'))}</p>
       <label class="gs-check"><input type="checkbox" id="gs-hide" name="hide" ${this.form.hide ? 'checked' : ''}><span>${esc(T('gs_hide_name'))}</span></label>
-      <div class="gs-recipient"><h3>${esc(T('gs_recipient_heading'))}</h3>
+      ${recipients.length>1?field('gs-recipient',T('gs_choose_recipient'),`<select id="gs-recipient" name="gaushala">${recipients.map(r=>`<option value="${esc(r.id)}" ${r.id===g?.id?'selected':''}>${esc(r.name)}${r.location?' · '+esc(r.location):''}</option>`).join('')}</select>`):''}<div class="gs-recipient"><h3>${esc(T('gs_recipient_heading'))}</h3>
         <p><strong>${esc(g?.beneficiary_name ? T('gs_recipient_line', { name: g.beneficiary_name }) : T('gs_gaushala_empty_title'))}</strong></p>
         ${g?.beneficiary_details ? `<p>${esc(g.beneficiary_details)}</p>` : ''}
         <p class="gs-hint">${esc(T('gs_recipient_note'))}</p></div>
       <div class="gs-donation-summary"><div><span>${esc(T('gs_purpose'))}</span><strong>${esc(purposeLabel(this.form.purpose))}</strong></div><div><span>${esc(T('gs_amount_label'))}</span><strong id="gs-summary-amount" aria-live="polite">${rupees(amount)}</strong></div></div>
-      <button type="submit" class="gs-btn gs-btn--block" ${this.busy ? 'disabled aria-busy="true"' : !cfg.available ? 'disabled' : ''}>${esc(this.busy ? T('gs_starting') : (amount ? T('gs_donate_amount_btn', { amount: amount.toLocaleString('en-IN') }) : T('gs_donate_btn')))}</button>
+      <button type="submit" class="gs-btn gs-btn--block" ${this.busy ? 'disabled aria-busy="true"' : !canDonate ? 'disabled' : ''}>${esc(this.busy ? T('gs_starting') : (amount ? T('gs_donate_amount_btn', { amount: amount.toLocaleString('en-IN') }) : T('gs_donate_btn')))}</button>
       </fieldset><p class="gs-hint gs-receipt-note">${esc(T('gs_payment_receipt_hint'))}</p>
     </form></section>`;
   }
 
   static updatesHtml() {
-    const items = this.updates;
+    const items = this.updates.filter(u=>!u.gaushala_id||u.gaushala_id===this.primary()?.id);
+    if(this.updatesFailed)return `<section class="gs-section"><h2>${esc(T('gs_updates_heading'))}</h2><div class="gs-card"><p role="status">${esc(T('gs_updates_error'))}</p><button type="button" class="gs-btn gs-btn--line" data-gs-updates-retry>${esc(T('gs_retry'))}</button></div></section>`;
     return `<section class="gs-section" aria-labelledby="gs-updates-h"><h2 id="gs-updates-h">${esc(T('gs_updates_heading'))}</h2>${items.length ? items.map(u => `
       <article class="gs-card gs-update"><small>${esc(dateText(u.published_at))}</small><h3>${esc(u.title)}</h3>${u.body ? `<p>${esc(u.body).replace(/\n/g, '<br>')}</p>` : ''}
       ${u.photos?.length ? `<div class="gs-photos">${u.photos.map(p => `<img src="${esc(mediaUrl(p))}" alt="${esc(u.title)}" loading="lazy">`).join('')}</div>` : ''}</article>`).join('')
       : `<div class="gs-card gs-empty"><p>${esc(T('gs_updates_empty'))}</p></div>`}</section>`;
+  }
+
+  static faqHtml(){
+    return `<section class="gs-section gs-faq"><h2>${esc(T('gs_faq_title'))}</h2>${['recipient','receipt','updates'].map(k=>`<details><summary>${esc(T('gs_faq_'+k+'_q'))}</summary><p>${esc(T('gs_faq_'+k+'_a'))}</p></details>`).join('')}</section>`;
   }
 
   // ------------------------------------------------------------------ form handling
@@ -186,11 +199,14 @@ export class GauSewaPageComponent {
   }
 
   static onClick(e) {
+    if(e.target.closest('[data-gs-updates-retry]')){this.load();return;}
+    if(e.target.closest('[data-gs-check]')){this.loadReceipt(true);return;}
+    if(e.target.closest('[data-gs-print]')){window.print();return;}
     if (e.target.closest('[data-gs-reload]')) { this.view === 'receipt' ? this.openReceipt(this.receiptToken) : this.open(); return; }
     const scroll = e.target.closest('[data-gs-scroll]');
     if (scroll) { e.preventDefault(); this.root.querySelector('#gs-donate')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     const purpose = e.target.closest('[data-gs-purpose]');
-    if (purpose) { this.form.purpose = purpose.dataset.gsPurpose; this.render(); return; }
+    if (purpose) { if(this.busy)return; this.form.purpose = purpose.dataset.gsPurpose; this.render(); return; }
     const chip = e.target.closest('[data-gs-amount]');
     if (chip) { this.form.amount = Number(chip.dataset.gsAmount); this.form.custom = ''; delete this.errors.amount; this.render(); return; }
     if (e.target.closest('[data-gs-download]')) { this.download(); return; }
@@ -199,6 +215,7 @@ export class GauSewaPageComponent {
 
   static onInput(e) {
     const t = e.target;
+    if(t.id==='gs-recipient'){this.form.gaushalaId=t.value;this.render();return;}
     if (t.id === 'gs-custom') {
       this.form.custom = t.value.trim();
       delete this.errors.amount;
@@ -226,7 +243,7 @@ export class GauSewaPageComponent {
   }
 
   static async donate() {
-    if (this.busy || !this.config?.available) return;
+    if (this.busy || !this.config?.available || !this.primary()) return;
     this.notice = null;
     if (!this.validate()) {
       this.render();
@@ -286,14 +303,19 @@ export class GauSewaPageComponent {
   }
 
   // ------------------------------------------------------------------ confirmation / receipt
-  static stopPolling() { clearTimeout(this.pollTimer); this.pollTimer = null; }
+  static stopPolling() { clearTimeout(this.pollTimer); this.pollTimer = null; this.receiptRequest++; }
 
   static async loadReceipt(first, attempt = 0) {
     this.stopPolling();
+    const request=this.receiptRequest,token=this.receiptToken;
     try {
-      this.receipt = await api('/api/v1/gau-sewa/donations/receipt/' + encodeURIComponent(this.receiptToken));
+      const receipt = await api('/api/v1/gau-sewa/donations/receipt/' + encodeURIComponent(token));
+      if(request!==this.receiptRequest||this.view!=='receipt')return;
+      this.receipt=receipt;this.lastChecked=new Date();
       this.loadFailed = false;
     } catch (err) {
+      if(request!==this.receiptRequest||this.view!=='receipt')return;
+      if(!first&&this.receipt){this.renderReceipt();return;}
       this.receipt = null;
       this.loadFailed = err.status === 404 ? 'notfound' : true;
     }
@@ -324,7 +346,7 @@ export class GauSewaPageComponent {
     this.root.innerHTML = this.frame(`<section class="gs-card gs-receipt ${cls}" aria-live="polite"><div class="gs-receipt-icon" aria-hidden="true">${icon}</div>
       <h1>${esc(title)}</h1>${text ? `<p>${esc(text)}</p>` : ''}
       <dl class="gs-details">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-      ${r.receipt_available ? `<button type="button" class="gs-btn" data-gs-download>${esc(T('gs_receipt_download'))}</button>` : ''}
+      ${r.status==='PENDING'?`<p class="gs-notice">${esc(T('gs_pending_safety'))}</p><button type="button" class="gs-btn" data-gs-check>${esc(T('gs_check_status'))}</button>`:''}${this.lastChecked?`<p class="gs-hint">${esc(T('gs_last_checked'))}: ${esc(this.lastChecked.toLocaleTimeString(lang(),{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Kolkata'}))} IST</p>`:''}<p><button type="button" class="gs-support-link" data-service-info="contact">${esc(T('gs_receipt_support'))}</button></p>${r.receipt_available ? `<button type="button" class="gs-btn" data-gs-download>${esc(T('gs_receipt_html_download'))}</button><button type="button" class="gs-btn gs-btn--line" data-gs-print>${esc(T('gs_print_receipt'))}</button>` : ''}
       <p class="gs-hint">${esc(T('gs_receipt_note'))}</p>${isSignedIn() ? '' : `<p class="gs-hint">${esc(T('gs_receipt_keep'))}</p>`}
       <p><a class="gs-btn gs-btn--line" href="/gau-sewa" data-nav-link>${esc(r.status === 'SUCCESS' ? T('gs_donate_again') : T('gs_back'))}</a></p></section>`);
   }

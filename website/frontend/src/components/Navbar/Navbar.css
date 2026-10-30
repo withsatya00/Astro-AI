@@ -48,11 +48,11 @@
 }
 
 .site-nav-link:hover {
-  color: #4a1b9a;
+  color: #650f23;
 }
 
 .site-nav-link.active {
-  color: #4a1b9a;
+  color: #650f23;
   font-weight: 700;
 }
 
@@ -63,7 +63,7 @@
   left: 0;
   right: 0;
   height: 2.5px;
-  background: #4a1b9a;
+  background: #650f23;
   border-radius: 9999px;
 }
 
@@ -76,13 +76,13 @@
   border-radius: 9999px;
   padding: 0.35rem 0.75rem;
   font-size: 0.75rem;
-  color: #211D50;
+  color: #34251f;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   transition: border-color 0.15s ease;
 }
 
 .global-lang-picker-wrapper:hover {
-  border-color: #4a1b9a;
+  border-color: #650f23;
 }
 
 .btn-mobile-menu {
@@ -94,7 +94,7 @@
   border-radius: 0.75rem;
   border: 1px solid #E7E2D8;
   background: #FFFFFF;
-  color: #1E1B4B;
+  color: #34251f;
   font-size: 1.125rem;
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -361,7 +361,7 @@ body.dark .nav-dropdown-menu,
 [data-theme="dark"] .nav-dropdown-menu {
   background-color: #1A163B !important;
   background: #1A163B !important;
-  border-color: #1e0b44 !important;
+  border-color: #3e0b18 !important;
 }
 
 /* A menu item was just chosen: stay closed while the pointer is still over the dropdown */

@@ -22,7 +22,7 @@
   font-family: var(--font-serif, serif);
   font-size: 2.25rem;
   font-weight: 800;
-  color: #211D50;
+  color: #34251f;
   margin: 0.75rem 0 1rem;
 }
 .why-subtitle {
@@ -41,7 +41,7 @@
   align-items: center;
   gap: 0.65rem;
   font-size: 0.95rem;
-  color: #211D50;
+  color: #34251f;
 }
 .point-check {
   color: #059669;
