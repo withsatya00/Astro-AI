@@ -1,12 +1,16 @@
 // Layout preview for social proof (rating, devotee count, reviews).
-// Real reviews and counts do not exist yet, so none of this is shown to visitors. Open any puja or temple page with
+// Real reviews and counts do not exist yet, so none of this is shown to visitors. On localhost only, open any puja or temple page with
 // ?sample=1 to see how it will look once real data is plugged in; ?sample=0 switches the preview off again.
 import { esc } from '../utils/shop.js';
 import { currentLang } from '../utils/shop-i18n.js';
 
 const KEY = 'astro_sample_proof';
 
+// The preview exists for design review only. On the live site it is always off, whatever the URL says.
+const isLocalHost = () => ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+
 export const sampleProofOn = () => {
+  if (!isLocalHost()) return false;
   try {
     const q = new URLSearchParams(location.search).get('sample');
     if (q === '1') localStorage.setItem(KEY, '1');
