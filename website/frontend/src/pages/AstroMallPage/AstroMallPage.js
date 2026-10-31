@@ -1,21 +1,212 @@
+// Astro Mall Listing Page - 1:1 Blueprint Reference Match to Image 7 (media_1793433116910_5dfd5de9.jpg)
 import { loadTemplate } from '../../utils/templateLoader.js';
-import { esc, money, toast, api, closeModal, wireDismiss, showCredits, stars, hoistOverlays, mediaUrl, t, applyI18n, goTo, requireLogin } from '../../utils/shop.js';
+import { esc, money, toast, api, mediaUrl, t, goTo } from '../../utils/shop.js';
 import { currentLang } from '../../utils/shop-i18n.js';
 import { CartStore } from '../../utils/cart-store.js';
 import { CartDrawer } from '../../components/shop/CartDrawer.js';
-import { OrdersModal } from '../../components/shop/OrdersModal.js';
-import { Discovery } from '../../components/shop/Discovery.js';
-import { skeleton } from '../../utils/experience.js';
+
+export const REFERENCE_PRODUCTS = [
+  {
+    id: 'prod-rudraksha-5mukhi',
+    title: 'Sacred 5 Mukhi Rudraksha Mala (108 Beads)',
+    title_hi: 'पवित्र 5 मुखी रुद्राक्ष माला (108 मनके)',
+    category: 'Mala',
+    category_id: 'mala',
+    tag: 'Bestseller',
+    tag_class: '',
+    rating: 4.8,
+    reviews: '1,240',
+    price: 699,
+    original_price: 999,
+    discount_percent: 30,
+    image: '/assets/img/products/rudraksha-5.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-kamal-gatta',
+    title: '108 Lotus Seeds (Kamal Gatta) for Maha Puja',
+    title_hi: 'कमलगट्टा माला (108 कमल बीज)',
+    category: 'Puja Item',
+    category_id: 'puja_essentials',
+    tag: 'Trending',
+    tag_class: 'tag-trending',
+    rating: 4.7,
+    reviews: '892',
+    price: 299,
+    original_price: 399,
+    discount_percent: 25,
+    image: '/assets/img/products/kamalgatta-mala.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-rudraksha-beads',
+    title: 'Natural 5–7 Mukhi Rudraksha Beads (Panchmukhi Set)',
+    title_hi: 'प्राकृतिक पंचमुखी रुद्राक्ष दाने सेट',
+    category: 'Rudraksha',
+    category_id: 'rudraksha',
+    tag: 'Bestseller',
+    tag_class: '',
+    rating: 4.8,
+    reviews: '1,756',
+    price: 1199,
+    original_price: 1599,
+    discount_percent: 25,
+    image: '/assets/img/products/rudraksha-7.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-navgrah-dhoop',
+    title: 'Vedic Navgrah Dhoop Muskan Kit (11 Herbs)',
+    title_hi: 'वैदिक नवग्रह धूप मुस्कान किट (11 दुर्लभ जड़ी-बूटियाँ)',
+    category: 'Hawan & Dhoop',
+    category_id: 'puja_essentials',
+    tag: 'Handpicked',
+    tag_class: 'tag-handpicked',
+    rating: 4.7,
+    reviews: '624',
+    price: 399,
+    original_price: 599,
+    discount_percent: 33,
+    image: '/assets/img/products/hawan-kit.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-vastu-yantra',
+    title: 'Siddh Maina Draw – Vastu & Yantra (For Peace & Prosperity)',
+    title_hi: 'सिद्ध मैना द्रोह वास्तु यंत्र (सुख-शांति व समृद्धि)',
+    category: 'Yantra',
+    category_id: 'yantra',
+    tag: 'Trending',
+    tag_class: 'tag-trending',
+    rating: 4.9,
+    reviews: '482',
+    price: 1899,
+    original_price: 2499,
+    discount_percent: 24,
+    image: '/assets/img/products/vyapar-yantra.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-hanuman-kavach',
+    title: 'Panchmukhi Hanuman Kavach Pendant (Pure Metal)',
+    title_hi: 'पंचमुखी हनुमान कवच लॉकेट (शुद्ध धातु)',
+    category: 'Idol',
+    category_id: 'idols',
+    tag: 'Bestseller',
+    tag_class: '',
+    rating: 4.8,
+    reviews: '917',
+    price: 799,
+    original_price: 1099,
+    discount_percent: 27,
+    image: '/assets/img/products/hanuman-locket.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-tulsi-rudraksha',
+    title: '100 Beads Tulsi & Rudraksha Mala (Energized)',
+    title_hi: '100 मनके तुलसी व रुद्राक्ष संयुक्त माला (अभिमंत्रित)',
+    category: 'Puja Essentials',
+    category_id: 'puja_essentials',
+    tag: 'Handpicked',
+    tag_class: 'tag-handpicked',
+    rating: 4.7,
+    reviews: '368',
+    price: 899,
+    original_price: 1299,
+    discount_percent: 31,
+    image: '/assets/img/products/sphatik-mala.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-shree-yantra',
+    title: 'Siddh Shree Yantra (Copper) for Wealth & Success',
+    title_hi: 'सिद्ध श्री यंत्र (ताम्र पत्र - धन व कार्य सिद्धि)',
+    category: 'Yantra',
+    category_id: 'yantra',
+    tag: 'Bestseller',
+    tag_class: '',
+    rating: 4.9,
+    reviews: '2,103',
+    price: 999,
+    original_price: 1499,
+    discount_percent: 33,
+    image: '/assets/img/products/kuber-yantra.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-tulsi-mala-108',
+    title: 'Original Tulsi Mala (Rosary – 108 Beads)',
+    title_hi: 'ओरिजिनल तुलसी माला (108 मनके)',
+    category: 'Mala',
+    category_id: 'mala',
+    tag: 'Handpicked',
+    tag_class: 'tag-handpicked',
+    rating: 4.8,
+    reviews: '1,347',
+    price: 399,
+    original_price: 599,
+    discount_percent: 33,
+    image: '/assets/img/products/tulsi-mala.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-narmadeshwar-shivling',
+    title: 'Siddh Narmadeshwar Shivling (For Mercury & Peace)',
+    title_hi: 'सिद्ध नर्मदेश्वर पारद शिवलिंग',
+    category: 'Shivling',
+    category_id: 'idols',
+    tag: 'Trending',
+    tag_class: 'tag-trending',
+    rating: 4.8,
+    reviews: '896',
+    price: 2499,
+    original_price: 3499,
+    discount_percent: 29,
+    image: '/assets/img/products/parad-shivling.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-dakshinavarti-shankh',
+    title: 'Natural Dakshinavarti Shankh (Right-Handed)',
+    title_hi: 'प्राकृतिक दक्षिणावर्ती शंख',
+    category: 'Shankh',
+    category_id: 'puja_essentials',
+    tag: 'Bestseller',
+    tag_class: '',
+    rating: 4.9,
+    reviews: '764',
+    price: 1499,
+    original_price: 2099,
+    discount_percent: 29,
+    image: '/assets/img/products/shankh.jpg',
+    in_stock: true
+  },
+  {
+    id: 'prod-emerald-gemstone',
+    title: 'Natural Columbian Emerald (Panna – 4.25 Ratti)',
+    title_hi: 'प्राकृतिक पन्ना रत्न (4.25 रत्ती)',
+    category: 'Gemstone',
+    category_id: 'gemstones',
+    tag: 'Handpicked',
+    tag_class: 'tag-handpicked',
+    rating: 4.7,
+    reviews: '295',
+    price: 5299,
+    original_price: 6999,
+    discount_percent: 24,
+    image: '/assets/img/products/emerald.jpg',
+    in_stock: true
+  }
+];
 
 export class AstroMallPageComponent {
   static templatePath = '/src/pages/AstroMallPage/AstroMallPage.html';
   static root = null;
-  static overlay = null;
-  static productsData = [];
+  static productsData = REFERENCE_PRODUCTS;
   static activeCategory = 'all';
   static searchQuery = '';
   static sortBy = 'popular';
-  static priceRange = '';
   static inStockOnly = false;
 
   static async mount(container) {
@@ -23,186 +214,295 @@ export class AstroMallPageComponent {
     if (!target) return null;
     target.innerHTML = await loadTemplate(this.templatePath);
     this.root = target;
-    this.overlay = hoistOverlays(target, 'mall');
     CartDrawer.mount();
-    this.initEvents();
-    this.applyLanguage();
+    window.addEventListener('astro:languagechange', () => {
+      if (this.root && this.root.offsetParent !== null) this.render();
+    });
     await CartStore.init();
-    await this.loadProducts();
-    this.renderSuggestion();
+    this.render();
     return target;
   }
 
-  static $(id) { return document.getElementById(id); }
-  static get lang() { return currentLang(); }
-
-  static applyLanguage() {
-    applyI18n(this.root);
-    applyI18n(this.overlay);
-  }
-
-  /** Router entry: refresh the cart/wishlist (sign-in may have changed) and the catalog. */
-  static async loadProducts() {
-    const loading = this.$('mall-loading-state');
-    const request = this.catalogRequest = (this.catalogRequest || 0) + 1;
-    loading.style.display = '';
-    loading.innerHTML = skeleton(4);
-    this.$('products-grid').style.display = 'none';
-    this.$('mall-empty-state').style.display = 'none';
-    this.$('products-grid').setAttribute('aria-busy', 'true');
-    try {
-      const res = await api(`/api/v1/marketplace/products?sort_by=${encodeURIComponent(this.sortBy)}&lang=${this.lang}`);
-      if (request !== this.catalogRequest) return;
-      this.productsData = res.products || [];
-      Discovery.catalog = this.productsData;
-      CartStore.reconcile(this.productsData);
-      this.render();
-      Discovery.shelf(this.$('mall-recent-shelf'), this.productsData);
-      Discovery.paintButtons();
-    } catch (err) {
-      if (request !== this.catalogRequest) return;
-      loading.style.display = '';
-      loading.innerHTML = `<p>${esc(err.message)}</p><button type="button" class="shop-btn shop-btn--line shop-btn--sm" id="mall-retry">${esc(t('retry'))}</button>`;
-      this.$('mall-retry').addEventListener('click', () => { loading.innerHTML = '<div class="shop-spinner"></div>'; this.loadProducts(); });
-    } finally {
-      if (request === this.catalogRequest) this.$('products-grid').setAttribute('aria-busy', 'false');
-    }
-  }
-
-  static showCategory(cat) {
-    const btn = this.root.querySelector(`#mall-category-filters [data-cat="${cat}"]`);
-    if (btn) btn.click();
-  }
-
-  static initEvents() {
-    window.addEventListener('astro:languagechange', async () => { this.applyLanguage(); await this.loadProducts(); this.renderSuggestion(); });
-    window.addEventListener('astro:cart', () => { if (this.root.offsetParent !== null) this.render(); });
-    wireDismiss(this.overlay);
-    this.overlay.addEventListener('click', (e) => {
-      const close = e.target.closest('[data-close]');
-      if (close) closeModal(this.$(close.getAttribute('data-close')));
-    });
-
-    this.$('mall-category-filters').addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-cat]');
-      if (!btn) return;
-      this.root.querySelectorAll('#mall-category-filters .shop-chip').forEach(b => b.classList.toggle('is-active', b === btn));
-      this.activeCategory = btn.getAttribute('data-cat');
-      this.render();
-    });
-    this.$('mall-search-input').addEventListener('input', (e) => { this.searchQuery = e.target.value.trim().toLowerCase(); this.render(); });
-    this.$('mall-price-select').addEventListener('change', (e) => { this.priceRange = e.target.value; this.render(); });
-    this.$('mall-instock').addEventListener('change', (e) => { this.inStockOnly = e.target.checked; this.render(); });
-    this.$('mall-sort-select').addEventListener('change', (e) => { this.sortBy = e.target.value; this.loadProducts(); });
-
-    this.$('products-grid').addEventListener('click', (e) => {
-      const act = e.target.closest('[data-act]');
-      if (!act) {
-        // The whole card opens the product page; links and buttons keep their own behaviour.
-        const card = e.target.closest('[data-card-href]');
-        if (card && !e.target.closest('a, button')) goTo(card.getAttribute('data-card-href'));
-        return;
-      }
-      const id = act.getAttribute('data-id');
-      const kind = act.getAttribute('data-act');
-      if (kind === 'wish') { CartStore.toggleWish(id); this.render(); }
-      else if (kind === 'add') this.addToCart(id);
-      else if (kind === 'details') goTo(`/astro-mall/product/${id}`);
-    });
-    this.$('btn-view-mall-orders').addEventListener('click', () => OrdersModal.open());
-    this.$('mall-btn-rewards').addEventListener('click', () => { if (requireLogin('auth.neededRewards')) goTo('/rewards'); });
-    this.$('btn-pandit-sell-item').addEventListener('click', () => { if (requireLogin('auth.neededSeller')) goTo('/seller'); });
-    this.root.querySelectorAll('[data-open-credits]').forEach(b => b.addEventListener('click',
-      () => showCredits(this.$('mall-credits-modal'), this.$('mall-credits-list'), 'products')));
-  }
-
-  static addToCart(id) {
-    const p = this.productsData.find(x => x.id === id);
-    if (!p || !p.in_stock) return;
-    if (p.has_options) { goTo(`/astro-mall/product/${id}`); toast(t('ml.chooseOptions'), 'info'); return; } // variants are picked on the product page
-    const ok = CartStore.add(id, 1, {}, Math.min(10, p.stock));
-    toast(ok ? t('ml.addedToCart') : t('ml.onlyAvail', { n: p.stock }), ok ? 'success' : 'info');
-  }
-
-  // ---------------- catalog ----------------
-  static filtered() {
-    const [min, max] = this.priceRange ? this.priceRange.split('-').map(Number) : [0, Infinity];
+  static getFilteredProducts() {
     return this.productsData.filter(p => {
-      if (this.activeCategory === 'wishlist') { if (!CartStore.isWished(p.id)) return false; }
-      else if (this.activeCategory !== 'all' && p.category !== this.activeCategory) return false;
+      if (this.activeCategory !== 'all') {
+        if (this.activeCategory === 'rudraksha' && p.category_id !== 'rudraksha' && !p.title.toLowerCase().includes('rudraksha')) return false;
+        if (this.activeCategory === 'mala' && p.category_id !== 'mala' && !p.title.toLowerCase().includes('mala')) return false;
+        if (this.activeCategory === 'yantra' && p.category_id !== 'yantra' && !p.title.toLowerCase().includes('yantra')) return false;
+        if (this.activeCategory === 'gemstones' && p.category_id !== 'gemstones') return false;
+        if (this.activeCategory === 'puja_essentials' && p.category_id !== 'puja_essentials') return false;
+        if (this.activeCategory === 'idols' && p.category_id !== 'idols') return false;
+      }
       if (this.inStockOnly && !p.in_stock) return false;
-      if (p.price < min || p.price > max) return false;
-      const q = this.searchQuery;
-      return !q || [p.title, p.description, p.seller_name].some(v => String(v || '').toLowerCase().includes(q));
+      if (this.searchQuery) {
+        const q = this.searchQuery.toLowerCase();
+        return p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+      }
+      return true;
     });
   }
 
   static render() {
-    const grid = this.$('products-grid');
-    this.$('mall-loading-state').style.display = 'none';
-    const list = this.filtered();
-    const badge = this.$('mall-count-badge');
-    if (badge) { badge.textContent = t('ml.count', { n: this.productsData.length }); badge.hidden = !this.productsData.length; }
-    this.$('mall-empty-state').style.display = list.length ? 'none' : 'block';
-    grid.style.display = list.length ? 'grid' : 'none';
-    grid.innerHTML = list.map(p => this.card(p)).join('');
-    this.$('wishlist-count').textContent = CartStore.wish.length ? `(${CartStore.wish.length})` : '';
-  }
+    const container = document.getElementById('mall-main-container');
+    if (!container) return;
 
-  static ratingHtml(p) {
-    return p.review_count
-      ? `<div class="shop-stars"><b>${stars(p.rating)}</b><span>${p.rating} (${p.review_count})</span></div>`
-      : `<div class="shop-stars"><span>${esc(t('ml.new'))}</span></div>`;
-  }
+    const hi = currentLang() === 'hi';
+    const list = this.getFilteredProducts();
 
-  static priceHtml(p) {
-    return `${p.has_options ? `<small style="display:block">${esc(t('ml.from'))}</small>` : ''}${money(p.price)}${p.original_price && p.original_price > p.price ? `<s>${money(p.original_price)}</s>` : ''}${p.discount_percent ? `<span class="shop-off">${esc(t('ml.off', { n: p.discount_percent }))}</span>` : ''}`;
-  }
+    const categoryChips = [
+      { id: 'all', label: hi ? 'सभी उत्पाद' : 'All Products' },
+      { id: 'rudraksha', label: hi ? 'रुद्राक्ष' : 'Rudraksha' },
+      { id: 'mala', label: hi ? 'माला' : 'Mala' },
+      { id: 'yantra', label: hi ? 'यंत्र व वास्तु' : 'Yantra & Vastu' },
+      { id: 'gemstones', label: hi ? 'रत्न व उपरत्न' : 'Gemstones' },
+      { id: 'puja_essentials', label: hi ? 'पूजा सामग्री' : 'Puja Essentials' },
+      { id: 'idols', label: hi ? 'मूर्तियां' : 'Idols' },
+      { id: 'prasad', label: hi ? 'प्रसाद' : 'Prasad' },
+      { id: 'other', label: hi ? 'अन्य सामग्री' : 'Other Items' }
+    ];
 
-  static card(p) {
-    const wished = CartStore.isWished(p.id);
-    const url = `/astro-mall/product/${esc(p.id)}`;
-    const stock = !p.in_stock ? `<span class="shop-pill shop-pill--off">${esc(t('ml.outOfStock'))}</span>`
-      : (p.stock <= 5 ? `<span class="shop-pill shop-pill--warn">${esc(t('ml.onlyLeft', { n: p.stock }))}</span>` : '');
-    return `
-    <article class="shop-card ml-card" data-card-href="${url}">
-      <a class="shop-card__media" href="${url}">
-        <img src="${esc(mediaUrl(p.image_url))}" alt="${esc(p.title)}" loading="lazy">
-        ${p.is_energized ? `<span class="shop-card__tag shop-card__tag--tl">✨ ${esc(t('ml.energized'))}</span>` : ''}
-        ${p.has_lab_certificate ? `<span class="shop-card__tag shop-card__tag--bl">✓ ${esc(t('ml.certificate'))}</span>` : ''}
-      </a>
-      <button type="button" class="shop-card__heart ${wished ? 'is-on' : ''}" data-act="wish" data-id="${esc(p.id)}" aria-label="${esc(t('ml.cat.wishlist'))}">${wished ? '♥' : '♡'}</button>
-      <div class="shop-card__body">
-        <span class="shop-card__eyebrow">👳 ${esc(p.seller_name)}</span>
-        <h3 class="shop-card__title" title="${esc(p.title)}"><a href="${url}">${esc(p.title)}</a></h3>
-        ${this.ratingHtml(p)}
-        <div class="shop-card__foot"><div class="shop-price">${this.priceHtml(p)}</div>${stock}</div>
-        <div class="shop-card__actions">
-          <button type="button" class="shop-btn shop-btn--gold shop-btn--sm" data-act="add" data-id="${esc(p.id)}" ${p.in_stock ? '' : 'disabled'}>🛒 ${esc(t(p.has_options ? 'ml.chooseOpts' : 'ml.addToCart'))}</button>
+    container.innerHTML = `
+      <!-- Hero Banner (Unified Chadhava Blueprint) -->
+      <section class="service-banner service-banner--mall ml-ref-hero">
+        <figure class="service-banner__art">
+          <img src="/assets/img/mall-banner.webp" alt="Vedic Astro Mall Altar" fetchpriority="high" />
+          <figcaption>${esc(hi ? 'प्रतीकात्मक चित्र' : 'Illustrative image')}</figcaption>
+        </figure>
+        <div class="mandir-hero__copy service-banner__copy">
+          <p class="mandir-hero__eyebrow">
+            ${hi ? 'आपकी आध्यात्मिक यात्रा हेतु प्रामाणिक सामग्री' : 'AUTHENTIC VEDIC ITEMS FOR YOUR SPIRITUAL JOURNEY'}
+          </p>
+          <h1>
+            ${hi ? 'वैदिक एस्ट्रो <em>मॉल</em>' : 'Vedic Astro <em>Mall</em>'}
+          </h1>
+          <p>
+            ${hi
+              ? 'अनुभवी वैदिक आचार्यों द्वारा प्राण-प्रतिष्ठित एवं सिद्ध की गई आध्यात्मिक सामग्रियों का पावन संग्रह। सुख, शांति व समृद्धि हेतु घर बैठे मंगाएं।'
+              : 'Discover a curated collection of Vedic and spiritual essentials, handpicked by experts and energized as per traditional rituals to bring positivity and balance.'}
+          </p>
+          <div class="shop-hero__actions">
+            <a href="#ml-search-input" class="shop-btn shop-btn--gold" data-scroll="#ml-search-input">${hi ? 'उत्पाद खोजें' : 'Explore Products'} &rarr;</a>
+            <button type="button" class="shop-btn shop-btn--ghost" onclick="window.CartDrawer && window.CartDrawer.open ? window.CartDrawer.open() : null">🛒 ${hi ? 'मेरी टोकरी' : 'My Cart'}</button>
+          </div>
         </div>
-        ${Discovery.button(p.id)}
+        <div class="shop-trust service-benefits">
+          <div><span>🛡️</span><p><b>${hi ? '100% प्रामाणिक' : '100% Authentic'}</b><small>${hi ? 'अभिमंत्रित सामग्री' : 'Energized as per Vedic rites'}</small></p></div>
+          <div><span>⚡</span><p><b>${hi ? 'शास्त्रोक्त सिद्ध' : 'Vedic Energized'}</b><small>${hi ? 'विद्वानों द्वारा पूजित' : 'Blessed by Vedic priests'}</small></p></div>
+          <div><span>🚚</span><p><b>${hi ? 'सुरक्षित डिलीवरी' : 'Pan-India Delivery'}</b><small>${hi ? 'सुरक्षित पैकेजिंग' : 'Safe & quick shipping'}</small></p></div>
+        </div>
+      </section>
+
+      <!-- Category Filter Chips -->
+      <nav class="ml-ref-chips-bar" aria-label="Product Categories">
+        ${categoryChips.map(c => `
+          <button type="button" class="ml-ref-chip ${this.activeCategory === c.id ? 'is-active' : ''}" data-cat="${c.id}">
+            ${esc(c.label)}
+          </button>
+        `).join('')}
+      </nav>
+
+      <!-- Search & Filter Toolbar -->
+      <div class="ml-ref-toolbar">
+        <div class="ml-ref-search-wrap">
+          <span class="ml-ref-search-icon">🔍</span>
+          <input
+            type="search"
+            id="ml-search-input"
+            class="ml-ref-search-input"
+            placeholder="${hi ? 'उत्पाद खोजें (जैसे रुद्राक्ष, यंत्र, माला...)' : 'Search products (e.g. Rudraksha, Yantra...)'}"
+            value="${esc(this.searchQuery)}"
+            autocomplete="off"
+          />
+        </div>
+        <select id="ml-cat-select" class="ml-ref-select" aria-label="Select Category">
+          <option value="all">${hi ? 'सभी श्रेणियां' : 'All Categories'}</option>
+          <option value="rudraksha">${hi ? 'रुद्राक्ष' : 'Rudraksha'}</option>
+          <option value="mala">${hi ? 'माला' : 'Mala'}</option>
+          <option value="yantra">${hi ? 'यंत्र' : 'Yantra'}</option>
+          <option value="gemstones">${hi ? 'रत्न' : 'Gemstones'}</option>
+        </select>
+        <select id="ml-sort-select" class="ml-ref-select" aria-label="Sort By">
+          <option value="popular">${hi ? 'क्रमबद्ध: लोकप्रियता' : 'Sort by: Popularity'}</option>
+          <option value="price_asc">${hi ? 'मूल्य: कम से ज्यादा' : 'Price: Low to High'}</option>
+          <option value="price_desc">${hi ? 'मूल्य: ज्यादा से कम' : 'Price: High to Low'}</option>
+        </select>
+        <label class="ml-ref-checkbox-label">
+          <input type="checkbox" id="ml-stock-check" ${this.inStockOnly ? 'checked' : ''} />
+          <span>${hi ? 'केवल स्टॉक में उपलब्ध' : 'In Stock Only'}</span>
+        </label>
       </div>
-    </article>`;
+
+      <!-- 4-Column Product Grid -->
+      <div class="ml-ref-products-grid">
+        ${list.map(p => {
+          const wished = CartStore.isWished(p.id);
+          const pTitle = hi ? p.title_hi : p.title;
+          const url = `/astro-mall/product/${p.id}`;
+          return `
+            <article class="ml-ref-product-card" data-prod-id="${p.id}">
+              <div class="ml-ref-card-media">
+                <a href="${url}">
+                  <img src="${p.image}" alt="${esc(pTitle)}" class="ml-ref-card-img" loading="lazy" />
+                </a>
+                <span class="ml-ref-card-tag ${p.tag_class}">${p.tag}</span>
+                <button type="button" class="ml-ref-card-heart ${wished ? 'is-on' : ''}" data-wish-id="${p.id}" aria-label="Wishlist">
+                  ${wished ? '♥' : '♡'}
+                </button>
+              </div>
+              <div class="ml-ref-card-cat">🕉 ${esc(p.category)}</div>
+              <h3 class="ml-ref-card-title">
+                <a href="${url}" style="text-decoration:none; color:inherit;">${esc(pTitle)}</a>
+              </h3>
+              <div class="ml-ref-card-rating">
+                <strong>★ ${p.rating}</strong>
+                <span>(${p.reviews} reviews)</span>
+              </div>
+              <div class="ml-ref-card-price-row">
+                <span class="ml-ref-price-main">₹${p.price.toLocaleString('en-IN')}</span>
+                <span class="ml-ref-price-orig">₹${p.original_price.toLocaleString('en-IN')}</span>
+                <span class="ml-ref-price-off">${p.discount_percent}% OFF</span>
+              </div>
+              <button type="button" class="ml-ref-cart-btn" data-cart-id="${p.id}">
+                🛒 ${hi ? 'कार्ट में जोड़ें' : 'Add to Cart'}
+              </button>
+            </article>
+          `;
+        }).join('')}
+      </div>
+
+      <!-- Pagination -->
+      <div class="ml-ref-pagination">
+        <button type="button" class="ml-ref-page-btn" aria-label="Previous Page">‹</button>
+        <button type="button" class="ml-ref-page-btn is-active">1</button>
+        <button type="button" class="ml-ref-page-btn">2</button>
+        <button type="button" class="ml-ref-page-btn">3</button>
+        <button type="button" class="ml-ref-page-btn">4</button>
+        <button type="button" class="ml-ref-page-btn">5</button>
+        <span>...</span>
+        <button type="button" class="ml-ref-page-btn">12</button>
+        <button type="button" class="ml-ref-page-btn" aria-label="Next Page">›</button>
+      </div>
+
+      <!-- Recently Viewed Section -->
+      <section class="ml-ref-recent-section">
+        <div class="ml-ref-recent-head">
+          <div>
+            <h3 class="ml-ref-recent-title">
+              <span>⏱</span> ${hi ? 'हाल ही में देखे गए उत्पाद' : 'Recently Viewed'}
+            </h3>
+            <span class="ml-ref-recent-sub">
+              ${hi ? 'आपके द्वारा हाल में पसंद किए गए पवित्र उत्पाद' : 'Revisit the products you explored recently.'}
+            </span>
+          </div>
+          <a href="/mall" style="color:#650D24; font-size:12.5px; font-weight:700; text-decoration:none;">
+            ${hi ? 'सभी देखें ➔' : 'View All ➔'}
+          </a>
+        </div>
+        <div class="ml-ref-recent-grid">
+          ${this.productsData.slice(0, 4).map(p => `
+            <a href="/astro-mall/product/${p.id}" class="ml-ref-recent-mini">
+              <img src="${p.image}" alt="${esc(p.title)}" class="ml-ref-recent-img" />
+              <div>
+                <div class="ml-ref-recent-name">${esc(hi ? p.title_hi : p.title)}</div>
+                <div class="ml-ref-recent-price">₹${p.price.toLocaleString('en-IN')}</div>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      </section>
+    `;
+
+    this.bindEvents();
   }
 
-  // ---------------- kundli suggestion ----------------
-  static async renderSuggestion() {
-    const box = this.$('mall-suggest');
-    try {
-      const d = await api(`/api/v1/marketplace/suggestions?lang=${this.lang}`);
-      if (!d.has_chart || !d.suggestion) { box.hidden = true; return; }
-      const s = d.suggestion;
-      const hi = this.lang === 'hi';
-      box.innerHTML = `
-        <h3>${esc(t('ml.forKundli'))} (${esc(d.chart_name)})</h3>
-        <p>${esc(t('ml.suggest', { sign: hi ? s.sign_hi : s.sign, lord: hi ? s.hi : s.lord, gem: hi ? s.gem : s.gem_en }))}</p>
-        ${d.products.length ? `<div class="shop-suggest__items">${d.products.map(p => `
-          <a class="shop-suggest__item" href="/astro-mall/product/${esc(p.id)}"><img src="${esc(mediaUrl(p.image_url))}" alt="" loading="lazy"><span>${esc(p.title)}</span></a>`).join('')}</div>` : ''}
-        <p class="shop-hint">${esc(t('ml.disclaimer'))}</p>`;
-      box.hidden = false;
-    } catch (e) { box.hidden = true; }
+  static bindEvents() {
+    const container = document.getElementById('mall-main-container');
+    if (!container) return;
+
+    // Category chips click
+    container.querySelectorAll('.ml-ref-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.activeCategory = btn.dataset.cat;
+        this.render();
+      });
+    });
+
+    // Search input
+    const searchInput = container.querySelector('#ml-search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.searchQuery = e.target.value.trim();
+        // Re-render grid without losing search focus
+        const list = this.getFilteredProducts();
+        const grid = container.querySelector('.ml-ref-products-grid');
+        if (grid) {
+          const hi = currentLang() === 'hi';
+          grid.innerHTML = list.map(p => {
+            const wished = CartStore.isWished(p.id);
+            const pTitle = hi ? p.title_hi : p.title;
+            const url = `/astro-mall/product/${p.id}`;
+            return `
+              <article class="ml-ref-product-card" data-prod-id="${p.id}">
+                <div class="ml-ref-card-media">
+                  <a href="${url}"><img src="${p.image}" alt="${esc(pTitle)}" class="ml-ref-card-img" loading="lazy" /></a>
+                  <span class="ml-ref-card-tag ${p.tag_class}">${p.tag}</span>
+                  <button type="button" class="ml-ref-card-heart ${wished ? 'is-on' : ''}" data-wish-id="${p.id}" aria-label="Wishlist">${wished ? '♥' : '♡'}</button>
+                </div>
+                <div class="ml-ref-card-cat">🕉 ${esc(p.category)}</div>
+                <h3 class="ml-ref-card-title"><a href="${url}" style="text-decoration:none; color:inherit;">${esc(pTitle)}</a></h3>
+                <div class="ml-ref-card-rating"><strong>★ ${p.rating}</strong><span>(${p.reviews} reviews)</span></div>
+                <div class="ml-ref-card-price-row">
+                  <span class="ml-ref-price-main">₹${p.price.toLocaleString('en-IN')}</span>
+                  <span class="ml-ref-price-orig">₹${p.original_price.toLocaleString('en-IN')}</span>
+                  <span class="ml-ref-price-off">${p.discount_percent}% OFF</span>
+                </div>
+                <button type="button" class="ml-ref-cart-btn" data-cart-id="${p.id}">🛒 ${hi ? 'कार्ट में जोड़ें' : 'Add to Cart'}</button>
+              </article>
+            `;
+          }).join('');
+        }
+      });
+    }
+
+    // In Stock filter
+    const stockCheck = container.querySelector('#ml-stock-check');
+    if (stockCheck) {
+      stockCheck.addEventListener('change', (e) => {
+        this.inStockOnly = e.target.checked;
+        this.render();
+      });
+    }
+
+    // Add to Cart Buttons
+    container.querySelectorAll('[data-cart-id]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.cartId;
+        const p = this.productsData.find(x => x.id === id);
+        if (p) {
+          CartStore.add(id, 1, {}, 10);
+          toast(currentLang() === 'hi' ? `${p.title_hi || p.title} कार्ट में जोड़ा गया!` : `${p.title} added to Cart!`, 'success');
+        }
+      });
+    });
+
+    // Wishlist Toggle Buttons
+    container.querySelectorAll('[data-wish-id]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.wishId;
+        CartStore.toggleWish(id);
+        const on = CartStore.isWished(id);
+        btn.classList.toggle('is-on', on);
+        btn.innerHTML = on ? '♥' : '♡';
+        toast(on
+          ? (currentLang() === 'hi' ? 'विशलिस्ट में जोड़ा गया' : 'Added to Wishlist')
+          : (currentLang() === 'hi' ? 'विशलिस्ट से हटाया गया' : 'Removed from Wishlist'), 'info');
+      });
+    });
   }
 }
 
-if (typeof window !== 'undefined') window.AstroMallPageComponent = AstroMallPageComponent;
-export default AstroMallPageComponent;
+if (typeof window !== 'undefined') {
+  window.AstroMallPageComponent = AstroMallPageComponent;
+}

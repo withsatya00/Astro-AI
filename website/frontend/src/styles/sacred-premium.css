@@ -260,14 +260,14 @@ html[data-theme=dark] body :is(.mandir-page,.gs-page) .service-banner h1 em { co
 }
 @media(max-width:640px) {
   html body .mandir-page,html body .gs-page { padding:18px 16px 48px; }
-  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner { display:flex; flex-direction:column; align-items:stretch; min-height:0; padding:0; border-radius:20px; }
-  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner::after { display:block; inset:0 0 auto; height:221px; z-index:1; background:linear-gradient(0deg,#3e0b18,transparent 55%); }
-  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner__copy { width:100%; padding:22px 22px 28px; max-width:none; z-index:2; }
-  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner :is(.service-banner__art,.gs-hero-art) { position:relative; inset:auto; order:-1; width:100%; height:220px; min-height:0; z-index:0; flex:none; }
-  html body .service-banner figcaption { top:12px; bottom:auto; right:12px; }
-  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner h1 { font-size:2rem!important; }
-  html body .service-banner .shop-hero__actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
-  html body .service-banner .shop-hero__actions .shop-btn { width:100%; padding:12px 10px; font-size:.8rem!important; }
+  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner { display:flex; flex-direction:column; align-items:stretch; min-height:0; padding:0; border-radius:16px; margin-bottom:12px; }
+  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner::after { display:block; inset:0 0 auto; height:105px; z-index:1; background:linear-gradient(0deg,#3e0b18,transparent 55%); }
+  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner__copy { width:100%; padding:6px 12px 8px; max-width:none; z-index:2; }
+  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner :is(.service-banner__art,.gs-hero-art) { position:relative; inset:auto; order:-1; width:100%; height:105px; min-height:0; z-index:0; flex:none; }
+  html body .service-banner figcaption { top:6px; bottom:auto; right:8px; }
+  html body :is(.directory-masthead,.shop-page,.gs-page) .service-banner h1 { font-size:1.15rem!important; line-height:1.15!important; margin-bottom:3px!important; }
+  html body .service-banner .shop-hero__actions { display:flex; flex-direction:row; gap:8px; width:100%; margin:0 0 2px; }
+  html body .service-banner .shop-hero__actions .shop-btn { flex:1; width:auto; min-height:30px; padding:4px 8px; font-size:.7rem!important; border-radius:9999px; }
   html body .service-banner .shop-hero__actions .shop-btn:only-child { grid-column:1 / -1; }
   html body .mandir-choose { margin-top:32px; padding:22px 16px; }
   html body .mandir-choose__grid { grid-template-columns:1fr; }

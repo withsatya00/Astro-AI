@@ -40,7 +40,7 @@ window.ASTRO_UI_LOCALES = {
       "tab_featured_all": "All Featured (8)",
       "shortcut_milan": "Kundli Milan",
       "tool_kundli": "🪐 Kundli Diagram & Bhavas",
-      "dir_page_heading": "Vedic Astrologer Directory",
+      "dir_page_heading": "Talk to Verified Vedic Astrologers",
       "horo_section_tag": "Planetary Transits & Rashiphal",
       "shortcut_sadesati_sub": "Timeline & Impact",
       "horo_section_heading": "Vedic Rashiphal",
@@ -139,7 +139,7 @@ window.ASTRO_UI_LOCALES = {
       "nav_sadesati": "Sade Sati",
       "filter_remedies": "Remedies & Graha Shanti",
       "family_profiles_heading": "Family Birth Profiles (Family Horoscope)",
-      "dir_page_subtitle": "Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.",
+      "dir_page_subtitle": "Get personalised guidance for Love, Career, Marriage, Finance, Health and more. Connect with experienced astrologers in your language.",
       "hero_search_placeholder": "Search astrologer or concern...",
       "filter_marriage": "Love & Marriage",
       "tool_reports": "📑 PDF Kundali Reports",
@@ -1153,7 +1153,7 @@ window.ASTRO_UI_LOCALES = {
       "mp.download": "Download PDF report",
       "mp.preparing": "Preparing PDF...",
       "mp.failed": "Could not create the PDF. Please try again.",
-      "dir.eyebrow": "Guidance, chosen with clarity",
+      "dir.eyebrow": "Ancient wisdom · Modern solutions",
       "dir.filters": "Filters",
       "dir.trust.verified": "Verified profiles",
       "dir.trust.verifiedSub": "Credentials shown clearly",
@@ -5877,8 +5877,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Discover accurate insights for every important aspect of your life.",
       "hi": "अपने जीवन के हर महत्वपूर्ण पहलू के लिए सटीक जानकारियां खोजें।"
     },
-    "Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.": {
-      "en": "Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.",
+    "Personalised guidance for love, career, marriage and life. Connect with experienced astrologers in your language.": {
+      "en": "Personalised guidance for love, career, marriage and life. Connect with experienced astrologers in your language.",
       "hi": "करियर, विवाह, वित्त, रत्न और वैदिक उपाय शास्त्रों में प्रमाणित विद्वानों और विशेष ज्योतिषियों की खोज करें।"
     },
     "Discover your Moon constellation, deity, planetary lord, and baby naming syllable.": {
@@ -11453,8 +11453,8 @@ window.ASTRO_UI_LOCALES = {
       "en": "Vedic Astrologer",
       "hi": "वैदिक ज्योतिषी"
     },
-    "Vedic Astrologer Directory": {
-      "en": "Vedic Astrologer Directory",
+    "Talk to Verified Vedic Astrologers": {
+      "en": "Talk to Verified Vedic Astrologers",
       "hi": "वैदिक ज्योतिषी निर्देशिका"
     },
     "Vedic Astrologer (Instant & Free)": {
@@ -23585,12 +23585,12 @@ window.ASTRO_UI_LOCALES = {
       "en": "Could not create the PDF. Please try again.",
       "hi": "PDF नहीं बन सकी। कृपया फिर प्रयास करें।"
     },
-    "Guidance, chosen with clarity": {
-      "en": "Guidance, chosen with clarity",
+    "Ancient wisdom · Modern solutions": {
+      "en": "Ancient wisdom · Modern solutions",
       "hi": "स्पष्टता के साथ चुना गया मार्गदर्शन"
     },
     "स्पष्टता के साथ चुना गया मार्गदर्शन": {
-      "en": "Guidance, chosen with clarity",
+      "en": "Ancient wisdom · Modern solutions",
       "hi": "स्पष्टता के साथ चुना गया मार्गदर्शन"
     },
     "Filters": {

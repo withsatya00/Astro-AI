@@ -1,16 +1,24 @@
-// Quick filter chips above the astrologer grid. They drive the same App.directoryFilter as the select boxes.
+// Quick filter chips and recommendations for the Astrologers Directory page.
 import { esc } from '../../utils/shop.js';
 import { px } from '../../utils/premium-copy.js';
 import { AstrologerCardComponent } from '../AstrologerCard/AstrologerCard.js';
 
-const SPECIALTIES = ['Marriage', 'Career', 'Finance', 'Health', 'Kundli', 'Remedies'];
+const SPECIALTIES = ['Marriage', 'Career', 'Finance', 'Health', 'Kundli', 'Remedies', 'Business', 'Education'];
 const DEFAULT = { type: 'all', specialty: '', language: '', sort: 'popular', q: '' };
 
 export const DirectoryChips = {
   count: null,
+  page: 1,
+  pageSize: 12,
+  observer: null,
 
   init() {
     this.render();
+    const grid = document.getElementById('directory-page-cards-grid');
+    if (grid && !this.observer) {
+      this.observer = new MutationObserver(() => { this.page = 1; this.paginate(); });
+      this.observer.observe(grid, { childList: true });
+    }
     window.addEventListener('astro:languagechange', () => this.render());
     document.addEventListener('click', (e) => {
       const chip = e.target.closest('[data-dir-chip]');
@@ -18,11 +26,41 @@ export const DirectoryChips = {
     });
   },
 
-  chips() {
-    return [
-      ['all', '', px('dir.all')], ['type', 'online', px('dir.online')], ['type', 'human', px('dir.human')], ['type', 'ai', px('dir.ai')], ['sort', 'rating', px('dir.top')],
-      ...SPECIALTIES.map(s => ['specialty', s, px('dir.' + s)]),
-    ];
+  applyPrice(value) {
+    const grid = document.getElementById('directory-page-cards-grid');
+    if (!grid) return;
+    grid.querySelectorAll('.ac2').forEach(card => {
+      const rate = Number(card.dataset.price || 0);
+      card.dataset.priceHidden = String(value === 'free' ? rate !== 0 : value ? rate > Number(value) : false);
+    });
+    this.page = 1;
+    this.paginate();
+  },
+
+  paginate() {
+    const grid = document.getElementById('directory-page-cards-grid');
+    if (!grid) return;
+    const cards = [...grid.querySelectorAll('.ac2')].filter(card => card.dataset.priceHidden !== 'true');
+    const pages = Math.max(1, Math.ceil(cards.length / this.pageSize));
+    this.page = Math.min(this.page, pages);
+    cards.forEach((card, index) => {
+      card.style.display = (index < (this.page - 1) * this.pageSize || index >= this.page * this.pageSize) ? 'none' : '';
+    });
+
+    let pager = document.getElementById('directory-pager');
+    if (!pager) {
+      pager = document.createElement('nav');
+      pager.id = 'directory-pager';
+      pager.className = 'directory-pager';
+      pager.setAttribute('aria-label', 'Astrologer pages');
+      grid.after(pager);
+    }
+    pager.innerHTML = `<button type="button" data-page="${Math.max(1, this.page - 1)}" ${this.page === 1 ? 'disabled' : ''}>‹</button>${Array.from({ length: pages }, (_, i) => `<button type="button" data-page="${i + 1}" class="${this.page === i + 1 ? 'is-active' : ''}">${i + 1}</button>`).join('')}<button type="button" data-page="${Math.min(pages, this.page + 1)}" ${this.page === pages ? 'disabled' : ''}>›</button>`;
+    pager.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => {
+      this.page = Number(button.dataset.page);
+      this.paginate();
+      document.querySelector('.dir-section-header')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
   },
 
   isActive(kind, value) {
@@ -30,74 +68,73 @@ export const DirectoryChips = {
     if (kind === 'all') return f.type === 'all' && !f.specialty && f.sort !== 'rating';
     if (kind === 'type') return f.type === value;
     if (kind === 'sort') return f.sort === value;
-    return (f.specialty || '').toLowerCase() === value.toLowerCase();
+    return (f.specialty || '').toLowerCase() === (value || '').toLowerCase();
   },
 
   render() {
     this.renderRecommendations();
-    const host = document.getElementById('dir-quick-chips');
-    if (!host) return;
-    host.innerHTML = `<div class="dir-chip-row" role="group">${this.chips().map(([kind, value, label]) =>
-      `<button type="button" class="dir-chip ${this.isActive(kind, value) ? 'is-active' : ''}" data-dir-chip="${kind}" data-value="${esc(value)}" aria-pressed="${this.isActive(kind, value)}">${esc(label)}</button>`).join('')}</div>
-      <span class="dir-count" id="dir-result-count" aria-live="polite">${this.count == null ? '' : esc(px('dir.count', { n: this.count }))}</span>`;
+    this.paint();
   },
 
   setCount(n) {
     this.count = n;
-    const el = document.getElementById('dir-result-count');
-    if (el) el.textContent = px('dir.count', { n });
     this.renderRecommendations();
+    queueMicrotask(() => this.paginate());
   },
 
   renderRecommendations() {
-    const grid = document.getElementById('directory-page-cards-grid');
-    if (!grid) return;
-    let layout = grid.parentElement;
-    if (!layout.classList.contains('directory-discovery-layout')) {
-      layout = document.createElement('div');
-      layout.className = 'directory-discovery-layout';
-      grid.before(layout);
-      layout.append(grid);
-    }
-    let aside = layout.querySelector('.directory-recommendations');
-    if (!aside) {
-      aside = document.createElement('aside');
-      aside.className = 'directory-recommendations';
-      layout.prepend(aside);
-    }
+    const rankList = document.getElementById('dir-ranking-list');
     const experts = [...(window.App?.astrologersList || [])]
       .filter(a => Number(a.consultations_count) > 0)
       .sort((a, b) => Number(b.consultations_count) - Number(a.consultations_count)).slice(0, 5);
-    aside.hidden = !experts.length;
-    layout.classList.toggle('has-recommendations', !!experts.length);
-    const hi = window.I18n?.currentLang === 'hi';
-    aside.innerHTML = `<p class="directory-eyebrow">${hi ? 'विशेषज्ञ खोजें' : 'DISCOVER EXPERTS'}</p><h2>${hi ? 'सबसे अधिक परामर्श' : 'Most consulted'}</h2><p class="directory-recommendations-note">${hi ? 'कुल परामर्शों के आधार पर, वर्तमान परिणामों में से।' : 'By total consultations, from your current results.'}</p><div class="directory-recommendations-list">${experts.map(a => {
-      const slug = encodeURIComponent(a.slug || a.id);
-      const name = hi && a.name_hi ? a.name_hi : a.name;
-      return `<a class="directory-expert-row" href="/astrologer/${slug}"><img src="${esc(AstrologerCardComponent.getPortraitUrl(a))}" alt="" loading="lazy" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'"><span><strong>${esc(name)}</strong><small>${esc((a.languages || []).toString())}</small><b>${Number(a.rating) > 0 ? '★ ' + Number(a.rating).toFixed(1) + ' · ' : ''}₹${Number(a.price_per_minute) || 0}/${hi ? 'मिनट' : 'min'}</b></span><i aria-hidden="true">↗</i></a>`;
-    }).join('')}</div>`;
+
+    if (rankList && experts.length > 0) {
+      const hi = window.I18n?.currentLang === 'hi';
+      rankList.innerHTML = experts.map((a, index) => {
+        const slug = encodeURIComponent(a.slug || a.id);
+        const name = (hi && a.name_hi) ? a.name_hi : a.name;
+        const statusClass = a.availability === 'busy' ? 'dir-status-busy' : 'dir-status-online';
+        const statusText = a.availability === 'busy' ? '● Busy' : '● Online';
+        return `
+          <a class="dir-expert-row" href="/astrologers/${slug}" data-nav-link>
+            <span class="dir-rank-num">${index + 1}</span>
+            <img src="${esc(AstrologerCardComponent.getPortraitUrl(a))}" alt="" class="dir-rank-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>${esc(name)}</strong>
+              <div class="dir-rank-meta">★ ${Number(a.rating || 0).toFixed(1)} &bull; ${AstrologerCardComponent.compact(Number(a.review_count || 0))}</div>
+              <span class="dir-rank-status ${statusClass}">${statusText}</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
   },
 
   apply(kind, value) {
     const app = window.App;
     if (!app) return;
     const f = app.directoryFilter;
-    if (kind === 'all') Object.assign(f, DEFAULT, { q: f.q, language: f.language });
-    else if (kind === 'type') f.type = f.type === value ? 'all' : value;
-    else if (kind === 'sort') f.sort = f.sort === value ? 'popular' : value;
-    else f.specialty = (f.specialty || '').toLowerCase() === value.toLowerCase() ? '' : value;
-    // Keep the select boxes in step with the chips.
+    if (kind === 'all') {
+      Object.assign(f, DEFAULT, { q: f.q, language: f.language });
+    } else if (kind === 'type') {
+      f.type = f.type === value ? 'all' : value;
+    } else if (kind === 'sort') {
+      f.sort = f.sort === value ? 'popular' : value;
+    } else {
+      f.specialty = (f.specialty || '').toLowerCase() === (value || '').toLowerCase() ? '' : value;
+    }
+
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-    set('dir-filter-mode', f.type); set('dir-filter-sort', f.sort); set('dir-filter-specialty', f.specialty || '');
-    this.render();
+    set('dir-filter-mode', f.type);
+    set('dir-filter-sort', f.sort);
+    set('dir-filter-specialty', f.specialty || '');
+
+    this.paint();
     app.loadAstrologerDirectory();
   },
 
-  /** Called after each directory load so the chips match the current filter (e.g. after "Clear filters"). */
   paint() {
-    const host = document.getElementById('dir-quick-chips');
-    if (!host) return;
-    host.querySelectorAll('[data-dir-chip]').forEach(b => {
+    document.querySelectorAll('[data-dir-chip]').forEach(b => {
       const on = this.isActive(b.dataset.dirChip, b.dataset.value || '');
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', String(on));

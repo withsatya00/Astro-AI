@@ -1,0 +1,2050 @@
+/* ==========================================================================
+   Astro Jyotish — Home Page Premium Reference Stylesheet
+   Blueprint: media_1793439144869_15265fb2.jpg
+   Design System: Deep Maroon (#450817 / #650D24), Antique Gold (#D9A441),
+                  Warm Cream (#FFF9EF / #FAF5EB), Ivory Cards (#FFFFFF)
+   ========================================================================== */
+
+:root {
+  --home-maroon-dark: #3B0612;
+  --home-maroon-primary: #5A0C20;
+  --home-maroon-mid: #6E1229;
+  --home-maroon-light: #841833;
+  --home-gold-dark: #B8822A;
+  --home-gold-primary: #D9A441;
+  --home-gold-light: #F4C46B;
+  --home-cream-bg: #FFF9EF;
+  --home-cream-surface: #FAF4E8;
+  --home-card-bg: #FFFFFF;
+  --home-border-soft: #EADBCA;
+  --home-border-gold: #E5CE9F;
+  --home-text-primary: #231815;
+  --home-text-secondary: #5C5248;
+  --home-text-muted: #84786C;
+}
+
+/* Base Home Container */
+.home-page-container {
+  background-color: var(--home-cream-bg);
+  color: var(--home-text-primary);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   1. HERO BANNER & TRUST STATS
+   ========================================================================== */
+
+.home-ref-hero-banner {
+  position: relative;
+  background-color: #24040B;
+  background-image: 
+    linear-gradient(90deg, #20030A 0%, #2A050E 34%, rgba(42, 5, 14, 0.98) 48%, rgba(42, 5, 14, 0.72) 60%, rgba(42, 5, 14, 0.15) 78%, transparent 100%),
+    url('/assets/img/astrologers-banner.webp');
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 20px;
+  margin: 16px auto 0;
+  max-width: 1240px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(36, 4, 11, 0.28);
+  border: 1px solid rgba(217, 164, 65, 0.45);
+}
+
+@media (max-width: 1280px) {
+  .home-ref-hero-banner {
+    margin-left: 16px;
+    margin-right: 16px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-hero-banner {
+    margin: 8px 8px 0;
+    border-radius: 14px;
+    background-color: #24040B;
+    background-image: 
+      linear-gradient(180deg, rgba(32, 3, 10, 0.6) 0%, rgba(32, 3, 10, 0.96) 110px, #24040B 150px, #3B0612 100%),
+      url('/assets/img/astrologers-banner.webp');
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    max-height: none;
+  }
+}
+
+/* Decorative Gold Corner Borders */
+.home-ref-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(217, 164, 65, 0.2);
+  border-radius: 18px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.home-ref-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: block;
+  max-width: 590px;
+  padding: 22px 38px 16px;
+}
+
+@media (max-width: 991px) {
+  .home-ref-hero-inner {
+    padding: 18px 22px 14px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-hero-inner {
+    padding: 10px 14px 8px;
+    max-width: 100%;
+  }
+}
+
+/* Hero Pill Eyebrow */
+.home-ref-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 12px;
+  background: rgba(36, 4, 11, 0.65);
+  border: 1px solid rgba(217, 164, 65, 0.55);
+  border-radius: 9999px;
+  color: #F4D38A;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-eyebrow {
+    font-size: 8px;
+    padding: 2px 7px;
+    gap: 4px;
+    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+  }
+}
+
+.home-ref-eyebrow-diamond {
+  color: var(--home-gold-primary);
+  font-size: 9px;
+}
+
+/* Hero Title */
+.home-ref-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 2.75vw, 2.65rem);
+  font-weight: 700;
+  color: #FFFDF8;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-hero-title {
+    font-size: 1.25rem;
+    line-height: 1.16;
+    margin-bottom: 4px;
+  }
+}
+
+.home-ref-hero-sub {
+  color: #EAD7BC;
+  font-size: 13px;
+  line-height: 1.45;
+  max-width: 480px;
+  margin: 0 0 12px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-hero-sub {
+    font-size: 10.5px;
+    line-height: 1.32;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Hero Search Bar */
+.home-ref-search-bar {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 9999px;
+  padding: 4px 5px 4px 18px;
+  max-width: 460px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  margin-bottom: 12px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-search-bar {
+    max-width: 100%;
+    margin-bottom: 8px;
+    padding: 3px 4px 3px 12px;
+  }
+}
+
+.home-ref-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  color: #231815;
+  padding: 6px 4px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-search-input {
+    font-size: 12px;
+    padding: 4px 2px;
+  }
+}
+
+.home-ref-search-input::placeholder {
+  color: #9CA3AF;
+}
+
+.home-ref-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #5A0C20 0%, #3B0612 100%);
+  color: #FFF9EF;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  white-space: nowrap;
+}
+
+.home-ref-search-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.home-ref-search-circle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #5A0C20;
+  color: #FFF9EF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, filter 0.18s ease;
+  margin-right: 2px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-search-circle-btn {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.home-ref-search-circle-btn:hover {
+  transform: scale(1.06);
+  filter: brightness(1.15);
+}
+
+/* Trending Tags */
+.home-ref-trending-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-trending-row {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+}
+
+.home-ref-trending-label {
+  color: #F4C46B;
+  font-size: 11.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-trending-label {
+    font-size: 10px;
+  }
+}
+
+.home-ref-trending-pill {
+  display: inline-block;
+  padding: 3px 11px;
+  border-radius: 9999px;
+  background: rgba(30, 4, 9, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #FFFDF8;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+@media (max-width: 640px) {
+  .home-ref-trending-pill {
+    font-size: 9.5px;
+    padding: 2px 7px;
+  }
+}
+
+.home-ref-trending-pill:hover {
+  background: rgba(217, 164, 65, 0.28);
+  border-color: #D9A441;
+  color: #FFFFFF;
+}
+
+/* Hero Action Buttons */
+.home-ref-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .home-ref-cta-group {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+  }
+}
+
+.home-ref-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ECC371;
+  color: #2E050D;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(236, 195, 113, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .home-ref-btn-primary {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 11.5px;
+  }
+}
+
+.home-ref-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(236, 195, 113, 0.5);
+}
+
+.home-ref-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(30, 4, 9, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #FFFDF8;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 20px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .home-ref-btn-secondary {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 11.5px;
+  }
+}
+
+.home-ref-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(217, 164, 65, 0.55);
+}
+
+/* Docked 4-Item Stats Strip at the bottom of the hero banner (media_1793444953415_4374adef.jpg) */
+.home-ref-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  background: #3B0612;
+  border-top: 1px solid rgba(217, 164, 65, 0.35);
+  padding: 12px 28px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 3;
+}
+
+.home-ref-stat-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.home-ref-stat-icon-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 164, 65, 0.5);
+  background: rgba(217, 164, 65, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #F4C46B;
+  flex-shrink: 0;
+}
+
+.home-ref-stat-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #FFFDF8;
+  line-height: 1.15;
+}
+
+.home-ref-stat-lbl {
+  font-size: 11.5px;
+  color: #EAD7BC;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@media (max-width: 991px) {
+  .home-ref-stats-strip {
+    padding: 10px 16px;
+  }
+  .home-ref-stat-col {
+    gap: 8px;
+  }
+  .home-ref-stat-icon-circle {
+    width: 28px;
+    height: 28px;
+  }
+  .home-ref-stat-num {
+    font-size: 14px;
+  }
+  .home-ref-stat-lbl {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-stats-strip {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    padding: 6px 4px !important;
+    gap: 2px !important;
+    background: #32050E !important;
+    border-top: 1px solid rgba(217, 164, 65, 0.3) !important;
+  }
+  .home-ref-stat-col {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 3px !important;
+  }
+  .home-ref-stat-icon-circle {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .home-ref-stat-icon-circle svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+  .home-ref-stat-num {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+  }
+  .home-ref-stat-lbl {
+    font-size: 8px !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Hero Right Art Column */
+.home-ref-hero-art {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-ref-art-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(217, 164, 65, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 991px) {
+  .home-ref-art-frame {
+    height: 280px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-art-frame {
+    height: 200px;
+  }
+}
+
+.home-ref-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: contrast(1.05) saturate(1.1);
+}
+
+/* "Trusted by 2M+ Devotees" Floating Badge */
+.home-ref-devotee-badge {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(28, 5, 11, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(217, 164, 65, 0.7);
+  border-radius: 9999px;
+  padding: 6px 14px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.home-ref-devotee-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.home-ref-devotee-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  border: 1.5px solid #D9A441;
+  margin-left: -8px;
+  object-fit: cover;
+}
+
+.home-ref-devotee-avatar:first-child {
+  margin-left: 0;
+}
+
+.home-ref-devotee-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.home-ref-devotee-text span:first-child {
+  font-size: 10px;
+  color: #EBD8BA;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.home-ref-devotee-text strong {
+  font-size: 12px;
+  color: #F4C46B;
+  font-weight: 800;
+}
+
+
+
+/* Green Verified Pill Below Hero */
+.home-ref-verified-pill-row {
+  display: flex;
+  justify-content: center;
+  margin: 18px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #EAF7EE;
+  border: 1px solid #B8E4C3;
+  color: #1B7A37;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(27, 122, 55, 0.08);
+}
+
+.home-ref-verified-pill svg {
+  color: #1B7A37;
+}
+
+/* ==========================================================================
+   2. FOUR-STEP JOURNEY SECTION
+   ========================================================================== */
+
+.home-ref-journey-sec {
+  max-width: 1240px;
+  margin: 40px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-journey-head {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.home-ref-section-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--home-gold-dark);
+  margin-bottom: 6px;
+}
+
+.home-ref-section-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 8px;
+}
+
+.home-ref-section-sub {
+  font-size: 14px;
+  color: var(--home-text-secondary);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.home-ref-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 1024px) {
+  .home-ref-journey-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-journey-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .home-ref-journey-card {
+    padding: 14px 12px;
+    border-radius: 14px;
+  }
+  .home-ref-journey-num {
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    font-size: 10.5px;
+  }
+  .home-ref-journey-icon {
+    font-size: 22px;
+    margin: 4px 0 8px;
+  }
+  .home-ref-journey-title {
+    font-size: 13.5px;
+    margin-bottom: 4px;
+  }
+  .home-ref-journey-desc {
+    font-size: 11px;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .home-ref-journey-link {
+    font-size: 11px;
+  }
+}
+
+.home-ref-journey-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 18px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 16px rgba(59, 6, 18, 0.04);
+}
+
+.home-ref-journey-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--home-gold-primary);
+  box-shadow: 0 10px 26px rgba(59, 6, 18, 0.09);
+}
+
+.home-ref-journey-num {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: #FAF3E6;
+  border: 1px solid #EADBCA;
+  color: #8C6A2E;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-ref-journey-icon {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFF9EF;
+  border: 1px solid #EADBCA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--home-maroon-primary);
+  margin-bottom: 14px;
+}
+
+.home-ref-journey-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 8px;
+}
+
+.home-ref-journey-desc {
+  font-size: 12.5px;
+  color: var(--home-text-secondary);
+  line-height: 1.5;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.home-ref-journey-link {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--home-maroon-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.18s ease;
+}
+
+.home-ref-journey-card:hover .home-ref-journey-link {
+  color: var(--home-gold-dark);
+}
+
+/* ==========================================================================
+   3. GAU SEVA BANNER STRIP
+   ========================================================================== */
+
+.home-ref-gausewa-banner {
+  max-width: 1240px;
+  margin: 28px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-gausewa-inner {
+  background: linear-gradient(135deg, #4A0B1B 0%, #631025 50%, #4A0B1B 100%);
+  border: 1px solid rgba(217, 164, 65, 0.45);
+  border-radius: 18px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 8px 24px rgba(74, 11, 27, 0.16);
+}
+
+@media (max-width: 768px) {
+  .home-ref-gausewa-inner {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+}
+
+.home-ref-gausewa-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+@media (max-width: 768px) {
+  .home-ref-gausewa-left {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.home-ref-gausewa-art {
+  width: 70px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(217, 164, 65, 0.6);
+  flex-shrink: 0;
+}
+
+.home-ref-gausewa-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFF9EF;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .home-ref-gausewa-title {
+    justify-content: center;
+  }
+}
+
+.home-ref-gausewa-sub {
+  font-size: 13px;
+  color: #EBD8BA;
+  margin: 0;
+  max-width: 580px;
+  line-height: 1.45;
+}
+
+.home-ref-gausewa-btn {
+  background: linear-gradient(135deg, #E6B24D 0%, #D9A441 100%);
+  color: #3B0612;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(217, 164, 65, 0.35);
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.home-ref-gausewa-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* ==========================================================================
+   4. QUICK SERVICE ACTION CARDS (6 CARDS)
+   ========================================================================== */
+
+.home-ref-shortcuts-sec {
+  max-width: 1240px;
+  margin: 28px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .home-ref-shortcuts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-shortcuts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .home-ref-shortcut-card {
+    padding: 12px 6px;
+    border-radius: 12px;
+  }
+  .home-ref-shortcut-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+  .home-ref-shortcut-title {
+    font-size: 11.5px;
+    line-height: 1.2;
+  }
+  .home-ref-shortcut-sub {
+    display: none;
+  }
+}
+
+.home-ref-shortcut-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 16px;
+  padding: 18px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: 0 4px 12px rgba(59, 6, 18, 0.03);
+}
+
+.home-ref-shortcut-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--home-maroon-primary);
+  box-shadow: 0 8px 20px rgba(59, 6, 18, 0.08);
+}
+
+.home-ref-shortcut-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFF9EF;
+  border: 1px solid #EADBCA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.home-ref-shortcut-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.home-ref-shortcut-sub {
+  font-size: 11px;
+  color: var(--home-text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* ==========================================================================
+   5. TOP VEDIC ASTROLOGERS SECTION (3x2 GRID)
+   ========================================================================== */
+
+.home-ref-astrologers-sec {
+  max-width: 1240px;
+  margin: 44px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-astrologers-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.home-ref-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1B7A37;
+  margin-bottom: 6px;
+}
+
+.home-ref-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #1B7A37;
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(27, 122, 55, 0.2);
+}
+
+.home-ref-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--home-maroon-primary);
+  border: 1.5px solid var(--home-maroon-primary);
+  border-radius: 9999px;
+  padding: 8px 18px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.home-ref-btn-outline:hover {
+  background: var(--home-maroon-primary);
+  color: #FFF9EF;
+}
+
+/* 3-Column Desktop Grid for 6 Astrologers */
+.home-ref-astro-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 991px) {
+  .home-ref-astro-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-astro-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .home-ref-astro-card {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+  .home-ref-astro-top {
+    gap: 10px !important;
+    margin-bottom: 6px !important;
+  }
+  .home-ref-astro-avatar-wrap {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .home-ref-astro-name {
+    font-size: 13.5px !important;
+  }
+  .home-ref-astro-specs {
+    font-size: 10.5px !important;
+    margin-bottom: 6px !important;
+  }
+  .home-ref-astro-langs {
+    display: none !important;
+  }
+  .home-ref-astro-bottom {
+    padding-top: 6px !important;
+    margin-top: 0 !important;
+  }
+  .home-ref-astro-rate {
+    font-size: 13px !important;
+  }
+  .home-ref-astro-btn-chat,
+  .home-ref-astro-btn-call {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    border-radius: 9999px !important;
+  }
+}
+
+/* Astrologer Card (Identical to Directory Card Spec) */
+.home-ref-astro-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(59, 6, 18, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.home-ref-astro-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--home-gold-primary);
+  box-shadow: 0 10px 24px rgba(59, 6, 18, 0.08);
+}
+
+.home-ref-astro-top {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.home-ref-astro-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 2px solid var(--home-gold-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.home-ref-astro-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.home-ref-astro-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-ref-astro-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.home-ref-astro-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 9999px;
+}
+
+.home-ref-astro-status--online {
+  color: #1B7A37;
+  background: #EAF7EE;
+}
+
+.home-ref-astro-status--busy {
+  color: #C2410C;
+  background: #FFF7ED;
+}
+
+.home-ref-astro-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+.home-ref-astro-heart {
+  background: none;
+  border: none;
+  color: #B4A79A;
+  cursor: pointer;
+  padding: 2px;
+  transition: color 0.18s ease;
+}
+
+.home-ref-astro-heart:hover {
+  color: #DC2626;
+}
+
+.home-ref-astro-name {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.home-ref-astro-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--home-text-secondary);
+  margin-bottom: 8px;
+}
+
+.home-ref-astro-rating {
+  font-weight: 700;
+  color: #3B0612;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.home-ref-astro-rating-star {
+  color: #D9A441;
+}
+
+.home-ref-astro-specs {
+  font-size: 11.5px;
+  color: var(--home-text-secondary);
+  line-height: 1.4;
+  margin: 0 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-ref-astro-langs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.home-ref-astro-lang-tag {
+  background: #F8F4EC;
+  border: 1px solid #EADBCA;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--home-text-secondary);
+}
+
+.home-ref-astro-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #F2E8DC;
+  margin-top: auto;
+}
+
+.home-ref-astro-rate {
+  font-size: 15px;
+  font-weight: 800;
+  color: #3B0612;
+}
+
+.home-ref-astro-rate small {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--home-text-muted);
+}
+
+.home-ref-astro-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-ref-astro-btn-chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #5A0C20;
+  color: #FFF9EF;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.home-ref-astro-btn-chat:hover {
+  background: #73132B;
+}
+
+.home-ref-astro-btn-call {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1px solid var(--home-maroon-primary);
+  color: var(--home-maroon-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.home-ref-astro-btn-call:hover {
+  background: var(--home-maroon-primary);
+  color: #FFF9EF;
+}
+
+/* ==========================================================================
+   6. EXPLORE OUR ASTROLOGY SERVICES (6 CARDS)
+   ========================================================================== */
+
+.home-ref-services-sec {
+  max-width: 1240px;
+  margin: 44px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-services-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .home-ref-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.home-ref-service-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 16px;
+  padding: 20px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: 0 4px 12px rgba(59, 6, 18, 0.03);
+}
+
+.home-ref-service-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--home-gold-primary);
+  box-shadow: 0 8px 22px rgba(59, 6, 18, 0.08);
+}
+
+.home-ref-service-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFF9EF;
+  border: 1px solid #EADBCA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: var(--home-maroon-primary);
+}
+
+.home-ref-service-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.home-ref-service-sub {
+  font-size: 11px;
+  color: var(--home-text-secondary);
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* ==========================================================================
+   7. PANCHANG & HOROSCOPE SPLIT (2 COLUMNS)
+   ========================================================================== */
+
+.home-ref-split-sec {
+  max-width: 1240px;
+  margin: 44px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-split-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+}
+
+@media (max-width: 991px) {
+  .home-ref-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Panchang Card */
+.home-ref-panchang-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(59, 6, 18, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home-ref-panchang-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.home-ref-panchang-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--home-maroon-primary);
+  margin-bottom: 4px;
+}
+
+.home-ref-panchang-date {
+  font-size: 12.5px;
+  color: var(--home-text-secondary);
+}
+
+.home-ref-panchang-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--home-maroon-primary);
+  text-decoration: none;
+}
+
+.home-ref-panchang-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 640px) {
+  .home-ref-panchang-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.home-ref-panchang-box {
+  background: #FAF5EB;
+  border: 1px solid #EADBCA;
+  border-radius: 12px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.home-ref-panchang-box--highlight {
+  background: #FFF3DC;
+  border-color: #E6C88D;
+  grid-column: span 1;
+}
+
+@media (max-width: 640px) {
+  .home-ref-panchang-box--highlight {
+    grid-column: span 2;
+  }
+}
+
+.home-ref-panchang-box-lbl {
+  font-size: 10.5px;
+  color: var(--home-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.home-ref-panchang-box-val {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #3B0612;
+  line-height: 1.2;
+}
+
+.home-ref-panchang-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid #F2E8DC;
+}
+
+.home-ref-panchang-tags {
+  font-size: 11.5px;
+  color: var(--home-maroon-primary);
+  font-weight: 700;
+}
+
+.home-ref-panchang-btn {
+  background: #5A0C20;
+  color: #FFF9EF;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background 0.18s ease;
+}
+
+.home-ref-panchang-btn:hover {
+  background: #73132B;
+}
+
+/* Daily Horoscope Card (Deep indigo/purple celestial card) */
+.home-ref-horoscope-card {
+  background: linear-gradient(135deg, #1A1333 0%, #281D4C 50%, #150F2B 100%);
+  border: 1px solid rgba(217, 164, 65, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  color: #FFF9EF;
+  box-shadow: 0 4px 16px rgba(26, 19, 51, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-ref-horoscope-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFF9EF;
+  margin: 0 0 6px;
+}
+
+.home-ref-horoscope-sub {
+  font-size: 12.5px;
+  color: #D3CBEE;
+  margin: 0 0 16px;
+}
+
+.home-ref-horoscope-glyph-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 18px;
+}
+
+.home-ref-horoscope-glyph {
+  width: 76px;
+  height: 76px;
+  border-radius: 9999px;
+  background: rgba(217, 164, 65, 0.15);
+  border: 1.5px solid rgba(217, 164, 65, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  color: #F4C46B;
+  box-shadow: 0 0 24px rgba(217, 164, 65, 0.25);
+}
+
+.home-ref-horoscope-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-ref-horoscope-select {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(217, 164, 65, 0.5);
+  color: #FFF9EF;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.home-ref-horoscope-select option {
+  background: #1A1333;
+  color: #FFF9EF;
+}
+
+.home-ref-horoscope-btn {
+  background: linear-gradient(135deg, #E6B24D 0%, #D9A441 100%);
+  color: #3B0612;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.home-ref-horoscope-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   8. WHY CHOOSE ASTRO JYOTISH? (4 COLUMNS)
+   ========================================================================== */
+
+.home-ref-why-sec {
+  max-width: 1240px;
+  margin: 50px auto 0;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.home-ref-why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+@media (max-width: 991px) {
+  .home-ref-why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-ref-why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-ref-why-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 18px;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(59, 6, 18, 0.03);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.home-ref-why-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 6, 18, 0.07);
+}
+
+.home-ref-why-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 9999px;
+  background: #FFF9EF;
+  border: 1px solid #EADBCA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--home-maroon-primary);
+  margin-bottom: 14px;
+}
+
+.home-ref-why-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 6px;
+}
+
+.home-ref-why-sub {
+  font-size: 12px;
+  color: var(--home-text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ==========================================================================
+   9. HOW ASTRO JYOTISH WORKS (PARCHMENT BANNER)
+   ========================================================================== */
+
+.home-ref-how-sec {
+  max-width: 1240px;
+  margin: 44px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-how-banner {
+  background: linear-gradient(135deg, #FFF6E5 0%, #FAEDD0 100%);
+  border: 1.5px solid #E2C792;
+  border-radius: 20px;
+  padding: 28px 36px;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 6px 20px rgba(184, 130, 42, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 991px) {
+  .home-ref-how-banner {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+}
+
+.home-ref-how-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3B0612;
+  margin: 0 0 6px;
+}
+
+.home-ref-how-sub {
+  font-size: 13.5px;
+  color: var(--home-text-secondary);
+  margin: 0 0 18px;
+}
+
+.home-ref-how-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-ref-how-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3B0612;
+}
+
+.home-ref-how-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: #D9A441;
+  color: #3B0612;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.home-ref-how-art {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-ref-how-scroll-img {
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(184, 130, 42, 0.25));
+}
+
+/* ==========================================================================
+   10. TESTIMONIALS ("Real People, Real Guidance.") (3 CARDS)
+   ========================================================================== */
+
+.home-ref-testi-sec {
+  max-width: 1240px;
+  margin: 48px auto 0;
+  padding: 0 16px;
+}
+
+.home-ref-testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 991px) {
+  .home-ref-testi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-ref-testi-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 14px rgba(59, 6, 18, 0.04);
+}
+
+.home-ref-testi-stars {
+  color: #D9A441;
+  font-size: 16px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.home-ref-testi-quote {
+  font-size: 13.5px;
+  color: var(--home-text-primary);
+  line-height: 1.55;
+  margin: 0 0 18px;
+  font-style: italic;
+}
+
+.home-ref-testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #F2E8DC;
+}
+
+.home-ref-testi-avatar-init {
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  background: #FAF3E6;
+  border: 1px solid #EADBCA;
+  color: var(--home-maroon-primary);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-ref-testi-author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-ref-testi-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #3B0612;
+}
+
+.home-ref-testi-role {
+  font-size: 11px;
+  color: var(--home-text-muted);
+}
+
+/* ==========================================================================
+   11. FREQUENTLY ASKED QUESTIONS (ACCORDION)
+   ========================================================================== */
+
+.home-ref-faq-sec {
+  max-width: 920px;
+  margin: 54px auto 60px;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.home-ref-faq-search-box {
+  position: relative;
+  max-width: 440px;
+  margin: 18px auto 20px;
+}
+
+.home-ref-faq-search-input {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 9999px;
+  padding: 9px 18px 9px 38px;
+  font-size: 13px;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(59, 6, 18, 0.04);
+}
+
+.home-ref-faq-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--home-text-muted);
+  font-size: 13px;
+}
+
+/* Category Filter Pills */
+.home-ref-faq-pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.home-ref-faq-pill {
+  border: 1px solid var(--home-border-soft);
+  background: #FFFFFF;
+  color: var(--home-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.home-ref-faq-pill.active,
+.home-ref-faq-pill:hover {
+  background: var(--home-maroon-primary);
+  border-color: var(--home-maroon-primary);
+  color: #FFF9EF;
+}
+
+/* FAQ Accordion Item */
+.home-ref-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.home-ref-faq-item {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.18s ease;
+}
+
+.home-ref-faq-item:hover {
+  border-color: var(--home-gold-primary);
+}
+
+.home-ref-faq-q-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.home-ref-faq-q-text {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3B0612;
+  line-height: 1.4;
+}
+
+.home-ref-faq-chevron {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: #FAF5EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--home-maroon-primary);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.home-ref-faq-item.is-open .home-ref-faq-chevron {
+  transform: rotate(180deg);
+}
+
+.home-ref-faq-answer {
+  display: none;
+  padding: 0 20px 18px;
+  font-size: 13px;
+  color: var(--home-text-secondary);
+  line-height: 1.6;
+}
+
+.home-ref-faq-item.is-open .home-ref-faq-answer {
+  display: block;
+}
+
+
+/* FAQ Accordion JS support */
+.home-ref-faq-item.active .home-ref-faq-answer,
+.home-ref-faq-item .home-ref-faq-answer:not(.hidden) {
+  display: block !important;
+}
+
+.home-ref-faq-item .home-ref-faq-answer.hidden {
+  display: none !important;
+}
+
+.home-ref-faq-item.active .home-ref-faq-chevron {
+  transform: rotate(180deg);
+}
+
+/* Hydrated Astrologer Cards in 3x2 Grid */
+.home-ref-astro-grid .ac-card {
+  background: #FFFFFF;
+  border: 1px solid var(--home-border-soft);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(59, 6, 18, 0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.home-ref-astro-grid .ac-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--home-gold-primary);
+  box-shadow: 0 10px 24px rgba(59, 6, 18, 0.08);
+}

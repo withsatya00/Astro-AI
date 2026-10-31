@@ -1,43 +1,59 @@
-/* One compact photographic banner across the four service pages. */
+/* One compact photographic banner across all service pages (1:1 Chadhava Blueprint). */
 .directory-masthead .service-banner,
 .shop-page .service-banner,
-.gs-page .service-banner {
+.gs-page .service-banner,
+.ml-reference-page .service-banner,
+.calc-reference-page .service-banner,
+.service-banner {
  position:relative; display:flex; align-items:center; isolation:isolate; overflow:hidden;
- min-height:340px; padding:30px 36px; gap:0; margin-bottom:0;
+ min-height:340px; padding:30px 36px; gap:0; margin-bottom:24px;
  border:1px solid #e5d9c7; border-radius:22px; background-color:#3e0b18; background-image:var(--brand-banner);
  box-shadow:0 16px 38px -30px #281a3c70;
 }
 .service-banner .service-banner__art,
-.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:-2; background:#650f23; }
+.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:1; background:#3e0b18; }
 .service-banner .service-banner__art img,
-.service-banner .gs-hero-art img { display:block; width:100%; height:100%; min-height:0; max-height:none; object-fit:cover; object-position:75% 45%; }
+.service-banner .gs-hero-art img { display:block; width:100%; height:100%; min-height:0; max-height:none; object-fit:cover; object-position:right center; }
 .directory-masthead .service-banner::after,
 .shop-page .service-banner::after,
-.gs-page .service-banner::after {
- content:''; position:absolute; inset:0; width:auto; height:auto; border:0; border-radius:0; z-index:-1; pointer-events:none;
- background:linear-gradient(90deg,#3e0b18 0%,#3e0b18f5 30%,#3e0b18d6 43%,#3e0b1850 65%,#3e0b180d 100%);
+.gs-page .service-banner::after,
+.gs-reference-page .service-banner::after,
+.service-banner--gausewa::after,
+.service-banner::after {
+ content:'' !important; position:absolute !important; inset:0 !important; width:auto !important; height:auto !important; border:0 !important; border-radius:0 !important; z-index:2 !important; pointer-events:none !important;
+ background:linear-gradient(90deg, #200308 0%, #26040C 36%, rgba(38, 4, 12, 0.96) 50%, rgba(38, 4, 12, 0.65) 66%, rgba(38, 4, 12, 0.15) 80%, transparent 100%) !important;
 }
 .service-banner::before,.service-banner .gs-hero-art::after { display:none; }
-.service-banner .service-banner__copy { position:relative; z-index:1; width:58%; max-width:680px; padding:0; min-width:0; }
+.service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:58%; max-width:680px; padding:0; min-width:0; }
 .service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#3e0b1880; font-size:.55rem; line-height:1.5; backdrop-filter:blur(6px); }
 .service-banner .gs-illustration { position:relative; width:100%; height:100%; margin:0; }
 .service-banner .directory-eyebrow,
 .service-banner .mandir-hero__eyebrow,
-.service-banner .gs-eyebrow { color:#efd4a0; font-size:.62rem; font-weight:700; letter-spacing:.15em; line-height:1.6; margin:0 0 14px; }
+.service-banner .gs-eyebrow { color:#efd4a0 !important; font-size:.62rem; font-weight:700; letter-spacing:.15em; line-height:1.6; margin:0 0 14px; text-transform:uppercase; }
 .gs-page .service-banner .gs-eyebrow { margin-bottom:10px; }
 .service-banner .gs-hero-name { font-size:.62rem; letter-spacing:.17em; margin-bottom:8px; }
+.service-banner h1,
 .directory-masthead .service-banner h1,
 .shop-page .service-banner h1,
-.gs-page .service-banner h1 { font-family:var(--font-serif); font-size:clamp(1.65rem,2.65vw,2.25rem); font-weight:600; letter-spacing:-.035em; line-height:1.18; margin:0 0 14px; color:#fffdf8; }
-.service-banner h1 em { font-style:normal; color:#efd4a0; -webkit-text-fill-color:#efd4a0; }
+.mandir-page .service-banner h1,
+.mall-page .service-banner h1,
+.gs-page .service-banner h1,
+.gs-reference-page .service-banner h1,
+.service-banner--gausewa h1 { font-family:'Playfair Display', Georgia, serif !important; font-size:clamp(1.65rem,2.65vw,2.25rem) !important; font-weight:700 !important; letter-spacing:-.035em !important; line-height:1.18 !important; margin:0 0 14px !important; color:#fffdf8 !important; }
+.service-banner h1 em { font-style:normal !important; color:#efd4a0 !important; -webkit-text-fill-color:#efd4a0 !important; }
 .service-banner .directory-title-row { gap:10px; margin-bottom:12px; }
 .service-banner .directory-title-row h1 { margin-bottom:0; }
 .service-banner .directory-badge { font-size:.6rem; min-height:25px; padding:4px 9px; }
 .service-banner .mandir-hero__titlerow { gap:8px; margin-bottom:12px; }
 .service-banner .shop-hero__badge,.service-banner .mandir-hero__count { font-size:.6rem; min-height:24px; padding:4px 9px; }
+.service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
 .directory-masthead .service-banner .directory-subtitle,
 .shop-page .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
-.gs-page .service-banner .gs-hero-copy > p { max-width:510px; color:#e6dcea; font-size:.83rem; line-height:1.8; margin:0 0 18px; }
+.mandir-page .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
+.gs-page .service-banner .gs-hero-copy > p,
+.gs-reference-page .service-banner .service-banner__copy > p,
+.service-banner--gausewa .service-banner__copy > p,
+.service-banner .service-banner__copy p { max-width:540px !important; color:#e6dcea !important; font-size:.85rem !important; line-height:1.8 !important; margin:0 0 18px !important; opacity:1 !important; }
 .service-banner .shop-hero__actions { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
 .service-banner .shop-btn,.gs-page .service-banner .gs-btn { min-height:42px; padding:10px 15px; font-size:.73rem; border-radius:9px; width:auto; }
 .service-banner .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
@@ -86,25 +102,39 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .directory-masthead .service-benefits > div,.shop-page .service-benefits > div { padding:12px; gap:8px; }
 }
 @media(max-width:640px) {
- .directory-masthead .service-banner,.shop-page .service-banner,.gs-page .service-banner { display:flex; flex-direction:column; align-items:stretch; min-height:0; padding:0; border-radius:17px; }
- .service-banner .service-banner__art,.service-banner .gs-hero-art { position:relative; inset:auto; z-index:-2; order:-1; width:100%; height:155px; flex:none; min-height:0; max-height:none; }
- .service-banner .service-banner__art img,.service-banner .gs-hero-art img { object-position:75% 42%; min-height:0; height:100%; max-height:none; }
- .directory-masthead .service-banner::after,.shop-page .service-banner::after,.gs-page .service-banner::after { display:block; inset:0 0 auto; height:156px; background:linear-gradient(0deg,#3e0b18,transparent 55%); }
- .service-banner .service-banner__copy { width:100%; max-width:none; padding:10px 20px 22px; }
- .directory-masthead .service-banner h1,.shop-page .service-banner h1,.gs-page .service-banner h1 { font-size:clamp(1.35rem,5.9vw,1.65rem); line-height:1.25; margin-bottom:12px; }
- .service-banner .directory-title-row h1 { font-size:clamp(1.35rem,5.9vw,1.65rem) !important; }
- .service-banner .gs-hero-name { display:none; }
- .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size:.54rem; margin-bottom:10px; letter-spacing:.11em; }
- .directory-masthead .service-banner .directory-subtitle,.shop-page .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),.gs-page .service-banner .gs-hero-copy > p { font-size:.77rem; line-height:1.8; margin-bottom:16px; }
- .service-banner .shop-btn,.gs-page .service-banner .gs-btn { min-height:40px; padding:9px 12px; font-size:.65rem; }
- .service-banner .shop-btn { flex:0 1 auto; }
- .service-banner figcaption { bottom:24px; right:10px; font-size:.5rem; }
- .gs-page .service-banner .gs-hero-caption { margin-top:12px; font-size:.55rem; }
- .directory-masthead .service-benefits,.shop-page .service-benefits { margin:12px 0 18px; }
- .directory-masthead .service-benefits > div,.shop-page .service-benefits > div { padding:10px 8px; gap:7px; align-items:flex-start; flex-direction:column; }
- .directory-masthead .service-benefits b,.shop-page .service-benefits b { font-size:.62rem; }
- .directory-masthead .service-benefits small,.shop-page .service-benefits small { font-size:.58rem; }
- .directory-masthead .service-benefits > div > span,.shop-page .service-benefits > div > span { width:25px; height:25px; border-radius:7px; }
+ .service-banner { display:flex !important; flex-direction:column !important; align-items:stretch !important; min-height:0 !important; padding:0 !important; border-radius:16px !important; margin-bottom:12px !important; background-color:#3e0b18 !important; border:1px solid #e5d9c7 !important; overflow:hidden !important; max-height:none !important; }
+ .service-banner .service-banner__art,.service-banner .gs-hero-art { position:relative !important; inset:auto !important; z-index:1 !important; order:-1 !important; width:100% !important; height:105px !important; flex:none !important; min-height:0 !important; max-height:none !important; overflow:hidden !important; }
+ .service-banner .service-banner__art img,.service-banner .gs-hero-art img { width:100% !important; height:100% !important; object-fit:cover !important; object-position:75% 42% !important; display:block !important; }
+ .service-banner::after { content:'' !important; position:absolute !important; top:0 !important; left:0 !important; right:0 !important; height:105px !important; background:linear-gradient(0deg,#3e0b18 0%,rgba(62,11,24,0) 65%) !important; pointer-events:none !important; z-index:2 !important; display:block !important; }
+ .service-banner figcaption { position:absolute !important; top:6px !important; right:8px !important; bottom:auto !important; z-index:3 !important; padding:2px 6px !important; border:1px solid rgba(255,255,255,0.35) !important; border-radius:4px !important; color:#f7eedf !important; background:rgba(62,11,24,0.65) !important; font-size:.46rem !important; backdrop-filter:blur(4px) !important; }
+ .service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:100% !important; max-width:none !important; padding:6px 12px 8px !important; box-sizing:border-box !important; }
+ .service-banner h1,
+ .directory-masthead .service-banner h1,
+ .shop-page .service-banner h1,
+ .gs-page .service-banner h1,
+ .gs-reference-page .service-banner h1,
+ .service-banner--gausewa h1,
+ .mandir-page .service-banner h1,
+ .mall-page .service-banner h1,
+ .service-banner--mall h1 { font-family:'Playfair Display', Georgia, serif !important; font-size:1.15rem !important; line-height:1.15 !important; margin:0 0 3px !important; color:#fffdf8 !important; }
+ .service-banner h1 em { color:#efd4a0 !important; font-style:normal !important; }
+ .service-banner .directory-title-row,.service-banner .mandir-hero__titlerow { display:none !important; }
+ .service-banner .gs-hero-name { display:none !important; }
+ .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size:.52rem !important; margin:0 0 2px !important; letter-spacing:.12em !important; color:#efd4a0 !important; font-weight:700 !important; text-transform:uppercase !important; line-height:1.2 !important; }
+ .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
+ .directory-masthead .service-banner .directory-subtitle,
+ .gs-page .service-banner .gs-hero-copy > p,
+ .gs-reference-page .service-banner .service-banner__copy > p,
+ .service-banner--gausewa .service-banner__copy > p { font-size:.7rem !important; line-height:1.3 !important; margin:0 0 6px !important; color:#e6dcea !important; display:-webkit-box !important; -webkit-line-clamp:2 !important; -webkit-box-orient:vertical !important; overflow:hidden !important; }
+ .service-banner .shop-hero__actions { display:flex !important; flex-direction:row !important; gap:8px !important; width:100% !important; margin:0 0 2px !important; }
+ .service-banner .shop-hero__actions .shop-btn,.service-banner .shop-hero__actions a,.service-banner .shop-hero__actions button { display:flex !important; align-items:center !important; justify-content:center !important; flex:1 !important; width:auto !important; min-height:30px !important; padding:4px 8px !important; border-radius:9999px !important; font-size:.7rem !important; font-weight:700 !important; text-decoration:none !important; text-align:center !important; box-sizing:border-box !important; white-space:nowrap !important; }
+ .service-banner .shop-hero__actions .shop-btn--gold,.service-banner .shop-hero__actions a.shop-btn--gold { background:#f1cf8b !important; color:#3e0b18 !important; border:none !important; box-shadow:0 2px 8px rgba(0,0,0,0.2) !important; }
+ .service-banner .shop-hero__actions .shop-btn--ghost,.service-banner .shop-hero__actions button.shop-btn--ghost,.service-banner .shop-hero__actions a.shop-btn--ghost,.service-banner .shop-hero__actions .shop-btn--white { background:rgba(255,255,255,0.08) !important; border:1px solid rgba(255,255,255,0.25) !important; color:#fffdf8 !important; }
+ .service-banner > .service-benefits { position:relative !important; z-index:3 !important; width:auto !important; margin:2px 8px 6px !important; padding-top:4px !important; border-top:1px solid rgba(239,212,160,0.25) !important; display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:4px !important; }
+ .service-banner > .service-benefits > div { display:flex !important; flex-direction:column !important; align-items:center !important; text-align:center !important; gap:3px !important; padding:1px 2px !important; border:0 !important; }
+ .service-banner > .service-benefits > div > span { display:flex !important; align-items:center !important; justify-content:center !important; width:22px !important; height:22px !important; border:1px solid rgba(239,212,160,0.4) !important; border-radius:50% !important; background:rgba(239,212,160,0.12) !important; color:#efd4a0 !important; font-size:.65rem !important; margin:0 auto !important; }
+ .service-banner > .service-benefits b { font-size:.56rem !important; color:#fffdf8 !important; font-weight:600 !important; text-align:center !important; line-height:1.1 !important; }
+ .service-banner > .service-benefits small { display:none !important; }
  .gs-content-grid { margin-top:26px; gap:28px; }
  .gs-purpose { padding:20px 17px; }
  .gs-purpose strong { font-size:1.05rem; }
@@ -130,8 +160,11 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 }
 /* Benefit points sit directly on the banner, under the buttons: no cards, just icon + text with a hairline above. */
 .service-banner:has(> .service-benefits) { flex-direction:column; align-items:stretch; justify-content:space-between; gap:20px; }
+.service-banner > .service-benefits,
 .directory-masthead .service-banner > .service-benefits,
-.shop-page .service-banner > .service-benefits { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; max-width:720px; width:100%; margin:0; padding:16px 0 0; border:0; border-top:1px solid #efd4a040; border-radius:0; background:none; box-shadow:none; backdrop-filter:none; }
+.shop-page .service-banner > .service-benefits,
+.mandir-page .service-banner > .service-benefits { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; max-width:760px; width:100%; margin:0; padding:16px 0 0; border:0; border-top:1px solid #efd4a040; border-radius:0; background:none; box-shadow:none; backdrop-filter:none; }
+.service-banner > .service-benefits.service-benefits--4col { grid-template-columns:repeat(4,minmax(0,1fr)) !important; max-width:960px !important; }
 .service-banner > .service-benefits > div { display:flex; align-items:center; gap:11px; min-width:0; margin:0; padding:2px 14px; border:0 !important; border-radius:0; background:none; }
 .service-banner > .service-benefits > div:first-child { padding-left:0; }
 .service-banner > .service-benefits > div + div { border-left:1px solid #efd4a02e !important; }
@@ -143,15 +176,6 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .shop-page .service-banner > .service-benefits { max-width:68%; }
  .service-banner > .service-benefits > div { padding:2px 10px; }
  .service-banner > .service-benefits > div > span { display:none; }
-}
-@media(max-width:640px) {
- .service-banner:has(> .service-benefits) { gap:0; }
- .directory-masthead .service-banner > .service-benefits,
- .shop-page .service-banner > .service-benefits { width:auto; margin:0 20px 18px; padding-top:12px; grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
- .service-banner > .service-benefits > div { flex-direction:column; align-items:center; text-align:center; gap:5px; padding:2px 4px; }
- .service-banner > .service-benefits > div:first-child { padding-left:4px; }
- .service-banner > .service-benefits small { display:none; }
- .service-banner > .service-benefits b { font-size:.62rem; }
 }
 /* Vedic Tools dropdown lists every tool, so it scrolls instead of running off the screen. */
 .nav-dropdown-menu--tools{width:21rem;max-width:calc(100vw - 24px);max-height:75vh;overflow-y:auto;overscroll-behavior:contain}

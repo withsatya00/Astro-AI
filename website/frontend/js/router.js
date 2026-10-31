@@ -228,13 +228,14 @@ const Router = {
       window.ChadhavaExperience?.openEvent?.(id);
     }
     else if (/^\/mandir-seva\/puja\/[\w-]+\/?$/.test(pathname)) {
-      // A puja detail page: the puja list sits behind it, the detail opens over it and has its own shareable URL.
-      this.switchView('view-mandir');
+      this.switchView('view-puja-detail');
       this.updateNavbarActive('nav-link-mandir');
       const id = pathname.replace('/mandir-seva/puja/', '').replace(/\/+$/, '');
-      const page = window.MandirSevaPageComponent;
-      if (page) { page.mode = 'puja'; if (page.applyMode) page.applyMode(); }
-      setTimeout(() => window.ChadhavaExperience?.calendarDetail?.(id), 150);
+      if (window.PujaDetailPageComponent) {
+        setTimeout(() => window.PujaDetailPageComponent.open(id), 20);
+      } else if (window.ChadhavaExperience) {
+        setTimeout(() => window.ChadhavaExperience?.calendarDetail?.(id), 20);
+      }
     }
     else if (pathname.startsWith('/mandir-seva/')) {
       this.switchView('view-temple');
@@ -316,7 +317,7 @@ const Router = {
   },
 
   switchView(viewId) {
-    const views = ['view-dashboard', 'view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang', 'view-mandir', 'view-mall', 'view-admin', 'view-product', 'view-temple', 'view-rewards', 'view-gifts', 'view-gau-sewa', 'view-seller', 'view-verify'];
+    const views = ['view-dashboard', 'view-home', 'view-directory', 'view-profile', 'view-consultation', 'view-horoscope', 'view-calculators', 'view-panchang', 'view-mandir', 'view-mall', 'view-admin', 'view-product', 'view-temple', 'view-puja-detail', 'view-rewards', 'view-gifts', 'view-gau-sewa', 'view-seller', 'view-verify'];
     views.forEach(v => {
       const el = document.getElementById(v);
       if (el) {

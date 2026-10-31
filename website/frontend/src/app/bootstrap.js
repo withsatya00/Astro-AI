@@ -21,6 +21,7 @@ import { AstroMallPageComponent } from '../pages/AstroMallPage/AstroMallPage.js?
 import { AdminPageComponent } from '../pages/AdminPage/AdminPage.js?v=r16';
 import { ProductPageComponent } from '../pages/ProductPage/ProductPage.js?v=r23';
 import { TemplePageComponent } from '../pages/TemplePage/TemplePage.js?v=r23';
+import { PujaDetailPageComponent } from '../pages/PujaDetailPage/PujaDetailPage.js?v=r1';
 import { RewardsPageComponent } from '../pages/RewardsPage/RewardsPage.js?v=r24';
 import { SellerPageComponent } from '../pages/SellerPage/SellerPage.js?v=r23';
 import { VerifyPageComponent } from '../pages/VerifyPage/VerifyPage.js?v=r23';
@@ -82,6 +83,7 @@ export class Bootstrap {
         AdminPageComponent.mount('#view-admin'),
         ProductPageComponent.mount('#view-product'),
         TemplePageComponent.mount('#view-temple'),
+        PujaDetailPageComponent.mount('#view-puja-detail'),
         RewardsPageComponent.mount('#view-rewards'),
         SellerPageComponent.mount('#view-seller'),
         VerifyPageComponent.mount('#view-verify'),

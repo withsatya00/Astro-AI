@@ -1,253 +1,273 @@
-<!-- Top Rated Astrologers & Discovery Section -->
-<section class="featured-astrologers-section bg-[#FFFDF7] border-b border-[#E7E2D8] py-10 md:py-14" id="featured-astrologers-section">
-  <div class="featured-astrologers-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <!-- 1. LIVE ASTROLOGERS STORIES / TICKER BAR (Astrotalk Style) -->
-    <div class="mb-10 p-4 rounded-2xl bg-gradient-to-r from-[#faf6fb] via-[#FFFDF7] to-[#FFFBEB] border border-[#e3d8f3] shadow-2xs">
-      <div class="flex items-center justify-between mb-3 px-1">
-        <div class="flex items-center gap-2">
-          <span class="inline-flex w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-          <h3 class="font-bold text-xs sm:text-sm text-[#1E1B4B] uppercase tracking-wider flex items-center gap-1.5">
-            <span>🔴 Live Astrologers Online Now</span>
-            <span class="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-full">34+ Available</span>
-          </h3>
-        </div>
-        <span class="text-[11px] text-[#4a1b9a] font-bold cursor-pointer hover:underline" onclick="Router.navigate('/astrologers')">
-          View All Live ➔
-        </span>
+<!-- Astro Jyotish — Top Vedic Astrologers Section (Matching Reference media_1793439144869_15265fb2.jpg) -->
+<section class="home-ref-astrologers-sec" id="featured-astrologers-section">
+  <!-- Header with Live Status & View All Link -->
+  <div class="home-ref-astrologers-header">
+    <div>
+      <div class="home-ref-live-pill">
+        <span class="home-ref-live-dot"></span>
+        <span>Live Astrologer Online Now: 25+ Available</span>
       </div>
-
-      <!-- Horizontal scrolling avatars with glowing emerald rings -->
-      <div class="flex items-center gap-4 sm:gap-6 overflow-x-auto pb-2 scrollbar-none select-none">
-        <!-- Story 1 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/pt-rameshwar-dwivedi')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/pt-rameshwar-dwivedi.jpg" alt="Pt. Rameshwar" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Pt. Rameshwar</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 2 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/acharya-shastri')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/acharya-shastri.jpg" alt="Acharya Shastri" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Acharya Shastri</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 3 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/dr-radhika-nair')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/dr-radhika-nair.jpg" alt="Dr. Radhika" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Dr. Radhika</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 4 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/acharya-kn-rao')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/acharya-kn-rao.jpg" alt="Acharya K.N. Rao" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">K.N. Rao Ji</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 5 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/pandit-ji-maharaj')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/pandit-ji-maharaj.jpg" alt="Pandit Ji Maharaj" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Pandit Ji</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 6 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/acharya-venkatesh-dikshitar')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/acharya-venkatesh-dikshitar.jpg" alt="Acharya Venkatesh" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Pt. Venkatesh</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 7 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/pt-devavrata')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/pt-devavrata.jpg" alt="Pt. Devavrata" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Pt. Devavrata</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 8 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/vidushi-ananya-joshi')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/vidushi-ananya-joshi.jpg" alt="Vidushi Ananya" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Vidushi Ananya</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 9 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/vidushi-meera-devi')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/vidushi-meera-devi.jpg" alt="Vidushi Meera" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Meera Devi</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-
-        <!-- Story 10 -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0 cursor-pointer group" onclick="Router.navigate('/consultation/acharya-raghavendra')">
-          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-emerald-400 via-amber-400 to-[#4a1b9a] group-hover:scale-105 transition-transform">
-            <img src="assets/portraits/acharya-raghavendra.jpg" alt="Acharya Raghavendra" class="w-full h-full object-cover rounded-full border-2 border-white" />
-            <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <span class="text-[11px] font-bold text-[#1E1B4B] group-hover:text-[#4a1b9a] truncate max-w-[70px] text-center">Pt. Raghavendra</span>
-          <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded-full">Online</span>
-        </div>
-      </div>
+      <h2 class="home-ref-section-title">Meet Our Top Vedic Astrologers</h2>
+      <p class="home-ref-section-sub">Certified, experienced and approachable astrologers with authentic Vedic knowledge, personalized advice and trusted remedies.</p>
     </div>
+    <a href="/astrologers" data-nav-link class="home-ref-btn-outline">
+      <span>View All 30+ Astrologers</span>
+      <span>→</span>
+    </a>
+  </div>
 
-    <!-- 2. PROBLEM-CENTRIC DISCOVERY CARDS ("समस्या अनुसार समाधान") -->
-    <div class="mb-14">
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <span class="text-[11px] font-extrabold tracking-widest uppercase text-[#B45309] bg-[#FFFBEB] border border-[#FCD34D] px-3 py-1 rounded-full inline-block mb-2">
-          SOLVE YOUR LIFE CONCERNS • समाधान
-        </span>
-        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] tracking-tight">
-          आपकी समस्या अनुसार विशेषज्ञ ज्योतिष समाधान
-        </h2>
-        <p class="text-xs sm:text-sm text-[#53627A] mt-1.5">
-          प्रेम, विवाह, करियर, धन या ग्रह दोष — अपनी प्रमुख चिंता चुनें और संबंधित ज्योतिषाचार्य से तुरंत परामर्श लें।
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <!-- Problem Card 1: Love & Relationship -->
-        <div class="bg-white border border-[#FBCFE8] hover:border-[#DB2777] rounded-2xl p-5 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group cursor-pointer" onclick="Router.navigate('/astrologers?specialty=Love')">
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-[#FDF2F8] border border-[#FBCFE8] flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              💔
-            </div>
-            <h3 class="font-serif font-bold text-base text-[#1E1B4B] group-hover:text-[#DB2777] transition-colors mb-1.5">
-              Love & Relations
-            </h3>
-            <p class="text-[11px] text-[#64748B] leading-relaxed mb-3">
-              ब्रेकअप समाधान, क्या पूर्व साथी वापस आएंगे? सच्चा प्यार और अनुकूलता कब मिलेगी?
-            </p>
-          </div>
-          <div class="pt-3 border-t border-[#FDF2F8] flex items-center justify-between">
-            <span class="text-[11px] font-bold text-[#DB2777]">विद्वान ज्योतिषी ➔</span>
-            <span class="text-[10px] bg-[#FDF2F8] text-[#DB2777] font-extrabold px-2 py-0.5 rounded-full">12 Online</span>
-          </div>
+  <!-- 3x2 Grid for 6 Top Astrologers -->
+  <div class="home-ref-astro-grid" id="home-featured-grid">
+    <!-- Astrologer 1: Pt. Rameshwar Dwivedi -->
+    <article class="home-ref-astro-card" data-id="pt-rameshwar-dwivedi">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/pt-rameshwar-dwivedi') : (window.location.href='/astrologers/pt-rameshwar-dwivedi')">
+          <img src="/assets/portraits/pt-rameshwar-dwivedi.jpg" alt="Pt. Rameshwar Dwivedi" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
         </div>
-
-        <!-- Problem Card 2: Career & Job -->
-        <div class="bg-white border border-[#BFDBFE] hover:border-[#2563EB] rounded-2xl p-5 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group cursor-pointer" onclick="Router.navigate('/astrologers?specialty=Career')">
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              💼
-            </div>
-            <h3 class="font-serif font-bold text-base text-[#1E1B4B] group-hover:text-[#2563EB] transition-colors mb-1.5">
-              Career & Jobs
-            </h3>
-            <p class="text-[11px] text-[#64748B] leading-relaxed mb-3">
-              पदोन्नति का शुभ योग, नौकरी में बदलाव, सरकारी नौकरी के योग व विदेश यात्रा विचार।
-            </p>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--online">
+              <span class="home-ref-astro-status-dot"></span> Online
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
           </div>
-          <div class="pt-3 border-t border-[#EFF6FF] flex items-center justify-between">
-            <span class="text-[11px] font-bold text-[#2563EB]">करियर गाइडेंस ➔</span>
-            <span class="text-[10px] bg-[#EFF6FF] text-[#2563EB] font-extrabold px-2 py-0.5 rounded-full">18 Online</span>
-          </div>
-        </div>
-
-        <!-- Problem Card 3: Marriage & Milan -->
-        <div class="bg-white border border-[#e3d8f3] hover:border-[#4a1b9a] rounded-2xl p-5 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group cursor-pointer" onclick="Router.navigate('/astrologers?specialty=Marriage')">
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-[#f4eefb] border border-[#e3d8f3] flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              💍
-            </div>
-            <h3 class="font-serif font-bold text-base text-[#1E1B4B] group-hover:text-[#4a1b9a] transition-colors mb-1.5">
-              Marriage & Milan
-            </h3>
-            <p class="text-[11px] text-[#64748B] leading-relaxed mb-3">
-              विवाह में देरी के कारण, 36 गुण मिलान, मांगलिक दोष का परिहार व सुखद दांपत्य योग।
-            </p>
-          </div>
-          <div class="pt-3 border-t border-[#f4eefb] flex items-center justify-between">
-            <span class="text-[11px] font-bold text-[#4a1b9a]">विवाह मिलान ➔</span>
-            <span class="text-[10px] bg-[#f4eefb] text-[#4a1b9a] font-extrabold px-2 py-0.5 rounded-full">24 Online</span>
-          </div>
-        </div>
-
-        <!-- Problem Card 4: Wealth & Business -->
-        <div class="bg-white border border-[#FDE68A] hover:border-[#D97706] rounded-2xl p-5 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group cursor-pointer" onclick="Router.navigate('/astrologers?specialty=Wealth')">
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-[#FFFBEB] border border-[#FDE68A] flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              💰
-            </div>
-            <h3 class="font-serif font-bold text-base text-[#1E1B4B] group-hover:text-[#D97706] transition-colors mb-1.5">
-              Wealth & Money
-            </h3>
-            <p class="text-[11px] text-[#64748B] leading-relaxed mb-3">
-              कर्ज मुक्ति के उपाय, व्यापार वृद्धि, अचानक धन लाभ व जन्म कुंडली में लक्ष्मी योग।
-            </p>
-          </div>
-          <div class="pt-3 border-t border-[#FFFBEB] flex items-center justify-between">
-            <span class="text-[11px] font-bold text-[#D97706]">धन योग जानें ➔</span>
-            <span class="text-[10px] bg-[#FFFBEB] text-[#D97706] font-extrabold px-2 py-0.5 rounded-full">15 Online</span>
-          </div>
-        </div>
-
-        <!-- Problem Card 5: Dosha & Shanti -->
-        <div class="bg-white border border-[#A7F3D0] hover:border-[#059669] rounded-2xl p-5 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between group cursor-pointer" onclick="Router.navigate('/astrologers?specialty=Vedic')">
-          <div>
-            <div class="w-12 h-12 rounded-xl bg-[#ECFDF5] border border-[#A7F3D0] flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              🪐
-            </div>
-            <h3 class="font-serif font-bold text-base text-[#1E1B4B] group-hover:text-[#059669] transition-colors mb-1.5">
-              Doshas & Upay
-            </h3>
-            <p class="text-[11px] text-[#64748B] leading-relaxed mb-3">
-              शनि साढ़ेसाती, कालसर्प दोष, पितृ दोष निवारण, शुभ रत्न एवं सरल वैदिक शांति उपाय।
-            </p>
-          </div>
-          <div class="pt-3 border-t border-[#ECFDF5] flex items-center justify-between">
-            <span class="text-[11px] font-bold text-[#059669]">शांति उपाय ➔</span>
-            <span class="text-[10px] bg-[#ECFDF5] text-[#059669] font-extrabold px-2 py-0.5 rounded-full">21 Online</span>
-          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/pt-rameshwar-dwivedi') : (window.location.href='/astrologers/pt-rameshwar-dwivedi')">Pt. Rameshwar Dwivedi</h3>
         </div>
       </div>
-    </div>
-
-    <!-- 3. TOP RATED ASTROLOGERS SECTION -->
-    <div class="section-header-split flex items-end justify-between gap-4 mb-8">
-      <div>
-        <h2 class="section-title font-serif text-2xl sm:text-3xl md:text-[2rem] font-bold text-[#1E1B4B] tracking-tight mb-1.5" data-i18n="featured_heading">Top Rated Astrologers</h2>
-        <p class="section-subtitle text-sm text-[#53627A]" data-i18n="featured_subtext">Consult experienced and verified Vedic astrologers for accurate guidance.</p>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.9 <small class="text-slate-400 font-normal">(2.1k reviews)</small></span>
+        <span>⏱ 25+ Years</span>
       </div>
-      <a href="/astrologers" data-nav-link class="btn-view-all-astrologers inline-flex items-center gap-1.5 text-sm font-bold text-[#4a1b9a] hover:text-[#1e0b44] transition-colors shrink-0 no-underline">
-        <span data-i18n="btn_view_all_astrologers">View All Astrologers</span>
-        <span>→</span>
-      </a>
-    </div>
+      <p class="home-ref-astro-specs" title="Vedic Astrology, Career, Business, Finance, Vastu">Vedic Astrology, Career, Business, Finance, Vastu</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">Hindi</span>
+        <span class="home-ref-astro-lang-tag">English</span>
+        <span class="home-ref-astro-lang-tag">Sanskrit</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹71<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('pt-rameshwar-dwivedi') : (window.location.href='/consultation/pt-rameshwar-dwivedi')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Pt. Rameshwar Dwivedi" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('pt-rameshwar-dwivedi') : window.App.startConsultationWith('pt-rameshwar-dwivedi'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
 
-    <!-- 5-Card Responsive Grid on Large Desktop, 3 on Tablet, 2 on Small Tablet, 1 on Mobile -->
-    <div class="featured-astrologers-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5" id="home-featured-grid">
-      <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
-    </div>
+    <!-- Astrologer 2: Acharya K.N. Rao Ji -->
+    <article class="home-ref-astro-card" data-id="acharya-kn-rao">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-kn-rao') : (window.location.href='/astrologers/acharya-kn-rao')">
+          <img src="/assets/portraits/acharya-kn-rao.jpg" alt="Acharya K.N. Rao Ji" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
+        </div>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--online">
+              <span class="home-ref-astro-status-dot"></span> Online
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-kn-rao') : (window.location.href='/astrologers/acharya-kn-rao')">Acharya K.N. Rao Ji</h3>
+        </div>
+      </div>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.8 <small class="text-slate-400 font-normal">(1.8k reviews)</small></span>
+        <span>⏱ 18+ Years</span>
+      </div>
+      <p class="home-ref-astro-specs" title="Kundli Analysis, Dasha, Career, Marriage, Vastu">Kundli Analysis, Dasha, Career, Marriage, Vastu</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">Hindi</span>
+        <span class="home-ref-astro-lang-tag">English</span>
+        <span class="home-ref-astro-lang-tag">Gujarati</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹61<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('acharya-kn-rao') : (window.location.href='/consultation/acharya-kn-rao')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Acharya K.N. Rao Ji" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('acharya-kn-rao') : window.App.startConsultationWith('acharya-kn-rao'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Astrologer 3: Pandit Ji Maharaj -->
+    <article class="home-ref-astro-card" data-id="pandit-ji-maharaj">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/pandit-ji-maharaj') : (window.location.href='/astrologers/pandit-ji-maharaj')">
+          <img src="/assets/portraits/pandit-ji-maharaj.jpg" alt="Pandit Ji Maharaj" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
+        </div>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--busy">
+              <span class="home-ref-astro-status-dot"></span> Busy
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/pandit-ji-maharaj') : (window.location.href='/astrologers/pandit-ji-maharaj')">Pandit Ji Maharaj</h3>
+        </div>
+      </div>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.9 <small class="text-slate-400 font-normal">(3.1k reviews)</small></span>
+        <span>⏱ 30+ Years</span>
+      </div>
+      <p class="home-ref-astro-specs" title="Love & Relationship, Remedial, Health, Shani Dosha">Love &amp; Relationship, Remedial, Health, Shani Dosha</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">Hindi</span>
+        <span class="home-ref-astro-lang-tag">English</span>
+        <span class="home-ref-astro-lang-tag">Sanskrit</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹71<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('pandit-ji-maharaj') : (window.location.href='/consultation/pandit-ji-maharaj')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Pandit Ji Maharaj" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('pandit-ji-maharaj') : window.App.startConsultationWith('pandit-ji-maharaj'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Astrologer 4: Acharya Venkatesh Dikshitar -->
+    <article class="home-ref-astro-card" data-id="acharya-venkatesh-dikshitar">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-venkatesh-dikshitar') : (window.location.href='/astrologers/acharya-venkatesh-dikshitar')">
+          <img src="/assets/portraits/acharya-venkatesh-dikshitar.jpg" alt="Acharya Venkatesh Dikshitar" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
+        </div>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--online">
+              <span class="home-ref-astro-status-dot"></span> Online
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-venkatesh-dikshitar') : (window.location.href='/astrologers/acharya-venkatesh-dikshitar')">Acharya Venkatesh Dikshitar</h3>
+        </div>
+      </div>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.7 <small class="text-slate-400 font-normal">(982 reviews)</small></span>
+        <span>⏱ 12+ Years</span>
+      </div>
+      <p class="home-ref-astro-specs" title="Shani Sade Sati, Mangal Dosha, Remedies, Temple Seva">Shani Sade Sati, Mangal Dosha, Remedies, Temple Seva</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">Tamil</span>
+        <span class="home-ref-astro-lang-tag">Sanskrit</span>
+        <span class="home-ref-astro-lang-tag">English</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹51<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('acharya-venkatesh-dikshitar') : (window.location.href='/consultation/acharya-venkatesh-dikshitar')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Acharya Venkatesh Dikshitar" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('acharya-venkatesh-dikshitar') : window.App.startConsultationWith('acharya-venkatesh-dikshitar'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Astrologer 5: Dr. Meenakshi Iyer -->
+    <article class="home-ref-astro-card" data-id="dr-meenakshi-iyer">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/dr-meenakshi-iyer') : (window.location.href='/astrologers/dr-meenakshi-iyer')">
+          <img src="/assets/portraits/dr-meenakshi-iyer.jpg" alt="Dr. Meenakshi Iyer" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
+        </div>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--online">
+              <span class="home-ref-astro-status-dot"></span> Online
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/dr-meenakshi-iyer') : (window.location.href='/astrologers/dr-meenakshi-iyer')">Dr. Meenakshi Iyer</h3>
+        </div>
+      </div>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.8 <small class="text-slate-400 font-normal">(1.2k reviews)</small></span>
+        <span>⏱ 20+ Years</span>
+      </div>
+      <p class="home-ref-astro-specs" title="Relationships, Family, Education, Vastu, Numerology">Relationships, Family, Education, Vastu, Numerology</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">English</span>
+        <span class="home-ref-astro-lang-tag">Tamil</span>
+        <span class="home-ref-astro-lang-tag">Hindi</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹49<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('dr-meenakshi-iyer') : (window.location.href='/consultation/dr-meenakshi-iyer')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Dr. Meenakshi Iyer" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('dr-meenakshi-iyer') : window.App.startConsultationWith('dr-meenakshi-iyer'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Astrologer 6: Acharya Shastri -->
+    <article class="home-ref-astro-card" data-id="acharya-shastri">
+      <div class="home-ref-astro-top">
+        <div class="home-ref-astro-avatar-wrap" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-shastri') : (window.location.href='/astrologers/acharya-shastri')">
+          <img src="/assets/portraits/acharya-shastri.jpg" alt="Acharya Shastri" class="home-ref-astro-avatar" loading="lazy" decoding="async" onerror="this.src='/assets/portraits/default-avatar.svg'" />
+        </div>
+        <div class="home-ref-astro-info">
+          <div class="home-ref-astro-status-row">
+            <span class="home-ref-astro-status home-ref-astro-status--online">
+              <span class="home-ref-astro-status-dot"></span> Online
+            </span>
+            <button type="button" class="home-ref-astro-heart" aria-label="Save" title="Save astrologer">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+          <h3 class="home-ref-astro-name" onclick="window.Router ? window.Router.navigate('/astrologers/acharya-shastri') : (window.location.href='/astrologers/acharya-shastri')">Acharya Shastri</h3>
+        </div>
+      </div>
+      <div class="home-ref-astro-meta-row">
+        <span class="home-ref-astro-rating"><span class="home-ref-astro-rating-star">★</span> 4.8 <small class="text-slate-400 font-normal">(1.6k reviews)</small></span>
+        <span>⏱ 14+ Years</span>
+      </div>
+      <p class="home-ref-astro-specs" title="Career, Business, Finance, Grah Shanti, Santan Dosh">Career, Business, Finance, Grah Shanti, Santan Dosh</p>
+      <div class="home-ref-astro-langs">
+        <span class="home-ref-astro-lang-tag">Hindi</span>
+        <span class="home-ref-astro-lang-tag">English</span>
+        <span class="home-ref-astro-lang-tag">Marathi</span>
+      </div>
+      <div class="home-ref-astro-bottom">
+        <div class="home-ref-astro-rate">₹51<small>/min</small></div>
+        <div class="home-ref-astro-actions">
+          <button type="button" class="home-ref-astro-btn-chat" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('acharya-shastri') : (window.location.href='/consultation/acharya-shastri')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+            <span>Chat</span>
+          </button>
+          <button type="button" class="home-ref-astro-btn-call" title="Call Acharya Shastri" aria-label="Call" onclick="window.App && (window.App.startCallWith ? window.App.startCallWith('acharya-shastri') : window.App.startConsultationWith('acharya-shastri'))">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </article>
   </div>
 </section>

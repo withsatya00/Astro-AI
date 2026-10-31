@@ -1905,6 +1905,7 @@ var App = {
       const cardsHtml = astrologers.map(a => this.renderAstrologerCardHtml(a, activeId)).join('');
       if (listEl) listEl.innerHTML = cardsHtml;
       if (modalListEl) modalListEl.innerHTML = cardsHtml;
+      if (listEl) window.DirectoryChips?.paginate();
     } catch (err) {
       console.error('Failed to load astrologers directory:', err);
       if (listEl && listEl.querySelector('.ac-card')) return; // keep the cached cards instead of replacing them with an error
@@ -2039,22 +2040,31 @@ var App = {
   async loadHomeFeatured() {
     const grid = document.getElementById('home-featured-grid');
     if (!grid) return;
-    // Show shimmering placeholders, not empty boxes, until the astrologers arrive.
-    if (!grid.querySelector('.ac-card')) grid.innerHTML = '<div class="astro-skeleton"></div>'.repeat(3);
+    // Show shimmering placeholders only if grid is empty
+    if (!grid.querySelector('.ac-card, .home-ref-astro-card')) grid.innerHTML = '<div class="astro-skeleton"></div>'.repeat(3);
 
     try {
       if (!this.astrologersList || this.astrologersList.length === 0) {
         const cached = this.readAstrologerCache();
-        if (cached && !grid.querySelector('.ac-card')) grid.innerHTML = cached.slice(0, 6).map(a => this.renderAstrologerCardHtml(a)).join('');
+        if (cached && !grid.querySelector('.ac-card, .home-ref-astro-card')) {
+          grid.innerHTML = cached.slice(0, 6).map(a => window.AstrologerCardComponent ? window.AstrologerCardComponent.render(a) : this.renderAstrologerCardHtml(a)).join('');
+        }
         const res = await API.getAstrologers({ limit: 50 });
         this.astrologersList = Array.isArray(res) ? res : (res.items || []);
         this.writeAstrologerCache(this.astrologersList);
       }
       const featured = (this.astrologersList || []).slice(0, 6);
-      grid.innerHTML = featured.map(a => this.renderAstrologerCardHtml(a)).join('');
+      if (featured.length > 0) {
+        if (window.AstrologerCardComponent && typeof window.AstrologerCardComponent.render === 'function') {
+          grid.innerHTML = featured.map(a => window.AstrologerCardComponent.render(a)).join('');
+          if (window.AstrologerCardComponent.enhance) window.AstrologerCardComponent.enhance(grid);
+        } else {
+          grid.innerHTML = featured.map(a => this.renderAstrologerCardHtml(a)).join('');
+        }
+      }
     } catch (err) {
       console.warn('Failed to load home featured astrologers:', err);
-      if (grid.querySelector('.ac-card')) return;
+      if (grid.querySelector('.ac-card, .home-ref-astro-card')) return;
       grid.innerHTML = `<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: #DC2626;">Failed to load featured astrologers.</div>`;
     }
   },
@@ -2246,6 +2256,22 @@ var App = {
     if (mode) this.directoryFilter.type = mode.value;
     if (sort) this.directoryFilter.sort = sort.value;
 
+    this.loadAstrologerDirectory();
+  },
+
+  filterDirectorySubtab(subtab) {
+    document.querySelectorAll('.dir-subtab').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.dirSubtab === subtab);
+    });
+    if (subtab === 'all') {
+      this.directoryFilter.sort = 'popular';
+    } else if (subtab === 'top-rated') {
+      this.directoryFilter.sort = 'rating';
+    } else if (subtab === 'most-consulted') {
+      this.directoryFilter.sort = 'popular';
+    } else if (subtab === 'new') {
+      this.directoryFilter.sort = 'name';
+    }
     this.loadAstrologerDirectory();
   },
 

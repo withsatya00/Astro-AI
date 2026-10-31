@@ -105,14 +105,14 @@
   background-color: #FAF8F2;
 }
 
-/* Responsive Navbar Breakpoints: full desktop (>=1280px) vs hamburger (<1280px).
+/* Responsive Navbar Breakpoints: full desktop (>=1366px) vs hamburger (<1366px).
    The full desktop bar needs ~1360px, so 1280-1599px drops the ambience pill and tightens spacing. */
-/* The desktop bar (links + bell + wallet + auth) needs ~1420px, so the hamburger now covers everything below 1500px */
+/* The desktop bar (links + bell + wallet + auth) fits from 1366px up, so the hamburger covers everything below 1366px */
 .site-navbar .site-navbar-inner {
   max-width: 1760px;
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1366px) {
   .site-nav-links {
     display: flex !important;
     gap: 1rem;
@@ -146,7 +146,7 @@
   }
 }
 
-@media (max-width: 1499.98px) {
+@media (max-width: 1365.98px) {
   .site-nav-links {
     display: none !important;
   }
@@ -207,8 +207,8 @@
   padding: 0;
 }
 
-/* 1280-1365px: the full bar is ~16px too wide, so tighten spacing instead of switching to the hamburger */
-@media (min-width: 1500px) and (max-width: 1559.98px) {
+/* 1366-1439px: the full bar is tight, so tighten spacing instead of switching to the hamburger */
+@media (min-width: 1366px) and (max-width: 1439.98px) {
   .site-navbar-inner {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -222,8 +222,8 @@
   }
 }
 
-/* 1500-1759px: language picker collapses to a globe button (the invisible select still opens the native menu) */
-@media (min-width: 1500px) and (max-width: 1759.98px) {
+/* 1366-1759px: language picker collapses to a globe button (the invisible select still opens the native menu) */
+@media (min-width: 1366px) and (max-width: 1759.98px) {
   .site-nav-actions .global-lang-picker-wrapper {
     position: relative;
     width: 2.25rem;

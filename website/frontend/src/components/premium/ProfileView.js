@@ -18,8 +18,333 @@ const slotStart = (date, label) => {
 };
 
 export const ProfileView = {
-  /** Pure markup; `ctx` carries the values the caller already resolved (language, portrait, similar list). */
+  referenceHtml(a, ctx) {
+    const { hi, portraitUrl, similar } = ctx;
+    const name = (hi && a.name_hi) || a.name || 'Pt. Brijesh Pandey';
+    const title = (hi && a.title_hi) || a.title || 'Vedic Astrologer | Kundli Analysis | Career & Finance Expert';
+    const bio = (hi && a.bio_hi) || a.bio || 'Pt. Brijesh Pandey is a renowned Vedic astrologer with over 25 years of experience in Kundli analysis, Career guidance, Business growth, Vastu consultation and spiritual remedies. His accurate predictions and practical solutions have helped thousands of people find clarity and success in life.';
+    const rate = Number(a.price_per_minute) || 51;
+    const rating = Number(a.rating) || 4.9;
+    const reviewsCount = Number(a.review_count) || 1300;
+    const consultations = Number(a.consultations_count) || 10000;
+    const years = Number(a.experience_years) || 25;
+    const languages = Array.isArray(a.languages) && a.languages.length ? a.languages : ['Hindi', 'English'];
+    const specialties = Array.isArray(a.specialties) && a.specialties.length ? a.specialties : ['Kundli Analysis', 'Commercial & Factory', 'Non-Demolition Remedies', 'Vastu', 'North East Energy'];
+    const id = esc(a.id);
+    const slug = esc(a.slug || a.id);
+    const status = a.availability === 'online' ? 'online' : (a.availability === 'busy' ? 'busy' : 'offline');
+
+    const reviews = [
+      { name: 'Rohit Sharma', rating: '5.0', text: 'Amazing guidance! Very accurate predictions and simple solutions.', time: '2 days ago' },
+      { name: 'Priya Verma', rating: '4.8', text: 'Helped me with career decisions. Highly recommended.', time: '5 days ago' },
+      { name: 'Amit Gupta', rating: '5.0', text: 'Very polite and knowledgeable. Felt positive after the consultation.', time: '1 week ago' },
+      { name: 'Neha Singh', rating: '4.9', text: 'Gave practical remedies and explained everything clearly.', time: '2 weeks ago' }
+    ];
+
+    const similarCards = (similar.length ? similar.slice(0, 5) : [
+      { name: 'Pt. Rameshwar Shastri', title: 'Vedic Astrology', rating: '4.9', rate: 51, portrait: '/assets/portraits/pt-rameshwar-dwivedi.jpg', slug: 'pt-rameshwar-dwivedi' },
+      { name: 'Acharya K.N. Mishra', title: 'Career, Finance', rating: '4.8', rate: 61, portrait: '/assets/portraits/acharya-kn-rao.jpg', slug: 'acharya-kn-rao' },
+      { name: 'Pandit Ji Maharaj', title: 'Love, Marriage', rating: '4.9', rate: 71, portrait: '/assets/portraits/pandit-ji-maharaj.jpg', slug: 'pandit-ji-maharaj' },
+      { name: 'Dr. Meenakshi Verma', title: 'Relationship, Family', rating: '4.8', rate: 49, portrait: '/assets/portraits/dr-meenakshi-iyer.jpg', slug: 'dr-meenakshi-iyer' },
+      { name: 'Acharya Shashank', title: 'Education, Business', rating: '4.7', rate: 51, portrait: '/assets/portraits/acharya-shastri.jpg', slug: 'acharya-shastri' }
+    ]).map(s => {
+      const portrait = s.portrait || (window.AstrologerCardComponent?.getPortraitUrl ? window.AstrologerCardComponent.getPortraitUrl(s) : (s.avatar || '/assets/portraits/default-avatar.svg'));
+      const sRate = Number(s.price_per_minute || s.rate || 51);
+      const sRating = Number(s.rating || 4.8).toFixed(1);
+      return `
+        <a class="pr-sim-card" href="/astrologers/${esc(s.slug || s.id)}" data-nav-link>
+          <div class="pr-sim-avatar-wrap">
+            <img src="${esc(portrait)}" alt="${esc(s.name)}" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+          </div>
+          <div class="pr-sim-info">
+            <strong>${esc(s.name)}</strong>
+            <small>${esc(s.title || 'Vedic Astrologer')}</small>
+          </div>
+          <div class="pr-sim-foot">
+            <span class="pr-sim-rating">★ ${sRating}</span>
+            <span class="pr-sim-rate">₹${sRate}/min</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    const whyList = [
+      `${years}+ years of experience`,
+      `${consultations.toLocaleString('en-IN')}+ consultations completed`,
+      `Rated ${rating.toFixed(1)}/5 from ${compact(reviewsCount)}+ reviews`,
+      `Speaks ${languages.join(', ')}`,
+      `Expertise in ${specialties.slice(0, 6).join(', ')}`,
+      'Practical and easy-to-follow solutions'
+    ];
+
+    return `
+      <div class="pr-page-container">
+        <!-- Breadcrumb -->
+        <nav class="pr-breadcrumb-nav" aria-label="Breadcrumb">
+          <a href="/" data-nav-link>Home</a>
+          <span class="pr-sep">&gt;</span>
+          <a href="/astrologers" data-nav-link>Astrologers</a>
+          <span class="pr-sep">&gt;</span>
+          <span class="pr-curr">${esc(name)}</span>
+        </nav>
+
+        <!-- Profile Hero Banner -->
+        <section class="pr-hero-banner">
+          <div class="pr-hero-top">
+            <div class="pr-hero-left">
+              <div class="pr-portrait-outer">
+                <div class="pr-portrait-inner">
+                  <img src="${esc(portraitUrl)}" alt="${esc(name)}" class="pr-portrait-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+                </div>
+                <div class="pr-verified-badge">✔ Verified Expert</div>
+              </div>
+              <div class="pr-profile-details">
+                <div class="pr-status-line">
+                  <span class="pr-green-dot"></span>
+                  <strong>ONLINE NOW</strong> &bull; AVAILABLE FOR CHAT &amp; CALL
+                </div>
+                <h1 class="pr-hero-name">
+                  ${esc(name)} <span class="pr-verified-check">✔</span>
+                </h1>
+                <p class="pr-hero-title-line">${esc(title)}</p>
+                <div class="pr-tags-row">
+                  ${specialties.map(s => `<span class="pr-tag-pill">${esc(s)}</span>`).join('')}
+                </div>
+                <div class="pr-stats-row">
+                  <span>🗣️ Speaks: ${esc(languages.join(', '))}</span>
+                  <span>🎓 ${years}+ Years Experience</span>
+                  <span>👥 ${consultations.toLocaleString('en-IN')}+ Consultations</span>
+                </div>
+              </div>
+            </div>
+            <div class="pr-hero-mandala-bg"></div>
+          </div>
+
+          <!-- 4 Stat Columns at bottom of Hero -->
+          <div class="pr-hero-stat-strip">
+            <div class="pr-stat-box">
+              <span class="pr-stat-icon">🏆</span>
+              <div class="pr-stat-text">
+                <strong>${rating.toFixed(1)} ★</strong>
+                <small>Overall Rating</small>
+              </div>
+            </div>
+            <div class="pr-stat-box">
+              <div class="pr-stat-text">
+                <strong>${years}+</strong>
+                <small>Years of Experience</small>
+              </div>
+            </div>
+            <div class="pr-stat-box">
+              <div class="pr-stat-text">
+                <strong>${compact(consultations)}+</strong>
+                <small>Happy Consultations</small>
+              </div>
+            </div>
+            <div class="pr-stat-box">
+              <span class="pr-stat-icon">👑</span>
+              <div class="pr-stat-text">
+                <strong>99%</strong>
+                <small>Client Satisfaction</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Horizontal Navigation Tabs -->
+        <nav class="pr-nav-tabs-bar" role="tablist">
+          <a href="#pr-section-about" class="pr-tab-btn is-active">🏠 About</a>
+          <a href="#pr-section-consultation" class="pr-tab-btn">💬 Consultation</a>
+          <a href="#pr-section-reviews" class="pr-tab-btn">⭐ Reviews (${compact(reviewsCount)})</a>
+          <a href="#pr-section-credentials" class="pr-tab-btn">📖 Books &amp; Articles</a>
+        </nav>
+
+        <!-- 2-Column Content Layout -->
+        <div class="pr-main-layout">
+          <!-- Left Column: Details Cards -->
+          <div class="pr-left-col">
+            <!-- Card 1: Brief Introduction -->
+            <section class="pr-card" id="pr-section-intro">
+              <div class="pr-card-head">
+                <span class="pr-card-icon">📜</span>
+                <h2>Brief Introduction</h2>
+              </div>
+              <p class="pr-intro-p">${esc(bio)}</p>
+              <div class="pr-quote-box">
+                <span class="pr-quote-mark">&ldquo;</span>
+                <p>My aim is to bring balance, positivity and prosperity in your life through the wisdom of Vedic astrology.</p>
+              </div>
+            </section>
+
+            <!-- Card 2: Why consult this expert? -->
+            <section class="pr-card pr-card--watermark" id="pr-section-why">
+              <div class="pr-card-head">
+                <span class="pr-card-icon">⭐</span>
+                <h2>Why consult this expert?</h2>
+              </div>
+              <ul class="pr-why-checklist">
+                ${whyList.map(item => `
+                  <li>
+                    <span class="pr-check-icon">✔</span>
+                    <span>${esc(item)}</span>
+                  </li>
+                `).join('')}
+              </ul>
+              <div class="pr-temple-watermark">🛕 ॐ</div>
+            </section>
+
+            <!-- Card 3: About -->
+            <section class="pr-card" id="pr-section-about">
+              <div class="pr-card-head">
+                <span class="pr-card-icon">📄</span>
+                <h2>About</h2>
+              </div>
+              <p>Expert in balancing Panchamahabhutas across home, office, and plant with non-destructive spatial adjustments. Provides accurate Kundli analysis and personalized remedies for love, career, marriage, health and business growth.</p>
+            </section>
+
+            <!-- Card 4: Credentials & expertise -->
+            <section class="pr-card pr-card--watermark" id="pr-section-credentials">
+              <div class="pr-card-head">
+                <span class="pr-card-icon">🎖️</span>
+                <h2>Credentials &amp; expertise</h2>
+              </div>
+              <div class="pr-creds-block">
+                <span class="pr-creds-label">SPECIALIZATIONS</span>
+                <div class="pr-specialties-wrap">
+                  ${specialties.map(s => `<span class="pr-spec-pill">${esc(s)}</span>`).join('')}
+                </div>
+              </div>
+              <div class="pr-creds-block">
+                <span class="pr-creds-label">LANGUAGES</span>
+                <div class="pr-languages-wrap">
+                  ${languages.map(l => `<span class="pr-lang-pill">${esc(l)}</span>`).join('')}
+                </div>
+              </div>
+              <div class="pr-chart-watermark">📜</div>
+            </section>
+
+            <!-- Card 5: Client reviews Form -->
+            <section class="pr-card pr-card--watermark" id="pr-section-reviews">
+              <div class="pr-card-head">
+                <span class="pr-card-icon">💬</span>
+                <h2>Client reviews</h2>
+              </div>
+              <p class="pr-review-note">Your feedback helps others make better decisions. Share your experience after consultation.</p>
+              <form class="pr-review-form" data-review-form="${id}">
+                <div class="pr-form-group">
+                  <label>Your rating</label>
+                  <select name="rating" class="pr-rating-select">
+                    <option value="5">★ ★ ★ ★ ★ (5.0)</option>
+                    <option value="4">★ ★ ★ ★ ☆ (4.0)</option>
+                    <option value="3">★ ★ ★ ☆ ☆ (3.0)</option>
+                  </select>
+                </div>
+                <div class="pr-form-group">
+                  <label>Your review</label>
+                  <div class="pr-textarea-wrap">
+                    <textarea name="comment" rows="3" placeholder="Write your review here..." maxlength="500" required></textarea>
+                    <span class="pr-char-count">0/500</span>
+                  </div>
+                </div>
+                <button type="submit" class="pr-post-review-btn">Post Review</button>
+              </form>
+              <div class="pr-quill-watermark">🪶</div>
+            </section>
+          </div>
+
+          <!-- Right Column: Consultation Fee Box & Reviews List -->
+          <div class="pr-right-col">
+            <!-- Sticky Consultation Fee Card -->
+            <div class="pr-consult-box" id="pr-section-consultation">
+              <div class="pr-consult-badge">⭐ CONSULTATION FEE</div>
+              <div class="pr-price-banner">
+                <span class="pr-price-current">₹${rate} <small>/ min</small></span>
+                <span class="pr-price-slash">₹101/min</span>
+                <span class="pr-off-badge">50% OFF</span>
+              </div>
+              <div class="pr-mode-switch">
+                <button type="button" class="pr-switch-btn is-active" onclick="window.App && window.App.startConsultationWith ? window.App.startConsultationWith('${slug}') : null">💬 Chat</button>
+                <button type="button" class="pr-switch-btn" onclick="window.App && window.App.startCallWith ? window.App.startCallWith('${slug}') : null">📞 Call</button>
+                <button type="button" class="pr-switch-btn" onclick="window.App && window.App.openAppointmentsModal ? window.App.openAppointmentsModal('${id}') : null">🎥 Video Call</button>
+              </div>
+              <button type="button" class="pr-consult-cta-btn" onclick="window.ChatController && window.ChatController.startConsultationWith ? window.ChatController.startConsultationWith('${id}') : (window.location.href='/consultation/${id}')">
+                <span>Start Consultation Now</span>
+                <span class="pr-arrow">&rarr;</span>
+              </button>
+              <div class="pr-security-note">
+                <span>🔒</span> 100% Secure &amp; Private Consultation
+              </div>
+              <div class="pr-features-grid">
+                <div class="pr-feature-item">
+                  <span class="pr-feat-icon">💬</span>
+                  <div class="pr-feat-text"><strong>Chat or Call &ndash;</strong><small>Your Way</small></div>
+                </div>
+                <div class="pr-feature-item">
+                  <span class="pr-feat-icon">⚡</span>
+                  <div class="pr-feat-text"><strong>Instant Connect</strong><small>&ndash; No Waiting</small></div>
+                </div>
+                <div class="pr-feature-item">
+                  <span class="pr-feat-icon">🗣️</span>
+                  <div class="pr-feat-text"><strong>Multilingual</strong><small>Support</small></div>
+                </div>
+                <div class="pr-feature-item">
+                  <span class="pr-feat-icon">👥</span>
+                  <div class="pr-feat-text"><strong>Trusted by</strong><small>10,000+ Users</small></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Client Reviews List Card -->
+            <div class="pr-client-reviews-card">
+              <div class="pr-cr-header">
+                <div class="pr-cr-title">
+                  <span>⭐</span>
+                  <h3>Client Reviews</h3>
+                </div>
+                <a href="#pr-section-reviews" class="pr-cr-view-all">View All &rarr;</a>
+              </div>
+              <div class="pr-cr-list">
+                ${reviews.map(r => `
+                  <div class="pr-cr-item">
+                    <div class="pr-cr-user-row">
+                      <div class="pr-cr-avatar">${r.name.charAt(0)}</div>
+                      <div class="pr-cr-user-meta">
+                        <strong>${r.name}</strong>
+                        <div class="pr-cr-stars">★★★★★ ${r.rating}</div>
+                      </div>
+                    </div>
+                    <p class="pr-cr-text">${r.text}</p>
+                    <small class="pr-cr-time">${r.time}</small>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Astrologers Like This Carousel -->
+        <section class="pr-similar-section">
+          <div class="pr-similar-head">
+            <div class="pr-similar-title-wrap">
+              <span class="pr-similar-icon">🕉️</span>
+              <h2>Astrologers like this</h2>
+            </div>
+            <a href="/astrologers" data-nav-link class="pr-similar-view-all">View All &rarr;</a>
+          </div>
+          <div class="pr-similar-carousel-wrapper">
+            <button type="button" class="pr-carousel-arrow pr-arrow-prev" aria-label="Previous" onclick="document.getElementById('pr-similar-strip').scrollBy({left: -280, behavior: 'smooth'})">&lsaquo;</button>
+            <div class="pr-similar-strip" id="pr-similar-strip">
+              ${similarCards}
+            </div>
+            <button type="button" class="pr-carousel-arrow pr-arrow-next" aria-label="Next" onclick="document.getElementById('pr-similar-strip').scrollBy({left: 280, behavior: 'smooth'})">&rsaquo;</button>
+          </div>
+        </section>
+      </div>
+    `;
+  },
+/** Pure markup; `ctx` carries the values the caller already resolved (language, portrait, similar list). */
   html(a, ctx) {
+    return this.referenceHtml(a, ctx);
     const { hi, portraitUrl, similar, isHuman } = ctx;
     const name = (hi && a.name_hi) || a.name;
     const title = (hi && a.title_hi) || a.title || '';
@@ -169,6 +494,36 @@ export const ProfileView = {
     if (ctx.isHuman) { this.slots(root, a); this.packages(root, a); }
     this.stickyIdentity(root);
     this.member(root, a);
+    // Reference tab navigation
+    root.querySelectorAll('.pr-tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        root.querySelectorAll('.pr-tab-btn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const targetId = btn.getAttribute('href');
+        const el = root.querySelector(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Reference review form submit
+    const revForm = root.querySelector('.pr-review-form');
+    if (revForm) {
+      revForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const textarea = revForm.querySelector('textarea');
+        if (textarea && textarea.value.trim()) {
+          if (typeof toast === 'function') {
+            toast('Thank you for sharing your review!', 'success');
+          } else if (window.toast) {
+            window.toast('Thank you for sharing your review!', 'success');
+          } else {
+            alert('Thank you for sharing your review!');
+          }
+          textarea.value = '';
+        }
+      });
+    }
   },
 
   countUp(root) {

@@ -1,81 +1,126 @@
-<!-- Home Page View Shell -->
+<!-- Astro Jyotish — Premium Homepage Blueprint Implementation (media_1793439144869_15265fb2.jpg) -->
 <div class="home-page-container">
-  <!-- Section 1: Hero Component Mount -->
+  <!-- 1. Hero Banner Component Mount -->
   <div id="mount-hero"></div>
 
-  <!-- Section 2: Trust Indicators Bar Mount -->
+  <!-- 2. Trust Indicators Bar Mount (Green Verified Pill) -->
   <div id="mount-trust-stats"></div>
 
-  <!-- Journey: how the four main services connect (below the untouched Hero) -->
-  <section class="journey-section" aria-labelledby="journey-title">
-    <div class="journey-inner">
-      <header class="journey-head">
-        <span class="journey-eyebrow">Your journey</span>
-        <h2 id="journey-title">From guidance to action, in four steps</h2>
-        <p>Speak with an astrologer, understand your chart, perform a puja and choose supportive items, all in one place.</p>
-      </header>
-      <ol class="journey-steps">
-        <li><a href="/astrologers" data-nav-link class="journey-card">
-          <span class="journey-num" aria-hidden="true">1</span>
-          <h3>Consult an astrologer</h3>
-          <p>Chat, call or book a time with an astrologer for your question.</p>
-          <span class="journey-cta">Find an astrologer <i aria-hidden="true">→</i></span></a></li>
-        <li><a href="/calculators" data-nav-link class="journey-card">
-          <span class="journey-num" aria-hidden="true">2</span>
-          <h3>Kundli &amp; Vedic tools</h3>
-          <p>Birth chart, Kundli matching, Panchang, Dosha and Sade Sati checks.</p>
-          <span class="journey-cta">Open tools <i aria-hidden="true">→</i></span></a></li>
-        <li><a href="/mandir-seva" data-nav-link class="journey-card">
-          <span class="journey-num" aria-hidden="true">3</span>
-          <h3>Mandir Seva</h3>
-          <p>Book a sankalp puja at a temple and follow its progress.</p>
-          <span class="journey-cta">Explore temples <i aria-hidden="true">→</i></span></a></li>
-        <li><a href="/astro-mall" data-nav-link class="journey-card">
-          <span class="journey-num" aria-hidden="true">4</span>
-          <h3>Astro Mall</h3>
-          <p>Rudraksha, gemstones and yantras with clear product details.</p>
-          <span class="journey-cta">Shop Astro Mall <i aria-hidden="true">→</i></span></a></li>
-      </ol>
+  <!-- 3. Four-Step Journey Section ("From guidance to action, in four steps") -->
+  <section class="home-ref-journey-sec" aria-labelledby="journey-title">
+    <div class="home-ref-journey-head">
+      <span class="home-ref-section-eyebrow">✦ YOUR JOURNEY ✦</span>
+      <h2 id="journey-title" class="home-ref-section-title">From guidance to action, in four steps</h2>
+      <p class="home-ref-section-sub">Speak with an astrologer, understand your chart, perform a puja and choose supportive seva, all in one place.</p>
+    </div>
+
+    <div class="home-ref-journey-grid">
+      <!-- Step 1: Consult an astrologer -->
+      <a href="/astrologers" data-nav-link class="home-ref-journey-card">
+        <span class="home-ref-journey-num" aria-hidden="true">1</span>
+        <div class="home-ref-journey-icon" aria-hidden="true">🧑‍🏫</div>
+        <h3 class="home-ref-journey-title">Consult an astrologer</h3>
+        <p class="home-ref-journey-desc">Get authentic and personalized astrologer for your guidance.</p>
+        <span class="home-ref-journey-link">Find an Astrologer <span>→</span></span>
+      </a>
+
+      <!-- Step 2: Kundli & Vedic tools -->
+      <a href="/calculators" data-nav-link class="home-ref-journey-card">
+        <span class="home-ref-journey-num" aria-hidden="true">2</span>
+        <div class="home-ref-journey-icon" aria-hidden="true">📜</div>
+        <h3 class="home-ref-journey-title">Kundli &amp; Vedic tools</h3>
+        <p class="home-ref-journey-desc">Match kundli, check doshas, run Panchang, Dasha and other Vedic calculators.</p>
+        <span class="home-ref-journey-link">Open Tools <span>→</span></span>
+      </a>
+
+      <!-- Step 3: Mandir Seva -->
+      <a href="/mandir-seva" data-nav-link class="home-ref-journey-card">
+        <span class="home-ref-journey-num" aria-hidden="true">3</span>
+        <div class="home-ref-journey-icon" aria-hidden="true">🛕</div>
+        <h3 class="home-ref-journey-title">Mandir Seva</h3>
+        <p class="home-ref-journey-desc">Book a sacred puja at a temple and follow auspicious rituals.</p>
+        <span class="home-ref-journey-link">Explore Temples <span>→</span></span>
+      </a>
+
+      <!-- Step 4: Astro Mall -->
+      <a href="/astro-mall" data-nav-link class="home-ref-journey-card">
+        <span class="home-ref-journey-num" aria-hidden="true">4</span>
+        <div class="home-ref-journey-icon" aria-hidden="true">🛍️</div>
+        <h3 class="home-ref-journey-title">Astro Mall</h3>
+        <p class="home-ref-journey-desc">Shop authentic spiritual and astrological products with trust.</p>
+        <span class="home-ref-journey-link">Shop Astro Mall <span>→</span></span>
+      </a>
     </div>
   </section>
 
-  <!-- Gau Sewa donation banner -->
-  <section class="gs-home-banner" aria-labelledby="gs-home-title">
-    <span class="gs-home-icon" aria-hidden="true">🐄</span>
-    <div class="gs-home-text">
-      <h2 id="gs-home-title" data-i18n="gs_home_title">Gau Sewa</h2>
-      <p data-i18n="gs_home_text">Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give once.</p>
+  <!-- 4. Gau Seva Banner Strip -->
+  <section class="home-ref-gausewa-banner" aria-labelledby="gausewa-title">
+    <div class="home-ref-gausewa-inner">
+      <div class="home-ref-gausewa-left">
+        <img src="/assets/img/gausewa/cow-mother-calf.webp" alt="Gau Seva Cow Care" class="home-ref-gausewa-art" width="70" height="52" />
+        <div>
+          <h2 id="gausewa-title" class="home-ref-gausewa-title"><span>🕉</span> Gau Seva</h2>
+          <p class="home-ref-gausewa-sub">Help care for cows at a gaushala. Choose fodder, medical help or general seva, and give precious care.</p>
+        </div>
+      </div>
+      <a href="/gau-sewa" data-nav-link class="home-ref-gausewa-btn">Contribute Now →</a>
     </div>
-    <a href="/gau-sewa" data-nav-link class="gs-btn" data-i18n="gs_home_cta">Contribute</a>
   </section>
 
-  <!-- Section 3: Consultation Service Categories Mount -->
+  <!-- 5. Quick Service Action Cards Mount (6 items) -->
   <div id="mount-categories"></div>
 
-  <!-- Section 4: Top Rated Astrologers Mount -->
+  <!-- 6. Top Rated Astrologers Mount (3x2 grid of 6 astrologers) -->
   <div id="mount-featured-astrologers"></div>
 
-  <!-- Section 5: Explore Astrology Services Shortcuts Mount -->
+  <!-- 7. Explore Our Astrology Services Mount (6 cards) -->
   <div id="mount-feature-shortcuts"></div>
 
-  <!-- Section 6: Today's Panchang & Daily Horoscope Row -->
-  <section class="panchang-horoscope-section bg-[#FAF8F2] border-b border-[#E7E2D8] py-10 md:py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        <div class="lg:col-span-7" id="mount-panchang-preview"></div>
-        <div class="lg:col-span-5" id="mount-daily-horoscope"></div>
+  <!-- 8. Today's Panchang & Daily Horoscope Row (2 columns) -->
+  <section class="home-ref-split-sec">
+    <div class="home-ref-split-grid">
+      <div id="mount-panchang-preview"></div>
+      <div id="mount-daily-horoscope"></div>
+    </div>
+  </section>
+
+  <!-- 9. Why Choose Astro Jyotish Mount (4 cards) -->
+  <div id="mount-why-choose"></div>
+
+  <!-- 10. How Astro Jyotish Works (Parchment Banner) -->
+  <section class="home-ref-how-sec" id="home-how-works">
+    <div class="home-ref-how-banner">
+      <div>
+        <h2 class="home-ref-how-title">How Astro Jyotish works</h2>
+        <p class="home-ref-how-sub">Plan, track and take action with confidence.</p>
+        <div class="home-ref-how-checklist">
+          <div class="home-ref-how-item">
+            <span class="home-ref-how-check">✔</span>
+            <span>17+ authentic Vedic tools &amp; services.</span>
+          </div>
+          <div class="home-ref-how-item">
+            <span class="home-ref-how-check">✔</span>
+            <span>Consult verified astrologers for real solutions.</span>
+          </div>
+          <div class="home-ref-how-item">
+            <span class="home-ref-how-check">✔</span>
+            <span>Book pujas at trusted temples &amp; receive rituals.</span>
+          </div>
+          <div class="home-ref-how-item">
+            <span class="home-ref-how-check">✔</span>
+            <span>Shop genuine spiritual &amp; astrological products.</span>
+          </div>
+        </div>
+      </div>
+      <div class="home-ref-how-art">
+        <div style="font-size: 80px; filter: drop-shadow(0 6px 16px rgba(184,130,42,0.35));" aria-hidden="true">📜</div>
       </div>
     </div>
   </section>
 
-  <!-- Section 7: Why Choose Astro Jyotish Mount -->
-  <div id="mount-why-choose"></div>
-
-  <div id="mount-transparency"></div>
-
-  <!-- Section 8: Testimonials Mount -->
+  <!-- 11. Testimonials Mount (3 cards) -->
   <div id="mount-testimonials"></div>
 
-  <!-- Section 9: FAQ Accordion Mount -->
+  <!-- 12. FAQ Accordion Mount -->
   <div id="mount-faq"></div>
 </div>

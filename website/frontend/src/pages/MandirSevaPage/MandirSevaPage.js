@@ -98,11 +98,30 @@ export class MandirSevaPageComponent {
     const mode = this.mode || this.modeFromPath();
     this.mode = mode;
     this.root.querySelectorAll('[data-mode]').forEach(el => { el.hidden = el.dataset.mode !== mode; });
-    if(ChadhavaExperience.events&&['puja','chadhava'].includes(mode)){
-      const hub=this.root.querySelector(mode==='puja'?'[data-puja-hub]':'[data-chadhava-hub]');
-      ChadhavaExperience.root=hub;ChadhavaExperience.fixedKind=mode;ChadhavaExperience.tab=mode;
-      if(mode==='chadhava'&&!hub.dataset.wired){hub.dataset.wired='true';hub.addEventListener('click',event=>ChadhavaExperience.click(event));}
-      ChadhavaExperience.hub(ChadhavaExperience.access||{});
+    if (['puja', 'chadhava'].includes(mode)) {
+      const hub = this.root.querySelector(mode === 'puja' ? '[data-puja-hub]' : '[data-chadhava-hub]');
+      if (hub) {
+        ChadhavaExperience.root = hub;
+        ChadhavaExperience.fixedKind = mode;
+        ChadhavaExperience.tab = mode;
+        if (!hub.dataset.wired) {
+          hub.dataset.wired = 'true';
+          hub.addEventListener('click', event => ChadhavaExperience.click(event));
+          hub.addEventListener('input', event => {
+            const box = event.target.closest('[data-ch-search]');
+            if (!box) return;
+            ChadhavaExperience.pujaFilters = { ...ChadhavaExperience.pujaFilters, q: box.value };
+            ChadhavaExperience.hub(ChadhavaExperience.access || {});
+          });
+          hub.addEventListener('change', event => {
+            const sel = event.target.closest('[data-ch-filter]');
+            if (!sel) return;
+            ChadhavaExperience.pujaFilters = { ...ChadhavaExperience.pujaFilters, [sel.dataset.chFilter]: sel.value };
+            ChadhavaExperience.hub(ChadhavaExperience.access || {});
+          });
+        }
+        ChadhavaExperience.hub(ChadhavaExperience.access || {});
+      }
     }
     this.renderHeads();
     this.renderHome();
@@ -136,9 +155,44 @@ export class MandirSevaPageComponent {
     banner('mandir-chadhava-head', '/assets/img/mandir-banner.webp', hi ? 'चढ़ावा सेवा' : 'Chadhava seva', hi ? 'चढ़ावा: मंदिर चुनें' : 'Chadhava offerings & temple sevas',
       hi ? 'देश के प्रसिद्ध मंदिर। मंदिर चुनें, अपनी श्रद्धा से चढ़ावा चुनें और अपने नाम से अर्पित करें।' : 'Famous temples across India. Pick a temple, choose what to offer and it is placed there in your name.',
       `<div class="shop-hero__actions"><a class="shop-btn shop-btn--gold ch-green" href="#temples-head" data-scroll="#temples-head">${esc(hi ? 'अभी देखें' : 'View now')}</a><a class="shop-btn shop-btn--ghost" href="#" data-scroll=".ch-how">${esc(hi ? 'यह कैसे काम करता है?' : 'How it works?')}</a></div>`);
-    banner('mandir-puja-head', '/assets/img/temples/kashi-vishwanath-varanasi.jpg', hi ? 'पूजा सेवा' : 'Puja seva', hi ? 'पूजा बुक करें' : 'Book a puja',
-      hi ? 'मंदिर की आगामी पूजा चुनें, पैकेज लें और अपने परिवार के नाम से संकल्प कराएं।' : 'Pick an upcoming temple puja, choose a package and have the sankalp made in your family’s names.',
-      `<div class="shop-hero__actions"><a class="shop-btn shop-btn--gold ch-green" href="#puja-list" data-scroll=".ch-puja-catalogue">${esc(hi ? 'अभी देखें' : 'View pujas')}</a></div>`);
+    const pEl = this.$('mandir-puja-head');
+    if (pEl) {
+      const pujaTrust = `
+        <div class="shop-trust service-benefits">
+          <div><span>🛡️</span><p><b>${esc(hi ? 'वैदिक अनुष्ठान' : 'Vedic Rituals')}</b><small>${esc(hi ? 'अनुभवी पुजारियों द्वारा' : 'Experienced priests')}</small></p></div>
+          <div><span>🪷</span><p><b>${esc(hi ? 'व्यक्तिगत संकल्प' : 'Personalized')}</b><small>${esc(hi ? 'नाम व गोत्र सहित' : 'With name & gotra')}</small></p></div>
+          <div><span>📹</span><p><b>${esc(hi ? 'लाइव व वीडियो' : 'Live Updates')}</b><small>${esc(hi ? 'पूजा का वीडियो प्रमाण' : 'Video of your puja')}</small></p></div>
+        </div>
+      `;
+
+      pEl.innerHTML = `
+        <section class="shop-hero mandir-hero service-banner service-banner--mandir service-banner--puja" id="pj-hero-banner">
+          <figure class="service-banner__art">
+            <img src="/assets/img/puja-banner.webp" alt="Sacred Mandir Puja" fetchpriority="high">
+            <figcaption>${esc(hi ? 'प्रतीकात्मक चित्र' : 'Illustrative image')}</figcaption>
+          </figure>
+          <div class="mandir-hero__copy service-banner__copy">
+            <p class="mandir-hero__eyebrow">${esc(hi ? 'पूजा सेवा' : 'PUJA SEVA')} 🪷 ──</p>
+            <h1>${esc(hi ? 'पूजा' : 'Book a')} <em>${esc(hi ? 'बुक करें' : 'Puja')}</em></h1>
+            <p>${esc(hi ? 'मंदिर की आगामी पूजा चुनें, पैकेज लें और अपने परिवार के नाम से संकल्प कराएं।' : 'Pick an upcoming sacred puja, choose a package and have the rituals performed in your name by trusted priests.')}</p>
+            <div class="shop-hero__actions">
+              <a href="#pj-calendar-section" class="shop-btn shop-btn--gold" data-scroll="#pj-calendar-section">
+                <span>🪷</span>
+                <span>${esc(hi ? 'सभी पूजा देखें' : 'View All Pujas')} &rarr;</span>
+              </a>
+              <button type="button" id="btn-view-my-bookings-puja" class="shop-btn shop-btn--ghost">
+                <span>📜</span>
+                <span>${esc(hi ? 'मेरी बुकिंग और वीडियो' : 'My Bookings & Videos')}</span>
+              </button>
+            </div>
+          </div>
+          ${pujaTrust}
+        </section>
+      `;
+
+      this.$('btn-view-my-bookings-puja')?.addEventListener('click', () => this.openBookingsModal());
+    }
+
     const thead = this.$('temples-head');
     if (thead) thead.innerHTML = `<h2>${esc(hi ? 'श्रद्धा से चढ़ावा अर्पित करें' : 'Upcoming Chadhava Offerings')}</h2><p>${esc(hi ? 'देशभर के प्रसिद्ध मंदिरों में अपने नाम और गोत्र से चढ़ावा अर्पित करें। सेवा का वीडियो आपकी बुकिंग में मिलेगा।' : 'Experience the divine through chadhava at renowned temples across India. Offer in your name and gotra, and receive the seva video in your bookings.')}</p>`;
   }

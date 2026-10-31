@@ -1,0 +1,1101 @@
+/* =========================================================================
+   Astro Jyotish - Astrologers Directory Page (Reference Image 1 Match)
+   ========================================================================= */
+
+#view-directory {
+  background-color: #FAF7F2;
+  color: #1E1B4B;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* Masthead Hero Banner */
+.directory-masthead-ref {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 20px 0;
+}
+
+@media (max-width: 640px) {
+  .directory-masthead-ref {
+    padding: 10px 14px 0;
+  }
+}
+
+.dir-masthead-inner {
+  position: relative;
+  min-height: 380px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: radial-gradient(circle at 75% 45%, #182848 0%, #080F1E 65%, #050A14 100%);
+  border: 1px solid #D4AF3740;
+  box-shadow: 0 12px 36px rgba(10, 15, 30, 0.25);
+  display: flex;
+  align-items: center;
+}
+
+.dir-masthead-art-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.dir-masthead-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 38%;
+  opacity: 0.88;
+}
+
+.dir-masthead-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #060B18FA 0%, #081122F0 36%, #0C172CE0 52%, #141C3370 75%, #16122610 100%);
+}
+
+.dir-floating-devotees {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  background: rgba(18, 24, 38, 0.78);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 9999px;
+  padding: 6px 16px 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+}
+
+.dir-devotees-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.dir-dev-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #E5C158;
+  object-fit: cover;
+  margin-left: -8px;
+}
+
+.dir-dev-avatar:first-child {
+  margin-left: 0;
+}
+
+.dir-devotees-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.dir-dev-muted {
+  font-size: 10px;
+  color: #CBD5E1;
+}
+
+.dir-dev-bold {
+  font-size: 12px;
+  font-weight: 700;
+  color: #FDE68A;
+  letter-spacing: 0.02em;
+}
+
+.dir-masthead-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 44px 48px;
+}
+
+.dir-eyebrow-gold {
+  color: #E5C158;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.dir-hero-title {
+  color: #FFFDF0 !important;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.dir-hero-subtitle {
+  color: #E2E8F0;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 0 26px;
+}
+
+.dir-trust-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dir-trust-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(229, 193, 88, 0.35);
+  border-radius: 9999px;
+  padding: 7px 14px;
+  color: #F8FAFC;
+  font-size: 11.5px;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+}
+
+.dir-trust-icon {
+  font-size: 13px;
+}
+
+/* Search & Filter Controls Container */
+.dir-search-container {
+  max-width: 1320px;
+  margin: 20px auto 0;
+  padding: 18px 24px;
+  background: #FFFDF7;
+  border: 1px solid #E7DFC9;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(139, 90, 40, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dir-search-top-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dir-search-input-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #D8CCB5;
+  border-radius: 14px;
+  padding: 4px 6px 4px 16px;
+  gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dir-search-input-box:focus-within {
+  border-color: #4A0E17;
+  box-shadow: 0 0 0 3px rgba(74, 14, 23, 0.1);
+}
+
+.dir-search-icon {
+  font-size: 16px;
+  color: #94A3B8;
+}
+
+.dir-search-input-box input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  color: #1E1B4B;
+  min-height: 38px;
+}
+
+.dir-search-input-box input::placeholder {
+  color: #94A3B8;
+}
+
+.dir-search-submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #4A0E17;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 0 20px;
+  height: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dir-search-submit-btn:hover {
+  background: #3B0A12;
+}
+
+.dir-help-choose-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFDF5;
+  border: 1px solid #E5D5B8;
+  border-radius: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, border-color 0.2s;
+  shrink: 0;
+}
+
+.dir-help-choose-btn:hover {
+  background: #FEF9ED;
+  border-color: #D4AF37;
+}
+
+.dir-sparkle {
+  color: #B45309;
+  font-size: 18px;
+}
+
+.dir-help-text strong {
+  display: block;
+  font-size: 12px;
+  color: #1E1B4B;
+  line-height: 1.2;
+}
+
+.dir-help-text small {
+  display: block;
+  font-size: 10.5px;
+  color: #B45309;
+  font-weight: 600;
+}
+
+/* 5 Dropdowns Row */
+.dir-dropdowns-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dir-select {
+  width: 100%;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #D8CCB5;
+  border-radius: 10px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: #334155;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.dir-select:focus {
+  border-color: #4A0E17;
+}
+
+/* Concern Category Pills */
+.dir-categories-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.dir-cat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: #FFFFFF;
+  border: 1px solid #E2D6C0;
+  border-radius: 9999px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dir-cat-pill:hover {
+  border-color: #4A0E17;
+  color: #4A0E17;
+  background: #FFFDF9;
+}
+
+.dir-cat-pill.is-active {
+  background: #4A0E17;
+  border-color: #4A0E17;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(74, 14, 23, 0.25);
+}
+
+.dir-cat-icon {
+  font-size: 13px;
+}
+
+/* Main Section Header */
+.dir-main-section {
+  max-width: 1320px;
+  margin: 36px auto 0;
+  padding: 0 20px;
+}
+
+.dir-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.dir-sec-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #B45309;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.dir-sec-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.dir-sec-sub {
+  font-size: 13px;
+  color: #64748B;
+  margin: 0;
+}
+
+.dir-guidance-seal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFDF5;
+  border: 1px dashed #D4AF37;
+  border-radius: 9999px;
+  padding: 8px 16px;
+}
+
+.dir-seal-sun {
+  font-size: 20px;
+}
+
+.dir-seal-text span {
+  display: block;
+  font-size: 9.5px;
+  color: #854D0E;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dir-seal-text strong {
+  display: block;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 11.5px;
+  color: #4A0E17;
+}
+
+/* Subtabs Bar */
+.dir-subtabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.dir-subtab {
+  padding: 7px 18px;
+  background: #FFFFFF;
+  border: 1px solid #E2D6C0;
+  border-radius: 9999px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dir-subtab:hover {
+  border-color: #4A0E17;
+  color: #4A0E17;
+}
+
+.dir-subtab.is-active {
+  background: #4A0E17;
+  border-color: #4A0E17;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(74, 14, 23, 0.2);
+}
+
+/* 2-Column Content Layout */
+.dir-layout-2col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  gap: 24px;
+  align-items: start;
+}
+
+.dir-left-grid-col {
+  min-width: 0;
+}
+
+.dir-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Astrologer Card (Reference Match) */
+.ac-card.ac2 {
+  background: #FFFFFF;
+  border: 1px solid #EAE3D3;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.ac-card.ac2:hover {
+  transform: translateY(-2px);
+  border-color: #D4AF37;
+  box-shadow: 0 8px 24px rgba(139, 90, 40, 0.12);
+}
+
+.ac-ref-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ac-ref-avatar-wrap {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid #D4AF37;
+  padding: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.ac-ref-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ac-ref-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ac-ref-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.ac-ref-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 9999px;
+}
+
+.ac-ref-status--online {
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.ac-ref-status--busy {
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+.ac-ref-status--away {
+  background: #FFFBEB;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.ac-ref-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ac-ref-heart {
+  background: transparent;
+  border: none;
+  color: #DC2626;
+  cursor: pointer;
+  padding: 2px;
+  display: grid;
+  place-items: center;
+}
+
+.ac-ref-name {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ac-ref-name:hover {
+  color: #4A0E17;
+}
+
+.ac-ref-rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: #64748B;
+  border-bottom: 1px solid #F1ECE0;
+  padding-bottom: 8px;
+}
+
+.ac-ref-rating {
+  font-weight: 700;
+  color: #1E1B4B;
+}
+
+.ac-ref-star {
+  color: #F59E0B;
+}
+
+.ac-ref-revcount {
+  font-weight: 400;
+  color: #64748B;
+  font-size: 10.5px;
+}
+
+.ac-ref-exp {
+  font-size: 11px;
+}
+
+.ac-ref-specialties {
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0;
+  min-height: 32px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ac-ref-languages {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.ac-ref-lang-pill {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #FAF6ED;
+  border: 1px solid #E8DFCB;
+  color: #5C4D3C;
+}
+
+.ac-ref-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #F1ECE0;
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+.ac-ref-rate strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1E1B4B;
+}
+
+.ac-ref-rate small {
+  font-size: 10.5px;
+  color: #64748B;
+}
+
+.ac-ref-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ac-ref-btn-chat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #4A0E17;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ac-ref-btn-chat:hover {
+  background: #3B0A12;
+}
+
+.ac-ref-btn-call {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid #D8CCB5;
+  color: #4A0E17;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ac-ref-btn-call:hover {
+  background: #FFF9EF;
+  border-color: #4A0E17;
+}
+
+/* Pagination Row */
+.dir-pager-container, .directory-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 28px;
+}
+
+.directory-pager button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2D6C0;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.directory-pager button:hover:not(:disabled) {
+  border-color: #4A0E17;
+  color: #4A0E17;
+}
+
+.directory-pager button.is-active {
+  background: #4A0E17;
+  border-color: #4A0E17;
+  color: #FFFFFF;
+}
+
+.directory-pager button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Sticky Right Sidebar */
+.dir-sidebar-col {
+  position: sticky;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Sidebar Card 1: Om Guidance Card */
+.dir-sidebar-guidance-card {
+  background: radial-gradient(circle at 50% 20%, #4D121E 0%, #2D070F 75%, #1C0308 100%);
+  border: 1px solid #D4AF3780;
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(45, 7, 15, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.dir-sidebar-guidance-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.dir-guidance-mandala-ornament {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.dir-om-badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #E5C158;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, #5E1624 0%, #300811 100%);
+  box-shadow: 0 0 16px rgba(229, 193, 88, 0.35);
+}
+
+.dir-om-symbol {
+  font-size: 26px;
+  color: #FDE68A;
+  line-height: 1;
+}
+
+.dir-guidance-heading {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFDF0;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+.dir-guidance-desc {
+  font-size: 11px;
+  color: #F1E5D8;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+.dir-guidance-cta-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #FDE68A 0%, #E5C158 50%, #C99B2A 100%);
+  color: #3B0A12;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dir-guidance-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(229, 193, 88, 0.4);
+}
+
+/* Sidebar Card 2: Most Consulted Astrologers */
+.dir-sidebar-ranking-card {
+  background: #FFFDF7;
+  border: 1px solid #E8DEC7;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.dir-ranking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #F1EBE0;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.dir-ranking-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dir-ranking-star {
+  color: #F59E0B;
+  font-size: 14px;
+}
+
+.dir-ranking-title {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+.dir-view-all-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: #4A0E17;
+  text-decoration: none;
+}
+
+.dir-view-all-link:hover {
+  text-decoration: underline;
+}
+
+.dir-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dir-expert-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 6px 4px;
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+
+.dir-expert-row:hover {
+  background: #FDF9EE;
+}
+
+.dir-rank-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.dir-rank-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #D4AF37;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dir-rank-info {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.dir-rank-info strong {
+  display: block;
+  font-size: 12px;
+  color: #1E1B4B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dir-rank-meta {
+  font-size: 10px;
+  color: #64748B;
+}
+
+.dir-rank-status {
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.dir-status-online {
+  color: #059669;
+}
+
+.dir-status-busy {
+  color: #DC2626;
+}
+
+/* Sidebar Card 3: First Consultation at ₹1 */
+.dir-sidebar-offer-card {
+  background: #FFFDF7;
+  border: 1px solid #E8DEC7;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  text-align: left;
+}
+
+.dir-offer-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.dir-offer-gift {
+  font-size: 26px;
+}
+
+.dir-offer-heading {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E1B4B;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.dir-offer-desc {
+  font-size: 11px;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0 0 14px;
+}
+
+.dir-offer-cta-btn {
+  width: 100%;
+  background: #4A0E17;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dir-offer-cta-btn:hover {
+  background: #3B0A12;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .dir-cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .dir-dropdowns-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dir-layout-2col {
+    grid-template-columns: 1fr;
+  }
+  .dir-sidebar-col {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .dir-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dir-masthead-copy {
+    padding: 32px 24px;
+  }
+  .dir-floating-devotees {
+    display: none;
+  }
+  .dir-dropdowns-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dir-search-top-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .dir-sidebar-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .dir-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .ac-card.ac2 {
+    padding: 12px 14px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+  .ac-ref-avatar-wrap {
+    width: 48px;
+    height: 48px;
+  }
+  .ac-ref-name {
+    font-size: 13.5px;
+  }
+  .ac-ref-specialties {
+    font-size: 11px;
+    margin: 2px 0;
+  }
+  .ac-ref-footer {
+    padding-top: 6px;
+  }
+  .ac-ref-price {
+    font-size: 13px;
+  }
+  .ac-ref-chat-btn, .ac-ref-call-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .dir-dropdowns-row {
+    grid-template-columns: 1fr;
+  }
+  .dir-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

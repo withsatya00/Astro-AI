@@ -1,102 +1,271 @@
-<section class="directory-page-header directory-masthead max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-6">
-  <div class="directory-masthead__inner service-banner service-banner--astrologers">
-    <figure class="service-banner__art"><img src="/assets/img/astrologers-banner.webp" alt="" fetchpriority="high"><figcaption data-i18n="gs_illustrative">Illustrative image</figcaption></figure>
-    <div class="directory-masthead__copy service-banner__copy">
-      <p class="directory-eyebrow" data-i18n="dir.eyebrow">Guidance, chosen with clarity</p>
-      <div class="directory-title-row flex items-center gap-3 mb-3 flex-wrap">
-        <h1 class="directory-title font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#1E1B4B]" data-i18n="dir_page_heading">Vedic Astrologer Directory</h1>
-        <span class="directory-badge" id="directory-total-badge">30+ Certified Astrologers</span>
+<!-- Astro Jyotish - Astrologers Directory Unified Banner (Matches Chadhava Blueprint) -->
+<section class="directory-masthead directory-masthead-ref">
+  <div class="service-banner service-banner--astrologers">
+    <figure class="service-banner__art">
+      <img src="/assets/img/astrologers-banner.webp" alt="Vedic Astrologers" fetchpriority="high" />
+      <figcaption>Illustrative image</figcaption>
+    </figure>
+    <div class="mandir-hero__copy service-banner__copy">
+      <p class="mandir-hero__eyebrow">ANCIENT WISDOM &bull; MODERN SOLUTIONS</p>
+      <h1>Talk to Verified <em>Vedic Astrologers</em></h1>
+      <p>Get personalised guidance for Love, Career, Marriage, Finance, Health and more. Connect with experienced astrologers in your language.</p>
+      <div class="shop-hero__actions">
+        <a href="#directory-page-cards-grid" class="shop-btn shop-btn--gold" data-scroll="#directory-page-cards-grid">Find Astrologer &rarr;</a>
+        <button type="button" class="shop-btn shop-btn--ghost" onclick="window.App && window.App.openChatModal ? window.App.openChatModal() : null">Help me choose</button>
       </div>
-      <p class="directory-subtitle" data-i18n="dir_page_subtitle">Discover certified scholars and specialized astrologers in Career, Marriage, Finance, Gemstones, and Vedic Remedial Shastras.</p>
     </div>
-    <div class="directory-trust-grid service-benefits" aria-label="Directory benefits">
-      <div><span aria-hidden="true">✓</span><p><b data-i18n="dir.trust.verified">Verified profiles</b><small data-i18n="dir.trust.verifiedSub">Credentials shown clearly</small></p></div>
-      <div><span aria-hidden="true">₹</span><p><b data-i18n="dir.trust.rates">Clear rates</b><small data-i18n="dir.trust.ratesSub">See the fee before you start</small></p></div>
-      <div><span aria-hidden="true">◷</span><p><b data-i18n="dir.trust.availability">Live availability</b><small data-i18n="dir.trust.availabilitySub">Find the next suitable time</small></p></div>
+    <div class="shop-trust service-benefits">
+      <div><span>🛡️</span><p><b>100% Verified</b><small>Experienced Astrologers</small></p></div>
+      <div><span>🔒</span><p><b>Private &amp; Secure</b><small>Confidential Consultation</small></p></div>
+      <div><span>💬</span><p><b>Chat &amp; Call</b><small>Connect in 12+ Languages</small></p></div>
     </div>
   </div>
 </section>
 
-<!-- Search & Filter Controls Toolbar -->
-<section class="directory-toolbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 space-y-4" aria-label="Find an astrologer">
-  <div class="dir-search-row flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-    <div class="dir-search-box flex-1 flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition-all">
-      <span class="text-slate-400">🔍</span>
-      <input type="text" id="dir-page-search-input" class="w-full bg-transparent border-none text-sm text-slate-800 focus:outline-none" data-i18n-placeholder="dir_search_placeholder" placeholder="Search astrologer or topic..." oninput="App.onDirectorySearchInput(event)" aria-label="Search astrologers"/>
+<!-- Search & Filter Controls Card -->
+<section class="dir-search-container">
+  <!-- Row 1: Search input + Help choose -->
+  <div class="dir-search-top-row">
+    <div class="dir-search-input-box">
+      <span class="dir-search-icon">🔍</span>
+      <input type="text" id="dir-page-search-input" placeholder="Search astrologer by name, expertise, or problem..." oninput="App.onDirectorySearchInput(event)" aria-label="Search astrologer" />
+      <button type="button" class="dir-search-submit-btn" onclick="App.loadAstrologerDirectory()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Search</span>
+      </button>
     </div>
-    <button type="button" class="dir-mobile-filter-toggle" id="dir-mobile-filter-toggle" aria-expanded="false" aria-controls="dir-filters-panel" onclick="App.toggleDirectoryFilters()">
-      <span aria-hidden="true">☷</span> <span data-i18n="dir.filters">Filters</span>
+    <button type="button" class="dir-help-choose-btn" onclick="window.App && window.App.openModal ? window.App.openModal('modal-smart-matching') : null">
+      <span class="dir-sparkle">✦</span>
+      <span class="dir-help-text">
+        <strong>I'm not sure</strong>
+        <small>Help me choose &rarr;</small>
+      </span>
     </button>
-    <button type="button" class="btn-clear-filters px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-slate-800 hover:bg-slate-50 text-xs font-semibold shrink-0 transition-colors" onclick="App.clearDirectoryFilters()">
-      <span data-i18n="dir_btn_clear">Clear Filters</span>
+  </div>
+
+  <!-- Row 2: 5 Filter Dropdowns -->
+  <div class="dir-dropdowns-row">
+    <select id="dir-filter-specialty" class="dir-select" onchange="App.onDirectoryFilterChange()" aria-label="All Specialities">
+      <option value="">All Specialities</option>
+      <option value="Career">Career &amp; Business</option>
+      <option value="Marriage">Love &amp; Marriage</option>
+      <option value="Kundli">Kundli Analysis</option>
+      <option value="Finance">Finance &amp; Wealth</option>
+      <option value="Remedies">Vedic Remedies</option>
+      <option value="Health">Health &amp; Wellness</option>
+      <option value="Education">Education &amp; Studies</option>
+    </select>
+    <select id="dir-filter-language" class="dir-select" onchange="App.onDirectoryFilterChange()" aria-label="All Languages">
+      <option value="">All Languages</option>
+      <option value="Hindi">Hindi (हिन्दी)</option>
+      <option value="English">English</option>
+      <option value="Sanskrit">Sanskrit (संस्कृत)</option>
+      <option value="Bhojpuri">Bhojpuri</option>
+      <option value="Marathi">Marathi (मराठी)</option>
+      <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+      <option value="Bengali">Bengali (বাংলা)</option>
+      <option value="Punjabi">Punjabi</option>
+      <option value="Tamil">Tamil (தமிழ்)</option>
+    </select>
+    <select id="dir-filter-price" class="dir-select" onchange="window.DirectoryChips && window.DirectoryChips.applyPrice(this.value)" aria-label="All Price Range">
+      <option value="">All Price Range</option>
+      <option value="free">Free guidance</option>
+      <option value="50">Up to ₹50/min</option>
+      <option value="75">Up to ₹75/min</option>
+      <option value="100">Up to ₹100/min</option>
+    </select>
+    <select id="dir-filter-gender" class="dir-select" onchange="App.onDirectoryFilterChange()" aria-label="All Genders">
+      <option value="all">All Genders</option>
+      <option value="male">Male Astrologers</option>
+      <option value="female">Female Astrologers</option>
+    </select>
+    <select id="dir-filter-sort" class="dir-select" onchange="App.onDirectoryFilterChange()" aria-label="Sort by Popularity">
+      <option value="popular">Sort by Popularity</option>
+      <option value="rating">Sort by Rating</option>
+      <option value="experience">Sort by Experience</option>
+      <option value="name">Sort by Name</option>
+    </select>
+  </div>
+
+  <!-- Row 3: Category Concern Pills -->
+  <div class="dir-categories-row" id="dir-quick-chips">
+    <button type="button" class="dir-cat-pill is-active" data-dir-chip="all" data-value="">
+      <span class="dir-cat-icon">▦</span> All
     </button>
-  </div>
-
-  <div class="dir-filters-panel" id="dir-filters-panel">
-  <div class="dir-filters-row grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-    <!-- Specialty / Concern Filter -->
-    <select id="dir-filter-specialty" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by specialty">
-      <option value="">All Specialties / Concerns</option>
-      <option value="Career">💼 Career & Business</option>
-      <option value="Marriage">💍 Love & Marriage</option>
-      <option value="Kundli">🪐 Kundli & Doshas</option>
-      <option value="Finance">💰 Wealth & Finance</option>
-      <option value="Remedies">🪔 Vedic Remedies</option>
-      <option value="Health">🩺 Health & Longevity</option>
-      <option value="Education">🎓 Education & Studies</option>
-      <option value="Prashna">❓ Prashna Shastra</option>
-      <option value="Gemology">💎 Gemstones</option>
-      <option value="Vastu">🏠 Vastu Shastra</option>
-    </select>
-
-    <!-- Language Filter -->
-    <select id="dir-filter-language" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by language">
-      <option value="">All Spoken Languages</option>
-      <option value="Hindi">🇮🇳 Hindi (हिन्दी)</option>
-      <option value="English">🇬🇧 English</option>
-      <option value="Sanskrit">🕉️ Sanskrit (संस्कृत)</option>
-      <option value="Marathi">🚩 Marathi (मराठी)</option>
-      <option value="Gujarati">🦚 Gujarati (ગુજરાતી)</option>
-      <option value="Bengali">🌸 Bengali (বাংলা)</option>
-      <option value="Tamil">🪔 Tamil (தமிழ்)</option>
-      <option value="Telugu">🌾 Telugu (తెలుగు)</option>
-    </select>
-
-    <!-- Consultation Mode Filter -->
-    <select id="dir-filter-mode" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Filter by consultation mode">
-      <option value="all">All Modes</option>
-      <option value="ai">Instant guidance</option>
-      <option value="human">Verified astrologers</option>
-      <option value="online">Online Now</option>
-    </select>
-
-    <!-- Sort Option -->
-    <select id="dir-filter-sort" class="dir-filter-select bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 shadow-sm focus:border-purple-600 focus:ring-1 focus:ring-purple-200 focus:outline-none" onchange="App.onDirectoryFilterChange()" aria-label="Sort astrologers">
-      <option value="popular">Sort: Most Popular</option>
-      <option value="experience">Sort: Highest Experience</option>
-      <option value="rating">Sort: Highest Rated</option>
-      <option value="name">Sort: Name (A-Z)</option>
-    </select>
-  </div>
-  </div>
-
-  <!-- Active Filter Chips Strip -->
-  <div id="dir-active-filters-strip" style="display: none;" class="items-center gap-2 flex-wrap pt-1">
-    <span class="text-xs text-slate-500 font-semibold">Active Filters:</span>
-    <div id="dir-active-chips-content" class="flex gap-1.5 flex-wrap"></div>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Love &amp; Relationship">
+      <span class="dir-cat-icon">❤️</span> Love &amp; Relationship
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Marriage">
+      <span class="dir-cat-icon">💍</span> Marriage
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Career">
+      <span class="dir-cat-icon">💼</span> Career
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Finance">
+      <span class="dir-cat-icon">🪙</span> Finance
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Health">
+      <span class="dir-cat-icon">🌿</span> Health
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Kundli">
+      <span class="dir-cat-icon">📜</span> Kundli
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Remedies">
+      <span class="dir-cat-icon">🪔</span> Remedies
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Business">
+      <span class="dir-cat-icon">📊</span> Business
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Education">
+      <span class="dir-cat-icon">📖</span> Education
+    </button>
+    <button type="button" class="dir-cat-pill" data-dir-chip="specialty" data-value="Others">
+      <span class="dir-cat-icon">⋯</span> Others
+    </button>
   </div>
 </section>
 
-<!-- Quick filter chips (sticky): a direct child of the page so it can stay in view over the grid -->
-<div id="dir-quick-chips" class="dir-chips max-w-7xl mx-auto"></div>
-
-<!-- Astrologer cards: live data is rendered by App.loadAstrologerDirectory -->
-<section class="directory-results max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16" aria-live="polite">
-  <div class="directory-results__head">
-    <div><p class="directory-eyebrow" data-i18n="dir.resultsEyebrow">Explore specialists</p><h2 data-i18n="dir.resultsTitle">Find the right astrologer for your concern</h2></div>
-    <p data-i18n="dir.resultsNote">Compare expertise, language, availability and fee before you connect.</p>
+<!-- Main Directory Content Section -->
+<section class="dir-main-section">
+  <!-- Section Heading + Seal -->
+  <div class="dir-section-header">
+    <div class="dir-section-header-left">
+      <div class="dir-sec-eyebrow">
+        <span class="dir-moon-icon">🌙</span> OUR ASTROLOGERS
+      </div>
+      <h2 class="dir-sec-title">Find the Right Astrologer for Your Concern</h2>
+      <p class="dir-sec-sub">Connect with experienced and verified astrologers for accurate guidance and practical solutions.</p>
+    </div>
+    <div class="dir-section-header-right">
+      <div class="dir-guidance-seal">
+        <div class="dir-seal-sun">☀️</div>
+        <div class="dir-seal-text">
+          <span>Guidance for a</span>
+          <strong>Better Tomorrow</strong>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="astrologers-grid-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full" id="directory-page-cards-grid">
-    <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div><div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
+
+  <!-- Subtabs Bar -->
+  <div class="dir-subtabs-bar">
+    <button type="button" class="dir-subtab is-active" data-dir-subtab="all" onclick="window.App && window.App.filterDirectorySubtab ? window.App.filterDirectorySubtab('all') : null">
+      All Astrologers (120+)
+    </button>
+    <button type="button" class="dir-subtab" data-dir-subtab="top-rated" onclick="window.App && window.App.filterDirectorySubtab ? window.App.filterDirectorySubtab('top-rated') : null">
+      ⭐ Top Rated
+    </button>
+    <button type="button" class="dir-subtab" data-dir-subtab="most-consulted" onclick="window.App && window.App.filterDirectorySubtab ? window.App.filterDirectorySubtab('most-consulted') : null">
+      👑 Most Consulted
+    </button>
+    <button type="button" class="dir-subtab" data-dir-subtab="new" onclick="window.App && window.App.filterDirectorySubtab ? window.App.filterDirectorySubtab('new') : null">
+      🌟 New Astrologers
+    </button>
+  </div>
+
+  <!-- 2-Column Content Layout (Cards Grid + Sticky Sidebar) -->
+  <div class="dir-layout-2col">
+    <!-- Left Column: Cards Grid + Pagination -->
+    <div class="dir-left-grid-col">
+      <div class="dir-cards-grid" id="directory-page-cards-grid">
+        <!-- Rendered dynamically by loadAstrologerDirectory -->
+        <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
+        <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
+        <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
+        <div class="sk-card" aria-hidden="true"><div class="sk-img sk"></div><div class="sk-body"><i class="sk sk-line w60"></i><i class="sk sk-line w40"></i><i class="sk sk-line w80"></i><div class="sk-row"><i class="sk sk-btn"></i><i class="sk sk-btn"></i></div></div></div>
+      </div>
+      <div class="dir-pager-container" id="directory-pager">
+        <!-- Pager buttons: < 1 2 3 4 5 ... 12 > -->
+      </div>
+    </div>
+
+    <!-- Right Column: Sticky Sidebar with 3 Reference Cards -->
+    <aside class="dir-sidebar-col">
+      <!-- Card 1: Om Guidance Card -->
+      <div class="dir-sidebar-guidance-card">
+        <div class="dir-guidance-mandala-ornament">
+          <div class="dir-om-badge">
+            <span class="dir-om-symbol">ॐ</span>
+          </div>
+        </div>
+        <h3 class="dir-guidance-heading">Get Personalised<br>Astrology Guidance</h3>
+        <p class="dir-guidance-desc">Talk to verified astrologers and find solutions to your life's questions.</p>
+        <button type="button" class="dir-guidance-cta-btn" onclick="window.App && window.App.openModal ? window.App.openModal('modal-smart-matching') : null">
+          <span>Start a Consultation</span>
+          <span class="dir-arrow">&rarr;</span>
+        </button>
+      </div>
+
+      <!-- Card 2: Most Consulted Astrologers -->
+      <div class="dir-sidebar-ranking-card">
+        <div class="dir-ranking-header">
+          <div class="dir-ranking-title-wrap">
+            <span class="dir-ranking-star">⭐</span>
+            <h3 class="dir-ranking-title">Most Consulted Astrologers</h3>
+          </div>
+          <a href="/astrologers" data-nav-link class="dir-view-all-link">View All &rarr;</a>
+        </div>
+        <div class="dir-ranking-list" id="dir-ranking-list">
+          <!-- Static / Dynamic 5 Ranked Experts -->
+          <a class="dir-expert-row" href="/astrologers/pt-rameshwar-dwivedi" data-nav-link>
+            <span class="dir-rank-num">1</span>
+            <img src="/assets/portraits/pt-rameshwar-dwivedi.jpg" alt="Pt. Rameshwar Shastri" class="dir-rank-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>Pt. Rameshwar Shastri</strong>
+              <div class="dir-rank-meta">★ 4.9 &bull; 2.1k</div>
+              <span class="dir-rank-status dir-status-online">● Online</span>
+            </div>
+          </a>
+          <a class="dir-expert-row" href="/astrologers/acharya-kn-rao" data-nav-link>
+            <span class="dir-rank-num">2</span>
+            <img src="/assets/portraits/acharya-kn-rao.jpg" alt="Acharya K.N. Mishra" class="dir-rank-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>Acharya K.N. Mishra</strong>
+              <div class="dir-rank-meta">★ 4.8 &bull; 1.8k</div>
+              <span class="dir-rank-status dir-status-online">● Online</span>
+            </div>
+          </a>
+          <a class="dir-expert-row" href="/astrologers/pandit-ji-maharaj" data-nav-link>
+            <span class="dir-rank-num">3</span>
+            <img src="/assets/portraits/pandit-ji-maharaj.jpg" alt="Pandit Ji Maharaj" class="dir-rank-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>Pandit Ji Maharaj</strong>
+              <div class="dir-rank-meta">★ 4.9 &bull; 3.1k</div>
+              <span class="dir-rank-status dir-status-busy">● Busy</span>
+            </div>
+          </a>
+          <a class="dir-expert-row" href="/astrologers/dr-meenakshi-iyer" data-nav-link>
+            <span class="dir-rank-num">4</span>
+            <img src="/assets/portraits/dr-meenakshi-iyer.jpg" alt="Dr. Meenakshi Verma" class="dir-rank-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>Dr. Meenakshi Verma</strong>
+              <div class="dir-rank-meta">★ 4.8 &bull; 1.2k</div>
+              <span class="dir-rank-status dir-status-online">● Online</span>
+            </div>
+          </a>
+          <a class="dir-expert-row" href="/astrologers/pt-harinarayan-mishra" data-nav-link>
+            <span class="dir-rank-num">5</span>
+            <img src="/assets/portraits/pt-harinarayan-mishra.jpg" alt="Pt. Harinarayan" class="dir-rank-img" onerror="this.onerror=null;this.src='/assets/portraits/default-avatar.svg'">
+            <div class="dir-rank-info">
+              <strong>Pt. Harinarayan</strong>
+              <div class="dir-rank-meta">★ 4.9 &bull; 2.7k</div>
+              <span class="dir-rank-status dir-status-online">● Online</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: First Consultation at ₹1 -->
+      <div class="dir-sidebar-offer-card">
+        <div class="dir-offer-top">
+          <span class="dir-offer-gift">🎁</span>
+          <h4 class="dir-offer-heading">First Consultation<br>at Just ₹1</h4>
+        </div>
+        <p class="dir-offer-desc">Talk to verified astrologers at an exclusive introductory price.</p>
+        <button type="button" class="dir-offer-cta-btn" onclick="window.App && window.App.openWalletModal ? window.App.openWalletModal() : null">
+          Claim Offer &rarr;
+        </button>
+      </div>
+    </aside>
   </div>
 </section>

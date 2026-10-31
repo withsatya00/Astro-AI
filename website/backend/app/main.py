@@ -203,6 +203,7 @@ def on_startup():
             marketplace.seed_products_if_empty(db)
             mandir.seed_packages_and_coupons(db)
             experience.ensure_pack_coupons(db)
+            gau_sewa.seed_gaushalas_if_empty(db)
         finally:
             db.close()
     except Exception as e:

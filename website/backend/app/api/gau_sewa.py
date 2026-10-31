@@ -32,7 +32,7 @@ from sqlalchemy.orm import Session
 from packages.core import mailer
 from packages.core.config import settings
 from packages.core.notify import notify
-from packages.database.models import Donation, Gaushala, GauSevaUpdate, PaymentWebhookEvent, User, generate_uuid, utc_now
+from packages.database.models import Donation, Gaushala, GauSevaUpdate, PaymentWebhookEvent, User, WalletTransaction, generate_uuid, utc_now
 from packages.database.session import SessionLocal, get_db
 from website.backend.app.api import wallet
 from website.backend.app.api.auth import get_current_user_optional, get_current_user_required
@@ -226,6 +226,124 @@ def create_donation_order(payload: DonationOrderRequest, db: Session = Depends(g
     db.commit()
     return {"order_id": order_id, "amount": paise, "currency": CURRENCY, "key_id": settings.RAZORPAY_KEY_ID,
             "reference": reference, "recipient_name": donation.recipient_name, "receipt_token": donation.receipt_token}
+
+class DonationWalletRequest(BaseModel):
+    amount: StrictInt = Field(..., description="Whole rupees")
+    purpose: str
+    donor_name: str = Field(..., max_length=200)
+    donor_email: Optional[str] = Field(None, max_length=255)
+    donor_phone: Optional[str] = Field(None, max_length=30)
+    hide_name_public: StrictBool = False
+    optin_updates: bool = True
+    gaushala_id: Optional[str] = None
+
+
+@router.post("/donations/wallet")
+@router.post("/donations")
+def donate_with_wallet(
+    payload: DonationWalletRequest,
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
+):
+    """
+    Directly contributes to Gau Seva from the user's Astro Jyotish wallet.
+    Debits the wallet, records the transaction, issues the official digital receipt,
+    and updates Gaushala records.
+    """
+    if payload.purpose not in PURPOSES:
+        raise HTTPException(status_code=422, detail="Choose a valid donation purpose")
+    if not (MIN_RUPEES <= payload.amount <= MAX_RUPEES):
+        raise HTTPException(status_code=422, detail=f"Enter an amount between ₹{MIN_RUPEES} and ₹{MAX_RUPEES:,}")
+    name = re.sub(r"\s+", " ", payload.donor_name or "").strip()
+    if len(name) < 2 or len(name) > 120:
+        raise HTTPException(status_code=422, detail="Enter the donor name (2 to 120 characters)")
+    email = (payload.donor_email or "").strip().lower() or None
+    if email and not EMAIL_RE.match(email):
+        raise HTTPException(status_code=422, detail="Enter a valid email address or leave it blank")
+    recipient = _recipient(db, payload.gaushala_id)
+    if not recipient:
+        raise HTTPException(status_code=422, detail="Choose a gaushala that is accepting donations")
+
+    if not current_user:
+        raise HTTPException(
+            status_code=401,
+            detail="Please sign in to donate using your Astro Jyotish Wallet balance."
+        )
+
+    user = db.query(User).filter(User.id == current_user.id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User account not found")
+
+    balance = float(user.wallet_balance or 0.0)
+    amount_rupees = float(payload.amount)
+    if balance < amount_rupees:
+        raise HTTPException(
+            status_code=402,
+            detail=f"Insufficient wallet balance (₹{balance:.2f}). Please recharge your wallet with ₹{amount_rupees - balance:.0f} to complete this Gau Seva."
+        )
+
+    # Debit wallet
+    user.wallet_balance = balance - amount_rupees
+    db.add(user)
+
+    paise = payload.amount * 100
+    reference = "GS-" + secrets.token_hex(5).upper()
+    donation_id = generate_uuid()
+
+    # Create debit transaction
+    tx = WalletTransaction(
+        id=generate_uuid(),
+        user_id=user.id,
+        amount=-amount_rupees,
+        transaction_type="debit",
+        description=f"Gau Seva ({payload.purpose}) - {recipient.beneficiary_name.strip()}",
+        reference_id=reference,
+        created_at=utc_now()
+    )
+    db.add(tx)
+
+    # Create successful donation record
+    donation = Donation(
+        id=donation_id,
+        reference=reference,
+        receipt_token=secrets.token_urlsafe(32),
+        user_id=user.id,
+        donor_name=name,
+        donor_email=email,
+        hide_name_public=payload.hide_name_public,
+        purpose=payload.purpose,
+        amount_paise=paise,
+        currency=CURRENCY,
+        gaushala_id=recipient.id,
+        recipient_name=recipient.beneficiary_name.strip(),
+        provider="wallet",
+        provider_order_id=f"WLT_{reference}",
+        status="SUCCESS",
+        paid_at=utc_now()
+    )
+    db.add(donation)
+
+    # Notify user
+    try:
+        notify(db, f"u:{user.id}", "donation_confirmed", "/gau-sewa", amount=f"{amount_rupees:.0f}", ref=reference)
+    except Exception:
+        pass
+
+    db.commit()
+    db.refresh(donation)
+
+    return {
+        "status": "SUCCESS",
+        "success": True,
+        "reference": reference,
+        "receipt_token": donation.receipt_token,
+        "donation_id": donation.id,
+        "amount": payload.amount,
+        "recipient_name": donation.recipient_name,
+        "donor_name": donation.donor_name,
+        "purpose": donation.purpose,
+        "new_balance": round(user.wallet_balance, 2)
+    }
 
 
 def _apply_payment(db: Session, donation: Donation, payment: Dict[str, Any]) -> bool:
@@ -604,3 +722,36 @@ def admin_list_donations(status: Optional[str] = None, purpose: Optional[str] = 
                        "user_id": d.user_id, "provider_order_id": d.provider_order_id, "provider_payment_id": d.provider_payment_id,
                        "failure_reason": d.failure_reason} for d in rows],
     }
+
+
+def seed_gaushalas_if_empty(db: Session) -> None:
+    """Ensures at least one active, verified Gaushala exists for devotees to support."""
+    existing = db.query(Gaushala).first()
+    if not existing:
+        photos = json.dumps([
+            "/assets/img/gausewa/cow-mother-calf.webp",
+            "/assets/img/gausewa/cow-portrait.webp",
+            "/assets/img/gausewa/gaushala-shelter-real.webp"
+        ])
+        g = Gaushala(
+            id=generate_uuid(),
+            slug="shri-krishna-gaushala-vrindavan",
+            name="Shri Krishna Gaushala (Cow Care Center)",
+            location="Vrindavan, Mathura, Uttar Pradesh",
+            introduction="A registered sanctuary providing loving care, daily green fodder, medical treatment, and shelter to 350+ sacred cows.",
+            photos=photos,
+            beneficiary_name="Shri Krishna Gaushala Trust",
+            beneficiary_details="Direct monthly disbursement for nutritious green fodder, 24/7 veterinarian aid, and seasonal cow shelter.",
+            donations_enabled=True,
+            is_active=True,
+            created_at=utc_now(),
+            updated_at=utc_now()
+        )
+        db.add(g)
+        db.commit()
+    elif not existing.donations_enabled:
+        existing.donations_enabled = True
+        existing.is_active = True
+        if not (existing.beneficiary_name or "").strip():
+            existing.beneficiary_name = "Shri Krishna Gaushala Trust"
+        db.commit()

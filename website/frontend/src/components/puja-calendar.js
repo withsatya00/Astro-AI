@@ -1,3 +1,4 @@
+import { REFERENCE_PUJAS } from './reference-pujas.js';
 // Observance calendar only. These entries do not represent confirmed temple bookings.
 // New Delhi / IST reference dates; temple-specific muhurat must be confirmed separately.
 export const calendarSources=[
@@ -65,11 +66,12 @@ export function deityPhoto(deity,key=''){
 }
 
 export function pujaCalendar(today=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'})){
+ const refRows = REFERENCE_PUJAS.map(p => ({ id: p.id, date: p.date, en: p.title, hi: p.title_hi, deity: p.deity, weekly: p.weekly, image: p.image, price: p.price, benefit: p.benefit, benefit_hi: p.benefit_hi, location: p.location, location_hi: p.location_hi, schedule: p.schedule, schedule_hi: p.schedule_hi, tag: p.tag, tag_hi: p.tag_hi }));
  const rows=festivals.map(([date,en,hi,deity],i)=>({id:`festival-${i}`,date,en,hi,deity,weekly:false}));
  const weekly={1:['Somvar Shiva Rudrabhishek','सोमवार शिव रुद्राभिषेक','shiva'],2:['Hanuman Chalisa & Sundarkand Path','हनुमान चालीसा और सुंदरकांड पाठ','hanuman'],3:['Ganesh Archana','गणेश अर्चना','ganesh'],4:['Vishnu Sahasranama Path','विष्णु सहस्रनाम पाठ','vishnu'],5:['Lakshmi Archana','लक्ष्मी अर्चना','devi'],6:['Shani Tailabhishek','शनि तैलाभिषेक','shani'],0:['Surya Arghya & Aditya Hridaya Path','सूर्य अर्घ्य और आदित्य हृदय पाठ','surya']};
  for(let day=new Date('2026-10-30T12:00:00Z');day<=new Date('2027-01-31T12:00:00Z');day.setUTCDate(day.getUTCDate()+1)){
    const date=day.toISOString().slice(0,10),[en,hi,deity]=weekly[day.getUTCDay()];
    rows.push({id:`weekly-${date}`,date,en,hi,deity,weekly:true});
  }
- return rows.filter(row=>row.date>=today).sort((a,b)=>a.date.localeCompare(b.date)||Number(a.weekly)-Number(b.weekly));
+ return [...refRows, ...rows.filter(row=>row.date>=today && !refRows.some(r => r.id === row.id))].sort((a,b)=>a.date.localeCompare(b.date)||Number(a.weekly)-Number(b.weekly));
 }

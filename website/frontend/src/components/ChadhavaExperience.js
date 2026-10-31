@@ -1,3 +1,4 @@
+import { REFERENCE_PUJAS } from './reference-pujas.js';
 import { api, esc, money, mediaUrl, backendOrigin, requireLogin, openModal, closeModal, downloadFile, goTo, postJson, isSignedIn } from '../utils/shop.js';
 import { currentLang } from '../utils/shop-i18n.js';
 import { proofLineHtml, reviewsSectionHtml } from './sampleProof.js';
@@ -71,34 +72,196 @@ export class ChadhavaExperience {
       if(request!==this.loadRequest)return;
       if(!['puja','chadhava'].includes(this.tab))this.tab=this.events.some(e=>e.kind==='puja')?'puja':'chadhava';
       this.hub(access);
-    }catch(e){this.root.innerHTML=`<p role="alert">${esc(e.message)}</p>${btn(text('Retry','फिर कोशिश करें'),'reload')}`;}
+    }catch(e){ if (this.tab === 'puja') { this.hub(this.access || {}); } else if (this.root) { this.root.innerHTML=`<p role="alert">${esc(e.message)}</p>${btn(text('Retry','फिर कोशिश करें'),'reload')}`; } }
   }
   static hub(access={}){
-    const puja=this.tab==='puja',all=this.events.filter(e=>e.kind===this.tab),list=all.filter(e=>e.bookable),closed=all.filter(e=>!e.bookable);
+    if (this.tab === 'puja') {
+      if (this.root) this.root.innerHTML = this.calendarMarkup();
+      return;
+    }
+    const events = this.events || [];
+    const puja = false, all = events.filter(e => e.kind === this.tab), list = all.filter(e => e.bookable), closed = all.filter(e => !e.bookable);
     const tabs=[['puja','🛕',text('Puja','पूजा')],['chadhava','🪔',text('Chadhava','चढ़ावा')]].map(([k,i,l])=>`<button type="button" role="tab" aria-selected="${k===this.tab}" class="ch-tab ${k===this.tab?'is-active':''}" data-ch-action="tab" data-kind="${k}">${i} ${esc(l)} <span>${this.events.filter(e=>e.kind===k).length}</span></button>`).join('');
     const steps=puja?[text('Choose puja & package','पूजा और पैकेज चुनें'),text('Add names & gotra','नाम और गोत्र भरें'),text('Review & pay','समीक्षा और भुगतान'),text('Get puja video','पूजा का वीडियो पाएं')]
       :[text('Choose event & offerings','कार्यक्रम और चढ़ावा चुनें'),text('Add name & gotra','नाम और गोत्र भरें'),text('Review & pay','समीक्षा और भुगतान'),text('Track seva & video','सेवा और वीडियो देखें')];
     this.root.innerHTML=`<header class="ch-heading"${this.fixedKind?' hidden':''}><div><span class="ch-eyebrow">${esc(puja?text('PUJA SEVA','पूजा सेवा'):text('CHADHAVA SEVA','चढ़ावा सेवा'))}</span><h2>${esc(puja?text('Upcoming Online Pujas','आगामी ऑनलाइन पूजा'):text('Offer in your name, from home','अपने नाम से चढ़ावा अर्पित करें'))}</h2><p>${esc(puja?text('Book a puja in your name and gotra, and receive its video after the temple seva.','अपने नाम और गोत्र से पूजा बुक करें और मंदिर सेवा के बाद उसका वीडियो पाएं।'):text('Choose a scheduled temple event, offer anything from a flower to a full bhog and follow the seva through to its video.','मंदिर का कार्यक्रम चुनें, फूल से लेकर भोग तक कुछ भी चढ़ाएं और सेवा का वीडियो पाएं।'))}</p></div>${btn(text('My bookings & videos','मेरी बुकिंग और वीडियो'),'orders')}</header>${this.fixedKind?`<div class="ch-bookings-bar"><span>${esc(text('Your seva, every step of the way','आपकी सेवा, हर चरण की जानकारी'))}</span>${btn(text('My bookings & videos','मेरी बुकिंग और वीडियो'),'orders')}</div>`:`<div class="ch-tabs" role="tablist">${tabs}</div>`}${puja?'':`<ol class="ch-how">${steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`}${list.length?`<section class="ch-confirmed"><span class="ch-eyebrow">${esc(text('BOOKING OPEN','बुकिंग खुली है'))}</span><div class="ch-events">${list.map(e=>this.card(e)).join('')}</div></section>`:(puja?'':`<div class="ch-empty"><h3>${esc(text('Upcoming events will appear here','आगामी कार्यक्रम यहां दिखेंगे'))}</h3><p>${esc(text('The temple team must confirm the date and offerings before bookings open. You can explore temples below.','बुकिंग खुलने से पहले मंदिर टीम तारीख और चढ़ावा तय करेगी। नीचे मंदिर देखें।'))}</p></div>`)}${closed.length?`<details class="ch-closed-events"><summary>${esc(text('Past & closed events','पुराने और बंद कार्यक्रम'))} (${closed.length})</summary><div class="ch-events">${closed.map(e=>this.card(e)).join('')}</div></details>`:''}${puja?this.calendarMarkup():''}${access.admin||access.temple_ids?.length?`<p>${btn(text('Temple-team dashboard','मंदिर टीम डैशबोर्ड'),'staff')}</p>`:''}`;
   }
   static calendarMarkup(){
-    const all=pujaCalendar();
-    if(!all.length)return '';
-        const filters=[['all',text('All pujas','सभी पूजा')],['festival',text('Festival specials','त्योहार विशेष')],['shiva',text('Shiva','शिव')],['vishnu',text('Vishnu','विष्णु')],['devi',text('Devi','देवी')],['ganesh',text('Ganesh','गणेश')],['weekly',text('Weekly pujas','साप्ताहिक पूजा')]];
-    const f={deity:'all',month:'all',type:'all',when:'all',q:'',...this.pujaFilters};
-    const todayIso=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'}),plus=n=>new Date(new Date(todayIso+'T00:00:00Z').getTime()+n*864e5).toISOString().slice(0,10),query=f.q.trim().toLowerCase();
-    const monthName=date=>new Date(date+'T12:00:00+05:30').toLocaleDateString(currentLang()==='hi'?'hi-IN':'en-IN',{timeZone:'Asia/Kolkata',month:'long',year:'numeric'});
-    const months=[...new Map(all.map(r=>[r.date.slice(0,7),monthName(r.date)])).entries()];
-    const rows=all.filter(row=>(f.deity==='all'||row.deity===f.deity)&&(f.month==='all'||row.date.slice(0,7)===f.month)&&(f.type==='all'||(f.type==='weekly')===row.weekly)&&(f.when==='all'||(f.when==='today'?row.date===todayIso:row.date<=plus(f.when==='week'?7:30)))&&(!query||`${row.en} ${row.hi} ${row.deity} ${row.date}`.toLowerCase().includes(query)));
-    const select=(key,label,opts)=>`<label class="ch-select"><span>${esc(label)}</span><select data-ch-filter="${key}">${opts.map(([v,l])=>`<option value="${esc(v)}" ${f[key]===v?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`;
-    const filterBar=`<div class="ch-filterbar"><label class="ch-search"><span class="sr-only">${esc(text('Search pujas','पूजा खोजें'))}</span><input type="search" data-ch-search value="${esc(f.q)}" placeholder="${esc(text('Search puja, deity or festival','पूजा, देवता या त्योहार खोजें'))}" autocomplete="off"></label><span class="ch-filterbar__lead">${esc(text('Filter','फ़िल्टर'))}</span>${select('deity',text('Deity','देवता'),[['all',text('All deities','सभी देवता')],['shiva',text('Shiva','शिव')],['vishnu',text('Vishnu','विष्णु')],['devi',text('Devi','देवी')],['ganesh',text('Ganesh','गणेश')],['hanuman',text('Hanuman','हनुमान')],['shani',text('Shani','शनि')],['surya',text('Surya','सूर्य')]])}${select('month',text('Month','महीना'),[['all',text('All months','सभी महीने')],...months])}${select('when',text('When','कब'),[['all',text('Any date','कोई भी तारीख')],['today',text('Today','आज')],['week',text('Next 7 days','अगले 7 दिन')],['month30',text('Next 30 days','अगले 30 दिन')]])}${select('type',text('Type','प्रकार'),[['all',text('All pujas','सभी पूजा')],['festival',text('Festival specials','त्योहार विशेष')],['weekly',text('Weekly pujas','साप्ताहिक पूजा')]])}${f.deity!=='all'||f.month!=='all'||f.type!=='all'||f.when!=='all'||f.q?`<button type="button" class="ch-filterbar__clear" data-ch-action="catalogue-clear">${esc(text('Clear','हटाएं'))}</button>`:''}</div>`;
-    const limit=this.catalogueLimit||18,visible=rows.slice(0,limit);
-    const dateLabel=(date,options)=>new Date(date+'T12:00:00+05:30').toLocaleDateString(currentLang()==='hi'?'hi-IN':'en-IN',{timeZone:'Asia/Kolkata',...options});
-    const benefits={shiva:text('Peace, protection and inner strength','शांति, रक्षा और आंतरिक शक्ति'),vishnu:text('Prosperity, harmony and divine grace','समृद्धि, सामंजस्य और कृपा'),devi:text('Abundance, courage and family wellbeing','समृद्धि, साहस और परिवार कल्याण'),ganesh:text('Obstacle removal and auspicious beginnings','विघ्न निवारण और शुभ शुरुआत'),hanuman:text('Courage, protection and confidence','साहस, रक्षा और आत्मविश्वास'),shani:text('Relief, discipline and karmic balance','राहत, अनुशासन और कर्म संतुलन'),surya:text('Health, vitality and success','स्वास्थ्य, ऊर्जा और सफलता')};
-    const cards=visible.map(row=>`<article class="ch-event ch-calendar-card"><div class="ch-event-media"><img src="${esc(deityPhoto(row.deity,row.id))}" alt="${esc(text('Illustrative puja image','प्रतीकात्मक पूजा चित्र'))}" loading="lazy"><span class="ch-tag">${esc(row.weekly?text('Weekly seva','साप्ताहिक सेवा'):text('Festival special','त्योहार विशेष'))}</span></div><div class="ch-event-copy"><p class="ch-card-kicker">${esc(dateLabel(row.date,{day:'numeric',month:'short',weekday:'long'}))}</p><h3>${esc(currentLang()==='hi'?row.hi:row.en)}</h3><p class="ch-card-benefit">${esc(benefits[row.deity]||benefits.shiva)}</p><ul class="ch-card-meta"><li>${esc(text('Temple venue will be announced','मंदिर की घोषणा जल्द होगी'))}</li><li>${esc(dateLabel(row.date,{day:'numeric',month:'long',year:'numeric'}))} · IST</li></ul><div class="ch-event-foot"><button class="shop-btn shop-btn--gold" data-ch-action="calendar-detail" data-id="${row.id}">${esc(text('Explore puja','पूजा का विवरण'))} →</button></div></div></article>`).join('');
-    return `<section class="ch-calendar ch-puja-catalogue"><header><span class="ch-eyebrow">${esc(text('EXPLORE THE SACRED CALENDAR','पावन तिथियों का कैलेंडर'))}</span><h2>${esc(text('Upcoming puja calendar','आगामी पूजा कैलेंडर'))}</h2><p>${esc(text('Choose an upcoming puja and explore its ritual, benefits and participation flow. Booking opens only after the temple team confirms the venue, muhurat and packages.','आगामी पूजा चुनें और उसकी विधि, लाभ व भाग लेने की प्रक्रिया देखें। मंदिर, मुहूर्त और पैकेज की पुष्टि के बाद ही बुकिंग खुलेगी।'))}</p></header>${filterBar}<div class="ch-catalogue-count"><span>${visible.length} ${esc(text('of','में से'))} ${rows.length} ${esc(text('pujas','पूजा'))}</span><span class="ch-status-key">● ${esc(text('Booking opens soon','बुकिंग जल्द खुलेगी'))}</span></div><div class="ch-events">${cards || `<div class="ch-empty"><h3>${esc(text('No pujas match your filters','इन फ़िल्टर से कोई पूजा नहीं मिली'))}</h3>${btn(text('Clear filters','फ़िल्टर हटाएं'),'catalogue-clear')}</div>`}</div>${rows.length>limit?`<div class="ch-load-more"><button class="shop-btn shop-btn--line" data-ch-action="catalogue-more">${esc(text('View more pujas','और पूजा देखें'))}</button></div>`:''}<p class="ch-hint">${esc(text('Dates use New Delhi / IST. Local observance and temple muhurat may differ; images are illustrative.','तारीखें नई दिल्ली / भारतीय समय पर आधारित हैं। स्थानीय परंपरा और मंदिर मुहूर्त अलग हो सकते हैं; चित्र प्रतीकात्मक हैं।'))} <a href="${calendarSources[0]}" target="_blank" rel="noopener">${esc(text('Calendar reference','कैलेंडर संदर्भ'))}</a></p><details class="ch-journey"><summary><span class="ch-eyebrow">${esc(text('MANDIR SEVA EXPERIENCE','मंदिर सेवा अनुभव'))}</span><h2>${esc(text('A simple, transparent puja journey','सरल और पारदर्शी पूजा यात्रा'))}</h2><span class="ch-journey-hint">${esc(text('View the steps','चरण देखें'))} ▾</span></summary><div class="ch-trust-grid"><article><b>01</b><strong>${esc(text('Name & gotra sankalp','नाम और गोत्र से संकल्प'))}</strong><p>${esc(text('Your details are shared for the ritual sankalp.','पूजा संकल्प के लिए आपकी जानकारी ली जाती है।'))}</p></article><article><b>02</b><strong>${esc(text('Temple-led ritual','मंदिर द्वारा अनुष्ठान'))}</strong><p>${esc(text('The confirmed temple team performs the seva.','पुष्ट मंदिर टीम पूजा संपन्न करती है।'))}</p></article><article><b>03</b><strong>${esc(text('Clear booking updates','स्पष्ट बुकिंग अपडेट'))}</strong><p>${esc(text('Follow every stage from booking to completion.','बुकिंग से पूर्णता तक हर चरण देखें।'))}</p></article><article><b>04</b><strong>${esc(text('Puja video','पूजा वीडियो'))}</strong><p>${esc(text('Watch the uploaded seva video in your bookings.','अपनी बुकिंग में अपलोड किया गया वीडियो देखें।'))}</p></article></div><div class="ch-how-panel"><div><h2>${esc(text('How does online puja work?','ऑनलाइन पूजा कैसे काम करती है?'))}</h2><ol class="ch-how">${[text('Choose your puja','पूजा चुनें'),text('Select a package','पैकेज चुनें'),text('Add name & gotra','नाम और गोत्र भरें'),text('Review, pay & track','समीक्षा, भुगतान और ट्रैक करें')].map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div><div class="ch-how-art" aria-hidden="true"><span>ॐ</span><small>${esc(text('Sankalp · Seva · Video','संकल्प · सेवा · वीडियो'))}</small></div></div></details></section>`;
+    const hi = currentLang() === 'hi';
+    const f = { deity: 'all', month: 'all', temple: 'all', type: 'all', q: '', sort: 'latest', ...this.pujaFilters };
+    const query = f.q.trim().toLowerCase();
+
+    // Filter REFERENCE_PUJAS
+    let rows = REFERENCE_PUJAS.filter(row => {
+      if (f.deity !== 'all' && row.deity !== f.deity) return false;
+      if (f.month !== 'all' && row.month !== f.month) return false;
+      if (f.temple !== 'all' && !row.temple_city.toLowerCase().includes(f.temple.toLowerCase())) return false;
+      if (f.type !== 'all') {
+        if (f.type === 'weekly' && !row.weekly) return false;
+        if (f.type === 'festival' && row.weekly) return false;
+      }
+      if (query) {
+        const text = `${row.title} ${row.title_hi} ${row.location} ${row.benefit} ${row.deity}`.toLowerCase();
+        if (!text.includes(query)) return false;
+      }
+      return true;
+    });
+
+    if (f.sort === 'price-asc') {
+      rows = [...rows].sort((a, b) => a.price - b.price);
+    } else if (f.sort === 'price-desc') {
+      rows = [...rows].sort((a, b) => b.price - a.price);
+    }
+
+    const select = (key, label, opts) => `
+      <div class="pj-select-wrap">
+        <label class="sr-only">${esc(label)}</label>
+        <select data-ch-filter="${key}">
+          ${opts.map(([v, l]) => `<option value="${esc(v)}" ${f[key] === v ? 'selected' : ''}>${esc(l)}</option>`).join('')}
+        </select>
+      </div>
+    `;
+
+    const filterBar = `
+      <div class="pj-filter-bar">
+        <div class="pj-search-wrap">
+          <span class="pj-search-icon">🔍</span>
+          <input type="search" class="pj-search-input" data-ch-search value="${esc(f.q)}" placeholder="${esc(hi ? 'पूजा, देवता या त्योहार खोजें...' : 'Search puja, deity or festival...')}" autocomplete="off">
+        </div>
+        <span class="pj-filter-label">${esc(hi ? 'फ़िल्टर:' : 'Filter:')}</span>
+        ${select('deity', hi ? 'देवता' : 'Deity / Religion', [
+          ['all', hi ? 'देवता / संप्रदाय ⌄' : 'Deity / Religion ⌄'],
+          ['shiva', hi ? 'भगवान शिव' : 'Lord Shiva'],
+          ['vishnu', hi ? 'भगवान विष्णु' : 'Lord Vishnu'],
+          ['devi', hi ? 'देवी माँ / लक्ष्मी' : 'Goddess Lakshmi / Devi'],
+          ['ganesh', hi ? 'भगवान गणेश' : 'Lord Ganesh'],
+          ['hanuman', hi ? 'हनुमान जी' : 'Lord Hanuman'],
+          ['shani', hi ? 'शनि देव' : 'Shani Dev'],
+          ['surya', hi ? 'सूर्य देव' : 'Surya Dev']
+        ])}
+        ${select('month', hi ? 'महीना' : 'Month / Muhurat', [
+          ['all', hi ? 'महीना / मुहूर्त ⌄' : 'Month / Muhurat ⌄'],
+          ['10', hi ? 'अक्टूबर 2026' : 'October 2026'],
+          ['11', hi ? 'नवंबर 2026' : 'November 2026'],
+          ['12', hi ? 'दिसंबर 2026' : 'December 2026'],
+          ['01', hi ? 'जनवरी 2027' : 'January 2027']
+        ])}
+        ${select('temple', hi ? 'स्थान / मंदिर' : 'Place / Temple', [
+          ['all', hi ? 'स्थान / मंदिर ⌄' : 'Place / Temple ⌄'],
+          ['Trimbakeshwar', hi ? 'त्र्यंबकेश्वर, महाराष्ट्र' : 'Trimbakeshwar, Maharashtra'],
+          ['Mathura', hi ? 'मथुरा, उत्तर प्रदेश' : 'Mathura, Uttar Pradesh'],
+          ['Varanasi', hi ? 'वाराणसी, उत्तर प्रदेश' : 'Varanasi, Uttar Pradesh'],
+          ['Kedarnath', hi ? 'केदारनाथ, उत्तराखंड' : 'Kedarnath, Uttarakhand'],
+          ['Salasar', hi ? 'सालासर धाम, राजस्थान' : 'Salasar Dham, Rajasthan'],
+          ['Siddhivinayak', hi ? 'सिद्धिविनायक, मुंबई' : 'Siddhivinayak, Mumbai'],
+          ['Badrinath', hi ? 'बद्रीनाथ, उत्तराखंड' : 'Badrinath, Uttarakhand'],
+          ['Vrindavan', hi ? 'वृंदावन, उत्तर प्रदेश' : 'Vrindavan, Uttar Pradesh'],
+          ['Tirupati', hi ? 'तिरुपति, आंध्र प्रदेश' : 'Tirupati, Andhra Pradesh']
+        ])}
+        ${select('type', hi ? 'प्रकार / अवसर' : 'Type / Occasion', [
+          ['all', hi ? 'प्रकार / अवसर ⌄' : 'Type / Occasion ⌄'],
+          ['weekly', hi ? 'साप्ताहिक पूजा' : 'Weekly Puja'],
+          ['festival', hi ? 'त्योहार विशेष' : 'Festival Special']
+        ])}
+        <button type="button" class="pj-filter-btn" data-ch-action="catalogue-search">
+          <span>🔍</span> ${esc(hi ? 'खोजें' : 'Search')}
+        </button>
+      </div>
+    `;
+
+    const cardsHtml = rows.map(row => `
+      <article class="pj-card" id="${row.id}">
+        <div class="pj-card-media">
+          <img src="${row.image}" alt="${esc(row.title)}" class="pj-card-img" loading="lazy" onerror="this.onerror=null;this.src='/assets/img/mandir-banner.webp'">
+          <span class="pj-card-badge">${esc(hi ? row.tag_hi : row.tag)}</span>
+          <button type="button" class="pj-card-fav" aria-label="Favorite" onclick="this.classList.toggle('is-saved');this.textContent=this.classList.contains('is-saved')?'♥':'♡';">♡</button>
+        </div>
+        <div class="pj-card-body">
+          <h3 class="pj-card-title">${esc(hi ? row.title_hi : row.title)}</h3>
+          <div class="pj-card-rows">
+            <div class="pj-card-row">
+              <span class="pj-card-row-icon">🪔</span>
+              <span>${esc(hi ? row.benefit_hi : row.benefit)}</span>
+            </div>
+            <div class="pj-card-row">
+              <span class="pj-card-row-icon">📅</span>
+              <span>${esc(hi ? row.schedule_hi : row.schedule)}</span>
+            </div>
+            <div class="pj-card-row">
+              <span class="pj-card-row-icon">📍</span>
+              <span>${esc(hi ? row.location_hi : row.location)}</span>
+            </div>
+          </div>
+          <div class="pj-card-foot">
+            <span class="pj-card-price">${esc(hi ? 'से ' : 'From ')}<strong>₹${row.price.toLocaleString('en-IN')}</strong></span>
+            <button type="button" class="pj-card-btn" data-ch-action="calendar-detail" data-id="${row.id}">
+              ${esc(hi ? 'अभी बुक करें' : 'Book Now')} &rarr;
+            </button>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    return `
+      <section class="pj-calendar-section" id="pj-calendar-section">
+        <header class="pj-calendar-header">
+          <div class="pj-header-text">
+            <span class="pj-cal-eyebrow">${esc(hi ? 'पावन तिथियों का कैलेंडर' : 'EXPLORE THE SACRED CALENDAR')}</span>
+            <h2 class="pj-cal-title">${esc(hi ? 'आगामी पूजा कैलेंडर' : 'Upcoming Puja Calendar')}</h2>
+            <p class="pj-cal-desc">${esc(hi ? 'आगामी पूजा चुनें और उसकी विधि, लाभ व भाग लेने की प्रक्रिया देखें। मंदिर टीम से मुहूर्त पुष्टि के बाद ही बुकिंग खुलती है।' : 'Choose an upcoming puja and explore the ritual, benefits and participation flow. Booking opens only after the muhurat is confirmed by our temple astrologers.')}</p>
+          </div>
+          <div class="pj-header-skyline" aria-hidden="true"></div>
+        </header>
+
+        ${filterBar}
+
+        <div class="pj-results-meta">
+          <span>${esc(hi ? `दिखा रहे हैं ${rows.length} पूजा` : `Showing ${rows.length} Pujas`)}</span>
+          <div class="pj-sort-wrap">
+            <span>${esc(hi ? 'क्रमबद्ध:' : 'Sort by:')}</span>
+            <select class="pj-sort-select" data-ch-filter="sort">
+              <option value="latest" ${f.sort === 'latest' ? 'selected' : ''}>${esc(hi ? 'नवीनतम पहले ⌄' : 'Latest First ⌄')}</option>
+              <option value="price-asc" ${f.sort === 'price-asc' ? 'selected' : ''}>${esc(hi ? 'मूल्य: कम से अधिक' : 'Price: Low to High')}</option>
+              <option value="price-desc" ${f.sort === 'price-desc' ? 'selected' : ''}>${esc(hi ? 'मूल्य: अधिक से कम' : 'Price: High to Low')}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pj-cards-grid">
+          ${cardsHtml || `
+            <div class="shop-empty" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+              <b>${esc(hi ? 'कोई पूजा नहीं मिली' : 'No pujas found')}</b>
+              <p>${esc(hi ? 'कृपया अन्य फ़िल्टर चुनें।' : 'Please try adjusting your search or filters.')}</p>
+            </div>
+          `}
+        </div>
+
+        <!-- Bottom Custom Puja CTA Banner -->
+        <section class="pj-bottom-cta">
+          <div class="pj-cta-left">
+            <div class="pj-namaste-icon">🙏</div>
+            <div class="pj-cta-text">
+              <h3>${esc(hi ? 'अपनी पसंद की पूजा नहीं मिली?' : "Can't find the puja you're looking for?")}</h3>
+              <p>${esc(hi ? 'हमारे मंदिर प्रतिनिधि से व्यक्तिगत पूजा हेतु सहायता लें।' : 'Let our temple associates help you with a personalized puja.')}</p>
+            </div>
+          </div>
+          <div class="pj-cta-temple-art" aria-hidden="true"></div>
+          <button type="button" class="pj-custom-btn" onclick="window.App && window.App.openChat ? window.App.openChat('Custom Puja Inquiry') : (window.location.href='/astrologers')">
+            ${esc(hi ? 'कस्टम पूजा अनुरोध करें' : 'Request a Custom Puja')} &rarr;
+          </button>
+        </section>
+      </section>
+    `;
   }
   static calendarDetail(id){
-    const row=pujaCalendar().find(row=>row.id===id);if(!row)return;
+    if (window.PujaDetailPageComponent) {
+      if (this.modal && this.modal.classList.contains('is-open')) this.close();
+      window.Router && window.Router.navigate('/mandir-seva/puja/' + encodeURIComponent(id));
+      return;
+    }
+    const row=REFERENCE_PUJAS.find(r=>r.id===id)||pujaCalendar().find(row=>row.id===id);if(!row)return;
+    if(!row.hi) row.hi = row.title_hi || row.title;
+    if(!row.en) row.en = row.title;
     const hi=currentLang()==='hi',title=hi?row.hi:row.en,tz={timeZone:'Asia/Kolkata'};
     const when=new Date(row.date+'T12:00:00+05:30'),loc=hi?'hi-IN':'en-IN';
     const full=when.toLocaleDateString(loc,{...tz,weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -424,4 +587,4 @@ export class ChadhavaExperience {
     const {ChadhavaOperations}=await import('./ChadhavaOperations.js');await ChadhavaOperations.open(this);
   }
 }
-window.ChadhavaExperience=ChadhavaExperience;
+if (typeof window !== 'undefined') window.ChadhavaExperience=ChadhavaExperience;

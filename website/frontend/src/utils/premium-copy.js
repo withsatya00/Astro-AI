@@ -256,7 +256,7 @@ const ENTRIES = [
   ['dir.Kundli', 'Kundli', 'कुंडली'],
   ['dir.Remedies', 'Remedies', 'उपाय'],
   ['dir.count', '{n} astrologers', '{n} ज्योतिषी'],
-  ['dir.eyebrow', 'Guidance, chosen with clarity', 'स्पष्टता के साथ चुना गया मार्गदर्शन'],
+  ['dir.eyebrow', 'Ancient wisdom · Modern solutions', 'स्पष्टता के साथ चुना गया मार्गदर्शन'],
   ['dir.filters', 'Filters', 'फ़िल्टर'],
   ['dir.trust.verified', 'Verified profiles', 'सत्यापित प्रोफ़ाइल'],
   ['dir.trust.verifiedSub', 'Credentials shown clearly', 'प्रमाण-पत्र स्पष्ट रूप से देखें'],

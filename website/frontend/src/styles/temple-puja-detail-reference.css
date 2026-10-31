@@ -1,0 +1,1234 @@
+/* ==========================================================================
+   Astro Jyotish - Temple / Chadhava & Puja Details 1:1 Blueprint Reference Styles
+   ========================================================================== */
+
+/* Page Wrapper */
+.ch-temple-detail-page,
+.ch-puja-detail-page {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+  font-family: var(--font-body, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  color: #332128;
+  box-sizing: border-box;
+}
+
+/* Breadcrumbs */
+.tp-breadcrumb,
+.pd-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #8C787E;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.tp-breadcrumb a,
+.pd-breadcrumb a {
+  color: #8C787E;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.tp-breadcrumb a:hover,
+.pd-breadcrumb a:hover {
+  color: #3E0B18;
+  text-decoration: underline;
+}
+.tp-breadcrumb span.current,
+.pd-breadcrumb span.current {
+  color: #3E0B18;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Top Hero Two-Column Card (Shared layout between Temple & Puja)
+   ========================================================================== */
+.tp-hero-card,
+.pd-hero-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(62, 11, 24, 0.05);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Photo Gallery Left Column */
+.tp-gallery,
+.pd-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tp-gallery-main,
+.pd-gallery-main {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1A0D11;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.tp-gallery-main img,
+.pd-gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+
+.tp-gallery-pill,
+.pd-gallery-pill {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(18, 6, 10, 0.72);
+  color: #FFFDF8;
+  backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+
+.pd-fav-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #3E0B18;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 2;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.pd-fav-btn:hover {
+  transform: scale(1.08);
+  background: #FFFFFF;
+}
+
+.tp-gallery-arrow,
+.pd-gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  border: 1px solid #E5D9C7;
+  color: #3E0B18;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, background 0.15s ease;
+  z-index: 2;
+}
+.tp-gallery-arrow:hover,
+.pd-gallery-arrow:hover {
+  background: #FFFFFF;
+  transform: translateY(-50%) scale(1.06);
+}
+.tp-gallery-arrow--prev,
+.pd-gallery-arrow--prev { left: 12px; }
+.tp-gallery-arrow--next,
+.pd-gallery-arrow--next { right: 12px; }
+
+/* Thumbnails Strip */
+.tp-thumbs-row,
+.pd-thumbs-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.tp-thumb,
+.pd-thumb {
+  aspect-ratio: 16 / 11;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  background: #F2ECE1;
+}
+.tp-thumb img,
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tp-thumb:hover,
+.pd-thumb:hover {
+  transform: translateY(-2px);
+}
+.tp-thumb.active,
+.pd-thumb.active {
+  border-color: #D4AF37;
+  box-shadow: 0 0 0 1px #D4AF37, 0 4px 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Info Right Column */
+.tp-info-col,
+.pd-info-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.tp-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.tp-hero-title,
+.pd-hero-title {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 29px);
+  font-weight: 700;
+  color: #2D0810;
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+}
+
+.tp-cat-pill,
+.pd-eyebrow-pill {
+  flex-shrink: 0;
+  background: #FEF6E4;
+  border: 1px solid #E9CC84;
+  color: #8C5806;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pd-eyebrow-row {
+  margin-bottom: 8px;
+}
+.pd-eyebrow-text {
+  color: #B45309;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pd-eyebrow-text::after {
+  content: '⟶';
+  font-weight: 900;
+}
+
+.tp-meta-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.tp-meta-loc {
+  color: #5A474D;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tp-meta-deity {
+  color: #B45309;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tp-hero-desc,
+.pd-hero-desc {
+  color: #635359;
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 16px;
+}
+
+/* Feature tags in Temple Card */
+.tp-highlights-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.tp-highlight-pill {
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+  border-radius: 999px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3E0B18;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Action Buttons */
+.tp-actions-row,
+.pd-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-maroon {
+  background: #3E0B18;
+  color: #FFFDF8 !important;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(62, 11, 24, 0.25);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-primary-maroon:hover {
+  background: #5A1024;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(62, 11, 24, 0.35);
+}
+
+.btn-secondary-white {
+  background: #FFFFFF;
+  color: #650F23 !important;
+  border: 1.5px solid #D4AF37;
+  border-radius: 999px;
+  padding: 11px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.btn-secondary-white:hover {
+  background: #FFFDF8;
+  border-color: #B45309;
+  transform: translateY(-2px);
+}
+
+/* Puja Details Info Panel (Inside right col) */
+.pd-details-box {
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: grid;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+.pd-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #3B262D;
+}
+.pd-detail-row strong {
+  font-weight: 700;
+  color: #2D0810;
+}
+
+.pd-ratings-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.pd-rating-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.pd-bookings-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.pd-main-cta {
+  width: 100%;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.pd-trust-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #726268;
+}
+
+/* ==========================================================================
+   Section: Offer Your Devotion (Temple Page)
+   ========================================================================== */
+.tp-devotion-section {
+  margin: 36px 0 32px;
+  text-align: center;
+}
+.section-ornament-eyebrow {
+  color: #B45309;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-ornament-eyebrow::before,
+.section-ornament-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+}
+
+.section-cinzel-title {
+  margin: 0 0 10px;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 700;
+  color: #2D0810;
+  letter-spacing: -0.015em;
+}
+.section-cinzel-sub {
+  margin: 0 auto 26px;
+  max-width: 650px;
+  font-size: 13.5px;
+  color: #6A5B60;
+  line-height: 1.6;
+}
+
+.tp-offerings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  text-align: left;
+}
+
+.tp-offering-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(62, 11, 24, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.tp-offering-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(62, 11, 24, 0.09);
+  border-color: #D4AF37;
+}
+
+.tp-offering-img-wrap {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 2px solid #E5D9C7;
+  background: #F7EFE3;
+}
+.tp-offering-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tp-offering-body {
+  flex: 1;
+  min-width: 0;
+}
+.tp-offering-title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2D0810;
+  line-height: 1.35;
+}
+.tp-offering-desc {
+  margin: 0 0 10px;
+  font-size: 11.5px;
+  color: #6A5B60;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tp-offering-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tp-offering-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #2D0810;
+}
+.tp-add-btn {
+  background: #3E0B18;
+  color: #FFFDF8;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.tp-add-btn:hover {
+  background: #5A1024;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   2-Column Layout (Temple Page: Left Content, Right Sidebar)
+   ========================================================================== */
+.tp-two-col-layout {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.tp-left-col,
+.tp-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Generic Section Panel Card */
+.tp-panel-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 18px;
+  padding: 22px 24px;
+  box-shadow: 0 6px 18px rgba(62, 11, 24, 0.04);
+}
+.tp-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.tp-panel-icon {
+  font-size: 20px;
+}
+.tp-panel-title {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2D0810;
+}
+
+/* "At a Glance" 6 Tiles Grid */
+.tp-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.tp-glance-tile {
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.tp-glance-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.tp-glance-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.tp-glance-label {
+  font-size: 10.5px;
+  color: #8C787E;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.tp-glance-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #2D0810;
+}
+.status-dot-green {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  margin-right: 4px;
+}
+
+/* About this Temple with Artwork */
+.tp-about-body {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 18px;
+  align-items: center;
+}
+.tp-about-text {
+  font-size: 13.5px;
+  color: #4C383F;
+  line-height: 1.7;
+}
+.tp-about-art {
+  width: 100%;
+  height: 110px;
+  background: url('/assets/brand/pattern-mandala.svg') center/contain no-repeat;
+  opacity: 0.35;
+}
+
+/* Live Darshan Maroon Strip */
+.tp-livedarshan-strip {
+  background: linear-gradient(100deg, #3E0B18 0%, #5E0F24 100%);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #FFFDF8;
+  box-shadow: 0 8px 20px rgba(62, 11, 24, 0.2);
+}
+.tp-live-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.tp-live-play-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.tp-live-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.tp-live-title {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+}
+.tp-live-pill {
+  background: #10B981;
+  color: #FFFFFF;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.tp-live-sub {
+  font-size: 12px;
+  color: #E2D2D7;
+}
+.tp-live-btn {
+  background: #F1CF8B;
+  color: #3E0B18;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.tp-live-btn:hover {
+  background: #FFE4A9;
+  transform: translateY(-1px);
+}
+
+/* Service Details Accordions */
+.tp-accordion-item {
+  border: 1px solid #E5D9C7;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background: #FAF7F2;
+}
+.tp-accordion-head {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #2D0810;
+  user-select: none;
+}
+.tp-accordion-head:hover {
+  background: #F7EFE3;
+}
+.tp-accordion-chevron {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+.tp-accordion-item.is-open .tp-accordion-chevron {
+  transform: rotate(180deg);
+}
+.tp-accordion-body {
+  padding: 0 18px 14px;
+  font-size: 12.5px;
+  color: #554449;
+  line-height: 1.6;
+  display: none;
+}
+.tp-accordion-item.is-open .tp-accordion-body {
+  display: block;
+}
+
+/* Sidebar: Aarti Timings */
+.tp-aarti-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tp-aarti-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  border: 1px solid transparent;
+}
+.tp-aarti-row.highlighted {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+  font-weight: 700;
+}
+.tp-aarti-row:not(.highlighted) {
+  background: #FAF7F2;
+  border-color: #E5D9C7;
+  color: #3B262D;
+}
+.tp-aarti-time {
+  font-weight: 700;
+}
+
+/* Sidebar: Priests */
+.tp-priests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tp-priest-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+}
+.tp-priest-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #D4AF37;
+  object-fit: cover;
+}
+.tp-priest-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.tp-priest-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #2D0810;
+}
+.tp-priest-role {
+  font-size: 11.5px;
+  color: #8C787E;
+}
+
+/* Sidebar: How It Works */
+.tp-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tp-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #4C383F;
+  line-height: 1.5;
+}
+.tp-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  border: 1px solid #F59E0B;
+  color: #92400E;
+  font-size: 11px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Puja Detail Page Specific Styles (Image 2)
+   ========================================================================== */
+.pd-sticky-tabs {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 14px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 28px 0;
+  position: sticky;
+  top: 76px;
+  z-index: 30;
+  box-shadow: 0 4px 14px rgba(62, 11, 24, 0.05);
+  overflow-x: auto;
+}
+.pd-tab-btn {
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+  color: #3E0B18;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.pd-tab-btn:hover {
+  background: #F7EFE3;
+  border-color: #D4AF37;
+}
+.pd-tab-btn.active {
+  background: #3E0B18 !important;
+  border-color: #3E0B18 !important;
+  color: #FFFDF8 !important;
+  font-weight: 700;
+}
+
+/* Section Containers */
+.pd-section-block {
+  margin-bottom: 32px;
+}
+.pd-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2D0810;
+}
+
+/* About Puja Section */
+.pd-about-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 4px 14px rgba(62, 11, 24, 0.03);
+}
+.pd-about-lead {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  color: #B45309;
+  margin: 0 0 8px;
+}
+.pd-about-text {
+  font-size: 13.5px;
+  color: #4C383F;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Benefits Grid */
+.pd-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.pd-benefit-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 12px rgba(62, 11, 24, 0.03);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.pd-benefit-card:hover {
+  transform: translateY(-2px);
+  border-color: #D4AF37;
+}
+.pd-benefit-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FEF3C7;
+  border: 1px solid #F59E0B;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.pd-benefit-text {
+  display: flex;
+  flex-direction: column;
+}
+.pd-benefit-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2D0810;
+  margin-bottom: 2px;
+}
+.pd-benefit-sub {
+  font-size: 12px;
+  color: #6A5B60;
+  line-height: 1.45;
+}
+
+/* Puja Process 4 Steps */
+.pd-process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  position: relative;
+}
+.pd-process-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(62, 11, 24, 0.03);
+}
+.pd-step-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #3E0B18;
+  color: #FFFDF8;
+  font-size: 12px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+}
+.pd-step-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #2D0810;
+  margin-bottom: 4px;
+}
+.pd-step-desc {
+  font-size: 11.5px;
+  color: #6A5B60;
+  line-height: 1.45;
+}
+
+/* All Packages Include Box */
+.pd-includes-box {
+  background: #FAF7F2;
+  border: 1px solid #E5D9C7;
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.pd-include-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #332128;
+}
+.pd-include-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3E0B18;
+  color: #FFFDF8;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+/* 4 Packages Grid */
+.pd-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.pd-package-card {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(62, 11, 24, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.pd-package-card:hover {
+  transform: translateY(-3px);
+  border-color: #D4AF37;
+  box-shadow: 0 8px 20px rgba(62, 11, 24, 0.08);
+}
+.pd-package-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F8F3EA;
+  margin-bottom: 12px;
+}
+.pd-package-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pd-package-title {
+  margin: 0 0 3px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2D0810;
+}
+.pd-package-sub {
+  font-size: 11.5px;
+  color: #6A5B60;
+  margin-bottom: 10px;
+}
+.pd-package-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #2D0810;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+.pd-package-btn {
+  background: #3E0B18;
+  color: #FFFDF8;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.pd-package-btn:hover {
+  background: #5A1024;
+  transform: scale(1.02);
+}
+
+/* FAQ Accordion List */
+.pd-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pd-faq-item {
+  background: #FFFFFF;
+  border: 1px solid #E5D9C7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.pd-faq-q {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2D0810;
+  user-select: none;
+}
+.pd-faq-q:hover {
+  background: #FAF7F2;
+}
+.pd-faq-chevron {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+.pd-faq-item.is-open .pd-faq-chevron {
+  transform: rotate(180deg);
+}
+.pd-faq-a {
+  padding: 0 20px 16px;
+  font-size: 13px;
+  color: #4C383F;
+  line-height: 1.65;
+  display: none;
+}
+.pd-faq-item.is-open .pd-faq-a {
+  display: block;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 980px) {
+  .tp-hero-card,
+  .pd-hero-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .tp-offerings-grid {
+    grid-template-columns: 1fr;
+  }
+  .tp-two-col-layout {
+    grid-template-columns: 1fr;
+  }
+  .pd-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  .pd-process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pd-packages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ch-temple-detail-page,
+  .ch-puja-detail-page {
+    padding: 10px 12px 40px;
+  }
+  .tp-gallery-main,
+  .pd-gallery-main {
+    max-height: 210px;
+  }
+  .tp-glance-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pd-includes-box {
+    grid-template-columns: 1fr;
+  }
+  .pd-process-grid {
+    grid-template-columns: 1fr;
+  }
+  .pd-packages-grid {
+    grid-template-columns: 1fr;
+  }
+  .tp-offering-card {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .tp-offering-img-wrap {
+    width: 64px;
+    height: 64px;
+  }
+}

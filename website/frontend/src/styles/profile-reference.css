@@ -1,0 +1,1134 @@
+/* Astro Jyotish - Astrologer Profile Page (1:1 Reference Match to media_1793425582436_a9e27bfb.jpg) */
+
+/* Page Background and Main Wrapper */
+body:has(#view-profile.active) {
+  background-color: #FAF7F2;
+}
+
+.profile-page-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 0 40px;
+}
+
+.pr-page-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 24px 60px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1A1A1A;
+}
+
+/* Breadcrumb */
+.pr-breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #5C1D24;
+  margin-bottom: 16px;
+  padding-left: 2px;
+}
+
+.pr-breadcrumb-nav a {
+  color: #5C1D24;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.pr-breadcrumb-nav a:hover {
+  color: #8B1E2B;
+  text-decoration: underline;
+}
+
+.pr-breadcrumb-nav .pr-sep {
+  color: #9C7A80;
+  font-size: 11px;
+}
+
+.pr-breadcrumb-nav .pr-curr {
+  color: #2D2526;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Hero Banner Card
+   ========================================================================== */
+.pr-hero-banner {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #3A060E 0%, #4D0915 50%, #2A040A 100%);
+  border: 1px solid #D4AF37;
+  box-shadow: 0 8px 30px rgba(58, 6, 14, 0.25);
+  color: #FFFDF9;
+  margin-bottom: 24px;
+}
+
+.pr-hero-top {
+  position: relative;
+  padding: 28px 36px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-image: 
+    radial-gradient(circle at 85% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 60%),
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+}
+
+.pr-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  z-index: 2;
+  flex: 1;
+}
+
+/* Portrait with double gold ring & verified pill */
+.pr-portrait-outer {
+  position: relative;
+  flex-shrink: 0;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #F3D27B, #9E6B15, #FCE8A6);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.pr-portrait-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #FFF8EC;
+  background: #FFF;
+}
+
+.pr-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.pr-verified-badge {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFE8A3;
+  color: #4A0E17;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  border: 1px solid #D4AF37;
+}
+
+/* Identity & Details */
+.pr-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pr-status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #F8D882;
+  text-transform: uppercase;
+}
+
+.pr-green-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34D399;
+  box-shadow: 0 0 8px #34D399;
+}
+
+.pr-hero-name {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #FFFDF8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.2;
+}
+
+.pr-verified-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0284C7;
+  color: #FFF;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.pr-hero-title-line {
+  margin: 0;
+  font-size: 14px;
+  color: #F5E8D8;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+.pr-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.pr-tag-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(229, 193, 88, 0.55);
+  color: #FFF8E6;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+}
+
+.pr-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  font-size: 12px;
+  color: #FDE8C7;
+  margin-top: 4px;
+}
+
+.pr-stats-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Hero Right Decorative Mandala background */
+.pr-hero-mandala-bg {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  height: 240px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23D4AF37' stroke-width='0.75' stroke-dasharray='2,2'/%3E%3Ccircle cx='50' cy='50' r='38' fill='none' stroke='%23D4AF37' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23D4AF37' stroke-width='0.5' stroke-dasharray='3,1'/%3E%3Ctext x='50' y='57' font-size='22' text-anchor='middle' fill='%23D4AF37' font-family='serif'%3Eॐ%3C/text%3E%3C/svg%3E") no-repeat center center;
+  background-size: contain;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* 4 Stat Columns at bottom of Hero */
+.pr-hero-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(30, 2, 7, 0.85);
+  border-top: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.pr-stat-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+}
+
+.pr-stat-box:last-child {
+  border-right: none;
+}
+
+.pr-stat-icon {
+  font-size: 24px;
+}
+
+.pr-stat-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pr-stat-text strong {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFDF8;
+  line-height: 1.1;
+}
+
+.pr-stat-text strong .pr-gold-star {
+  color: #FBBF24;
+}
+
+.pr-stat-text small {
+  font-size: 11px;
+  color: #E2CEB8;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Horizontal Navigation Tabs
+   ========================================================================== */
+.pr-nav-tabs-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #FFFDF9;
+  border: 1px solid #E6D2B5;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.pr-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #372E2F;
+  text-decoration: none;
+  border-right: 1px solid #EFE4D2;
+  transition: all 0.2s ease;
+  background: #FFFDF9;
+}
+
+.pr-tab-btn:last-child {
+  border-right: none;
+}
+
+.pr-tab-btn:hover {
+  background: #FBF4E8;
+  color: #4A0E17;
+}
+
+.pr-tab-btn.is-active {
+  background: linear-gradient(135deg, #4A0E17, #661220);
+  color: #FFFDF8;
+}
+
+/* ==========================================================================
+   2-Column Layout (Left Content, Right Sticky Booking & Reviews)
+   ========================================================================== */
+.pr-main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(320px, 1.15fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.pr-left-col,
+.pr-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Reusable Cream Card Style */
+.pr-card {
+  position: relative;
+  background: #FFFDF9;
+  border: 1px solid #E8D6BD;
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(180, 140, 80, 0.07);
+  overflow: hidden;
+}
+
+.pr-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pr-card-icon {
+  font-size: 20px;
+}
+
+.pr-card-head h2 {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1F191B;
+  letter-spacing: -0.01em;
+}
+
+/* Card 1: Brief Introduction */
+.pr-intro-p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #443B3D;
+  margin: 0 0 16px;
+}
+
+.pr-quote-box {
+  position: relative;
+  background: #FFF6E7;
+  border-left: 3px solid #D4AF37;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+}
+
+.pr-quote-mark {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  color: #C08A29;
+  line-height: 1;
+  display: block;
+  margin-bottom: -10px;
+}
+
+.pr-quote-box p {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #5A1924;
+  line-height: 1.6;
+}
+
+/* Card 2: Why consult this expert? */
+.pr-why-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.pr-why-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: #383032;
+}
+
+.pr-check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #EAF7EC;
+  color: #15803D;
+  font-size: 11px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.pr-temple-watermark {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  font-size: 72px;
+  color: rgba(212, 175, 55, 0.12);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  font-family: serif;
+}
+
+/* Card 3: About */
+#pr-section-about p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #443B3D;
+  margin: 0;
+}
+
+/* Card 4: Credentials & expertise */
+.pr-creds-block {
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.pr-creds-block:last-child {
+  margin-bottom: 0;
+}
+
+.pr-creds-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #6C595C;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.pr-specialties-wrap,
+.pr-languages-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pr-spec-pill,
+.pr-lang-pill {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  background: #FAF2E6;
+  border: 1px solid #E8D3B5;
+  color: #581622;
+}
+
+.pr-chart-watermark {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  font-size: 64px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Card 5: Review Submission Form */
+.pr-review-note {
+  font-size: 13px;
+  color: #554A4D;
+  margin: -4px 0 16px;
+}
+
+.pr-review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.pr-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pr-form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #312A2B;
+}
+
+.pr-rating-select {
+  padding: 10px 14px;
+  border: 1px solid #D8C4A9;
+  border-radius: 8px;
+  background: #FFFDF9;
+  font-size: 13px;
+  color: #B47C15;
+  outline: none;
+  font-weight: 600;
+  max-width: 200px;
+}
+
+.pr-textarea-wrap {
+  position: relative;
+}
+
+.pr-textarea-wrap textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #D8C4A9;
+  border-radius: 8px;
+  background: #FFFDF9;
+  font-size: 13px;
+  font-family: inherit;
+  color: #2D2526;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.pr-char-count {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-size: 11px;
+  color: #9C898C;
+}
+
+.pr-post-review-btn {
+  align-self: flex-start;
+  padding: 10px 24px;
+  background: #4A0E17;
+  color: #FFFDF9;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pr-post-review-btn:hover {
+  background: #661220;
+}
+
+.pr-quill-watermark {
+  position: absolute;
+  right: 24px;
+  bottom: 16px;
+  font-size: 60px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Right Column: Sticky Consultation Fee Box & Client Reviews List
+   ========================================================================== */
+.pr-consult-box {
+  position: sticky;
+  top: 90px;
+  background: #FFFDF9;
+  border: 1px solid #E8D6BD;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(180, 140, 80, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.pr-consult-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #8C2434;
+  margin-bottom: 12px;
+}
+
+.pr-price-banner {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pr-price-current {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1F191B;
+  line-height: 1;
+}
+
+.pr-price-current small {
+  font-size: 14px;
+  color: #7A696C;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+}
+
+.pr-price-slash {
+  font-size: 14px;
+  color: #9C898C;
+  text-decoration: line-through;
+}
+
+.pr-off-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.pr-mode-switch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #FAF4E8;
+  border: 1px solid #EAD8BF;
+  border-radius: 10px;
+  padding: 3px;
+  gap: 3px;
+  margin-bottom: 16px;
+}
+
+.pr-switch-btn {
+  padding: 10px 6px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #581622;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pr-switch-btn.is-active,
+.pr-switch-btn:hover {
+  background: #FFFDF9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.pr-consult-cta-btn {
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #4A0E17, #7A1425);
+  color: #FFFDF8;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(74, 14, 23, 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.pr-consult-cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(74, 14, 23, 0.4);
+}
+
+.pr-security-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #6C595C;
+  margin: 14px 0 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #EFE4D2;
+}
+
+.pr-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 12px;
+}
+
+.pr-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.pr-feat-icon {
+  font-size: 16px;
+  color: #8C2434;
+  line-height: 1.2;
+}
+
+.pr-feat-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.pr-feat-text strong {
+  font-size: 11px;
+  color: #2D2526;
+  font-weight: 700;
+}
+
+.pr-feat-text small {
+  font-size: 10px;
+  color: #6C595C;
+}
+
+/* Client Reviews List Card (in right column) */
+.pr-client-reviews-card {
+  background: #FFFDF9;
+  border: 1px solid #E8D6BD;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 4px 16px rgba(180, 140, 80, 0.07);
+}
+
+.pr-cr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F1E5D5;
+}
+
+.pr-cr-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pr-cr-title h3 {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1F191B;
+}
+
+.pr-cr-view-all {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8C2434;
+  text-decoration: none;
+}
+
+.pr-cr-view-all:hover {
+  text-decoration: underline;
+}
+
+.pr-cr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pr-cr-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #F4EAE0;
+}
+
+.pr-cr-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.pr-cr-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pr-cr-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D4AF37, #8B1E2B);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.pr-cr-user-meta strong {
+  font-size: 12px;
+  color: #2D2526;
+  display: block;
+}
+
+.pr-cr-stars {
+  font-size: 11px;
+  color: #F59E0B;
+  font-weight: 600;
+}
+
+.pr-cr-text {
+  margin: 0;
+  font-size: 12px;
+  color: #4A4042;
+  line-height: 1.5;
+}
+
+.pr-cr-time {
+  font-size: 10px;
+  color: #9C898C;
+}
+
+/* ==========================================================================
+   Bottom Section: Astrologers Like This Carousel
+   ========================================================================== */
+.pr-similar-section {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #E8D6BD;
+}
+
+.pr-similar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.pr-similar-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pr-similar-icon {
+  font-size: 22px;
+  color: #D4AF37;
+}
+
+.pr-similar-head h2 {
+  margin: 0;
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1F191B;
+}
+
+.pr-similar-view-all {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8C2434;
+  text-decoration: none;
+}
+
+.pr-similar-view-all:hover {
+  text-decoration: underline;
+}
+
+.pr-similar-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pr-carousel-arrow {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #D8C4A9;
+  background: #FFFDF9;
+  color: #4A0E17;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.pr-carousel-arrow:hover {
+  background: #4A0E17;
+  color: #FFFDF8;
+  border-color: #4A0E17;
+}
+
+.pr-similar-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.pr-similar-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.pr-sim-card,
+.pr-similar-card {
+  background: #FFFDF9;
+  border: 1px solid #E8D6BD;
+  border-radius: 12px;
+  padding: 14px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(180, 140, 80, 0.05);
+}
+
+.pr-sim-card:hover,
+.pr-similar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(180, 140, 80, 0.12);
+}
+
+.pr-sim-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, #F3D27B, #9E6B15);
+  margin-bottom: 8px;
+}
+
+.pr-sim-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.pr-sim-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.pr-sim-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.pr-sim-info strong,
+.pr-sim-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1F191B;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+  display: block;
+}
+
+.pr-sim-info small,
+.pr-sim-spec {
+  font-size: 11px;
+  color: #7A696C;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+  display: block;
+}
+
+.pr-sim-foot,
+.pr-sim-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-top: 1px solid #F1E5D5;
+  padding-top: 8px;
+  font-size: 11px;
+}
+
+.pr-sim-rating {
+  color: #D97706;
+  font-weight: 700;
+}
+
+.pr-sim-rate {
+  color: #4A0E17;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .pr-main-layout {
+    grid-template-columns: 1fr;
+  }
+  .pr-consult-box {
+    position: static;
+  }
+  .pr-hero-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  .pr-hero-left {
+    flex-direction: column;
+    text-align: center;
+  }
+  .pr-hero-name {
+    justify-content: center;
+  }
+  .pr-tags-row,
+  .pr-stats-row {
+    justify-content: center;
+  }
+  .pr-hero-mandala-bg {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .pr-page-container {
+    padding: 12px 14px 40px;
+  }
+  .pr-hero-stat-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pr-stat-box:nth-child(2) {
+    border-right: none;
+  }
+  .pr-stat-box {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .pr-nav-tabs-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pr-similar-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .pr-hero-stat-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pr-stat-box {
+    padding: 10px 8px;
+  }
+  .pr-stat-val {
+    font-size: 1.15rem;
+  }
+  .pr-stat-lbl {
+    font-size: 10.5px;
+  }
+  .pr-features-grid {
+    grid-template-columns: 1fr;
+  }
+}

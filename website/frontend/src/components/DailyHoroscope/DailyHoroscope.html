@@ -1,26 +1,32 @@
-<!-- Daily Horoscope Component (Matches Reference) -->
-<div class="daily-horoscope-card bg-gradient-to-br from-[#141131] via-[#1E1B4B] to-[#1e0b44] border border-[#3B3673] rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col justify-between text-white relative overflow-hidden h-full" id="daily-horoscope-component">
-  <!-- Subtle Background Constellation Glow -->
-  <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
-
-  <div class="relative z-10 flex items-start justify-between gap-4">
-    <div class="max-w-[240px]">
-      <h3 class="font-serif text-xl sm:text-2xl font-bold text-white mb-2 tracking-tight">Your Daily Horoscope</h3>
-      <p class="text-xs sm:text-sm text-purple-200/80 leading-relaxed mb-6">Find out what the stars say about your day.</p>
-    </div>
-
-    <!-- Golden Ram (Aries) Zodiac Graphic -->
-    <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center text-6xl drop-shadow-lg transform hover:scale-105 transition-transform">
-      ♈
-    </div>
+<!-- Astro Jyotish — Your Daily Horoscope (Matching Reference media_1793439144869_15265fb2.jpg) -->
+<div class="home-ref-horoscope-card" id="daily-horoscope-component">
+  <div>
+    <h3 class="home-ref-horoscope-title">Your Daily Horoscope</h3>
+    <p class="home-ref-horoscope-sub">Read accurate horoscope about your day.</p>
   </div>
 
-  <!-- Bottom Action: Select Sign / View Aries -->
-  <div class="relative z-10 pt-4 border-t border-white/10 flex items-center gap-3">
-    <a href="/rashiphal" data-nav-link class="inline-flex items-center gap-2 bg-white hover:bg-purple-50 text-[#1E1B4B] text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full shadow-md transition-all transform hover:-translate-y-0.5 no-underline">
-      <span>♈ Aries (मेष)</span>
-      <span>➔</span>
+  <div class="home-ref-horoscope-glyph-wrap">
+    <div class="home-ref-horoscope-glyph" id="home-horoscope-glyph" aria-hidden="true">♈</div>
+  </div>
+
+  <div class="home-ref-horoscope-controls">
+    <select class="home-ref-horoscope-select" id="home-horoscope-select" onchange="const g = {Aries:'♈',Taurus:'♉',Gemini:'♊',Cancer:'♋',Leo:'♌',Virgo:'♍',Libra:'♎',Scorpio:'♏',Sagittarius:'♐',Capricorn:'♑',Aquarius:'♒',Pisces:'♓'}; document.getElementById('home-horoscope-glyph').textContent = g[this.value] || '♈';">
+      <option value="Aries">Aries (Mesh)</option>
+      <option value="Taurus">Taurus (Vrishabh)</option>
+      <option value="Gemini">Gemini (Mithun)</option>
+      <option value="Cancer">Cancer (Kark)</option>
+      <option value="Leo">Leo (Singh)</option>
+      <option value="Virgo">Virgo (Kanya)</option>
+      <option value="Libra">Libra (Tula)</option>
+      <option value="Scorpio">Scorpio (Vrishchik)</option>
+      <option value="Sagittarius">Sagittarius (Dhanu)</option>
+      <option value="Capricorn">Capricorn (Makar)</option>
+      <option value="Aquarius">Aquarius (Kumbh)</option>
+      <option value="Pisces">Pisces (Meen)</option>
+    </select>
+
+    <a href="/rashiphal" data-nav-link class="home-ref-horoscope-btn" onclick="const sel = document.getElementById('home-horoscope-select'); if (window.App && window.App.showSignHoroscope && sel) { event.preventDefault(); window.App.showSignHoroscope(sel.value); }">
+      Get personalized prediction →
     </a>
-    <span class="text-[11px] text-purple-200/60 hidden sm:inline">12 Rashi Forecasts Available</span>
   </div>
 </div>

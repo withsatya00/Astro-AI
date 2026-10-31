@@ -1,58 +1,47 @@
-<!-- Today's Vedic Panchang Component (Matches Reference) -->
-<div class="panchang-preview-card bg-[#FFFDF7] border border-[#E7E2D8] rounded-2xl p-6 sm:p-7 shadow-xs flex flex-col justify-between h-full" id="panchang-preview-component">
+<!-- Astro Jyotish — Today's Vedic Panchang (Matching Reference media_1793439144869_15265fb2.jpg) -->
+<div class="home-ref-panchang-card" id="panchang-preview-component">
   <div>
-    <!-- Header: Title, Date & View Full Link -->
-    <div class="flex items-start justify-between gap-3 mb-6 flex-wrap">
+    <!-- Top Row: Eyebrow, Date & View Full Link -->
+    <div class="home-ref-panchang-top">
       <div>
-        <div class="flex items-center gap-1.5 text-xs font-bold text-[#B45309] uppercase tracking-wider mb-1">
-          <span>✦</span> <span>Today's Vedic Panchang (दैनिक पंचांग)</span> <span>✦</span>
+        <div class="home-ref-panchang-eyebrow">
+          <span>✦</span> <span>TODAY'S VEDIC PANCHANG</span> <span>✦</span>
         </div>
-        <div class="text-xs text-[#64748B] font-medium" id="panchang-date-display">Wednesday, 21 October 2026</div>
+        <div class="home-ref-panchang-date" id="home-panchang-date">Wednesday, 29 October 2026</div>
       </div>
-      <a href="/panchang" data-nav-link class="text-xs font-bold text-[#4a1b9a] hover:text-[#1e0b44] transition-colors inline-flex items-center gap-1 no-underline">
-        <span>View Full Panchang</span>
-        <span>→</span>
-      </a>
+      <a href="/panchang" data-nav-link class="home-ref-panchang-link">View Full Panchang →</a>
     </div>
 
-    <!-- 4-Column Metric Values: Tithi, Nakshatra, Yoga, Rahu Kaal -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
-      <!-- Tithi -->
-      <div class="bg-white border border-[#E7E2D8] rounded-xl p-3 flex flex-col">
-        <span class="text-[11px] text-[#64748B] font-medium mb-1">Tithi</span>
-        <strong class="text-xs sm:text-sm font-bold text-[#1E1B4B]" id="panchang-home-tithi">Dashami (दशमी)</strong>
+    <!-- 5 Metrics: Tithi, Nakshatra, Yoga, Karan, Aaj ka Muhurat -->
+    <div class="home-ref-panchang-metrics">
+      <div class="home-ref-panchang-box">
+        <div class="home-ref-panchang-box-lbl">Tithi</div>
+        <div class="home-ref-panchang-box-val" id="panchang-metric-tithi">Shukla Chaturthi</div>
       </div>
-
-      <!-- Nakshatra -->
-      <div class="bg-white border border-[#E7E2D8] rounded-xl p-3 flex flex-col">
-        <span class="text-[11px] text-[#64748B] font-medium mb-1">Nakshatra</span>
-        <strong class="text-xs sm:text-sm font-bold text-[#1E1B4B]" id="panchang-home-nakshatra">Dhanistha</strong>
+      <div class="home-ref-panchang-box">
+        <div class="home-ref-panchang-box-lbl">Nakshatra</div>
+        <div class="home-ref-panchang-box-val" id="panchang-metric-nakshatra">Dhanishtha</div>
       </div>
-
-      <!-- Yoga -->
-      <div class="bg-white border border-[#E7E2D8] rounded-xl p-3 flex flex-col">
-        <span class="text-[11px] text-[#64748B] font-medium mb-1">Yoga</span>
-        <strong class="text-xs sm:text-sm font-bold text-[#1E1B4B]" id="panchang-home-yoga">Shobhana</strong>
+      <div class="home-ref-panchang-box">
+        <div class="home-ref-panchang-box-lbl">Yoga</div>
+        <div class="home-ref-panchang-box-val" id="panchang-metric-yoga">Shobhana</div>
       </div>
-
-      <!-- Rahu Kaal (Red Alert Pill) -->
-      <div class="bg-[#FEF2F2] border border-[#FECACA] rounded-xl p-3 flex flex-col">
-        <span class="text-[11px] text-[#DC2626] font-semibold mb-1">Rahu Kaal</span>
-        <strong class="text-xs sm:text-sm font-bold text-[#B91C1C]" id="panchang-home-rahu">04:30 PM - 06:00 PM</strong>
+      <div class="home-ref-panchang-box">
+        <div class="home-ref-panchang-box-lbl">Karan</div>
+        <div class="home-ref-panchang-box-val">Balav</div>
+      </div>
+      <div class="home-ref-panchang-box home-ref-panchang-box--highlight">
+        <div class="home-ref-panchang-box-lbl" style="color: #92400E;">Aaj ka Muhurat</div>
+        <div class="home-ref-panchang-box-val" style="color: #78350F;" id="panchang-metric-rahukaal">04:22 PM - 06:10 PM</div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Row: Choghadiya Pill & Muhurat Action Button -->
-  <div class="flex items-center justify-between gap-3 pt-4 border-t border-[#F1ECE1] flex-wrap">
-    <div class="inline-flex items-center gap-2 bg-[#ECFDF5] border border-[#A7F3D0] px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#059669]">
-      <span>Choghadiya:</span>
-      <strong class="font-bold">Amrit (अमृत)</strong>
+  <!-- Bottom Row: Tags & CTA -->
+  <div class="home-ref-panchang-bottom">
+    <div class="home-ref-panchang-tags">
+      Choghadiya | Aarti (Details)
     </div>
-
-    <a href="/panchang" data-nav-link class="inline-flex items-center gap-2 bg-[#78350F] hover:bg-[#92400E] text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm transition-all no-underline">
-      <span>View Choghadiya & Muhurat</span>
-      <span>➔</span>
-    </a>
+    <a href="/panchang" data-nav-link class="home-ref-panchang-btn">View Choghadiya &amp; Muhurat →</a>
   </div>
 </div>

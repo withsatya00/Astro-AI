@@ -1,0 +1,782 @@
+/* Astro Jyotish - Puja Booking Page (1:1 Reference Match to media_1793425595705_cc672569.jpg) */
+
+body:has(#view-mandir.active) {
+  background-color: #FAF7F2 !important;
+}
+
+/* Page Container */
+#view-mandir .mandir-page,
+.mandir-page {
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 16px 24px 60px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  color: #1F191B !important;
+}
+
+/* Ensure navbar and promo ticker remain visible */
+#site-navbar-mount {
+  display: block !important;
+}
+
+/* ==========================================================================
+   1. Hero Section ("Book a Puja")
+   ========================================================================== */
+@media (min-width: 641px) {
+  .pj-hero-banner.service-banner,
+  #mandir-puja-head .service-banner,
+  .pj-hero-banner {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    min-height: 340px;
+    background-color: #3e0b18;
+    border: 1px solid #e5d9c7;
+    box-shadow: 0 16px 38px -30px #281a3c70;
+    padding: 30px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #FFFDF8;
+  }
+}
+
+.pj-hero-content {
+  max-width: 650px !important;
+  z-index: 2 !important;
+}
+
+.pj-hero-eyebrow,
+#mandir-puja-head .pj-hero-eyebrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.15em !important;
+  color: #F8D882 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 10px !important;
+}
+
+.pj-hero-eyebrow::after {
+  content: "" !important;
+  display: inline-block !important;
+  width: 44px !important;
+  height: 1px !important;
+  background: #F8D882 !important;
+  vertical-align: middle !important;
+}
+
+.pj-hero-title,
+#mandir-puja-head h1,
+#mandir-puja-head .pj-hero-title {
+  margin: 0 0 12px 0 !important;
+  font-family: "Cinzel", Georgia, serif !important;
+  font-size: 44px !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+  line-height: 1.15 !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7) !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.pj-hero-sub,
+#mandir-puja-head p.pj-hero-sub,
+#mandir-puja-head .pj-hero-sub {
+  margin: 0 0 22px 0 !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  color: #FDF3E5 !important;
+  opacity: 0.95 !important;
+  max-width: 620px !important;
+  display: block !important;
+  visibility: visible !important;
+}
+
+.pj-hero-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: linear-gradient(135deg, #F5D061, #E5B338) !important;
+  color: #2D0810 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 24px !important;
+  border-radius: 24px !important;
+  text-decoration: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+}
+
+.pj-hero-cta:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(229, 179, 56, 0.45) !important;
+}
+
+/* 4 Trust Badges */
+.pj-trust-strip {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 14px !important;
+  margin-top: 30px !important;
+  z-index: 2 !important;
+}
+
+.pj-trust-card {
+  background: rgba(28, 3, 9, 0.72) !important;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.pj-trust-icon {
+  font-size: 22px !important;
+  flex-shrink: 0 !important;
+  color: #F8D882 !important;
+}
+
+.pj-trust-info strong {
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #FFFDF8 !important;
+  line-height: 1.25 !important;
+}
+
+.pj-trust-info small {
+  display: block !important;
+  font-size: 10.5px !important;
+  color: #E8D6BD !important;
+  margin-top: 2px !important;
+  line-height: 1.2 !important;
+}
+
+/* ==========================================================================
+   2. Sub-Hero Decorative Band
+   ========================================================================== */
+.pj-subhero-strip {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #FFFDF9 !important;
+  border: 1px solid #E8D6BD !important;
+  border-radius: 12px !important;
+  padding: 12px 24px !important;
+  margin-bottom: 32px !important;
+  box-shadow: 0 2px 8px rgba(180, 140, 80, 0.05) !important;
+}
+
+.pj-subhero-left {
+  font-family: Georgia, serif !important;
+  font-style: italic !important;
+  font-size: 14px !important;
+  color: #5C1D24 !important;
+  font-weight: 600 !important;
+}
+
+.pj-subhero-center {
+  font-size: 22px !important;
+  color: #D4AF37 !important;
+  line-height: 1 !important;
+}
+
+.pj-subhero-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #FAF5EB !important;
+  border: 1px solid #D8C4A9 !important;
+  color: #4A0E17 !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  padding: 8px 18px !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+
+.pj-subhero-btn:hover {
+  background: #4A0E17 !important;
+  color: #FFFDF8 !important;
+  border-color: #4A0E17 !important;
+}
+
+/* ==========================================================================
+   3. Section Header ("Upcoming Puja Calendar")
+   ========================================================================== */
+.pj-calendar-section {
+  display: block !important;
+  margin-top: 10px !important;
+}
+
+.pj-calendar-header {
+  position: relative !important;
+  margin-bottom: 24px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+}
+
+.pj-header-text {
+  max-width: 680px !important;
+}
+
+.pj-cal-eyebrow {
+  display: block !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
+  color: #8C2434 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 4px !important;
+}
+
+.pj-cal-title {
+  margin: 0 0 8px 0 !important;
+  font-family: "Cinzel", Georgia, serif !important;
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #1F191B !important;
+  line-height: 1.2 !important;
+}
+
+.pj-cal-desc {
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  color: #5C4E51 !important;
+  line-height: 1.6 !important;
+}
+
+.pj-header-skyline {
+  width: 220px !important;
+  height: 70px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Cpath d='M10 60 L10 40 L25 20 L30 10 L35 20 L50 40 L50 60 Z' fill='none' stroke='%23D4AF37' stroke-width='1.5'/%3E%3Cpath d='M60 60 L60 30 L80 15 L90 5 L100 15 L120 30 L120 60 Z' fill='none' stroke='%23D4AF37' stroke-width='1.5'/%3E%3Cpath d='M130 60 L130 35 L145 18 L150 8 L155 18 L170 35 L170 60 Z' fill='none' stroke='%23D4AF37' stroke-width='1.5'/%3E%3Ccircle cx='90' cy='3' r='2' fill='%23D4AF37'/%3E%3Ccircle cx='30' cy='8' r='1.5' fill='%23D4AF37'/%3E%3Ccircle cx='150' cy='6' r='1.5' fill='%23D4AF37'/%3E%3C/svg%3E") no-repeat right bottom !important;
+  background-size: contain !important;
+  opacity: 0.4 !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   4. Search and Filter Bar
+   ========================================================================== */
+.pj-filter-bar {
+  background: #FFFDF9 !important;
+  border: 1px solid #E6D5BD !important;
+  border-radius: 14px !important;
+  padding: 14px 18px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
+  box-shadow: 0 4px 14px rgba(180, 140, 80, 0.06) !important;
+  margin-bottom: 18px !important;
+}
+
+.pj-search-wrap {
+  position: relative !important;
+  flex: 1 !important;
+  min-width: 220px !important;
+}
+
+.pj-search-icon {
+  position: absolute !important;
+  left: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #8C2434 !important;
+  font-size: 14px !important;
+  pointer-events: none !important;
+}
+
+.pj-search-input {
+  width: 100% !important;
+  padding: 10px 14px 10px 34px !important;
+  border: 1px solid #D8C4A9 !important;
+  border-radius: 8px !important;
+  background: #FAF7F2 !important;
+  font-size: 13px !important;
+  color: #1F191B !important;
+  outline: none !important;
+}
+
+.pj-search-input:focus {
+  border-color: #8C2434 !important;
+  background: #FFF !important;
+}
+
+.pj-filter-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #3A2B2D !important;
+  margin-left: 6px !important;
+}
+
+.pj-select-wrap select {
+  padding: 9px 28px 9px 12px !important;
+  border: 1px solid #D8C4A9 !important;
+  border-radius: 8px !important;
+  background: #FFFDF9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 5 5-5z' fill='%23666'/%3E%3C/svg%3E") no-repeat calc(100% - 10px) center !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #2D2526 !important;
+  outline: none !important;
+  cursor: pointer !important;
+  appearance: none !important;
+}
+
+.pj-select-wrap select:focus {
+  border-color: #8C2434 !important;
+}
+
+.pj-filter-btn {
+  background: #4A0E17 !important;
+  color: #FFFDF9 !important;
+  border: none !important;
+  padding: 10px 22px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: background 0.15s !important;
+}
+
+.pj-filter-btn:hover {
+  background: #661220 !important;
+}
+
+/* ==========================================================================
+   5. Results Meta Row
+   ========================================================================== */
+.pj-results-meta {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 20px !important;
+  font-size: 13px !important;
+  color: #4A3E40 !important;
+  font-weight: 600 !important;
+  padding: 0 4px !important;
+}
+
+.pj-sort-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.pj-sort-select {
+  border: none !important;
+  background: transparent !important;
+  font-weight: 700 !important;
+  color: #1F191B !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+   6. 3x3 Grid of 9 Puja Cards
+   ========================================================================== */
+.pj-cards-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+  margin-bottom: 40px !important;
+}
+
+.pj-card {
+  background: #FFFDF9 !important;
+  border: 1px solid #E8D6BD !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(180, 140, 80, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+.pj-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(180, 140, 80, 0.16) !important;
+}
+
+.pj-card-media {
+  position: relative !important;
+  height: 195px !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background: #F0E6D8 !important;
+}
+
+.pj-card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+
+.pj-card-badge {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  background: #FEF3C7 !important;
+  border: 1px solid #F59E0B !important;
+  color: #78350F !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  padding: 4px 10px !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.pj-card-fav {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: #FFFDF9 !important;
+  border: 1px solid #E6D2B5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8C2434 !important;
+  font-size: 15px !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  transition: background 0.15s !important;
+}
+
+.pj-card-fav:hover {
+  background: #FEE2E2 !important;
+}
+
+.pj-card-body {
+  padding: 16px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+.pj-card-title {
+  margin: 0 0 10px 0 !important;
+  font-family: "Cinzel", Georgia, serif !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #1F191B !important;
+  line-height: 1.25 !important;
+  min-height: 42px !important;
+}
+
+.pj-card-rows {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 14px !important;
+}
+
+.pj-card-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 12px !important;
+  color: #4A3E40 !important;
+  line-height: 1.4 !important;
+}
+
+.pj-card-row-icon {
+  font-size: 13px !important;
+  color: #8C2434 !important;
+  flex-shrink: 0 !important;
+  margin-top: 1px !important;
+}
+
+.pj-card-foot {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: auto !important;
+  padding-top: 12px !important;
+  border-top: 1px solid #F1E5D5 !important;
+}
+
+.pj-card-price {
+  font-size: 12px !important;
+  color: #6C595C !important;
+}
+
+.pj-card-price strong {
+  font-family: "Cinzel", Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #1F191B !important;
+  margin-left: 2px !important;
+}
+
+.pj-card-btn {
+  background: #4A0E17 !important;
+  color: #FFFDF9 !important;
+  padding: 8px 18px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  transition: background 0.15s !important;
+}
+
+.pj-card-btn:hover {
+  background: #661220 !important;
+}
+
+/* ==========================================================================
+   7. Bottom Custom Puja CTA Banner
+   ========================================================================== */
+.pj-bottom-cta {
+  background: linear-gradient(135deg, #3A0813 0%, #4D0915 50%, #2A040A 100%) !important;
+  border: 1px solid #D4AF37 !important;
+  border-radius: 16px !important;
+  padding: 24px 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  color: #FFFDF9 !important;
+  box-shadow: 0 8px 24px rgba(58, 6, 14, 0.25) !important;
+  margin-top: 24px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.pj-cta-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  z-index: 2 !important;
+}
+
+.pj-namaste-icon {
+  font-size: 32px !important;
+  line-height: 1 !important;
+}
+
+.pj-cta-text h3 {
+  margin: 0 !important;
+  font-family: "Cinzel", Georgia, serif !important;
+  font-size: 19px !important;
+  font-weight: 700 !important;
+  color: #FFFDF8 !important;
+}
+
+.pj-cta-text p {
+  margin: 4px 0 0 !important;
+  font-size: 13px !important;
+  color: #F5E8D8 !important;
+  opacity: 0.95 !important;
+}
+
+.pj-cta-temple-art {
+  width: 140px !important;
+  height: 50px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 50'%3E%3Cpath d='M20 50 L40 20 L50 8 L60 20 L80 50 Z' fill='none' stroke='%23D4AF37' stroke-width='1'/%3E%3Ccircle cx='50' cy='6' r='2' fill='%23D4AF37'/%3E%3Cpath d='M85 50 L95 30 L105 18 L115 30 L125 50 Z' fill='none' stroke='%23D4AF37' stroke-width='1'/%3E%3Ccircle cx='105' cy='16' r='1.5' fill='%23D4AF37'/%3E%3C/svg%3E") no-repeat center center !important;
+  background-size: contain !important;
+  opacity: 0.3 !important;
+  pointer-events: none !important;
+}
+
+.pj-custom-btn {
+  background: linear-gradient(135deg, #F5D061, #E5B338) !important;
+  color: #2D0810 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  border-radius: 24px !important;
+  text-decoration: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  transition: transform 0.15s, box-shadow 0.15s !important;
+  z-index: 2 !important;
+}
+
+.pj-custom-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(229, 179, 56, 0.4) !important;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================= */
+@media (max-width: 1024px) {
+  .pj-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .pj-trust-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .pj-bottom-cta {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 18px !important;
+  }
+  .pj-cta-left {
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #view-mandir .mandir-page,
+  .mandir-page {
+    padding: 12px 14px 40px !important;
+  }
+  .pj-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin-bottom: 28px !important;
+  }
+  .pj-card {
+    border-radius: 12px !important;
+  }
+  .pj-card-media {
+    height: 105px !important;
+  }
+  .pj-card-body {
+    padding: 8px 8px 10px !important;
+  }
+  .pj-card-title {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+  }
+  .pj-card-sub {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 4px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .pj-card-benefits {
+    display: none !important;
+  }
+  .pj-card-meta {
+    font-size: 9.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .pj-card-rows {
+    gap: 3px !important;
+    margin-bottom: 6px !important;
+  }
+  .pj-card-row {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+    gap: 4px !important;
+  }
+  .pj-card-row:nth-child(n+3) {
+    display: none !important;
+  }
+  .pj-card-row-icon {
+    font-size: 10px !important;
+  }
+  .pj-card-foot {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 4px !important;
+    padding-top: 6px !important;
+    margin-top: auto !important;
+  }
+  .pj-card-price {
+    font-size: 10px !important;
+    text-align: center !important;
+  }
+  .pj-card-price strong {
+    font-size: 13px !important;
+  }
+  .pj-card-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 5px 8px !important;
+    font-size: 10.5px !important;
+    min-height: 28px !important;
+    border-radius: 9999px !important;
+  }
+  .pj-card-price-row {
+    margin-top: auto !important;
+    padding-top: 4px !important;
+  }
+  .pj-card-price {
+    font-size: 12px !important;
+  }
+  .pj-btn-book {
+    padding: 5px 10px !important;
+    font-size: 10.5px !important;
+    border-radius: 999px !important;
+    min-height: 28px !important;
+  }
+  .pj-subhero-strip {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center !important;
+  }
+  .pj-header-skyline {
+    display: none !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .pj-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+  .pj-card-media {
+    height: 105px !important;
+  }
+  .pj-card-body {
+    padding: 8px 6px 10px !important;
+  }
+  .pj-card-title {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 2px !important;
+  }
+  .pj-card-sub {
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 4px !important;
+  }
+  .pj-card-meta {
+    font-size: 9.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .pj-card-price {
+    font-size: 11.5px !important;
+  }
+  .pj-btn-book {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    min-height: 26px !important;
+  }
+}
