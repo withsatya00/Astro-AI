@@ -363,3 +363,4 @@ export default function MandirSevaPage({ section = 'all' }) {
     </div>
   );
 }
+
