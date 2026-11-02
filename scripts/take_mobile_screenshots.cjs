@@ -38,3 +38,4 @@ const { chromium } = require('@playwright/test');
   await browser.close();
   console.log('All mobile screenshots captured successfully!');
 })();
+

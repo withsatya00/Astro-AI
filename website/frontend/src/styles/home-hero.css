@@ -27,8 +27,8 @@
 #view-home .trust-stat-number { color:#efd4a0 !important; font-size:1.35rem !important; }
 #view-home .trust-stat-label { color:#f7eedf !important; }
 
-/* One heading style for every home section. */
-#view-home section h2 { font-family:var(--font-serif) !important; color:#3e0b18 !important; font-weight:600 !important; letter-spacing:-.03em !important; }
+/* One heading style for every home section (excluding dark banner sections like Gau Seva). */
+#view-home section:not(.home-ref-gausewa-banner) h2 { font-family:var(--font-serif) !important; color:#3e0b18 !important; font-weight:600 !important; letter-spacing:-.03em !important; }
 #view-home :is(.journey-eyebrow) { color:#8a5a14 !important; letter-spacing:.15em !important; }
 
 @media(max-width:1023px) {
