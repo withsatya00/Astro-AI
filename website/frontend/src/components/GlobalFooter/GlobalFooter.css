@@ -3,7 +3,7 @@
   background-color: #1a060d;
   color: #CBD5E1;
   border-top: 1px solid #3B0612;
-  padding: 4rem 1.5rem 3rem;
+  padding: 3rem 1.5rem 2.5rem;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -15,6 +15,12 @@
   margin: 0 auto;
 }
 
+.footer-logo-full {
+  width: 180px;
+  height: auto;
+  display: block;
+}
+
 .footer-links a,
 .footer-info-link {
   text-decoration: none;
@@ -23,195 +29,159 @@
   color: #94A3B8;
   font: inherit;
   font-size: 13px;
-  padding: 0.35rem 0;
+  padding: 0.25rem 0;
   display: inline-block;
   cursor: pointer;
   text-align: left;
-  transition: color var(--transition-fast, 0.15s ease);
+  transition: color 0.15s ease;
 }
 
 .footer-links a:hover,
 .footer-info-link:hover {
-  color: #FFFFFF;
+  color: #F8D882;
 }
 
-/* Trust row matching Screenshot 5 */
+/* Trust row */
 .footer-trust-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 16px;
-  margin: 2.5rem 0 2rem;
-  padding: 1.5rem;
+  margin: 1.5rem 0 1.25rem;
+  padding: 1rem 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
+  border-radius: 14px;
 }
 
-@media (min-width: 769px) {
-  .footer-trust-row {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 24px;
-  }
-}
-
-.footer-trust-row > div {
+.footer-trust-item {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   flex: 1;
 }
 
-.footer-trust-row > div > span {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
+.footer-trust-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(248, 216, 130, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   flex-shrink: 0;
 }
 
-.footer-trust-row > div > p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: #CBD5E1;
-}
-
-.footer-trust-row > div > p b {
+.footer-trust-copy b {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #FFFFFF;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+}
+
+.footer-trust-copy small {
+  display: block;
+  font-size: 11px;
+  color: #94A3B8;
+  line-height: 1.3;
 }
 
 /* Mobile Responsiveness & Bottom Nav Clearance */
 @media (max-width: 768px) {
   .site-global-footer {
-    padding: 1.5rem 1rem calc(5.25rem + env(safe-area-inset-bottom, 0px)) 1rem !important;
+    padding: 1.25rem 1rem calc(4.75rem + env(safe-area-inset-bottom, 0px)) 1rem !important;
   }
 
-  .footer-columns-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px 12px !important;
+  .footer-brand-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding-bottom: 0.75rem !important;
     margin-bottom: 0.75rem !important;
   }
 
-  .footer-col-brand {
-    grid-column: span 2 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-bottom: 0.6rem !important;
-  }
-
   .footer-logo-full {
-    width: 140px !important;
-    height: auto !important;
+    width: 130px !important;
   }
 
   .footer-brand-desc {
+    text-align: left !important;
     font-size: 11.5px !important;
     line-height: 1.35 !important;
-    margin-top: 4px !important;
-    max-width: 100% !important;
   }
 
-  .footer-col {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
+  .footer-columns-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    margin-bottom: 0.5rem !important;
   }
 
-  .footer-col:last-child {
-    grid-column: span 2 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-    padding-top: 0.6rem !important;
+  .footer-col-section {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
   }
 
-  .footer-col:last-child .footer-links {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 3px 8px !important;
+  .footer-accordion-header {
+    padding: 6px 0 !important;
   }
 
   .footer-heading {
     font-size: 13px !important;
     font-weight: 700 !important;
     color: #F8D882 !important;
-    letter-spacing: 0.04em !important;
-    margin-bottom: 0.35rem !important;
   }
 
-  .footer-links li {
-    margin-bottom: 2px !important;
+  .footer-accordion-chevron {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
   }
 
-  .footer-links a,
-  .footer-info-link {
-    font-size: 11.5px !important;
-    padding: 2px 0 !important;
-    line-height: 1.3 !important;
-  }
-
-  /* Compact Trust Row */
+  /* Compact Trust Row on Mobile: 3 pills horizontally */
   .footer-trust-row {
-    display: flex !important;
-    flex-direction: column !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 6px !important;
-    margin: 0.85rem 0 0.65rem !important;
-    padding: 8px 12px !important;
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    margin: 0.75rem 0 0.5rem !important;
+    padding: 8px 6px !important;
     border-radius: 10px !important;
   }
 
-  .footer-trust-row > div {
-    display: flex !important;
+  .footer-trust-item {
+    flex-direction: column !important;
     align-items: center !important;
-    gap: 8px !important;
+    text-align: center !important;
+    gap: 4px !important;
   }
 
-  .footer-trust-row > div > span {
+  .footer-trust-icon {
     width: 26px !important;
     height: 26px !important;
     min-width: 26px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.06) !important;
-    font-size: 12px !important;
-    flex-shrink: 0 !important;
+    font-size: 13px !important;
   }
 
-  .footer-trust-row > div > p {
-    font-size: 11.5px !important;
-    line-height: 1.25 !important;
-    color: #CBD5E1 !important;
-    margin: 0 !important;
+  .footer-trust-copy b {
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
   }
 
-  .footer-trust-row > div > p b {
-    display: inline !important;
-    font-size: 11.5px !important;
-    font-weight: 700 !important;
-    color: #FFFFFF !important;
-    margin-right: 4px !important;
+  .footer-trust-copy small {
+    display: none !important;
   }
 
   .footer-bottom-bar {
-    padding-top: 0.65rem !important;
+    padding-top: 0.5rem !important;
+    flex-direction: column !important;
     gap: 4px !important;
     text-align: center !important;
   }
 
   .footer-copyright {
-    font-size: 11.5px !important;
-    line-height: 1.3 !important;
-  }
-
-  .footer-made-in-india {
-    font-size: 11.5px !important;
+    font-size: 11px !important;
   }
 }

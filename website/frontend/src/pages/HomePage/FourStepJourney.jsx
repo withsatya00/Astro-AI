@@ -41,7 +41,7 @@ export default function FourStepJourney() {
         </Link>
 
         {/* Step 4: Astro Mall */}
-        <Link to="/astro-mall" className="home-ref-journey-card no-underline">
+        <Link to="/mall" className="home-ref-journey-card no-underline">
           <span className="home-ref-journey-num" aria-hidden="true">4</span>
           <div className="home-ref-journey-icon" aria-hidden="true">🛍️</div>
           <h3 className="home-ref-journey-title">Astro Mall</h3>
@@ -52,3 +52,4 @@ export default function FourStepJourney() {
     </section>
   );
 }
+

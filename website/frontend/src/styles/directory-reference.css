@@ -1313,3 +1313,268 @@
 .ac-ref-card :is(.ac-ref-revcount, .ac-ref-exp, .ac-ref-specialties, .ac-ref-lang-pill, .ac-ref-rate small, span, b) {
   font-size: 11.5px !important;
 }
+
+/* ==========================================================================
+   Mobile-Optimized Directory & Compact Cards (Screen Real Estate Fix)
+   Blueprint: 2.5 - 3 cards per screen on mobile; zero wasted filter space
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Streamlined Astrologers Masthead */
+  .service-banner.service-banner--astrologers {
+    padding: 12px 14px 10px !important;
+    min-height: auto !important;
+    gap: 6px !important;
+    margin: 8px 8px 0 !important;
+    border-radius: 14px !important;
+  }
+  .service-banner--astrologers .service-banner__art {
+    display: none !important;
+  }
+  .service-banner--astrologers .mandir-hero__copy h1 {
+    font-size: 1.25rem !important;
+    line-height: 1.15 !important;
+    margin: 2px 0 4px !important;
+  }
+  .service-banner--astrologers .mandir-hero__copy p {
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+    margin: 0 0 8px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .service-banner--astrologers .shop-hero__actions {
+    margin-bottom: 4px !important;
+    gap: 8px !important;
+  }
+  .service-banner--astrologers .shop-hero__actions .shop-btn {
+    padding: 6px 12px !important;
+    font-size: 11.5px !important;
+    min-height: 32px !important;
+    flex: 1 !important;
+    justify-content: center !important;
+  }
+  .service-banner--astrologers .service-benefits {
+    display: none !important;
+  }
+
+  /* 2. Compact Search & Filter Controls */
+  .dir-search-container {
+    padding: 8px 10px !important;
+    margin: 8px 8px 0 !important;
+    gap: 6px !important;
+    border-radius: 12px !important;
+  }
+  .dir-search-top-row {
+    margin-bottom: 2px !important;
+  }
+  .dir-search-input-box {
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 2px 2px 2px 8px !important;
+    border-radius: 10px !important;
+  }
+  .dir-search-input-box input {
+    font-size: 12px !important;
+    min-height: 32px !important;
+  }
+  .dir-search-submit-btn {
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 11.5px !important;
+    padding: 0 12px !important;
+    border-radius: 8px !important;
+  }
+  .dir-filter-actions-bar {
+    padding: 2px 0 !important;
+  }
+  .dir-dropdowns-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    margin-top: 4px !important;
+  }
+  .dir-dropdowns-row > select:nth-child(5) {
+    grid-column: span 2 !important;
+  }
+  .dir-select {
+    height: 34px !important;
+    min-height: 34px !important;
+    font-size: 11.5px !important;
+    padding: 0 6px !important;
+    border-radius: 8px !important;
+  }
+  .dir-categories-row {
+    gap: 4px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+  .dir-cat-pill {
+    min-height: 28px !important;
+    height: 28px !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
+    border-radius: 9999px !important;
+  }
+
+  /* 3. Streamlined Directory Header */
+  .dir-main-section {
+    padding: 8px 8px calc(5.5rem + env(safe-area-inset-bottom, 0px)) 8px !important;
+  }
+  .dir-section-header {
+    margin-bottom: 6px !important;
+  }
+  .dir-sec-eyebrow {
+    font-size: 9.5px !important;
+    margin-bottom: 2px !important;
+  }
+  .dir-sec-title {
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+    margin: 0 0 2px !important;
+  }
+  .dir-sec-sub {
+    display: none !important;
+  }
+  .dir-guidance-seal {
+    display: none !important;
+  }
+  .dir-subtabs-bar {
+    margin-bottom: 8px !important;
+    gap: 5px !important;
+  }
+  .dir-subtab {
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    min-height: 26px !important;
+    border-radius: 9999px !important;
+  }
+
+  /* 4. Compact Astrologer Cards: 2.5 - 3 Cards per Screen */
+  .dir-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .dir-cards-grid .home-ref-astro-card,
+  .home-ref-astro-grid .home-ref-astro-card,
+  .home-ref-astro-card {
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    gap: 2px !important;
+    box-shadow: 0 2px 8px rgba(59, 6, 18, 0.04) !important;
+  }
+  .dir-cards-grid .home-ref-astro-top,
+  .home-ref-astro-grid .home-ref-astro-top,
+  .home-ref-astro-top {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 4px !important;
+  }
+  .dir-cards-grid .home-ref-astro-avatar-wrap,
+  .home-ref-astro-grid .home-ref-astro-avatar-wrap,
+  .home-ref-astro-avatar-wrap {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    border-radius: 50% !important;
+    border: 1.5px solid #D9A441 !important;
+  }
+  .dir-cards-grid .home-ref-astro-info,
+  .home-ref-astro-grid .home-ref-astro-info,
+  .home-ref-astro-info {
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+  .dir-cards-grid .home-ref-astro-name,
+  .home-ref-astro-grid .home-ref-astro-name,
+  .home-ref-astro-name {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .dir-cards-grid .home-ref-astro-status,
+  .home-ref-astro-grid .home-ref-astro-status,
+  .home-ref-astro-status {
+    font-size: 10px !important;
+    padding: 0 6px !important;
+  }
+  .dir-cards-grid .home-ref-astro-meta-row,
+  .home-ref-astro-grid .home-ref-astro-meta-row,
+  .home-ref-astro-meta-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 11px !important;
+    color: #5C5248 !important;
+    margin-bottom: 2px !important;
+  }
+  .dir-cards-grid .home-ref-astro-specs,
+  .home-ref-astro-grid .home-ref-astro-specs,
+  .home-ref-astro-specs {
+    font-size: 11px !important;
+    color: #786C5E !important;
+    margin-bottom: 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.2 !important;
+  }
+  .dir-cards-grid .home-ref-astro-langs,
+  .home-ref-astro-grid .home-ref-astro-langs,
+  .home-ref-astro-langs {
+    display: none !important;
+  }
+  .dir-cards-grid .home-ref-astro-bottom,
+  .home-ref-astro-grid .home-ref-astro-bottom,
+  .home-ref-astro-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-top: 5px !important;
+    border-top: 1px dashed #EADBCA !important;
+    margin-top: 2px !important;
+  }
+  .dir-cards-grid .home-ref-astro-rate,
+  .home-ref-astro-grid .home-ref-astro-rate,
+  .home-ref-astro-rate {
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    color: #3B0612 !important;
+  }
+  .dir-cards-grid .home-ref-astro-actions,
+  .home-ref-astro-grid .home-ref-astro-actions,
+  .home-ref-astro-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .dir-cards-grid .home-ref-astro-btn-chat,
+  .home-ref-astro-grid .home-ref-astro-btn-chat,
+  .home-ref-astro-btn-chat {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    border-radius: 9999px !important;
+    gap: 4px !important;
+  }
+  .dir-cards-grid .home-ref-astro-btn-call,
+  .home-ref-astro-grid .home-ref-astro-btn-call,
+  .home-ref-astro-btn-call {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}

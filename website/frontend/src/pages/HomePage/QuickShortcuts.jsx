@@ -37,7 +37,7 @@ export default function QuickShortcuts() {
       title: 'Astro Mall',
       desc: 'Shop spiritual products & remedies',
       icon: '🛍️',
-      to: '/astro-mall',
+      to: '/mall',
     },
   ];
 
@@ -55,3 +55,4 @@ export default function QuickShortcuts() {
     </section>
   );
 }
+

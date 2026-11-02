@@ -131,6 +131,70 @@ const FALLBACK_ASTROLOGERS = [
     availability: 'online',
     gender: 'female',
   },
+  {
+    id: 'acharya-suresh-tripathi',
+    slug: 'acharya-suresh-tripathi',
+    name: 'Acharya Suresh Tripathi',
+    title: 'Mahurat & Vivah Kundli Specialist',
+    avatar: '/assets/portraits/acharya-suresh-tripathi.webp',
+    fallbackAvatar: '/assets/portraits/acharya-suresh-tripathi.jpg',
+    rating: 4.8,
+    review_count: 1180,
+    experience_years: 19,
+    price_per_minute: 55,
+    languages: ['Hindi', 'English'],
+    specialties: ['Vedic Astrology', 'Marriage', 'Remedies'],
+    availability: 'online',
+    gender: 'male',
+  },
+  {
+    id: 'vidushi-maya-pandey',
+    slug: 'vidushi-maya-pandey',
+    name: 'Vidushi Maya Pandey',
+    title: 'Lal Kitab & Vastu Shastra Consultant',
+    avatar: '/assets/portraits/vidushi-maya-pandey.webp',
+    fallbackAvatar: '/assets/portraits/vidushi-maya-pandey.jpg',
+    rating: 4.9,
+    review_count: 1640,
+    experience_years: 14,
+    price_per_minute: 58,
+    languages: ['Hindi', 'English'],
+    specialties: ['Lal Kitab', 'Vastu', 'Finance'],
+    availability: 'online',
+    gender: 'female',
+  },
+  {
+    id: 'pt-devendra-shukla',
+    slug: 'pt-devendra-shukla',
+    name: 'Pt. Devendra Shukla',
+    title: 'Nadi Astrology & Past Life Karmic Healer',
+    avatar: '/assets/portraits/pt-devendra-shukla.webp',
+    fallbackAvatar: '/assets/portraits/pt-devendra-shukla.jpg',
+    rating: 4.7,
+    review_count: 890,
+    experience_years: 13,
+    price_per_minute: 48,
+    languages: ['Hindi', 'Sanskrit'],
+    specialties: ['Nadi Astrology', 'Career', 'Health'],
+    availability: 'online',
+    gender: 'male',
+  },
+  {
+    id: 'acharya-omkarnath',
+    slug: 'acharya-omkarnath',
+    name: 'Acharya Omkarnath',
+    title: 'Vedic Gemstone & Yantra Specialist',
+    avatar: '/assets/portraits/acharya-omkarnath.webp',
+    fallbackAvatar: '/assets/portraits/acharya-omkarnath.jpg',
+    rating: 4.9,
+    review_count: 1980,
+    experience_years: 21,
+    price_per_minute: 68,
+    languages: ['Hindi', 'English', 'Marathi'],
+    specialties: ['Gemology', 'Vedic Astrology', 'Remedies'],
+    availability: 'busy',
+    gender: 'male',
+  },
 ];
 
 export default function DirectoryPage() {
@@ -147,80 +211,97 @@ export default function DirectoryPage() {
   const [activeSubtab, setActiveSubtab] = useState('all');
   const [activeConcern, setActiveConcern] = useState('');
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [showFiltersMobile, setShowFiltersMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6;
+  const pageSize = 8;
 
-  // Fetch astrologers from API
+  // Active filter count for mobile badge
+  const activeFilterCount = useMemo(() => {
+    return (selectedSpecialty ? 1 : 0) +
+           (selectedLanguage ? 1 : 0) +
+           (selectedPrice ? 1 : 0) +
+           (selectedGender !== 'all' ? 1 : 0) +
+           (sortBy !== 'popular' ? 1 : 0);
+  }, [selectedSpecialty, selectedLanguage, selectedPrice, selectedGender, sortBy]);
+
   useEffect(() => {
-    fetch('/api/v1/astrologers')
+    fetch('/api/astrologers')
       .then((res) => {
-        if (!res.ok) throw new Error('API fetch error');
+        if (!res.ok) throw new Error('API request failed');
         return res.json();
       })
       .then((data) => {
-        const items = data.items || data.astrologers || data;
-        if (Array.isArray(items) && items.length > 0) {
-          setAstrologers(items);
+        const list = Array.isArray(data) ? data : data.astrologers;
+        if (Array.isArray(list) && list.length > 0) {
+          setAstrologers(list);
         }
       })
       .catch(() => {
-        // Fallback already pre-set
+        // Keep fallback data
       });
   }, []);
 
-  // Sync URL search params
   useEffect(() => {
-    const q = searchParams.get('search');
+    const s = searchParams.get('search');
+    if (s !== null && s !== searchQuery) setSearchQuery(s);
     const spec = searchParams.get('specialty');
-    if (q !== null && q !== searchQuery) setSearchQuery(q);
     if (spec !== null && spec !== selectedSpecialty) setSelectedSpecialty(spec);
   }, [searchParams]);
 
-  // Filter and sort astrologers
   const filteredAstrologers = useMemo(() => {
     return astrologers.filter((astro) => {
-      // 1. Search text
+      // 1. Search filter
       if (searchQuery.trim()) {
-        const text = `${astro.name} ${astro.title || ''} ${(astro.specialties || []).join(' ')} ${(astro.languages || []).join(' ')}`.toLowerCase();
-        if (!text.includes(searchQuery.toLowerCase())) return false;
+        const q = searchQuery.toLowerCase().trim();
+        const matchesName = (astro.name || '').toLowerCase().includes(q);
+        const matchesTitle = (astro.title || '').toLowerCase().includes(q);
+        const matchesSpecialties = (astro.specialties || []).some((s) => s.toLowerCase().includes(q));
+        const matchesLanguages = (astro.languages || []).some((l) => l.toLowerCase().includes(q));
+        if (!matchesName && !matchesTitle && !matchesSpecialties && !matchesLanguages) {
+          return false;
+        }
       }
 
-      // 2. Specialty Dropdown
+      // 2. Specialty dropdown filter
       if (selectedSpecialty) {
-        const specs = (astro.specialties || []).map((s) => s.toLowerCase());
-        const match = specs.some((s) => s.includes(selectedSpecialty.toLowerCase()));
-        if (!match) return false;
+        const hasSpec = (astro.specialties || []).some(
+          (s) => s.toLowerCase().includes(selectedSpecialty.toLowerCase())
+        );
+        if (!hasSpec) return false;
       }
 
-      // 3. Language Dropdown
+      // 3. Language dropdown filter
       if (selectedLanguage) {
-        const langs = (astro.languages || []).map((l) => l.toLowerCase());
-        if (!langs.includes(selectedLanguage.toLowerCase())) return false;
+        const hasLang = (astro.languages || []).some(
+          (l) => l.toLowerCase() === selectedLanguage.toLowerCase()
+        );
+        if (!hasLang) return false;
       }
 
-      // 4. Price Dropdown
+      // 4. Price range filter
       if (selectedPrice) {
-        const rate = Number(astro.price_per_minute) || 0;
-        if (selectedPrice === '50' && rate > 50) return false;
-        if (selectedPrice === '75' && (rate <= 50 || rate > 75)) return false;
-        if (selectedPrice === '100' && rate <= 75) return false;
+        const price = Number(astro.price_per_minute) || 0;
+        if (selectedPrice === '50' && price > 50) return false;
+        if (selectedPrice === '75' && (price <= 50 || price > 75)) return false;
+        if (selectedPrice === '100' && price <= 75) return false;
       }
 
-      // 5. Gender Dropdown
-      if (selectedGender !== 'all' && astro.gender) {
-        if (astro.gender.toLowerCase() !== selectedGender.toLowerCase()) return false;
+      // 5. Gender filter
+      if (selectedGender && selectedGender !== 'all') {
+        if (astro.gender !== selectedGender) return false;
       }
 
-      // 6. Category Chip
+      // 6. Quick Concern horizontal chip filter
       if (activeConcern) {
-        const specs = (astro.specialties || []).map((s) => s.toLowerCase());
-        const match = specs.some((s) => s.includes(activeConcern.toLowerCase()));
-        if (!match) return false;
+        const hasConcern = (astro.specialties || []).some(
+          (s) => s.toLowerCase().includes(activeConcern.toLowerCase())
+        );
+        if (!hasConcern) return false;
       }
 
-      // 7. Subtab
-      if (activeSubtab === 'top-rated' && Number(astro.rating) < 4.8) return false;
-      if (activeSubtab === 'most-consulted' && (Number(astro.review_count) || 0) < 1500) return false;
+      // 7. Subtabs
+      if (activeSubtab === 'top-rated' && (astro.rating || 0) < 4.9) return false;
+      if (activeSubtab === 'most-consulted' && (astro.review_count || 0) < 1500) return false;
 
       return true;
     }).sort((a, b) => {
@@ -238,23 +319,26 @@ export default function DirectoryPage() {
   const paginatedAstrologers = filteredAstrologers.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   const handleStartConsultation = (slug) => {
-    if (window.App && typeof window.App.startConsultationWith === 'function') {
-      window.App.startConsultationWith(slug);
-    } else {
-      navigate(`/astrologers/${slug}`);
-    }
+    navigate(`/consultation/${slug}`);
   };
 
   const handleStartCall = (slug) => {
-    if (window.App && typeof window.App.startCallWith === 'function') {
-      window.App.startCallWith(slug);
-    } else {
-      navigate(`/astrologers/${slug}`);
-    }
+    navigate(`/consultation/${slug}?call=true`);
   };
 
   const handleConcernClick = (concern) => {
     setActiveConcern(concern === activeConcern ? '' : concern);
+    setCurrentPage(1);
+  };
+
+  const clearAllFilters = () => {
+    setSearchQuery('');
+    setSelectedSpecialty('');
+    setSelectedLanguage('');
+    setSelectedPrice('');
+    setSelectedGender('all');
+    setSortBy('popular');
+    setActiveConcern('');
     setCurrentPage(1);
   };
 
@@ -303,7 +387,7 @@ export default function DirectoryPage() {
 
       {/* 2. Search & Filter Controls Card */}
       <section className="dir-search-container">
-        {/* Row 1: Search input + Help choose button */}
+        {/* Search Input Bar */}
         <div className="dir-search-top-row">
           <div className="dir-search-input-box">
             <span className="dir-search-icon">🔍</span>
@@ -318,10 +402,22 @@ export default function DirectoryPage() {
               }}
               aria-label="Search astrologer"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                className="text-slate-400 hover:text-slate-700 bg-transparent border-0 cursor-pointer p-1 text-sm flex-shrink-0"
+                title="Clear search"
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
             <button
               type="button"
               className="dir-search-submit-btn cursor-pointer"
               onClick={() => setCurrentPage(1)}
+              aria-label="Submit search"
             >
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -330,115 +426,149 @@ export default function DirectoryPage() {
               <span>Search</span>
             </button>
           </div>
+        </div>
+
+        {/* Filter Controls Toggle Bar (Mobile & Desktop) */}
+        <div className="dir-filter-actions-bar flex items-center justify-between gap-2 pt-1 pb-1">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className={`dir-filter-toggle-btn cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border ${
+                showFiltersMobile || activeFilterCount > 0
+                  ? 'bg-[#3E0B18] text-[#F8D882] border-[#3E0B18]'
+                  : 'bg-white text-slate-700 border-slate-300 hover:border-[#3E0B18]'
+              }`}
+              onClick={() => setShowFiltersMobile(!showFiltersMobile)}
+              aria-expanded={showFiltersMobile}
+            >
+              <span>⚙️</span>
+              <span>Filters &amp; Sort</span>
+              {activeFilterCount > 0 && (
+                <span className="bg-[#D9A441] text-[#3E0B18] text-[10.5px] font-black px-1.5 py-0.2 rounded-full">
+                  {activeFilterCount}
+                </span>
+              )}
+              <span className="text-[10px] ml-0.5">{showFiltersMobile ? '▲' : '▼'}</span>
+            </button>
+
+            {activeFilterCount > 0 && (
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                className="text-xs text-[#841833] font-bold hover:underline cursor-pointer bg-transparent border-0 p-1"
+              >
+                Reset
+              </button>
+            )}
+          </div>
 
           <button
             type="button"
-            className="dir-help-choose-btn cursor-pointer"
+            className="dir-help-choose-compact-btn cursor-pointer inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-[#FFF9EF] border border-[#E5CE9F] text-[#5A0C20] hover:bg-[#FDF3E3] transition-colors"
             onClick={() => setIsHelpModalOpen(true)}
           >
-            <span className="dir-sparkle">✦</span>
-            <span className="dir-help-text">
-              <strong>I'm not sure</strong>
-              <small>Help me choose →</small>
-            </span>
+            <span className="text-[#D9A441]">✦</span>
+            <span>Help me choose</span>
           </button>
         </div>
 
-        {/* Row 2: 5 Filter Dropdowns */}
-        <div className="dir-dropdowns-row">
-          <select
-            id="dir-filter-specialty"
-            className="dir-select"
-            value={selectedSpecialty}
-            onChange={(e) => {
-              setSelectedSpecialty(e.target.value);
-              setCurrentPage(1);
-            }}
-            aria-label="All Specialities"
-          >
-            <option value="">All Specialities</option>
-            <option value="Career">Career &amp; Business</option>
-            <option value="Marriage">Love &amp; Marriage</option>
-            <option value="Kundli">Kundli Analysis</option>
-            <option value="Finance">Finance &amp; Wealth</option>
-            <option value="Remedies">Vedic Remedies</option>
-            <option value="Health">Health &amp; Wellness</option>
-            <option value="Education">Education &amp; Studies</option>
-          </select>
+        {/* 5 Filter Dropdowns Row: Collapsible on mobile, visible on desktop */}
+        <div className={`dir-dropdowns-wrapper ${showFiltersMobile ? 'block' : 'hidden md:block'}`}>
+          <div className="dir-dropdowns-row">
+            <select
+              id="dir-filter-specialty"
+              className="dir-select"
+              value={selectedSpecialty}
+              onChange={(e) => {
+                setSelectedSpecialty(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="All Specialities"
+            >
+              <option value="">All Specialities</option>
+              <option value="Career">Career &amp; Business</option>
+              <option value="Marriage">Love &amp; Marriage</option>
+              <option value="Kundli">Kundli Analysis</option>
+              <option value="Finance">Finance &amp; Wealth</option>
+              <option value="Remedies">Vedic Remedies</option>
+              <option value="Health">Health &amp; Wellness</option>
+              <option value="Education">Education &amp; Studies</option>
+            </select>
 
-          <select
-            id="dir-filter-language"
-            className="dir-select"
-            value={selectedLanguage}
-            onChange={(e) => {
-              setSelectedLanguage(e.target.value);
-              setCurrentPage(1);
-            }}
-            aria-label="All Languages"
-          >
-            <option value="">All Languages</option>
-            <option value="Hindi">Hindi (हिन्दी)</option>
-            <option value="English">English</option>
-            <option value="Sanskrit">Sanskrit (संस्कृत)</option>
-            <option value="Bhojpuri">Bhojpuri</option>
-            <option value="Marathi">Marathi (मराठी)</option>
-            <option value="Gujarati">Gujarati (ગુજરાતી)</option>
-            <option value="Bengali">Bengali (বাংলা)</option>
-            <option value="Punjabi">Punjabi</option>
-            <option value="Tamil">Tamil (தமிழ்)</option>
-          </select>
+            <select
+              id="dir-filter-language"
+              className="dir-select"
+              value={selectedLanguage}
+              onChange={(e) => {
+                setSelectedLanguage(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="All Languages"
+            >
+              <option value="">All Languages</option>
+              <option value="Hindi">Hindi (हिन्दी)</option>
+              <option value="English">English</option>
+              <option value="Sanskrit">Sanskrit (संस्कृत)</option>
+              <option value="Bhojpuri">Bhojpuri</option>
+              <option value="Marathi">Marathi (मराठी)</option>
+              <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+              <option value="Bengali">Bengali (বাংলা)</option>
+              <option value="Punjabi">Punjabi</option>
+              <option value="Tamil">Tamil (தமிழ்)</option>
+            </select>
 
-          <select
-            id="dir-filter-price"
-            className="dir-select"
-            value={selectedPrice}
-            onChange={(e) => {
-              setSelectedPrice(e.target.value);
-              setCurrentPage(1);
-            }}
-            aria-label="All Price Range"
-          >
-            <option value="">All Price Range</option>
-            <option value="50">Under ₹50/min</option>
-            <option value="75">₹50 – ₹75/min</option>
-            <option value="100">Above ₹75/min</option>
-          </select>
+            <select
+              id="dir-filter-price"
+              className="dir-select"
+              value={selectedPrice}
+              onChange={(e) => {
+                setSelectedPrice(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="All Price Range"
+            >
+              <option value="">All Price Range</option>
+              <option value="50">Under ₹50/min</option>
+              <option value="75">₹50 – ₹75/min</option>
+              <option value="100">Above ₹75/min</option>
+            </select>
 
-          <select
-            id="dir-filter-gender"
-            className="dir-select"
-            value={selectedGender}
-            onChange={(e) => {
-              setSelectedGender(e.target.value);
-              setCurrentPage(1);
-            }}
-            aria-label="All Genders"
-          >
-            <option value="all">All Genders</option>
-            <option value="male">Male Astrologers</option>
-            <option value="female">Female Astrologers</option>
-          </select>
+            <select
+              id="dir-filter-gender"
+              className="dir-select"
+              value={selectedGender}
+              onChange={(e) => {
+                setSelectedGender(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="All Genders"
+            >
+              <option value="all">All Genders</option>
+              <option value="male">Male Astrologers</option>
+              <option value="female">Female Astrologers</option>
+            </select>
 
-          <select
-            id="dir-filter-sort"
-            className="dir-select"
-            value={sortBy}
-            onChange={(e) => {
-              setSortBy(e.target.value);
-              setCurrentPage(1);
-            }}
-            aria-label="Sort By"
-          >
-            <option value="popular">Sort by Popularity</option>
-            <option value="rating">Sort by Rating</option>
-            <option value="experience">Sort by Experience</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
-            <option value="name">Sort by Name</option>
-          </select>
+            <select
+              id="dir-filter-sort"
+              className="dir-select"
+              value={sortBy}
+              onChange={(e) => {
+                setSortBy(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="Sort By"
+            >
+              <option value="popular">Sort by Popularity</option>
+              <option value="rating">Sort by Rating</option>
+              <option value="experience">Sort by Experience</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Sort by Name</option>
+            </select>
+          </div>
         </div>
 
-        {/* Row 3: Horizontal Scrolling Category Concern Pills */}
+        {/* Horizontal Scrolling Category Concern Pills */}
         <div className="dir-categories-row" id="dir-quick-chips">
           {[
             { id: '', label: 'All', icon: '▦' },
@@ -473,7 +603,9 @@ export default function DirectoryPage() {
             <div className="dir-sec-eyebrow">
               <span className="dir-moon-icon">🌙</span> OUR ASTROLOGERS
             </div>
-            <h2 className="dir-sec-title">Find the Right Astrologer for Your Concern</h2>
+            <h2 className="dir-sec-title">
+              Find Verified Astrologers <span className="text-sm font-normal text-slate-500">({filteredAstrologers.length})</span>
+            </h2>
             <p className="dir-sec-sub">
               Connect with experienced and verified astrologers for accurate guidance and practical solutions.
             </p>
@@ -492,10 +624,9 @@ export default function DirectoryPage() {
         {/* Subtabs Bar */}
         <div className="dir-subtabs-bar">
           {[
-            { id: 'all', label: `All Astrologers (${filteredAstrologers.length})` },
+            { id: 'all', label: `All (${filteredAstrologers.length})` },
             { id: 'top-rated', label: '⭐ Top Rated' },
             { id: 'most-consulted', label: '👑 Most Consulted' },
-            { id: 'new', label: '🌟 New Astrologers' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -517,21 +648,14 @@ export default function DirectoryPage() {
           <div className="dir-left-grid-col">
             <div className="dir-cards-grid" id="directory-page-cards-grid">
               {paginatedAstrologers.length === 0 ? (
-                <div className="col-span-2 text-center p-12 bg-white rounded-3xl border border-[#E7E2D8]">
-                  <span className="text-4xl block mb-3">🔍</span>
-                  <h3 className="font-serif font-bold text-lg text-[#1E1B4B] mb-1">No astrologers found</h3>
-                  <p className="text-xs text-slate-500 mb-4">Try relaxing your search query or filter selections.</p>
+                <div className="col-span-full text-center p-10 bg-white rounded-2xl border border-[#E7E2D8]">
+                  <span className="text-3xl block mb-2">🔍</span>
+                  <h3 className="font-serif font-bold text-base text-[#1E1B4B] mb-1">No astrologers found</h3>
+                  <p className="text-xs text-slate-500 mb-3">Try relaxing your search query or filter selections.</p>
                   <button
                     type="button"
-                    onClick={() => {
-                      setSearchQuery('');
-                      setSelectedSpecialty('');
-                      setSelectedLanguage('');
-                      setSelectedPrice('');
-                      setSelectedGender('all');
-                      setActiveConcern('');
-                    }}
-                    className="px-4 py-2 rounded-full text-xs font-bold bg-[#3E0B18] text-white cursor-pointer border-0"
+                    onClick={clearAllFilters}
+                    className="px-4 py-1.5 rounded-full text-xs font-bold bg-[#3E0B18] text-white cursor-pointer border-0"
                   >
                     Clear All Filters
                   </button>
@@ -583,14 +707,14 @@ export default function DirectoryPage() {
                       <span className="home-ref-astro-rating">
                         <span className="home-ref-astro-rating-star">★</span> {astro.rating || '4.8'}{' '}
                         <small className="text-slate-400 font-normal">
-                          ({astro.review_count || '1.2k'} reviews)
+                          ({astro.review_count || '1.2k'})
                         </small>
                       </span>
-                      <span>⏱ {astro.experience_years || '15'}+ Years</span>
+                      <span>⏱ {astro.experience_years || '15'}+ Yrs</span>
                     </div>
 
                     <p className="home-ref-astro-specs" title={(astro.specialties || []).join(', ')}>
-                      {(astro.specialties || []).slice(0, 5).join(', ')}
+                      {(astro.specialties || []).slice(0, 4).join(', ')}
                     </p>
 
                     <div className="home-ref-astro-langs">
@@ -637,12 +761,12 @@ export default function DirectoryPage() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="dir-pager-container flex items-center justify-center gap-2 mt-8">
+              <div className="dir-pager-container flex items-center justify-center gap-2 mt-6">
                 <button
                   type="button"
                   disabled={currentPage === 1}
                   onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                  className="px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold disabled:opacity-40 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold disabled:opacity-40 cursor-pointer"
                 >
                   ‹ Prev
                 </button>
@@ -651,10 +775,10 @@ export default function DirectoryPage() {
                     key={num}
                     type="button"
                     onClick={() => setCurrentPage(num)}
-                    className={`w-8 h-8 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
+                    className={`w-8 h-8 rounded-xl text-xs font-bold cursor-pointer border ${
                       currentPage === num
-                        ? 'bg-[#3E0B18] text-white border-[#3E0B18]'
-                        : 'bg-white text-slate-700 border-slate-200 hover:border-[#4a1b9a]'
+                        ? 'bg-[#3E0B18] text-[#F8D882] border-[#3E0B18]'
+                        : 'bg-white text-slate-700 border-slate-200 hover:border-[#3E0B18]'
                     }`}
                   >
                     {num}
@@ -664,7 +788,7 @@ export default function DirectoryPage() {
                   type="button"
                   disabled={currentPage === totalPages}
                   onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                  className="px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold disabled:opacity-40 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-xs font-bold disabled:opacity-40 cursor-pointer"
                 >
                   Next ›
                 </button>
@@ -672,107 +796,46 @@ export default function DirectoryPage() {
             )}
           </div>
 
-          {/* Right Column: Sticky Sidebar */}
-          <aside className="dir-sidebar-col">
-            {/* Card 1: Om Guidance Card */}
-            <div className="dir-sidebar-guidance-card">
-              <div className="dir-guidance-mandala-ornament">
-                <div className="dir-om-badge">
-                  <span className="dir-om-symbol">ॐ</span>
-                </div>
-              </div>
-              <h3 className="dir-guidance-heading">
-                Get Personalised<br />Astrology Guidance
-              </h3>
-              <p className="dir-guidance-desc">
-                Talk to verified astrologers and find solutions to your life's deepest questions.
+          {/* Right Column: Sticky Sidebar Widgets (Hidden on small mobile) */}
+          <aside className="dir-sidebar-col hidden lg:block">
+            {/* Widget 1: Live Consultation Guarantee */}
+            <div className="dir-guarantee-card">
+              <div className="dir-guarantee-icon">🛡️</div>
+              <h3 className="dir-guarantee-title">100% Satisfaction Guarantee</h3>
+              <p className="dir-guarantee-desc">
+                If you are not satisfied with your consultation, receive a 100% refund into your wallet, no questions asked.
               </p>
-              <button
-                type="button"
-                className="dir-guidance-cta-btn cursor-pointer"
-                onClick={() => setIsHelpModalOpen(true)}
-              >
-                <span>Start a Consultation</span>
-                <span className="dir-arrow">→</span>
-              </button>
+              <ul className="dir-guarantee-list">
+                <li><span>✓</span> Verified Vedic Astrologers</li>
+                <li><span>✓</span> 100% Private &amp; Confidential</li>
+                <li><span>✓</span> Instant Live Chat or Audio Call</li>
+              </ul>
             </div>
 
-            {/* Card 2: Most Consulted Astrologers Ranking */}
-            <div className="dir-sidebar-ranking-card">
-              <div className="dir-ranking-header">
-                <div className="dir-ranking-title-wrap">
-                  <span className="dir-ranking-star">⭐</span>
-                  <h3 className="dir-ranking-title">Most Consulted Astrologers</h3>
-                </div>
-                <a
-                  href="#directory-page-cards-grid"
-                  className="dir-view-all-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveSubtab('most-consulted');
-                  }}
-                >
-                  View All →
-                </a>
-              </div>
-              <div className="dir-ranking-list" id="dir-ranking-list">
-                {astrologers.slice(0, 5).map((exp, rankIdx) => (
-                  <Link
-                    key={exp.id}
-                    to={`/astrologers/${exp.slug || exp.id}`}
-                    className="dir-expert-row no-underline"
-                  >
-                    <span className="dir-rank-num">{rankIdx + 1}</span>
-                    <img
-                      src={exp.avatar || '/assets/portraits/default-avatar.svg'}
-                      alt={exp.name}
-                      className="dir-rank-img"
-                      onError={(e) => {
-                        e.target.src = '/assets/portraits/default-avatar.svg';
-                      }}
-                    />
-                    <div className="dir-rank-info">
-                      <strong>{exp.name}</strong>
-                      <div className="dir-rank-meta">★ {exp.rating || '4.9'} • {exp.review_count || '2.1k'}</div>
-                      <span className="dir-rank-status dir-status-online">● Online</span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Card 3: First Consultation at ₹1 Offer */}
-            <div className="dir-sidebar-offer-card">
-              <div className="dir-offer-top">
-                <span className="dir-offer-gift">🎁</span>
-                <h4 className="dir-offer-heading">First Consultation<br />at Just ₹0</h4>
-              </div>
+            {/* Widget 2: First Chat Free Offer */}
+            <div className="dir-offer-card">
+              <div className="dir-offer-badge">SPECIAL OFFER</div>
+              <h4 className="dir-offer-title">First 5 Minutes at ₹0</h4>
               <p className="dir-offer-desc">
-                Talk to verified astrologers at an exclusive introductory price with code <b>FIRSTFREE</b>.
+                Experience authentic guidance from India's leading Vedic scholars with zero risk today.
               </p>
-              <button
-                type="button"
-                className="dir-offer-cta-btn cursor-pointer"
-                onClick={() => {
-                  if (window.App && typeof window.App.openWalletModal === 'function') {
-                    window.App.openWalletModal();
-                  } else {
-                    navigate('/wallet');
-                  }
-                }}
-              >
-                Claim Offer →
-              </button>
+              <Link to="/wallet" className="dir-offer-cta-btn no-underline">
+                Recharge Wallet →
+              </Link>
             </div>
           </aside>
         </div>
       </section>
 
-      {/* Help Me Choose Questionnaire Modal */}
+      {/* Help Me Choose Interactive Modal */}
       <HelpMeChooseModal
         isOpen={isHelpModalOpen}
         onClose={() => setIsHelpModalOpen(false)}
         astrologers={astrologers}
+        onSelectAstrologer={(slug) => {
+          setIsHelpModalOpen(false);
+          handleStartConsultation(slug);
+        }}
       />
     </div>
   );
