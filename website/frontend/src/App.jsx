@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
+import DirectoryPage from './pages/DirectoryPage/DirectoryPage.jsx';
+import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 
 export default function App() {
   return (
@@ -9,8 +11,8 @@ export default function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/astrologers" element={<AstrologersView />} />
-          <Route path="/astrologers/:slug" element={<AstrologersView />} />
+          <Route path="/astrologers" element={<DirectoryPage />} />
+          <Route path="/astrologers/:slug" element={<ProfilePage />} />
           <Route path="/mandir-seva" element={<MandirSevaView />} />
           <Route path="/mandir-seva/puja" element={<MandirSevaView section="puja" />} />
           <Route path="/mandir-seva/chadhava" element={<MandirSevaView section="chadhava" />} />

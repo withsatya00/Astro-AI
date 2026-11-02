@@ -13,9 +13,9 @@ export default function Layout({ children }) {
   }, []);
 
   return (
-    <div id="app-root" className="site-layout-shell min-h-screen flex flex-col bg-[#FFFDF7]">
+    <div id="app-root" className="site-layout-shell min-h-screen flex flex-col bg-[#FFFDF7] w-full max-w-full overflow-x-hidden">
       <Navbar />
-      <main className="site-layout-outlet flex-1" id="site-layout-outlet">
+      <main className="site-layout-outlet flex-1 w-full min-w-0 max-w-full" id="site-layout-outlet">
         {children}
       </main>
       <GlobalFooter />
