@@ -25,13 +25,13 @@
 }
 .service-banner::before,.service-banner .gs-hero-art::after { display:none; }
 .service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:58%; max-width:680px; padding:0; min-width:0; }
-.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#3e0b1880; font-size:.55rem; line-height:1.5; backdrop-filter:blur(6px); }
+.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#3e0b1880; font-size: 11.5px; line-height:1.5; backdrop-filter:blur(6px); }
 .service-banner .gs-illustration { position:relative; width:100%; height:100%; margin:0; }
 .service-banner .directory-eyebrow,
 .service-banner .mandir-hero__eyebrow,
-.service-banner .gs-eyebrow { color:#efd4a0 !important; font-size:.62rem; font-weight:700; letter-spacing:.15em; line-height:1.6; margin:0 0 14px; text-transform:uppercase; }
+.service-banner .gs-eyebrow { color:#efd4a0 !important; font-size: 11.5px; font-weight:700; letter-spacing:.15em; line-height:1.6; margin:0 0 14px; text-transform:uppercase; }
 .gs-page .service-banner .gs-eyebrow { margin-bottom:10px; }
-.service-banner .gs-hero-name { font-size:.62rem; letter-spacing:.17em; margin-bottom:8px; }
+.service-banner .gs-hero-name { font-size: 11.5px; letter-spacing:.17em; margin-bottom:8px; }
 .service-banner h1,
 .directory-masthead .service-banner h1,
 .shop-page .service-banner h1,
@@ -43,9 +43,9 @@
 .service-banner h1 em { font-style:normal !important; color:#efd4a0 !important; -webkit-text-fill-color:#efd4a0 !important; }
 .service-banner .directory-title-row { gap:10px; margin-bottom:12px; }
 .service-banner .directory-title-row h1 { margin-bottom:0; }
-.service-banner .directory-badge { font-size:.6rem; min-height:25px; padding:4px 9px; }
+.service-banner .directory-badge { font-size: 11.5px; min-height:25px; padding:4px 9px; }
 .service-banner .mandir-hero__titlerow { gap:8px; margin-bottom:12px; }
-.service-banner .shop-hero__badge,.service-banner .mandir-hero__count { font-size:.6rem; min-height:24px; padding:4px 9px; }
+.service-banner .shop-hero__badge,.service-banner .mandir-hero__count { font-size: 11.5px; min-height:24px; padding:4px 9px; }
 .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
 .directory-masthead .service-banner .directory-subtitle,
 .shop-page .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
@@ -59,7 +59,7 @@
 .service-banner .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
 .service-banner .shop-btn--gold:hover { background:#ffe4a9; border-color:#ffe4a9; }
 .service-banner .shop-btn--ghost { color:#f7eedf; background:#ffffff0d; border-color:#ffffff35; }
-.gs-page .service-banner .gs-hero-caption { color:#dacbe3; margin-top:14px; font-size:.6rem; line-height:1.6; }
+.gs-page .service-banner .gs-hero-caption { color:#dacbe3; margin-top:14px; font-size: 11.5px; line-height:1.6; }
 .directory-masthead .service-benefits,
 .shop-page .service-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:14px 0 22px; padding:4px 0; border:1px solid var(--exp-line); border-radius:14px; background:var(--exp-card); box-shadow:0 8px 20px -20px #3e0b1870; }
 .directory-masthead .service-benefits > div,
@@ -74,7 +74,7 @@
 .gs-page { padding-top:24px; }
 .gs-content-grid { margin-top:32px; gap:34px; }
 .gs-page h2 { font-size:clamp(1.5rem,2vw,1.8rem); font-weight:600; }
-.gs-section-kicker { font-size:.6rem; letter-spacing:.16em; }
+.gs-section-kicker { font-size: 11.5px; letter-spacing:.16em; }
 .gs-purpose { border-radius:15px; padding:24px; box-shadow:0 6px 22px -22px #650f2360; }
 .gs-purpose.is-on { border-color:#b79ac6; background:linear-gradient(115deg,#f7f1fa,#fffdf8); box-shadow:inset 3px 0 var(--brand-primary),0 10px 24px -24px #650f23; }
 .gs-purpose-number { color:var(--exp-gold); }
@@ -85,7 +85,7 @@
 .gs-donation-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; padding:16px 0; border-top:1px solid var(--gs-line); border-bottom:1px solid var(--gs-line); }
 .gs-donation-summary > div { display:grid; gap:6px; }
 .gs-donation-summary > div:last-child { text-align:right; }
-.gs-donation-summary span { font-size:.65rem; color:var(--gs-muted); }
+.gs-donation-summary span { font-size: 11.5px; color:var(--gs-muted); }
 .gs-donation-summary strong { color:var(--gs-brown); font-size:.82rem; }
 .gs-journey { border:1px solid var(--gs-line); border-radius:16px; padding:24px; background:var(--exp-card); }
 .gs-page .gs-journey h2 { font-size:1.4rem; }
@@ -106,7 +106,7 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .service-banner .service-banner__art,.service-banner .gs-hero-art { position:relative !important; inset:auto !important; z-index:1 !important; order:-1 !important; width:100% !important; height:105px !important; flex:none !important; min-height:0 !important; max-height:none !important; overflow:hidden !important; }
  .service-banner .service-banner__art img,.service-banner .gs-hero-art img { width:100% !important; height:100% !important; object-fit:cover !important; object-position:75% 42% !important; display:block !important; }
  .service-banner::after { content:'' !important; position:absolute !important; top:0 !important; left:0 !important; right:0 !important; height:105px !important; background:linear-gradient(0deg,#3e0b18 0%,rgba(62,11,24,0) 65%) !important; pointer-events:none !important; z-index:2 !important; display:block !important; }
- .service-banner figcaption { position:absolute !important; top:6px !important; right:8px !important; bottom:auto !important; z-index:3 !important; padding:2px 6px !important; border:1px solid rgba(255,255,255,0.35) !important; border-radius:4px !important; color:#f7eedf !important; background:rgba(62,11,24,0.65) !important; font-size:.46rem !important; backdrop-filter:blur(4px) !important; }
+ .service-banner figcaption { position:absolute !important; top:6px !important; right:8px !important; bottom:auto !important; z-index:3 !important; padding:2px 6px !important; border:1px solid rgba(255,255,255,0.35) !important; border-radius:4px !important; color:#f7eedf !important; background:rgba(62,11,24,0.65) !important; font-size: 11.5px !important; backdrop-filter:blur(4px) !important; }
  .service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:100% !important; max-width:none !important; padding:6px 12px 8px !important; box-sizing:border-box !important; }
  .service-banner h1,
  .directory-masthead .service-banner h1,
@@ -120,20 +120,20 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .service-banner h1 em { color:#efd4a0 !important; font-style:normal !important; }
  .service-banner .directory-title-row,.service-banner .mandir-hero__titlerow { display:none !important; }
  .service-banner .gs-hero-name { display:none !important; }
- .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size:.52rem !important; margin:0 0 2px !important; letter-spacing:.12em !important; color:#efd4a0 !important; font-weight:700 !important; text-transform:uppercase !important; line-height:1.2 !important; }
+ .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size: 11.5px !important; margin:0 0 2px !important; letter-spacing:.12em !important; color:#efd4a0 !important; font-weight:700 !important; text-transform:uppercase !important; line-height:1.2 !important; }
  .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
  .directory-masthead .service-banner .directory-subtitle,
  .gs-page .service-banner .gs-hero-copy > p,
  .gs-reference-page .service-banner .service-banner__copy > p,
- .service-banner--gausewa .service-banner__copy > p { font-size:.7rem !important; line-height:1.3 !important; margin:0 0 6px !important; color:#e6dcea !important; display:-webkit-box !important; -webkit-line-clamp:2 !important; -webkit-box-orient:vertical !important; overflow:hidden !important; }
+ .service-banner--gausewa .service-banner__copy > p { font-size: 0.75rem !important; line-height:1.3 !important; margin:0 0 6px !important; color:#e6dcea !important; display:-webkit-box !important; -webkit-line-clamp:2 !important; -webkit-box-orient:vertical !important; overflow:hidden !important; }
  .service-banner .shop-hero__actions { display:flex !important; flex-direction:row !important; gap:8px !important; width:100% !important; margin:0 0 2px !important; }
- .service-banner .shop-hero__actions .shop-btn,.service-banner .shop-hero__actions a,.service-banner .shop-hero__actions button { display:flex !important; align-items:center !important; justify-content:center !important; flex:1 !important; width:auto !important; min-height:30px !important; padding:4px 8px !important; border-radius:9999px !important; font-size:.7rem !important; font-weight:700 !important; text-decoration:none !important; text-align:center !important; box-sizing:border-box !important; white-space:nowrap !important; }
+ .service-banner .shop-hero__actions .shop-btn,.service-banner .shop-hero__actions a,.service-banner .shop-hero__actions button { display:flex !important; align-items:center !important; justify-content:center !important; flex:1 !important; width:auto !important; min-height:36px !important; padding:6px 12px !important; border-radius:9999px !important; font-size:.78rem !important; font-weight:700 !important; text-decoration:none !important; text-align:center !important; box-sizing:border-box !important; white-space:nowrap !important; }
  .service-banner .shop-hero__actions .shop-btn--gold,.service-banner .shop-hero__actions a.shop-btn--gold { background:#f1cf8b !important; color:#3e0b18 !important; border:none !important; box-shadow:0 2px 8px rgba(0,0,0,0.2) !important; }
  .service-banner .shop-hero__actions .shop-btn--ghost,.service-banner .shop-hero__actions button.shop-btn--ghost,.service-banner .shop-hero__actions a.shop-btn--ghost,.service-banner .shop-hero__actions .shop-btn--white { background:rgba(255,255,255,0.08) !important; border:1px solid rgba(255,255,255,0.25) !important; color:#fffdf8 !important; }
  .service-banner > .service-benefits { position:relative !important; z-index:3 !important; width:auto !important; margin:2px 8px 6px !important; padding-top:4px !important; border-top:1px solid rgba(239,212,160,0.25) !important; display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:4px !important; }
  .service-banner > .service-benefits > div { display:flex !important; flex-direction:column !important; align-items:center !important; text-align:center !important; gap:3px !important; padding:1px 2px !important; border:0 !important; }
  .service-banner > .service-benefits > div > span { display:flex !important; align-items:center !important; justify-content:center !important; width:22px !important; height:22px !important; border:1px solid rgba(239,212,160,0.4) !important; border-radius:50% !important; background:rgba(239,212,160,0.12) !important; color:#efd4a0 !important; font-size:.65rem !important; margin:0 auto !important; }
- .service-banner > .service-benefits b { font-size:.56rem !important; color:#fffdf8 !important; font-weight:600 !important; text-align:center !important; line-height:1.1 !important; }
+ .service-banner > .service-benefits b { font-size: 11.5px !important; color:#fffdf8 !important; font-weight:600 !important; text-align:center !important; line-height:1.1 !important; }
  .service-banner > .service-benefits small { display:none !important; }
  .gs-content-grid { margin-top:26px; gap:28px; }
  .gs-purpose { padding:20px 17px; }
@@ -147,7 +147,7 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  box-shadow:0 16px 38px -30px #281a3c70;
 }
 .pv-hero::after { border-color:#efd4a033; box-shadow:0 0 0 32px #efd4a010,0 0 0 64px #efd4a008; }
-.exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { color:#efd4a0; font-size:.62rem; font-weight:700; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
+.exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { color:#efd4a0; font-size: 11.5px; font-weight:700; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
 .exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-family:var(--font-serif); font-size:clamp(1.65rem,2.65vw,2.25rem); font-weight:600; letter-spacing:-.035em; line-height:1.18; color:#fffdf8 !important; }
 .exp-dashboard-hero h1 em,.pf-hero h1 em,.pv-hero h1 em { font-style:normal; color:#efd4a0; -webkit-text-fill-color:#efd4a0; }
 .exp-dashboard-hero p,.pf-hero p,.pv-title { color:#e6dcea; font-size:.83rem; line-height:1.8; }
@@ -156,7 +156,7 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 @media(max-width:640px) {
  .exp-dashboard-hero,.pf-hero,.pv-hero { border-radius:17px; }
  .exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-size:clamp(1.35rem,5.9vw,1.65rem); }
- .exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { font-size:.54rem; letter-spacing:.11em; }
+ .exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { font-size: 11.5px; letter-spacing:.11em; }
 }
 /* Benefit points sit directly on the banner, under the buttons: no cards, just icon + text with a hairline above. */
 .service-banner:has(> .service-benefits) { flex-direction:column; align-items:stretch; justify-content:space-between; gap:20px; }
@@ -192,6 +192,6 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 }
 @media (max-width: 480px) {
   .site-nav-actions .pm-theme-toggle, .site-nav-actions .gs-trigger, .site-nav-actions .btn-mobile-menu, .site-nav-actions .nb-wrap > button { width: 32px !important; height: 32px !important; min-width: 0 !important; min-height: 0 !important; padding: 0 !important; }
-  .site-nav-actions .btn-nav-wallet { padding: 5px 8px !important; font-size: 11px !important; }
+  .site-nav-actions .btn-nav-wallet { padding: 5px 8px !important; font-size: 12px !important; }
   .site-nav-actions .btn-nav-wallet .wallet-icon { display: none; }
 }

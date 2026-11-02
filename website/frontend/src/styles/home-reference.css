@@ -118,7 +118,7 @@
   border: 1px solid rgba(217, 164, 65, 0.55);
   border-radius: 9999px;
   color: #F4D38A;
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -127,7 +127,7 @@
 
 @media (max-width: 640px) {
   .home-ref-eyebrow {
-    font-size: 8px;
+    font-size: 11.5px;
     padding: 2px 7px;
     gap: 4px;
     margin-bottom: 4px;
@@ -137,7 +137,7 @@
 
 .home-ref-eyebrow-diamond {
   color: var(--home-gold-primary);
-  font-size: 9px;
+  font-size: 11.5px;
 }
 
 /* Hero Title */
@@ -169,7 +169,7 @@
 
 @media (max-width: 640px) {
   .home-ref-hero-sub {
-    font-size: 10.5px;
+    font-size: 11.5px;
     line-height: 1.32;
     margin-bottom: 6px;
     display: -webkit-box;
@@ -296,7 +296,7 @@
 
 @media (max-width: 640px) {
   .home-ref-trending-label {
-    font-size: 10px;
+    font-size: 11.5px;
   }
 }
 
@@ -307,7 +307,7 @@
   background: rgba(30, 4, 9, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #FFFDF8;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
@@ -316,7 +316,7 @@
 
 @media (max-width: 640px) {
   .home-ref-trending-pill {
-    font-size: 9.5px;
+    font-size: 11.5px;
     padding: 2px 7px;
   }
 }
@@ -467,8 +467,7 @@
   .home-ref-stat-num {
     font-size: 14px;
   }
-  .home-ref-stat-lbl {
-    font-size: 10px;
+  .home-ref-stat-lbl { font-size: 11.5px !important;
   }
 }
 
@@ -500,8 +499,7 @@
     font-weight: 700 !important;
     line-height: 1.1 !important;
   }
-  .home-ref-stat-lbl {
-    font-size: 8px !important;
+  .home-ref-stat-lbl { font-size: 11.5px !important;
     line-height: 1.05 !important;
     white-space: nowrap !important;
   }
@@ -588,7 +586,7 @@
 }
 
 .home-ref-devotee-text span:first-child {
-  font-size: 10px;
+  font-size: 11.5px;
   color: #EBD8BA;
   text-transform: uppercase;
   font-weight: 600;
@@ -644,9 +642,7 @@
   margin-bottom: 26px;
 }
 
-.home-ref-section-eyebrow {
-  display: inline-block;
-  font-size: 11px;
+.home-ref-section-eyebrow { display: inline-block; font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -695,7 +691,7 @@
     left: 10px;
     width: 20px;
     height: 20px;
-    font-size: 10.5px;
+    font-size: 11.5px;
   }
   .home-ref-journey-icon {
     font-size: 22px;
@@ -706,7 +702,7 @@
     margin-bottom: 4px;
   }
   .home-ref-journey-desc {
-    font-size: 11px;
+    font-size: 11.5px;
     line-height: 1.35;
     margin-bottom: 8px;
     display: -webkit-box;
@@ -715,7 +711,7 @@
     overflow: hidden;
   }
   .home-ref-journey-link {
-    font-size: 11px;
+    font-size: 11.5px;
   }
 }
 
@@ -985,7 +981,7 @@
 }
 
 .home-ref-shortcut-sub {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--home-text-secondary);
   line-height: 1.35;
   margin: 0;
@@ -1161,7 +1157,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   padding: 1px 8px;
   border-radius: 9999px;
@@ -1252,7 +1248,7 @@
   border: 1px solid #EADBCA;
   border-radius: 9999px;
   padding: 2px 8px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
   color: var(--home-text-secondary);
 }
@@ -1273,7 +1269,7 @@
 }
 
 .home-ref-astro-rate small {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   color: var(--home-text-muted);
 }
@@ -1394,8 +1390,7 @@
   line-height: 1.25;
 }
 
-.home-ref-service-sub {
-  font-size: 11px;
+.home-ref-service-sub { font-size: 11.5px;
   color: var(--home-text-secondary);
   line-height: 1.35;
   margin: 0;
@@ -1446,7 +1441,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1464,6 +1459,15 @@
   font-weight: 700;
   color: var(--home-maroon-primary);
   text-decoration: none;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 12px !important;
+  border-radius: 6px !important;
+  box-sizing: border-box !important;
 }
 
 .home-ref-panchang-metrics {
@@ -1500,7 +1504,7 @@
 }
 
 .home-ref-panchang-box-lbl {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: var(--home-text-muted);
   text-transform: uppercase;
   font-weight: 700;
@@ -1779,7 +1783,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 900;
   flex-shrink: 0;
 }
@@ -1878,7 +1882,7 @@
 }
 
 .home-ref-testi-role {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--home-text-muted);
 }
 
@@ -1996,7 +2000,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--home-maroon-primary);
   flex-shrink: 0;
   transition: transform 0.2s ease;
@@ -2047,4 +2051,94 @@
   transform: translateY(-2px);
   border-color: var(--home-gold-primary);
   box-shadow: 0 10px 24px rgba(59, 6, 18, 0.08);
+}
+
+
+/* Mobile Home Page Responsive Enhancements (320px - 640px) */
+@media (max-width: 640px) {
+  .home-ref-hero-banner {
+    margin: 8px 8px 0 !important;
+    border-radius: 16px !important;
+  }
+  .home-ref-hero-sub {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+  .home-ref-search-bar {
+    min-height: 48px !important;
+    padding: 4px 6px 4px 14px !important;
+    box-sizing: border-box !important;
+  }
+  .home-ref-search-input {
+    min-height: 38px !important;
+    font-size: 13px !important;
+    padding: 6px 4px !important;
+  }
+  .home-ref-search-circle-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    font-size: 14px !important;
+  }
+  .home-ref-trending-row {
+    display: flex !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 4px !important;
+    margin-bottom: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .home-ref-trending-row::-webkit-scrollbar {
+    display: none !important;
+  }
+  .home-ref-trending-label {
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .home-ref-trending-pill {
+    font-size: 11.5px !important;
+    padding: 6px 12px !important;
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .home-ref-btn-primary,
+  .home-ref-btn-secondary {
+    min-height: 42px !important;
+    font-size: 12.5px !important;
+    padding: 10px 16px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .home-page-container {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* TABLET HOME REFINEMENTS */
+@media (max-width: 768px) {
+  .home-ref-search-circle-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+  .home-ref-trending-pill {
+    min-height: 34px !important;
+    font-size: 11.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+  }
+  .home-ref-stat-lbl {
+    font-size: 11.5px !important;
+  }
 }

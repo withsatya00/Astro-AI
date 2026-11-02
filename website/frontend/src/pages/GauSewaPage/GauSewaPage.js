@@ -392,7 +392,7 @@ export class GauSewaPageComponent {
 
               <!-- Payment Option (Astro Wallet Live Integration) -->
               <div class="gs-ref-payment-selector" style="margin: 12px 0 16px; padding: 12px 14px; background: #FFFDF9; border: 1px solid #E5D9C7; border-radius: 12px;">
-                <label style="display:block; font-size:11px; font-weight:700; color:#450817; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em;">
+                <label style="display:block; font-size:11.5px; font-weight:700; color:#450817; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em;">
                   💳 ${hi ? 'भुगतान का माध्यम (Payment Method)' : 'Payment Method'}
                 </label>
                 <label style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 12px; border-radius:8px; background:rgba(217,164,65,0.08); border:1px solid #D9A441; cursor:pointer; font-size:12.5px; font-weight:600; color:#1E1B4B;">
@@ -400,13 +400,13 @@ export class GauSewaPageComponent {
                     <input type="radio" name="gs_payment_method" value="wallet" checked style="accent-color:#450817;" />
                     <span>💰 ${hi ? 'एस्ट्रो वॉलेट (Astro Wallet)' : 'Astro Jyotish Wallet'}</span>
                   </div>
-                  <span style="font-size:11px; padding:2px 8px; border-radius:20px; background:#450817; color:#F6E0A8; font-weight:700;" id="gs-wallet-pill">
+                  <span style="font-size:11.5px; padding:2px 8px; border-radius:20px; background:#450817; color:#F6E0A8; font-weight:700;" id="gs-wallet-pill">
                     ${window.App && window.App.walletBalance !== undefined ? '₹' + Number(window.App.walletBalance).toFixed(2) : 'Astro Wallet'}
                   </span>
                 </label>
-                <div style="margin-top:6px; font-size:11px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="margin-top:6px; font-size:11.5px; display:flex; justify-content:space-between; align-items:center;">
                   <span style="color:#726268;">${hi ? 'सुरक्षित वॉलेट से तुरंत दान राशि कटेगी' : 'Instant deduction from your funded wallet'}</span>
-                  <button type="button" onclick="window.App && window.App.openWalletModal ? window.App.openWalletModal() : (window.Router && window.Router.navigate('/dashboard'))" style="background:none; border:none; color:#B45309; font-weight:700; text-decoration:underline; cursor:pointer; font-size:11px; padding:0;">
+                  <button type="button" onclick="window.App && window.App.openWalletModal ? window.App.openWalletModal() : (window.Router && window.Router.navigate('/dashboard'))" style="background:none; border:none; color:#B45309; font-weight:700; text-decoration:underline; cursor:pointer; font-size:11.5px; padding:0;">
                     ${hi ? '+ वॉलेट रिचार्ज' : '+ Recharge Wallet'}
                   </button>
                 </div>
@@ -436,11 +436,11 @@ export class GauSewaPageComponent {
               <!-- Summary Row -->
               <div class="gs-ref-summary-row">
                 <div>
-                  <small style="color:#726268; display:block; font-size:11px;">${hi ? 'चयनित सेवा' : 'Selected Seva'}</small>
+                  <small style="color:#726268; display:block; font-size:11.5px;">${hi ? 'चयनित सेवा' : 'Selected Seva'}</small>
                   <strong>${esc(selectedSevaTitle)}</strong>
                 </div>
                 <div style="text-align:right;">
-                  <small style="color:#726268; display:block; font-size:11px;">${hi ? 'दान राशि' : 'Amount'}</small>
+                  <small style="color:#726268; display:block; font-size:11.5px;">${hi ? 'दान राशि' : 'Amount'}</small>
                   <span class="gs-ref-summary-amount">₹${amount.toLocaleString('en-IN')}</span>
                 </div>
               </div>
@@ -649,7 +649,7 @@ export class GauSewaPageComponent {
       <div class="gs-reference-page" style="max-width: 680px; margin: 40px auto;">
         <div style="background: #FFFFFF; border: 2px solid #D9A441; border-radius: 20px; padding: 36px 32px; box-shadow: 0 10px 30px rgba(62,11,24,0.08); text-align: center;">
           <div style="width: 64px; height: 64px; border-radius: 50%; background: #DEF7EC; color: #03543F; font-size: 32px; display: grid; place-items: center; margin: 0 auto 16px;">✓</div>
-          <span style="color: #92400E; font-size: 11px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">
+          <span style="color: #92400E; font-size:11.5px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">
             ${hi ? 'पुण्य पावती • अधिकृत रसीद' : 'OFFICIAL DONATION RECEIPT'}
           </span>
           <h2 style="font-family: 'Cinzel', Georgia, serif; font-size: 26px; font-weight: 700; color: #2D0810; margin: 8px 0 16px;">

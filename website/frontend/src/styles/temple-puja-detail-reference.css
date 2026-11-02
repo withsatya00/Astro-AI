@@ -29,6 +29,10 @@
 .pd-breadcrumb a {
   color: #8C787E;
   text-decoration: none;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 0;
   transition: color 0.15s ease;
 }
 .tp-breadcrumb a:hover,
@@ -100,7 +104,7 @@
   backdrop-filter: blur(8px);
   padding: 5px 12px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.03em;
   display: inline-flex;
@@ -233,7 +237,7 @@
   color: #8C5806;
   border-radius: 999px;
   padding: 5px 12px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
   display: inline-flex;
@@ -246,7 +250,7 @@
 }
 .pd-eyebrow-text {
   color: #B45309;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -417,7 +421,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 11.5px;
   color: #726268;
 }
 
@@ -430,7 +434,7 @@
 }
 .section-ornament-eyebrow {
   color: #B45309;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -617,8 +621,7 @@
   flex-direction: column;
   line-height: 1.25;
 }
-.tp-glance-label {
-  font-size: 10.5px;
+.tp-glance-label { font-size: 11.5px;
   color: #8C787E;
   margin-bottom: 3px;
   font-weight: 600;
@@ -854,7 +857,7 @@
   background: #FEF3C7;
   border: 1px solid #F59E0B;
   color: #92400E;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   display: grid;
   place-items: center;
@@ -1058,7 +1061,7 @@
   color: #FFFDF8;
   display: grid;
   place-items: center;
-  font-size: 11px;
+  font-size: 11.5px;
   flex-shrink: 0;
 }
 
@@ -1230,5 +1233,78 @@
   .tp-offering-img-wrap {
     width: 64px;
     height: 64px;
+  }
+}
+
+
+/* Mobile Temple Detail Overflow & Layout Fixes (320px - 768px) */
+@media (max-width: 768px) {
+  .ch-temple-detail-page,
+  .ch-puja-detail-page {
+    padding: 10px 10px calc(6rem + env(safe-area-inset-bottom, 0px)) 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .tp-two-col-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .tp-left-col,
+  .tp-right-col {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .tp-panel-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 16px 12px !important;
+    border-radius: 14px !important;
+  }
+  .tp-about-body {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .tp-about-art {
+    display: none !important;
+  }
+  .tp-livedarshan-strip {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 14px 12px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .tp-glance-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .tp-gallery-arrow {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    font-size: 18px !important;
+  }
+  .tp-thumbs-row {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 6px !important;
+  }
+  .tp-breadcrumb a,
+  .pd-breadcrumb a {
+    min-height: 34px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 }

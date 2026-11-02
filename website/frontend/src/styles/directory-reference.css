@@ -96,7 +96,7 @@
 }
 
 .dir-dev-muted {
-  font-size: 10px;
+  font-size: 11.5px;
   color: #CBD5E1;
 }
 
@@ -117,7 +117,7 @@
 .dir-eyebrow-gold {
   color: #E5C158;
   font-family: var(--font-serif, Georgia, serif);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -276,7 +276,7 @@
 
 .dir-help-text small {
   display: block;
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #B45309;
   font-weight: 600;
 }
@@ -369,7 +369,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-serif, Georgia, serif);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.18em;
   color: #B45309;
@@ -408,7 +408,7 @@
 
 .dir-seal-text span {
   display: block;
-  font-size: 9.5px;
+  font-size: 11.5px;
   color: #854D0E;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -532,7 +532,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 9999px;
@@ -608,18 +608,13 @@
   color: #F59E0B;
 }
 
-.ac-ref-revcount {
-  font-weight: 400;
-  color: #64748B;
-  font-size: 10.5px;
+.ac-ref-revcount { font-size: 11.5px;
 }
 
-.ac-ref-exp {
-  font-size: 11px;
+.ac-ref-exp { font-size: 11.5px;
 }
 
-.ac-ref-specialties {
-  font-size: 11px;
+.ac-ref-specialties { font-size: 11.5px;
   color: #475569;
   line-height: 1.45;
   margin: 0;
@@ -636,8 +631,7 @@
   flex-wrap: wrap;
 }
 
-.ac-ref-lang-pill {
-  font-size: 10px;
+.ac-ref-lang-pill { font-size: 11.5px;
   padding: 3px 8px;
   border-radius: 6px;
   background: #FAF6ED;
@@ -660,8 +654,7 @@
   color: #1E1B4B;
 }
 
-.ac-ref-rate small {
-  font-size: 10.5px;
+.ac-ref-rate small { font-size: 11.5px;
   color: #64748B;
 }
 
@@ -717,6 +710,7 @@
   margin-top: 28px;
 }
 
+.dir-pager-container button,
 .directory-pager button {
   min-width: 36px;
   height: 36px;
@@ -729,19 +723,25 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.dir-pager-container button:hover:not(:disabled),
 .directory-pager button:hover:not(:disabled) {
   border-color: #4A0E17;
   color: #4A0E17;
 }
 
+.dir-pager-container button.is-active,
 .directory-pager button.is-active {
   background: #4A0E17;
   border-color: #4A0E17;
   color: #FFFFFF;
 }
 
+.dir-pager-container button:disabled,
 .directory-pager button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
@@ -811,7 +811,7 @@
 }
 
 .dir-guidance-desc {
-  font-size: 11px;
+  font-size: 11.5px;
   color: #F1E5D8;
   line-height: 1.5;
   margin: 0 0 18px;
@@ -877,10 +877,16 @@
 }
 
 .dir-view-all-link {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #4A0E17;
   text-decoration: none;
+  min-height: 34px;
+  min-width: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
 }
 
 .dir-view-all-link:hover {
@@ -913,7 +919,7 @@
   border-radius: 50%;
   background: #FEF3C7;
   color: #92400E;
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   display: grid;
   place-items: center;
@@ -945,12 +951,12 @@
 }
 
 .dir-rank-meta {
-  font-size: 10px;
+  font-size: 11.5px;
   color: #64748B;
 }
 
 .dir-rank-status {
-  font-size: 9.5px;
+  font-size: 11.5px;
   font-weight: 700;
 }
 
@@ -993,7 +999,7 @@
 }
 
 .dir-offer-desc {
-  font-size: 11px;
+  font-size: 11.5px;
   color: #64748B;
   line-height: 1.45;
   margin: 0 0 14px;
@@ -1077,8 +1083,7 @@
   .ac-ref-name {
     font-size: 13.5px;
   }
-  .ac-ref-specialties {
-    font-size: 11px;
+  .ac-ref-specialties { font-size: 11.5px;
     margin: 2px 0;
   }
   .ac-ref-footer {
@@ -1089,7 +1094,7 @@
   }
   .ac-ref-chat-btn, .ac-ref-call-btn {
     padding: 6px 12px;
-    font-size: 11px;
+    font-size: 11.5px;
   }
   .dir-dropdowns-row {
     grid-template-columns: 1fr;
@@ -1098,4 +1103,119 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+
+/* Mobile Astrologers Directory Enhancements (320px - 768px) */
+@media (max-width: 768px) {
+  #view-directory {
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .dir-search-container {
+    padding: 14px 12px !important;
+    border-radius: 16px !important;
+    gap: 12px !important;
+  }
+  .dir-search-top-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .dir-search-input-box {
+    min-height: 44px !important;
+    padding: 4px 6px 4px 14px !important;
+    box-sizing: border-box !important;
+  }
+  .dir-search-input-box input {
+    min-height: 38px !important;
+    font-size: 13.5px !important;
+  }
+  .dir-search-submit-btn {
+    height: 42px !important;
+    min-height: 42px !important;
+    font-size: 13.5px !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .dir-help-choose-btn {
+    min-height: 44px !important;
+    padding: 10px 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .dir-dropdowns-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .dir-select {
+    height: 44px !important;
+    font-size: 13px !important;
+    padding: 0 12px !important;
+  }
+  .dir-categories-row {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 6px !important;
+  }
+  .dir-categories-row::-webkit-scrollbar {
+    display: none !important;
+  }
+  .dir-cat-pill {
+    min-height: 36px !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .ac-ref-heart {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .ac-ref-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  .ac-ref-btn-call {
+    min-width: 38px !important;
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .ac-ref-chat-btn {
+    min-height: 40px !important;
+    padding: 8px 14px !important;
+    font-size: 12.5px !important;
+    flex: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .dir-pager-container button {
+    min-width: 38px !important;
+    min-height: 38px !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .shop-hero__actions .shop-btn {
+    min-height: 38px !important;
+    padding: 8px 14px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* DIRECTORY CARD MIN READABLE */
+.ac-ref-card :is(.ac-ref-revcount, .ac-ref-exp, .ac-ref-specialties, .ac-ref-lang-pill, .ac-ref-rate small, span, b) {
+  font-size: 11.5px !important;
 }

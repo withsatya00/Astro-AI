@@ -51,7 +51,7 @@
 
 .calc-ref-hero-eyebrow {
   color: #D9A441;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -97,7 +97,7 @@
 }
 
 .calc-ref-badge-item small {
-  font-size: 10.5px;
+  font-size: 11.5px;
   color: #E6D2B5;
 }
 
@@ -289,7 +289,7 @@
 }
 
 .calc-ref-why-col p {
-  font-size: 11px;
+  font-size: 11.5px;
   color: #726268;
   margin: 0;
   line-height: 1.4;
@@ -327,7 +327,7 @@
     font-size: 13.5px;
   }
   .calc-ref-card-desc {
-    font-size: 11px;
+    font-size: 11.5px;
     line-height: 1.35;
   }
   .calc-ref-why-box {
@@ -362,7 +362,7 @@
     margin-bottom: 4px !important;
   }
   .calc-ref-card-desc {
-    font-size: 9.5px !important;
+    font-size: 12px !important;
     line-height: 1.3 !important;
     margin-bottom: 8px !important;
     display: -webkit-box !important;
@@ -371,7 +371,7 @@
     overflow: hidden !important;
   }
   .calc-ref-card-btn {
-    font-size: 9.5px !important;
+    font-size: 12px !important;
     padding: 4px 6px !important;
   }
 }
