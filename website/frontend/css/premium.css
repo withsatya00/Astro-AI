@@ -301,7 +301,6 @@ button:not(#hero-section button):not(:disabled):active,
   body.pm-has-tabbar .site-layout-outlet { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)) !important; }
   .toast-container { bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
 }
-}
 
 /* ---- Pull to refresh ----------------------------------------------------- */
 .pm-ptr {

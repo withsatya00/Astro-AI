@@ -4,6 +4,9 @@
   "description": "Astro Jyotish - Vedic Astrology & AI Consultation Platform",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build:react": "vite build",
+    "preview": "vite preview",
     "build:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --minify && npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./ai/frontend/css/tailwind.css --minify && node scripts/normalize_brand_css.cjs",
     "watch:css": "npx tailwindcss -i ./website/frontend/src/styles/tailwind-input.css -o ./website/frontend/css/tailwind.css --watch",
     "serve:frontend": "node scripts/serve_frontend.js",
@@ -28,10 +31,17 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
+    "@vitejs/plugin-react": "^6.2.1",
     "autoprefixer": "^10.4.27",
     "linkedom": "^0.18.14",
     "postcss": "^8.5.8",
     "sharp": "^0.35.5",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.5"
   }
 }
