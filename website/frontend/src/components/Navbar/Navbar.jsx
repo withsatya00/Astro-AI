@@ -24,13 +24,24 @@ export default function Navbar() {
       }
     } catch (e) {}
 
-    // Check user & wallet from legacy app state if present
-    if (window.App) {
-      if (window.App.currentUser) setCurrentUser(window.App.currentUser);
-      if (window.App.walletBalance !== undefined) {
-        setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
-      }
+    // Check user & wallet from state / localStorage
+    const savedBal = localStorage.getItem('astro_wallet_balance');
+    if (savedBal !== null) {
+      setWalletBalance(`₹${Number(savedBal).toFixed(2)}`);
+    } else if (window.App && window.App.walletBalance !== undefined) {
+      setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
     }
+    if (window.App && window.App.currentUser) {
+      setCurrentUser(window.App.currentUser);
+    }
+
+    // Wallet balance live event listener
+    const handleWalletUpdated = (e) => {
+      if (e.detail?.balance !== undefined) {
+        setWalletBalance(`₹${Number(e.detail.balance).toFixed(2)}`);
+      }
+    };
+    window.addEventListener('astro:wallet-updated', handleWalletUpdated);
 
     // Language change listener
     const handleLangChange = (e) => {
@@ -50,6 +61,7 @@ export default function Navbar() {
     document.addEventListener('click', handleClickOutside);
 
     return () => {
+      window.removeEventListener('astro:wallet-updated', handleWalletUpdated);
       window.removeEventListener('astro:languagechange', handleLangChange);
       document.removeEventListener('click', handleClickOutside);
     };

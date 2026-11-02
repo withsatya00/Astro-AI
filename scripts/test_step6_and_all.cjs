@@ -65,3 +65,4 @@ const { chromium } = require("playwright");
   await browser.close();
   console.log("All routes and Step 6 features verified successfully!");
 })();
+
