@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<HomeView />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/astrologers" element={<AstrologersView />} />
           <Route path="/astrologers/:slug" element={<AstrologersView />} />
           <Route path="/mandir-seva" element={<MandirSevaView />} />
