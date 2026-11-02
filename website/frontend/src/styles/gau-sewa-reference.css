@@ -820,3 +820,34 @@
   background: #FAF5EB !important;
   border-color: #FAF5EB !important;
 }
+
+/* ==========================================================================
+   Resilient 2-Column Desktop Grid for Gau Sewa
+   ========================================================================== */
+.gs-content-2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .gs-content-2col {
+    grid-template-columns: 7fr 5fr !important;
+    gap: 32px !important;
+    align-items: start !important;
+  }
+}
+
+.gs-content-2col > .gs-col-left {
+  width: 100%;
+  min-width: 0;
+  grid-column: auto !important;
+}
+
+.gs-content-2col > .gs-col-right {
+  width: 100%;
+  min-width: 0;
+  grid-column: auto !important;
+}
+

@@ -121,9 +121,9 @@ export default function GauSewaPage() {
       </header>
 
       {/* 2. Main Content Grid (Two Columns on Desktop) */}
-      <div className="max-w-7xl mx-auto px-4 mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="gs-content-2col max-w-7xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Seva Purposes and Thoughtful Guide */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="gs-col-left lg:col-span-7 space-y-6">
           <div>
             <div className="text-xs font-bold uppercase tracking-widest text-[#B45309] mb-1">
               AN OFFERING FOR THE SELFLESS
@@ -199,7 +199,7 @@ export default function GauSewaPage() {
         </div>
 
         {/* Right Column: Donation Form */}
-        <div className="lg:col-span-5" id="gs-donation-form">
+        <div className="gs-col-right lg:col-span-5" id="gs-donation-form">
           <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E7E2D8] shadow-lg sticky top-24">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#B45309]">GAU SEVA DANA</span>

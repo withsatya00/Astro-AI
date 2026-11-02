@@ -8,8 +8,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'pt-rameshwar-dwivedi',
     name: 'Pt. Rameshwar Dwivedi',
     title: 'Senior Vedic Jyotish & Karmakand Scholar',
-    avatar: '/assets/portraits/pt-rameshwar-dwivedi.webp',
-    fallbackAvatar: '/assets/portraits/pt-rameshwar-dwivedi.jpg',
+    avatar: '/assets/portraits/pt-rameshwar-dwivedi.jpg',
+    fallbackAvatar: '/assets/portraits/pt-rameshwar-dwivedi.svg',
     rating: 4.9,
     review_count: 2140,
     experience_years: 25,
@@ -24,8 +24,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'acharya-kn-rao',
     name: 'Acharya K.N. Rao Ji',
     title: 'Kundli Expert & Shani Dasha Specialist',
-    avatar: '/assets/portraits/acharya-kn-rao.webp',
-    fallbackAvatar: '/assets/portraits/acharya-kn-rao.jpg',
+    avatar: '/assets/portraits/acharya-kn-rao.jpg',
+    fallbackAvatar: '/assets/portraits/acharya-kn-rao.svg',
     rating: 4.8,
     review_count: 1820,
     experience_years: 18,
@@ -40,8 +40,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'vidushi-sunita-sharma',
     name: 'Vidushi Sunita Sharma',
     title: 'Tarot Grandmaster & Vedic Relationship Guide',
-    avatar: '/assets/portraits/vidushi-sunita-sharma.webp',
-    fallbackAvatar: '/assets/portraits/vidushi-sunita-sharma.jpg',
+    avatar: '/assets/portraits/vidushi-sunita-sharma.jpg',
+    fallbackAvatar: '/assets/portraits/vidushi-sunita-sharma.svg',
     rating: 4.9,
     review_count: 1530,
     experience_years: 15,
@@ -56,8 +56,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'dr-arvind-mohan',
     name: 'Dr. Arvind Mohan',
     title: 'Medical Astrology & KP System Authority',
-    avatar: '/assets/portraits/dr-arvind-mohan.webp',
-    fallbackAvatar: '/assets/portraits/dr-arvind-mohan.jpg',
+    avatar: '/assets/portraits/dr-arvind-mohan.jpg',
+    fallbackAvatar: '/assets/portraits/dr-arvind-mohan.svg',
     rating: 4.8,
     review_count: 1250,
     experience_years: 20,
@@ -72,8 +72,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'acharya-vishwanath',
     name: 'Acharya Vishwanath',
     title: 'Prashna Kundli & Ratna Jyotish Expert',
-    avatar: '/assets/portraits/acharya-vishwanath.webp',
-    fallbackAvatar: '/assets/portraits/acharya-vishwanath.jpg',
+    avatar: '/assets/portraits/acharya-vishwanath.jpg',
+    fallbackAvatar: '/assets/portraits/acharya-vishwanath.svg',
     rating: 4.9,
     review_count: 2410,
     experience_years: 22,
@@ -88,8 +88,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'vidushi-tarot-aradhana',
     name: 'Vidushi Tarot Aradhana',
     title: 'Intuitive Tarot & Crystal Healing Counselor',
-    avatar: '/assets/portraits/vidushi-tarot-aradhana.webp',
-    fallbackAvatar: '/assets/portraits/vidushi-tarot-aradhana.jpg',
+    avatar: '/assets/portraits/vidushi-tarot-aradhana.jpg',
+    fallbackAvatar: '/assets/portraits/vidushi-tarot-aradhana.svg',
     rating: 4.7,
     review_count: 980,
     experience_years: 11,
@@ -104,8 +104,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'pt-harinarayan-mishra',
     name: 'Pt. Harinarayan Mishra',
     title: 'Horoscope Specialist & Kaal Sarp Niwaran',
-    avatar: '/assets/portraits/pt-harinarayan-mishra.webp',
-    fallbackAvatar: '/assets/portraits/pt-harinarayan-mishra.jpg',
+    avatar: '/assets/portraits/pt-harinarayan-mishra.jpg',
+    fallbackAvatar: '/assets/portraits/pt-harinarayan-mishra.svg',
     rating: 4.9,
     review_count: 2750,
     experience_years: 27,
@@ -120,8 +120,8 @@ const FALLBACK_ASTROLOGERS = [
     slug: 'dr-meenakshi-iyer',
     name: 'Dr. Meenakshi Iyer',
     title: 'South Indian Vedic Astrology & Prashna Expert',
-    avatar: '/assets/portraits/dr-meenakshi-iyer.webp',
-    fallbackAvatar: '/assets/portraits/dr-meenakshi-iyer.jpg',
+    avatar: '/assets/portraits/dr-meenakshi-iyer.jpg',
+    fallbackAvatar: '/assets/portraits/dr-meenakshi-iyer.svg',
     rating: 4.8,
     review_count: 1420,
     experience_years: 16,
@@ -132,12 +132,12 @@ const FALLBACK_ASTROLOGERS = [
     gender: 'female',
   },
   {
-    id: 'acharya-suresh-tripathi',
-    slug: 'acharya-suresh-tripathi',
-    name: 'Acharya Suresh Tripathi',
+    id: 'acharya-raghavendra',
+    slug: 'acharya-raghavendra',
+    name: 'Acharya Raghavendra Shastri',
     title: 'Mahurat & Vivah Kundli Specialist',
-    avatar: '/assets/portraits/acharya-suresh-tripathi.webp',
-    fallbackAvatar: '/assets/portraits/acharya-suresh-tripathi.jpg',
+    avatar: '/assets/portraits/acharya-raghavendra.jpg',
+    fallbackAvatar: '/assets/portraits/acharya-raghavendra.svg',
     rating: 4.8,
     review_count: 1180,
     experience_years: 19,
@@ -148,12 +148,12 @@ const FALLBACK_ASTROLOGERS = [
     gender: 'male',
   },
   {
-    id: 'vidushi-maya-pandey',
-    slug: 'vidushi-maya-pandey',
-    name: 'Vidushi Maya Pandey',
+    id: 'vidushi-gayatri-bhatt',
+    slug: 'vidushi-gayatri-bhatt',
+    name: 'Vidushi Gayatri Bhatt',
     title: 'Lal Kitab & Vastu Shastra Consultant',
-    avatar: '/assets/portraits/vidushi-maya-pandey.webp',
-    fallbackAvatar: '/assets/portraits/vidushi-maya-pandey.jpg',
+    avatar: '/assets/portraits/vidushi-gayatri-bhatt.jpg',
+    fallbackAvatar: '/assets/portraits/vidushi-gayatri-bhatt.svg',
     rating: 4.9,
     review_count: 1640,
     experience_years: 14,
@@ -164,12 +164,12 @@ const FALLBACK_ASTROLOGERS = [
     gender: 'female',
   },
   {
-    id: 'pt-devendra-shukla',
-    slug: 'pt-devendra-shukla',
-    name: 'Pt. Devendra Shukla',
+    id: 'pt-devavrata',
+    slug: 'pt-devavrata',
+    name: 'Pt. Devavrata Shastri',
     title: 'Nadi Astrology & Past Life Karmic Healer',
-    avatar: '/assets/portraits/pt-devendra-shukla.webp',
-    fallbackAvatar: '/assets/portraits/pt-devendra-shukla.jpg',
+    avatar: '/assets/portraits/pt-devavrata.jpg',
+    fallbackAvatar: '/assets/portraits/pt-devavrata.svg',
     rating: 4.7,
     review_count: 890,
     experience_years: 13,
@@ -180,12 +180,12 @@ const FALLBACK_ASTROLOGERS = [
     gender: 'male',
   },
   {
-    id: 'acharya-omkarnath',
-    slug: 'acharya-omkarnath',
-    name: 'Acharya Omkarnath',
+    id: 'acharya-shastri',
+    slug: 'acharya-shastri',
+    name: 'Acharya Ram Shastri',
     title: 'Vedic Gemstone & Yantra Specialist',
-    avatar: '/assets/portraits/acharya-omkarnath.webp',
-    fallbackAvatar: '/assets/portraits/acharya-omkarnath.jpg',
+    avatar: '/assets/portraits/acharya-shastri.jpg',
+    fallbackAvatar: '/assets/portraits/acharya-shastri.svg',
     rating: 4.9,
     review_count: 1980,
     experience_years: 21,
@@ -225,13 +225,17 @@ export default function DirectoryPage() {
   }, [selectedSpecialty, selectedLanguage, selectedPrice, selectedGender, sortBy]);
 
   useEffect(() => {
-    fetch('/api/astrologers')
+    fetch('/api/v1/astrologers')
+      .then((res) => {
+        if (!res.ok) return fetch('/api/astrologers');
+        return res;
+      })
       .then((res) => {
         if (!res.ok) throw new Error('API request failed');
         return res.json();
       })
       .then((data) => {
-        const list = Array.isArray(data) ? data : data.astrologers;
+        const list = Array.isArray(data) ? data : (data.astrologers || data.items);
         if (Array.isArray(list) && list.length > 0) {
           setAstrologers(list);
         }
@@ -675,10 +679,11 @@ export default function DirectoryPage() {
                           loading="lazy"
                           decoding="async"
                           onError={(e) => {
-                            if (astro.fallbackAvatar && e.target.src !== astro.fallbackAvatar) {
-                              e.target.src = astro.fallbackAvatar;
+                            if (!e.currentTarget.dataset.fallbackApplied && astro.fallbackAvatar) {
+                              e.currentTarget.dataset.fallbackApplied = 'true';
+                              e.currentTarget.src = astro.fallbackAvatar;
                             } else {
-                              e.target.src = '/assets/portraits/default-avatar.svg';
+                              e.currentTarget.src = '/assets/portraits/default-avatar.svg';
                             }
                           }}
                         />
@@ -800,15 +805,20 @@ export default function DirectoryPage() {
           <aside className="dir-sidebar-col hidden lg:block">
             {/* Widget 1: Live Consultation Guarantee */}
             <div className="dir-guarantee-card">
-              <div className="dir-guarantee-icon">🛡️</div>
+              <div className="dir-guarantee-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D9A441" strokeWidth="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="M9 12l2 2 4-4" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
               <h3 className="dir-guarantee-title">100% Satisfaction Guarantee</h3>
               <p className="dir-guarantee-desc">
                 If you are not satisfied with your consultation, receive a 100% refund into your wallet, no questions asked.
               </p>
               <ul className="dir-guarantee-list">
-                <li><span>✓</span> Verified Vedic Astrologers</li>
-                <li><span>✓</span> 100% Private &amp; Confidential</li>
-                <li><span>✓</span> Instant Live Chat or Audio Call</li>
+                <li><span className="dir-guarantee-check">✓</span> Verified Vedic Astrologers</li>
+                <li><span className="dir-guarantee-check">✓</span> 100% Private &amp; Confidential</li>
+                <li><span className="dir-guarantee-check">✓</span> Instant Live Chat or Audio Call</li>
               </ul>
             </div>
 

@@ -45,8 +45,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 20px;
-  margin: 16px auto 0;
-  max-width: 1240px;
+  margin: 20px auto 0;
+  max-width: 1360px;
+  width: calc(100% - 32px);
   overflow: hidden;
   box-shadow: 0 16px 40px rgba(36, 4, 11, 0.28);
   border: 1px solid rgba(217, 164, 65, 0.45);
@@ -142,12 +143,12 @@
 
 /* Hero Title */
 .home-ref-hero-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
   font-size: clamp(2rem, 2.75vw, 2.65rem);
   font-weight: 700;
   color: #FFFDF8;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0 0 10px;
 }
 
@@ -1281,14 +1282,19 @@
 }
 
 .home-ref-astro-name {
-  font-family: 'Cinzel', Georgia, serif;
-  font-size: 15px;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+  font-size: 14.5px;
   font-weight: 700;
   color: #3B0612;
   margin: 0;
-  white-space: nowrap;
+  white-space: normal !important;
+  line-height: 1.25 !important;
+  word-break: break-word;
+  min-height: 2.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
   cursor: pointer;
 }
 

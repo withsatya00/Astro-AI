@@ -3,8 +3,24 @@
  * Multi-lingual Vedic typography supporting Latin, Sanskrit, and Indic scripts.
  */
 
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  src: url('/assets/fonts/NotoSansDevanagari-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans Devanagari';
+  src: url('/assets/fonts/NotoSansDevanagari-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-serif, 'Cinzel', 'Playfair Display', Georgia, serif);
   color: var(--color-navy-main, #34251f);
   line-height: 1.2;
   font-weight: 700;

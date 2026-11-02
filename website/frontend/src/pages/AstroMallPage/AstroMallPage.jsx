@@ -316,7 +316,7 @@ export default function AstroMallPage() {
 
       {/* 4. Product Grid (2 columns on mobile, 4 columns on desktop) */}
       <section className="max-w-7xl mx-auto px-4 mt-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+        <div className="ml-products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredProducts.map((p) => {
             const isWished = wishlist.includes(p.id);
             return (
@@ -326,7 +326,7 @@ export default function AstroMallPage() {
               >
                 <div>
                   {/* Image container */}
-                  <div className="relative aspect-square overflow-hidden bg-amber-50">
+                  <div className="relative aspect-square max-h-[260px] overflow-hidden bg-amber-50">
                     <Link to={`/mall/product/${p.id}`}>
                       <img
                         src={p.image}
