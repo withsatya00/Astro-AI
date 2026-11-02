@@ -12,3 +12,4 @@ if (rootEl) {
 } else {
   console.warn('React root element #root not found.');
 }
+

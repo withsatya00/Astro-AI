@@ -105,20 +105,19 @@
   background-color: #FAF8F2;
 }
 
-/* Responsive Navbar Breakpoints: full desktop (>=1366px) vs hamburger (<1366px).
-   The full desktop bar needs ~1360px, so 1280-1599px drops the ambience pill and tightens spacing. */
-/* The desktop bar (links + bell + wallet + auth) fits from 1366px up, so the hamburger covers everything below 1366px */
+/* Responsive Navbar Breakpoints: desktop (>=1024px) vs hamburger (<1024px) */
 .site-navbar .site-navbar-inner {
-  max-width: 1760px;
+  max-width: 1440px;
 }
 
-@media (min-width: 1366px) {
+@media (min-width: 1024px) {
   .site-nav-links {
     display: flex !important;
-    gap: 1rem;
+    gap: 0.85rem;
   }
   .site-nav-link {
     white-space: nowrap;
+    font-size: 0.88rem;
   }
   .global-lang-picker-wrapper {
     display: flex !important;
@@ -134,19 +133,19 @@
   }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1280px) {
   .site-nav-links {
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
-}
-
-@media (min-width: 1760px) {
+  .site-nav-link {
+    font-size: 0.92rem;
+  }
   .btn-nav-ambience {
     display: inline-flex !important;
   }
 }
 
-@media (max-width: 1365.98px) {
+@media (max-width: 1023.98px) {
   .site-nav-links {
     display: none !important;
   }

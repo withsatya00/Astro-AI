@@ -1,53 +1,219 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Layout from './layouts/Layout.jsx';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="react-app-wrapper" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        {/* React App Header / Shell */}
-        <header className="react-shell-header" style={{
-          backgroundColor: '#3E0B18',
-          color: '#FFF9EF',
-          padding: '12px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid rgba(217, 164, 65, 0.4)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '20px' }}>🕉</span>
-            <span style={{ fontFamily: 'Cinzel, Georgia, serif', fontWeight: 700, fontSize: '18px', color: '#F8D882' }}>
-              Astro Jyotish (React Engine)
-            </span>
-          </div>
-          <div style={{ display: 'flex', gap: '16px', fontSize: '13px' }}>
-            <span style={{ color: '#A7F3D0', fontWeight: 600 }}>● React 19 Active</span>
-            <span style={{ color: '#EBD8BA' }}>Vite Powered</span>
-          </div>
-        </header>
-
-        {/* Dynamic Route View */}
-        <main style={{ flex: 1 }}>
-          <Routes>
-            <Route path="*" element={<PlaceholderView />} />
-          </Routes>
-        </main>
-      </div>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/astrologers" element={<AstrologersView />} />
+          <Route path="/astrologers/:slug" element={<AstrologersView />} />
+          <Route path="/mandir-seva" element={<MandirSevaView />} />
+          <Route path="/mandir-seva/puja" element={<MandirSevaView section="puja" />} />
+          <Route path="/mandir-seva/chadhava" element={<MandirSevaView section="chadhava" />} />
+          <Route path="/gau-sewa" element={<GauSewaView />} />
+          <Route path="/astro-mall" element={<AstroMallView />} />
+          <Route path="/rashiphal" element={<RashiphalView />} />
+          <Route path="/panchang" element={<PanchangView />} />
+          <Route path="/calculators" element={<CalculatorsView />} />
+          <Route path="/calculators/:tool" element={<CalculatorsView />} />
+          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/wallet" element={<WalletView />} />
+          <Route path="*" element={<NotFoundView />} />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
 
-function PlaceholderView() {
+/* Route View Placeholders for Step 2 Verification */
+
+function HomeView() {
   return (
-    <div style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-      <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚀</div>
-      <h2 style={{ fontFamily: 'Cinzel, serif', color: '#3E0B18', fontSize: '24px', marginBottom: '8px' }}>
-        React Migration Step 1 Complete
+    <div className="home-preview max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Welcome banner */}
+      <section
+        className="rounded-3xl p-6 sm:p-10 shadow-xl border border-[#D9A441]/40 mb-8 relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #3E0B18 0%, #5B1024 50%, #2B050F 100%)',
+          color: '#FFF9EF',
+        }}
+      >
+        <div className="relative z-10 max-w-2xl">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 text-[#F8D882] text-xs font-bold uppercase tracking-wider border border-[#D9A441]/30 mb-3">
+            ✨ प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श
+          </span>
+          <h1 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4 leading-tight">
+            Talk to India's Top Vedic Astrologers
+          </h1>
+          <p className="text-amber-100/90 text-sm sm:text-base leading-relaxed mb-6">
+            Get authentic guidance on career, marriage, health, finance, and life's critical crossroads from verified Vedic masters.
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              to="/astrologers"
+              className="bg-gradient-to-r from-[#D9A441] to-[#B3832B] hover:brightness-110 text-[#1E1B4B] font-bold text-sm px-6 py-3 rounded-full transition-all shadow-md cursor-pointer no-underline"
+            >
+              Find an Astrologer →
+            </Link>
+            <Link
+              to="/mandir-seva"
+              className="bg-white/10 hover:bg-white/20 text-white font-semibold text-sm px-5 py-3 rounded-full transition-all border border-white/20 cursor-pointer no-underline"
+            >
+              Explore Mandir Seva
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Navigation Cards Grid */}
+      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10">
+        {[
+          { label: 'Chat Astrologer', icon: '💬', to: '/astrologers', desc: 'Instant chat' },
+          { label: 'Call Astrologer', icon: '📞', to: '/astrologers', desc: 'Direct call' },
+          { label: 'Daily Horoscope', icon: '♈', to: '/rashiphal', desc: 'All 12 signs' },
+          { label: 'Kundli Milan', icon: '💖', to: '/calculators/kundali-milan', desc: 'Gun matching' },
+          { label: '17 Calculators', icon: '📐', to: '/calculators', desc: 'Vedic tools' },
+          { label: 'Astro Mall', icon: '📿', to: '/astro-mall', desc: 'Siddh items' },
+        ].map((card, i) => (
+          <Link
+            key={i}
+            to={card.to}
+            className="p-4 rounded-2xl bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] hover:shadow-md transition-all text-center flex flex-col items-center justify-center gap-2 group no-underline"
+          >
+            <span className="text-2xl group-hover:scale-110 transition-transform">{card.icon}</span>
+            <span className="font-bold text-xs sm:text-sm text-[#1E1B4B]">{card.label}</span>
+            <span className="text-[11px] text-slate-400">{card.desc}</span>
+          </Link>
+        ))}
+      </section>
+
+      {/* Gau Sewa Promo Bar */}
+      <section className="p-4 sm:p-5 rounded-2xl bg-[#FFF8EB] border border-[#FCD34D] flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">🐄</span>
+          <div>
+            <h4 className="font-serif font-bold text-sm sm:text-base text-[#1E1B4B]">पवित्र गौ सेवा (Shree Krishna Gaushala Seva)</h4>
+            <p className="text-xs text-slate-600">Provide green fodder, jaggery, and medical care for revered cows.</p>
+          </div>
+        </div>
+        <Link
+          to="/gau-sewa"
+          className="bg-[#B45309] hover:bg-[#92400E] text-white font-bold text-xs px-5 py-2.5 rounded-full transition-colors whitespace-nowrap no-underline shrink-0"
+        >
+          Contribute Gau Sewa →
+        </Link>
+      </section>
+    </div>
+  );
+}
+
+function AstrologersView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Verified Vedic Astrologers</h2>
+      <p className="text-slate-600 text-sm mb-6">Connect with certified astrologers specializing in Vedic astrology, Tarot, Numerology &amp; Vastu.</p>
+      <div className="p-6 bg-white rounded-2xl border border-[#E7E2D8] text-center text-slate-500 text-sm">
+        Astrologers directory &amp; filter system will be hydrated here in Step 4.
+      </div>
+    </div>
+  );
+}
+
+function MandirSevaView({ section = 'all' }) {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">
+        {section === 'puja' ? 'Temple Puja Bookings' : section === 'chadhava' ? 'Daily Chadhava Seva' : 'Mandir Seva'}
       </h2>
-      <p style={{ color: '#64748B', fontSize: '14px', lineHeight: 1.6, marginBottom: '24px' }}>
-        React 19 and Vite tooling are now configured and operational in <code>website/frontend</code>.
-      </p>
+      <p className="text-slate-600 text-sm mb-6">Participate in divine rituals at 12 Jyotirlingas and ancient Vedic temples across India.</p>
+      <div className="p-6 bg-white rounded-2xl border border-[#E7E2D8] text-center text-slate-500 text-sm">
+        Mandir Puja &amp; Chadhava catalogue will be hydrated here in Step 5.
+      </div>
+    </div>
+  );
+}
+
+function GauSewaView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Gau Sewa (गौ सेवा)</h2>
+      <p className="text-slate-600 text-sm mb-6">Direct contribution to Gaushalas with live receipt and sankalp.</p>
+      <div className="p-6 bg-white rounded-2xl border border-[#E7E2D8] text-center text-slate-500 text-sm">
+        Gau Sewa offerings will be hydrated here in Step 5.
+      </div>
+    </div>
+  );
+}
+
+function AstroMallView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Vedic Astro Mall</h2>
+      <p className="text-slate-600 text-sm mb-6">100% Authentic, Lab-Certified Gemstones, Rudraksha, Yantras &amp; Puja Samagri.</p>
+      <div className="p-6 bg-white rounded-2xl border border-[#E7E2D8] text-center text-slate-500 text-sm">
+        Mall e-commerce products grid will be hydrated here in Step 5.
+      </div>
+    </div>
+  );
+}
+
+function RashiphalView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Daily Rashifal (दैनिक राशिफल)</h2>
+      <p className="text-slate-600 text-sm mb-6">Detailed astrological predictions for all 12 Rashi / Zodiac signs.</p>
+    </div>
+  );
+}
+
+function PanchangView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Aaj Ka Panchang (दैनिक पंचांग)</h2>
+      <p className="text-slate-600 text-sm mb-6">Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat &amp; Rahukaal.</p>
+    </div>
+  );
+}
+
+function CalculatorsView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">17 Vedic Astrology Calculators</h2>
+      <p className="text-slate-600 text-sm mb-6">Kundli Milan, Shani Sade Sati, Mangal Dosha, Gemstone recommendation, and more.</p>
+    </div>
+  );
+}
+
+function ProfileView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">My Account &amp; Consultations</h2>
+      <p className="text-slate-600 text-sm mb-6">View past chats, calls, saved kundlis, and active orders.</p>
+    </div>
+  );
+}
+
+function WalletView() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Wallet &amp; Recharge</h2>
+      <p className="text-slate-600 text-sm mb-6">Add balance for instant chat &amp; call consultations.</p>
+    </div>
+  );
+}
+
+function NotFoundView() {
+  return (
+    <div className="max-w-md mx-auto px-4 py-16 text-center">
+      <span className="text-5xl block mb-4">🪐</span>
+      <h2 className="font-serif text-2xl font-bold text-[#1E1B4B] mb-2">Page Not Found</h2>
+      <p className="text-slate-600 text-sm mb-6">The cosmic coordinates you requested do not exist.</p>
+      <Link to="/" className="inline-block bg-[#3E0B18] text-white font-bold text-xs px-5 py-2.5 rounded-full no-underline">
+        Return to Home
+      </Link>
     </div>
   );
 }

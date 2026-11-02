@@ -88,51 +88,14 @@
 </head>
 <body>
 
-  <!-- Main Application Root Shell -->
-  <div id="app-root" class="site-layout-shell">
-    <!-- Navbar Mount Point -->
-    <div id="site-navbar-mount"></div>
-    
-    <!-- Dynamic Views Container (SPA Views) -->
-    <main class="site-layout-outlet" id="site-layout-outlet">
-      <div id="app-views-container">
-        <div id="view-dashboard" class="app-page-view" style="display: none;"></div>
-        <div id="view-home" class="app-page-view active home-page-container"></div>
-        <div id="view-directory" class="app-page-view directory-page-container" style="display: none;"></div>
-        <div id="view-profile" class="app-page-view profile-page-container" style="display: none;"></div>
-        <div id="view-horoscope" class="app-page-view horoscope-page-container" style="display: none;"></div>
-        <div id="view-calculators" class="app-page-view calculators-page-container" style="display: none;"></div>
-        <div id="view-panchang" class="app-page-view panchang-page-container" style="display: none;"></div>
-        <div id="view-mandir" class="app-page-view mandir-page-container" style="display: none;"></div>
-        <div id="view-mall" class="app-page-view mall-page-container" style="display: none;"></div>
-        <div id="view-admin" class="app-page-view admin-page-container" style="display: none;"></div>
-        <div id="view-product" class="app-page-view" style="display: none;"></div>
-        <div id="view-temple" class="app-page-view" style="display: none;"></div>
-        <div id="view-puja-detail" class="app-page-view" style="display: none;"></div>
-        <div id="view-rewards" class="app-page-view" style="display: none;"></div>
-        <div id="view-gifts" class="app-page-view" style="display: none;"></div>
-        <div id="view-gau-sewa" class="app-page-view" style="display: none;"></div>
-        <div id="view-seller" class="app-page-view" style="display: none;"></div>
-        <div id="view-verify" class="app-page-view" style="display: none;"></div>
-        <div id="view-consultation" class="app-page-view app-shell" style="display: none;"></div>
-      </div>
-    </main>
-
-    <!-- Global Footer Mount Point -->
-    <div id="site-footer-mount"></div>
-
-    <!-- Modals Container -->
-    <div id="modals-container"></div>
-
-    <!-- Toast Notifications Container -->
-    <div class="toast-container" id="toast-container"></div>
-  </div>
+  <!-- React Application Root Container -->
+  <div id="root"></div>
 
   <!-- Third-party Modern Calendar & Time Picker & PDF Generation -->
   <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <!-- Core Business Controllers -->
+  <!-- Core Business Controllers & Global Utilities -->
   <script defer src="/js/ui-locales.js?v=r4_gau&brand=sacred2"></script>
   <script defer src="/js/i18n.js?v=r4_gau&brand=sacred2"></script>
   <script defer src="/js/api.js?v=r4&brand=sacred2"></script>
@@ -142,12 +105,8 @@
   <script defer src="/js/seo.js?v=1&brand=sacred2"></script>
   <script defer src="/js/banner-title.js?v=1"></script>
   <script defer src="/js/perf.js?v=1&brand=sacred2"></script>
-  <script defer src="/js/router.js?v=r5&brand=sacred2"></script>
-  <script defer src="/js/app.js?v=r9&brand=sacred2"></script>
-  <script defer src="/js/portrait-guard.js?v=4&brand=sacred2"></script>
-  <script defer src="/js/premium.js?v=r3&brand=sacred2"></script>
 
-  <!-- Modular Component Bootstrapper -->
-  <script type="module" src="/src/app/bootstrap.js?v=r29_mandir&brand=sacred2"></script>
+  <!-- React Application Entry Point -->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
