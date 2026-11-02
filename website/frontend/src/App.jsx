@@ -4,6 +4,12 @@ import Layout from './layouts/Layout.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import DirectoryPage from './pages/DirectoryPage/DirectoryPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
+import MandirSevaPage from './pages/MandirSevaPage/MandirSevaPage.jsx';
+import TempleDetailPage from './pages/TemplePage/TempleDetailPage.jsx';
+import GauSewaPage from './pages/GauSewaPage/GauSewaPage.jsx';
+import AstroMallPage from './pages/AstroMallPage/AstroMallPage.jsx';
+import ProductDetailPage from './pages/ProductPage/ProductDetailPage.jsx';
+import CalculatorsPage from './pages/CalculatorsPage/CalculatorsPage.jsx';
 
 export default function App() {
   return (
@@ -13,15 +19,20 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/astrologers" element={<DirectoryPage />} />
           <Route path="/astrologers/:slug" element={<ProfilePage />} />
-          <Route path="/mandir-seva" element={<MandirSevaView />} />
-          <Route path="/mandir-seva/puja" element={<MandirSevaView section="puja" />} />
-          <Route path="/mandir-seva/chadhava" element={<MandirSevaView section="chadhava" />} />
-          <Route path="/gau-sewa" element={<GauSewaView />} />
-          <Route path="/astro-mall" element={<AstroMallView />} />
+          <Route path="/mandir-seva" element={<MandirSevaPage />} />
+          <Route path="/mandir-seva/puja" element={<MandirSevaPage section="puja" />} />
+          <Route path="/mandir-seva/chadhava" element={<MandirSevaPage section="chadhava" />} />
+          <Route path="/mandir-seva/temple/:slug" element={<TempleDetailPage />} />
+          <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
+          <Route path="/gau-sewa" element={<GauSewaPage />} />
+          <Route path="/astro-mall" element={<AstroMallPage />} />
+          <Route path="/mall" element={<AstroMallPage />} />
+          <Route path="/astro-mall/product/:id" element={<ProductDetailPage />} />
+          <Route path="/mall/product/:id" element={<ProductDetailPage />} />
+          <Route path="/calculators" element={<CalculatorsPage />} />
+          <Route path="/calculators/:slug" element={<CalculatorsPage />} />
           <Route path="/rashiphal" element={<RashiphalView />} />
           <Route path="/panchang" element={<PanchangView />} />
-          <Route path="/calculators" element={<CalculatorsView />} />
-          <Route path="/calculators/:tool" element={<CalculatorsView />} />
           <Route path="/profile" element={<ProfileView />} />
           <Route path="/wallet" element={<WalletView />} />
           <Route path="*" element={<NotFoundView />} />
