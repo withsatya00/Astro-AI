@@ -54,3 +54,4 @@ if (missing.length > 0) {
 } else {
   console.log('ALL ASSET REFERENCES EXIST ON DISK!');
 }
+

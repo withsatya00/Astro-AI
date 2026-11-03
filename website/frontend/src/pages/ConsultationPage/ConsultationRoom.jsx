@@ -8,7 +8,7 @@ const ASTROLOGERS_DIRECTORY = [
     slug: 'pt-rameshwar-dwivedi',
     name: 'Pt. Rameshwar Dwivedi',
     title: 'Senior Vedic Jyotish & Karmakand Scholar',
-    avatar: '/assets/portraits/pt-rameshwar-dwivedi.webp',
+    avatar: '/assets/portraits/pt-rameshwar-dwivedi.jpg',
     rate: 35,
     rating: 4.9,
     reviews: 2850,
@@ -18,7 +18,7 @@ const ASTROLOGERS_DIRECTORY = [
     slug: 'acharya-kn-rao',
     name: 'Acharya K.N. Rao Ji',
     title: 'Kundli Expert & Shani Dasha Specialist',
-    avatar: '/assets/portraits/acharya-kn-rao.webp',
+    avatar: '/assets/portraits/acharya-kn-rao.jpg',
     rate: 51,
     rating: 4.8,
     reviews: 2400,
@@ -28,7 +28,7 @@ const ASTROLOGERS_DIRECTORY = [
     slug: 'vidushi-sunita-sharma',
     name: 'Vidushi Sunita Sharma',
     title: 'Tarot Grandmaster & Vedic Relationship Guide',
-    avatar: '/assets/portraits/vidushi-sunita-sharma.webp',
+    avatar: '/assets/portraits/vidushi-sunita-sharma.jpg',
     rate: 45,
     rating: 4.9,
     reviews: 1530,
@@ -172,8 +172,17 @@ export default function ConsultationRoom() {
 
           {/* Astrologer Badge */}
           <div className="flex items-center gap-2.5">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#D9A441] shadow-xs">
-              <img src={astrologer.avatar} alt={astrologer.name} className="w-full h-full object-cover" />
+            <div className="relative w-10 h-10 min-w-10 min-h-10 shrink-0 rounded-full overflow-hidden border-2 border-[#D9A441] shadow-xs bg-amber-50">
+              <img
+                src={astrologer.avatar}
+                alt={astrologer.name}
+                className="w-full h-full object-cover block"
+                loading="eager"
+                fetchPriority="high"
+                onError={(e) => {
+                  e.target.src = '/assets/portraits/pt-rameshwar-dwivedi.jpg';
+                }}
+              />
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border border-white"></span>
             </div>
             <div>
@@ -284,8 +293,8 @@ export default function ConsultationRoom() {
               className={`flex items-start gap-2.5 ${isAstro ? 'justify-start' : 'justify-end'}`}
             >
               {isAstro && (
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-[#D9A441] shrink-0 mt-1">
-                  <img src={astrologer.avatar} alt="Astrologer" className="w-full h-full object-cover" />
+                <div className="w-8 h-8 min-w-8 min-h-8 rounded-full overflow-hidden border border-[#D9A441] shrink-0 mt-1 bg-amber-50">
+                  <img src={astrologer.avatar} alt="Astrologer" className="w-full h-full object-cover block" onError={(e) => { e.target.src = "/assets/portraits/pt-rameshwar-dwivedi.jpg"; }} />
                 </div>
               )}
               <div

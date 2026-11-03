@@ -129,3 +129,4 @@ const { chromium } = require('playwright');
   await browser.close();
   console.log('All verifications completed successfully!');
 })();
+
