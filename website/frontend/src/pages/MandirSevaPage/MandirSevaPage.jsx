@@ -3,6 +3,27 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const MOCK_EVENTS = [
   {
+    "id": "ch-dhanteras-lakshmi-kuber-dhanvantari",
+    "slug": "dhanteras-lakshmi-dhanvantari-kuber",
+    "kind": "chadhava",
+    "category": "shakti",
+    "title": "Dhanteras Dhan-Arogya Pradayak Devtas - Lakshmi, Dhanvantari & Kuber Chadhava",
+    "temple": {
+      "name": "Shri Gajalakshmi, Dhanvantari & Kuber Dham",
+      "city": "Prayagraj",
+      "state": "Uttar Pradesh",
+      "slug": "dhanteras-lakshmi-dhanvantari-kuber"
+    },
+    "starts_at": "2026-11-06T07:00:00+05:30",
+    "deadline": "2026-11-06T05:00:00+05:30",
+    "image_url": "/assets/img/temples/dhanteras-chadhava-hero.webp",
+    "video_hours": 72,
+    "devotees_joined": 150000,
+    "from_price": 51,
+    "tag": "Grand Dhanteras Chadhava",
+    "bookable": true
+  },
+  {
     "id": "ch-daily-mahakal",
     "slug": "mahakaleshwar-ujjain",
     "kind": "chadhava",
@@ -496,6 +517,13 @@ export default function MandirSevaPage({ section = 'all' }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const nextTab = section === 'puja' ? 'puja' : section === 'chadhava' ? 'chadhava' : 'all';
+    setActiveTab(nextTab);
+    setCategoryFilter('all');
+    setSearchQuery('');
+  }, [section]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setSecondsTick((prev) => prev + 1);
     }, 1000);
@@ -629,7 +657,10 @@ export default function MandirSevaPage({ section = 'all' }) {
           <button
             key={tab.id}
             type="button"
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => {
+              setActiveTab(tab.id);
+              navigate(tab.id === 'all' ? '/mandir-seva' : `/mandir-seva/${tab.id}`);
+            }}
             className="px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer border"
             style={{
               background: activeTab === tab.id ? '#3E0B18' : '#FFFDF9',

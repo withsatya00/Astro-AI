@@ -20,6 +20,14 @@ const NaamJaap = lazy(() => import('./pages/BhaktiPage/NaamJaap.jsx'));
 const MyBhakti = lazy(() => import('./pages/BhaktiPage/MyBhakti.jsx'));
 const AartiLibrary = lazy(() => import('./pages/BhaktiPage/AartiLibrary.jsx'));
 const AartiDetail = lazy(() => import('./pages/BhaktiPage/AartiDetail.jsx'));
+const GitaHome = lazy(() => import('./pages/BhaktiPage/GitaHome.jsx'));
+const GitaChapter = lazy(() => import('./pages/BhaktiPage/GitaChapter.jsx'));
+const BhajanRadio = lazy(() => import('./pages/BhaktiPage/BhajanRadio.jsx'));
+const MandirList = lazy(() => import('./pages/BhaktiPage/MandirList.jsx'));
+const MandirDetail = lazy(() => import('./pages/BhaktiPage/MandirDetail.jsx'));
+const ShankaracharyaPage = lazy(() => import('./pages/BhaktiPage/ShankaracharyaPage.jsx'));
+const VedantaPage = lazy(() => import('./pages/BhaktiPage/VedantaPage.jsx'));
+const AdminPage = lazy(() => import('./pages/BhaktiPage/AdminPage.jsx'));
 const ComingSoon = lazy(() => import('./pages/BhaktiPage/ComingSoon.jsx'));
 
 export default function App() {
@@ -35,11 +43,12 @@ export default function App() {
           <Route path="/consult/:slug" element={<ConsultationRoom />} />
           <Route path="/mandir-seva" element={<MandirSevaPage />} />
           <Route path="/mandir-seva/puja" element={<MandirSevaPage section="puja" />} />
-          <Route path="/mandir-seva/chadhava" element={<MandirSevaPage section="chadhava" />} />
+          <Route path="/mandir-seva/events" element={<MandirSevaPage section="all" />} />
+          <Route path="/mandir-seva/chadhava" element={<TempleDetailPage />} />
+          <Route path="/chadhava" element={<TempleDetailPage />} />
           <Route path="/mandir-seva/puja/:slug" element={<PujaDetailPage />} />
           <Route path="/puja/:slug" element={<PujaDetailPage />} />
           <Route path="/mandir-seva/temple/:slug" element={<TempleDetailPage />} />
-          <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/temple/:slug" element={<TempleDetailPage />} />
           <Route path="/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
@@ -56,15 +65,16 @@ export default function App() {
             <Route index element={<BhaktiHome />} />
             <Route path="naam-jaap" element={<NaamJaap />} />
             <Route path="my-bhakti" element={<MyBhakti />} />
+            <Route path="admin" element={<AdminPage />} />
             <Route path="aarti-chalisa" element={<AartiLibrary />} />
             <Route path="aarti-chalisa/:slug" element={<AartiDetail />} />
-            <Route path="shankaracharya" element={<ComingSoon title="Shankaracharya" hi="शंकराचार्य" />} />
-            <Route path="vedanta" element={<ComingSoon title="Vedanta" hi="वेदांत" />} />
-            <Route path="bhagavad-gita" element={<ComingSoon title="Bhagavad Gita" hi="भगवद्गीता" />} />
-            <Route path="bhagavad-gita/:chapter" element={<ComingSoon title="Bhagavad Gita" />} />
-            <Route path="bhajan-radio" element={<ComingSoon title="Bhajan Radio" hi="भजन रेडियो" />} />
-            <Route path="mandir-darshan" element={<ComingSoon title="Mandir Darshan" hi="मंदिर दर्शन" />} />
-            <Route path="mandir-darshan/:slug" element={<ComingSoon title="Mandir Darshan" />} />
+            <Route path="shankaracharya" element={<ShankaracharyaPage />} />
+            <Route path="vedanta" element={<VedantaPage />} />
+            <Route path="bhagavad-gita" element={<GitaHome />} />
+            <Route path="bhagavad-gita/:chapter" element={<GitaChapter />} />
+            <Route path="bhajan-radio" element={<BhajanRadio />} />
+            <Route path="mandir-darshan" element={<MandirList />} />
+            <Route path="mandir-darshan/:slug" element={<MandirDetail />} />
             <Route path="puja-vidhi" element={<ComingSoon title="Puja Vidhi" hi="पूजा विधि" />} />
             <Route path="festivals" element={<ComingSoon title="Festivals & Vrat" hi="व्रत त्योहार" />} />
           </Route>
