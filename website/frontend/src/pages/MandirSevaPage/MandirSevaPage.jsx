@@ -3,85 +3,488 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 const MOCK_EVENTS = [
   {
-    id: 'ch-daily-mahakal',
-    slug: 'mahakaleshwar-ujjain',
-    kind: 'chadhava',
-    title: 'Daily chadhava seva',
-    temple: {
-      name: 'Shri Mahakaleshwar Jyotirlinga, Ujjain',
-      city: 'Ujjain',
-      state: 'Madhya Pradesh',
-      slug: 'mahakaleshwar-ujjain',
+    "id": "ch-daily-mahakal",
+    "slug": "mahakaleshwar-ujjain",
+    "kind": "chadhava",
+    "category": "shiva",
+    "title": "Daily Bhasma Aarti & Bilva Patra Chadhava",
+    "temple": {
+      "name": "Shri Mahakaleshwar Jyotirlinga",
+      "city": "Ujjain",
+      "state": "Madhya Pradesh",
+      "slug": "mahakaleshwar-ujjain"
     },
-    starts_at: '2026-11-03T19:41:00+05:30',
-    deadline: '2026-11-02T18:41:00+05:30',
-    image_url: '/assets/img/temples/mahakaleshwar-ujjain.jpg',
-    video_hours: 72,
-    devotees_joined: 1,
-    from_price: 5,
-    tag: 'Collective seva',
-    bookable: true,
+    "starts_at": "2026-11-03T19:41:00+05:30",
+    "deadline": "2026-11-02T18:41:00+05:30",
+    "image_url": "/assets/img/temples/mahakaleshwar-ujjain.jpg",
+    "video_hours": 72,
+    "devotees_joined": 412,
+    "from_price": 51,
+    "tag": "Daily Chadhava",
+    "bookable": true
   },
   {
-    id: 'pj-somnath-rudrabhishek',
-    slug: 'somnath-jyotirlinga-gujarat',
-    kind: 'puja',
-    title: 'Maha Rudrabhishek & Bilva Patra Archana',
-    temple: {
-      name: 'Shri Somnath Jyotirlinga',
-      city: 'Prabhas Patan',
-      state: 'Gujarat',
-      slug: 'somnath-jyotirlinga-gujarat',
+    "id": "pj-somnath-rudrabhishek",
+    "slug": "somnath-jyotirlinga-gujarat",
+    "kind": "puja",
+    "category": "shiva",
+    "title": "Maha Rudrabhishek & Bilva Patra Archana",
+    "temple": {
+      "name": "Shri Somnath Jyotirlinga",
+      "city": "Prabhas Patan",
+      "state": "Gujarat",
+      "slug": "somnath-jyotirlinga-gujarat"
     },
-    starts_at: '2026-11-05T08:00:00+05:30',
-    deadline: '2026-11-04T20:00:00+05:30',
-    image_url: '/assets/img/temples/somnath-jyotirlinga-gujarat.jpg',
-    video_hours: 48,
-    devotees_joined: 34,
-    from_price: 251,
-    tag: 'Special Puja',
-    bookable: true,
+    "starts_at": "2026-11-05T08:00:00+05:30",
+    "deadline": "2026-11-04T20:00:00+05:30",
+    "image_url": "/assets/img/temples/somnath-jyotirlinga-gujarat.jpg",
+    "video_hours": 48,
+    "devotees_joined": 34,
+    "from_price": 251,
+    "tag": "Special Puja",
+    "bookable": true
   },
   {
-    id: 'ch-kashi-ganga-aarti',
-    slug: 'kashi-vishwanath-varanasi',
-    kind: 'chadhava',
-    title: 'Ganga Jal & Bhasma Chadhava Seva',
-    temple: {
-      name: 'Shri Kashi Vishwanath Dham',
-      city: 'Varanasi',
-      state: 'Uttar Pradesh',
-      slug: 'kashi-vishwanath-varanasi',
+    "id": "ch-kashi-ganga-aarti",
+    "slug": "kashi-vishwanath-varanasi",
+    "kind": "chadhava",
+    "category": "shiva",
+    "title": "Ganga Jal & Bhasma Chadhava Seva",
+    "temple": {
+      "name": "Shri Kashi Vishwanath Dham",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "slug": "kashi-vishwanath-varanasi"
     },
-    starts_at: '2026-11-06T18:30:00+05:30',
-    deadline: '2026-11-05T12:00:00+05:30',
-    image_url: '/assets/img/temples/kashi-vishwanath-varanasi.jpg',
-    video_hours: 72,
-    devotees_joined: 18,
-    from_price: 51,
-    tag: 'Collective seva',
-    bookable: true,
+    "starts_at": "2026-11-06T18:30:00+05:30",
+    "deadline": "2026-11-05T12:00:00+05:30",
+    "image_url": "/assets/img/temples/kashi-vishwanath-varanasi.jpg",
+    "video_hours": 72,
+    "devotees_joined": 185,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
   },
   {
-    id: 'pj-kedarnath-mahamrityunjaya',
-    slug: 'kedarnath-dham-uttarakhand',
-    kind: 'puja',
-    title: 'Akhand Mahamrityunjaya Jaap & Havan',
-    temple: {
-      name: 'Shri Kedarnath Dham',
-      city: 'Rudraprayag',
-      state: 'Uttarakhand',
-      slug: 'kedarnath-dham-uttarakhand',
+    "id": "pj-kedarnath-mahamrityunjaya",
+    "slug": "kedarnath-dham-uttarakhand",
+    "kind": "puja",
+    "category": "shiva",
+    "title": "Akhand Mahamrityunjaya Jaap & Havan",
+    "temple": {
+      "name": "Shri Kedarnath Dham",
+      "city": "Rudraprayag",
+      "state": "Uttarakhand",
+      "slug": "kedarnath-dham-uttarakhand"
     },
-    starts_at: '2026-11-08T06:00:00+05:30',
-    deadline: '2026-11-07T18:00:00+05:30',
-    image_url: '/assets/img/temples/kedarnath-dham-uttarakhand.jpg',
-    video_hours: 48,
-    devotees_joined: 52,
-    from_price: 501,
-    tag: 'Maha Yagya',
-    bookable: true,
+    "starts_at": "2026-11-08T06:00:00+05:30",
+    "deadline": "2026-11-07T18:00:00+05:30",
+    "image_url": "/assets/img/temples/kedarnath-dham-uttarakhand.jpg",
+    "video_hours": 48,
+    "devotees_joined": 52,
+    "from_price": 501,
+    "tag": "Maha Yagya",
+    "bookable": true
   },
+  {
+    "id": "ch-omkareshwar-jal",
+    "slug": "omkareshwar-madhya-pradesh",
+    "kind": "chadhava",
+    "category": "shiva",
+    "title": "Narmada Jal & Panchamrit Abhishek Seva",
+    "temple": {
+      "name": "Shri Omkareshwar Jyotirlinga",
+      "city": "Khandwa",
+      "state": "Madhya Pradesh",
+      "slug": "omkareshwar-madhya-pradesh"
+    },
+    "starts_at": "2026-11-07T08:00:00+05:30",
+    "deadline": "2026-11-06T18:00:00+05:30",
+    "image_url": "/assets/img/temples/omkareshwar-madhya-pradesh.jpg",
+    "video_hours": 72,
+    "devotees_joined": 124,
+    "from_price": 51,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-trimbak-kalsarp",
+    "slug": "trimbakeshwar-nashik",
+    "kind": "puja",
+    "category": "shiva",
+    "title": "Kalsarp & Pitra Dosh Nivaran Maha Puja",
+    "temple": {
+      "name": "Shri Trimbakeshwar Jyotirlinga",
+      "city": "Nashik",
+      "state": "Maharashtra",
+      "slug": "trimbakeshwar-nashik"
+    },
+    "starts_at": "2026-11-10T07:00:00+05:30",
+    "deadline": "2026-11-09T20:00:00+05:30",
+    "image_url": "/assets/img/temples/trimbakeshwar-nashik.jpg",
+    "video_hours": 48,
+    "devotees_joined": 28,
+    "from_price": 501,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-baidyanath-bela",
+    "slug": "baidyanath-deoghar",
+    "kind": "chadhava",
+    "category": "shiva",
+    "title": "Pavitra Bela Patra & Chandan Chadhava",
+    "temple": {
+      "name": "Baba Baidyanath Dham",
+      "city": "Deoghar",
+      "state": "Jharkhand",
+      "slug": "baidyanath-deoghar"
+    },
+    "starts_at": "2026-11-09T09:00:00+05:30",
+    "deadline": "2026-11-08T18:00:00+05:30",
+    "image_url": "/assets/img/temples/baidyanath-deoghar.jpg",
+    "video_hours": 72,
+    "devotees_joined": 96,
+    "from_price": 51,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-bhimashankar-rudra",
+    "slug": "bhimashankar-maharashtra",
+    "kind": "puja",
+    "category": "shiva",
+    "title": "Rudra Suktam Path & Maha Rudrabhishek",
+    "temple": {
+      "name": "Shri Bhimashankar Jyotirlinga",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "slug": "bhimashankar-maharashtra"
+    },
+    "starts_at": "2026-11-11T08:00:00+05:30",
+    "deadline": "2026-11-10T18:00:00+05:30",
+    "image_url": "/assets/img/temples/bhimashankar-maharashtra.jpg",
+    "video_hours": 48,
+    "devotees_joined": 43,
+    "from_price": 351,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-mallikarjuna-chadhava",
+    "slug": "mallikarjuna-srisailam",
+    "kind": "chadhava",
+    "category": "shiva",
+    "title": "Mallikarjuna Swamy & Bhramaramba Chadhava",
+    "temple": {
+      "name": "Shri Mallikarjuna Jyotirlinga",
+      "city": "Srisailam",
+      "state": "Andhra Pradesh",
+      "slug": "mallikarjuna-srisailam"
+    },
+    "starts_at": "2026-11-12T07:30:00+05:30",
+    "deadline": "2026-11-11T18:00:00+05:30",
+    "image_url": "/assets/img/temples/mallikarjuna-srisailam.jpg",
+    "video_hours": 72,
+    "devotees_joined": 110,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-rameswaram-snan",
+    "slug": "ramanathaswamy-rameswaram",
+    "kind": "puja",
+    "category": "shiva",
+    "title": "22 Teerth Snan Sankalp & Ganga Jal Archana",
+    "temple": {
+      "name": "Shri Ramanathaswamy Temple",
+      "city": "Rameswaram",
+      "state": "Tamil Nadu",
+      "slug": "ramanathaswamy-rameswaram"
+    },
+    "starts_at": "2026-11-14T06:00:00+05:30",
+    "deadline": "2026-11-13T18:00:00+05:30",
+    "image_url": "/assets/img/temples/ramanathaswamy-rameswaram.jpg",
+    "video_hours": 48,
+    "devotees_joined": 67,
+    "from_price": 501,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-vaishnodevi-chunari",
+    "slug": "vaishno-devi-katra",
+    "kind": "chadhava",
+    "category": "shakti",
+    "title": "Maa Vaishno Devi Chunari & Dry Fruit Bhog",
+    "temple": {
+      "name": "Shri Mata Vaishno Devi Shrine",
+      "city": "Katra",
+      "state": "Jammu & Kashmir",
+      "slug": "vaishno-devi-katra"
+    },
+    "starts_at": "2026-11-04T07:00:00+05:30",
+    "deadline": "2026-11-03T18:00:00+05:30",
+    "image_url": "/assets/img/temples/vaishno-devi-katra.jpg",
+    "video_hours": 72,
+    "devotees_joined": 540,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-kamakhya-raksha",
+    "slug": "kamakhya-devi-assam",
+    "kind": "puja",
+    "category": "shakti",
+    "title": "Maa Kamakhya Shatru Badha & Raksha Puja",
+    "temple": {
+      "name": "Maa Kamakhya Devalaya",
+      "city": "Guwahati",
+      "state": "Assam",
+      "slug": "kamakhya-devi-assam"
+    },
+    "starts_at": "2026-11-07T09:00:00+05:30",
+    "deadline": "2026-11-06T18:00:00+05:30",
+    "image_url": "/assets/img/temples/kamakhya-devi-assam.jpg",
+    "video_hours": 48,
+    "devotees_joined": 85,
+    "from_price": 251,
+    "tag": "Shakti Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-kalighat-deepdaan",
+    "slug": "kalighat-kali-kolkata",
+    "kind": "chadhava",
+    "category": "shakti",
+    "title": "Maha Kali Deepdaan & Raksha Dhaga Seva",
+    "temple": {
+      "name": "Kalighat Kali Temple",
+      "city": "Kolkata",
+      "state": "West Bengal",
+      "slug": "kalighat-kali-kolkata"
+    },
+    "starts_at": "2026-11-05T18:00:00+05:30",
+    "deadline": "2026-11-04T16:00:00+05:30",
+    "image_url": "/assets/img/temples/kalighat-kali-kolkata.jpg",
+    "video_hours": 72,
+    "devotees_joined": 140,
+    "from_price": 51,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-mahalakshmi-suktam",
+    "slug": "mahalakshmi-kolhapur",
+    "kind": "puja",
+    "category": "shakti",
+    "title": "Shri Suktam Path & Kumkumarchana Maha Puja",
+    "temple": {
+      "name": "Shri Mahalakshmi Ambabai Temple",
+      "city": "Kolhapur",
+      "state": "Maharashtra",
+      "slug": "mahalakshmi-kolhapur"
+    },
+    "starts_at": "2026-11-06T11:00:00+05:30",
+    "deadline": "2026-11-05T18:00:00+05:30",
+    "image_url": "/assets/img/temples/mahalakshmi-kolhapur.jpg",
+    "video_hours": 48,
+    "devotees_joined": 205,
+    "from_price": 251,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-meenakshi-archana",
+    "slug": "meenakshi-amman-madurai",
+    "kind": "chadhava",
+    "category": "shakti",
+    "title": "Devi Meenakshi Pushparchana & Ghee Lamp",
+    "temple": {
+      "name": "Arulmigu Meenakshi Amman Temple",
+      "city": "Madurai",
+      "state": "Tamil Nadu",
+      "slug": "meenakshi-amman-madurai"
+    },
+    "starts_at": "2026-11-08T08:30:00+05:30",
+    "deadline": "2026-11-07T18:00:00+05:30",
+    "image_url": "/assets/img/temples/meenakshi-amman-madurai.jpg",
+    "video_hours": 72,
+    "devotees_joined": 88,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "ch-mansa-devi",
+    "slug": "mansa-devi-haridwar",
+    "kind": "chadhava",
+    "category": "shakti",
+    "title": "Mano-kamna Bandhan & Chadhava",
+    "temple": {
+      "name": "Maa Mansa Devi Temple, Bilwa Parvat",
+      "city": "Haridwar",
+      "state": "Uttarakhand",
+      "slug": "mansa-devi-haridwar"
+    },
+    "starts_at": "2026-11-08T10:00:00+05:30",
+    "deadline": "2026-11-07T18:00:00+05:30",
+    "image_url": "/assets/img/temples/mansa-devi-haridwar.jpg",
+    "video_hours": 72,
+    "devotees_joined": 92,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-shani-tailabhishek",
+    "slug": "shani-shingnapur",
+    "kind": "puja",
+    "category": "shani",
+    "title": "Pavitra Shani Tailabhishek & Shanti Havan",
+    "temple": {
+      "name": "Shri Shani Shingnapur",
+      "city": "Ahmednagar",
+      "state": "Maharashtra",
+      "slug": "shani-shingnapur"
+    },
+    "starts_at": "2026-11-07T06:30:00+05:30",
+    "deadline": "2026-11-06T18:00:00+05:30",
+    "image_url": "/assets/img/temples/shani-shingnapur.jpg",
+    "video_hours": 48,
+    "devotees_joined": 320,
+    "from_price": 151,
+    "tag": "Shani Shanti",
+    "bookable": true
+  },
+  {
+    "id": "ch-sankat-mochan",
+    "slug": "sankat-mochan-hanuman-varanasi",
+    "kind": "chadhava",
+    "category": "shani",
+    "title": "Sindoor Chola & Sundarkand Path Seva",
+    "temple": {
+      "name": "Sankat Mochan Hanuman Temple",
+      "city": "Varanasi",
+      "state": "Uttar Pradesh",
+      "slug": "sankat-mochan-hanuman-varanasi"
+    },
+    "starts_at": "2026-11-03T17:00:00+05:30",
+    "deadline": "2026-11-03T12:00:00+05:30",
+    "image_url": "/assets/img/temples/sankat-mochan-hanuman-varanasi.jpg",
+    "video_hours": 72,
+    "devotees_joined": 280,
+    "from_price": 51,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-siddhivinayak-modak",
+    "slug": "siddhivinayak-mumbai",
+    "kind": "puja",
+    "category": "ganesh",
+    "title": "Siddhivinayak 108 Durva & Modak Archana",
+    "temple": {
+      "name": "Shri Siddhivinayak Temple",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "slug": "siddhivinayak-mumbai"
+    },
+    "starts_at": "2026-11-04T07:30:00+05:30",
+    "deadline": "2026-11-03T20:00:00+05:30",
+    "image_url": "/assets/img/temples/siddhivinayak-mumbai.jpg",
+    "video_hours": 48,
+    "devotees_joined": 110,
+    "from_price": 151,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-bankebihari-bhog",
+    "slug": "banke-bihari-vrindavan",
+    "kind": "chadhava",
+    "category": "krishna",
+    "title": "Makhan Mishri & Pavitra Itra Sewa",
+    "temple": {
+      "name": "Shri Banke Bihari Mandir",
+      "city": "Vrindavan",
+      "state": "Uttar Pradesh",
+      "slug": "banke-bihari-vrindavan"
+    },
+    "starts_at": "2026-11-05T09:00:00+05:30",
+    "deadline": "2026-11-04T18:00:00+05:30",
+    "image_url": "/assets/img/temples/banke-bihari-vrindavan.jpg",
+    "video_hours": 72,
+    "devotees_joined": 395,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "pj-tirupati-laddu",
+    "slug": "tirupati-balaji-andhra",
+    "kind": "puja",
+    "category": "krishna",
+    "title": "Lord Venkateswara Sahasranama Archana",
+    "temple": {
+      "name": "Tirumala Venkateswara Temple",
+      "city": "Tirupati",
+      "state": "Andhra Pradesh",
+      "slug": "tirupati-balaji-andhra"
+    },
+    "starts_at": "2026-11-07T05:30:00+05:30",
+    "deadline": "2026-11-06T18:00:00+05:30",
+    "image_url": "/assets/img/temples/tirupati-balaji-andhra.jpg",
+    "video_hours": 48,
+    "devotees_joined": 480,
+    "from_price": 251,
+    "tag": "Special Puja",
+    "bookable": true
+  },
+  {
+    "id": "ch-ayodhya-ramlalla",
+    "slug": "ram-janmabhoomi-ayodhya",
+    "kind": "chadhava",
+    "category": "krishna",
+    "title": "Shri Ram Lalla Pavitra Pushparchana",
+    "temple": {
+      "name": "Shri Ram Janmabhoomi Mandir",
+      "city": "Ayodhya",
+      "state": "Uttar Pradesh",
+      "slug": "ram-janmabhoomi-ayodhya"
+    },
+    "starts_at": "2026-11-06T10:00:00+05:30",
+    "deadline": "2026-11-05T18:00:00+05:30",
+    "image_url": "/assets/img/temples/ram-janmabhoomi-ayodhya.jpg",
+    "video_hours": 72,
+    "devotees_joined": 610,
+    "from_price": 101,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  },
+  {
+    "id": "ch-jagannath-puri",
+    "slug": "jagannath-temple-puri",
+    "kind": "chadhava",
+    "category": "krishna",
+    "title": "Shri Jagannath Mahaprasad & Dhwaja Chadhava",
+    "temple": {
+      "name": "Shree Jagannath Temple",
+      "city": "Puri",
+      "state": "Odisha",
+      "slug": "jagannath-temple-puri"
+    },
+    "starts_at": "2026-11-08T11:00:00+05:30",
+    "deadline": "2026-11-07T18:00:00+05:30",
+    "image_url": "/assets/img/temples/jagannath-temple-puri.jpg",
+    "video_hours": 72,
+    "devotees_joined": 310,
+    "from_price": 151,
+    "tag": "Daily Chadhava",
+    "bookable": true
+  }
 ];
 
 export default function MandirSevaPage({ section = 'all' }) {
@@ -109,9 +512,10 @@ export default function MandirSevaPage({ section = 'all' }) {
       });
   }, []);
 
-  const filteredEvents = events.filter((e) => {
+    const filteredEvents = events.filter((e) => {
     if (activeTab === 'puja' && e.kind !== 'puja') return false;
     if (activeTab === 'chadhava' && e.kind !== 'chadhava') return false;
+    if (categoryFilter !== 'all' && e.category !== categoryFilter) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const match =
@@ -123,9 +527,13 @@ export default function MandirSevaPage({ section = 'all' }) {
     return true;
   });
 
-  const handleOfferChadhava = (event) => {
+    const handleOfferChadhava = (event) => {
     const slug = event.temple?.slug || event.slug || 'mahakaleshwar-ujjain';
-    navigate(`/mandir-seva/temple/${slug}`);
+    if (event.kind === 'puja') {
+      navigate(`/mandir-seva/puja/${slug}`);
+    } else {
+      navigate(`/mandir-seva/temple/${slug}`);
+    }
   };
 
   return (
@@ -227,6 +635,7 @@ export default function MandirSevaPage({ section = 'all' }) {
               { id: 'shakti', label: '🌸 Shaktipeeth & Devi' },
               { id: 'shani', label: '🪐 Shani & Hanuman' },
               { id: 'ganesh', label: '🐘 Ganesh' },
+              { id: 'krishna', label: '🪈 Krishna & Vishnu' },
             ].map((chip) => (
               <button
                 key={chip.id}
@@ -278,7 +687,7 @@ export default function MandirSevaPage({ section = 'all' }) {
                 className="ch-event bg-white rounded-3xl border border-[#E7E2D8] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col"
               >
                 {/* Media banner */}
-                <div className="ch-event-media relative h-52 overflow-hidden bg-slate-900">
+                <div className="ch-event-media relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onClick={() => handleOfferChadhava(e)}>
                   <img
                     src={e.image_url}
                     alt={e.temple?.name}

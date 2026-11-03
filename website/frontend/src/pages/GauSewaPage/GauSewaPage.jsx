@@ -11,13 +11,13 @@ const PURPOSES = [
     id: 'chikitsa',
     title: 'Medical Care & Rehabilitation (चिकित्सा सेवा)',
     desc: 'Medicines, bandages and round-the-clock veterinary treatment for injured and aged cows.',
-    photo: '/assets/img/gausewa/gau-shelter.webp',
+    photo: '/assets/img/gausewa/gaushala-shelter-real.webp',
   },
   {
     id: 'monthly',
     title: 'Monthly Cow Adoption (मासिक गौ सेवा)',
     desc: 'Sponsor the complete food, shelter and medical care of a cow for an entire month.',
-    photo: '/assets/img/gausewa/cow-calf.webp',
+    photo: '/assets/img/gausewa/cow-mother-calf.webp',
   },
 ];
 
@@ -223,11 +223,7 @@ export default function GauSewaPage() {
                         setSelectedAmount(amt);
                         setCustomAmount('');
                       }}
-                      className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
-                        selectedAmount === amt && !customAmount
-                          ? 'bg-[#3E0B18] text-white border-[#3E0B18]'
-                          : 'bg-white text-slate-700 border-slate-200 hover:border-amber-400'
-                      }`}
+                      className="py-2.5 text-xs font-bold rounded-xl transition-all cursor-pointer shadow-xs" style={{ backgroundColor: selectedAmount === amt && !customAmount ? "#3E0B18" : "#FFFDF7", color: selectedAmount === amt && !customAmount ? "#F8D882" : "#3E0B18", border: selectedAmount === amt && !customAmount ? "2px solid #D9A441" : "1.5px solid #EADBCA" }}
                     >
                       ₹{amt}
                     </button>
@@ -321,13 +317,13 @@ export default function GauSewaPage() {
               title: 'Routine Veterinary Health Checkup',
               date: 'Yesterday, 3:00 PM',
               desc: 'Veterinary doctor completed health checkups and administered vitamins to calves.',
-              img: '/assets/img/gausewa/gau-shelter.webp',
+              img: '/assets/img/gausewa/gaushala-shelter-real.webp',
             },
             {
               title: 'Shelter Winter Protection Upgrades',
               date: '2 Nov 2026',
               desc: 'Clean straw bedding and windbreakers installed to ensure cozy shelter.',
-              img: '/assets/img/gausewa/cow-calf.webp',
+              img: '/assets/img/gausewa/cow-portrait.webp',
             },
           ].map((item, i) => (
             <div key={i} className="p-4 rounded-2xl bg-white border border-[#E7E2D8] shadow-xs">

@@ -6,6 +6,7 @@ import DirectoryPage from './pages/DirectoryPage/DirectoryPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import MandirSevaPage from './pages/MandirSevaPage/MandirSevaPage.jsx';
 import TempleDetailPage from './pages/TemplePage/TempleDetailPage.jsx';
+import PujaDetailPage from './pages/PujaDetailPage/PujaDetailPage.jsx';
 import GauSewaPage from './pages/GauSewaPage/GauSewaPage.jsx';
 import AstroMallPage from './pages/AstroMallPage/AstroMallPage.jsx';
 import ProductDetailPage from './pages/ProductPage/ProductDetailPage.jsx';
@@ -28,7 +29,12 @@ export default function App() {
           <Route path="/mandir-seva" element={<MandirSevaPage />} />
           <Route path="/mandir-seva/puja" element={<MandirSevaPage section="puja" />} />
           <Route path="/mandir-seva/chadhava" element={<MandirSevaPage section="chadhava" />} />
+          <Route path="/mandir-seva/puja/:slug" element={<PujaDetailPage />} />
+          <Route path="/puja/:slug" element={<PujaDetailPage />} />
           <Route path="/mandir-seva/temple/:slug" element={<TempleDetailPage />} />
+          <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
+          <Route path="/temple/:slug" element={<TempleDetailPage />} />
+          <Route path="/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/gau-sewa" element={<GauSewaPage />} />
           <Route path="/astro-mall" element={<AstroMallPage />} />

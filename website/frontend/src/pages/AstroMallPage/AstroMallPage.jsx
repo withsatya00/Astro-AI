@@ -119,7 +119,7 @@ export const REFERENCE_PRODUCTS = [
     price: 499,
     original_price: 699,
     discount_percent: 28,
-    image: '/assets/img/products/gomti-chakra.jpg',
+    image: '/assets/img/products/shankh.jpg',
     in_stock: true,
   },
 ];

@@ -57,6 +57,67 @@ const TEMPLE_DATA = {
   },
 };
 
+
+function getTempleDetails(slug) {
+  if (TEMPLE_DATA[slug]) return TEMPLE_DATA[slug];
+
+  const formattedName = slug
+    ? slug.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ')
+    : 'Sacred Mandir';
+
+  return {
+    id: slug || 'sacred-mandir',
+    slug: slug || 'mahakaleshwar-ujjain',
+    name: `Shri ${formattedName}`,
+    city: 'Holy Pilgrimage',
+    state: 'India',
+    deity: 'Presiding Sacred Deity',
+    category_label: '🛕 Sacred Pilgrimage & Seva',
+    description: 'Consecrated temple offering divine blessings, spiritual peace and sacred chadhava seva with video proof.',
+    photos: [
+      `/assets/img/temples/${slug || 'mahakaleshwar-ujjain'}.jpg`,
+      '/assets/img/temples/somnath-jyotirlinga-gujarat.jpg',
+      '/assets/img/temples/kashi-vishwanath-varanasi.jpg',
+      '/assets/img/temples/kedarnath-dham-uttarakhand.jpg',
+    ],
+    highlights: [
+      'Sankalp in your name and gotra',
+      'Daily archana, aarti & sacred offerings',
+      'Video delivery within 48-72 hours in your account',
+      'Prasad delivered directly to your doorstep',
+    ],
+    stages: [
+      'Select your sacred offering items and provide Yajman details',
+      'Temple priest conducts sankalp with your name and gotra',
+      'Sacred offerings are offered inside the Garbhagriha',
+      'Video recording is generated and uploaded to your account',
+    ],
+    offerings: [
+      {
+        id: 'off-flowers',
+        title: 'Flowers, Bilva Leaves & Lamp Offering',
+        description: 'Offer fresh sacred flowers, leaves and oil lamp with your sankalp.',
+        price: 51,
+        image: '/assets/img/offerings/flowers.webp',
+      },
+      {
+        id: 'off-panchamrit',
+        title: 'Panchamrit Abhishek & Prasad Offering',
+        description: 'Sacred abhishek with milk, curd, honey, and prasadam offering.',
+        price: 251,
+        image: '/assets/img/offerings/panchamrit.webp',
+      },
+      {
+        id: 'off-havan',
+        title: 'Special Sankalp Archana & Shanti Havan',
+        description: 'Intensive Vedic archana for family prosperity, peace and protection.',
+        price: 1101,
+        image: '/assets/img/offerings/havan.webp',
+      },
+    ],
+  };
+}
+
 export default function TempleDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -70,7 +131,7 @@ export default function TempleDetailPage() {
   const [devoteeName, setDevoteeName] = useState('');
   const [gotra, setGotra] = useState('');
 
-  const temple = TEMPLE_DATA[slug] || TEMPLE_DATA['mahakaleshwar-ujjain'];
+  const temple = getTempleDetails(slug);
   const photos = temple.photos || [];
 
   useEffect(() => {

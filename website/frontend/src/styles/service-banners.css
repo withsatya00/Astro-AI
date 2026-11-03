@@ -39,7 +39,7 @@
 .mall-page .service-banner h1,
 .gs-page .service-banner h1,
 .gs-reference-page .service-banner h1,
-.service-banner--gausewa h1 { font-family:'Playfair Display', Georgia, serif !important; font-size:clamp(1.65rem,2.65vw,2.25rem) !important; font-weight:700 !important; letter-spacing:-.035em !important; line-height:1.18 !important; margin:0 0 14px !important; color:#fffdf8 !important; }
+.service-banner--gausewa h1 { font-family:'Cinzel', 'Playfair Display', Georgia, serif !important; font-size:clamp(1.65rem,2.65vw,2.25rem) !important; font-weight:700 !important; letter-spacing:-.035em !important; line-height:1.18 !important; margin:0 0 14px !important; color:#fffdf8 !important; }
 .service-banner h1 em { font-style:normal !important; color:#efd4a0 !important; -webkit-text-fill-color:#efd4a0 !important; }
 .service-banner .directory-title-row { gap:10px; margin-bottom:12px; }
 .service-banner .directory-title-row h1 { margin-bottom:0; }
