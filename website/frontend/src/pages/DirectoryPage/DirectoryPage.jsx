@@ -213,6 +213,16 @@ export default function DirectoryPage() {
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const [showFiltersMobile, setShowFiltersMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [playingVoiceId, setPlayingVoiceId] = useState(null);
+
+  const handleToggleVoiceBio = (astroId, e) => {
+    e.stopPropagation();
+    if (playingVoiceId === astroId) {
+      setPlayingVoiceId(null);
+    } else {
+      setPlayingVoiceId(astroId);
+    }
+  };
   const pageSize = 8;
 
   // Active filter count for mobile badge
@@ -666,96 +676,125 @@ export default function DirectoryPage() {
                 </div>
               ) : (
                 paginatedAstrologers.map((astro) => (
-                  <article key={astro.id} className="home-ref-astro-card" data-id={astro.id}>
-                    <div className="home-ref-astro-top">
-                      <div
-                        className="home-ref-astro-avatar-wrap cursor-pointer"
-                        onClick={() => navigate(`/astrologers/${astro.slug || astro.id}`)}
-                      >
-                        <img
-                          src={astro.avatar || '/assets/portraits/default-avatar.svg'}
-                          alt={astro.name}
-                          className="home-ref-astro-avatar"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(e) => {
-                            if (!e.currentTarget.dataset.fallbackApplied && astro.fallbackAvatar) {
-                              e.currentTarget.dataset.fallbackApplied = 'true';
-                              e.currentTarget.src = astro.fallbackAvatar;
-                            } else {
-                              e.currentTarget.src = '/assets/portraits/default-avatar.svg';
-                            }
-                          }}
-                        />
-                      </div>
-                      <div className="home-ref-astro-info">
-                        <div className="home-ref-astro-status-row">
-                          <span
-                            className={`home-ref-astro-status ${
-                              astro.availability === 'busy' ? 'home-ref-astro-status--busy' : 'home-ref-astro-status--online'
-                            }`}
-                          >
-                            <span className="home-ref-astro-status-dot"></span>
-                            {astro.availability === 'busy' ? 'Busy' : 'Online'}
+                  <article key={astro.id} className="home-ref-astro-card bg-white rounded-2xl border border-[#E7E2D8] p-4.5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between" data-id={astro.id}>
+                    <div>
+                      {/* Live Dynamic Status Ribbon */}
+                      <div className="mb-2.5">
+                        {astro.availability === 'busy' ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFFBEB] text-[#92400E] border border-[#FDE68A]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            In Consultation (Next: ~3 min)
                           </span>
-                        </div>
-                        <h3
-                          className="home-ref-astro-name cursor-pointer"
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ECFDF5] text-[#065F46] border border-[#A7F3D0]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                            Available Now (0m wait)
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Top Info with Verified Avatar */}
+                      <div className="home-ref-astro-top flex items-center gap-3.5 mb-2.5">
+                        <div
+                          className="relative w-14 h-14 shrink-0 cursor-pointer"
                           onClick={() => navigate(`/astrologers/${astro.slug || astro.id}`)}
                         >
-                          {astro.name}
-                        </h3>
+                          <img
+                            src={astro.avatar || '/assets/portraits/default-avatar.svg'}
+                            alt={astro.name}
+                            className="w-full h-full rounded-full object-cover border-2 border-[#D9A441] shadow-2xs"
+                            loading="lazy"
+                            decoding="async"
+                            onError={(e) => {
+                              if (!e.currentTarget.dataset.fallbackApplied && astro.fallbackAvatar) {
+                                e.currentTarget.dataset.fallbackApplied = 'true';
+                                e.currentTarget.src = astro.fallbackAvatar;
+                              } else {
+                                e.currentTarget.src = '/assets/portraits/default-avatar.svg';
+                              }
+                            }}
+                          />
+                          <span className="absolute -bottom-0.5 -right-0.5 w-4.5 h-4.5 bg-blue-600 text-white rounded-full text-[10px] font-extrabold flex items-center justify-center border-2 border-white shadow-xs">
+                            ✓
+                          </span>
+                        </div>
+                        <div className="home-ref-astro-info flex-1 min-w-0">
+                          <h3
+                            className="font-serif text-base font-bold text-[#1E1B4B] hover:text-[#B45309] cursor-pointer truncate"
+                            onClick={() => navigate(`/astrologers/${astro.slug || astro.id}`)}
+                          >
+                            {astro.name}
+                          </h3>
+                          <p className="text-xs text-slate-500 truncate font-medium">
+                            {astro.title || 'Vedic Astrology Scholar'}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1 text-xs text-slate-600">
+                            <span className="font-bold text-amber-800 flex items-center gap-1">
+                              ★ {astro.rating || '4.8'}
+                              <small className="text-slate-400 font-normal">
+                                ({astro.review_count || '1.2k'})
+                              </small>
+                            </span>
+                            <span>•</span>
+                            <span className="text-slate-500 font-semibold">{astro.experience_years || '15'}+ Yrs</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="home-ref-astro-meta-row">
-                      <span className="home-ref-astro-rating">
-                        <span className="home-ref-astro-rating-star">★</span> {astro.rating || '4.8'}{' '}
-                        <small className="text-slate-400 font-normal">
-                          ({astro.review_count || '1.2k'})
-                        </small>
-                      </span>
-                      <span>⏱ {astro.experience_years || '15'}+ Yrs</span>
-                    </div>
-
-                    <p className="home-ref-astro-specs" title={(astro.specialties || []).join(', ')}>
-                      {(astro.specialties || []).slice(0, 4).join(', ')}
-                    </p>
-
-                    <div className="home-ref-astro-langs">
-                      {(astro.languages || ['Hindi', 'English']).map((lang, lIdx) => (
-                        <span key={lIdx} className="home-ref-astro-lang-tag">
-                          {lang}
+                      {/* 30s Audio Bio Preview Pill */}
+                      <div
+                        onClick={(e) => handleToggleVoiceBio(astro.id, e)}
+                        className="my-2.5 px-3 py-1.5 rounded-xl border border-dashed border-[#D9A441] bg-[#FFFDF8] hover:bg-[#FEF9EE] flex items-center justify-between text-[11.5px] font-semibold text-[#78350F] cursor-pointer transition-all shadow-2xs"
+                        title="Click to preview astrologer voice bio"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <span>🎙️</span> {playingVoiceId === astro.id ? 'Playing Voice Sample...' : 'Listen to Voice Bio (30s)'}
                         </span>
-                      ))}
+                        <div className="flex items-center gap-0.5">
+                          <span className={`w-0.5 bg-[#D9A441] rounded-full transition-all ${playingVoiceId === astro.id ? 'h-3 animate-pulse' : 'h-1.5'}`} />
+                          <span className={`w-0.5 bg-[#D9A441] rounded-full transition-all ${playingVoiceId === astro.id ? 'h-4 animate-pulse delay-75' : 'h-3'}`} />
+                          <span className={`w-0.5 bg-[#D9A441] rounded-full transition-all ${playingVoiceId === astro.id ? 'h-2 animate-pulse delay-150' : 'h-2'}`} />
+                          <span className={`w-0.5 bg-[#D9A441] rounded-full transition-all ${playingVoiceId === astro.id ? 'h-4 animate-pulse delay-100' : 'h-3.5'}`} />
+                        </div>
+                      </div>
+
+                      {/* Specialties & Languages */}
+                      <p className="text-xs text-slate-600 line-clamp-1 mb-2 font-medium" title={(astro.specialties || []).join(', ')}>
+                        {(astro.specialties || []).slice(0, 4).join(', ')}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1 mb-3">
+                        {(astro.languages || ['Hindi', 'English']).map((lang, lIdx) => (
+                          <span key={lIdx} className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md text-[10px] font-medium">
+                            {lang}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="home-ref-astro-bottom">
-                      <div className="home-ref-astro-rate">
-                        ₹{astro.price_per_minute || 51}
-                        <small>/min</small>
+                    {/* Card Footer with Price, Offer, & Dual CTAs */}
+                    <div className="pt-3 border-t border-[#F1ECE4] flex items-center justify-between mt-auto">
+                      <div className="flex flex-col">
+                        <div className="text-base font-extrabold text-[#3E0B18]">
+                          ₹{astro.price_per_minute || 51}<small className="text-xs font-normal text-slate-500">/min</small>
+                        </div>
+                        <span className="text-[10px] font-bold text-emerald-700">First 5 Mins Free (FREE5)</span>
                       </div>
-                      <div className="home-ref-astro-actions">
+                      <div className="flex items-center gap-1.5">
                         <button
                           type="button"
-                          className="home-ref-astro-btn-chat cursor-pointer"
-                          onClick={() => handleStartConsultation(astro.slug || astro.id)}
+                          className="px-3 py-1.5 rounded-xl text-xs font-bold bg-[#F0FDF4] text-[#166534] border border-[#86EFAC] hover:bg-[#DCFCE7] cursor-pointer flex items-center gap-1 transition-all"
+                          title={`Call ${astro.name}`}
+                          onClick={() => handleStartCall(astro.slug || astro.id)}
                         >
-                          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
-                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path>
-                          </svg>
-                          <span>Chat</span>
+                          <span>📞</span> Call
                         </button>
                         <button
                           type="button"
-                          className="home-ref-astro-btn-call cursor-pointer"
-                          title={`Call ${astro.name}`}
-                          aria-label="Call"
-                          onClick={() => handleStartCall(astro.slug || astro.id)}
+                          className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-[#FFF9EF] bg-[#3E0B18] hover:bg-[#5B1324] cursor-pointer flex items-center gap-1 shadow-xs transition-all"
+                          onClick={() => handleStartConsultation(astro.slug || astro.id)}
                         >
-                          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                          </svg>
+                          <span>💬</span> Chat
                         </button>
                       </div>
                     </div>

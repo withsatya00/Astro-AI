@@ -59,6 +59,13 @@ export default function ConsultationRoom() {
       sender: 'astrologer',
       text: `प्रणाम! मैं ${astrologer.name} हूँ। आपकी जन्म कुंडली और गोचर ग्रहों का अध्ययन करने हेतु तत्पर हूँ। आप करियर, विवाह, धन या ग्रह शांति के बारे में अपना प्रश्न पूछ सकते हैं।`,
       time: 'Just now',
+      prescription: {
+        title: 'दैनिक वैदिक शांति एवं इष्ट देव स्मरण',
+        subtitle: 'VEDIC FOUNDATION REMEDY',
+        text: 'नित्य प्रातः गायत्री मंत्र का 11 बार जप करें एवं सूर्य देव को तांबे के पात्र से जल अर्पित करें। यह आपकी आभा और मानसिक स्पष्टता को सुदृढ़ करेगा।',
+        puja_cta: 'Explore Mandir Seva →',
+        puja_link: '/mandir-seva',
+      },
     },
   ]);
   const [inputText, setInputText] = useState('');
@@ -116,20 +123,49 @@ export default function ConsultationRoom() {
     // Astrologer response simulation with deep Vedic personalization
     setTimeout(() => {
       let replyText = '';
+      let prescription = null;
       const lower = q.toLowerCase();
 
       if (lower.includes('करियर') || lower.includes('career') || lower.includes('job') || lower.includes('राजयोग')) {
         replyText =
-          'आपकी पत्रिका में दशम भाव का स्वामी उच्च राशिगत है और बृहस्पति की दृष्टि कर्म भाव पर पड़ रही है। आगामी 3 से 6 महीनों में कार्यक्षेत्र में अनुकूल स्थानांतरण और पदोन्नति के प्रबल योग निर्मित हो रहे हैं। सूर्य देव को नित्य प्रातः ताम्बे के पात्र से अर्घ्य दें।';
+          'आपकी पत्रिका में दशम भाव का स्वामी उच्च राशिगत है और बृहस्पति की दृष्टि कर्म भाव पर पड़ रही है। आगामी 3 से 6 महीनों में कार्यक्षेत्र में अनुकूल स्थानांतरण और पदोन्नति के प्रबल योग निर्मित हो रहे हैं।';
+        prescription = {
+          title: 'सूर्य अर्घ्य एवं आदित्य हृदय स्तोत्र संकल्प',
+          subtitle: 'VEDIC CAREER ENHANCER',
+          text: 'नित्य प्रातः तांबे के लोटे से सूर्य देव को कुंकुम मिश्रित जल अर्पित करें और 21 बार गायत्री मंत्र का जप करें।',
+          puja_cta: 'Book Surya Shanti Puja (₹251) →',
+          puja_link: '/mandir-seva',
+        };
       } else if (lower.includes('शादी') || lower.includes('marriage') || lower.includes('love') || lower.includes('विवाह')) {
         replyText =
           'सप्तम भाव में गुरु की शुभ दृष्टि होने से विवाह का अत्यंत शुभ मुहूर्त आगामी गुरु गोचर में सक्रिय हो रहा है। गुरुवार के दिन पीले पुष्प और चने की दाल का दान आपके दांपत्य सुख में स्थिरता प्रदान करेगा।';
+        prescription = {
+          title: 'गौरी शंकर एवं बृहस्पति शांति अनुष्ठान',
+          subtitle: 'VIVAH BADHA NIVARAN',
+          text: 'गुरुवार को केले के वृक्ष का विधिवत पूजन करें और माथे पर केसर अथवा हल्दी का तिलक लगाएं।',
+          puja_cta: 'Book Gauri Shankar Puja (₹251) →',
+          puja_link: '/mandir-seva/puja/somnath-jyotirlinga-gujarat',
+        };
       } else if (lower.includes('शनि') || lower.includes('sade sati') || lower.includes('साढ़ेसाती')) {
         replyText =
-          'वर्तमान में शनि की स्थिति अनुकूल गति में है। किसी प्रकार के भय की आवश्यकता नहीं है। शनिवार के दिन पीपल के वृक्ष के नीचे सरसों के तेल का दीपक प्रज्वलित करें और हनुमान चालीसा का पाठ करें।';
+          'आपकी कुंडली में शनि देव की साढ़ेसाती का प्रभाव कर्म स्थान पर पड़ रहा है। इसके निवारण हेतु हमने आपके लिए विशेष वैदिक उपाय निर्धारित किया है। नीचे दिए गए उपाय का नियमित पालन करें।';
+        prescription = {
+          title: 'शनि तैलाभिषेक एवं नीला पुखराज (Amethyst) उपाय',
+          subtitle: 'AUTHENTIC SHASTRA REMEDY',
+          text: 'नित्य शनिवार सायंकाल पीपल के नीचे तिल के तेल का दीपक एवं 108 बार ॐ शं शनैश्चराय नमः का जप करें।',
+          puja_cta: 'Book Shani Puja (₹151) →',
+          puja_link: '/mandir-seva/puja/shani-shingnapur',
+        };
       } else if (lower.includes('रत्न') || lower.includes('gemstone')) {
         replyText =
-          'आपके लग्न और राशि के अनुसार पंचमेश की अनुकूलता हेतु पीला पुखराज (Yellow Sapphire) अथवा मानिक्य (Ruby) चांदी या अष्टधातु में धारण करना अत्यंत फलदायी रहेगा।';
+          'आपके लग्न और राशि के अनुसार पंचमेश की अनुकूलता हेतु पीला पुखराज (Yellow Sapphire) अथवा 5-मुखी रुद्राक्ष चांदी में धारण करना अत्यंत फलदायी रहेगा।';
+        prescription = {
+          title: 'सर्टिफाइड 5-मुखी रुद्राक्ष माला धारण',
+          subtitle: 'VEDIC RATNA RECOMMENDATION',
+          text: 'शुभ शुक्ल पक्ष के सोमवार या गुरुवार को गंगाजल से शुद्ध कर धारण करें।',
+          puja_cta: 'Order Consecrated Rudraksha (₹699) →',
+          puja_link: '/astro-mall',
+        };
       } else {
         replyText =
           'मैंने आपके प्रश्न का ग्रह-गोचर अनुसार सूक्ष्म विश्लेषण किया है। पराशरी सिद्धांत के अनुसार शुभ योग सक्रिय हैं। मन में एकाग्रता बनाए रखें और अपने इष्ट देव का स्मरण करें।';
@@ -139,6 +175,7 @@ export default function ConsultationRoom() {
         id: Date.now() + 1,
         sender: 'astrologer',
         text: replyText,
+        prescription: prescription,
         time: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
       };
 
@@ -310,7 +347,42 @@ export default function ConsultationRoom() {
                   </span>
                 )}
                 <p className="whitespace-pre-line">{m.text}</p>
-                <span className={`text-[10px] block text-right mt-1.5 ${isAstro ? 'text-slate-400' : 'text-amber-200/80'}`}>
+
+                {/* In-Chat Vedic Remedy Prescription Card */}
+                {m.prescription && (
+                  <div className="mt-3 p-3.5 rounded-2xl bg-gradient-to-br from-[#FFFDF8] to-[#FDF7EB] border border-[#D9A441] shadow-xs text-left">
+                    <div className="flex items-center justify-between text-[10.5px] font-extrabold uppercase tracking-wider text-[#B45309] mb-1">
+                      <span>📜 {m.prescription.subtitle || 'VEDIC REMEDY PRESCRIPTION'}</span>
+                      <span className="bg-emerald-100 text-emerald-800 text-[9px] px-1.5 py-0.5 rounded font-bold">
+                        AUTHENTIC SHASTRA
+                      </span>
+                    </div>
+                    <h4 className="font-serif text-xs sm:text-sm font-bold text-[#3E0B18] mb-1">
+                      {m.prescription.title}
+                    </h4>
+                    <p className="text-xs text-slate-600 mb-2.5 leading-relaxed">
+                      {m.prescription.text}
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => navigate(m.prescription.puja_link || '/mandir-seva')}
+                        className="px-3 py-1.5 rounded-xl text-[11px] font-bold text-[#FFF9EF] bg-[#3E0B18] hover:bg-[#5B1324] shadow-xs cursor-pointer border-0 transition-all active:scale-95"
+                      >
+                        {m.prescription.puja_cta || 'Book Vedic Puja →'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => alert('उपाय आपकी प्रोफाइल में सुरक्षित कर दिया गया है। (Saved to Profile)')}
+                        className="px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-[#78350F] bg-white border border-[#D9A441] hover:bg-amber-50 cursor-pointer transition-all"
+                      >
+                        Save to Profile
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <span className={`text-[10px] block text-right mt-2 ${isAstro ? 'text-slate-400' : 'text-amber-200/80'}`}>
                   {m.time}
                 </span>
               </div>

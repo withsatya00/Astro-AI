@@ -322,28 +322,30 @@ export default function AstroMallPage() {
             return (
               <article
                 key={p.id}
-                className="bg-white rounded-2xl border border-[#E7E2D8] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                className="bg-white rounded-2xl border border-[#E7E2D8] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group"
               >
                 <div>
-                  {/* Image container */}
+                  {/* Image container with Lab Certified Trust Shield */}
                   <div className="relative aspect-square max-h-[260px] overflow-hidden bg-amber-50">
                     <Link to={`/mall/product/${p.id}`}>
                       <img
                         src={p.image}
                         alt={p.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
                     </Link>
-                    {/* Tag badge */}
-                    <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-amber-100 text-amber-900 border border-amber-300 shadow-xs">
-                      {p.tag}
-                    </span>
+
+                    {/* Govt. Lab Certified Badge */}
+                    <div style={{ top: "10px", left: "10px" }} className="absolute bg-[#FFFDF8] border border-[#D9A441] px-2 py-0.5 rounded-md text-[9.5px] font-extrabold text-[#3E0B18] flex items-center gap-1 shadow-xs">
+                      <span>🛡️</span> LAB CERTIFIED
+                    </div>
+
                     {/* Wishlist button */}
                     <button
                       type="button"
                       onClick={() => toggleWishlist(p.id)}
-                      className="absolute top-2 right-2 w-7 h-7 rounded-full bg-white/90 text-rose-500 flex items-center justify-center text-sm shadow-xs cursor-pointer border-0"
+                      style={{ top: "10px", right: "10px" }} className="absolute w-7 h-7 rounded-full bg-white/90 hover:bg-white text-rose-500 flex items-center justify-center text-sm shadow-xs cursor-pointer border-0 transition-transform active:scale-90"
                       aria-label="Add to wishlist"
                     >
                       {isWished ? '♥' : '♡'}
@@ -351,16 +353,21 @@ export default function AstroMallPage() {
                   </div>
 
                   {/* Body */}
-                  <div className="p-3">
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block mb-0.5">
+                  <div className="p-3.5">
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">
                       {p.category}
                     </span>
                     <Link
-                      to={`/mall/product/${p.id}`}
-                      className="font-serif text-xs sm:text-sm font-bold text-[#1E1B4B] line-clamp-2 hover:text-[#B45309] no-underline leading-snug"
-                    >
-                      {p.title}
+                      to={`/mall/product/${p.id}`}>
+                      <h4 className="font-serif text-xs sm:text-sm font-bold text-[#1E1B4B] line-clamp-2 hover:text-[#B45309] no-underline leading-snug">
+                        {p.title}
+                      </h4>
                     </Link>
+
+                    {/* Consecration Note */}
+                    <div className="text-[11px] text-[#B45309] font-bold mt-1 flex items-center gap-1">
+                      <span>✨</span> Energized by Kashi Priests
+                    </div>
 
                     {/* Rating */}
                     <div className="flex items-center gap-1 mt-1 text-[11px] text-amber-500 font-bold">
@@ -373,19 +380,24 @@ export default function AstroMallPage() {
                     <div className="flex items-baseline gap-1.5 mt-2">
                       <span className="font-extrabold text-sm sm:text-base text-[#3E0B18]">₹{p.price}</span>
                       <span className="text-[11px] text-slate-400 line-through">₹{p.original_price}</span>
-                      <span className="text-[10px] font-bold text-emerald-600">-{p.discount_percent}%</span>
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
+                        -{p.discount_percent}% OFF
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Foot CTA */}
-                <div className="p-3 pt-0">
+                {/* Foot Action Button */}
+                <div className="p-3.5 pt-0">
                   <button
                     type="button"
                     onClick={() => addToCart(p)}
-                    className="w-full py-2 rounded-xl text-xs font-bold bg-[#3E0B18] text-[#FFF9EF] shadow-xs hover:brightness-110 cursor-pointer border-0 transition-all"
+                    className="w-full py-2.5 rounded-xl text-[11px] font-extrabold uppercase tracking-wider text-[#1E1B4B] shadow-xs cursor-pointer border-0 transition-all hover:brightness-105 active:scale-98"
+                    style={{
+                      background: 'linear-gradient(135deg, #D9A441 0%, #B3832B 100%)',
+                    }}
                   >
-                    + Add to Cart
+                    Add to Cart • Instant Dispatch →
                   </button>
                 </div>
               </article>

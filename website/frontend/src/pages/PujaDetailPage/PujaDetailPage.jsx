@@ -214,6 +214,21 @@ export default function PujaDetailPage() {
   };
 
   const [selectedPkg, setSelectedPkg] = useState(puja.packages[0]?.id || 'pkg-single');
+  const [secondsLeft, setSecondsLeft] = useState(15420);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setSecondsLeft((prev) => Math.max(120, prev - 1));
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const formatCountdown = (totalSecs) => {
+    const hrs = String(Math.floor(totalSecs / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0');
+    const secs = String(totalSecs % 60).padStart(2, '0');
+    return `${hrs}h : ${mins}m : ${secs}s`;
+  };
   const [devoteeName, setDevoteeName] = useState('');
   const [gotra, setGotra] = useState('');
   const [whatsappMobile, setWhatsappMobile] = useState('');
@@ -399,6 +414,33 @@ export default function PujaDetailPage() {
 
         {/* Right Column: Interactive Booking Form */}
         <div id="puja-booking-form" className="lg:col-span-5 p-6 rounded-3xl bg-white border border-[#E7E2D8] shadow-xl sticky top-24">
+          {/* Live Urgency Countdown Header */}
+          <div className="bg-[#3E0B18] text-[#FFFDF8] rounded-2xl p-3.5 mb-4 flex items-center justify-between shadow-xs">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-[#FDE68A]">
+              <span>⏳</span> Sankalp Booking Closes:
+            </span>
+            <span className="font-mono font-extrabold text-[#F8D882] text-sm tracking-wider">
+              {formatCountdown(secondsLeft)}
+            </span>
+          </div>
+
+          {/* Devotee Slots Booked Progress */}
+          <div className="bg-[#FAF7F2] border border-[#EADBCA] rounded-2xl p-3 mb-4 shadow-2xs">
+            <div className="flex items-center justify-between text-xs font-bold text-[#3E0B18] mb-1.5">
+              <span>🔥 88 / 100 Sankalp Slots Booked</span>
+              <span className="text-amber-800 font-extrabold">Only 12 Slots Left</span>
+            </div>
+            <div className="w-full bg-[#EADBCA] h-2 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: '88%',
+                  background: 'linear-gradient(90deg, #D9A441 0%, #B45309 100%)',
+                }}
+              />
+            </div>
+          </div>
+
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-extrabold uppercase tracking-wider text-[#B45309]">SANKALP BOOKING</span>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">100% Verified Pandit</span>

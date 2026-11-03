@@ -492,7 +492,25 @@ export default function MandirSevaPage({ section = 'all' }) {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [events, setEvents] = useState(MOCK_EVENTS);
+  const [secondsTick, setSecondsTick] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSecondsTick((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const getUrgencyCountdown = (seedId) => {
+    // Generate deterministic yet lively countdown per card
+    const num = seedId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const totalRemainingSecs = Math.max(300, (num * 143 + 15420 - secondsTick) % 86400);
+    const hrs = String(Math.floor(totalRemainingSecs / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((totalRemainingSecs % 3600) / 60)).padStart(2, '0');
+    const secs = String(totalRemainingSecs % 60).padStart(2, '0');
+    return `${hrs}h : ${mins}m : ${secs}s`;
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -686,8 +704,8 @@ export default function MandirSevaPage({ section = 'all' }) {
                 key={e.id}
                 className="ch-event bg-white rounded-3xl border border-[#E7E2D8] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col"
               >
-                {/* Media banner */}
-                <div className="ch-event-media relative h-52 overflow-hidden bg-slate-900 cursor-pointer" onClick={() => handleOfferChadhava(e)}>
+                {/* Media banner with Live Countdown */}
+                <div className="ch-event-media relative h-56 overflow-hidden bg-slate-900 cursor-pointer" onClick={() => handleOfferChadhava(e)}>
                   <img
                     src={e.image_url}
                     alt={e.temple?.name}
@@ -696,10 +714,10 @@ export default function MandirSevaPage({ section = 'all' }) {
                   />
                   {/* Badge top-left */}
                   <span
-                    className="absolute top-3.5 left-3.5 px-3 py-1 rounded-lg text-[11px] font-bold shadow-xs"
-                    style={{ background: '#FFFDF9', color: '#3E0B18' }}
+                    className="absolute top-3.5 left-3.5 px-3 py-1 rounded-lg text-[11px] font-bold shadow-xs uppercase tracking-wider"
+                    style={{ background: '#FFFDF9', color: '#3E0B18', border: '1px solid #E6D2B5' }}
                   >
-                    {e.tag || 'Collective seva'}
+                    {e.tag || (e.kind === 'puja' ? 'Special Puja' : 'Daily Chadhava')}
                   </span>
                   {/* Date badge top-right */}
                   <span
@@ -709,11 +727,27 @@ export default function MandirSevaPage({ section = 'all' }) {
                     <b className="text-base font-extrabold text-[#3E0B18] leading-none">{dayNum}</b>
                     <small className="text-[10px] font-bold text-[#8C787E] uppercase">{monthName}</small>
                   </span>
+
+                  {/* Urgency Countdown Bar */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-3.5 py-2 flex items-center justify-between text-xs text-[#FFFDF8]"
+                    style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(32, 4, 11, 0.95) 100%)' }}
+                  >
+                    <span className="flex items-center gap-1.5 text-[11px] font-semibold text-[#FDE68A]">
+                      <span>⏳</span> Registration Closes In:
+                    </span>
+                    <span className="font-mono font-extrabold text-[#F8D882] text-xs tracking-wider">
+                      {getUrgencyCountdown(e.id)}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Event details */}
                 <div className="ch-event-copy p-5 flex-1 flex flex-col justify-between">
                   <div>
+                    <span className="text-[10px] font-extrabold text-[#B45309] uppercase tracking-wider block mb-1">
+                      {e.kind === 'puja' ? '🔱 MAHA YAGYA • SPECIAL SANKALP' : '🪔 DAILY TEMPLE CHADHAVA'}
+                    </span>
                     <h3
                       className="font-serif text-lg font-bold text-[#1E1B4B] mb-1.5 cursor-pointer hover:text-[#B45309]"
                       onClick={() => handleOfferChadhava(e)}
@@ -721,46 +755,68 @@ export default function MandirSevaPage({ section = 'all' }) {
                       {e.title}
                     </h3>
                     <p className="text-xs text-slate-500 mb-2 font-medium">
-                      {e.temple?.name} · {e.temple?.city}
+                      📍 {e.temple?.name} · {e.temple?.city}, {e.temple?.state}
                     </p>
-                    <p className="text-xs font-bold text-[#3E0B18] mb-2">
-                      {formattedDate}, {formattedTime} IST
+                    <p className="text-xs font-bold text-[#3E0B18] mb-3">
+                      🗓️ {formattedDate}, {formattedTime} IST
                     </p>
-                    <small className="text-[11px] text-slate-500 block mb-2">
-                      Booking closes: 2 Nov 2026, 6:41 pm IST · <b className="text-amber-700 font-bold">1 day left to join</b>
-                    </small>
-                    <div className="text-xs text-slate-600 mb-2 flex items-center gap-1.5">
-                      <span>👥</span>
-                      <span>{e.devotees_joined || 1} devotee joined</span>
+
+                    {/* Live Sankalp Slots Progress Bar */}
+                    {(() => {
+                      const seed = e.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+                      const bookedSlots = Math.min(96, Math.max(68, ((seed * 7) % 30) + 68));
+                      const slotsLeft = 100 - bookedSlots;
+                      return (
+                        <div className="bg-[#FAF7F2] border border-[#EADBCA] rounded-xl p-2.5 mb-3 shadow-2xs">
+                          <div className="flex items-center justify-between text-[11px] font-bold text-[#3E0B18] mb-1.5">
+                            <span>🔥 {bookedSlots} / 100 Sankalp Slots Booked</span>
+                            <span className="text-amber-800 font-extrabold">Only {slotsLeft} Left</span>
+                          </div>
+                          <div className="w-full bg-[#EADBCA] h-2 rounded-full overflow-hidden">
+                            <div
+                              className="h-full rounded-full transition-all duration-500"
+                              style={{
+                                width: `${bookedSlots}%`,
+                                background: 'linear-gradient(90deg, #D9A441 0%, #B45309 100%)',
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
+
+                    {/* Guaranteed Video Proof Badge */}
+                    <div className="bg-[#ECFDF5] border border-[#A7F3D0] text-[#065F46] rounded-xl px-3 py-2 text-[11.5px] font-medium flex items-center gap-2 mb-3">
+                      <span className="text-sm">📹</span>
+                      <span>
+                        <strong>Guaranteed Video Proof:</strong> High-definition video with your name &amp; gotra within {e.video_hours || 48} hrs.
+                      </span>
                     </div>
-                    <p className="text-xs text-slate-500 mb-4">
-                      Video within: {e.video_hours || 72} hours after seva
-                    </p>
                   </div>
 
                   {/* Foot with price and button */}
                   <div className="ch-event-foot pt-4 border-t border-[#F2E8DC] flex items-center justify-between mt-auto">
                     <div>
-                      <span className="text-[10px] text-slate-400 block font-medium">Starts</span>
+                      <span className="text-[10px] text-slate-400 block font-medium">Starts From</span>
                       <strong className="text-lg font-extrabold text-[#3E0B18]">
-                        From ₹{e.from_price || 5}
+                        ₹{e.from_price || 51}
                       </strong>
                     </div>
                     <button
                       type="button"
-                      className="shop-btn shop-btn--gold cursor-pointer"
+                      className="cursor-pointer shadow-sm hover:shadow-md transition-all active:scale-95"
                       style={{
-                        background: '#5A0C20',
+                        background: 'linear-gradient(135deg, #3E0B18 0%, #5B1324 100%)',
                         color: '#FFF9EF',
-                        padding: '10px 22px',
-                        borderRadius: '9999px',
+                        padding: '10px 20px',
+                        borderRadius: '12px',
                         fontWeight: 700,
                         fontSize: '12px',
                         border: 'none',
                       }}
                       onClick={() => handleOfferChadhava(e)}
                     >
-                      Offer chadhava
+                      {e.kind === 'puja' ? 'Book Sankalp Puja →' : 'Offer Chadhava →'}
                     </button>
                   </div>
                 </div>
