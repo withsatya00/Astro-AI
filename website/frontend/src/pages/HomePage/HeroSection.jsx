@@ -1,164 +1,101 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function HeroSection() {
-  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/astrologers?search=${encodeURIComponent(searchQuery.trim())}`);
-    } else {
-      navigate('/astrologers');
-    }
-  };
-
-  const handleHowItWorksClick = () => {
-    const el = document.getElementById('home-how-works');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <>
-      <section className="home-ref-hero-banner" id="hero-section">
-        <div className="home-ref-hero-inner">
-          <div className="home-ref-hero-left">
-            {/* Eyebrow Pill */}
-            <div className="home-ref-eyebrow">
-              <span>✦ ✦</span>
-              <span>ASTRO JYOTISH • AUTHENTIC VEDIC ASTROLOGY &amp; KUNDALI PLATFORM</span>
-              <span>✦ ✦</span>
+    <section className="relative bg-[#FAF7F2] pt-6 pb-10 lg:pt-10 lg:pb-14 overflow-hidden border-b border-[#EADBCA]/40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Heading, Subtitle, CTAs & Trust Badges */}
+          <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left">
+            {/* Eyebrow with decorative gold lines */}
+            <div className="inline-flex items-center justify-center lg:justify-start gap-2 mb-3.5 text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] text-[#8C6538]">
+              <span className="w-6 sm:w-10 h-[1.5px] bg-[#D9A441]" />
+              <span>VEDIC ASTROLOGY FOR MODERN LIFE</span>
+              <span className="w-6 sm:w-10 h-[1.5px] bg-[#D9A441]" />
             </div>
 
-            {/* Main Headline */}
-            <h1 className="home-ref-hero-title">
-              Talk to India's<br />
-              Top Vedic Astrologers
+            {/* Main Headline (Exact match to reference) */}
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-[56px] xl:text-[62px] font-bold tracking-tight text-[#3E0B18] leading-[1.12] mb-4">
+              Ancient wisdom.<br />
+              <span className="text-[#C88A2C]">Personal guidance.</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="home-ref-hero-sub">
-              Get authentic guidance on career, marriage, health, finance and life's important decisions from experienced Vedic astrologers.
+            <p className="text-sm sm:text-base text-[#4A4543] max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal mb-6">
+              Consult trusted, experienced Vedic astrologers for clarity on life, relationships, career, health and more.
             </p>
 
-            {/* Search Bar with Circular Search Button */}
-            <form className="home-ref-search-bar" id="hero-search-form" onSubmit={handleSearchSubmit}>
-              <input
-                type="text"
-                id="hero-search-input"
-                className="home-ref-search-input"
-                placeholder="Search astrologer or concern..."
-                aria-label="Search astrologers, services or topics"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="home-ref-search-circle-btn" title="Search Astrologer" aria-label="Search">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.35-4.35" />
-                </svg>
-              </button>
-            </form>
-
-            {/* Trending Tags */}
-            <div className="home-ref-trending-row">
-              <span className="home-ref-trending-label">🔥 Trending:</span>
-              <Link to="/astrologers?specialty=Career" className="home-ref-trending-pill">Career Growth</Link>
-              <Link to="/astrologers?specialty=Marriage" className="home-ref-trending-pill">Marriage &amp; Love</Link>
-              <Link to="/astrologers?specialty=Wealth" className="home-ref-trending-pill">Dhan Yog</Link>
-              <Link to="/calculators/sade-sati" className="home-ref-trending-pill">Shani Sade Sati</Link>
-              <Link to="/calculators/kundali-milan" className="home-ref-trending-pill">Kundli Milan</Link>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="home-ref-cta-group">
-              <Link to="/astrologers" className="home-ref-btn-primary">
-                <span>Find an Astrologer</span>
-                <span>→</span>
+            {/* Action Buttons Row */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-6">
+              <Link
+                to="/astrologers"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-[#FFFDF8] bg-[#3E0B18] hover:bg-[#5B1324] shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 no-underline active:scale-98"
+              >
+                <span>Consult an Astrologer</span>
+                <span className="text-sm">→</span>
               </Link>
-              <button type="button" className="home-ref-btn-secondary cursor-pointer" onClick={handleHowItWorksClick}>
-                <span>▶</span>
-                <span>How It Works</span>
-              </button>
+              <Link
+                to="/calculators/kundali-milan"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-bold text-[#3E0B18] bg-[#FFFDF8] border border-[#D9A441] hover:bg-[#FAF3E6] shadow-xs transition-all flex items-center justify-center gap-2 no-underline active:scale-98"
+              >
+                <span className="text-sm">🪟</span>
+                <span>Create Free Kundli</span>
+              </Link>
             </div>
-          </div>
-        </div>
 
-        {/* Integrated 4-Item Trust Stats Strip Docked at Banner Bottom */}
-        <div className="home-ref-stats-strip">
-          {/* Stat 1: 50,000+ Happy Seekers */}
-          <div className="home-ref-stat-col">
-            <div className="home-ref-stat-icon-circle">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
+            {/* Mobile-Only Sage Artwork (shown between CTA and Trust badges on small screens) */}
+            <div className="block lg:hidden my-6">
+              <div className="relative mx-auto w-full max-w-[360px] aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-[#EADBCA] bg-[#FFFDF8]">
+                <img
+                  src="/assets/img/vedic-sage-hero.webp"
+                  alt="Vedic Astrology Scholar"
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              </div>
             </div>
-            <div>
-              <div className="home-ref-stat-num">50,000+</div>
-              <div className="home-ref-stat-lbl">Happy Seekers</div>
-            </div>
-          </div>
 
-          {/* Stat 2: 30+ Certified Astrologers */}
-          <div className="home-ref-stat-col">
-            <div className="home-ref-stat-icon-circle">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-              </svg>
-            </div>
-            <div>
-              <div className="home-ref-stat-num">30+</div>
-              <div className="home-ref-stat-lbl">Certified Astrologers</div>
-            </div>
-          </div>
-
-          {/* Stat 3: 13+ Languages */}
-          <div className="home-ref-stat-col">
-            <div className="home-ref-stat-icon-circle">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-              </svg>
-            </div>
-            <div>
-              <div className="home-ref-stat-num">13+</div>
-              <div className="home-ref-stat-lbl">Languages</div>
+            {/* Trust Badges Strip (3 Items with Green Icons) */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-5 text-[11.5px] sm:text-xs font-semibold text-slate-700">
+              <div className="flex items-center gap-1.5">
+                <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">
+                  ✓
+                </span>
+                <span>Verified Astrologers</span>
+              </div>
+              <span className="text-slate-300 hidden sm:inline">•</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-emerald-700 text-xs">🔒</span>
+                <span>Private &amp; Secure</span>
+              </div>
+              <span className="text-slate-300 hidden sm:inline">•</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-emerald-600 text-xs">★</span>
+                <span>Trusted by 10L+ Users</span>
+              </div>
             </div>
           </div>
 
-          {/* Stat 4: 60+ Consultation Areas */}
-          <div className="home-ref-stat-col">
-            <div className="home-ref-stat-icon-circle">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-              </svg>
-            </div>
-            <div>
-              <div className="home-ref-stat-num">60+</div>
-              <div className="home-ref-stat-lbl">Consultation Areas</div>
+          {/* Right Column: Desktop Sage Artwork */}
+          <div className="hidden lg:flex lg:col-span-5 items-center justify-center">
+            <div className="relative w-full max-w-[490px] aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-2 border-[#EADBCA]/70 bg-gradient-to-b from-[#FAF3E6] to-[#FAF7F2]">
+              <img
+                src="/assets/img/vedic-sage-hero.webp"
+                alt="Vedic Astrology Scholar & Sage"
+                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-102"
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Green Verified Pill Directly below Hero Banner */}
-      <div className="home-ref-verified-pill-row" id="trust-stats-section">
-        <div className="home-ref-verified-pill">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span>Professional guidance from our 30+ verified astrologers</span>
         </div>
       </div>
-    </>
+    </section>
   );
 }
-

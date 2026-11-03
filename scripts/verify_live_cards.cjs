@@ -26,3 +26,4 @@ const { chromium } = require('playwright');
   console.log('Cards screenshots captured successfully!');
   await browser.close();
 })();
+

@@ -1,9 +1,9 @@
 import React from 'react';
 import HeroSection from './HeroSection.jsx';
-import FourStepJourney from './FourStepJourney.jsx';
-import GauSewaBanner from './GauSewaBanner.jsx';
+import HomeMetricsBar from './HomeMetricsBar.jsx';
 import QuickShortcuts from './QuickShortcuts.jsx';
 import FeaturedAstrologers from './FeaturedAstrologers.jsx';
+import AstroPlusBanner from './AstroPlusBanner.jsx';
 import AstrologyServices from './AstrologyServices.jsx';
 import PanchangAndHoroscope from './PanchangAndHoroscope.jsx';
 import WhyChooseAndHowItWorks from './WhyChooseAndHowItWorks.jsx';
@@ -11,26 +11,26 @@ import TestimonialsAndFAQ from './TestimonialsAndFAQ.jsx';
 
 export default function HomePage() {
   return (
-    <div className="home-page-container">
-      {/* 1. Hero Banner with Search, Trending Tags, CTA & Trust Stats Bar */}
+    <div className="home-page-container bg-[#FAF7F2] min-h-screen">
+      {/* 1. Exact Reference Hero Section with Sage Artwork */}
       <HeroSection />
 
-      {/* 2. Four-Step Journey Section */}
-      <FourStepJourney />
+      {/* 2. 4-Item Metrics & Stats Bar */}
+      <HomeMetricsBar />
 
-      {/* 3. Gau Seva Cow Care Highlight Card */}
-      <GauSewaBanner />
-
-      {/* 4. Quick Action Service Cards */}
+      {/* 3. 5 Quick Service Feature Cards (Desktop Grid / Mobile Row) */}
       <QuickShortcuts />
 
-      {/* 5. Top Rated Astrologers Grid with Live Status & Chat/Call */}
+      {/* 4. Featured Astrologers with exact 4 reference profiles */}
       <FeaturedAstrologers />
 
-      {/* 6. Explore Astrology Services */}
+      {/* 5. Astro Plus Premium Membership Banner */}
+      <AstroPlusBanner />
+
+      {/* 6. Explore Sacred Astrology Services */}
       <AstrologyServices />
 
-      {/* 7. Today's Panchang & Daily Horoscope 2-Column Split */}
+      {/* 7. Today's Panchang & Daily Horoscope Split */}
       <PanchangAndHoroscope />
 
       {/* 8. Why Choose Us & How It Works */}
@@ -41,4 +41,3 @@ export default function HomePage() {
     </div>
   );
 }
-

@@ -119,33 +119,44 @@ export default function Navbar() {
 
   return (
     <>
-      {/* 1. Top Promo Announcement Bar */}
+      {/* 1. Top Promo Announcement Bar (Exact Match to Reference Design) */}
       {!promoDismissed && (
-        <div className="top-promo-bar bg-gradient-to-r from-[#4a1b9a] via-[#6b3fc4] to-[#D97706] text-white text-[12px] py-1.5 px-3 font-semibold shadow-inner flex items-center justify-between z-50 relative overflow-hidden w-full max-w-full">
+        <div className="top-promo-bar bg-[#3E0B18] text-[#FFFDF8] text-[12px] py-1.5 px-3 font-semibold shadow-inner flex items-center justify-between z-50 relative overflow-hidden w-full max-w-full border-b border-[#D9A441]/20">
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-2 px-2 sm:px-6 min-w-0">
-            <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
-              <span className="bg-amber-400 text-[#1E1B4B] text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wider animate-pulse shrink-0">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
+              <span
+                className="font-extrabold uppercase tracking-wider shrink-0"
+                style={{
+                  background: '#E5A83B',
+                  color: '#3E0B18',
+                  fontSize: '10px',
+                  padding: '2px 9px',
+                  borderRadius: '999px',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                }}
+              >
                 OFFER
               </span>
-              <span className="truncate block text-xs">
-                🎉 <strong>पहली ज्योतिष चर्चा ₹0 में</strong> | First Consultation Free (Code: <strong>FIRSTFREE</strong>)
+              <span className="truncate block text-xs text-[#FFFDF8]">
+                First Consultation Free · Code: <strong className="text-[#FDE68A] font-bold">FIRSTFREE</strong>
               </span>
             </div>
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => navigate('/astrologers')}
-                className="bg-white text-[#4a1b9a] hover:bg-amber-100 font-extrabold text-[11px] px-3 py-0.5 rounded-full transition-all shadow-xs cursor-pointer shrink-0"
+                className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-[11px] px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
               >
-                Claim Now ➔
+                Claim now →
               </button>
               <button
                 type="button"
                 onClick={handleDismissPromo}
-                className="promo-dismiss text-white/80 hover:text-white text-base leading-none px-1 cursor-pointer bg-transparent border-0"
+                className="promo-dismiss text-white/80 hover:text-white text-sm leading-none px-1 cursor-pointer bg-transparent border-0"
                 aria-label="Dismiss offer"
               >
-                ×
+                ✕
               </button>
             </div>
           </div>

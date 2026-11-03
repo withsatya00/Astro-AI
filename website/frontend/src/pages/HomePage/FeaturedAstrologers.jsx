@@ -1,236 +1,115 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const DEFAULT_ASTROLOGERS = [
-  {
-    id: 'pt-rameshwar-dwivedi',
-    name: 'Pt. Rameshwar Dwivedi',
-    avatar: '/assets/portraits/pt-rameshwar-dwivedi.jpg',
-    fallbackAvatar: '/assets/portraits/pt-rameshwar-dwivedi.svg',
-    status: 'Online',
-    rating: 4.9,
-    reviews: '2.1k reviews',
-    exp: '25+ Years',
-    specs: 'Vedic Astrology, Career, Business, Finance, Vastu',
-    languages: ['Hindi', 'English', 'Sanskrit'],
-    rate: 71,
-  },
-  {
-    id: 'acharya-kn-rao',
-    name: 'Acharya K.N. Rao Ji',
-    avatar: '/assets/portraits/acharya-kn-rao.jpg',
-    fallbackAvatar: '/assets/portraits/acharya-kn-rao.svg',
-    status: 'Online',
-    rating: 4.8,
-    reviews: '1.8k reviews',
-    exp: '18+ Years',
-    specs: 'Kundli Analysis, Dasha, Career, Marriage, Vastu',
-    languages: ['Hindi', 'English', 'Gujarati'],
-    rate: 61,
-  },
-  {
-    id: 'vidushi-sunita-sharma',
-    name: 'Vidushi Sunita Sharma',
-    avatar: '/assets/portraits/vidushi-sunita-sharma.jpg',
-    fallbackAvatar: '/assets/portraits/vidushi-sunita-sharma.svg',
-    status: 'Online',
-    rating: 4.9,
-    reviews: '1.5k reviews',
-    exp: '15+ Years',
-    specs: 'Tarot Reading, Love, Relationship, Numerology',
-    languages: ['Hindi', 'English', 'Punjabi'],
-    rate: 51,
-  },
-  {
-    id: 'dr-arvind-mohan',
-    name: 'Dr. Arvind Mohan',
-    avatar: '/assets/portraits/dr-arvind-mohan.jpg',
-    fallbackAvatar: '/assets/portraits/dr-arvind-mohan.svg',
-    status: 'Online',
-    rating: 4.8,
-    reviews: '1.2k reviews',
-    exp: '20+ Years',
-    specs: 'Medical Astrology, Career, KP Astrology',
-    languages: ['Hindi', 'English', 'Bengali'],
-    rate: 65,
-  },
-  {
-    id: 'acharya-vishwanath',
-    name: 'Acharya Vishwanath',
-    avatar: '/assets/portraits/acharya-vishwanath.jpg',
-    fallbackAvatar: '/assets/portraits/acharya-vishwanath.svg',
-    status: 'Online',
-    rating: 4.9,
-    reviews: '2.4k reviews',
-    exp: '22+ Years',
-    specs: 'Vedic Astrology, Prashna Kundli, Gemology',
-    languages: ['Hindi', 'Sanskrit', 'Marathi'],
-    rate: 75,
-  },
-  {
-    id: 'vidushi-tarot-aradhana',
-    name: 'Vidushi Tarot Aradhana',
-    avatar: '/assets/portraits/vidushi-tarot-aradhana.jpg',
-    fallbackAvatar: '/assets/portraits/vidushi-tarot-aradhana.svg',
-    status: 'Online',
-    rating: 4.7,
-    reviews: '980 reviews',
-    exp: '11+ Years',
-    specs: 'Tarot, Crystal Healing, Relationship, Career',
-    languages: ['Hindi', 'English'],
-    rate: 45,
-  },
-];
-
 export default function FeaturedAstrologers() {
-  const [favorites, setFavorites] = useState({});
   const navigate = useNavigate();
 
-  const toggleFavorite = (id) => {
-    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const handleStartChat = (slug) => {
-    if (window.App && typeof window.App.startConsultationWith === 'function') {
-      window.App.startConsultationWith(slug);
-    } else {
-      navigate(`/astrologers/${slug}`);
-    }
-  };
-
-  const handleStartCall = (slug) => {
-    if (window.App && typeof window.App.startCallWith === 'function') {
-      window.App.startCallWith(slug);
-    } else {
-      navigate(`/astrologers/${slug}`);
-    }
-  };
+  const astrologers = [
+    {
+      id: 'jyotishi-devendra',
+      name: 'Acharya Devendra Ji',
+      slug: 'jyotishi-devendra',
+      avatar: '/assets/portraits/acharya-devendra-ref.jpg',
+      specs: 'Vedic Astrology, Kundli, Career',
+      rating: '4.9 (12.4K)',
+      exp: '18+ Yrs',
+      status: 'Online',
+    },
+    {
+      id: 'dr-meera-sharma',
+      name: 'Dr. Meera Sharma',
+      slug: 'dr-meera-sharma',
+      avatar: '/assets/portraits/dr-meera-sharma-ref.jpg',
+      specs: 'Marriage, Relationships, Life Path',
+      rating: '4.8 (8.9K)',
+      exp: '12+ Yrs',
+      status: 'Online',
+    },
+    {
+      id: 'acharya-raghavendra',
+      name: 'Pandit Raghav Joshi',
+      slug: 'acharya-raghavendra',
+      avatar: '/assets/portraits/pandit-raghav-ref.jpg',
+      specs: 'Finance, Business, Property',
+      rating: '4.9 (10.7K)',
+      exp: '20+ Yrs',
+      status: 'Online',
+    },
+    {
+      id: 'acharya-shastri',
+      name: 'Acharya Nitin Trivedi',
+      slug: 'acharya-shastri',
+      avatar: '/assets/portraits/acharya-nitin-ref.jpg',
+      specs: 'Health, Remedies, Vastu',
+      rating: '4.8 (6.3K)',
+      exp: '15+ Yrs',
+      status: 'Online',
+    },
+  ];
 
   return (
-    <section className="home-ref-astrologers-sec" id="featured-astrologers-section">
-      {/* Header with Live Status & View All Link */}
-      <div className="home-ref-astrologers-header">
-        <div>
-          <div className="home-ref-live-pill">
-            <span className="home-ref-live-dot"></span>
-            <span>Live Astrologer Online Now: 25+ Available</span>
-          </div>
-          <h2 className="home-ref-section-title">Meet Our Top Vedic Astrologers</h2>
-          <p className="home-ref-section-sub">
-            Certified, experienced and approachable astrologers with authentic Vedic knowledge, personalized advice and trusted remedies.
-          </p>
-        </div>
-        <Link to="/astrologers" className="home-ref-btn-outline no-underline">
-          <span>View All 30+ Astrologers</span>
-          <span>→</span>
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#1E1B4B]">
+          Featured Astrologers
+        </h2>
+        <Link
+          to="/astrologers"
+          className="text-xs sm:text-sm font-bold text-[#3E0B18] hover:text-[#B45309] no-underline flex items-center gap-1 transition-colors"
+        >
+          View All Astrologers →
         </Link>
       </div>
 
-      {/* 3x2 Grid for Top Astrologers */}
-      <div className="home-ref-astro-grid" id="home-featured-grid">
-        {DEFAULT_ASTROLOGERS.map((astro) => (
-          <article key={astro.id} className="home-ref-astro-card" data-id={astro.id}>
-            <div className="home-ref-astro-top">
-              <div
-                className="home-ref-astro-avatar-wrap cursor-pointer"
-                onClick={() => navigate(`/astrologers/${astro.id}`)}
-              >
-                <img
-                  src={astro.avatar}
-                  alt={astro.name}
-                  className="home-ref-astro-avatar"
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    if (e.target.src !== astro.fallbackAvatar) {
-                      e.target.src = astro.fallbackAvatar;
-                    } else {
-                      e.target.src = '/assets/portraits/default-avatar.svg';
-                    }
-                  }}
-                />
-              </div>
-              <div className="home-ref-astro-info">
-                <div className="home-ref-astro-status-row">
-                  <span className="home-ref-astro-status home-ref-astro-status--online">
-                    <span className="home-ref-astro-status-dot"></span> Online
-                  </span>
-                  <button
-                    type="button"
-                    className={`home-ref-astro-heart cursor-pointer ${favorites[astro.id] ? 'active text-rose-500' : ''}`}
-                    aria-label="Save astrologer"
-                    title="Save astrologer"
-                    onClick={() => toggleFavorite(astro.id)}
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      width="16"
-                      height="16"
-                      fill={favorites[astro.id] ? 'currentColor' : 'none'}
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                    </svg>
-                  </button>
+      {/* Cards Grid: 2 columns on mobile, 4 columns on desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {astrologers.map((astro) => (
+          <article
+            key={astro.id}
+            onClick={() => navigate(`/consultation/${astro.slug || astro.id}`)}
+            className="bg-white rounded-2xl border border-[#E7E2D8] p-3 sm:p-4 shadow-2xs hover:shadow-md hover:border-[#D9A441] transition-all cursor-pointer flex flex-col justify-between group active:scale-98"
+          >
+            <div>
+              {/* Top Row: Avatar & Status */}
+              <div className="flex items-start justify-between mb-2.5">
+                <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden bg-amber-50 border border-[#EADBCA] shrink-0">
+                  <img
+                    src={astro.avatar}
+                    alt={astro.name}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
                 </div>
-                <h3
-                  className="home-ref-astro-name cursor-pointer"
-                  onClick={() => navigate(`/astrologers/${astro.id}`)}
-                >
+                <div className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>{astro.status}</span>
+                </div>
+              </div>
+
+              {/* Astrologer Name & Verified Tick */}
+              <div className="flex items-center gap-1 mb-1">
+                <h3 className="font-serif text-xs sm:text-sm font-bold text-[#1E1B4B] group-hover:text-[#B45309] transition-colors truncate">
                   {astro.name}
                 </h3>
-              </div>
-            </div>
-
-            <div className="home-ref-astro-meta-row">
-              <span className="home-ref-astro-rating">
-                <span className="home-ref-astro-rating-star">★</span> {astro.rating}{' '}
-                <small className="text-slate-400 font-normal">({astro.reviews})</small>
-              </span>
-              <span>⏱ {astro.exp}</span>
-            </div>
-
-            <p className="home-ref-astro-specs" title={astro.specs}>
-              {astro.specs}
-            </p>
-
-            <div className="home-ref-astro-langs">
-              {astro.languages.map((lang, lIdx) => (
-                <span key={lIdx} className="home-ref-astro-lang-tag">
-                  {lang}
+                <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white text-[8px] font-bold flex items-center justify-center shrink-0">
+                  ✓
                 </span>
-              ))}
+              </div>
+
+              {/* Specialities */}
+              <p className="text-[10.5px] sm:text-xs text-slate-500 font-medium line-clamp-1 mb-2.5">
+                {astro.specs}
+              </p>
             </div>
 
-            <div className="home-ref-astro-bottom">
-              <div className="home-ref-astro-rate">
-                ₹{astro.rate}
-                <small>/min</small>
-              </div>
-              <div className="home-ref-astro-actions">
-                <button
-                  type="button"
-                  className="home-ref-astro-btn-chat cursor-pointer"
-                  onClick={() => handleStartChat(astro.id)}
-                >
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-                  </svg>
-                  <span>Chat</span>
-                </button>
-                <button
-                  type="button"
-                  className="home-ref-astro-btn-call cursor-pointer"
-                  title={`Call ${astro.name}`}
-                  aria-label="Call"
-                  onClick={() => handleStartCall(astro.id)}
-                >
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                </button>
-              </div>
+            {/* Rating & Experience Foot */}
+            <div className="pt-2 border-t border-[#F2ECE1] flex items-center justify-between text-[11px] sm:text-xs">
+              <span className="font-bold text-[#1E1B4B] flex items-center gap-1">
+                <span className="text-amber-500">★</span>
+                <span>{astro.rating}</span>
+              </span>
+              <span className="text-slate-500 font-semibold">{astro.exp}</span>
             </div>
           </article>
         ))}
@@ -238,4 +117,3 @@ export default function FeaturedAstrologers() {
     </section>
   );
 }
-

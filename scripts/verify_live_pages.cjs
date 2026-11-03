@@ -29,3 +29,4 @@ const path = require('path');
   console.log('All live pages verified successfully!');
   await browser.close();
 })();
+
