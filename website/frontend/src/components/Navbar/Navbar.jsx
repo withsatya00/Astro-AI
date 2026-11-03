@@ -123,47 +123,90 @@ export default function Navbar() {
       {!promoDismissed && (
         <div className="top-promo-bar bg-[#3E0B18] text-[#FFFDF8] text-[12px] py-1.5 px-3 font-semibold shadow-inner flex items-center justify-between z-50 relative overflow-hidden w-full max-w-full border-b border-[#D9A441]/20">
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-2 px-2 sm:px-6 min-w-0">
-            <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
-              <span
-                className="font-extrabold uppercase tracking-wider shrink-0"
-                style={{
-                  background: '#E5A83B',
-                  color: '#3E0B18',
-                  fontSize: '10px',
-                  padding: '2px 9px',
-                  borderRadius: '999px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                }}
-              >
-                OFFER
-              </span>
-              <span className="truncate block text-xs text-[#FFFDF8]">
-                First Consultation Free · Code: <strong className="text-[#FDE68A] font-bold">FIRSTFREE</strong>
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 shrink-0">
-              <button
-                type="button"
-                onClick={() => navigate('/astrologers')}
-                className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-[11px] px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
-              >
-                Claim now →
-              </button>
-              <button
-                type="button"
-                onClick={handleDismissPromo}
-                className="promo-dismiss text-white/80 hover:text-white text-sm leading-none px-1 cursor-pointer bg-transparent border-0"
-                aria-label="Dismiss offer"
-              >
-                ✕
-              </button>
-            </div>
+            {location.pathname.startsWith('/astrologers') ? (
+              <>
+                <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
+                  <span
+                    className="font-extrabold uppercase tracking-wider shrink-0 shadow-xs"
+                    style={{
+                      background: '#F8D882',
+                      color: '#3E0B18',
+                      fontSize: '10px',
+                      padding: '2px 9px',
+                      borderRadius: '999px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    New
+                  </span>
+                  <span className="truncate block text-xs text-[#FFFDF8] font-medium">
+                    Consult Verified Astrologers 24x7 · Chat | Call | Remedies | Kundli
+                  </span>
+                </div>
+                <div className="flex items-center gap-3.5 shrink-0 text-xs text-[#FFFDF8]">
+                  <span className="cursor-pointer hover:text-[#F8D882] flex items-center gap-1 font-normal">
+                    Download App <span className="text-[13px]">📱</span> <span className="text-[13px]">🍎</span>
+                  </span>
+                  <span className="text-white/30 hidden sm:inline">|</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (window.App && window.App.openContactModal) window.App.openContactModal();
+                      else navigate('/help');
+                    }}
+                    className="cursor-pointer hover:text-[#F8D882] hidden sm:flex items-center gap-1 bg-transparent border-0 text-[#FFFDF8] text-xs font-normal"
+                  >
+                    🎧 Need Help?
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
+                  <span
+                    className="font-extrabold uppercase tracking-wider shrink-0"
+                    style={{
+                      background: '#E5A83B',
+                      color: '#3E0B18',
+                      fontSize: '10px',
+                      padding: '2px 9px',
+                      borderRadius: '999px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    OFFER
+                  </span>
+                  <span className="truncate block text-xs text-[#FFFDF8]">
+                    First Consultation Free · Code: <strong className="text-[#FDE68A] font-bold">FIRSTFREE</strong>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/astrologers')}
+                    className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-[11px] px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
+                  >
+                    Claim now →
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDismissPromo}
+                    className="promo-dismiss text-white/80 hover:text-white text-sm leading-none px-1 cursor-pointer bg-transparent border-0"
+                    aria-label="Dismiss offer"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
 
       {/* 2. Live Planetary Ephemeris Ticker */}
+      {!location.pathname.startsWith('/astrologers') && (
       <div className="ephemeris-ticker-bar bg-[#1E1B4B] text-amber-100 text-[11px] py-1 px-3 border-b border-[#D97706]/30 overflow-hidden relative shadow-xs z-40 select-none w-full max-w-full">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 min-w-0">
           <div className="ephemeris-title-tag shrink-0 hidden sm:flex items-center gap-1.5 font-bold text-[#FCD34D] text-[10px] tracking-wider uppercase bg-[#1e0b44] px-2 py-0.5 rounded border border-[#D97706]/40">
@@ -190,6 +233,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      )}
 
       {/* 3. Sticky Site Navbar */}
       <header className="site-navbar sticky top-0 z-50 bg-[#FFFDF7]/95 backdrop-blur-md border-b border-[#E7E2D8] shadow-xs w-full max-w-full" id="site-navbar">
@@ -232,6 +276,14 @@ export default function Navbar() {
               className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 ${isActive ? 'active text-[#4a1b9a]' : ''}`}
             >
               Astrologers
+            </NavLink>
+
+            <NavLink
+              to="/bhakti"
+              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+            >
+              <span aria-hidden="true">🪷</span>
+              <span>Bhakti</span>
             </NavLink>
 
             {/* Mandir Seva Dropdown */}
@@ -616,6 +668,13 @@ export default function Navbar() {
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🪔</span> <span>Chadhava (चढ़ावा)</span>
+            </Link>
+            <Link
+              to="/bhakti"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              onClick={() => setMobileDrawerOpen(false)}
+            >
+              <span>🪷</span> <span>Bhakti (भक्ति)</span>
             </Link>
             <Link
               to="/gau-sewa"

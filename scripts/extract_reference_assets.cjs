@@ -65,3 +65,4 @@ const fs = require('fs');
 
   console.log('✅ All reference portraits extracted!');
 })();
+

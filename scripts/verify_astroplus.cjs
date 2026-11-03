@@ -20,3 +20,4 @@ const { chromium } = require('playwright');
   console.log('Astro Plus banner screenshot captured!');
   await browser.close();
 })();
+

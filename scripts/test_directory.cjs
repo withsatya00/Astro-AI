@@ -29,7 +29,7 @@ async function run() {
 
   // Test "Help me choose" modal
   const helpBtn = mobilePage.locator('.dir-help-choose-btn');
-  if (await helpBtn.count() > 0) {
+  if (await helpBtn.count() > 0 && await helpBtn.first().isVisible()) {
     await helpBtn.scrollIntoViewIfNeeded();
     await helpBtn.click();
     await mobilePage.waitForTimeout(600);

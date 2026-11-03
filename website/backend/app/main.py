@@ -11,7 +11,7 @@ from pathlib import Path
 import time
 from packages.core.logging import logger
 from packages.database.session import init_db
-from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa
+from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa, bhakti, bhakti_content
 
 app = FastAPI(
     title="Astro Jyotish Website Backend",
@@ -96,7 +96,7 @@ app.include_router(voice.router, prefix=API_V1_PREFIX)
 app.include_router(mandir.router, prefix=API_V1_PREFIX)
 app.include_router(marketplace.router, prefix=API_V1_PREFIX)
 app.include_router(notifications.router, prefix=API_V1_PREFIX)
-for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router, experience.router, gau_sewa.router):
+for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router, experience.router, gau_sewa.router, bhakti.router, bhakti_content.router):
     app.include_router(_router, prefix=API_V1_PREFIX)
 
 # Optional inclusion of AI routers for unified production gateway
@@ -204,6 +204,7 @@ def on_startup():
             mandir.seed_packages_and_coupons(db)
             experience.ensure_pack_coupons(db)
             gau_sewa.seed_gaushalas_if_empty(db)
+            bhakti.seed_bhakti_if_empty(db)
         finally:
             db.close()
     except Exception as e:

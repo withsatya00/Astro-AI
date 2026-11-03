@@ -36,3 +36,4 @@ const path = require('path');
   console.log('Homepage reference screenshots captured successfully!');
   await browser.close();
 })();
+

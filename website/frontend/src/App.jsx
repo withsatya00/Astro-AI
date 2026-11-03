@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
@@ -14,6 +14,13 @@ import CalculatorsPage from './pages/CalculatorsPage/CalculatorsPage.jsx';
 import ConsultationRoom from './pages/ConsultationPage/ConsultationRoom.jsx';
 import WalletPage from './pages/WalletPage/WalletPage.jsx';
 import PanchangAndHoroscope from './pages/HomePage/PanchangAndHoroscope.jsx';
+const BhaktiLayout = lazy(() => import('./pages/BhaktiPage/BhaktiLayout.jsx'));
+const BhaktiHome = lazy(() => import('./pages/BhaktiPage/BhaktiHome.jsx'));
+const NaamJaap = lazy(() => import('./pages/BhaktiPage/NaamJaap.jsx'));
+const MyBhakti = lazy(() => import('./pages/BhaktiPage/MyBhakti.jsx'));
+const AartiLibrary = lazy(() => import('./pages/BhaktiPage/AartiLibrary.jsx'));
+const AartiDetail = lazy(() => import('./pages/BhaktiPage/AartiDetail.jsx'));
+const ComingSoon = lazy(() => import('./pages/BhaktiPage/ComingSoon.jsx'));
 
 export default function App() {
   return (
@@ -45,6 +52,22 @@ export default function App() {
           <Route path="/calculators/:slug" element={<CalculatorsPage />} />
           <Route path="/rashiphal" element={<RashiphalDedicatedPage />} />
           <Route path="/panchang" element={<PanchangDedicatedPage />} />
+          <Route path="/bhakti" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><BhaktiLayout /></Suspense>}>
+            <Route index element={<BhaktiHome />} />
+            <Route path="naam-jaap" element={<NaamJaap />} />
+            <Route path="my-bhakti" element={<MyBhakti />} />
+            <Route path="aarti-chalisa" element={<AartiLibrary />} />
+            <Route path="aarti-chalisa/:slug" element={<AartiDetail />} />
+            <Route path="shankaracharya" element={<ComingSoon title="Shankaracharya" hi="शंकराचार्य" />} />
+            <Route path="vedanta" element={<ComingSoon title="Vedanta" hi="वेदांत" />} />
+            <Route path="bhagavad-gita" element={<ComingSoon title="Bhagavad Gita" hi="भगवद्गीता" />} />
+            <Route path="bhagavad-gita/:chapter" element={<ComingSoon title="Bhagavad Gita" />} />
+            <Route path="bhajan-radio" element={<ComingSoon title="Bhajan Radio" hi="भजन रेडियो" />} />
+            <Route path="mandir-darshan" element={<ComingSoon title="Mandir Darshan" hi="मंदिर दर्शन" />} />
+            <Route path="mandir-darshan/:slug" element={<ComingSoon title="Mandir Darshan" />} />
+            <Route path="puja-vidhi" element={<ComingSoon title="Puja Vidhi" hi="पूजा विधि" />} />
+            <Route path="festivals" element={<ComingSoon title="Festivals & Vrat" hi="व्रत त्योहार" />} />
+          </Route>
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/profile" element={<ProfileView />} />
           <Route path="*" element={<NotFoundView />} />
