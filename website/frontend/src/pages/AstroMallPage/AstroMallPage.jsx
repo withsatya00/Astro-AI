@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { fetchProducts, fromReference, reviewCount } from './mallApi.js';
 
 export const REFERENCE_PRODUCTS = [
   {
@@ -129,7 +130,7 @@ export default function AstroMallPage() {
   // ?category= lets other pages (e.g. Bhakti) land on a filtered shelf; unknown values fall back to all products.
   const [activeCategory, setActiveCategory] = useState(() => {
     const c = searchParams.get('category');
-    return ['rudraksha', 'mala', 'yantra', 'puja_essentials', 'idols'].includes(c) ? c : 'all';
+    return ['rudraksha', 'mala', 'yantra', 'puja_essentials', 'idols', 'gemstone'].includes(c) ? c : 'all';
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
@@ -138,9 +139,20 @@ export default function AstroMallPage() {
   const [wishlist, setWishlist] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
+  // The live catalogue; the hand-written reference products are used only if the API cannot be reached.
+  const [products, setProducts] = useState(null);
+  const [offline, setOffline] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    let alive = true;
+    fetchProducts()
+      .then((list) => { if (alive) { setProducts(list); setOffline(false); } })
+      .catch(() => { if (alive) { setProducts(REFERENCE_PRODUCTS.map(fromReference)); setOffline(true); } });
+    return () => { alive = false; };
   }, []);
 
   const categoryChips = [
@@ -150,10 +162,11 @@ export default function AstroMallPage() {
     { id: 'yantra', label: 'Yantra' },
     { id: 'puja_essentials', label: 'Puja Essentials' },
     { id: 'idols', label: 'Idols & Kavach' },
+    { id: 'gemstone', label: 'Gemstones' },
   ];
 
   const filteredProducts = useMemo(() => {
-    return REFERENCE_PRODUCTS.filter((p) => {
+    return (products || []).filter((p) => {
       if (activeCategory !== 'all' && p.category_id !== activeCategory) return false;
       if (inStockOnly && !p.in_stock) return false;
       if (searchQuery.trim()) {
@@ -169,9 +182,9 @@ export default function AstroMallPage() {
       if (sortBy === 'price_asc') return a.price - b.price;
       if (sortBy === 'price_desc') return b.price - a.price;
       if (sortBy === 'rating') return b.rating - a.rating;
-      return Number(b.reviews.replace(',', '')) - Number(a.reviews.replace(',', ''));
+      return reviewCount(b) - reviewCount(a) || b.rating - a.rating;
     });
-  }, [activeCategory, searchQuery, sortBy, inStockOnly]);
+  }, [products, activeCategory, searchQuery, sortBy, inStockOnly]);
 
   const toggleWishlist = (id) => {
     setWishlist((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
@@ -303,6 +316,7 @@ export default function AstroMallPage() {
               <option value="yantra">Yantra</option>
               <option value="puja_essentials">Puja Essentials</option>
               <option value="idols">Idols &amp; Kavach</option>
+              <option value="gemstone">Gemstones</option>
             </select>
 
             <select
@@ -322,7 +336,12 @@ export default function AstroMallPage() {
 
       {/* 4. Product Grid (2 columns on mobile, 4 columns on desktop) */}
       <section className="max-w-7xl mx-auto px-4 mt-8">
+        {offline && <p role="status" className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-4">The live catalogue could not be loaded, so sample products are shown.</p>}
+        {products && filteredProducts.length === 0 && (
+          <p role="status" className="text-sm text-slate-600 bg-white border border-[#E7E2D8] rounded-2xl p-6 text-center">No products match this selection yet. Try another category or clear the search.</p>
+        )}
         <div className="ml-products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+          {!products && [0, 1, 2, 3].map((i) => <div key={i} aria-hidden="true" className="rounded-2xl bg-white border border-[#E7E2D8] aspect-[3/4] animate-pulse" />)}
           {filteredProducts.map((p) => {
             const isWished = wishlist.includes(p.id);
             return (
@@ -343,9 +362,9 @@ export default function AstroMallPage() {
                     </Link>
 
                     {/* Govt. Lab Certified Badge */}
-                    <div style={{ top: "10px", left: "10px" }} className="absolute bg-[#FFFDF8] border border-[#D9A441] px-2 py-0.5 rounded-md text-[11.5px] font-extrabold text-[#3E0B18] flex items-center gap-1 shadow-xs">
+                    {p.lab_certified && <div style={{ top: "10px", left: "10px" }} className="absolute bg-[#FFFDF8] border border-[#D9A441] px-2 py-0.5 rounded-md text-[11.5px] font-extrabold text-[#3E0B18] flex items-center gap-1 shadow-xs">
                       <span>🛡️</span> LAB CERTIFIED
-                    </div>
+                    </div>}
 
                     {/* Wishlist button */}
                     <button
@@ -371,16 +390,16 @@ export default function AstroMallPage() {
                     </Link>
 
                     {/* Consecration Note */}
-                    <div className="text-[11px] text-[#B45309] font-bold mt-1 flex items-center gap-1">
-                      <span>✨</span> Energized by Kashi Priests
-                    </div>
+                    {p.energized && <div className="text-[11px] text-[#B45309] font-bold mt-1 flex items-center gap-1">
+                      <span>✨</span> {p.energized}
+                    </div>}
 
                     {/* Rating */}
-                    <div className="flex items-center gap-1 mt-1 text-[11px] text-amber-500 font-bold">
+                    {reviewCount(p) > 0 && <div className="flex items-center gap-1 mt-1 text-[11px] text-amber-500 font-bold">
                       <span>★</span>
                       <span className="text-[#1E1B4B]">{p.rating}</span>
                       <span className="text-slate-400 font-normal">({p.reviews})</span>
-                    </div>
+                    </div>}
 
                     {/* Pricing */}
                     <div className="flex items-baseline gap-1.5 mt-2">

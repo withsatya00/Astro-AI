@@ -7,13 +7,13 @@ export const WEEKDAY = [
   { slug: 'ram', day: 'Ravivaar', name: 'Shri Ram', line: 'Ravivaar Surya aur Shri Ram ka din hai', mall: 'mala' },
   { slug: 'shiva', day: 'Somvaar', name: 'Bhole Nath', line: 'Somvaar Bhagwan Shiv ka din hai', mall: 'rudraksha' },
   { slug: 'hanuman', day: 'Mangalvaar', name: 'Hanuman Ji', line: 'Mangalvaar Hanuman Ji ka din hai', mall: 'puja_essentials' },
-  { slug: 'ganesh', day: 'Budhvaar', name: 'Ganesh Ji', line: 'Budhvaar Shri Ganesh ka din hai', mall: 'idols' },
+  { slug: 'ganesh', day: 'Budhvaar', name: 'Ganesh Ji', line: 'Budhvaar Shri Ganesh ka din hai', mall: 'puja_essentials' },
   { slug: 'krishna', day: 'Guruvaar', name: 'Vishnu · Krishna', line: 'Guruvaar Bhagwan Vishnu ka din hai', mall: 'mala' },
   { slug: 'durga', day: 'Shukravaar', name: 'Maa Durga · Lakshmi', line: 'Shukravaar Devi Maa ka din hai', mall: 'yantra' },
   { slug: 'hanuman', day: 'Shanivaar', name: 'Hanuman Ji', line: 'Shanivaar Hanuman Ji aur Shani Dev ka din hai', mall: 'puja_essentials' },
 ];
 
-export const MALL_FOR_DEITY = { shiva: 'rudraksha', hanuman: 'puja_essentials', ganesh: 'idols', durga: 'yantra', krishna: 'mala', vishnu: 'mala', ram: 'mala' };
+export const MALL_FOR_DEITY = { shiva: 'rudraksha', hanuman: 'puja_essentials', ganesh: 'puja_essentials', durga: 'yantra', krishna: 'mala', vishnu: 'mala', ram: 'mala' };
 
 export const todayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const KEY = 'bhakti_daily_ritual_v1';

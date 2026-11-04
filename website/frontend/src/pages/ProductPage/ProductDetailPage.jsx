@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { REFERENCE_PRODUCTS } from '../AstroMallPage/AstroMallPage.jsx';
+import { fetchProduct, fromReference, reviewCount } from '../AstroMallPage/mallApi.js';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -9,14 +10,35 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('details');
 
-  const product =
-    REFERENCE_PRODUCTS.find((p) => p.id === id) || REFERENCE_PRODUCTS[0];
+  // Reference ids ("prod-...") come from the design samples; every other id is a real catalogue product loaded from the API.
+  const sample = REFERENCE_PRODUCTS.find((p) => p.id === id);
+  const [product, setProduct] = useState(sample ? fromReference(sample) : null);
+  const [missing, setMissing] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [id]);
+    setPhotoIndex(0);
+    if (sample) { setProduct(fromReference(sample)); setMissing(false); return undefined; }
+    let alive = true;
+    setProduct(null); setMissing(false);
+    fetchProduct(id).then((p) => { if (!alive) return; if (p) setProduct(p); else setMissing(true); }).catch(() => { if (alive) setMissing(true); });
+    return () => { alive = false; };
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const photos = [
+  if (missing) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center">
+        <h1 className="font-serif text-2xl font-bold text-[#1E1B4B] mb-2">Product not available</h1>
+        <p className="text-sm text-slate-600 mb-6">This item may have been removed or is no longer listed.</p>
+        <Link to="/astro-mall" className="inline-block bg-[#3E0B18] text-[#FFF9EF] font-bold text-sm px-5 py-3 rounded-full no-underline">Back to Astro Mall</Link>
+      </div>
+    );
+  }
+  if (!product) {
+    return <div className="max-w-6xl mx-auto px-4 py-10" role="status" aria-label="Loading product"><div className="rounded-3xl bg-white border border-[#E7E2D8] h-96 animate-pulse" /></div>;
+  }
+
+  const photos = product.images && product.images.length ? product.images : [
     product.image,
     '/assets/img/products/kamalgatta-mala.jpg',
     '/assets/img/products/sphatik-mala.jpg',
@@ -67,10 +89,12 @@ export default function ProductDetailPage() {
           <div className="md:col-span-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-extrabold uppercase">
+                {(product.tag || sample) && <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11.5px] font-extrabold uppercase">
                   {product.tag || 'Bestseller'}
-                </span>
-                <span className="text-xs text-emerald-700 font-bold">✔ In Stock &amp; Ready to Ship</span>
+                </span>}
+                {product.in_stock
+                  ? <span className="text-xs text-emerald-700 font-bold">✔ In Stock &amp; Ready to Ship</span>
+                  : <span className="text-xs text-rose-700 font-bold">Currently out of stock</span>}
               </div>
 
               <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2 leading-tight">
@@ -79,8 +103,9 @@ export default function ProductDetailPage() {
 
               {/* Rating */}
               <div className="flex items-center gap-2 mb-4 text-xs font-bold text-amber-500">
-                <span>★ {product.rating || '4.8'}</span>
-                <span className="text-slate-400 font-normal">({product.reviews || '1,240'} verified reviews)</span>
+                {reviewCount(product) > 0
+                  ? (<><span>★ {product.rating}</span><span className="text-slate-400 font-normal">({product.reviews} verified reviews)</span></>)
+                  : <span className="text-slate-400 font-normal">No reviews yet</span>}
               </div>
 
               {/* Pricing */}
@@ -95,14 +120,18 @@ export default function ProductDetailPage() {
 
               {/* Key Benefits */}
               <div className="space-y-2 mb-6 text-xs text-slate-700">
-                <div className="flex items-center gap-2">
+                {product.lab_certified && <div className="flex items-center gap-2">
                   <span className="text-amber-600 font-bold">✔</span>
-                  <span>100% Genuine, tested and certified natural Vedic item.</span>
-                </div>
-                <div className="flex items-center gap-2">
+                  <span>Comes with a lab certificate.</span>
+                </div>}
+                {product.energized && <div className="flex items-center gap-2">
                   <span className="text-amber-600 font-bold">✔</span>
-                  <span>Energized with Parashari Vedic mantras by learned scholars.</span>
-                </div>
+                  <span>{product.energized}</span>
+                </div>}
+                {product.seller && <div className="flex items-center gap-2">
+                  <span className="text-amber-600 font-bold">✔</span>
+                  <span>Sold by {product.seller}{product.seller_verified ? ' (verified seller)' : ''}.</span>
+                </div>}
                 <div className="flex items-center gap-2">
                   <span className="text-amber-600 font-bold">✔</span>
                   <span>Free doorstep delivery across all Indian pin codes.</span>
@@ -174,9 +203,12 @@ export default function ProductDetailPage() {
 
           {activeTab === 'details' && (
             <div className="space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
-              <p>
-                Each sacred item is ethically sourced and inspected for purity, density, and natural formation. In Vedic traditions, wearing or worshipping authentic spiritual instruments creates protective auric vibrations and aids mental calmness, concentration, and harmony.
-              </p>
+              {product.description
+                ? <p>{product.description}</p>
+                : <p>Each sacred item is ethically sourced and inspected for purity, density, and natural formation.</p>}
+              {(product.material || product.origin) && (
+                <p className="text-slate-600">{product.material && <>Material: {product.material}. </>}{product.origin && <>Origin: {product.origin}.</>}</p>
+              )}
               <h4 className="font-bold text-xs uppercase tracking-wider text-[#B45309] pt-2">How to Use:</h4>
               <p>
                 After taking a morning bath, hold the sacred item with folded hands facing North or East. Chant the associated deity mantra 11 or 108 times before wearing or placing it on your altar.
