@@ -3,7 +3,10 @@ Wallet & Bookings API for Astro Jyotish.
 Handles client wallet balance, simulated test-mode recharges,
 transaction ledger, and certified astrologer appointment bookings.
 """
-from fastapi import APIRouter, HTTPException, Depends
+import json
+
+from fastapi import APIRouter, HTTPException, Depends, Request
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
@@ -11,7 +14,7 @@ from datetime import datetime, timedelta, timezone
 
 from packages.database.session import get_db
 from packages.database.models import (
-    User, Astrologer, WalletTransaction, Booking, generate_uuid, utc_now
+    User, Astrologer, WalletTransaction, Booking, PaymentWebhookEvent, generate_uuid, utc_now
 )
 from website.backend.app.api.auth import get_current_user_optional
 from packages.core.identity import Owner, optional_owner
@@ -169,16 +172,89 @@ def verify_razorpay_payment(payload: RazorpayVerifyRequest, db: Session = Depend
     order = _razorpay("GET", f"/orders/{payload.razorpay_order_id}")
     if order.get("status") != "paid" or (order.get("notes") or {}).get("user_id") != current_user.id:
         raise HTTPException(status_code=400, detail="This payment does not belong to your account or is not complete.")
+    amount = _credit_recharge(db, current_user, order, payload.razorpay_payment_id)
+    db.commit()
+    if amount is None:  # the webhook credited this order first
+        db.refresh(current_user)
+        return {"status": "success", "duplicate": True, "new_balance": round(current_user.wallet_balance or 0.0, 2)}
+    return {"status": "success", "amount_added": amount, "new_balance": round(current_user.wallet_balance, 2)}
+
+
+def _credit_recharge(db: Session, user: User, order: Dict[str, Any], payment_id: str) -> Optional[float]:
+    """Adds a paid Razorpay order to the wallet exactly once. Returns the amount, or None if this order was already credited.
+
+    Both the browser callback (/razorpay/verify) and the webhook call this, so a recharge is credited even if the person closes the tab
+    after paying. The unique (provider, order id) row makes the two paths safe to run at the same time."""
     amount = round(int(order.get("amount_paid", 0)) / 100, 2)
     if amount <= 0:
         raise HTTPException(status_code=400, detail="Payment amount is invalid.")
-    current_user.wallet_balance = (current_user.wallet_balance or 0.0) + amount
-    db.add(current_user)
-    db.add(WalletTransaction(id=generate_uuid(), user_id=current_user.id, amount=amount, transaction_type="credit",
+    try:
+        db.add(PaymentWebhookEvent(provider="razorpay-wallet", event_id=str(order.get("id", ""))[:100], event_type="wallet_credit"))
+        db.flush()
+    except IntegrityError:
+        db.rollback()
+        return None
+    user.wallet_balance = (user.wallet_balance or 0.0) + amount
+    db.add(user)
+    ref = f"RZP_{payment_id}"
+    db.add(WalletTransaction(id=generate_uuid(), user_id=user.id, amount=amount, transaction_type="credit",
                              description="Wallet recharge via Razorpay", reference_id=ref, created_at=utc_now()))
-    notify(db, f"u:{current_user.id}", "wallet_recharged", "/dashboard", amount=f"{amount:.2f}", ref=ref)
+    notify(db, f"u:{user.id}", "wallet_recharged", "/dashboard", amount=f"{amount:.2f}", ref=ref)
+    return amount
+
+
+@router.post("/razorpay/webhook")
+async def razorpay_wallet_webhook(request: Request, db: Session = Depends(get_db)):
+    """Signed Razorpay webhook that credits wallet recharges the browser never confirmed (closed tab, lost connection).
+
+    Set this URL and RAZORPAY_WEBHOOK_SECRET in the Razorpay dashboard. Only orders this site created for a wallet recharge are credited."""
+    from starlette.concurrency import run_in_threadpool
+    if not settings.razorpay_webhook_enabled:
+        raise HTTPException(status_code=503, detail="Webhook secret is not configured")
+    raw = await request.body()
+    if len(raw) > 2 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="Payload too large")
+    expected = hmac.new(settings.RAZORPAY_WEBHOOK_SECRET.encode(), raw, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected, request.headers.get("X-Razorpay-Signature", "")):
+        raise HTTPException(status_code=400, detail="Invalid webhook signature")
+    try:
+        event = json.loads(raw)
+        if not isinstance(event, dict):
+            raise ValueError()
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid webhook payload")
+    event_id = request.headers.get("X-Razorpay-Event-Id") or hashlib.sha256(raw).hexdigest()
+    return await run_in_threadpool(_process_wallet_webhook, db, event, event_id)
+
+
+def _process_wallet_webhook(db: Session, event: Dict[str, Any], event_id: str) -> Dict[str, Any]:
+    etype = str(event.get("event", ""))
+    if etype not in ("payment.captured", "order.paid"):
+        return {"status": "ignored"}
+    try:
+        db.add(PaymentWebhookEvent(provider="razorpay-wallet-evt", event_id=event_id[:100], event_type=etype[:60]))
+        db.flush()
+    except IntegrityError:
+        db.rollback()
+        return {"status": "duplicate"}
+    entity = ((event.get("payload") or {}).get("payment") or {}).get("entity") or {}
+    order_id, payment_id = str(entity.get("order_id") or ""), str(entity.get("id") or "")
+    if not (order_id.startswith("order_") and order_id[6:].isalnum() and payment_id.startswith("pay_") and payment_id[4:].isalnum()):
+        db.commit()
+        return {"status": "ignored"}
+    order = _razorpay("GET", f"/orders/{order_id}")
+    user_id = (order.get("notes") or {}).get("user_id")
+    # Orders for other products (puja, chadhava, donations) share the Razorpay account; wallet orders carry a "w-" receipt.
+    if not str(order.get("receipt", "")).startswith("w-") or order.get("status") != "paid" or not user_id:
+        db.commit()
+        return {"status": "ignored"}
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        db.commit()
+        return {"status": "ignored"}
+    amount = _credit_recharge(db, user, order, payment_id)
     db.commit()
-    return {"status": "success", "amount_added": amount, "new_balance": round(current_user.wallet_balance, 2)}
+    return {"status": "ok" if amount is not None else "duplicate"}
 
 
 @router.post("/recharge")

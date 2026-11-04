@@ -243,6 +243,8 @@ One-time donations to a gaushala at `/gau-sewa`, paid through Razorpay and kept 
 
 **Razorpay webhook setup:** in the Razorpay dashboard add a webhook to `https://<your-domain>/api/v1/gau-sewa/webhook`, set the same secret as `RAZORPAY_WEBHOOK_SECRET`, and enable `payment.captured`, `payment.failed`, `order.paid`, `refund.processed` (and `refund.created`). Deliveries are idempotent (event id + guarded status change).
 
+**Wallet recharge webhook:** add a second webhook to `https://<your-domain>/api/v1/wallet/razorpay/webhook` with the same secret and the `payment.captured` and `order.paid` events. It credits a recharge when the person paid but closed the tab before the browser confirmed it; the browser callback and the webhook cannot both credit the same order. Orders for other products (puja, chadhava, donations) are ignored by this endpoint.
+
 **Before real donations can be taken:**
 1. Set the Razorpay keys (and the webhook secret) in the server environment.
 2. Sign in as an admin, open **Admin > Gau Sewa**, add the real gaushala (name, location, introduction, photos), fill in the **beneficiary name** and the note on how funds reach the gaushala, and switch **Donations on**. Collection stays closed until this is done.
