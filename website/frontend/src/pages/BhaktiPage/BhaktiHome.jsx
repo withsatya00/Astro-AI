@@ -64,7 +64,7 @@ function DailyRitual({ shlok, today, malaDone, wd, idSuffix = '' }) {
   const { done, toggle } = useRitual();
   const steps = [
     ['mantra', 'Mantra', today ? today.text_roman : 'Aaj ka mantra', '/bhakti/naam-jaap', !!done.mantra],
-    ['aarti', `${wd.name} ki Aarti`, 'Aarti padhein ya sunein', `/bhakti/aarti-chalisa?deity=${wd.slug}&kind=aarti`, !!done.aarti],
+    ['aarti', `${wd.name} ki Aarti`, 'Aarti ya path padhein', `/bhakti/aarti-chalisa?deity=${wd.slug}`, !!done.aarti],
     ['gita', 'Gita Shlok', shlok ? `Adhyay ${shlok.chapter}.${shlok.verse}` : 'Aaj ka shlok', shlok ? `/bhakti/bhagavad-gita/${shlok.chapter}#v${shlok.verse}` : '/bhakti/bhagavad-gita', !!done.gita],
     ['jaap', '1 Mala (108) Jaap', malaDone ? 'Poorn ho gayi' : 'Naam jaap shuru karein', '/bhakti/naam-jaap', !!done.jaap || malaDone],
   ];
@@ -211,7 +211,7 @@ export default function BhaktiHome() {
           <p>अपने दिन की शुरुआत प्रभु के नाम और सकारात्मक विचारों के साथ करें।</p>
           <div className="bh-cta-row">
             <Link className="bh-btn bh-btn-gold" to="/bhakti/naam-jaap">▶ Naam Jaap Shuru Karein</Link>
-            <Link className="bh-btn bh-btn-line" to={`/bhakti/aarti-chalisa?deity=${wd.slug}&kind=aarti`}>🪔 {wd.name} ki Aarti</Link>
+            <Link className="bh-btn bh-btn-line" to={`/bhakti/aarti-chalisa?deity=${wd.slug}`}>🪔 {wd.name} ki Aarti</Link>
           </div>
         </div>
         <div className="bh-hero-art">

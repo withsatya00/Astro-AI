@@ -29,7 +29,7 @@ export default function AartiDetail() {
 
   useEffect(() => {
     setC(null); setErr('');
-    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); if (d.kind === 'aarti') markRitual('aarti'); })
+    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); markRitual('aarti'); })
       .catch((e) => setErr(e instanceof ApiError && e.status === 404 ? 'This text is not available.' : (e.message || 'Could not load')));
   }, [slug, signedIn]);
 

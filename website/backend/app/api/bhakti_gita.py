@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from packages.database.bhakti import BhaktiAuditLog, BhaktiContent, BhaktiDeity, GitaBookmark, GitaChapter, GitaRead, GitaVerse
 from packages.database.models import User
 from packages.database.session import get_db
-from website.backend.app import bhakti_seed, bhakti_seed_library
+from website.backend.app import bhakti_seed, bhakti_seed_aarti, bhakti_seed_library
 from website.backend.app.api.auth import get_current_user_optional, get_current_user_required
 from website.backend.app.api.mandir import require_admin
 
@@ -30,7 +30,7 @@ def seed_gita_and_library_if_missing(db: Session) -> None:
             db.add(GitaVerse(chapter=ch, verse=vs, text_sa=sa, transliteration=tr, meaning_hi=mhi, meaning_en=men, source=bhakti_seed.GITA_SOURCE,
                              license="Public domain (original Sanskrit); meaning is our own wording", is_verified=False, published=True))
     chalisa = dict(bhakti_seed.HANUMAN_CHALISA, body_roman=bhakti_seed_library.CHALISA_ROMAN)
-    for seed in (chalisa, bhakti_seed_library.JAGDISH_AARTI):
+    for seed in (chalisa, bhakti_seed_library.JAGDISH_AARTI, *bhakti_seed_aarti.ALL):
         row = db.query(BhaktiContent).filter(BhaktiContent.slug == seed["slug"]).first()
         if not row:
             d = db.query(BhaktiDeity).filter(BhaktiDeity.slug == seed["deity"]).first()
