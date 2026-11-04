@@ -167,7 +167,7 @@ export default function DirectoryPage() {
           
           {/* Left Content */}
           <div className="p-5 sm:p-8 md:p-10 z-10 flex flex-col justify-center max-w-[62%] sm:max-w-xl md:max-w-2xl relative min-w-0">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[#D9A441] text-[9.5px] sm:text-xs font-bold tracking-widest uppercase mb-1.5 sm:mb-2">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 text-[#D9A441] text-[11.5px] sm:text-xs font-bold tracking-widest uppercase mb-1.5 sm:mb-2">
               <span>VERIFIED</span>
               <span>•</span>
               <span>EXPERIENCED</span>

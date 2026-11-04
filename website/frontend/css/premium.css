@@ -259,7 +259,7 @@ button:not(#hero-section button):not(:disabled):active,
 @media (max-width: 768px) {
   .pm-tabbar {
     display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
     position: fixed !important;
     left: 0 !important;
     right: 0 !important;

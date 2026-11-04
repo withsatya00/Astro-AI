@@ -6,7 +6,7 @@ const { chromium } = require('@playwright/test');
 
 const LANG = process.env.RESP_LANG === 'hi' ? 'hi' : 'en'; // RESP_LANG=hi checks the longer Hindi copy
 const WIDTHS = (process.env.RESP_WIDTHS || '360,390,768,1024,1280,1536').split(',').map(Number);
-const PAGES = ['/', '/astrologers', '/calculators', '/panchang', '/rashiphal', '/mandir-seva', '/mandir-seva/mahakaleshwar-ujjain', '/astro-mall', '/gau-sewa', '/gifts', '/verify/none', '/no-such-page', '/bhakti', '/bhakti/naam-jaap', '/bhakti/aarti-chalisa', '/bhakti/aarti-chalisa/om-jai-jagdish-hare', '/bhakti/festivals', '/bhakti/puja-vidhi', '/bhakti/puja-vidhi/daily-home-puja', '/bhakti/guide'];
+const PAGES = ['/', '/astrologers', '/calculators', '/panchang', '/rashiphal', '/mandir-seva', '/mandir-seva/mahakaleshwar-ujjain', '/astro-mall', '/gau-sewa', '/gifts', '/verify/none', '/no-such-page', '/bhakti', '/bhakti/naam-jaap', '/bhakti/aarti-chalisa', '/bhakti/aarti-chalisa/om-jai-jagdish-hare', '/bhakti/festivals', '/bhakti/puja-vidhi', '/bhakti/puja-vidhi/daily-home-puja', '/bhakti/guide', '/astro-mall/checkout', '/my-orders', '/wallet'];
 
 const measure = () => {
   const vw = window.innerWidth;

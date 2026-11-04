@@ -16,7 +16,8 @@ export default function BottomNav() {
   const isHome = currentPath === '/' || currentPath === '';
   const isAstrologers = currentPath.startsWith('/astrologers');
   const isSeva = currentPath.startsWith('/mandir-seva') || currentPath.startsWith('/gau-sewa') || currentPath.startsWith('/chadhava');
-  const isMall = currentPath.startsWith('/astro-mall');
+  const isMall = currentPath.startsWith('/astro-mall') || currentPath.startsWith('/mall') || currentPath === '/my-orders';
+  const isBhakti = currentPath.startsWith('/bhakti');
   const isProfile = currentPath.startsWith('/profile');
 
   const handleProfileClick = (e) => {
@@ -79,7 +80,23 @@ export default function BottomNav() {
         <span translate="no">Seva</span>
       </NavLink>
 
-      {/* 4. Astro Mall */}
+      {/* 4. Bhakti */}
+      <NavLink
+        to="/bhakti"
+        className={({ isActive }) => `pm-tab ${isActive || isBhakti ? 'active' : ''}`}
+        aria-current={isBhakti ? 'page' : undefined}
+      >
+        <span className="pi" data-ic="bhakti" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 3c2 3 2 6 0 9-2-3-2-6 0-9z" />
+            <path d="M12 12c2-3 5-4 8-3-1 4-4 6-8 6M12 12c-2-3-5-4-8-3 1 4 4 6 8 6" />
+            <path d="M6 20h12" />
+          </svg>
+        </span>
+        <span translate="no">Bhakti</span>
+      </NavLink>
+
+      {/* 5. Astro Mall */}
       <NavLink
         data-tab="mall"
         to="/astro-mall"
@@ -95,7 +112,7 @@ export default function BottomNav() {
         <span translate="no">Mall</span>
       </NavLink>
 
-      {/* 5. Profile */}
+      {/* 6. Profile */}
       <a
         data-tab="profile"
         href="/profile"
@@ -109,7 +126,7 @@ export default function BottomNav() {
             <path d="M4 21a8 8 0 0 1 16 0" />
           </svg>
         </span>
-        <span translate="no">{currentUser ? (currentUser.full_name || 'Profile') : 'Profile'}</span>
+        <span translate="no" className="pm-tab-name">{currentUser ? ((currentUser.full_name || '').trim().split(/\s+/)[0] || 'Profile') : 'Profile'}</span>
       </a>
     </nav>
   );

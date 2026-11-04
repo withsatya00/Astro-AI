@@ -112,3 +112,9 @@ html[data-theme="dark"] :where(a, button, input, select, textarea, summary, [tab
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+/* Six bottom tabs: labels stay on one line; only the profile name (first name) is cut with an ellipsis when it is long. */
+.pm-tabbar { padding-inline: 2px !important; }
+.pm-tabbar .pm-tab { min-width: 0 !important; }
+.pm-tabbar .pm-tab > span:last-child { white-space: nowrap !important; }
+.pm-tabbar .pm-tab > .pm-tab-name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
