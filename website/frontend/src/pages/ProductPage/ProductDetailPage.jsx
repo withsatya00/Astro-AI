@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { REFERENCE_PRODUCTS } from '../AstroMallPage/AstroMallPage.jsx';
 import { fetchProduct, fromReference, reviewCount } from '../AstroMallPage/mallApi.js';
+import { useCart, MAX_QTY } from '../AstroMallPage/cartStore.js';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -9,6 +10,9 @@ export default function ProductDetailPage() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('details');
+  const cart = useCart();
+  const [chosen, setChosen] = useState({});
+  const [added, setAdded] = useState(false);
 
   // Reference ids ("prod-...") come from the design samples; every other id is a real catalogue product loaded from the API.
   const sample = REFERENCE_PRODUCTS.find((p) => p.id === id);
@@ -18,12 +22,20 @@ export default function ProductDetailPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setPhotoIndex(0);
+    setAdded(false);
+    setQuantity(1);
     if (sample) { setProduct(fromReference(sample)); setMissing(false); return undefined; }
     let alive = true;
     setProduct(null); setMissing(false);
     fetchProduct(id).then((p) => { if (!alive) return; if (p) setProduct(p); else setMissing(true); }).catch(() => { if (alive) setMissing(true); });
     return () => { alive = false; };
   }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Start each option (weight, metal, size) on its no-extra-charge choice, so the shopper only changes what they want.
+  useEffect(() => {
+    if (!product || !product.options || !product.options.length) { setChosen({}); return; }
+    setChosen(Object.fromEntries(product.options.map((g) => [g.key, (g.values.find((v) => !v.price_delta) || g.values[0]).value])));
+  }, [product]);
 
   if (missing) {
     return (
@@ -37,6 +49,13 @@ export default function ProductDetailPage() {
   if (!product) {
     return <div className="max-w-6xl mx-auto px-4 py-10" role="status" aria-label="Loading product"><div className="rounded-3xl bg-white border border-[#E7E2D8] h-96 animate-pulse" /></div>;
   }
+
+  const delta = (product.options || []).reduce((sum, g) => {
+    const v = g.values.find((x) => x.value === chosen[g.key]);
+    return sum + (v ? v.price_delta || 0 : 0);
+  }, 0);
+  const unit = product.price + delta;
+  const addNow = () => { cart.add(product, quantity, chosen, unit); setAdded(true); };
 
   const photos = product.images && product.images.length ? product.images : [
     product.image,
@@ -111,7 +130,7 @@ export default function ProductDetailPage() {
               {/* Pricing */}
               <div className="p-4 bg-amber-50/50 rounded-2xl border border-amber-200/50 mb-6">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold text-[#3E0B18]">₹{product.price}</span>
+                  <span className="text-3xl font-extrabold text-[#3E0B18]">₹{unit}</span>
                   <span className="text-sm text-slate-400 line-through">₹{product.original_price}</span>
                   <span className="text-xs font-bold text-emerald-700">Save {product.discount_percent}%</span>
                 </div>
@@ -141,6 +160,21 @@ export default function ProductDetailPage() {
 
             {/* Quantity and Buy Button */}
             <div className="space-y-3 pt-4 border-t border-slate-100">
+              {(product.options || []).map((g) => (
+                <label key={g.key} className="flex items-center gap-3 text-xs font-bold text-[#1E1B4B]">
+                  <span style={{ minWidth: 96 }}>{g.label}:</span>
+                  <select
+                    value={chosen[g.key] || ''}
+                    onChange={(e) => setChosen({ ...chosen, [g.key]: e.target.value })}
+                    className="flex-1 p-2 text-xs rounded-xl border border-slate-200 bg-white outline-none"
+                    style={{ minHeight: 40 }}
+                  >
+                    {g.values.map((v) => (
+                      <option key={v.value} value={v.value}>{v.label}{v.price_delta ? ` (${v.price_delta > 0 ? '+' : '−'}₹${Math.abs(v.price_delta)})` : ''}</option>
+                    ))}
+                  </select>
+                </label>
+              ))}
               <div className="flex items-center gap-3">
                 <span className="text-xs font-bold text-[#1E1B4B]">Quantity:</span>
                 <div className="flex items-center border border-slate-200 rounded-xl overflow-hidden">
@@ -154,7 +188,7 @@ export default function ProductDetailPage() {
                   <span className="px-4 text-xs font-bold text-[#1E1B4B]">{quantity}</span>
                   <button
                     type="button"
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => setQuantity(Math.min(MAX_QTY, quantity + 1))}
                     className="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 font-bold cursor-pointer border-0"
                   >
                     +
@@ -165,19 +199,26 @@ export default function ProductDetailPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
-                  onClick={() => alert(`Added ${quantity} × ${product.title} to cart!`)}
+                  disabled={!product.in_stock}
+                  onClick={addNow}
                   className="flex-1 py-3.5 rounded-xl bg-[#3E0B18] text-[#FFF9EF] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:brightness-110"
                 >
-                  Add to Cart • ₹{product.price * quantity}
+                  Add to Cart • ₹{unit * quantity}
                 </button>
                 <button
                   type="button"
-                  onClick={() => alert(`Starting fast checkout for ${product.title}...`)}
+                  disabled={!product.in_stock}
+                  onClick={() => { addNow(); navigate('/astro-mall/checkout'); }}
                   className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B3832B] text-[#1E1B4B] font-extrabold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:brightness-105"
                 >
                   Buy Now ➔
                 </button>
               </div>
+              {added && (
+                <p role="status" className="text-xs font-bold text-emerald-700">
+                  Added to your cart. <Link to="/astro-mall/checkout" className="underline text-[#3E0B18]">View cart &amp; checkout</Link>
+                </p>
+              )}
             </div>
           </div>
         </div>

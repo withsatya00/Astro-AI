@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchProducts, fromReference, reviewCount } from './mallApi.js';
+import { useCart } from './cartStore.js';
 
 export const REFERENCE_PRODUCTS = [
   {
@@ -135,7 +136,7 @@ export default function AstroMallPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const cart = useCart();
   const [wishlist, setWishlist] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
@@ -191,19 +192,13 @@ export default function AstroMallPage() {
   };
 
   const addToCart = (product) => {
-    setCartItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
+    // Items with sizes, weights or metals need those chosen first, so they go to the product page.
+    if (product.has_options) { navigate(`/mall/product/${product.id}`); return; }
+    cart.add(product, 1, {});
     setIsCartOpen(true);
   };
 
-  const cartTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const cartTotal = cart.subtotal;
 
   return (
     <div className="w-full min-w-0 max-w-full overflow-x-hidden bg-[#FAF7F2] min-h-screen pb-24">
@@ -237,7 +232,7 @@ export default function AstroMallPage() {
               className="shop-btn shop-btn--ghost cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             >
-              🛒 My Cart ({cartItems.reduce((acc, i) => acc + i.quantity, 0)})
+              🛒 My Cart ({cart.count})
             </button>
           </div>
         </div>
@@ -437,7 +432,7 @@ export default function AstroMallPage() {
           <div className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between p-6 overflow-y-auto">
             <div>
               <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-                <h3 className="font-serif text-lg font-bold text-[#1E1B4B]">Your Spiritual Cart ({cartItems.length})</h3>
+                <h3 className="font-serif text-lg font-bold text-[#1E1B4B]">Your Spiritual Cart ({cart.items.length})</h3>
                 <button
                   type="button"
                   onClick={() => setIsCartOpen(false)}
@@ -447,22 +442,22 @@ export default function AstroMallPage() {
                 </button>
               </div>
 
-              {cartItems.length === 0 ? (
+              {cart.items.length === 0 ? (
                 <div className="text-center py-16 text-slate-400 text-xs">
                   Your cart is empty. Add sacred items to get started.
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {cartItems.map((item) => (
-                    <div key={item.id} className="flex items-center gap-3 p-3 bg-amber-50/50 rounded-2xl border border-amber-200/50">
+                  {cart.items.map((item) => (
+                    <div key={item.key} className="flex items-center gap-3 p-3 bg-amber-50/50 rounded-2xl border border-amber-200/50">
                       <img src={item.image} alt={item.title} className="w-14 h-14 object-cover rounded-xl" />
                       <div className="flex-1 min-w-0">
                         <h4 className="font-serif text-xs font-bold text-[#1E1B4B] truncate">{item.title}</h4>
-                        <span className="text-xs font-bold text-[#3E0B18]">₹{item.price} × {item.quantity}</span>
+                        <span className="text-xs font-bold text-[#3E0B18]">₹{item.unit_price} × {item.quantity}</span>
                       </div>
                       <button
                         type="button"
-                        onClick={() => setCartItems(cartItems.filter((i) => i.id !== item.id))}
+                        onClick={() => cart.remove(item.key)}
                         className="text-xs text-rose-500 font-bold cursor-pointer border-0 bg-transparent"
                       >
                         Remove
@@ -473,7 +468,7 @@ export default function AstroMallPage() {
               )}
             </div>
 
-            {cartItems.length > 0 && (
+            {cart.items.length > 0 && (
               <div className="pt-4 border-t border-slate-100">
                 <div className="flex justify-between text-sm font-bold text-[#1E1B4B] mb-4">
                   <span>Subtotal:</span>
@@ -481,7 +476,7 @@ export default function AstroMallPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => alert(`Proceeding to secure checkout for ₹${cartTotal}...`)}
+                  onClick={() => { setIsCartOpen(false); navigate('/astro-mall/checkout'); }}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B3832B] text-[#1E1B4B] font-extrabold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md"
                 >
                   Proceed to Checkout →

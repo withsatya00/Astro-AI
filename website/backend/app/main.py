@@ -74,7 +74,7 @@ def sitemap(request: Request):
     from fastapi.responses import Response
     return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + body + "</urlset>", media_type="application/xml")
 
-PRIVATE_PATHS = ("/admin", "/dashboard", "/seller", "/my-account", "/rewards", "/gau-sewa/receipt/", "/bhakti/admin")
+PRIVATE_PATHS = ("/admin", "/dashboard", "/seller", "/my-account", "/rewards", "/gau-sewa/receipt/", "/bhakti/admin", "/astro-mall/checkout", "/mall/checkout")
 
 
 @app.get("/robots.txt", include_in_schema=False)

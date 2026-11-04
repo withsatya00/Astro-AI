@@ -33,6 +33,9 @@ export function fromApi(p) {
     return_days: p.return_policy && p.return_policy.days,
     seller: p.seller && p.seller.name,
     seller_verified: !!(p.seller && p.seller.verified),
+    has_options: !!p.has_options,
+    options: Array.isArray(p.options) ? p.options : [],
+    stock: p.stock,
   };
 }
 
@@ -54,3 +57,40 @@ export async function fetchProduct(id) {
 }
 
 export const reviewCount = (p) => Number(String(p.reviews || 0).replace(/,/g, '')) || 0;
+
+// ---- cart pricing and checkout (all need the shopper's login token except a plain quote) ----
+export class MallError extends Error {
+  constructor(status, message) { super(message); this.status = status; }
+}
+
+const token = () => { try { return localStorage.getItem('astro_access_token') || ''; } catch (e) { return ''; } };
+export const isSignedIn = () => !!token();
+
+async function call(path, { method = 'GET', body } = {}) {
+  const headers = { Accept: 'application/json' };
+  if (token()) headers.Authorization = `Bearer ${token()}`;
+  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  let res;
+  try {
+    res = await fetch(path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+  } catch (e) { throw new MallError(0, 'Network unavailable. Please check your connection and try again.'); }
+  if (!res.ok) {
+    let detail = res.statusText;
+    try {
+      const j = await res.json();
+      if (typeof j.detail === 'string') detail = j.detail;
+      else if (Array.isArray(j.detail)) detail = j.detail.map((d) => `${(d.loc || []).filter((x) => x !== 'body').join('.')}: ${String(d.msg || '').replace(/^Value error, /, '')}`).join('; ');
+    } catch (e) { /* not json */ }
+    throw new MallError(res.status, detail);
+  }
+  return res.json();
+}
+
+const toApiItems = (items) => items.map((i) => ({ product_id: i.product_id, quantity: i.quantity, options: i.options || {} }));
+
+export const quoteCart = (items, couponCode) => call(`${BASE}/quote?lang=en`, { method: 'POST', body: { items: toApiItems(items), coupon_code: couponCode || null, use_points: 0 } });
+export const placeOrder = (items, buyer) => call(`${BASE}/checkout?lang=en`, { method: 'POST', body: { ...buyer, items: toApiItems(items), use_points: 0 } });
+export async function walletBalance() {
+  if (!token()) return null;
+  try { return (await call('/api/v1/wallet')).balance; } catch (e) { return null; }
+}

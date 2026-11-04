@@ -28,7 +28,8 @@
     "test:responsive": "node scripts/test_responsive_all.cjs",
     "test:responsive-account": "node scripts/test_responsive_account.cjs",
     "test:seva": "node scripts/test_seva_refresh.cjs",
-    "test:week1": "node scripts/test_week1_quality.cjs"
+    "test:week1": "node scripts/test_week1_quality.cjs",
+    "test:checkout": "node scripts/test_mall_checkout.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",

@@ -10,6 +10,8 @@
     '/astro-mall': ['Astro Mall – Rudraksha, Gemstones & Yantras | Astro Jyotish', 'एस्ट्रो मॉल – रुद्राक्ष, रत्न और यंत्र | Astro Jyotish', 'Spiritual products with clear details, delivery estimates and return policy.', 'स्पष्ट विवरण, डिलीवरी अनुमान और वापसी नीति के साथ आध्यात्मिक सामग्री।'],
     '/gau-sewa': ['Gau Sewa – Support Cow Care | Astro Jyotish', 'गौ सेवा – गौ सेवा में सहयोग करें | Astro Jyotish', 'Make a one-time donation for fodder, medical help or general seva at a gaushala.', 'गौशाला में चारा, चिकित्सा या सामान्य सेवा के लिए एक बार दान करें।'],
     '/gifts': ['Gifts & Festival Packs | Astro Jyotish', 'उपहार और त्योहार पैक | Astro Jyotish', 'Send wallet credit as a gift card or buy a ready festival puja set.', 'वॉलेट क्रेडिट उपहार कार्ड के रूप में भेजें या तैयार त्योहार पूजा सेट खरीदें।'],
+    '/astro-mall/checkout': ['Checkout | Astro Jyotish', 'चेकआउट | Astro Jyotish', '', '', true],
+    '/mall/checkout': ['Checkout | Astro Jyotish', 'चेकआउट | Astro Jyotish', '', '', true],
     '/rewards': ['My Rewards | Astro Jyotish', 'मेरे रिवॉर्ड | Astro Jyotish', '', '', true],
     '/dashboard': ['My Dashboard | Astro Jyotish', 'मेरा डैशबोर्ड | Astro Jyotish', '', '', true],
     '/admin': ['Admin | Astro Jyotish', 'व्यवस्थापक | Astro Jyotish', '', '', true],
