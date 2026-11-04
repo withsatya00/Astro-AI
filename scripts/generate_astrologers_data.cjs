@@ -173,3 +173,4 @@ export const ALL_ASTROLOGERS = ${JSON.stringify(allAstrologers, null, 2)};
 const targetPath = path.resolve(__dirname, '../website/frontend/src/pages/DirectoryPage/astrologersData.js');
 fs.writeFileSync(targetPath, outContent, 'utf8');
 console.log(`Saved to ${targetPath}`);
+

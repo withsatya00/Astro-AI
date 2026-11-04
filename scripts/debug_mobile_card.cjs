@@ -26,3 +26,4 @@ const { chromium } = require('playwright');
   console.log('Mobile Card Info:', JSON.stringify(cardInfo, null, 2));
   await browser.close();
 })();
+

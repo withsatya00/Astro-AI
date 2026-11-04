@@ -1,32 +1,30 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { currentUser, openAuthModal, openUserAccountModal } = useAuth();
   const currentPath = location.pathname;
 
   // Hide tabbar in consultation chat room
-  const inConsult = currentPath.startsWith('/consultation');
+  const inConsult = currentPath.startsWith('/consultation') || currentPath.startsWith('/consult');
   if (inConsult) return null;
 
   // Determine active tab
   const isHome = currentPath === '/' || currentPath === '';
   const isAstrologers = currentPath.startsWith('/astrologers');
-  const isSeva = currentPath.startsWith('/mandir-seva') || currentPath.startsWith('/gau-sewa');
+  const isSeva = currentPath.startsWith('/mandir-seva') || currentPath.startsWith('/gau-sewa') || currentPath.startsWith('/chadhava');
   const isMall = currentPath.startsWith('/astro-mall');
   const isProfile = currentPath.startsWith('/profile');
 
   const handleProfileClick = (e) => {
     e.preventDefault();
-    if (window.App) {
-      if (window.App.currentUser) {
-        window.App.openUserAccountModal();
-      } else {
-        window.App.openAuthModal('login');
-      }
+    if (currentUser) {
+      openUserAccountModal();
     } else {
-      navigate('/profile');
+      openAuthModal('login');
     }
   };
 
@@ -34,6 +32,7 @@ export default function BottomNav() {
     <nav className="pm-tabbar" aria-label="Primary Mobile Navigation">
       {/* 1. Home */}
       <NavLink
+        data-tab="home"
         to="/"
         className={({ isActive }) => `pm-tab ${isActive || isHome ? 'active' : ''}`}
         aria-current={isHome ? 'page' : undefined}
@@ -48,14 +47,16 @@ export default function BottomNav() {
 
       {/* 2. Astrologers */}
       <NavLink
+        data-tab="astrologers"
         to="/astrologers"
         className={({ isActive }) => `pm-tab ${isActive || isAstrologers ? 'active' : ''}`}
         aria-current={isAstrologers ? 'page' : undefined}
       >
-        <span className="pi" data-ic="crystal" aria-hidden="true">
+        <span className="pi" data-ic="astrologer" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="10.5" r="7" />
-            <path d="M7 20.5h10M9 17.5l-1 3M15 17.5l1 3" />
+            <circle cx="12" cy="7" r="4" />
+            <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+            <path d="M12 3v-2M9 4.5l-1.5-1.5M15 4.5l1.5-1.5" />
           </svg>
         </span>
         <span translate="no">Astrologers</span>
@@ -63,20 +64,24 @@ export default function BottomNav() {
 
       {/* 3. Seva */}
       <NavLink
+        data-tab="seva"
         to="/mandir-seva"
         className={({ isActive }) => `pm-tab ${isActive || isSeva ? 'active' : ''}`}
         aria-current={isSeva ? 'page' : undefined}
       >
-        <span className="pi" data-ic="lamp" aria-hidden="true">
+        <span className="pi" data-ic="diya" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 14h16l-2 6H6zM12 3c2 2.5 2.5 4.5 0 7-2.5-2.5-2-4.5 0-7z" />
+            <path d="M12 2c0 2-2 4-2 6a2 2 0 0 0 4 0c0-2-2-4-2-6z" fill="#D97706" stroke="none" />
+            <path d="M3 13c1 5 5 8 9 8s8-3 9-8H3z" />
+            <path d="M6 13c0-3 3-5 6-5s6 2 6 5" />
           </svg>
         </span>
         <span translate="no">Seva</span>
       </NavLink>
 
-      {/* 4. Mall */}
+      {/* 4. Astro Mall */}
       <NavLink
+        data-tab="mall"
         to="/astro-mall"
         className={({ isActive }) => `pm-tab ${isActive || isMall ? 'active' : ''}`}
         aria-current={isMall ? 'page' : undefined}
@@ -92,6 +97,7 @@ export default function BottomNav() {
 
       {/* 5. Profile */}
       <a
+        data-tab="profile"
         href="/profile"
         onClick={handleProfileClick}
         className={`pm-tab ${isProfile ? 'active' : ''}`}
@@ -103,9 +109,8 @@ export default function BottomNav() {
             <path d="M4 21a8 8 0 0 1 16 0" />
           </svg>
         </span>
-        <span translate="no">Profile</span>
+        <span translate="no">{currentUser ? (currentUser.full_name || 'Profile') : 'Profile'}</span>
       </a>
     </nav>
   );
 }
-

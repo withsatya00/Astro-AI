@@ -338,6 +338,33 @@
   }
 }
 
+/* Mobile accessibility baseline: every header action remains a reliable touch target. */
+@media (max-width: 767.98px) {
+  .site-navbar .site-nav-actions .btn-mobile-menu {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .top-promo-bar {
+    min-height: 44px !important;
+    font-size: 12px !important;
+  }
+
+  .top-promo-bar button {
+    min-height: 36px !important;
+    font-size: 12px !important;
+  }
+
+  .top-promo-bar .promo-dismiss {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+  }
+}
+
 /* The menu drawer and its backdrop must cover the mobile bottom tab bar (.pm-tabbar, z-index 400) */
 .mobile-nav-backdrop { z-index: 1100 !important; }
 .mobile-nav-drawer { z-index: 1101 !important; }
@@ -438,3 +465,95 @@ body.dark .nav-dropdown-menu,
   display: none !important;
 }
 .site-nav-dropdown-wrapper.is-closed:hover .dropdown-chevron { transform: none; }
+
+/* ===== Clean desktop navbar: one row, consistent weight, no overflow ===== */
+@media (min-width: 1024px) {
+  .site-navbar .site-navbar-inner {
+    max-width: 1440px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    gap: 1rem;
+    flex-wrap: nowrap;
+  }
+  .site-navbar .site-brand { flex: 0 0 auto; }
+  .site-navbar .site-nav-links {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
+    gap: 1.1rem;
+  }
+  .site-navbar .site-nav-link {
+    font-size: 0.9rem;
+    font-weight: 600 !important;
+    white-space: nowrap;
+    padding: 0.5rem 0.15rem;
+    gap: 0.4rem;
+  }
+  .site-navbar .site-nav-link.active { font-weight: 700 !important; }
+  .site-navbar .site-nav-dropdown-wrapper { padding: 0; }
+  .site-navbar .nav-badge {
+    font-size: 8.5px;
+    line-height: 1;
+    padding: 3px 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Right-hand actions: icon circles + two compact buttons */
+  .site-navbar .site-nav-actions { flex: 0 0 auto; gap: 0.5rem; }
+  .site-navbar .btn-nav-ambience {
+    display: inline-flex !important;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .site-navbar .btn-nav-ambience .ambience-label { display: none; }
+  .site-navbar .site-nav-actions .global-lang-picker-wrapper {
+    position: relative;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    justify-content: center;
+  }
+  .site-navbar .global-lang-picker-wrapper .global-lang-icon { font-size: 1rem; }
+  .site-navbar .global-lang-picker-wrapper .global-lang-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .site-navbar .btn-nav-wallet,
+  .site-navbar .btn-nav-auth,
+  .site-navbar .btn-nav-register {
+    height: 2.25rem;
+    padding: 0 0.9rem;
+    white-space: nowrap;
+  }
+  .site-navbar .nav-auth-group { gap: 0.5rem; }
+}
+
+/* Not enough room for everything: drop badges and Register first */
+@media (min-width: 1024px) and (max-width: 1365.98px) {
+  .site-navbar .nav-badge,
+  .site-navbar .btn-nav-register { display: none !important; }
+  .site-navbar .brand-subtitle { display: none; }
+  .site-navbar .site-nav-links { gap: 0.85rem; }
+}
+@media (min-width: 1366px) and (max-width: 1535.98px) {
+  .site-navbar .btn-nav-register { display: none !important; }
+}
+
+/* Dropdowns: no hover gap between trigger and menu (the menu used to vanish while the pointer crossed it) */
+.site-navbar .nav-dropdown-menu { margin-top: 0 !important; top: 100% !important; }
+.site-navbar .nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -0.6rem;
+  height: 0.6rem;
+}
+.site-navbar .nav-dropdown-menu:not(.nav-dropdown-menu--tools) { left: 0 !important; right: auto !important; }

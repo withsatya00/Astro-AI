@@ -1,0 +1,12 @@
+/* Shared readability and touch-target guardrails. */
+.site-navbar .brand-subtitle,.site-navbar .nav-badge{font-size:12px!important}
+.top-promo-bar button,.site-navbar button{min-height:44px}
+.top-promo-bar .promo-dismiss{width:44px!important;height:44px!important;padding:0!important}
+.hp-hero-actions a{min-height:44px!important;padding-block:10px!important}
+.hp-hero-kicker{font-size:12px!important}
+button.absolute.w-7{width:44px!important;min-height:44px!important}
+body small{font-size:max(12px,1em)!important}
+.pm-tabbar .pm-tab>span:last-child{font-size:12px!important}
+.directory-page-container button,.directory-page-container a{min-height:34px}
+.mall-page-container button.absolute.w-7{height:44px!important}
+@media(max-width:900px){.hp-hero-actions a{display:flex!important;align-items:center;justify-content:center}.top-promo-bar .bg-white{min-height:44px!important}.site-navbar button.cursor-pointer{min-height:44px!important}}

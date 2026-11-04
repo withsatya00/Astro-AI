@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
@@ -9,7 +10,7 @@ export default function Navbar() {
   const [isAmbiencePlaying, setIsAmbiencePlaying] = useState(false);
   const [currentLang, setCurrentLang] = useState('en');
   const [walletBalance, setWalletBalance] = useState('₹0.00');
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, openAuthModal, openUserAccountModal } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,9 +31,6 @@ export default function Navbar() {
       setWalletBalance(`₹${Number(savedBal).toFixed(2)}`);
     } else if (window.App && window.App.walletBalance !== undefined) {
       setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
-    }
-    if (window.App && window.App.currentUser) {
-      setCurrentUser(window.App.currentUser);
     }
 
     // Wallet balance live event listener
@@ -131,7 +129,7 @@ export default function Navbar() {
                     style={{
                       background: '#F8D882',
                       color: '#3E0B18',
-                      fontSize: '10px',
+                      fontSize: '12px',
                       padding: '2px 9px',
                       borderRadius: '999px',
                       display: 'inline-flex',
@@ -169,7 +167,7 @@ export default function Navbar() {
                     style={{
                       background: '#E5A83B',
                       color: '#3E0B18',
-                      fontSize: '10px',
+                      fontSize: '12px',
                       padding: '2px 9px',
                       borderRadius: '999px',
                       display: 'inline-flex',
@@ -282,12 +280,11 @@ export default function Navbar() {
               to="/bhakti"
               className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
             >
-              <span aria-hidden="true">🪷</span>
               <span>Bhakti</span>
             </NavLink>
 
             {/* Mandir Seva Dropdown */}
-            <div className="site-nav-dropdown-wrapper relative py-1.5" ref={mandirDropdownRef}>
+            <div className={`site-nav-dropdown-wrapper relative py-1.5 ${mandirDropdownOpen ? 'is-open' : ''}`} ref={mandirDropdownRef}>
               <button
                 type="button"
                 className="site-nav-link flex items-center gap-1.5 hover:text-[#4a1b9a] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit font-bold"
@@ -299,8 +296,8 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded={mandirDropdownOpen}
               >
-                <span>🏛️ Mandir Seva</span>
-                <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
+                <span>Mandir Seva</span>
+                <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
                   Puja
                 </span>
                 <span className={`dropdown-chevron text-[10px] transition-transform duration-200 ${mandirDropdownOpen ? 'rotate-180' : ''}`}>
@@ -309,7 +306,7 @@ export default function Navbar() {
               </button>
 
               {mandirDropdownOpen && (
-                <div className="nav-dropdown-menu absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
+                <div className="nav-dropdown-menu absolute top-full left-0 w-72 bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
                   <div className="px-2 py-1 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 rounded-lg flex items-center gap-1.5">
                     <span>🏛️</span> <span>Mandir Seva</span>
                   </div>
@@ -347,7 +344,6 @@ export default function Navbar() {
               to="/gau-sewa"
               className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
             >
-              <span aria-hidden="true">🐄</span>
               <span>Gau Sewa</span>
             </NavLink>
 
@@ -355,14 +351,14 @@ export default function Navbar() {
               to="/astro-mall"
               className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 group font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
             >
-              <span>📿 Astro Mall</span>
-              <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 border border-purple-300 group-hover:bg-purple-200 transition-colors">
+              <span>Astro Mall</span>
+              <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 border border-purple-300 group-hover:bg-purple-200 transition-colors">
                 Siddh
               </span>
             </NavLink>
 
             {/* Vedic Tools Dropdown */}
-            <div className="site-nav-dropdown-wrapper relative py-1.5" ref={toolsDropdownRef}>
+            <div className={`site-nav-dropdown-wrapper relative py-1.5 ${toolsDropdownOpen ? 'is-open' : ''}`} ref={toolsDropdownRef}>
               <button
                 type="button"
                 className="site-nav-link flex items-center gap-1 hover:text-[#4a1b9a] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
@@ -374,14 +370,14 @@ export default function Navbar() {
                 aria-haspopup="true"
                 aria-expanded={toolsDropdownOpen}
               >
-                <span>🔮 Vedic Tools</span>
+                <span>Vedic Tools</span>
                 <span className={`dropdown-chevron text-[10px] transition-transform duration-200 ${toolsDropdownOpen ? 'rotate-180' : ''}`}>
                   ▾
                 </span>
               </button>
 
               {toolsDropdownOpen && (
-                <div className="nav-dropdown-menu nav-dropdown-menu--tools absolute top-full right-0 mt-2 w-80 max-h-[75vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
+                <div className="nav-dropdown-menu nav-dropdown-menu--tools absolute top-full right-0 w-80 max-h-[75vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
                   <div className="px-2 py-1 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 rounded-lg flex items-center gap-1.5">
                     <span>✨</span> <span>Vedic Astrology Tools</span>
                   </div>
@@ -451,8 +447,8 @@ export default function Navbar() {
               title="वैदिक वातावरण नाद (432Hz Soundscape Drone)"
               onClick={handleToggleAmbience}
             >
-              <span className="text-xs">🕉️</span>
-              <span className="text-xs whitespace-nowrap font-bold">432Hz नाद</span>
+              <span className="text-sm" aria-hidden="true">🕉️</span>
+              <span className="ambience-label text-xs whitespace-nowrap font-bold">432Hz नाद</span>
             </button>
 
             {/* Language Picker (Desktop) */}
@@ -505,7 +501,6 @@ export default function Navbar() {
                     className="btn-nav-auth inline-flex items-center gap-1.5 bg-white hover:bg-[#FAF8F2] border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0"
                     title="Sign In"
                   >
-                    <span>👤</span>
                     <span>Sign In</span>
                   </button>
                   <button
@@ -514,7 +509,6 @@ export default function Navbar() {
                     className="btn-nav-register inline-flex items-center gap-1.5 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-xs hover:shadow-md shrink-0"
                     title="Create Free Account"
                   >
-                    <span>✨</span>
                     <span>Register</span>
                   </button>
                 </>

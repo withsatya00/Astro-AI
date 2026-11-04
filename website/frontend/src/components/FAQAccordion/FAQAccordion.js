@@ -23,7 +23,7 @@ export class FAQAccordionComponent {
     let category = 'all';
     let search = '';
     const filter = () => target.querySelectorAll('.faq-item').forEach(item => {
-      const matchesCategory = category === 'all' || item.dataset.category === category;
+      const matchesCategory = category === 'all' || (item.dataset.category || '').split(/\s+/).includes(category);
       const matchesSearch = !search || item.textContent.toLocaleLowerCase().includes(search);
       item.hidden = !(matchesCategory && matchesSearch);
       item.style.display = item.hidden ? 'none' : '';

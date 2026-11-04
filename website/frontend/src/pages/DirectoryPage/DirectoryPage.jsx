@@ -275,6 +275,7 @@ export default function DirectoryPage() {
           <div className={`${showMobileFilters ? 'grid grid-cols-2 gap-2' : 'hidden lg:flex'} flex-wrap lg:flex-nowrap items-center gap-2 pt-1 w-full min-w-0`}>
             {/* 1. Language */}
             <select
+              aria-label="Filter by language"
               value={selectedLanguage}
               onChange={(e) => { setSelectedLanguage(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -293,6 +294,7 @@ export default function DirectoryPage() {
 
             {/* 2. Expertise */}
             <select
+              aria-label="Filter by expertise"
               value={selectedSpecialty}
               onChange={(e) => { setSelectedSpecialty(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -312,6 +314,7 @@ export default function DirectoryPage() {
 
             {/* 3. Availability */}
             <select
+              aria-label="Filter by availability"
               value={selectedAvailability}
               onChange={(e) => { setSelectedAvailability(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -323,6 +326,7 @@ export default function DirectoryPage() {
 
             {/* 4. Experience */}
             <select
+              aria-label="Filter by experience"
               value={selectedExperience}
               onChange={(e) => { setSelectedExperience(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -336,6 +340,7 @@ export default function DirectoryPage() {
 
             {/* 5. Price Range */}
             <select
+              aria-label="Filter by price"
               value={selectedPrice}
               onChange={(e) => { setSelectedPrice(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -348,6 +353,7 @@ export default function DirectoryPage() {
 
             {/* 6. Rating */}
             <select
+              aria-label="Filter by rating"
               value={selectedRating}
               onChange={(e) => { setSelectedRating(e.target.value); setCurrentPage(1); }}
               className="flex-1 min-w-0 h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-2.5 text-xs text-slate-700 font-medium outline-none focus:border-[#3E0B18] cursor-pointer"
@@ -416,6 +422,7 @@ export default function DirectoryPage() {
         <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
           <span className="text-xs font-bold text-slate-600">Sort By:</span>
           <select
+            aria-label="Sort astrologers"
             value={sortBy}
             onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1); }}
             className="h-9.5 bg-white border border-[#D9D0C1] rounded-xl px-3 text-xs text-slate-700 font-semibold outline-none focus:border-[#3E0B18] cursor-pointer shadow-2xs"
@@ -465,7 +472,8 @@ export default function DirectoryPage() {
                       <button
                         type="button"
                         onClick={() => toggleBookmark(astro.id)}
-                        className={`absolute top-3.5 right-3.5 p-1 cursor-pointer bg-transparent border-0 transition-colors z-10 ${
+                        style={{ width: 44, minWidth: 44, height: 44 }}
+                        className={`absolute top-2 right-2 w-11 h-11 flex items-center justify-center cursor-pointer bg-transparent border-0 transition-colors z-10 ${
                           isBookmarked ? 'text-[#D9A441]' : 'text-slate-300 hover:text-[#D9A441]'
                         }`}
                         title={isBookmarked ? 'Remove bookmark' : 'Bookmark astrologer'}
@@ -610,11 +618,12 @@ export default function DirectoryPage() {
                   <button
                     key={num}
                     type="button"
+                    style={{ width: 44, minWidth: 44, height: 44, flex: '0 0 44px' }}
                     onClick={() => {
                       setCurrentPage(num);
                       document.getElementById('directory-cards-container')?.scrollIntoView({ behavior: 'smooth' });
                     }}
-                    className={`w-8 h-8 rounded-xl text-xs font-bold cursor-pointer border transition-all ${
+                    className={`w-11 h-11 min-w-11 rounded-xl text-xs font-bold cursor-pointer border transition-all ${
                       currentPage === num
                         ? 'bg-[#3E0B18] text-[#F8D882] border-[#3E0B18] shadow-xs'
                         : 'bg-white text-slate-700 border-slate-200 hover:border-[#3E0B18]'

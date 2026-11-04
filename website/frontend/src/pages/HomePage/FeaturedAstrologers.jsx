@@ -56,7 +56,8 @@ export default function FeaturedAstrologers() {
         </h2>
         <Link
           to="/astrologers"
-          className="text-xs sm:text-sm font-bold text-[#3E0B18] hover:text-[#B45309] no-underline flex items-center gap-1 transition-colors"
+          className="min-h-11 px-2 text-xs sm:text-sm font-bold text-[#3E0B18] hover:text-[#B45309] no-underline flex items-center gap-1 transition-colors"
+          style={{ minHeight: 44 }}
         >
           View All Astrologers →
         </Link>
@@ -98,7 +99,7 @@ export default function FeaturedAstrologers() {
               </div>
 
               {/* Specialities */}
-              <p className="text-[10.5px] sm:text-xs text-slate-500 font-medium line-clamp-1 mb-2.5">
+              <p className="text-xs text-slate-500 font-medium line-clamp-1 mb-2.5">
                 {astro.specs}
               </p>
             </div>

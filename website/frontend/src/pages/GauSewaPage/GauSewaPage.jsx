@@ -230,6 +230,7 @@ export default function GauSewaPage() {
                   ))}
                 </div>
                 <input
+                  aria-label="Custom contribution amount"
                   type="number"
                   placeholder="Or enter custom amount in ₹"
                   value={customAmount}
@@ -242,6 +243,7 @@ export default function GauSewaPage() {
               <div>
                 <label className="block text-xs font-bold text-[#1E1B4B] mb-1">Devotee (Yajman) Name *</label>
                 <input
+                  aria-label="Devotee name"
                   type="text"
                   required
                   placeholder="e.g. Suresh Kumar"
@@ -255,6 +257,7 @@ export default function GauSewaPage() {
                 <div>
                   <label className="block text-xs font-bold text-[#1E1B4B] mb-1">WhatsApp Mobile *</label>
                   <input
+                    aria-label="WhatsApp mobile number"
                     type="tel"
                     required
                     placeholder="10-digit number"
@@ -266,6 +269,7 @@ export default function GauSewaPage() {
                 <div>
                   <label className="block text-xs font-bold text-[#1E1B4B] mb-1">Gotra (optional)</label>
                   <input
+                    aria-label="Gotra"
                     type="text"
                     placeholder="e.g. Kashyap"
                     value={gotra}
@@ -278,6 +282,7 @@ export default function GauSewaPage() {
               <div>
                 <label className="block text-xs font-bold text-[#1E1B4B] mb-1">Sankalp Occasion</label>
                 <select
+                  aria-label="Sankalp occasion"
                   value={sankalpOccasion}
                   onChange={(e) => setSankalpOccasion(e.target.value)}
                   className="w-full p-2.5 text-xs rounded-xl border border-slate-200 bg-white outline-none"

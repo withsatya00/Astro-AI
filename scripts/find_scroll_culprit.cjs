@@ -26,3 +26,4 @@ const { chromium } = require('playwright');
   console.log(culprits.slice(0, 10));
   await browser.close();
 })();
+

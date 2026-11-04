@@ -19,6 +19,22 @@ test('counts repeated phrases in one final transcript', () => {
   assert.equal(countRepetitions('', RADHE), 0);
 });
 
+test('counts real Devanagari speech output with danda punctuation', () => {
+  assert.equal(countRepetitions('राधे राधे। राधे राधे।', RADHE), 2);
+});
+
+test('counts fast chanting when recognition removes all spaces', () => {
+  assert.equal(countRepetitions('राधेराधेराधेराधे', RADHE), 2);
+  assert.equal(countRepetitions('radheradheradheradhe', RADHE), 2);
+});
+
+test('rolling final chunks complete a phrase across their boundary', () => {
+  const first = 'राधे राधे राधे';
+  const combined = `${first} राधे राधे`;
+  assert.equal(countRepetitions(first, RADHE), 1);
+  assert.equal(countRepetitions(combined, RADHE) - countRepetitions(first, RADHE), 1);
+});
+
 test('longer phrase is not double counted as its shorter part', () => {
   assert.equal(countRepetitions('jai shri ram', [...JSR, ...SR]), 1);
 });
@@ -27,8 +43,8 @@ test('interim results are never counted', () => {
   assert.equal(repetitionsFromResult(result(false, ['radhe radhe', 0.9]), RADHE), 0);
 });
 
-test('low confidence is rejected, unreported confidence (0) is accepted', () => {
-  assert.equal(repetitionsFromResult(result(true, ['radhe radhe', 0.2]), RADHE), 0);
+test('exact phrase wins even when the browser reports unreliable low confidence', () => {
+  assert.equal(repetitionsFromResult(result(true, ['radhe radhe', 0.2]), RADHE), 1);
   assert.equal(repetitionsFromResult(result(true, ['radhe radhe', 0]), RADHE), 1);
   assert.equal(repetitionsFromResult(result(true, ['xyz', 0.9], ['radhe radhe', 0.8]), RADHE), 1);
 });

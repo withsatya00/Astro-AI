@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from 'react';
+import { useAuth } from './context/AuthContext.jsx';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
@@ -28,6 +29,12 @@ const MandirDetail = lazy(() => import('./pages/BhaktiPage/MandirDetail.jsx'));
 const ShankaracharyaPage = lazy(() => import('./pages/BhaktiPage/ShankaracharyaPage.jsx'));
 const VedantaPage = lazy(() => import('./pages/BhaktiPage/VedantaPage.jsx'));
 const AdminPage = lazy(() => import('./pages/BhaktiPage/AdminPage.jsx'));
+const GuidePage = lazy(() => import('./pages/BhaktiPage/GuidePage.jsx'));
+const PujaList = lazy(() => import('./pages/BhaktiPage/PujaList.jsx'));
+const PujaDetail = lazy(() => import('./pages/BhaktiPage/PujaDetail.jsx'));
+const Festivals = lazy(() => import('./pages/BhaktiPage/Festivals.jsx'));
+const Sadhana = lazy(() => import('./pages/BhaktiPage/Sadhana.jsx'));
+const TrustCenterPage = lazy(() => import('./pages/TrustCenterPage/TrustCenterPage.jsx'));
 const ComingSoon = lazy(() => import('./pages/BhaktiPage/ComingSoon.jsx'));
 
 export default function App() {
@@ -65,6 +72,7 @@ export default function App() {
             <Route index element={<BhaktiHome />} />
             <Route path="naam-jaap" element={<NaamJaap />} />
             <Route path="my-bhakti" element={<MyBhakti />} />
+            <Route path="guide" element={<GuidePage />} />
             <Route path="admin" element={<AdminPage />} />
             <Route path="aarti-chalisa" element={<AartiLibrary />} />
             <Route path="aarti-chalisa/:slug" element={<AartiDetail />} />
@@ -75,11 +83,14 @@ export default function App() {
             <Route path="bhajan-radio" element={<BhajanRadio />} />
             <Route path="mandir-darshan" element={<MandirList />} />
             <Route path="mandir-darshan/:slug" element={<MandirDetail />} />
-            <Route path="puja-vidhi" element={<ComingSoon title="Puja Vidhi" hi="पूजा विधि" />} />
-            <Route path="festivals" element={<ComingSoon title="Festivals & Vrat" hi="व्रत त्योहार" />} />
+            <Route path="puja-vidhi" element={<PujaList />} />
+            <Route path="puja-vidhi/:slug" element={<PujaDetail />} />
+            <Route path="festivals" element={<Festivals />} />
+            <Route path="sadhana" element={<Sadhana />} />
           </Route>
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/profile" element={<ProfileView />} />
+          <Route path="/trust-center" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><TrustCenterPage /></Suspense>} />
           <Route path="*" element={<NotFoundView />} />
         </Routes>
       </Layout>
@@ -160,6 +171,7 @@ function HomeView() {
           { label: 'Kundli Milan', icon: '💖', to: '/calculators/kundali-milan', desc: 'Gun matching' },
           { label: '17 Calculators', icon: '📐', to: '/calculators', desc: 'Vedic tools' },
           { label: 'Astro Mall', icon: '📿', to: '/astro-mall', desc: 'Siddh items' },
+          { label: 'Trust Center', icon: '✓', to: '/trust-center', desc: 'Verify guidance' },
         ].map((card, i) => (
           <Link
             key={i}
@@ -275,6 +287,7 @@ function ProfileView() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">My Account &amp; Consultations</h2>
       <p className="text-slate-600 text-sm mb-6">View past chats, calls, saved kundlis, and active orders.</p>
+      <Link to="/trust-center" className="inline-block bg-[#650F23] text-white font-bold text-sm px-5 py-3 rounded-full no-underline">Open Guidance &amp; Trust Center →</Link>
     </div>
   );
 }

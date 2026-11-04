@@ -286,6 +286,7 @@ export default function CalculatorsPage() {
         <div className="bg-white p-3 rounded-2xl border border-[#E7E2D8] flex items-center gap-2">
           <span className="text-slate-400 ml-2">🔍</span>
           <input
+            aria-label="Search calculators"
             type="search"
             placeholder="Search calculator (e.g. Kundali, Sade Sati, Numerology...)"
             value={searchQuery}

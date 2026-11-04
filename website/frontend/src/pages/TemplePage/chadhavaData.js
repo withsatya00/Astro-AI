@@ -373,3 +373,4 @@ export function getChadhavaEvent(slug) {
     banner_image: `/assets/img/temples/${slug}.jpg`,
   };
 }
+

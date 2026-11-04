@@ -83,3 +83,4 @@ verify().catch(err => {
   console.error('Verify failed:', err);
   process.exit(1);
 });
+
