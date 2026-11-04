@@ -12,16 +12,23 @@ export async function api(path, { method = 'GET', body, raw } = {}) {
   const headers = { Accept: 'application/json' };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (body !== undefined) headers['Content-Type'] = 'application/json';
+  const isForm = typeof FormData !== 'undefined' && body instanceof FormData; // multipart: the browser sets the boundary itself
+  if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
   let res;
   try {
-    res = await fetch(BASE + path, { method, headers, body: body !== undefined ? JSON.stringify(body) : undefined });
+    res = await fetch(BASE + path, { method, headers, body: body === undefined ? undefined : (isForm ? body : JSON.stringify(body)) });
   } catch (e) {
     throw new ApiError(0, 'Network unavailable');
   }
   if (!res.ok) {
     let detail = res.statusText;
-    try { const j = await res.json(); detail = typeof j.detail === 'string' ? j.detail : detail; } catch (e) { /* not json */ }
+    try {
+      const j = await res.json();
+      if (typeof j.detail === 'string') detail = j.detail;
+      else if (Array.isArray(j.detail)) { // validation errors: name the field so the person knows what to fix
+        detail = j.detail.map((d) => `${(d.loc || []).filter((x) => x !== 'body').join('.')}: ${String(d.msg || '').replace(/^Value error, /, '')}`).join('; ');
+      }
+    } catch (e) { /* not json */ }
     throw new ApiError(res.status, detail);
   }
   return raw ? res : res.json();

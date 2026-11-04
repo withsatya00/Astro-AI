@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from './bhaktiApi.js';
 import { useJaap, useSignedIn, openLogin } from './useJaap.js';
-import { eventIdFor, repetitionsFromResult, speechRecognitionCtor } from './jaapVoice.mjs';
+import { countRepetitions, eventIdFor, speechRecognitionCtor } from './jaapVoice.mjs';
 
 const MALA = 108;
 const MODES = [['manual', 'Manual'], ['voice', 'Voice'], ['mala', 'Digital Mala']];
@@ -38,36 +38,53 @@ function VoicePanel({ jaap, mantra }) {
   const [heard, setHeard] = useState('');
   const [note, setNote] = useState('');
   const rec = useRef(null);
+  const restartTimer = useRef(null);
   const want = useRef(false);
   const run = useRef(0);
   const done = useRef(0); // result slots already counted in this recogniser run
+  const finalSpeech = useRef('');
+  const countedSpeech = useRef(0);
   const jaapRef = useRef(jaap);
   jaapRef.current = jaap;
 
   const stop = useCallback(() => {
     want.current = false;
+    clearTimeout(restartTimer.current);
     setListening(false);
-    try { rec.current && rec.current.stop(); } catch (e) { /* already stopped */ }
+    const current = rec.current;
+    rec.current = null;
+    try { current && current.abort(); } catch (e) { /* already stopped */ }
   }, []);
   useEffect(() => stop, [stop]); // never keep listening after leaving the page
 
   const begin = useCallback(() => {
-    if (!Ctor || !mantra) return;
+    if (!Ctor || !mantra || rec.current) return;
+    clearTimeout(restartTimer.current);
     const r = new Ctor();
     r.lang = 'hi-IN';
     r.continuous = true;
     r.interimResults = true;
-    r.maxAlternatives = 3;
+    r.maxAlternatives = 5;
     run.current += 1;
     done.current = 0;
+    finalSpeech.current = '';
+    countedSpeech.current = 0;
     const runId = `${Date.now().toString(36)}${run.current}`;
     r.onresult = (ev) => {
       for (let i = Math.max(ev.resultIndex, done.current); i < ev.results.length; i += 1) {
         const res = ev.results[i];
         if (!res.isFinal) { setHeard(res[0].transcript); continue; } // interim text is shown, never counted
         done.current = i + 1;
-        setHeard(res[0].transcript);
-        const n = repetitionsFromResult(res, mantra.match_phrases);
+        let chosen = res[0].transcript;
+        let total = 0;
+        for (let a = 0; a < res.length; a += 1) {
+          const candidateTotal = countRepetitions(`${finalSpeech.current} ${res[a].transcript}`, mantra.match_phrases, 1000000);
+          if (candidateTotal > total) { total = candidateTotal; chosen = res[a].transcript; }
+        }
+        finalSpeech.current = `${finalSpeech.current} ${chosen}`.trim();
+        setHeard(chosen);
+        const n = Math.max(0, total - countedSpeech.current);
+        countedSpeech.current = Math.max(countedSpeech.current, total);
         for (let k = 0; k < n; k += 1) {
           const s = jaapRef.current.session;
           if (!s || !jaapRef.current.add(1, 'voice', eventIdFor(s.id, runId, i, k))) break;
@@ -77,12 +94,19 @@ function VoicePanel({ jaap, mantra }) {
     };
     r.onerror = (e) => {
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { want.current = false; setListening(false); setNote('Microphone permission was denied. Allow it in your browser settings, or use the manual counter.'); }
-      else if (e.error === 'network') setNote('Speech recognition needs an internet connection. You can switch to the manual counter.');
+      else if (e.error === 'network') { want.current = false; setListening(false); setNote('Speech recognition needs an internet connection. You can switch to the manual counter.'); }
+      else if (e.error === 'audio-capture') { want.current = false; setListening(false); setNote('No microphone was found. Connect or enable a microphone, then try again.'); }
+      else if (e.error !== 'no-speech' && e.error !== 'aborted') setNote('Voice recognition stopped. Tap Pause, then start listening again.');
     };
-    r.onend = () => { if (want.current) { try { begin(); } catch (e) { stop(); } } else setListening(false); };
+    r.onend = () => {
+      if (rec.current === r) rec.current = null;
+      if (want.current) restartTimer.current = setTimeout(begin, 300);
+      else setListening(false);
+    };
     rec.current = r;
     want.current = true;
-    try { r.start(); setListening(true); setNote(''); } catch (e) { setNote('Could not start the microphone.'); }
+    try { r.start(); setListening(true); setNote(''); }
+    catch (e) { rec.current = null; want.current = false; setListening(false); setNote('Could not start the microphone.'); }
   }, [Ctor, mantra, stop]);
 
   const s = jaap.session;
@@ -169,11 +193,19 @@ export default function NaamJaap() {
               </label>
               <label>{mode === 'mala' ? 'Target (jaap, usually 108 per mala)' : 'Target (jaap)'}
                 <input type="number" min="1" max="1000000" value={target} onChange={(e) => setTarget(e.target.value)} />
+                <span className="bh-target-presets" aria-label="Common jaap targets">{[11, 21, 51, 108, 1008].map((n) => <button key={n} type="button" aria-pressed={Number(target) === n} onClick={() => setTarget(n)}>{n}</button>)}</span>
               </label>
               <label>Add your own mantra
                 <span style={{ display: 'flex', gap: 6 }}><input style={{ flex: 1 }} value={customText} maxLength={120} onChange={(e) => setCustomText(e.target.value)} placeholder="e.g. Jai Shri Shyam" /><button type="button" className="bh-btn bh-btn-ghost" onClick={addCustom}>Add</button></span>
               </label>
             </div>
+            {mantra && mantra.meaning_en && (
+              <div className="bh-msg ok" role="note" style={{ marginTop: 12 }}>
+                <b>Meaning:</b> {mantra.meaning_en}
+                {mantra.meaning_hi && <div lang="hi" style={{ marginTop: 4 }}>{mantra.meaning_hi}</div>}
+                {mantra.meaning_note && <div className="bh-small" style={{ marginTop: 4 }}>{mantra.meaning_note}</div>}
+              </div>
+            )}
             <div className="bh-row"><button type="button" className="bh-btn bh-btn-maroon" onClick={begin} disabled={busy || !mantraId}>🪔 Start jaap</button></div>
           </>
         ) : (

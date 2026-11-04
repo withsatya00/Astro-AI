@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api } from './bhaktiApi.js';
+import { Skel } from './Skeleton.jsx';
 
 const KINDS = [['', 'All'], ['aarti', 'Aarti'], ['chalisa', 'Chalisa'], ['stotra', 'Stotra']];
 
@@ -49,11 +50,16 @@ export default function AartiLibrary() {
       </div>
 
       {err && <div className="bh-msg" role="alert" style={{ marginTop: 12 }}>{err}</div>}
-      {!data && !err && <p className="bh-small" style={{ marginTop: 12 }}>Loading…</p>}
+      {!data && !err && (
+        <div className="bh-cards" style={{ marginTop: 16 }} role="status" aria-label="Loading library">
+          {[0, 1, 2].map((i) => <div key={i} className="bh-card" aria-hidden="true"><Skel w={56} h={56} r={12} /><div style={{ flex: 1, display: 'grid', gap: 6 }}><Skel h={14} /><Skel h={10} w="60%" /></div></div>)}
+        </div>
+      )}
       {data && data.items.length === 0 && (
         <div className="bh-panel bh-signin" style={{ marginTop: 16 }}>
           <h3>{q || kind || deity ? 'Nothing matches your filters' : 'The library is being prepared'}</h3>
           <p className="bh-small">{q || kind || deity ? 'Try clearing the search or filters.' : 'Texts appear here once they are published with their source and licence.'}</p>
+          {(q || kind || deity) && <button type="button" className="bh-btn bh-btn-maroon" onClick={() => { setQ(''); setParams({}, { replace: true }); setPage(1); }}>Sabhi aarti dekhein</button>}
         </div>
       )}
       {data && data.items.length > 0 && (

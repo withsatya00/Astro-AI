@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 export const REFERENCE_PRODUCTS = [
   {
@@ -125,7 +125,12 @@ export const REFERENCE_PRODUCTS = [
 ];
 
 export default function AstroMallPage() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchParams] = useSearchParams();
+  // ?category= lets other pages (e.g. Bhakti) land on a filtered shelf; unknown values fall back to all products.
+  const [activeCategory, setActiveCategory] = useState(() => {
+    const c = searchParams.get('category');
+    return ['rudraksha', 'mala', 'yantra', 'puja_essentials', 'idols'].includes(c) ? c : 'all';
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popular');
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -274,6 +279,7 @@ export default function AstroMallPage() {
           <div className="flex-1 flex items-center bg-[#FAF7F2] border border-[#D8CCB5] rounded-xl px-3 py-2">
             <span className="text-slate-400 mr-2 text-sm">🔍</span>
             <input
+              aria-label="Search products"
               type="search"
               id="ml-search-input"
               className="bg-transparent border-0 outline-none w-full text-xs text-[#1E1B4B]"
