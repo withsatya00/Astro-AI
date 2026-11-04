@@ -343,7 +343,7 @@ export default function AstroMallPage() {
                     </Link>
 
                     {/* Govt. Lab Certified Badge */}
-                    <div style={{ top: "10px", left: "10px" }} className="absolute bg-[#FFFDF8] border border-[#D9A441] px-2 py-0.5 rounded-md text-[9.5px] font-extrabold text-[#3E0B18] flex items-center gap-1 shadow-xs">
+                    <div style={{ top: "10px", left: "10px" }} className="absolute bg-[#FFFDF8] border border-[#D9A441] px-2 py-0.5 rounded-md text-[11.5px] font-extrabold text-[#3E0B18] flex items-center gap-1 shadow-xs">
                       <span>🛡️</span> LAB CERTIFIED
                     </div>
 
@@ -360,11 +360,11 @@ export default function AstroMallPage() {
 
                   {/* Body */}
                   <div className="p-3.5">
-                    <span className="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">
+                    <span className="text-[11.5px] text-slate-400 uppercase font-bold block mb-0.5">
                       {p.category}
                     </span>
                     <Link
-                      to={`/mall/product/${p.id}`}>
+                      to={`/mall/product/${p.id}`} style={{ display: 'block', minHeight: 34 }}>
                       <h4 className="font-serif text-xs sm:text-sm font-bold text-[#1E1B4B] line-clamp-2 hover:text-[#B45309] no-underline leading-snug">
                         {p.title}
                       </h4>
@@ -386,7 +386,7 @@ export default function AstroMallPage() {
                     <div className="flex items-baseline gap-1.5 mt-2">
                       <span className="font-extrabold text-sm sm:text-base text-[#3E0B18]">₹{p.price}</span>
                       <span className="text-[11px] text-slate-400 line-through">₹{p.original_price}</span>
-                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
+                      <span className="text-[11.5px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
                         -{p.discount_percent}% OFF
                       </span>
                     </div>
