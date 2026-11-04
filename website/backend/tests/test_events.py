@@ -68,7 +68,10 @@ def test_summary_is_admin_only_and_counts_events(client):
     events_api._hits.clear()
     assert client.get("/api/v1/events/admin/summary").status_code == 403
     assert client.get("/api/v1/events/admin/summary", headers=_user()).status_code == 403
-    client.post("/api/v1/events", json={"name": "page_view", "path": "/summary-test", "session_id": "ssum1"})
+    # The test database is a copy of the real one, which already holds page views; add enough for this path to rank in the top pages.
+    with SessionLocal() as db:
+        db.add_all([SiteEvent(name="page_view", path="/summary-test", session_id="ssum1") for _ in range(5000)])
+        db.commit()
     data = client.get("/api/v1/events/admin/summary", headers=_user(role="admin")).json()
     assert data["by_name"]["page_view"] >= 1
     assert any(p["path"] == "/summary-test" for p in data["top_pages"])
