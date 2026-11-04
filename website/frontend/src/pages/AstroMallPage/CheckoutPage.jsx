@@ -25,7 +25,7 @@ function Done({ result }) {
       </ul>
       <p className="mc-total-line"><span>Total {result.orders[0] && result.orders[0].payment_method === 'COD' ? '(pay on delivery)' : '(paid)'}</span><b>{money(result.total ?? t.total)}</b></p>
       <div className="mc-actions">
-        <Link className="mc-btn mc-btn-primary" to="/dashboard">View my orders</Link>
+        <Link className="mc-btn mc-btn-primary" to="/my-orders">View my orders</Link>
         <Link className="mc-btn mc-btn-ghost" to="/astro-mall">Continue shopping</Link>
       </div>
     </section>

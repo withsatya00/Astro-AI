@@ -96,6 +96,11 @@ export const fetchServerCart = () => call('/api/v1/cart');
 export const mergeServerCart = (items) => call('/api/v1/cart/merge', { method: 'POST', body: { items: lines(items) } });
 export const saveServerCart = (items, keepalive = false) => call('/api/v1/cart', { method: 'PUT', keepalive, body: { items: lines(items) } });
 
+export const fetchMyOrders = () => call(`${BASE}/my-orders?lang=en`);
+export const fetchTracking = (id) => call(`${BASE}/orders/${encodeURIComponent(id)}/tracking`);
+export const cancelOrder = (id) => call(`${BASE}/orders/${encodeURIComponent(id)}/cancel`, { method: 'POST' });
+export const requestReturn = (id, reason) => call(`${BASE}/orders/${encodeURIComponent(id)}/return`, { method: 'POST', body: { reason } });
+
 export async function walletBalance() {
   if (!token()) return null;
   try { return (await call('/api/v1/wallet')).balance; } catch (e) { return null; }

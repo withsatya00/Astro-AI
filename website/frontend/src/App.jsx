@@ -31,6 +31,7 @@ const MandirDetail = lazy(() => import('./pages/BhaktiPage/MandirDetail.jsx'));
 const ShankaracharyaPage = lazy(() => import('./pages/BhaktiPage/ShankaracharyaPage.jsx'));
 const VedantaPage = lazy(() => import('./pages/BhaktiPage/VedantaPage.jsx'));
 const AdminPage = lazy(() => import('./pages/BhaktiPage/AdminPage.jsx'));
+const MyOrdersPage = lazy(() => import('./pages/AstroMallPage/MyOrdersPage.jsx'));
 const CheckoutPage = lazy(() => import('./pages/AstroMallPage/CheckoutPage.jsx'));
 const GuidePage = lazy(() => import('./pages/BhaktiPage/GuidePage.jsx'));
 const PujaList = lazy(() => import('./pages/BhaktiPage/PujaList.jsx'));
@@ -67,6 +68,7 @@ export default function App() {
           <Route path="/gau-sewa" element={<GauSewaPage />} />
           <Route path="/astro-mall" element={<AstroMallPage />} />
           <Route path="/astro-mall/checkout" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><CheckoutPage /></Suspense>} />
+          <Route path="/my-orders" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><MyOrdersPage /></Suspense>} />
           <Route path="/mall/checkout" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><CheckoutPage /></Suspense>} />
           <Route path="/mall" element={<AstroMallPage />} />
           <Route path="/astro-mall/product/:id" element={<ProductDetailPage />} />

@@ -141,6 +141,22 @@ const fill = async (page, { wallet = false } = {}) => {
     assert.strictEqual((await api('/api/v1/wallet', { token })).json.balance - before, 500);
   });
 
+  await step('my orders lists the orders, shows tracking, and cancelling a wallet order refunds it', async () => {
+    await page.goto(`${BASE}/my-orders`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('.mo-order');
+    assert.ok((await page.locator('.mo-order').count()) >= 3);
+    const wallet = page.locator('.mo-order', { hasText: 'Paid from wallet' }).first();
+    await wallet.getByRole('button', { name: 'Track order' }).click();
+    await wallet.locator('.mo-steps li').first().waitFor();
+    assert.ok((await wallet.locator('.mo-steps li').count()) >= 2, 'placed and paid steps');
+    const before = (await api('/api/v1/wallet', { token })).json.balance;
+    page.once('dialog', (d) => d.accept());
+    await wallet.getByRole('button', { name: 'Cancel order' }).click();
+    await page.getByText('Order cancelled.').waitFor();
+    assert.strictEqual((await api('/api/v1/wallet', { token })).json.balance - before, 299);
+    await wallet.getByText('Cancelled', { exact: true }).waitFor();
+  });
+
   await step('an empty cart shows a way back to the shop', async () => {
     await page.goto(`${BASE}/astro-mall/checkout`, { waitUntil: 'networkidle' });
     assert.strictEqual(await page.locator('.mc-empty a[href="/astro-mall"]').count(), 1);

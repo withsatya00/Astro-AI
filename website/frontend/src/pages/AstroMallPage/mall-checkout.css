@@ -88,3 +88,22 @@ small.mc-bad { color:#b3261e; font-weight:700; }
 
 .mc-skel { background:linear-gradient(90deg,#f1e3c4 25%,#f8eed6 50%,#f1e3c4 75%); background-size:200% 100%; animation:mc-shimmer 1.3s linear infinite; }
 @keyframes mc-shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* My orders */
+.mo-list { list-style:none; margin:0; padding:0; display:grid; gap:14px; }
+.mo-head { display:grid; grid-template-columns:64px minmax(0,1fr) auto; gap:12px; align-items:start; }
+.mo-head img { width:64px; height:64px; object-fit:cover; border-radius:12px; background:#fdf3d9; }
+.mo-main { display:grid; gap:3px; min-width:0; }
+.mo-badge { font-size:12px; font-weight:800; padding:4px 10px; border-radius:999px; background:#f1e3c4; color:var(--mc-gold-d); white-space:nowrap; }
+.mo-paid, .mo-delivered { background:#e4f3e6; color:#235c2d; }
+.mo-cancelled { background:#FAEEF0; color:#650F23; }
+.mo-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.mo-return { margin-top:12px; display:grid; gap:8px; }
+.mo-return label { display:grid; gap:4px; font-size:12px; font-weight:700; color:var(--mc-mute); }
+.mo-track { margin-top:14px; border-top:1px dashed var(--mc-line); padding-top:12px; }
+.mo-steps { list-style:none; margin:0 0 10px; padding:0 0 0 14px; border-left:2px solid var(--mc-gold); display:grid; gap:10px; }
+.mo-steps li { display:grid; gap:1px; font-size:14px; }
+.mo-steps small { color:var(--mc-mute); font-size:12px; }
+.mo-scans { margin:8px 0 0; padding-left:18px; font-size:13px; }
+.mc a[target=_blank] { text-decoration:underline; font-weight:700; color:var(--mc-maroon2); }
+@media (max-width:520px) { .mo-head { grid-template-columns:56px minmax(0,1fr); } .mo-head img { width:56px; height:56px; } .mo-badge { grid-column:2; justify-self:start; } .mo-actions .mc-btn { flex:1 1 100%; } }

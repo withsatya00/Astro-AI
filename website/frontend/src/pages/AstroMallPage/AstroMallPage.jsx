@@ -235,6 +235,7 @@ export default function AstroMallPage() {
             >
               🛒 My Cart ({cart.count})
             </button>
+            <Link to="/my-orders" className="shop-btn shop-btn--ghost cursor-pointer">My Orders</Link>
           </div>
         </div>
         <div className="shop-trust service-benefits">
