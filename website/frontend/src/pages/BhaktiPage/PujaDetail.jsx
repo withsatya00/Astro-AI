@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api, ApiError } from './bhaktiApi.js';
 import { SkelPage } from './Skeleton.jsx';
+import { usePageMeta } from './usePageMeta.js';
 
 export default function PujaDetail() {
   const { slug } = useParams();
@@ -15,6 +16,7 @@ export default function PujaDetail() {
     api(`/puja/${slug}`).then(setP).catch((e) => setErr(e instanceof ApiError && e.status === 404 ? 'This puja guide is not available.' : (e.message || 'Could not load')));
   }, [slug]);
 
+  usePageMeta(p && `${p.title_en} puja vidhi`, p && p.summary);
   if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/puja-vidhi">All puja guides</Link></div>;
   if (!p) return <SkelPage label="Loading puja guide" />;
   const ready = p.samagri.filter((_, i) => have[i]).length;

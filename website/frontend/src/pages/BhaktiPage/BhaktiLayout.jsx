@@ -2,7 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { RadioProvider, MiniPlayer, useRadio } from './RadioContext.jsx';
 import { api, ApiError } from './bhaktiApi.js';
+import { usePageMeta } from './usePageMeta.js';
 import './bhakti.css';
+
+const DESCRIPTIONS = {
+  '': 'Daily bhakti: naam jaap, aarti and chalisa, Bhagavad Gita, bhajan radio, temples, puja vidhi and festival calendar.',
+  'naam-jaap': 'Digital mala and naam jaap counter with streaks and a private jaap record.',
+  'aarti-chalisa': 'Aarti, chalisa and stotra for every deity, in Hindi and Roman with meaning.',
+  'bhagavad-gita': 'Read the Bhagavad Gita chapter by chapter with Sanskrit, transliteration and meaning.',
+  'bhajan-radio': 'Bhajan, kirtan, aarti and dhyan music.',
+  'mandir-darshan': 'Famous temples with history, significance and darshan links.',
+  'puja-vidhi': 'Step-by-step puja guides with samagri checklists and sources.',
+  festivals: 'Ekadashi, Purnima, Amavasya, Pradosh and festival dates calculated for your city.',
+  guide: 'Ask about the Gita, mantras, Vedanta and puja; answers cite the texts published here.',
+  shankaracharya: 'Adi Shankaracharya: life, teachings and Advaita Vedanta.',
+  vedanta: 'Vedanta articles and questions with sources.',
+};
 
 const NAMES = {
   'naam-jaap': 'Naam Jaap', 'my-bhakti': 'My Bhakti', 'aarti-chalisa': 'Aarti & Chalisa', shankaracharya: 'Shankaracharya',
@@ -30,6 +45,7 @@ function Shell() {
   const radio = useRadio();
   const { problem, check } = useServiceStatus();
   const sub = pathname.replace(/^\/bhakti\/?/, '').split('/')[0];
+  usePageMeta(NAMES[sub] ? `${NAMES[sub]} (Bhakti)` : 'Bhakti', DESCRIPTIONS[sub] || DESCRIPTIONS['']);
   return (
     <div className="bh">
       <div className={`bh-wrap${radio.current ? ' bh-wrap--playing' : ''}`}>

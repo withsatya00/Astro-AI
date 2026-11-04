@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { api, ApiError } from './bhaktiApi.js';
+import { usePageMeta } from './usePageMeta.js';
+import { SkelPage } from './Skeleton.jsx';
 
 export default function MandirDetail() {
   const { slug } = useParams();
@@ -12,8 +14,9 @@ export default function MandirDetail() {
     api(`/temples/${slug}`).then(setT).catch((e) => setErr(e instanceof ApiError && e.status === 404 ? 'This temple page is not available.' : (e.message || 'Could not load')));
   }, [slug]);
 
+  usePageMeta(t && `${t.name_en}, ${t.city}`, t && t.summary);
   if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/mandir-darshan">All temples</Link></div>;
-  if (!t) return <div className="bh-panel">Loading…</div>;
+  if (!t) return <SkelPage label="Loading temple" />;
 
   // Directions open the visitor's own maps app with a search for the temple; we do not store or guess coordinates.
   const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${t.name_en}, ${t.city}, ${t.state}`)}`;

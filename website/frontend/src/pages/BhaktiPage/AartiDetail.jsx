@@ -4,6 +4,7 @@ import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
 import { markRitual, MALL_FOR_DEITY } from './dailyRitual.js';
 import { SkelPage } from './Skeleton.jsx';
+import { usePageMeta } from './usePageMeta.js';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
 const loadPrefs = () => { try { return { size: 22, diya: false, ...(JSON.parse(localStorage.getItem(PREF_KEY) || '{}')) }; } catch (e) { return { size: 22, diya: false }; } };
@@ -84,6 +85,7 @@ export default function AartiDetail() {
   };
   const playPause = () => { const a = audio.current; if (!a) return; if (a.paused) a.play().catch(() => setNote('Could not play this audio')); else a.pause(); };
 
+  usePageMeta(c && `${c.title_en} (${c.title_hi})`, c && (c.meaning_en || c.body_hi || '').replace(/^Summary[^:]*:\s*/i, ''));
   if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/aarti-chalisa">Back to library</Link></div>;
   if (!c) return <SkelPage label="Loading text" />;
 

@@ -54,12 +54,20 @@ def sitemap(request: Request):
     import os
     from xml.sax.saxutils import escape
     from packages.database.models import Astrologer, MarketplaceProduct, Temple
+    from packages.database.bhakti import BhaktiContent, BhaktiTemple
+    from packages.database.bhakti_calendar import BhaktiPuja
     from packages.database.session import SessionLocal
     base = (os.environ.get("SITE_URL") or str(request.base_url)).rstrip("/")
     paths = ["/", "/astrologers", "/calculators", "/panchang", "/rashiphal", "/mandir-seva", "/astro-mall", "/gau-sewa", "/gifts"]
+    # Bhakti: section pages, the 18 Gita chapters, and every published text, puja guide and temple page.
+    paths += ["/bhakti"] + [f"/bhakti/{s}" for s in ("naam-jaap", "aarti-chalisa", "bhagavad-gita", "bhajan-radio", "mandir-darshan", "puja-vidhi", "festivals", "shankaracharya", "vedanta", "guide")]
+    paths += [f"/bhakti/bhagavad-gita/{n}" for n in range(1, 19)]
     with SessionLocal() as db:
         paths += [f"/astrologers/{a.slug}" for a in db.query(Astrologer.slug).all()]
         paths += [f"/mandir-seva/{t.slug}" for t in db.query(Temple.slug).filter(Temple.is_active == True).all()]  # noqa: E712
+        paths += [f"/bhakti/aarti-chalisa/{c.slug}" for c in db.query(BhaktiContent.slug).filter(BhaktiContent.published == True).all()]  # noqa: E712
+        paths += [f"/bhakti/puja-vidhi/{c.slug}" for c in db.query(BhaktiPuja.slug).filter(BhaktiPuja.published == True).all()]  # noqa: E712
+        paths += [f"/bhakti/mandir-darshan/{c.slug}" for c in db.query(BhaktiTemple.slug).filter(BhaktiTemple.published == True).all()]  # noqa: E712
         paths += [f"/astro-mall/product/{p.id}" for p in db.query(MarketplaceProduct.id).filter(
             MarketplaceProduct.is_active == True, MarketplaceProduct.listing_status == "APPROVED").all()]  # noqa: E712
     body = "".join(f"<url><loc>{escape(base + p)}</loc></url>" for p in paths)

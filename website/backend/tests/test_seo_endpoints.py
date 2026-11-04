@@ -34,3 +34,25 @@ def test_sitemap_lists_public_pages_but_no_receipts_or_private_routes(client):
         assert f"{path}</loc>" in xml, path
     for private in ("/receipt", "/dashboard", "/admin", "/seller", "/rewards"):
         assert private not in xml, private
+
+
+def test_sitemap_lists_published_bhakti_pages(client):
+    from packages.database.bhakti import BhaktiContent
+    from packages.database.session import SessionLocal
+    from website.backend.app.api import bhakti_gita
+    with SessionLocal() as db:
+        bhakti_gita.seed_gita_and_library_if_missing(db)
+        hidden = db.query(BhaktiContent).filter(BhaktiContent.slug == "jai-ganesh-deva").first()
+        was = hidden.published
+        hidden.published = False
+        db.commit()
+    try:
+        body = client.get("/sitemap.xml").text
+    finally:
+        with SessionLocal() as db:
+            db.query(BhaktiContent).filter(BhaktiContent.slug == "jai-ganesh-deva").update({"published": was})
+            db.commit()
+    for path in ("/bhakti<", "/bhakti/aarti-chalisa<", "/bhakti/bhagavad-gita/18<", "/bhakti/aarti-chalisa/hanuman-chalisa<", "/bhakti/festivals<"):
+        assert path in body, path
+    assert "/bhakti/aarti-chalisa/jai-ganesh-deva<" not in body  # unpublished text stays out
+    assert "/bhakti/admin" not in body and "/bhakti/my-bhakti" not in body

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { markRitual } from './dailyRitual.js';
+import { usePageMeta } from './usePageMeta.js';
+import { SkelPage } from './Skeleton.jsx';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
@@ -42,8 +44,9 @@ export default function GitaChapter() {
     } catch (e) { setNote(e.message || 'Could not save'); }
   };
 
+  usePageMeta(data && `Bhagavad Gita Chapter ${data.number}: ${data.name_en}`, data && data.summary_en);
   if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/bhagavad-gita">All chapters</Link></div>;
-  if (!data) return <div className="bh-panel">Loading…</div>;
+  if (!data) return <SkelPage label="Loading chapter" />;
 
   const readCount = data.verses.filter((v) => v.read).length;
   return (
