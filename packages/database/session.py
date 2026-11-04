@@ -56,6 +56,7 @@ def init_db():
     import packages.database.bhakti_articles  # noqa
     import packages.database.bhakti_guide  # noqa
     import packages.database.bhakti_media  # noqa
+    import packages.database.analytics  # noqa
     import packages.database.bhakti_calendar  # noqa
     Base.metadata.create_all(bind=engine)
 

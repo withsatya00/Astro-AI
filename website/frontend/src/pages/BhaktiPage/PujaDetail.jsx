@@ -68,8 +68,8 @@ export default function PujaDetail() {
       <div className="bh-cta-card">
         <div><b>Yeh puja pandit ji se karwana chahte hain?</b><span className="bh-small">Mandir Seva me apne naam aur sankalp se puja book karein, ya samagri Astro Mall se mangwayein.</span></div>
         <div className="bh-cta-actions">
-          <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/puja">Puja book karein</Link>
-          <Link className="bh-btn bh-btn-ghost" to="/astro-mall?category=puja_essentials">Puja samagri</Link>
+          <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/puja" data-track="puja_vidhi_book">Puja book karein</Link>
+          <Link className="bh-btn bh-btn-ghost" to="/astro-mall?category=puja_essentials" data-track="puja_vidhi_samagri">Puja samagri</Link>
         </div>
       </div>
       <div className="bh-row"><Link className="bh-btn bh-btn-ghost" to="/bhakti/puja-vidhi">← All puja guides</Link><Link className="bh-btn bh-btn-ghost" to="/bhakti/naam-jaap">Chant a mantra →</Link></div>

@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { useAuth } from './context/AuthContext.jsx';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
+import { Analytics } from './analytics.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import DirectoryPage from './pages/DirectoryPage/DirectoryPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
@@ -40,6 +41,7 @@ const ComingSoon = lazy(() => import('./pages/BhaktiPage/ComingSoon.jsx'));
 export default function App() {
   return (
     <BrowserRouter>
+      <Analytics />
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />

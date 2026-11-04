@@ -21,6 +21,7 @@ from packages.core.identity import Owner, optional_owner
 from packages.core.notify import notify
 from packages.core.config import settings
 from packages.core.pricing import MEMBER_CONSULT_DISCOUNT, active_membership
+from packages.database.analytics import record_event
 
 router = APIRouter(prefix="/wallet", tags=["Wallet & Bookings"])
 
@@ -200,6 +201,7 @@ def _credit_recharge(db: Session, user: User, order: Dict[str, Any], payment_id:
     db.add(WalletTransaction(id=generate_uuid(), user_id=user.id, amount=amount, transaction_type="credit",
                              description="Wallet recharge via Razorpay", reference_id=ref, created_at=utc_now()))
     notify(db, f"u:{user.id}", "wallet_recharged", "/dashboard", amount=f"{amount:.2f}", ref=ref)
+    record_event(db, "wallet_recharged", {"amount": round(amount), "method": "razorpay"})
     return amount
 
 
@@ -291,6 +293,7 @@ def recharge_wallet(
     )
     db.add(tx)
     notify(db, f"u:{current_user.id}", "wallet_recharged", "/dashboard", amount=f"{amount:.2f}", ref=tx.reference_id)
+    record_event(db, "wallet_recharged", {"amount": round(amount), "method": "test"})
     db.commit()
 
     new_balance = current_user.wallet_balance
@@ -389,6 +392,7 @@ def create_booking(
     db.add(booking)
     notify(db, f"u:{current_user.id}", "consultation_booked", "/dashboard", name=astro.name,
            when=start.astimezone(IST).strftime("%d %b, %I:%M %p IST"))
+    record_event(db, "consultation_booked", {"mode": payload.mode, "minutes": payload.duration_minutes, "amount": round(total_amount), "member": bool(member)})
     db.commit()
 
     return {

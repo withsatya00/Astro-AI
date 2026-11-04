@@ -4,6 +4,7 @@ import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
 import { markRitual, MALL_FOR_DEITY } from './dailyRitual.js';
 import { SkelPage } from './Skeleton.jsx';
+import { track } from '../../analytics.jsx';
 import { usePageMeta } from './usePageMeta.js';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
@@ -30,7 +31,7 @@ export default function AartiDetail() {
 
   useEffect(() => {
     setC(null); setErr('');
-    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); markRitual('aarti'); })
+    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); markRitual('aarti'); track('bhakti_text_open', { kind: d.kind, slug: d.slug }); })
       .catch((e) => setErr(e instanceof ApiError && e.status === 404 ? 'This text is not available.' : (e.message || 'Could not load')));
   }, [slug, signedIn]);
 
@@ -151,8 +152,8 @@ export default function AartiDetail() {
       <div className="bh-cta-card">
         <div><b>{c.deity ? `${c.deity.name_en} ke liye seva` : 'Seva aur samagri'}</b><span className="bh-small">Mandir me puja karwayein ya puja samagri mangwayein.</span></div>
         <div className="bh-cta-actions">
-          <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/puja">Puja book karein</Link>
-          <Link className="bh-btn bh-btn-ghost" to={`/astro-mall?category=${(c.deity && MALL_FOR_DEITY[c.deity.slug]) || 'mala'}`}>Mala &amp; samagri</Link>
+          <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/puja" data-track="aarti_puja_book">Puja book karein</Link>
+          <Link className="bh-btn bh-btn-ghost" data-track="aarti_mall" to={`/astro-mall?category=${(c.deity && MALL_FOR_DEITY[c.deity.slug]) || 'mala'}`}>Mala &amp; samagri</Link>
         </div>
       </div>
     </div>

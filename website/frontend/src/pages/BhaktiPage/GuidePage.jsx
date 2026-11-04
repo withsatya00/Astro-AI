@@ -124,7 +124,7 @@ export default function GuidePage() {
       {msgs.some((m) => m.role === 'ai' && (m.data.needs_teacher || m.data.mode !== 'ai')) && (
         <div className="bh-cta-card" style={{ marginBottom: 12 }}>
           <div><b>Vyaktigat margdarshan chahiye?</b><span className="bh-small">Kundali ya jeevan ke nirnay jaise sawal ke liye kisi anubhavi jyotishi se seedhe baat karein.</span></div>
-          <div className="bh-cta-actions"><Link className="bh-btn bh-btn-maroon" to="/astrologers">Astrologer se baat karein</Link></div>
+          <div className="bh-cta-actions"><Link className="bh-btn bh-btn-maroon" to="/astrologers" data-track="guide_astrologer">Astrologer se baat karein</Link></div>
         </div>
       )}
 

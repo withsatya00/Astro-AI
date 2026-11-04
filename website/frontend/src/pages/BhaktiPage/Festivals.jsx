@@ -157,9 +157,9 @@ export default function Festivals() {
                   <div className="bh-cta-card" style={{ marginTop: 10 }}>
                     <div><b>Is din ki seva</b><span className="bh-small">Parv par mandir me puja ya chadhava arpit karein, ya daan karein.</span></div>
                     <div className="bh-cta-actions">
-                      <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/chadhava">Chadhava</Link>
-                      <Link className="bh-btn bh-btn-ghost" to="/mandir-seva/puja">Puja book</Link>
-                      <Link className="bh-btn bh-btn-ghost" to="/gau-sewa">Gau Sewa daan</Link>
+                      <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/chadhava" data-track="festival_chadhava">Chadhava</Link>
+                      <Link className="bh-btn bh-btn-ghost" to="/mandir-seva/puja" data-track="festival_puja">Puja book</Link>
+                      <Link className="bh-btn bh-btn-ghost" to="/gau-sewa" data-track="festival_gau_sewa">Gau Sewa daan</Link>
                     </div>
                   </div>
                 )}

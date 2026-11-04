@@ -21,6 +21,7 @@ from packages.core.security import (
     decode_access_token, sanitize_user_input
 )
 from packages.core.config import settings
+from packages.database.analytics import record_event
 from packages.core.identity import Owner, optional_owner, CLIENT_ID_RE
 from packages.database.models import ChatSession
 
@@ -76,6 +77,7 @@ def register_user(payload: UserRegisterRequest, db: Session = Depends(get_db)):
         is_active=True
     )
     db.add(user)
+    record_event(db, "sign_up")
     db.commit()
     db.refresh(user)
 

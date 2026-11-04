@@ -1,5 +1,6 @@
 // Daily ritual helpers: which deity the weekday belongs to, and a small per-day checklist kept on this device.
 import { useCallback, useEffect, useState } from 'react';
+import { track } from '../../analytics.jsx';
 
 // Traditional weekday association. index = Date#getDay() (0 = Sunday).
 export const WEEKDAY = [
@@ -33,6 +34,7 @@ const write = (v) => {
 export function markRitual(step, on = true) {
   const cur = read();
   if (!!cur.done[step] === on) return;
+  if (on) track('bhakti_ritual_step', { step });
   write({ ...cur, done: { ...cur.done, [step]: on } });
 }
 

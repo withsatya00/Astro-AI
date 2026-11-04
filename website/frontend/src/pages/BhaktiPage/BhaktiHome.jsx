@@ -163,7 +163,7 @@ function SevaStrip({ wd }) {
       <div className="bh-sec-title"><h2>सेवा और संकल्प</h2></div>
       <div className="bh-cards bh-cards-2">
         {items.map(([ic, t, d, to]) => (
-          <Link key={t} to={to} className="bh-card">
+          <Link key={t} to={to} className="bh-card" data-track={`home_seva_${to.split('?')[0].replace(/\W+/g, '_').replace(/^_|_$/g, '')}`}>
             <div className="bh-card-ic" aria-hidden="true">{ic}</div>
             <div style={{ minWidth: 0 }}><h3>{t}</h3><p>{d}</p></div>
           </Link>
