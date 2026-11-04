@@ -184,7 +184,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => navigate('/astrologers')}
-                    className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-[11px] px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
+                    className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-xs px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
                   >
                     Claim now →
                   </button>

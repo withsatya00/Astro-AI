@@ -165,9 +165,9 @@
   }
 
   .footer-trust-copy b {
-    font-size: 10.5px !important;
+    font-size: 11.5px !important;
     line-height: 1.2 !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
   }
 
   .footer-trust-copy small {
