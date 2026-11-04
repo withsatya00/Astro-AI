@@ -1,0 +1,96 @@
+"""Starter puja guides and mantra meanings, written in our own words.
+
+Home puja differs between families, regions and traditions, so every guide says so and points to a family priest or elder. Mantra
+meanings are short, plain explanations of well-known short mantras, not translations of any published text. Everything is seeded as
+UNVERIFIED: an editor must review it before turning `is_verified` on. Seeding only adds what is missing and never overwrites edits."""
+
+REVIEWED_ON = "2026-11-04"
+_COMMON = {"title": "Common household practice, summarised in our own words", "note": "Details differ by family, region and tradition; confirm with your family priest or an elder"}
+_NOTE = ("This is a simple, widely followed way to do the puja at home. Families and traditions differ in the order, the items and the mantras used. "
+         "If your family has its own custom, follow that. For a special occasion, a priest can guide you.")
+
+# (slug, title_en, title_hi, deity slug or "", sort_order, summary, samagri [(item, note)], steps [(title, text)], notes)
+PUJAS = [
+    ("daily-home-puja", "Daily puja at home", "घर की दैनिक पूजा", "", 10,
+     "A short morning puja that takes about 15 minutes.",
+     [("A clean corner or small altar", "with the images or murtis you worship"), ("A lamp (diya) with ghee or oil and a wick", ""), ("Incense (agarbatti or dhoop)", ""),
+      ("Fresh flowers", "any that your tradition allows"), ("A small vessel of clean water", ""), ("Fruit, sweets or any simple food", "to offer as prasad"), ("A bell", "optional")],
+     [("Prepare yourself", "Bathe and wear clean clothes. Keep the mind calm and the phone away."),
+      ("Clean the altar", "Wipe the space, remove old flowers and place fresh ones."),
+      ("Set your intention", "Sit facing the altar and say silently, in your own words, why you are doing the puja today."),
+      ("Begin with Ganesha", "Many families begin with a short salutation to Ganesha, for example the mantra Om Gam Ganapataye Namah."),
+      ("Light the lamp and incense", "Light the diya first, then the incense, and offer both to the deity."),
+      ("Offer water and flowers", "Offer a little water and place flowers at the feet of the image with a respectful mind."),
+      ("Chant or recite", "Chant the mantra you follow, or read a chalisa or stotra. Even 108 repetitions of a short mantra on a mala is enough."),
+      ("Aarti", "Wave the lit lamp slowly in a circle before the image while singing or reciting an aarti."),
+      ("Offer prasad and close", "Offer the food, bow, ask for forgiveness for any mistakes, and share the prasad with the family.")], _NOTE),
+    ("ganesh-puja", "Ganesh puja", "गणेश पूजा", "ganesh", 20,
+     "A simple puja to Ganesha, kept at the start of new work or on Chaturthi.",
+     [("An image or murti of Ganesha", ""), ("Durva grass", "traditionally offered to Ganesha"), ("Red or yellow flowers", ""), ("A lamp and incense", ""),
+      ("Modak, laddu or any sweet", "as the offering"), ("Clean water", "")],
+     [("Clean the place and sit facing the image", "Keep the image on a clean cloth or a raised seat."),
+      ("Light the lamp and incense", ""), ("Offer water", "Offer a little water to the image."),
+      ("Offer durva and flowers", "Place the durva and flowers at the feet of the image."),
+      ("Chant", "Chant Om Gam Ganapataye Namah, or recite an aarti or stotra of Ganesha you know."),
+      ("Offer the sweet", "Offer the modak or sweet, then share it as prasad."),
+      ("Aarti and prayer", "Do the aarti, bow, and pray for a good beginning and the removal of obstacles.")], _NOTE),
+    ("shiva-puja", "Shiva puja and abhishek", "शिव पूजा और अभिषेक", "shiva", 30,
+     "A simple Shivalinga abhishek, commonly done on Mondays, Pradosh and Mahashivratri.",
+     [("A Shivalinga or image of Shiva", ""), ("Clean water", "plain water is enough"), ("Milk", "optional, in a separate vessel"), ("Bilva (bel) leaves", "traditionally offered to Shiva"),
+      ("White flowers", ""), ("Incense and a lamp", ""), ("Fruit", "")],
+     [("Clean the place", "Wash the Shivalinga or wipe the image gently."),
+      ("Pour water slowly", "Pour water in a thin, steady stream over the linga while chanting."),
+      ("Offer milk if you wish", "Offer a little milk, then pour water again to rinse."),
+      ("Offer bilva leaves and flowers", "Place bilva leaves with the smooth side down, and offer white flowers."),
+      ("Chant", "Chant Om Namah Shivaya, 108 times if you can."),
+      ("Light the lamp and incense", ""), ("Aarti and prayer", "Do the aarti and bow in silence for a minute.")],
+     _NOTE + " Traditionally tulsi leaves are not offered to Shiva."),
+    ("hanuman-puja", "Hanuman puja", "हनुमान पूजा", "hanuman", 40,
+     "A simple puja to Hanuman, commonly kept on Tuesdays and Saturdays.",
+     [("An image or murti of Hanuman", ""), ("Red flowers", ""), ("Sindoor", "traditionally offered with oil"), ("A lamp and incense", ""), ("Jaggery, gram or a sweet", "as prasad")],
+     [("Clean the place and light the lamp", ""), ("Offer flowers and sindoor", "Offer them with respect to the image."),
+      ("Recite", "Recite the Hanuman Chalisa, or chant Jai Hanuman or Om Hanumate Namah."),
+      ("Offer prasad", "Offer the jaggery, gram or sweet."), ("Aarti and prayer", "Do the aarti and pray for strength and courage.")], _NOTE),
+    ("lakshmi-puja-diwali", "Lakshmi puja (Diwali evening)", "लक्ष्मी पूजा (दीपावली)", "lakshmi", 50,
+     "A simple Lakshmi and Ganesha puja kept in the evening of Diwali.",
+     [("Images or murtis of Lakshmi and Ganesha", ""), ("Many lamps (diyas)", ""), ("Flowers, especially lotus if available", ""), ("Incense", ""), ("Sweets and fruit", ""),
+      ("Rice, turmeric and kumkum", "for tilak"), ("Coins", "some families place them near the images")],
+     [("Clean the home and make a rangoli", "The home is cleaned and decorated before the evening."),
+      ("Choose the evening time", "The puja is kept after sunset on the Amavasya evening. Check the exact timing for your city in a local panchang."),
+      ("Light the lamps", "Light the diyas at the altar and at the doors."),
+      ("Begin with Ganesha", "Salute Ganesha first, as in any puja."),
+      ("Offer to Lakshmi", "Apply tilak, offer flowers, incense and sweets, and place coins near the image if your family does so."),
+      ("Chant and aarti", "Chant or sing the aarti of Lakshmi and Ganesha."),
+      ("Share prasad", "Share sweets with the family and neighbours.")], _NOTE),
+    ("ekadashi-vrat", "Ekadashi vrat", "एकादशी व्रत", "vishnu", 60,
+     "How the Ekadashi fast is commonly kept. Always follow your own health needs.",
+     [("Fruit, milk, nuts or other foods your tradition allows during the fast", ""), ("Tulsi leaves", "traditionally offered to Vishnu"), ("A lamp and incense", ""), ("Clean water", "")],
+     [("Check the date for your city", "Use the Festivals page and confirm with your local panchang, because the day can differ between traditions."),
+      ("Prepare the day before", "Eat a light meal and avoid grains if your tradition requires it."),
+      ("On Ekadashi", "Many people avoid grains and pulses, and eat only fruit, milk or other permitted foods, or fast completely."),
+      ("Worship Vishnu", "Light a lamp, offer tulsi, and chant Om Namo Narayanaya or read a stotra of Vishnu."),
+      ("Break the fast", "The fast is traditionally broken the next morning, after sunrise and within Dwadashi. The timing is given in a panchang.")],
+     _NOTE + " Fasting is not right for everyone. Children, elders, pregnant women and anyone who is unwell or on medication should not fast without their doctor's advice."),
+]
+
+# slug of the mantra -> (meaning in English, meaning in Hindi, short note). Short, plain explanations in our own words.
+MANTRA_MEANINGS = {
+    "om-namah-shivaya": ("A salutation to Shiva, the auspicious one. It is traditionally called the five-syllable (Panchakshari) mantra, from na-ma-shi-va-ya.",
+                         "शिव, यानी कल्याणकारी, को प्रणाम। परंपरा में इसे पंचाक्षरी मंत्र कहा जाता है (न-मः-शि-वा-य)।", "Om is the sacred sound; Namah means salutation."),
+    "om-namo-narayanaya": ("A salutation to Narayana, a name of Vishnu. It is traditionally called the eight-syllable (Ashtakshari) mantra.",
+                           "नारायण, यानी विष्णु, को प्रणाम। परंपरा में इसे अष्टाक्षरी मंत्र कहा जाता है।", "Commonly chanted by devotees of Vishnu."),
+    "hare-krishna": ("An invocation of Hari and Krishna, calling on the Lord with love. It is part of the longer Hare Krishna maha-mantra chanted in Vaishnava traditions.",
+                     "हरि और कृष्ण का आह्वान, प्रेम से प्रभु को पुकारना। यह वैष्णव परंपराओं में गाए जाने वाले लंबे महामंत्र का हिस्सा है।", "Often chanted aloud in kirtan."),
+    "radhe-radhe": ("A devotional call to Radha, the beloved of Krishna. It is also used as a friendly, respectful greeting by devotees in the Braj region.",
+                    "कृष्ण की प्रिया राधा का भक्ति-भाव से स्मरण। ब्रज क्षेत्र में भक्त इसे आदर भरे अभिवादन के रूप में भी कहते हैं।", "Associated with Radha-Krishna devotion."),
+    "shri-ram": ("An invocation of Shri Ram. 'Shri' is a word of respect and auspiciousness.",
+                 "श्री राम का स्मरण। 'श्री' आदर और मंगल का सूचक शब्द है।", "A simple name-remembrance (naam smaran)."),
+    "jai-shri-ram": ("Victory and praise to Shri Ram. 'Jai' means victory or hail.",
+                     "श्री राम की जय। 'जय' का अर्थ जीत या जयकार है।", "Often said as a greeting and in praise of Ram."),
+    "jai-hanuman": ("Praise to Hanuman, remembered for strength, devotion and service to Ram.",
+                    "हनुमान की जय, जो बल, भक्ति और श्री राम की सेवा के लिए स्मरण किए जाते हैं।", "Often said for courage."),
+    "om-gan-ganapataye-namah": ("A salutation to Ganapati (Ganesha). 'Gam' is a seed sound (beeja) associated with Ganesha in the tradition.",
+                                "गणपति, यानी गणेश, को प्रणाम। 'गं' परंपरा में गणेश से जुड़ा बीज-अक्षर माना जाता है।", "Often chanted at the start of any new work."),
+    "jai-mata-di": ("Victory to the Mother, the Goddess, especially Durga. 'Di' means 'of' in Punjabi and Hindi, so it reads 'hail to the Mother'.",
+                    "माता, यानी देवी (विशेषकर दुर्गा), की जय। 'दी' का अर्थ 'की' है, यानी 'माता की जय'।", "Popular during Navratri and at Devi temples."),
+}

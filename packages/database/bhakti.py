@@ -121,3 +121,98 @@ class BhaktiAuditLog(Base):
     entity_id = Column(String(100), nullable=False)
     detail = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), default=utc_now, index=True)
+
+
+class GitaChapter(Base):
+    __tablename__ = "bhakti_gita_chapters"
+    number = Column(Integer, primary_key=True)
+    name_sa = Column(String(120), nullable=False)
+    name_hi = Column(String(120), nullable=False)
+    name_en = Column(String(120), nullable=False)
+    verse_count = Column(Integer, nullable=False)
+    summary_en = Column(String(400), nullable=False, default="")
+
+
+class GitaVerse(Base):
+    """One shloka. Only published rows are public; publishing needs a source and licence, like the library."""
+    __tablename__ = "bhakti_gita_verses"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    chapter = Column(Integer, ForeignKey("bhakti_gita_chapters.number"), nullable=False)
+    verse = Column(Integer, nullable=False)
+    text_sa = Column(Text, nullable=False)
+    transliteration = Column(Text, nullable=False, default="")
+    meaning_hi = Column(Text, nullable=False, default="")
+    meaning_en = Column(Text, nullable=False, default="")
+    source = Column(String(300), nullable=False, default="")
+    license = Column(String(160), nullable=False, default="")
+    is_verified = Column(Boolean, nullable=False, default=False)
+    published = Column(Boolean, nullable=False, default=False)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+    __table_args__ = (UniqueConstraint("chapter", "verse", name="uq_gita_verse"), Index("ix_gita_verses_pub", "published", "chapter"))
+
+
+class GitaBookmark(Base):
+    __tablename__ = "bhakti_gita_bookmarks"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    verse_id = Column(String(36), ForeignKey("bhakti_gita_verses.id"), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    __table_args__ = (UniqueConstraint("user_id", "verse_id", name="uq_gita_bookmark"),)
+
+
+class GitaRead(Base):
+    """Verses a user has marked as read; chapter progress is read-count over the verses that exist."""
+    __tablename__ = "bhakti_gita_reads"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    verse_id = Column(String(36), ForeignKey("bhakti_gita_verses.id"), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    __table_args__ = (UniqueConstraint("user_id", "verse_id", name="uq_gita_read"),)
+
+
+class BhajanTrack(Base):
+    """A bhajan played through YouTube's own embedded player. No media is stored or downloaded; only the video id."""
+    __tablename__ = "bhakti_bhajan_tracks"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    youtube_id = Column(String(11), unique=True, nullable=False, index=True)
+    title = Column(String(200), nullable=False)
+    category = Column(String(30), nullable=False, index=True)
+    channel = Column(String(200), nullable=False)  # who published it on YouTube
+    rights_note = Column(String(300), nullable=False)  # why it may be shown here, e.g. "Official channel; embedding enabled"
+    published = Column(Boolean, nullable=False, default=True, index=True)
+    created_by = Column(String(36), ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+
+
+class BhajanFavourite(Base):
+    __tablename__ = "bhakti_bhajan_favourites"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
+    track_id = Column(String(36), ForeignKey("bhakti_bhajan_tracks.id"), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    __table_args__ = (UniqueConstraint("user_id", "track_id", name="uq_bhajan_fav"),)
+
+
+class BhaktiTemple(Base):
+    """A temple page. Timings are never invented: only an admin-entered note with a source link is shown."""
+    __tablename__ = "bhakti_temples"
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    slug = Column(String(100), unique=True, nullable=False, index=True)
+    name_en = Column(String(200), nullable=False)
+    name_hi = Column(String(200), nullable=False)
+    city = Column(String(100), nullable=False, index=True)
+    state = Column(String(100), nullable=False, index=True)
+    deity = Column(String(200), nullable=False, default="")
+    summary = Column(Text, nullable=False, default="")        # history, in our own words
+    significance = Column(Text, nullable=False, default="")
+    festivals = Column(JSON, nullable=False, default=list)    # list of festival names
+    official_url = Column(String(300), nullable=True)
+    virtual_darshan_url = Column(String(300), nullable=True)
+    image_url = Column(String(300), nullable=True)
+    image_credit = Column(String(300), nullable=True)
+    timings_note = Column(String(500), nullable=True)
+    timings_source_url = Column(String(300), nullable=True)
+    source = Column(String(300), nullable=False, default="")
+    is_verified = Column(Boolean, nullable=False, default=False)
+    published = Column(Boolean, nullable=False, default=False, index=True)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)

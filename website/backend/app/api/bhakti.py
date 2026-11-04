@@ -16,6 +16,7 @@ from packages.database.bhakti import BhaktiDeity, BhaktiMantra, JaapEvent, JaapR
 from packages.database.models import User, utc_now
 from packages.database.session import get_db
 from website.backend.app.api.auth import get_current_user_optional, get_current_user_required
+from website.backend.app.bhakti_seed_puja import MANTRA_MEANINGS
 
 router = APIRouter(prefix="/bhakti", tags=["Bhakti"])
 
@@ -102,8 +103,10 @@ def _norm_phrase(s: str) -> str:
 
 def _mantra_out(m: BhaktiMantra, deities: dict) -> dict:
     d = deities.get(m.deity_id)
+    meaning = MANTRA_MEANINGS.get(m.slug)  # a short plain-language meaning, for the catalogue mantras only
     return {"id": m.id, "slug": m.slug, "text_hi": m.text_hi, "text_roman": m.text_roman, "match_phrases": m.match_phrases or [],
-            "is_custom": m.is_custom, "deity": {"slug": d.slug, "name_en": d.name_en, "name_hi": d.name_hi} if d else None}
+            "is_custom": m.is_custom, "deity": {"slug": d.slug, "name_en": d.name_en, "name_hi": d.name_hi} if d else None,
+            "meaning_en": meaning[0] if meaning else "", "meaning_hi": meaning[1] if meaning else "", "meaning_note": meaning[2] if meaning else ""}
 
 
 def _session_out(s: JaapSession) -> dict:

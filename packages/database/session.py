@@ -53,6 +53,10 @@ def init_db():
     import packages.database.advanced  # noqa
     import packages.database.chadhava  # noqa
     import packages.database.bhakti  # noqa
+    import packages.database.bhakti_articles  # noqa
+    import packages.database.bhakti_guide  # noqa
+    import packages.database.bhakti_media  # noqa
+    import packages.database.bhakti_calendar  # noqa
     Base.metadata.create_all(bind=engine)
 
     # Safe migration check for metadata and extended columns in SQLite / Postgres

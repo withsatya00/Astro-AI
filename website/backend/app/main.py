@@ -11,7 +11,7 @@ from pathlib import Path
 import time
 from packages.core.logging import logger
 from packages.database.session import init_db
-from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa, bhakti, bhakti_content
+from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa, bhakti, bhakti_content, bhakti_gita, bhakti_radio, bhakti_temples, bhakti_vedanta, bhakti_guide, bhakti_calendar
 
 app = FastAPI(
     title="Astro Jyotish Website Backend",
@@ -66,7 +66,7 @@ def sitemap(request: Request):
     from fastapi.responses import Response
     return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + body + "</urlset>", media_type="application/xml")
 
-PRIVATE_PATHS = ("/admin", "/dashboard", "/seller", "/my-account", "/rewards", "/gau-sewa/receipt/")
+PRIVATE_PATHS = ("/admin", "/dashboard", "/seller", "/my-account", "/rewards", "/gau-sewa/receipt/", "/bhakti/admin")
 
 
 @app.get("/robots.txt", include_in_schema=False)
@@ -96,7 +96,7 @@ app.include_router(voice.router, prefix=API_V1_PREFIX)
 app.include_router(mandir.router, prefix=API_V1_PREFIX)
 app.include_router(marketplace.router, prefix=API_V1_PREFIX)
 app.include_router(notifications.router, prefix=API_V1_PREFIX)
-for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router, experience.router, gau_sewa.router, bhakti.router, bhakti_content.router):
+for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router, experience.router, gau_sewa.router, bhakti.router, bhakti_content.router, bhakti_gita.router, bhakti_radio.router, bhakti_temples.router, bhakti_vedanta.router, bhakti_guide.router, bhakti_calendar.router, bhakti_calendar.puja_router):
     app.include_router(_router, prefix=API_V1_PREFIX)
 
 # Optional inclusion of AI routers for unified production gateway
@@ -204,11 +204,20 @@ def on_startup():
             mandir.seed_packages_and_coupons(db)
             experience.ensure_pack_coupons(db)
             gau_sewa.seed_gaushalas_if_empty(db)
-            bhakti.seed_bhakti_if_empty(db)
         finally:
             db.close()
     except Exception as e:
         logger.warning(f"Catalog seed skipped: {e}")
+    # Bhakti starter data is seeded on its own, so a failure in an older catalog seed above can never leave Bhakti empty.
+    for _name, _seed in (("deities and mantras", bhakti.seed_bhakti_if_empty), ("gita and library", bhakti_gita.seed_gita_and_library_if_missing),
+                         ("temples", bhakti_temples.seed_temples_if_missing), ("vedanta articles", bhakti_vedanta.seed_articles_if_missing),
+                         ("puja guides", bhakti_calendar.seed_puja_if_missing)):
+        try:
+            from packages.database.session import SessionLocal as _SL
+            with _SL() as _db:
+                _seed(_db)
+        except Exception as e:
+            logger.warning(f"Bhakti seed skipped ({_name}): {e}")
     try:
         from ai.backend.app.services.llm_service import warm_up_gemini_async
         warm_up_gemini_async()

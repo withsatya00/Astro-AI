@@ -10,8 +10,10 @@ from sqlalchemy.orm import Session
 
 from packages.core.logging import logger
 from packages.database.bhakti import BhaktiAudio, BhaktiAuditLog, BhaktiContent, BhaktiDeity, BhaktiFavourite
+from packages.database.bhakti_media import BhaktiContentEmbed
 from packages.database.models import User, generate_uuid
 from packages.database.session import get_db
+from website.backend.app.api import bhakti_radio
 from website.backend.app.api.auth import get_current_user_optional, get_current_user_required
 from website.backend.app.api.mandir import require_admin
 
@@ -70,11 +72,16 @@ def _full(db: Session, c: BhaktiContent, user: Optional[User], admin: bool = Fal
     audio_q = db.query(BhaktiAudio).filter(BhaktiAudio.content_id == c.id)
     if not admin:
         audio_q = audio_q.filter(BhaktiAudio.published == True)  # noqa: E712
+    embed_q = db.query(BhaktiContentEmbed).filter(BhaktiContentEmbed.content_id == c.id)
+    if not admin:
+        embed_q = embed_q.filter(BhaktiContentEmbed.published == True)  # noqa: E712
     fav = bool(user and db.query(BhaktiFavourite.id).filter(BhaktiFavourite.user_id == user.id, BhaktiFavourite.content_id == c.id).first())
     return {**_brief(c, _deity_map(db)), "body_hi": c.body_hi, "body_roman": c.body_roman, "meaning_hi": c.meaning_hi, "meaning_en": c.meaning_en,
             "source": c.source, "license": c.license, "published": c.published,
             "updated_at": c.updated_at.isoformat() if c.updated_at else None, "is_favourite": fav,
-            "audio": [{"id": a.id, "title": a.title, "url": a.url, "source": a.source, "license": a.license} for a in audio_q.all()]}
+            "audio": [{"id": a.id, "title": a.title, "url": a.url, "source": a.source, "license": a.license} for a in audio_q.all()],
+            "embeds": [{"id": e.id, "youtube_id": e.youtube_id, "title": e.title, "channel": e.channel, "rights_note": e.rights_note, "published": e.published}
+                       for e in embed_q.order_by(BhaktiContentEmbed.created_at).all()]}
 
 
 @router.get("/content")
@@ -223,6 +230,49 @@ def admin_delete_audio(audio_id: str, db: Session = Depends(get_db), admin: User
     _audit(db, admin, "delete", "audio", audio_id)
     db.commit()
     return {"deleted": audio_id}
+
+
+class EmbedIn(BaseModel):
+    content_slug: str = Field(..., max_length=100)
+    url: str = Field(..., min_length=11, max_length=300)
+    title: str = Field(..., min_length=1, max_length=200)
+    channel: str = Field(..., min_length=1, max_length=200)
+    rights_note: str = Field(..., min_length=3, max_length=300)
+    published: bool = True
+
+
+@router.put("/admin/embed")
+def admin_add_embed(payload: EmbedIn, db: Session = Depends(get_db), admin: User = Depends(require_admin)):
+    """Shows an official YouTube video on a text's page through YouTube's own player. The link is checked with YouTube before it is accepted."""
+    c = db.query(BhaktiContent).filter(BhaktiContent.slug == payload.content_slug).first()
+    if not c:
+        raise HTTPException(status_code=404, detail="Content not found")
+    vid = bhakti_radio.parse_youtube_id(payload.url)
+    if not vid:
+        raise HTTPException(status_code=422, detail="That is not a valid YouTube link or video id")
+    if bhakti_radio.check_embeddable(vid) is False:
+        raise HTTPException(status_code=422, detail="YouTube does not allow this video to be embedded (or it is private or removed)")
+    e = db.query(BhaktiContentEmbed).filter(BhaktiContentEmbed.content_id == c.id, BhaktiContentEmbed.youtube_id == vid).first()
+    created = e is None
+    if created:
+        e = BhaktiContentEmbed(content_id=c.id, youtube_id=vid, created_by=admin.id)
+        db.add(e)
+    e.title, e.channel, e.rights_note, e.published = payload.title.strip(), payload.channel.strip(), payload.rights_note.strip(), payload.published
+    db.flush()
+    _audit(db, admin, "create" if created else "update", "embed", vid, {"content": c.slug})
+    db.commit()
+    return {"id": e.id, "youtube_id": vid}
+
+
+@router.delete("/admin/embed/{embed_id}")
+def admin_delete_embed(embed_id: str, db: Session = Depends(get_db), admin: User = Depends(require_admin)):
+    e = db.query(BhaktiContentEmbed).filter(BhaktiContentEmbed.id == embed_id).first()
+    if not e:
+        raise HTTPException(status_code=404, detail="Video not found")
+    db.delete(e)
+    _audit(db, admin, "delete", "embed", e.youtube_id)
+    db.commit()
+    return {"deleted": embed_id}
 
 
 @router.get("/admin/audit")
