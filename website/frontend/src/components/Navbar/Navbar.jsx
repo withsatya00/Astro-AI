@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { fetchWallet } from '../WalletModal/walletApi.js';
 
 export default function Navbar() {
   const [promoDismissed, setPromoDismissed] = useState(false);
@@ -17,6 +18,12 @@ export default function Navbar() {
   const mandirDropdownRef = useRef(null);
   const toolsDropdownRef = useRef(null);
 
+  // The balance shown in the header is always the server's, for the signed-in account (and zero when signed out).
+  useEffect(() => {
+    if (!currentUser) { setWalletBalance('₹0.00'); return; }
+    fetchWallet().catch(() => { /* keep the last known value; the wallet page shows the error */ });
+  }, [currentUser]);
+
   useEffect(() => {
     // Check promo bar dismissed status
     try {
@@ -24,14 +31,6 @@ export default function Navbar() {
         setPromoDismissed(true);
       }
     } catch (e) {}
-
-    // Check user & wallet from state / localStorage
-    const savedBal = localStorage.getItem('astro_wallet_balance');
-    if (savedBal !== null) {
-      setWalletBalance(`₹${Number(savedBal).toFixed(2)}`);
-    } else if (window.App && window.App.walletBalance !== undefined) {
-      setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
-    }
 
     // Wallet balance live event listener
     const handleWalletUpdated = (e) => {

@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
-                  disabled={!product.in_stock}
+                  disabled={!product.in_stock || !!sample}
                   onClick={addNow}
                   className="flex-1 py-3.5 rounded-xl bg-[#3E0B18] text-[#FFF9EF] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:brightness-110"
                 >
@@ -207,13 +207,14 @@ export default function ProductDetailPage() {
                 </button>
                 <button
                   type="button"
-                  disabled={!product.in_stock}
+                  disabled={!product.in_stock || !!sample}
                   onClick={() => { addNow(); navigate('/astro-mall/checkout'); }}
                   className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B3832B] text-[#1E1B4B] font-extrabold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:brightness-105"
                 >
                   Buy Now ➔
                 </button>
               </div>
+              {sample && <p role="note" className="text-xs text-amber-800">This is a sample item and cannot be ordered.</p>}
               {added && (
                 <p role="status" className="text-xs font-bold text-emerald-700">
                   Added to your cart. <Link to="/astro-mall/checkout" className="underline text-[#3E0B18]">View cart &amp; checkout</Link>

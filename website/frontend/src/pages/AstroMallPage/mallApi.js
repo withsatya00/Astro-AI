@@ -66,13 +66,13 @@ export class MallError extends Error {
 const token = () => { try { return localStorage.getItem('astro_access_token') || ''; } catch (e) { return ''; } };
 export const isSignedIn = () => !!token();
 
-async function call(path, { method = 'GET', body } = {}) {
+async function call(path, { method = 'GET', body, keepalive } = {}) {
   const headers = { Accept: 'application/json' };
   if (token()) headers.Authorization = `Bearer ${token()}`;
   if (body !== undefined) headers['Content-Type'] = 'application/json';
   let res;
   try {
-    res = await fetch(path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+    res = await fetch(path, { method, headers, keepalive, body: body === undefined ? undefined : JSON.stringify(body) });
   } catch (e) { throw new MallError(0, 'Network unavailable. Please check your connection and try again.'); }
   if (!res.ok) {
     let detail = res.statusText;
@@ -90,6 +90,12 @@ const toApiItems = (items) => items.map((i) => ({ product_id: i.product_id, quan
 
 export const quoteCart = (items, couponCode) => call(`${BASE}/quote?lang=en`, { method: 'POST', body: { items: toApiItems(items), coupon_code: couponCode || null, use_points: 0 } });
 export const placeOrder = (items, buyer) => call(`${BASE}/checkout?lang=en`, { method: 'POST', body: { ...buyer, items: toApiItems(items), use_points: 0 } });
+// The saved cart follows the account across devices (/api/v1/cart). Lines carry only product, quantity and options.
+const lines = (items) => items.map((i) => ({ product_id: i.product_id, quantity: i.quantity, options: i.options || {} }));
+export const fetchServerCart = () => call('/api/v1/cart');
+export const mergeServerCart = (items) => call('/api/v1/cart/merge', { method: 'POST', body: { items: lines(items) } });
+export const saveServerCart = (items, keepalive = false) => call('/api/v1/cart', { method: 'PUT', keepalive, body: { items: lines(items) } });
+
 export async function walletBalance() {
   if (!token()) return null;
   try { return (await call('/api/v1/wallet')).balance; } catch (e) { return null; }

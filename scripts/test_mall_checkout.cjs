@@ -53,6 +53,24 @@ const fill = async (page, { wallet = false } = {}) => {
     assert.strictEqual(cart[0].quantity, 2);
   });
 
+  await step('the cart follows the account to another device', async () => {
+    await page.waitForTimeout(1200); // the saved copy is written shortly after a change
+    const server = (await api('/api/v1/cart', { token })).json.items;
+    assert.strictEqual(server.length, 1);
+    assert.strictEqual(server[0].quantity, 2);
+    const other = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await other.addInitScript(([t, u]) => { try { localStorage.setItem('astro_access_token', t); localStorage.setItem('astro_user', JSON.stringify(u)); } catch (e) { /* ignore */ } }, [token, user]);
+    const p2 = await other.newPage();
+    await p2.goto(`${BASE}/astro-mall/checkout`, { waitUntil: 'networkidle' });
+    await p2.waitForSelector('.mc-lines li');
+    assert.match(await p2.locator('.mc-line-title').first().innerText(), /Tulsi/);
+    assert.strictEqual(await p2.locator('.mc-qty span').first().innerText(), '2');
+    await p2.reload({ waitUntil: 'networkidle' }); // reloading must not double the quantity
+    await p2.waitForSelector('.mc-lines li');
+    assert.strictEqual(await p2.locator('.mc-qty span').first().innerText(), '2');
+    await other.close();
+  });
+
   await step('a product with options opens its page instead of adding blindly', async () => {
     await page.goto(`${BASE}/astro-mall`, { waitUntil: 'networkidle' });
     await page.locator('.ml-products-grid article', { hasText: 'Emerald' }).first().getByRole('button', { name: /Add to Cart/ }).click();
@@ -92,6 +110,8 @@ const fill = async (page, { wallet = false } = {}) => {
     const orders = (await api('/api/v1/marketplace/my-orders', { token })).json.orders;
     assert.strictEqual(orders.length, 2);
     assert.ok(orders.every((o) => o.payment_method === 'COD' && o.status === 'PLACED'));
+    await page.waitForTimeout(1200);
+    assert.strictEqual((await api('/api/v1/cart', { token })).json.items.length, 0, 'the saved cart should be emptied after ordering');
   });
 
   await step('wallet order is paid from the wallet balance', async () => {
@@ -107,6 +127,18 @@ const fill = async (page, { wallet = false } = {}) => {
     assert.strictEqual(before - after, 299);
     const orders = (await api('/api/v1/marketplace/my-orders', { token })).json.orders;
     assert.ok(orders.some((o) => o.payment_method === 'WALLET' && o.status === 'PAID'));
+  });
+
+  await step('wallet page shows the real balance and tops up through the server', async () => {
+    const before = (await api('/api/v1/wallet', { token })).json.balance;
+    await page.goto(`${BASE}/wallet`, { waitUntil: 'networkidle' });
+    await page.waitForFunction((b) => document.body.innerText.includes(`₹${b.toFixed(2)}`), before);
+    await page.getByRole('button', { name: /Add Funds/ }).click();
+    await page.getByRole('dialog').getByRole('button', { name: '₹500', exact: true }).click();
+    assert.strictEqual(await page.getByText(/Extra|Welcome Bonus/).count(), 0, 'no invented bonus credit');
+    await page.getByRole('dialog').getByRole('button', { name: /^Add ₹500/ }).click();
+    await page.getByText('₹500 added to your wallet.').waitFor();
+    assert.strictEqual((await api('/api/v1/wallet', { token })).json.balance - before, 500);
   });
 
   await step('an empty cart shows a way back to the shop', async () => {

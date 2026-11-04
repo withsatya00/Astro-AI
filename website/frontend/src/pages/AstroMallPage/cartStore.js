@@ -36,6 +36,9 @@ export function addToCart(product, quantity = 1, options = {}, unitPrice) {
 export const setQuantity = (key, quantity) => write(read().map((i) => (i.key === key ? { ...i, quantity: Math.max(1, Math.min(MAX_QTY, quantity)) } : i)));
 export const removeLine = (key) => write(read().filter((i) => i.key !== key));
 export const clearCart = () => write([]);
+export const readCart = read;
+export const replaceCart = write;
+export const CART_EVENT = EVENT;
 
 export function useCart() {
   const [items, setItems] = useState(read);
@@ -43,6 +46,7 @@ export function useCart() {
     const sync = () => setItems(read());
     window.addEventListener(EVENT, sync);
     window.addEventListener('storage', sync);
+    sync(); // the cart may have changed between the first render and this subscription
     return () => { window.removeEventListener(EVENT, sync); window.removeEventListener('storage', sync); };
   }, []);
   const count = items.reduce((n, i) => n + i.quantity, 0);

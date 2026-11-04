@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext.jsx';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layouts/Layout.jsx';
 import { Analytics } from './analytics.jsx';
+import { CartSync } from './pages/AstroMallPage/CartSync.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import DirectoryPage from './pages/DirectoryPage/DirectoryPage.jsx';
 import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
@@ -44,6 +45,7 @@ export default function App() {
     <BrowserRouter>
       <Analytics />
       <Layout>
+        <CartSync />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/astrologers" element={<DirectoryPage />} />

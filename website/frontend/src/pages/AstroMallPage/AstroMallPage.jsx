@@ -193,6 +193,7 @@ export default function AstroMallPage() {
 
   const addToCart = (product) => {
     // Items with sizes, weights or metals need those chosen first, so they go to the product page.
+    if (offline) return; // sample products are not in the catalogue and cannot be ordered
     if (product.has_options) { navigate(`/mall/product/${product.id}`); return; }
     cart.add(product, 1, {});
     setIsCartOpen(true);
@@ -412,12 +413,15 @@ export default function AstroMallPage() {
                   <button
                     type="button"
                     onClick={() => addToCart(p)}
+                    disabled={offline || !p.in_stock}
                     className="w-full py-2.5 rounded-xl text-[11px] font-extrabold uppercase tracking-wider text-[#1E1B4B] shadow-xs cursor-pointer border-0 transition-all hover:brightness-105 active:scale-98"
                     style={{
                       background: 'linear-gradient(135deg, #D9A441 0%, #B3832B 100%)',
+                      opacity: offline || !p.in_stock ? 0.5 : 1,
+                      cursor: offline || !p.in_stock ? 'not-allowed' : 'pointer',
                     }}
                   >
-                    Add to Cart • Instant Dispatch →
+                    {offline ? 'Unavailable right now' : !p.in_stock ? 'Out of stock' : 'Add to Cart • Instant Dispatch →'}
                   </button>
                 </div>
               </article>
