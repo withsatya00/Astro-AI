@@ -122,7 +122,7 @@ export default function ProfilePage() {
     if (p) {
       document.title = `${p.name} – ${p.title || 'Vedic Astrologer'} | Astro Jyotish`;
       if (meta) {
-        meta.setAttribute('content', `Consult ${p.name}, ${p.title || 'Vedic astrologer'}. ${p.experience_years}+ years of experience, ${(p.languages || []).join(', ')}. Chat or call at ${money(p.price_per_minute)}/min.`);
+        meta.setAttribute('content', `Consult ${p.name}, ${p.title || 'Vedic astrologer'}. ${p.experience_years}+ years of experience, ${(p.languages || []).join(', ')}. ${p.is_ai ? 'Free chat with an AI astrologer.' : `Chat or call at ${money(p.price_per_minute)}/min.`}`);
       }
     } else if (!loading) {
       document.title = 'Astrologer not found | Astro Jyotish';
@@ -218,7 +218,7 @@ export default function ProfilePage() {
             </div>
             <div className="apf-info">
               <div className={`apf-status ${online ? 'online' : ''}`}><i aria-hidden="true" />{statusText}</div>
-              <h1 id="apf-name" className="apf-name">{name}<Verified /></h1>
+              <h1 id="apf-name" className="apf-name">{name}{p.is_ai ? <span className="apf-ai" title="AI astrologer">AI</span> : <Verified />}</h1>
               <p className="apf-title">{title}</p>
               <ul className="apf-tags" aria-label="Specialties">
                 {specialties.map((s) => <li key={s}>{s}</li>)}
@@ -292,7 +292,7 @@ export default function ProfilePage() {
                     <div>
                       <strong>{a.name}</strong>
                       <span>{(a.specialties || []).slice(0, 2).join(' · ')}</span>
-                      <small>★ {Number(a.rating).toFixed(1)} · {money(a.price_per_minute)}/min</small>
+                      <small>★ {Number(a.rating).toFixed(1)} · {a.is_ai ? 'Free chat' : `${money(a.price_per_minute)}/min`}</small>
                     </div>
                   </Link>
                 ))}
@@ -302,13 +302,13 @@ export default function ProfilePage() {
         </div>
 
         <aside className="apf-booking" aria-label="Book a consultation">
-          <div className="apf-fee"><span>Consultation fee</span><strong>{money(p.price_per_minute)}<small>/minute</small></strong></div>
-          <div className="apf-costs">
+          <div className="apf-fee"><span>Consultation fee</span><strong>{p.is_ai ? 'Free' : money(p.price_per_minute)}<small>{p.is_ai ? ' chat' : '/minute'}</small></strong></div>
+          {!p.is_ai && <div className="apf-costs">
             <span>Estimated session cost</span>
             <div>
               {[15, 30, 60].map((m) => <p key={m}><small>{m} mins</small><b>{money(p.price_per_minute * m)}</b></p>)}
             </div>
-          </div>
+          </div>}
           <div className="apf-wallet">
             <div>
               <small>Your wallet balance</small>
@@ -320,17 +320,17 @@ export default function ProfilePage() {
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z" /></svg>
             Start chat
           </button>
-          <button type="button" className="apf-btn apf-btn-outline" onClick={startCall}>
+          {!p.is_ai ? <button type="button" className="apf-btn apf-btn-outline" onClick={startCall}>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" /></svg>
             Start audio call
-          </button>
+          </button> : <p className="apf-fine">AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.</p>}
           <p className="apf-privacy">🔒 Private &amp; confidential consultations</p>
         </aside>
       </div>
 
       <div className="apf-sticky" role="region" aria-label="Quick booking">
-        <div><strong>{money(p.price_per_minute)}<small>/min</small></strong><span className={online ? 'online' : ''}>{online ? 'Online now' : (p.statusLabel || 'Offline')}</span></div>
-        <button type="button" className="apf-btn apf-btn-outline" onClick={startCall}>Call</button>
+        <div><strong>{p.is_ai ? 'Free' : money(p.price_per_minute)}<small>{p.is_ai ? ' chat' : '/min'}</small></strong><span className={online ? 'online' : ''}>{online ? 'Online now' : (p.statusLabel || 'Offline')}</span></div>
+        {!p.is_ai && <button type="button" className="apf-btn apf-btn-outline" onClick={startCall}>Call</button>}
         <button type="button" className="apf-btn apf-btn-primary" onClick={startChat}>Chat</button>
       </div>
     </div>

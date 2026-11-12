@@ -990,12 +990,58 @@ DEFAULT_ASTROLOGERS = [
         "reviews": [
             {"user_name": "Mithilesh J.", "rating": 5.0, "comment": "Pandit ji gave the most auspicious marriage muhurat for my sister. Deeply respected scholar."}
         ]
+    },
+    {
+        "slug": "acharya-vaibhav-nath",
+        "name": "Acharya Vaibhav Nath",
+        "name_hi": "आचार्य वैभव नाथ",
+        "title": "Vedic Astrology, Numerology",
+        "title_hi": "वैदिक ज्योतिष, अंक ज्योतिष",
+        "avatar": "assets/portraits/default-avatar.svg",
+        "experience_years": 8,
+        "rating": 4.7,
+        "review_count": 1204,
+        "consultations_count": 0,
+        "price_per_minute": 0.0,
+        "currency": "INR",
+        "is_ai": True,
+        "ai_persona_id": "acharya_vaibhav_nath",
+        "availability": "online",
+        "languages": ["Hindi", "English"],
+        "specialties": ["Vedic Astrology", "Numerology", "Career"],
+        "is_featured": False,
+        "is_verified": True,
+        "bio": "AI astrologer for simple, practical Vedic astrology and numerology guidance on career and everyday decisions, grounded in your birth details when you share them.",
+        "bio_hi": "करियर और रोज़मर्रा के निर्णयों के लिए सरल, व्यावहारिक वैदिक ज्योतिष एवं अंक ज्योतिष मार्गदर्शन देने वाले AI ज्योतिषी, जन्म विवरण साझा करने पर उसी के आधार पर।"
+    },
+    {
+        "slug": "dr-meenakshi-sharma",
+        "name": "Dr. Meenakshi Sharma",
+        "name_hi": "डॉ. मीनाक्षी शर्मा",
+        "title": "Vastu, Health, Family",
+        "title_hi": "वास्तु, स्वास्थ्य, परिवार",
+        "avatar": "assets/portraits/default-avatar.svg",
+        "experience_years": 14,
+        "rating": 4.8,
+        "review_count": 2106,
+        "consultations_count": 0,
+        "price_per_minute": 0.0,
+        "currency": "INR",
+        "is_ai": True,
+        "ai_persona_id": "dr_meenakshi_sharma",
+        "availability": "online",
+        "languages": ["Hindi", "English"],
+        "specialties": ["Vastu", "Health", "Family", "Love & Relationship"],
+        "is_featured": False,
+        "is_verified": True,
+        "bio": "AI astrologer for Vastu, family harmony and general wellbeing guidance. Health topics are general guidance only and never a medical opinion.",
+        "bio_hi": "वास्तु, पारिवारिक सामंजस्य और सामान्य स्वास्थ्य मार्गदर्शन के लिए AI ज्योतिषी। स्वास्थ्य संबंधी बातें केवल सामान्य मार्गदर्शन हैं, चिकित्सकीय राय नहीं।"
     }
 ]
 
 def seed_astrologers(db: Session):
     """
-    Idempotent database seeder for all 37 certified scholars and specialized astrologers.
+    Idempotent database seeder for all 39 astrologers and specialized astrologers.
     Ensures existing records are updated with clean titles, SVG portraits, and new profiles inserted.
     """
     try:

@@ -121,7 +121,7 @@ export default function HelpMeChooseModal({ isOpen, onClose, astrologers = [] })
                   <div className="min-w-0">
                     <h5 className="font-bold text-xs sm:text-sm text-[#1E1B4B] truncate">{ast.name}</h5>
                     <p className="text-[11px] text-slate-500 truncate">{ast.title || (ast.specialties || []).join(', ')}</p>
-                    <span className="text-[10px] font-bold text-[#B45309]">★ {ast.rating || '4.9'} • ₹{ast.price_per_minute || 51}/min</span>
+                    <span className="text-[10px] font-bold text-[#B45309]">★ {Number(ast.rating).toFixed(1)} • {ast.is_ai ? 'Free chat' : `₹${ast.price_per_minute}/min`}</span>
                   </div>
                 </div>
                 <button

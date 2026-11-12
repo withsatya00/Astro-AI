@@ -535,7 +535,15 @@
     ["Verified Astrologers", "Verified Astrologers", "सत्यापित ज्योतिषी"],
     ["Certified Vedic Scholars", "Certified Vedic Scholars", "प्रमाणित वैदिक विद्वान"],
     ["Private by Design", "Private by Design", "डिज़ाइन से ही निजी"],
-    ["100% Confidential Consultation", "100% Confidential Consultation", "100% गोपनीय परामर्श"]
+    ["100% Confidential Consultation", "100% Confidential Consultation", "100% गोपनीय परामर्श"],
+
+    // ---- AI / human astrologers (directory, profile, home) ----
+    ["Free chat", "Free chat", "मुफ़्त चैट"],
+    ["Type", "Type", "प्रकार"],
+    ["Any type", "Any type", "कोई भी प्रकार"],
+    ["AI astrologer", "AI astrologer", "AI ज्योतिषी"],
+    ["Human astrologer", "Human astrologer", "मानव ज्योतिषी"],
+    ["AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI ज्योतिषी चैट में तुरंत उत्तर देते हैं। कॉल और वीडियो सत्यापित मानव ज्योतिषियों के साथ उपलब्ध हैं।"]
   ];
 
   var mine = {};
