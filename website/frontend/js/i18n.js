@@ -2479,10 +2479,15 @@ const I18n = {
       }
     });
 
-    // 4. Update page document title
+    // 4. Update the default page title, but never overwrite a title that a page has set for itself (this runs on every DOM change).
     const brandName = this.t("brand_title") || "Astro Jyotish";
     const subTitle = this.t("brand_subtitle") || "Vedic Astrology";
-    if (!(window.Seo && window.Seo.refresh())) document.title = `${brandName} - ${subTitle}`;
+    if (window.Seo && window.Seo.refresh()) {
+      this.engineTitle = document.title;
+    } else if (this.engineTitle === undefined || document.title === this.engineTitle) {
+      this.engineTitle = `${brandName} - ${subTitle}`;
+      document.title = this.engineTitle;
+    }
     // Translate asynchronously rendered templates and dynamic labels as well.
     // Preserve source strings so switching repeatedly never translates a translation.
     const skip = 'script, style, code, pre, textarea, [translate="no"], [data-no-translate], [data-user-content], .user-bubble, .assistant-bubble .msg-text-content, #active-streaming-text, #call-user-transcript, #call-pandit-transcript';
