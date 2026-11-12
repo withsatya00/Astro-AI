@@ -1,43 +1,41 @@
-import React from 'react';
-import HeroSection from './HeroSection.jsx';
-import HomeMetricsBar from './HomeMetricsBar.jsx';
-import QuickShortcuts from './QuickShortcuts.jsx';
-import FeaturedAstrologers from './FeaturedAstrologers.jsx';
-import AstroPlusBanner from './AstroPlusBanner.jsx';
-import AstrologyServices from './AstrologyServices.jsx';
-import PanchangAndHoroscope from './PanchangAndHoroscope.jsx';
-import WhyChooseAndHowItWorks from './WhyChooseAndHowItWorks.jsx';
-import TestimonialsAndFAQ from './TestimonialsAndFAQ.jsx';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './homepage-v2.css';
 
-export default function HomePage() {
-  return (
-    <div className="home-page-container bg-[#FAF7F2] min-h-screen">
-      {/* 1. Exact Reference Hero Section with Sage Artwork */}
-      <HeroSection />
+const copy = {
+  en: { kicker:'Authentic Vedic Astrology & Kundli Platform', title:"Clarity for life's important decisions", hero:'Get guidance from verified Vedic astrologers on career, marriage, health, finance and other key aspects of life.', search:'Search astrologer or concern...', talk:'Talk to an Astrologer', tools:'Explore Free Tools', verified:'Verified Astrologers', expertise:'Vedic Expertise', guidance:'Trusted Guidance', languages:'Languages', protected:'Protected Payments', private:'Private Consultations', intentEye:'Explore by your intent', intent:'What brings you here today?', intentSub:'Choose your area of concern and get the right Vedic guidance.', expertsEye:'Our experts', experts:'Featured Astrologers', expertsSub:'Connect with verified astrologers for personalized Vedic guidance.', schedule:'View schedule', chat:'Chat', call:'Call', all:'View all verified astrologers', cosmic:'Your daily cosmic guide', daily:"Today's Panchang & Daily Horoscope", dailySub:"Stay aligned with the day's Vedic timings and see what the stars have in store for you.", panchang:"Today's Panchang", panchangSub:'Tithi, Nakshatra, Yoga and auspicious timings.', viewPanchang:'View Panchang', horoscope:'Daily Horoscope', horoscopeSub:'Your personalized horoscope for today.', read:'Read Horoscope', beyond:'Beyond consultation', more:'More than consultation', moreSub:"Complete Vedic support for your life's important journeys.", howEye:'Simple & trusted', how:'How it works', howSub:'Get expert Vedic guidance in a few easy steps.', choose:'Choose', chooseSub:'Find the right astrologer or service for your need.', connect:'Connect', connectSub:'Chat or talk with your chosen astrologer.', get:'Get Guidance', getSub:'Receive personalized Vedic advice and next steps.', final:'Take the Right Step with Vedic Guidance', finalSub:'Talk to a verified astrologer and get clarity on your career, marriage, health, finance and more.' },
+  hi: { kicker:'प्रामाणिक वैदिक ज्योतिष एवं कुंडली मंच', title:'जीवन के महत्वपूर्ण निर्णयों के लिए स्पष्टता', hero:'करियर, विवाह, स्वास्थ्य, धन और जीवन के अन्य महत्वपूर्ण विषयों पर सत्यापित वैदिक ज्योतिषियों से मार्गदर्शन पाएँ।', search:'ज्योतिषी या समस्या खोजें...', talk:'ज्योतिषी से बात करें', tools:'निःशुल्क टूल देखें', verified:'सत्यापित ज्योतिषी', expertise:'वैदिक विशेषज्ञता', guidance:'विश्वसनीय मार्गदर्शन', languages:'भाषाएँ', protected:'सुरक्षित भुगतान', private:'निजी परामर्श', intentEye:'अपनी आवश्यकता चुनें', intent:'आज आप किस विषय पर मार्गदर्शन चाहते हैं?', intentSub:'अपनी चिंता का क्षेत्र चुनें और सही वैदिक मार्गदर्शन पाएँ।', expertsEye:'हमारे विशेषज्ञ', experts:'प्रमुख ज्योतिषी', expertsSub:'व्यक्तिगत वैदिक मार्गदर्शन के लिए सत्यापित ज्योतिषियों से जुड़ें।', schedule:'समय देखें', chat:'चैट', call:'कॉल', all:'सभी सत्यापित ज्योतिषी देखें', cosmic:'आज का ज्योतिष मार्गदर्शन', daily:'आज का पंचांग और दैनिक राशिफल', dailySub:'दिन के वैदिक समय के अनुसार चलें और जानें आज सितारे क्या संकेत देते हैं।', panchang:'आज का पंचांग', panchangSub:'तिथि, नक्षत्र, योग और शुभ समय।', viewPanchang:'पंचांग देखें', horoscope:'दैनिक राशिफल', horoscopeSub:'आज का आपका व्यक्तिगत राशिफल।', read:'राशिफल पढ़ें', beyond:'परामर्श से आगे', more:'केवल परामर्श नहीं', moreSub:'जीवन की महत्वपूर्ण यात्राओं के लिए संपूर्ण वैदिक सहयोग।', howEye:'सरल और विश्वसनीय', how:'यह कैसे काम करता है', howSub:'कुछ आसान चरणों में विशेषज्ञ वैदिक मार्गदर्शन पाएँ।', choose:'चुनें', chooseSub:'अपनी आवश्यकता के लिए सही ज्योतिषी या सेवा खोजें।', connect:'जुड़ें', connectSub:'अपने चुने हुए ज्योतिषी से चैट या कॉल करें।', get:'मार्गदर्शन पाएँ', getSub:'व्यक्तिगत वैदिक सलाह और अगले कदम पाएँ।', final:'वैदिक मार्गदर्शन के साथ सही कदम उठाएँ', finalSub:'करियर, विवाह, स्वास्थ्य, धन और अन्य विषयों पर स्पष्टता के लिए सत्यापित ज्योतिषी से बात करें।' }
+};
+const intents = [['Career','career','/astrologers?specialty=Career'],['Marriage','rings','/astrologers?specialty=Marriage'],['Finance','coins','/astrologers?specialty=Finance'],['Health','lotus','/astrologers?specialty=Health'],['Kundli','chart','/calculators'],['Spiritual Guidance','flame','/bhakti']];
+const intentHi = {Career:'करियर',Marriage:'विवाह',Finance:'धन',Health:'स्वास्थ्य',Kundli:'कुंडली','Spiritual Guidance':'आध्यात्मिक मार्गदर्शन'};
+const baseAstrologers = [
+  {name:'Acharya Rajesh Sharma',slug:'jyotishi-devendra',image:'/assets/portraits/individual/jyotishi-devendra.webp',expertise:'Vedic Astrology · Kundli · Career Guidance',rating:'4.9'},
+  {name:'Astrologer Kavita Joshi',slug:'jyotishi-kavita-devi',image:'/assets/portraits/individual/jyotishi-kavita-devi.webp',expertise:'Marriage · Relationship · Dhan Yog',rating:'4.8'},
+  {name:'Pandit Anil Tripathi',slug:'acharya-shastri',image:'/assets/portraits/individual/acharya-shastri.webp',expertise:'Health · Finance · Vastu',rating:'4.8'}
+];
+const services = [['Kundli','Get your birth chart and understand your life path.','Create Kundli','/calculators','/assets/img/calculators-banner.webp'],['Puja & Chadhava','Book authentic Vedic pujas for your specific needs.','Book a Puja','/mandir-seva','/assets/img/puja-banner.webp'],['Gau Seva','Perform Gau Seva and receive divine blessings.','Do Gau Seva','/gau-sewa','/assets/img/gausewa/cow-mother-calf.webp'],['Astro Mall','Explore astrological items and sacred essentials.','Visit Astro Mall','/astro-mall','/assets/img/mall-banner.webp']];
+const servicesHi = {Kundli:['कुंडली','अपनी जन्म कुंडली बनाएँ और जीवन पथ समझें।','कुंडली बनाएँ'],'Puja & Chadhava':['पूजा और चढ़ावा','अपनी आवश्यकता के लिए प्रामाणिक वैदिक पूजा बुक करें।','पूजा बुक करें'],'Gau Seva':['गौ सेवा','गौ सेवा करें और पुण्य प्राप्त करें।','गौ सेवा करें'],'Astro Mall':['एस्ट्रो मॉल','प्रामाणिक ज्योतिष एवं पूजा सामग्री देखें।','मॉल देखें']};
 
-      {/* 2. 4-Item Metrics & Stats Bar */}
-      <HomeMetricsBar />
+function Icon({name}) { const p={career:<><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M9 8V5h6v3M4 12h16"/></>,rings:<><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/><path d="m8 5 1-2 1 2m4 0 1-2 1 2"/></>,coins:<><ellipse cx="9" cy="7" rx="5" ry="2.5"/><path d="M4 7v7c0 1.4 2.2 2.5 5 2.5M14 7v5"/><ellipse cx="16" cy="16" rx="4" ry="2"/><path d="M12 16v3c0 1.1 1.8 2 4 2s4-.9 4-2v-3"/></>,lotus:<><path d="M12 20c-5 0-8-3-8-7 3 0 5 1 8 4 3-3 5-4 8-4 0 4-3 7-8 7Z"/><path d="M12 17c-3-3-3-7 0-11 3 4 3 8 0 11Z"/></>,chart:<><rect x="4" y="4" width="16" height="16" rx="1"/><path d="m4 4 16 16M20 4 4 20M12 4v16M4 12h16"/></>,flame:<path d="M12 21c-4 0-7-2.6-7-6.2 0-3.2 2-5.7 5.4-9.8.1 2.4 1 3.8 2.2 4.8.8-1.4 1.6-3.1 1.4-5.8 3.1 3.7 5 6.8 5 10.8 0 3.6-3 6.2-7 6.2Z"/>}; return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{p[name]}</svg>; }
 
-      {/* 3. 5 Quick Service Feature Cards (Desktop Grid / Mobile Row) */}
-      <QuickShortcuts />
-
-      {/* 4. Featured Astrologers with exact 4 reference profiles */}
-      <FeaturedAstrologers />
-
-      {/* 5. Astro Plus Premium Membership Banner */}
-      <AstroPlusBanner />
-
-      {/* 6. Explore Sacred Astrology Services */}
-      <AstrologyServices />
-
-      {/* 7. Today's Panchang & Daily Horoscope Split */}
-      <PanchangAndHoroscope />
-
-      {/* 8. Why Choose Us & How It Works */}
-      <WhyChooseAndHowItWorks />
-
-      {/* 9. Client Testimonials & Interactive FAQs */}
-      <TestimonialsAndFAQ />
-    </div>
-  );
+export default function HomePage(){
+  const [query,setQuery]=useState(''),[lang,setLang]=useState(()=>localStorage.getItem('astro_preferred_lang')==='hi'?'hi':'en'),[live,setLive]=useState({}),[panchang,setPanchang]=useState(null),[slide,setSlide]=useState(0); const slider=useRef(null),navigate=useNavigate(),t=copy[lang];
+  useEffect(()=>{const onLang=e=>setLang(e.detail?.language==='hi'?'hi':'en');window.addEventListener('astro:languagechange',onLang);return()=>window.removeEventListener('astro:languagechange',onLang)},[]);
+  useEffect(()=>{const controller=new AbortController();fetch('/api/v1/astrologers?limit=100',{signal:controller.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{const rows=d.items||d.astrologers||[];setLive(Object.fromEntries(rows.map(a=>[a.slug||a.id,a.availability||a.status]))) }).catch(()=>{});fetch('/api/v1/charts/panchang',{signal:controller.signal}).then(r=>r.ok?r.json():Promise.reject()).then(setPanchang).catch(()=>{});return()=>controller.abort()},[]);
+  const search=e=>{e.preventDefault();navigate(query.trim()?`/astrologers?search=${encodeURIComponent(query.trim())}`:'/astrologers')};
+  const scrollSlide=i=>{setSlide(i);slider.current?.scrollTo({left:i*slider.current.clientWidth*.9,behavior:'smooth'})};
+  const date=new Intl.DateTimeFormat(lang==='hi'?'hi-IN':'en-IN',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+  const panLine=panchang?`${panchang.tithi?.name||''} · ${panchang.nakshatra?.name||''} · ${panchang.yog?.name||''}`:t.panchangSub;
+  return <div className="home-v2" lang={lang}>
+    <section className="hv2-hero" aria-labelledby="home-title"><div className="hv2-hero-copy"><div className="hv2-kicker">✦ Astro Jyotish · {t.kicker} ✦</div><h1 id="home-title">{t.title}</h1><p>{t.hero}</p><form className="hv2-search" role="search" onSubmit={search}><input value={query} onChange={e=>setQuery(e.target.value)} placeholder={t.search} aria-label={t.search}/><button aria-label={t.search}><span aria-hidden="true">⌕</span></button></form><div className="hv2-actions"><Link className="primary" to="/astrologers">☎ {t.talk} →</Link><Link className="secondary" to="/calculators">▷ {t.tools}</Link></div><div className="hv2-proof"><span>✓ {t.verified}</span><span>✓ {t.expertise}</span><span>✓ {t.guidance}</span></div></div><div className="hv2-hero-image"><picture><source media="(max-width:640px)" srcSet="/assets/img/vedic-sage-hero-mobile.webp"/><img src="/assets/img/vedic-sage-hero.webp" alt="Experienced Vedic astrologer studying a birth chart" width="900" height="600" fetchPriority="high" decoding="async"/></picture></div></section>
+    <section className="hv2-trust" aria-label="Trust indicators"><div><b>♧</b><span><strong>30+</strong>{t.verified}</span></div><div><b>◎</b><span><strong>13+</strong>{t.languages}</span></div><div><b>⌾</b><span><strong>{lang==='hi'?'सुरक्षित':'Secure'}</strong>{lang==='hi'?'भुगतान':'Payments'}</span></div><div><b>▣</b><span><strong>100%</strong>{t.private}</span></div></section>
+    <section className="hv2-section"><Header eye={t.intentEye} title={t.intent} sub={t.intentSub}/><div className="hv2-intent-grid">{intents.map(([label,icon,to])=><Link to={to} key={label}><i><Icon name={icon}/></i><strong>{lang==='hi'?intentHi[label]:label}</strong></Link>)}</div></section>
+    <section className="hv2-section"><Header eye={t.expertsEye} title={t.experts} sub={t.expertsSub}/><div className="hv2-expert-grid" ref={slider} onScroll={e=>setSlide(Math.min(2,Math.round(e.currentTarget.scrollLeft/(e.currentTarget.clientWidth*.88))))}>{baseAstrologers.map(a=>{const status=live[a.slug];const online=['online','available'].includes(String(status).toLowerCase());return <article className="hv2-expert-card" key={a.slug}><Link className="photo" to={`/astrologers/${a.slug}`}><img src={a.image} alt={a.name} width="240" height="300" loading="lazy" decoding="async"/></Link><div className="info"><h3>{a.name}</h3><p>{a.expertise}</p><span className="language">◎ Hindi, English</span><div className="meta"><span>★ {a.rating}</span><span className={online?'is-live':''}>{online?'● Online':t.schedule}</span></div><div className="expert-actions"><Link to={`/consultation/${a.slug}`}>{t.chat}</Link><Link className="call" to={`/consultation/${a.slug}?call=true`}>☎ {t.call}</Link></div></div></article>})}</div><div className="hv2-slider-dots" aria-label="Astrologer slides">{baseAstrologers.map((a,i)=><button key={a.slug} className={slide===i?'active':''} onClick={()=>scrollSlide(i)} aria-label={`Show ${a.name}`}/>)}</div><Link className="view-all" to="/astrologers">{t.all} →</Link></section>
+    <section className="hv2-cosmic"><div className="cosmic-title"><span>✦ {t.cosmic} ✦</span><h2>{t.daily}</h2><p>{t.dailySub}</p></div><Link to="/panchang" className="cosmic-card"><i>▣</i><div><h3>{t.panchang}</h3><p>{date}<br/>{panLine}</p><b>{t.viewPanchang} →</b></div></Link><Link to="/rashiphal" className="cosmic-card"><i>♈</i><div><h3>{t.horoscope}</h3><p>{t.horoscopeSub}</p><b>{t.read} →</b></div></Link><div className="zodiac" aria-hidden="true">☼</div></section>
+    <section className="hv2-section"><Header eye={t.beyond} title={t.more} sub={t.moreSub}/><div className="hv2-service-grid">{services.map(([title,desc,cta,to,image],i)=>{const x=lang==='hi'?servicesHi[title]:[title,desc,cta];return <Link to={to} className={`hv2-service-card crop-${i}`} key={title}><img src={image} alt="" width="480" height="320" loading="lazy" decoding="async"/><div><h3>{x[0]}</h3><p>{x[1]}</p><b>{x[2]} →</b></div></Link>})}</div></section>
+    <section className="hv2-how"><div className="how-title"><span>✦ {t.howEye} ✦</span><h2>{t.how}</h2><p>{t.howSub}</p></div><Step n="1" title={t.choose} sub={t.chooseSub}/><b className="arrow">→</b><Step n="2" title={t.connect} sub={t.connectSub}/><b className="arrow">→</b><Step n="3" title={t.get} sub={t.getSub}/></section>
+    <section className="hv2-final"><div><h2>{t.final}</h2><p>{t.finalSub}</p><Link to="/astrologers">☎ {t.talk} →</Link></div></section>
+  </div>
 }
+function Header({eye,title,sub}){return <header className="hv2-heading"><span>✦ {eye} ✦</span><h2>{title}</h2><p>{sub}</p></header>}
+function Step({n,title,sub}){return <div className="hv2-step"><i>{n}</i><div><b>{n}. {title}</b><span>{sub}</span></div></div>}
