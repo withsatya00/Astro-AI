@@ -5,6 +5,7 @@ import { SkelPage } from './Skeleton.jsx';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
+import { useLang, pick, other } from './lang.js';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
 const loadSize = () => { try { return JSON.parse(localStorage.getItem(PREF_KEY) || '{}').size || 22; } catch (e) { return 22; } };
@@ -18,7 +19,9 @@ export default function GitaChapter() {
   const [data, setData] = useState(null);
   const [err, setErr] = useState('');
   const [size, setSize] = useState(loadSize);
-  const [lang, setLang] = useState('en');
+  const site = useLang();
+  const [lang, setLang] = useState(site); // the meaning language starts as the site language
+  useEffect(() => { setLang(site); }, [site]);
   const [note, setNote] = useState('');
 
   useEffect(() => {
@@ -45,21 +48,21 @@ export default function GitaChapter() {
   };
 
   usePageMeta(data && `Bhagavad Gita Chapter ${data.number}: ${data.name_en}`, data && data.summary_en);
-  if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/bhagavad-gita">All chapters</Link></div>;
+  if (err) return <div className="bh-panel bh-signin"><h1 className="bh-title">{err}</h1><Link className="bh-btn bh-btn-maroon" to="/bhakti/bhagavad-gita">All chapters</Link></div>;
   if (!data) return <SkelPage label="Loading chapter" />;
 
   const readCount = data.verses.filter((v) => v.read).length;
   return (
     <div>
       <div className="bh-sec-title">
-        <div><h2>{data.number}. {data.name_hi}</h2><div className="bh-small">{data.name_en} · {data.verses.length} of {data.verse_count} verses published</div></div>
+        <div translate="no"><h1 className="bh-title">{data.number}. {pick(site, data.name_en, data.name_hi)}</h1><div className="bh-small">{pick(other(site), data.name_en, data.name_hi)} · {site === 'hi' ? `${data.verse_count} में से ${data.verses.length} श्लोक प्रकाशित` : `${data.verses.length} of ${data.verse_count} verses published`}</div></div>
         <div className="bh-row" style={{ margin: 0 }}>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={() => resize(-2)} aria-label="Smaller text">A−</button>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={() => resize(2)} aria-label="Larger text">A+</button>
         </div>
       </div>
-      <p className="bh-small">{data.summary_en}</p>
-      {signedIn && data.verses.length > 0 && <><div className="bh-bar" aria-hidden="true"><i style={{ width: `${(readCount / data.verses.length) * 100}%` }} /></div><p className="bh-small">{readCount} of {data.verses.length} published verses read</p></>}
+      <p className="bh-small" translate="no">{pick(site, data.summary_en, data.summary_hi)}</p>
+      {signedIn && data.verses.length > 0 && <><div className="bh-bar" aria-hidden="true"><i style={{ width: `${(readCount / data.verses.length) * 100}%` }} /></div><p className="bh-small">{site === 'hi' ? `${data.verses.length} में से ${readCount} प्रकाशित श्लोक पढ़े गए` : `${readCount} of ${data.verses.length} published verses read`}</p></>}
       {note && <div className="bh-msg" role="alert">{note}</div>}
       <div className="bh-tabs" role="tablist" aria-label="Meaning language" style={{ margin: '10px 0' }}>
         {[['en', 'English'], ['hi', 'हिन्दी']].map(([k, l]) => <button key={k} role="tab" type="button" className="bh-tab" aria-selected={lang === k} onClick={() => setLang(k)}>{l}</button>)}
@@ -74,10 +77,10 @@ export default function GitaChapter() {
               <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!v.read} onClick={() => toggle(v, 'read')}>{v.read ? '✓ Read' : 'Mark read'}</button>
             </div>
           </div>
-          <div className="bh-reader" lang="sa" style={{ fontSize: size, margin: '6px 0' }}>{v.text_sa}</div>
-          {v.transliteration && <p className="bh-small" style={{ whiteSpace: 'pre-line', fontStyle: 'italic' }}>{v.transliteration}</p>}
-          <p style={{ fontSize: Math.max(14, size - 6), lineHeight: 1.7, margin: '8px 0' }} lang={lang === 'hi' ? 'hi' : 'en'}>{lang === 'hi' ? v.meaning_hi : v.meaning_en}</p>
-          <p className="bh-small">Source: {v.source} · Licence: {v.license}{v.is_verified ? ' · Verified' : ' · Not yet verified against the source'}</p>
+          <div className="bh-reader" lang="sa" translate="no" style={{ fontSize: size, margin: '6px 0' }}>{v.text_sa}</div>
+          {v.transliteration && <p className="bh-small" translate="no" style={{ whiteSpace: 'pre-line', fontStyle: 'italic' }}>{v.transliteration}</p>}
+          <p style={{ fontSize: Math.max(14, size - 6), lineHeight: 1.7, margin: '8px 0' }} lang={lang === 'hi' ? 'hi' : 'en'} translate="no">{lang === 'hi' ? v.meaning_hi : v.meaning_en}</p>
+          <p className="bh-small">Source: <span translate="no">{v.source}</span> · Licence: <span translate="no">{v.license}</span>{v.is_verified ? ' · Verified' : ' · Not yet verified against the source'}</p>
         </article>
       ))}
       <div className="bh-row">

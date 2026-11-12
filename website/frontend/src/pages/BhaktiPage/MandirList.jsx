@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from './bhaktiApi.js';
+import { useLang, pick, other } from './lang.js';
 
 export default function MandirList() {
+  const lang = useLang();
   const [states, setStates] = useState([]);
   const [state, setState] = useState('');
   const [q, setQ] = useState('');
@@ -22,11 +24,11 @@ export default function MandirList() {
 
   return (
     <div>
-      <div className="bh-sec-title"><h2>Mandir Darshan (मंदिर दर्शन)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Mandir Darshan (मंदिर दर्शन)</h1></div>
       <div className="bh-panel">
         <div className="bh-form">
           <label>Search<input type="search" value={q} maxLength={80} onChange={(e) => setQ(e.target.value)} placeholder="Temple, city or deity…" /></label>
-          <label>State
+          <label>{pick(lang, 'State', 'राज्य')}
             <select value={state} onChange={(e) => setState(e.target.value)}>
               <option value="">All states</option>
               {states.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -42,9 +44,9 @@ export default function MandirList() {
           {items.map((t) => (
             <Link key={t.slug} to={`/bhakti/mandir-darshan/${t.slug}`} className="bh-card">
               <div className="bh-card-ic" aria-hidden="true">🛕</div>
-              <div style={{ minWidth: 0 }}>
-                <h3>{t.name_hi}</h3>
-                <p>{t.name_en} · {t.city}, {t.state}</p>
+              <div style={{ minWidth: 0 }} translate="no">
+                <h3>{pick(lang, t.name_en, t.name_hi)}</h3>
+                <p>{pick(other(lang), t.name_en, t.name_hi)} · {t.city}, {t.state}</p>
               </div>
             </Link>
           ))}

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api } from './bhaktiApi.js';
 import { useJaap, useSignedIn, openLogin } from './useJaap.js';
+import { useLang, pick, other } from './lang.js';
 import { countRepetitions, eventIdFor, speechRecognitionCtor } from './jaapVoice.mjs';
 
 const MALA = 108;
@@ -128,6 +129,7 @@ function VoicePanel({ jaap, mantra }) {
 }
 
 export default function NaamJaap() {
+  const lang = useLang();
   const signedIn = useSignedIn();
   const jaap = useJaap(signedIn);
   const { session: s } = jaap;
@@ -140,7 +142,13 @@ export default function NaamJaap() {
   const [celebrate, setCelebrate] = useState(false);
   const [customText, setCustomText] = useState('');
 
-  const loadMantras = useCallback(() => api('/mantras').then((m) => { setMantras(m); setMantraId((cur) => cur || (m[0] && m[0].id) || ''); }).catch(() => setErr('Could not load mantras. Please refresh.')), []);
+  const [mantraStatus, setMantraStatus] = useState('loading'); // loading | ready | error
+  const loadMantras = useCallback(() => {
+    setMantraStatus('loading');
+    return api('/mantras')
+      .then((m) => { setMantras(m); setMantraId((cur) => cur || (m[0] && m[0].id) || ''); setMantraStatus('ready'); })
+      .catch(() => setMantraStatus('error'));
+  }, []);
   useEffect(() => { loadMantras(); }, [loadMantras, signedIn]);
   useEffect(() => { if (s) { setMode(s.mode); setMantraId(s.mantra_id); } }, [s && s.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -171,12 +179,12 @@ export default function NaamJaap() {
   const tap = () => { if (jaap.add(1, mode === 'mala' ? 'mala' : 'manual')) vibrate(10); };
 
   if (!signedIn) {
-    return <div className="bh-panel bh-signin"><h2>Naam Jaap</h2><p>Sign in to count your jaap, keep your history and continue on any device.</p><button type="button" className="bh-btn bh-btn-maroon" onClick={openLogin}>Sign in</button></div>;
+    return <div className="bh-panel bh-signin"><h1 className="bh-title">Naam Jaap</h1><p>Sign in to count your jaap, keep your history and continue on any device.</p><button type="button" className="bh-btn bh-btn-maroon" onClick={openLogin}>Sign in</button></div>;
   }
 
   return (
     <div>
-      <div className="bh-sec-title"><h2>Naam Jaap (नाम जप)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Naam Jaap (नाम जप)</h1></div>
       <div className="bh-tabs" role="tablist" aria-label="Jaap mode">
         {MODES.map(([k, label]) => <button key={k} role="tab" type="button" className="bh-tab" aria-selected={mode === k} disabled={!!s && !finished} onClick={() => setMode(k)}>{label}</button>)}
       </div>
@@ -187,9 +195,16 @@ export default function NaamJaap() {
             {finished && <div className="bh-msg ok">🙏 Session complete: {count} jaap, {Math.floor(count / MALA)} mala. Start another below.</div>}
             <div className="bh-form" style={{ marginTop: finished ? 12 : 0 }}>
               <label>Mantra
-                <select value={mantraId} onChange={(e) => setMantraId(e.target.value)}>
+                <select value={mantraId} onChange={(e) => setMantraId(e.target.value)} disabled={mantras.length === 0}>
+                  {mantras.length === 0 && <option value="">{mantraStatus === 'loading' ? 'Loading mantras…' : mantraStatus === 'error' ? 'Mantras unavailable' : 'No mantras yet'}</option>}
                   {mantras.map((m) => <option key={m.id} value={m.id}>{m.text_roman} — {m.text_hi}{m.is_custom ? ' (mine)' : ''}</option>)}
                 </select>
+                {mantraStatus === 'error' && (
+                  <span className="bh-msg" role="alert" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                    <span>Mantras could not be loaded.</span>
+                    <button type="button" className="bh-btn bh-btn-ghost" style={{ minHeight: 32, padding: '0 12px' }} onClick={loadMantras}>Retry</button>
+                  </span>
+                )}
               </label>
               <label>{mode === 'mala' ? 'Target (jaap, usually 108 per mala)' : 'Target (jaap)'}
                 <input type="number" min="1" max="1000000" value={target} onChange={(e) => setTarget(e.target.value)} />
@@ -201,8 +216,7 @@ export default function NaamJaap() {
             </div>
             {mantra && mantra.meaning_en && (
               <div className="bh-msg ok" role="note" style={{ marginTop: 12 }}>
-                <b>Meaning:</b> {mantra.meaning_en}
-                {mantra.meaning_hi && <div lang="hi" style={{ marginTop: 4 }}>{mantra.meaning_hi}</div>}
+                <b>Meaning:</b> {pick(lang, mantra.meaning_en, mantra.meaning_hi)}
                 {mantra.meaning_note && <div className="bh-small" style={{ marginTop: 4 }}>{mantra.meaning_note}</div>}
               </div>
             )}

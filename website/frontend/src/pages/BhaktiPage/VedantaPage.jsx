@@ -5,7 +5,7 @@ import ArticleList from './ArticleList.jsx';
 export default function VedantaPage() {
   return (
     <div>
-      <div className="bh-sec-title"><h2>Vedanta (वेदांत)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Vedanta (वेदांत)</h1></div>
       <p className="bh-small" style={{ marginTop: 0 }}>Plain-language learning articles on Advaita Vedanta. Each one lists its sources and the date it was last reviewed. They are introductions, not a substitute for studying the texts with a teacher.</p>
       <ArticleList section="vedanta" kind="article" />
       <div className="bh-sec-title"><h2 style={{ fontSize: 18 }}>Questions and answers</h2></div>

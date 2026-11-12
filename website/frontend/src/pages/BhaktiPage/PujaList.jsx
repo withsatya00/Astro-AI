@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from './bhaktiApi.js';
+import { useLang, pick, other } from './lang.js';
 
 export default function PujaList() {
+  const lang = useLang();
   const [items, setItems] = useState(null);
   const [err, setErr] = useState('');
   useEffect(() => { api('/puja').then(setItems).catch((e) => setErr(e.message || 'Could not load the puja guides')); }, []);
   return (
     <div>
-      <div className="bh-sec-title"><h2>Puja Vidhi (पूजा विधि)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Puja Vidhi (पूजा विधि)</h1></div>
       <p className="bh-small" style={{ marginTop: 0 }}>Simple, step-by-step guides for puja at home. Customs differ between families and traditions, so follow your own family’s way where it differs.</p>
       {err && <div className="bh-msg" role="alert">{err}</div>}
       {!items && !err && <p className="bh-small">Loading…</p>}
@@ -18,7 +20,7 @@ export default function PujaList() {
           {items.map((p) => (
             <Link key={p.slug} to={`/bhakti/puja-vidhi/${p.slug}`} className="bh-card">
               <div className="bh-card-ic" aria-hidden="true">🙏</div>
-              <div style={{ minWidth: 0 }}><h3>{p.title_hi || p.title_en}</h3><p>{p.title_en}{p.summary ? ` · ${p.summary}` : ''}</p></div>
+              <div style={{ minWidth: 0 }} translate="no"><h3>{pick(lang, p.title_en, p.title_hi)}</h3><p>{pick(other(lang), p.title_en, p.title_hi)}{p.summary ? ` · ${p.summary}` : ''}</p></div>
             </Link>
           ))}
         </div>

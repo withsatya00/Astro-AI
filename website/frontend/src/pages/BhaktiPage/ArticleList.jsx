@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { api } from './bhaktiApi.js';
+import { useLang, pick, other } from './lang.js';
 
 function Sources({ sources }) {
   if (!sources || !sources.length) return null;
   return (
     <div className="bh-small" style={{ marginTop: 10 }}>
       <b>Sources</b>
-      <ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>
+      <ul style={{ margin: '4px 0 0', paddingLeft: 18 }} translate="no">
         {sources.map((s, i) => (
           <li key={i}>
             {s.url ? <a href={s.url} target="_blank" rel="noopener noreferrer" style={{ color: '#650F23', fontWeight: 700 }}>{s.title} ↗</a> : s.title}
@@ -20,14 +21,15 @@ function Sources({ sources }) {
 
 // One expandable item per article or Q&A, each showing its sources and when it was last reviewed.
 export function ArticleItem({ a }) {
+  const lang = useLang();
   return (
     <details className="bh-panel bh-article">
       <summary>
-        <span style={{ fontFamily: 'Georgia, serif', fontWeight: 700, color: '#3E0B18', fontSize: 17 }}>{a.title_en}</span>
-        {a.title_hi && <span className="bh-small" style={{ marginLeft: 8 }}>{a.title_hi}</span>}
-        {a.summary && a.kind !== 'qa' && <div className="bh-small" style={{ marginTop: 2 }}>{a.summary}</div>}
+        <span style={{ fontFamily: 'Georgia, serif', fontWeight: 700, color: '#3E0B18', fontSize: 17 }} translate="no">{pick(lang, a.title_en, a.title_hi)}</span>
+        {a.title_hi && a.title_en && <span className="bh-small" style={{ marginLeft: 8 }} translate="no">{pick(other(lang), a.title_en, a.title_hi)}</span>}
+        {a.summary && a.kind !== 'qa' && <div className="bh-small" style={{ marginTop: 2 }} translate="no">{a.summary}</div>}
       </summary>
-      <div style={{ marginTop: 10, lineHeight: 1.75 }}>
+      <div style={{ marginTop: 10, lineHeight: 1.75 }} translate="no">
         {a.body.split('\n\n').map((p, i) => <p key={i} style={{ margin: '0 0 10px' }}>{p}</p>)}
       </div>
       <Sources sources={a.sources} />

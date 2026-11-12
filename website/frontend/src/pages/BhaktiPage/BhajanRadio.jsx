@@ -72,7 +72,7 @@ export default function BhajanRadio() {
   const tabs = [['all', 'All'], ...cats.map((c) => [c.slug, c.label]), ['favourites', '♥ Favourites'], ['recent', 'Recently played']];
   return (
     <div>
-      <div className="bh-sec-title"><h2>Bhajan Radio (भजन रेडियो)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Bhajan Radio (भजन रेडियो)</h1></div>
       <div className="bh-panel">
         <div className="bh-tabs" role="tablist" aria-label="Category">
           {tabs.map(([k, l]) => <button key={k} role="tab" type="button" className="bh-tab" aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>)}
@@ -96,7 +96,7 @@ export default function BhajanRadio() {
                   <img src={`https://i.ytimg.com/vi/${t.youtube_id}/mqdefault.jpg`} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.visibility = 'hidden'; }} />
                   <span aria-hidden="true">{active && radio.playing ? '⏸' : '▶'}</span>
                 </button>
-                <div style={{ minWidth: 0, flex: 1 }}><b className="bh-track-t">{t.title}</b><div className="bh-small">{t.channel}</div></div>
+                <div style={{ minWidth: 0, flex: 1 }} translate="no"><b className="bh-track-t">{t.title}</b><div className="bh-small">{t.channel}</div></div>
                 {tab !== 'recent' && <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!t.is_favourite} onClick={() => toggleFav(t)} aria-label={t.is_favourite ? 'Remove favourite' : 'Add favourite'}>{t.is_favourite ? '♥' : '♡'}</button>}
               </li>
             );

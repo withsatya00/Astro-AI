@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { RadioProvider, MiniPlayer, useRadio } from './RadioContext.jsx';
 import { api, ApiError } from './bhaktiApi.js';
 import { usePageMeta } from './usePageMeta.js';
+import { useLang } from './lang.js';
 import './bhakti.css';
 
 const DESCRIPTIONS = {
@@ -40,10 +41,15 @@ function useServiceStatus() {
   return { problem, check };
 }
 
+const HI_NAMES = { shankaracharya: 'शंकराचार्य' };
+
 function Shell() {
+  const lang = useLang();
   const { pathname } = useLocation();
   const radio = useRadio();
   const { problem, check } = useServiceStatus();
+  const [nonce, setNonce] = useState(0); // remounting the page makes every section fetch again
+  const retry = () => { check(); setNonce((n) => n + 1); };
   const sub = pathname.replace(/^\/bhakti\/?/, '').split('/')[0];
   usePageMeta(NAMES[sub] ? `${NAMES[sub]} (Bhakti)` : 'Bhakti', DESCRIPTIONS[sub] || DESCRIPTIONS['']);
   return (
@@ -51,15 +57,15 @@ function Shell() {
       <div className={`bh-wrap${radio.current ? ' bh-wrap--playing' : ''}`}>
         <nav className="bh-crumbs" aria-label="Breadcrumb">
           <Link to="/">Home</Link><span aria-hidden="true">›</span>
-          {sub ? <><Link to="/bhakti">Bhakti</Link><span aria-hidden="true">›</span><b>{NAMES[sub] || sub}</b></> : <b>Bhakti</b>}
+          {sub ? <><Link to="/bhakti">Bhakti</Link><span aria-hidden="true">›</span><b>{(lang === 'hi' && HI_NAMES[sub]) || NAMES[sub] || sub}</b></> : <b>Bhakti</b>}
         </nav>
         {problem && (
-          <div className="bh-msg" role="alert" style={{ marginBottom: 12 }}>
-            {problem} Please try again in a moment. If you run this site yourself, restart the backend so the latest Bhakti tables and data are created.{' '}
-            <button type="button" className="bh-btn bh-btn-ghost" style={{ minHeight: 32, padding: '0 12px' }} onClick={check}>Retry</button>
+          <div className="bh-msg bh-service-msg" role="alert" data-detail={problem}>
+            <span>Bhakti content abhi load nahi ho pa raha. Kuch hissa dikhai na de to thodi der baad dobara koshish karein.</span>
+            <button type="button" className="bh-btn bh-btn-ghost" onClick={retry}>Retry</button>
           </div>
         )}
-        <Outlet />
+        <React.Fragment key={nonce}><Outlet /></React.Fragment>
       </div>
       <MiniPlayer />
     </div>

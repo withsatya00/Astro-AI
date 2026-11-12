@@ -4,6 +4,7 @@ import { api } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
 import { WEEKDAY, BADGES, useRitual, todayKey } from './dailyRitual.js';
 import { Skel } from './Skeleton.jsx';
+import { useLang, pick, other } from './lang.js';
 
 const DEITIES = [
   ['ram', 'Shri Ram', 'रा', 'linear-gradient(135deg,#9a4a1c,#3E0B18)', '/assets/img/seva-gallery/ram-verified-1.webp'],
@@ -30,6 +31,7 @@ const SECTIONS = [
   ['My Sadhana', 'Daily routine, sankalp, journal & meditation', '/assets/img/seva-gallery/ritual-ganesh-2.webp', '/bhakti/sadhana', true],
 ];
 
+const DEITY_HI = { ram: 'श्री राम', shiva: 'शिव', hanuman: 'हनुमान', ganesh: 'गणेश', durga: 'दुर्गा', krishna: 'कृष्ण' };
 const fmt = (n) => Number(n || 0).toLocaleString('en-IN');
 const dayOfYear = () => Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
 
@@ -61,11 +63,12 @@ function Ring({ done, total }) {
 }
 
 function DailyRitual({ shlok, today, malaDone, wd, idSuffix = '' }) {
+  const lang = useLang();
   const { done, toggle } = useRitual();
   const steps = [
-    ['mantra', 'Mantra', today ? today.text_roman : 'Aaj ka mantra', '/bhakti/naam-jaap', !!done.mantra],
+    ['mantra', 'Mantra', today ? pick(lang, today.text_roman, today.text_hi) : 'Aaj ka mantra', '/bhakti/naam-jaap', !!done.mantra],
     ['aarti', `${wd.name} ki Aarti`, 'Aarti ya path padhein', `/bhakti/aarti-chalisa?deity=${wd.slug}`, !!done.aarti],
-    ['gita', 'Gita Shlok', shlok ? `Adhyay ${shlok.chapter}.${shlok.verse}` : 'Aaj ka shlok', shlok ? `/bhakti/bhagavad-gita/${shlok.chapter}#v${shlok.verse}` : '/bhakti/bhagavad-gita', !!done.gita],
+    ['gita', 'Gita Shlok', shlok ? `${lang === 'hi' ? 'अध्याय' : 'Adhyay'} ${shlok.chapter}.${shlok.verse}` : 'Aaj ka shlok', shlok ? `/bhakti/bhagavad-gita/${shlok.chapter}#v${shlok.verse}` : '/bhakti/bhagavad-gita', !!done.gita],
     ['jaap', '1 Mala (108) Jaap', malaDone ? 'Poorn ho gayi' : 'Naam jaap shuru karein', '/bhakti/naam-jaap', !!done.jaap || malaDone],
   ];
   const count = steps.filter((x) => x[4]).length;
@@ -91,6 +94,7 @@ function DailyRitual({ shlok, today, malaDone, wd, idSuffix = '' }) {
 }
 
 function PanchangStrip() {
+  const lang = useLang();
   const [day, setDay] = useState(null);
   const [next, setNext] = useState([]);
   const [failed, setFailed] = useState(false);
@@ -110,20 +114,29 @@ function PanchangStrip() {
       </div>
       {!day ? <div style={{ display: 'grid', gap: 8 }} role="status" aria-label="Loading panchang"><Skel h={18} w="70%" /><Skel h={14} w="90%" /></div> : (
         <>
-          <p className="bh-pan-main"><b>{day.tithi.paksha} {day.tithi.name_hi}</b> <span>({day.tithi.name_en})</span></p>
-          <p className="bh-small" style={{ margin: '2px 0 0' }}>{day.lunar_month_hi} · Suryoday {day.sunrise} · Suryast {day.sunset} · Delhi</p>
+          <p className="bh-pan-main"><b>{lang === 'hi' ? ({ Shukla: 'शुक्ल', Krishna: 'कृष्ण' }[day.tithi.paksha] || day.tithi.paksha) : day.tithi.paksha} {pick(lang, day.tithi.name_en, day.tithi.name_hi)}</b> <span>({pick(other(lang), day.tithi.name_en, day.tithi.name_hi)})</span></p>
+          <p className="bh-small" style={{ margin: '2px 0 0' }}>{pick(lang, day.lunar_month, day.lunar_month_hi)} · Suryoday {day.sunrise} · Suryast {day.sunset} · Delhi</p>
           {(day.festivals.length > 0 || day.observances.length > 0) && (
-            <p className="bh-pan-fest">🪔 {[...day.festivals.map((f) => f.name_en), ...day.observances.map((o) => o.name_en)].join(' · ')}</p>
+            <p className="bh-pan-fest">🪔 {[...day.festivals.map((f) => pick(lang, f.name_en, f.name_hi)), ...day.observances.map((o) => pick(lang, o.name_en, o.name_hi))].join(' · ')}</p>
           )}
           {next.length > 0 && (
             <ul className="bh-pan-next">
-              {next.map((i, k) => <li key={k}><span>{i.name}</span><b>{i.weekday.slice(0, 3)}, {i.date.slice(8)}/{i.date.slice(5, 7)}</b></li>)}
+              {next.map((i, k) => <li key={k}><span>{pick(lang, i.name_en || i.name, i.name_hi)}</span><b>{new Date(`${i.date}T12:00:00`).toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', { weekday: 'short' })}, {i.date.slice(8)}/{i.date.slice(5, 7)}</b></li>)}
             </ul>
           )}
           <p className="bh-small" style={{ margin: '8px 0 0' }}>Calculated panchang; exact muhurat apne local panchang ya pandit se confirm karein.</p>
         </>
       )}
     </section>
+  );
+}
+
+function Unavailable({ what, onRetry }) {
+  return (
+    <div role="status">
+      <p className="bh-small" style={{ margin: '0 0 8px' }}>{what} abhi load nahi ho paya.</p>
+      <button type="button" className="bh-btn bh-btn-ghost" style={{ minHeight: 36 }} onClick={onRetry}>Dobara koshish karein</button>
+    </div>
   );
 }
 
@@ -152,10 +165,11 @@ function Badges({ stats }) {
 }
 
 function SevaStrip({ wd }) {
+  const lang = useLang();
   const items = [
     ['🛕', 'Mandir Seva', 'Apne naam se puja aur sankalp', '/mandir-seva/puja'],
     ['🌸', 'Chadhava', 'Mandir me chadhava arpit karein', '/mandir-seva/chadhava'],
-    ['📿', `${wd.name} ke liye`, 'Mala, rudraksha aur puja samagri', `/astro-mall?category=${wd.mall}`],
+    ['📿', (lang === 'hi' ? `${wd.name} के लिए` : `For ${wd.name}`), 'Mala, rudraksha aur puja samagri', `/astro-mall?category=${wd.mall}`],
     ['🐄', 'Gau Sewa', 'Gau mata ke liye daan', '/gau-sewa'],
   ];
   return (
@@ -174,22 +188,35 @@ function SevaStrip({ wd }) {
 }
 
 export default function BhaktiHome() {
+  const lang = useLang();
   const signedIn = useSignedIn();
   const [mantras, setMantras] = useState([]);
   const [mantrasReady, setMantrasReady] = useState(false);
+  const [mantrasFailed, setMantrasFailed] = useState(false);
   const [stats, setStats] = useState(null);
+  const [statsFailed, setStatsFailed] = useState(false);
   const [shlok, setShlok] = useState(null);
+  const [shlokFailed, setShlokFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const retry = () => setAttempt((a) => a + 1);
   const wd = WEEKDAY[new Date().getDay()];
   const heroImg = wd.slug === 'krishna' ? '/assets/bhakti/hero/radha-krishna-premium.webp' : (DEITIES.find((d) => d[0] === wd.slug) || [])[4];
 
+  // A failed request shows a message with a retry instead of an endless loading shimmer.
   useEffect(() => {
-    api('/mantras').then(setMantras).catch(() => {}).finally(() => setMantrasReady(true));
-    api('/gita/daily').then((d) => setShlok(d.verse)).catch(() => {});
-  }, []);
+    let live = true;
+    setMantrasReady(false); setMantrasFailed(false); setShlok(null); setShlokFailed(false);
+    api('/mantras').then((m) => { if (live) setMantras(m); }).catch(() => { if (live) setMantrasFailed(true); }).finally(() => { if (live) setMantrasReady(true); });
+    api('/gita/daily').then((d) => { if (live) setShlok(d.verse); }).catch(() => { if (live) setShlokFailed(true); });
+    return () => { live = false; };
+  }, [attempt]);
   useEffect(() => {
-    if (signedIn) api('/jaap/analytics').then(setStats).catch(() => setStats(null));
+    let live = true;
+    setStatsFailed(false);
+    if (signedIn) api('/jaap/analytics').then((s) => { if (live) setStats(s); }).catch(() => { if (live) { setStats(null); setStatsFailed(true); } });
     else setStats(null);
-  }, [signedIn]);
+    return () => { live = false; };
+  }, [signedIn, attempt]);
 
   const catalogue = mantras.filter((m) => !m.is_custom);
   // Prefer a mantra of today's deity when one exists; otherwise rotate through the catalogue.
@@ -228,7 +255,7 @@ export default function BhaktiHome() {
               <span aria-hidden="true">{glyph}</span>
               <Art src={image} alt={`${name} devotional artwork`} />
             </div>
-            <b>{name}</b>
+            <b>{lang === 'hi' ? DEITY_HI[slug] : name}</b>
             {slug === wd.slug && <em className="bh-today-tag">Aaj</em>}
           </Link>
         ))}
@@ -248,8 +275,8 @@ export default function BhaktiHome() {
               </Link>
             ))}
           </div>
-          <div className="bh-sec-title" style={{ margin: '18px 0 10px' }}><h2 style={{ fontSize: '17px' }}>और विभाग</h2></div>
-          <div className="bh-cards">
+          <div className="bh-sec-title" style={{ margin: '30px 0 12px' }}><h2 style={{ fontSize: '17px' }}>और विभाग</h2></div>
+          <div className="bh-cards bh-cards-more">
             {more.map(([t, d, image, to, built]) => (
               <Link key={t} to={to} className="bh-card">
                 <div className="bh-card-media"><Art src={image} alt="" glyph="ॐ" /></div>
@@ -264,33 +291,37 @@ export default function BhaktiHome() {
               <h3>Aaj Ka Mantra</h3>
               {today ? (
                 <>
-                  <p className="bh-quote">“{today.text_hi}”</p>
-                  <p className="bh-small">{today.text_roman}{today.deity ? ` · ${today.deity.name_en}` : ''}</p>
+                  <p className="bh-quote" translate="no">“{today.text_hi}”</p>
+                  <p className="bh-small" translate="no">{today.text_roman}{today.deity ? ` · ${pick(lang, today.deity.name_en, today.deity.name_hi)}` : ''}</p>
                   <Link className="bh-btn bh-btn-maroon" to="/bhakti/naam-jaap" style={{ marginTop: 10 }}>108 baar jaap karein</Link>
                 </>
-              ) : mantrasReady ? <p className="bh-small">Mantra abhi uplabdh nahi hai.</p> : <div role="status" aria-label="Loading mantra" style={{ display: 'grid', gap: 8 }}><Skel h={22} /><Skel h={22} w="70%" /><Skel h={12} w="45%" /></div>}
+              ) : mantrasReady ? (mantrasFailed ? <Unavailable what="Mantra" onRetry={retry} /> : <p className="bh-small">Mantra abhi uplabdh nahi hai.</p>) : <div role="status" aria-label="Loading mantra" style={{ display: 'grid', gap: 8 }}><Skel h={22} /><Skel h={22} w="70%" /><Skel h={12} w="45%" /></div>}
             </div>
             <div>
               <h3>Aaj Ka Gita Shlok</h3>
               {shlok ? (
                 <>
-                  <p className="bh-quote" lang="sa" style={{ whiteSpace: 'pre-line' }}>{shlok.text_sa}</p>
+                  <p className="bh-quote" lang="sa" translate="no" style={{ whiteSpace: 'pre-line' }}>{shlok.text_sa}</p>
                   <p className="bh-small">Bhagavad Gita {shlok.chapter}.{shlok.verse} · <Link to={`/bhakti/bhagavad-gita/${shlok.chapter}#v${shlok.verse}`} style={{ color: '#650F23', fontWeight: 700 }}>Read with meaning →</Link></p>
                 </>
-              ) : <div role="status" aria-label="Loading shlok" style={{ display: 'grid', gap: 8 }}><Skel h={22} /><Skel h={22} w="80%" /><Skel h={12} w="50%" /></div>}
+              ) : shlokFailed ? <Unavailable what="Shlok" onRetry={retry} /> : <div role="status" aria-label="Loading shlok" style={{ display: 'grid', gap: 8 }}><Skel h={22} /><Skel h={22} w="80%" /><Skel h={12} w="50%" /></div>}
             </div>
           </div>
 
-          <div className="bh-sec-title"><h2>लोकप्रिय मंत्र</h2><Link to="/bhakti/naam-jaap" className="bh-small" style={{ fontWeight: 700, color: '#650F23' }}>Sabhi Mantra →</Link></div>
-          <div className="bh-cards">
-            {!mantrasReady && [0, 1, 2].map((i) => <div key={i} className="bh-card" aria-hidden="true"><Skel w={56} h={56} r={12} /><div style={{ flex: 1, display: 'grid', gap: 6 }}><Skel h={14} /><Skel h={10} w="60%" /></div></div>)}
-            {catalogue.slice(0, 3).map((m) => (
-              <Link key={m.id} to="/bhakti/naam-jaap" className="bh-card">
-                <div className="bh-card-ic" aria-hidden="true">ॐ</div>
-                <div style={{ minWidth: 0 }}><h3>{m.text_hi}</h3><p>{m.text_roman}</p></div>
-              </Link>
-            ))}
-          </div>
+          {(!mantrasReady || catalogue.length > 0) && (
+            <>
+              <div className="bh-sec-title"><h2>लोकप्रिय मंत्र</h2><Link to="/bhakti/naam-jaap" className="bh-small" style={{ fontWeight: 700, color: '#650F23' }}>Sabhi Mantra →</Link></div>
+              <div className="bh-cards">
+                {!mantrasReady && [0, 1, 2].map((i) => <div key={i} className="bh-card" aria-hidden="true"><Skel w={56} h={56} r={12} /><div style={{ flex: 1, display: 'grid', gap: 6 }}><Skel h={14} /><Skel h={10} w="60%" /></div></div>)}
+                {catalogue.slice(0, 3).map((m) => (
+                  <Link key={m.id} to="/bhakti/naam-jaap" className="bh-card">
+                    <div className="bh-card-ic" aria-hidden="true">ॐ</div>
+                    <div style={{ minWidth: 0 }} translate="no"><h3>{m.text_hi}</h3><p>{m.text_roman}</p></div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
 
           <SevaStrip wd={wd} />
         </div>
@@ -323,7 +354,7 @@ export default function BhaktiHome() {
                 <Badges stats={stats} />
                 <Link to="/bhakti/my-bhakti" className="bh-small" style={{ fontWeight: 700, color: '#650F23', display: 'inline-block', marginTop: 8 }}>Poora vivaran →</Link>
               </>
-            ) : <div role="status" aria-label="Loading your progress" style={{ display: 'grid', gap: 8 }}><Skel h={52} /><Skel h={10} /><Skel h={12} w="40%" /></div>}
+            ) : statsFailed ? <Unavailable what="Aapki pragati" onRetry={retry} /> : <div role="status" aria-label="Loading your progress" style={{ display: 'grid', gap: 8 }}><Skel h={52} /><Skel h={10} /><Skel h={12} w="40%" /></div>}
           </div>
         </aside>
       </div>

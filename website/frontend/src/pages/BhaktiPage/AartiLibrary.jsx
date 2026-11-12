@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { api } from './bhaktiApi.js';
 import { Skel } from './Skeleton.jsx';
+import { useLang, pick, other } from './lang.js';
 
-const KINDS = [['', 'All'], ['aarti', 'Aarti'], ['chalisa', 'Chalisa'], ['stotra', 'Stotra']];
+const KINDS = [['', 'All', 'सभी'], ['aarti', 'Aarti', 'आरती'], ['chalisa', 'Chalisa', 'चालीसा'], ['stotra', 'Stotra', 'स्तोत्र']];
 
 export default function AartiLibrary() {
+  const lang = useLang();
   const [params, setParams] = useSearchParams();
   const kind = params.get('kind') || '';
   const deity = params.get('deity') || '';
@@ -33,17 +35,17 @@ export default function AartiLibrary() {
   const totalPages = data ? Math.max(1, Math.ceil(data.total / data.page_size)) : 1;
   return (
     <div>
-      <div className="bh-sec-title"><h2>Aarti &amp; Chalisa (आरती · चालीसा)</h2></div>
+      <div className="bh-sec-title"><h1 className="bh-title">Aarti &amp; Chalisa (आरती · चालीसा)</h1></div>
       <div className="bh-panel">
         <div className="bh-tabs" role="tablist" aria-label="Type">
-          {KINDS.map(([k, l]) => <button key={k || 'all'} role="tab" type="button" className="bh-tab" aria-selected={kind === k} onClick={() => set('kind', k)}>{l}</button>)}
+          {KINDS.map(([k, en, hi]) => <button key={k || 'all'} role="tab" type="button" className="bh-tab" aria-selected={kind === k} onClick={() => set('kind', k)}>{pick(lang, en, hi)}</button>)}
         </div>
         <div className="bh-form" style={{ marginTop: 12 }}>
           <label>Search<input type="search" value={q} maxLength={80} onChange={(e) => { setQ(e.target.value); setPage(1); }} placeholder="Title or text…" /></label>
-          <label>Deity
+          <label>{pick(lang, 'Deity', 'देवता')}
             <select value={deity} onChange={(e) => set('deity', e.target.value)}>
               <option value="">All deities</option>
-              {deities.map((d) => <option key={d.slug} value={d.slug}>{d.name_en} — {d.name_hi}</option>)}
+              {deities.map((d) => <option key={d.slug} value={d.slug}>{pick(lang, d.name_en, d.name_hi)}</option>)}
             </select>
           </label>
         </div>
@@ -67,9 +69,9 @@ export default function AartiLibrary() {
           {data.items.map((c) => (
             <Link key={c.id} to={`/bhakti/aarti-chalisa/${c.slug}`} className="bh-card">
               <div className="bh-card-ic" aria-hidden="true">{c.kind === 'aarti' ? '🪔' : c.kind === 'chalisa' ? '📜' : '🕉️'}</div>
-              <div style={{ minWidth: 0 }}>
-                <h3>{c.title_hi}</h3>
-                <p>{c.title_en}{c.deity ? ` · ${c.deity.name_en}` : ''}</p>
+              <div style={{ minWidth: 0 }} translate="no">
+                <h3>{pick(lang, c.title_en, c.title_hi)}</h3>
+                <p>{pick(other(lang), c.title_en, c.title_hi)}{c.deity ? ` · ${pick(lang, c.deity.name_en, c.deity.name_hi)}` : ''}</p>
               </div>
             </Link>
           ))}

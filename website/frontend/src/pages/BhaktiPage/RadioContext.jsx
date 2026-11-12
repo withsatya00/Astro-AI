@@ -164,7 +164,7 @@ export function MiniPlayer() {
     <section className="bh-mini" aria-label="Bhajan player">
       <div className="bh-mini-video" ref={r.hostRef} />
       <div className="bh-mini-ctl">
-        <div className="bh-mini-title" title={c.title}><b>{c.title}</b><span>{c.channel}</span></div>
+        <div className="bh-mini-title" title={c.title} translate="no"><b>{c.title}</b><span>{c.channel}</span></div>
         <div className="bh-mini-btns">
           <button type="button" aria-label="Previous" onClick={r.prev}>⏮</button>
           <button type="button" className="main" aria-label={r.playing ? 'Pause' : 'Play'} onClick={r.toggle}>{r.playing ? '⏸' : '▶'}</button>

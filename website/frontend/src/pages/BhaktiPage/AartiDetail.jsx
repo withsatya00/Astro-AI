@@ -4,8 +4,9 @@ import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
 import { markRitual, MALL_FOR_DEITY } from './dailyRitual.js';
 import { SkelPage } from './Skeleton.jsx';
-import { track } from '../../analytics.jsx';
+import { track as trackEvent } from '../../analytics.jsx';
 import { usePageMeta } from './usePageMeta.js';
+import { useLang, pick, other } from './lang.js';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
 const loadPrefs = () => { try { return { size: 22, diya: false, ...(JSON.parse(localStorage.getItem(PREF_KEY) || '{}')) }; } catch (e) { return { size: 22, diya: false }; } };
@@ -13,6 +14,7 @@ const SPEEDS = [['Dheema', 25], ['Madhyam', 45], ['Tez', 80]]; // pixels per sec
 
 export default function AartiDetail() {
   const { slug } = useParams();
+  const lang = useLang();
   const signedIn = useSignedIn();
   const [c, setC] = useState(null);
   const [err, setErr] = useState('');
@@ -31,7 +33,7 @@ export default function AartiDetail() {
 
   useEffect(() => {
     setC(null); setErr('');
-    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); markRitual('aarti'); track('bhakti_text_open', { kind: d.kind, slug: d.slug }); })
+    api(`/content/${slug}`).then((d) => { setC(d); setFav(d.is_favourite); setTab('hi'); setTrack(0); markRitual('aarti'); trackEvent('bhakti_text_open', { kind: d.kind, slug: d.slug }); })
       .catch((e) => setErr(e instanceof ApiError && e.status === 404 ? 'This text is not available.' : (e.message || 'Could not load')));
   }, [slug, signedIn]);
 
@@ -87,10 +89,10 @@ export default function AartiDetail() {
   const playPause = () => { const a = audio.current; if (!a) return; if (a.paused) a.play().catch(() => setNote('Could not play this audio')); else a.pause(); };
 
   usePageMeta(c && `${c.title_en} (${c.title_hi})`, c && (c.meaning_en || c.body_hi || '').replace(/^Summary[^:]*:\s*/i, ''));
-  if (err) return <div className="bh-panel bh-signin"><h2>{err}</h2><Link className="bh-btn bh-btn-maroon" to="/bhakti/aarti-chalisa">Back to library</Link></div>;
+  if (err) return <div className="bh-panel bh-signin"><h1 className="bh-title">{err}</h1><Link className="bh-btn bh-btn-maroon" to="/bhakti/aarti-chalisa">Back to library</Link></div>;
   if (!c) return <SkelPage label="Loading text" />;
 
-  const tabs = [['hi', 'हिन्दी', c.body_hi], ['roman', 'Roman', c.body_roman], ['mhi', 'अर्थ', c.meaning_hi], ['men', 'Meaning', c.meaning_en]].filter((t) => t[2]);
+  const tabs = [['hi', 'हिन्दी', c.body_hi], ['roman', pick(lang, 'Roman', 'रोमन'), c.body_roman], ['mhi', pick(lang, 'Meaning (Hindi)', 'अर्थ (हिन्दी)'), c.meaning_hi], ['men', pick(lang, 'Meaning (English)', 'अर्थ (अंग्रेज़ी)'), c.meaning_en]].filter((t) => t[2]);
   const text = (tabs.find((t) => t[0] === tab) || tabs[0] || [0, 0, ''])[2];
   const tr = c.audio[track];
 
@@ -98,7 +100,7 @@ export default function AartiDetail() {
     <div>
       <div className="bh-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} aria-label="Reading progress"><i style={{ width: `${progress}%` }} /></div>
       <div className="bh-sec-title">
-        <div><h2>{c.title_hi}</h2><div className="bh-small">{c.title_en}{c.deity ? ` · ${c.deity.name_en}` : ''}</div></div>
+        <div translate="no"><h1 className="bh-title">{pick(lang, c.title_en, c.title_hi)}</h1><div className="bh-small">{pick(other(lang), c.title_en, c.title_hi)}{c.deity ? ` · ${pick(lang, c.deity.name_en, c.deity.name_hi)}` : ''}</div></div>
         <div className="bh-row" style={{ margin: 0 }}>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={toggleFav} aria-pressed={fav}>{fav ? '♥ Saved' : '♡ Save'}</button>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={share}>Share</button>
@@ -115,7 +117,7 @@ export default function AartiDetail() {
             <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setRepeat(!repeat)} aria-pressed={repeat}>🔁 Repeat {repeat ? 'on' : 'off'}</button>
             {c.audio.length > 1 && <select aria-label="Choose recording" value={track} onChange={(e) => { setTrack(Number(e.target.value)); setPlaying(false); }} style={{ minHeight: 44, borderRadius: 10, border: '1px solid #E8D7BA', padding: '0 10px' }}>{c.audio.map((a, i) => <option key={a.id} value={i}>{a.title}</option>)}</select>}
           </div>
-          <p className="bh-small" style={{ margin: '8px 0 0' }}>{tr.title} · Source: {tr.source} · Licence: {tr.license}</p>
+          <p className="bh-small" style={{ margin: '8px 0 0' }}><span translate="no">{tr.title}</span> · Source: <span translate="no">{tr.source}</span> · Licence: <span translate="no">{tr.license}</span></p>
         </div>
       )}
 
@@ -138,19 +140,19 @@ export default function AartiDetail() {
           <div className="bh-row" style={{ margin: 0 }} role="group" aria-label="Text size">
             <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setPrefs({ ...prefs, size: Math.max(14, prefs.size - 2) })} aria-label="Smaller text">A−</button>
             <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setPrefs({ ...prefs, size: Math.min(40, prefs.size + 2) })} aria-label="Larger text">A+</button>
-            <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setPrefs({ ...prefs, diya: !prefs.diya })} aria-pressed={prefs.diya} aria-label="Diya (dark) reading mode">🪔 {prefs.diya ? 'Diya on' : 'Diya'}</button>
+            <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setPrefs({ ...prefs, diya: !prefs.diya })} aria-pressed={prefs.diya} aria-label="Diya (dark) reading mode">🪔 {prefs.diya ? pick(lang, 'Diya on', 'दीया चालू') : pick(lang, 'Diya', 'दीया')}</button>
             <button type="button" className="bh-btn bh-btn-ghost" onClick={() => setScrolling(!scrolling)} aria-pressed={scrolling}>{scrolling ? '⏸ Rokein' : '↓ Auto-scroll'}</button>
             {scrolling && <select aria-label="Auto-scroll speed" value={speed} onChange={(e) => setSpeed(Number(e.target.value))} style={{ minHeight: 44, borderRadius: 10, border: '1px solid #E8D7BA', padding: '0 8px' }}>{SPEEDS.map(([l], i) => <option key={l} value={i}>{l}</option>)}</select>}
           </div>
         </div>
         <div className={`bh-reader-box${prefs.diya ? ' diya' : ''}`}>
-          <div ref={body} className="bh-reader" style={{ fontSize: prefs.size }} lang={tab === 'hi' || tab === 'mhi' ? 'hi' : 'en'}>{text}</div>
-          <p className="bh-small">Source: {c.source || '—'} · Licence: {c.license || '—'}{c.is_verified ? ' · Verified' : ''}</p>
+          <div ref={body} className="bh-reader" translate="no" style={{ fontSize: prefs.size }} lang={tab === 'hi' || tab === 'mhi' ? 'hi' : 'en'}>{text}</div>
+          <p className="bh-small">Source: <span translate="no">{c.source || '—'}</span> · Licence: <span translate="no">{c.license || '—'}</span>{c.is_verified ? ' · Verified' : ''}</p>
         </div>
       </div>
 
       <div className="bh-cta-card">
-        <div><b>{c.deity ? `${c.deity.name_en} ke liye seva` : 'Seva aur samagri'}</b><span className="bh-small">Mandir me puja karwayein ya puja samagri mangwayein.</span></div>
+        <div><b>{c.deity ? (lang === 'hi' ? `${c.deity.name_hi} के लिए सेवा` : `Seva for ${c.deity.name_en}`) : 'Seva aur samagri'}</b><span className="bh-small">Mandir me puja karwayein ya puja samagri mangwayein.</span></div>
         <div className="bh-cta-actions">
           <Link className="bh-btn bh-btn-maroon" to="/mandir-seva/puja" data-track="aarti_puja_book">Puja book karein</Link>
           <Link className="bh-btn bh-btn-ghost" data-track="aarti_mall" to={`/astro-mall?category=${(c.deity && MALL_FOR_DEITY[c.deity.slug]) || 'mala'}`}>Mala &amp; samagri</Link>

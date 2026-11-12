@@ -308,3 +308,19 @@
 @media (max-width:900px) { .bh-ritual-mobile { display:block; margin-top:16px; } .bh-ritual-desktop { display:none; } }
 
 .bh-sec-title > a.bh-small { display:inline-flex; align-items:center; min-height:36px; font-size:13px; }
+
+/* Page titles on inner pages (an h1 each, same look as the former h2 section titles) */
+.bh .bh-title { font-size:22px !important; font-family:Georgia,'Noto Serif Devanagari',serif !important; margin:0; line-height:1.25; }
+
+/* Service notice: short, calm, and it does not push the page down on phones */
+.bh-service-msg { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 12px; }
+.bh-service-msg .bh-btn { min-height:34px; padding:0 14px; flex:none; }
+@media (max-width:520px) { .bh-service-msg { font-size:12.5px; padding:8px 10px; } }
+
+/* "More" grid: a lone last card spans the row instead of sitting orphaned */
+.bh-cards-more > :last-child:nth-child(3n+1) { grid-column:1 / -1; }
+@media (max-width:900px) {
+  .bh-cards-more > :last-child:nth-child(3n+1) { grid-column:auto; }
+  .bh-cards-more > :last-child:nth-child(odd) { grid-column:1 / -1; }
+  .bh-hero-art { min-height:clamp(180px,46vw,260px); }
+}

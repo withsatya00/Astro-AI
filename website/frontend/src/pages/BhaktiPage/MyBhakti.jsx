@@ -43,14 +43,24 @@ export default function MyBhakti() {
     } catch (e) { setErr('Could not download the report'); }
   };
 
-  if (!signedIn) return <div className="bh-panel bh-signin"><h2>My Bhakti</h2><p>Sign in to see your private jaap progress. Your devotional activity is visible only to you.</p><button type="button" className="bh-btn bh-btn-maroon" onClick={openLogin}>Sign in</button></div>;
-  if (err) return <div className="bh-msg" role="alert">{err}</div>;
-  if (!a) return <div className="bh-panel">Loading…</div>;
+  if (!signedIn) return <div className="bh-panel bh-signin"><h1 className="bh-title">My Bhakti</h1><p>Sign in to see your private jaap progress. Your devotional activity is visible only to you.</p><button type="button" className="bh-btn bh-btn-maroon" onClick={openLogin}>Sign in</button></div>;
+  if (err) {
+    return (
+      <div>
+        <div className="bh-sec-title"><h1 className="bh-title">My Bhakti (मेरी भक्ति यात्रा)</h1></div>
+        <div className="bh-msg" role="alert" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+          <span>{err}</span>
+          <button type="button" className="bh-btn bh-btn-ghost" style={{ minHeight: 34 }} onClick={() => { setErr(''); load(); }}>Retry</button>
+        </div>
+      </div>
+    );
+  }
+  if (!a) return <div><div className="bh-sec-title"><h1 className="bh-title">My Bhakti (मेरी भक्ति यात्रा)</h1></div><div className="bh-panel" role="status">Loading…</div></div>;
 
   const shown = { today: a.today, week: a.week, month: a.month }[range];
   return (
     <div>
-      <div className="bh-sec-title"><h2>My Bhakti (मेरी भक्ति यात्रा)</h2><button type="button" className="bh-btn bh-btn-ghost" onClick={download}>⬇ Report (CSV)</button></div>
+      <div className="bh-sec-title"><h1 className="bh-title">My Bhakti (मेरी भक्ति यात्रा)</h1><button type="button" className="bh-btn bh-btn-ghost" onClick={download}>⬇ Report (CSV)</button></div>
       <div className="bh-panel">
         <div className="bh-tabs" role="tablist" aria-label="Period">
           {[['today', 'Today'], ['week', '7 days'], ['month', '30 days']].map(([k, l]) => <button key={k} role="tab" type="button" className="bh-tab" aria-selected={range === k} onClick={() => setRange(k)}>{l}</button>)}
