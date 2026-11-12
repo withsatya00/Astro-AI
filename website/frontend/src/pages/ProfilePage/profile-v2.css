@@ -1,0 +1,101 @@
+.apf{--wine:#650f27;--deep:#3b0715;--gold:#d5a13f;--line:#e4cfaf;--ink:#39131e;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif}
+.apf *{box-sizing:border-box}
+.apf-page{max-width:1280px;margin:0 auto;padding:18px 16px 64px}
+.apf a{text-decoration:none}
+.apf :is(button,a):focus-visible{outline:3px solid #e0aa42;outline-offset:2px}
+
+.apf-breadcrumb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:#6f5f63;margin-bottom:16px}
+.apf-breadcrumb a{color:#5b4a50}.apf-breadcrumb a:hover{color:var(--wine)}.apf-breadcrumb [aria-current]{font-weight:800;color:var(--ink)}
+
+.apf-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.apf-main{display:grid;gap:20px;min-width:0}
+
+.apf-hero{display:grid;grid-template-columns:auto 1fr;gap:26px;padding:28px;border-radius:22px;background:linear-gradient(100deg,#3d0716,#6e1630);color:#fff;border:1px solid #8a3347}
+.apf-portrait{width:148px}
+.apf .apf-photo{width:148px;height:148px;border-radius:22px;object-fit:cover;border:2px solid var(--gold);display:block;background:#f4e8d3}
+.apf-info{min-width:0}
+.apf-status{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#e9d9bd;letter-spacing:.02em}
+.apf-status i{width:9px;height:9px;border-radius:50%;background:#b4a9a2}
+.apf-status.online{color:#6ee7a8}.apf-status.online i{background:#34d399;box-shadow:0 0 0 4px #34d39933}
+.apf .apf-name{font-family:'Playfair Display',Georgia,serif;font-size:clamp(26px,3vw,36px);line-height:1.15;margin:8px 0 4px;color:#fff9ed!important;font-weight:700;text-transform:none;letter-spacing:0;font-variant:normal}
+.apf-verified{width:.62em;height:.62em;min-width:18px;min-height:18px;fill:#d5a13f;vertical-align:.04em;margin-left:10px;display:inline-block}
+.apf .apf-title{margin:0 0 14px;font-size:15px;font-weight:600;color:#efd4a0}
+.apf-tags{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.apf-tags li{padding:5px 12px;border-radius:999px;font-size:12.5px;font-weight:600;background:#ffffff1f;border:1px solid #d9a44180;color:#fff4e0}
+.apf-stats{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:14px 16px;border-radius:16px;background:#0000004d;border:1px solid #d9a4414d}
+.apf-stats dt{font-size:11.5px;color:#efd4a0d9;margin:0 0 3px;font-weight:600}
+.apf-stats dd{margin:0;font-size:14px;font-weight:800;color:#fffdf8;line-height:1.3}.apf-stats dd small{font-weight:500;color:#efd4a0}
+
+.apf-tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);padding-bottom:10px;overflow-x:auto;scrollbar-width:none}
+.apf-tabs::-webkit-scrollbar{display:none}
+.apf-tabs button{flex:none;min-height:42px;padding:0 18px;border-radius:12px;border:1px solid #e6d2b5;background:#fffdf9;color:#372e2f;font-weight:800;font-size:13.5px;cursor:pointer}
+.apf-tabs button.active{background:#3e0b18;color:#fff9ef;border-color:#3e0b18;box-shadow:0 2px 6px #3e0b183f}
+
+.apf-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;gap:14px}
+.apf .apf-card h2,.apf .apf-similar h2{font-family:'Playfair Display',Georgia,serif;font-size:22px;margin:0;color:#2a0e16}
+.apf .apf-card h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#92600f;margin:6px 0 0}
+.apf-bio{font-size:15px;line-height:1.75;color:#4a3d42;margin:0}
+.apf-expertise,.apf-why{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.apf-expertise li{display:flex;gap:9px;font-size:14px;color:#3d3236}.apf-expertise span{color:#b67519}
+.apf-why li{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:#fff8e8;border:1px solid #f0dcae;font-size:14px;font-weight:600;color:#3d3236;line-height:1.45}.apf-why span{color:#b67519;font-weight:900}
+.apf-rating-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font-size:14px;color:#6f5f63}.apf-rating-line strong{color:var(--ink)}
+.apf-stars{color:#e0a21c;letter-spacing:2px;font-size:15px}
+.apf-reviews{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.apf-reviews li{padding:16px;border-radius:16px;border:1px solid #efe4d2;background:#fffaf2;display:grid;gap:6px}
+.apf-reviews p{margin:0;font-size:14px;line-height:1.6;color:#4a3d42}
+.apf-review-head{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:13.5px}.apf-review-head em{font-style:normal;font-size:11.5px;color:#17783b;font-weight:700}.apf-review-head time{margin-left:auto;font-size:12px;color:#85767b}
+.apf-empty{margin:0;padding:22px;border-radius:14px;background:#fffaf2;border:1px dashed #dcc9a8;color:#6f5f63;font-size:14px;text-align:center}
+
+.apf-similar{display:grid;gap:12px}
+.apf-similar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.apf-sim-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:#fff;border:1px solid var(--line);color:var(--ink);min-width:0}
+.apf-sim-card:hover{border-color:var(--wine);box-shadow:0 6px 16px #48101e14}
+.apf .apf-sim-photo{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex:none}
+.apf-sim-card div{display:grid;gap:2px;min-width:0}.apf-sim-card strong{font-size:14px;line-height:1.3}.apf-sim-card span{font-size:12px;color:#6f5f63;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.apf-sim-card small{font-size:12px;color:#92600f;font-weight:700}
+
+.apf-booking{position:sticky;top:96px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:16px;box-shadow:0 14px 34px #48101e14}
+.apf-fee{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid #f0e6d6}.apf-fee span{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7a6a6f}
+.apf-fee strong{font-family:'Playfair Display',Georgia,serif;font-size:30px;color:#3e0b18}.apf-fee small{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;color:#85767b;margin-left:2px}
+.apf-costs>span{display:block;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#85767b;margin-bottom:8px}
+.apf-costs div{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.apf-costs p{margin:0;padding:10px 6px;text-align:center;border-radius:12px;background:#fff8e8;border:1px solid #f0dcae}.apf-costs small{display:block;font-size:11px;color:#7a6a6f}.apf-costs b{font-size:14px;color:#2a0e16}
+.apf-wallet{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#fffdf7;border:1px solid var(--line)}
+.apf-wallet small{display:block;font-size:11px;color:#85767b}.apf-wallet b{font-size:15px;color:#b45309}.apf-wallet a{font-size:13px;font-weight:700;color:var(--wine)}
+.apf-wallet button{border:0;background:none;color:var(--wine);font-weight:800;font-size:13px;cursor:pointer;min-height:40px;padding:0 4px}
+.apf-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 20px;border-radius:999px;font-weight:800;font-size:14px;cursor:pointer;border:1px solid transparent;width:100%}
+.apf-btn-primary{background:linear-gradient(90deg,#d9a441,#b3832b);color:#2a0e16;box-shadow:0 4px 12px #b3832b40}.apf-btn-primary:hover{filter:brightness(1.05)}
+.apf-btn-outline{background:#fff;border-color:#3e0b18;color:#3e0b18}.apf-btn-outline:hover{background:#faf5ee}
+.apf-privacy{margin:0;text-align:center;font-size:12px;color:#85767b}
+
+.apf-missing{max-width:520px;margin:60px auto;text-align:center;display:grid;gap:14px;justify-items:center}
+.apf .apf-missing h1{font-family:'Playfair Display',Georgia,serif;font-size:30px;margin:0;color:#2a0e16}.apf-missing p{margin:0;color:#6f5f63;line-height:1.6}.apf-missing .apf-btn{width:auto}
+
+.apf-sticky{display:none}
+
+@media(max-width:1024px){.apf-grid{grid-template-columns:minmax(0,1fr) 300px;gap:18px}.apf-similar-grid{grid-template-columns:1fr}}
+@media(max-width:860px){
+  .apf-grid{grid-template-columns:1fr}
+  .apf-booking{position:static;order:2}
+}
+@media(max-width:768px){
+  .apf-page{padding:12px 12px calc(150px + env(safe-area-inset-bottom,0px))}
+  .apf-hero{grid-template-columns:1fr;justify-items:center;text-align:center;padding:22px 16px;gap:16px}
+  .apf-portrait,.apf .apf-photo{width:112px}.apf .apf-photo{height:112px}
+  .apf .apf-name{font-size:24px}.apf-verified{margin-left:8px}
+  .apf-tags{justify-content:center}.apf-stats{width:100%;text-align:center;grid-template-columns:1fr 1fr}.apf-stats>div:last-child:nth-child(odd){grid-column:1/-1}
+  .apf-expertise,.apf-why{grid-template-columns:1fr}
+  .apf-card{padding:18px}
+  .apf-booking{padding:18px}
+  .apf-sticky{display:flex;align-items:center;gap:10px;position:fixed;left:0;right:0;bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:990;padding:10px 12px;background:#fffdf7f7;backdrop-filter:blur(10px);border-top:1px solid var(--line);box-shadow:0 -6px 18px #48101e14}
+  .apf-sticky>div{display:grid;margin-right:auto;min-width:0}.apf-sticky strong{font-size:17px;color:#3e0b18}.apf-sticky strong small{font-size:12px;font-weight:500;color:#85767b}
+  .apf-sticky span{font-size:11.5px;font-weight:700;color:#7a6a6f}.apf-sticky span.online{color:#17783b}
+  .apf-sticky .apf-btn{width:auto;min-width:84px;min-height:46px}
+}
+@media(prefers-reduced-motion:reduce){.apf *{transition:none!important;animation:none!important}}
+.apf .apf-fee small{font-family:'Plus Jakarta Sans',sans-serif!important;font-size:13px!important;font-weight:500!important}
+.apf .apf-costs small{font-size:11px!important;font-weight:600!important;display:block}
+.apf .apf-wallet small{font-size:11px!important}
+.apf .apf-stats dd small,.apf .apf-sticky small,.apf .apf-sim-card small{font-size:12px!important}
+.apf .apf-card h2,.apf .apf-similar h2,.apf .apf-missing h1,.apf .apf-name{font-family:'Playfair Display',Georgia,serif!important}
+.apf .apf-card h2,.apf .apf-similar h2{font-size:22px!important}
+.apf .apf-card h3{font-size:12px!important;font-family:'Plus Jakarta Sans',sans-serif!important}
