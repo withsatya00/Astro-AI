@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { ALL_ASTROLOGERS } from './astrologersData.js';
+import { useLiveAstrologers, withLive } from '../../utils/liveAstrologers.js';
 import HelpMeChooseModal from './HelpMeChooseModal.jsx';
 import './directory-v2.css';
 
@@ -13,11 +14,12 @@ export default function DirectoryPage(){
   const [query,setQuery]=useState(params.get('search')||''),[specialty,setSpecialty]=useState(params.get('specialty')||params.get('concern')||''),[language,setLanguage]=useState(params.get('language')||''),[availability,setAvailability]=useState(''),[experience,setExperience]=useState(''),[price,setPrice]=useState(''),[rating,setRating]=useState(''),[sort,setSort]=useState('recommended'),[page,setPage]=useState(1),[filtersOpen,setFiltersOpen]=useState(false),[helpOpen,setHelpOpen]=useState(false);
   const [bookmarks,setBookmarks]=useState(()=>{try{return JSON.parse(localStorage.getItem('astro_bookmarks')||'[]')}catch{return[]}});
   const pageSize=9;
+  const live=useLiveAstrologers(), all=useMemo(()=>ALL_ASTROLOGERS.map(a=>withLive(a,live)),[live]);
 
   useEffect(()=>{setQuery(params.get('search')||'');setSpecialty(params.get('specialty')||params.get('concern')||'');setLanguage(params.get('language')||'');setPage(1)},[params]);
   useEffect(()=>{document.body.classList.toggle('dir-sheet-open',filtersOpen);return()=>document.body.classList.remove('dir-sheet-open')},[filtersOpen]);
 
-  const filtered=useMemo(()=>ALL_ASTROLOGERS.filter(a=>{
+  const filtered=useMemo(()=>all.filter(a=>{
     const hay=[a.name,a.title,...(a.specialties||[]),...(a.languages||[])].join(' ').toLowerCase(), q=query.trim().toLowerCase();
     if(q&&!hay.includes(q))return false;
     if(specialty&&!(a.specialties||[]).some(x=>x.toLowerCase().includes(specialty.toLowerCase())))return false;
@@ -29,7 +31,7 @@ export default function DirectoryPage(){
     
     if(rating&&Number(a.rating)<Number(rating))return false;
     return true;
-  }).sort((a,b)=>sort==='rating'?b.rating-a.rating:sort==='experience'?b.experience_years-a.experience_years:sort==='price-low'?a.price_per_minute-b.price_per_minute:sort==='popular'?b.review_count-a.review_count:0),[query,specialty,language,availability,experience,price,rating,sort]);
+  }).sort((a,b)=>sort==='rating'?b.rating-a.rating:sort==='experience'?b.experience_years-a.experience_years:sort==='price-low'?a.price_per_minute-b.price_per_minute:sort==='popular'?b.review_count-a.review_count:0),[all,query,specialty,language,availability,experience,price,rating,sort]);
   const expertiseCounts=useMemo(()=>Object.fromEntries(expertise.map(x=>[x,ALL_ASTROLOGERS.filter(a=>(a.specialties||[]).some(s=>s.toLowerCase().includes(x.toLowerCase()))).length])),[]);
   const pages=Math.max(1,Math.ceil(filtered.length/pageSize)), visible=filtered.slice((page-1)*pageSize,page*pageSize);
   const active=[specialty&&['Expertise',specialty,()=>setSpecialty('')],language&&['Language',language,()=>setLanguage('')],availability&&['Availability','Online',()=>setAvailability('')],experience&&['Experience',`${experience}+ years`,()=>setExperience('')],price&&['Type',price==='ai'?'AI astrologer':'Human astrologer',()=>setPrice('')],rating&&['Rating',`${rating}+`,()=>setRating('')]].filter(Boolean);
@@ -56,11 +58,11 @@ export default function DirectoryPage(){
         {pages>1&&<nav className="dirv2-pages" aria-label="Pagination"><button disabled={page===1} onClick={()=>setPage(page-1)}>←</button>{Array.from({length:Math.min(pages,5)},(_,i)=>i+1).map(n=><button className={page===n?'active':''} onClick={()=>setPage(n)} key={n}>{n}</button>)}<button disabled={page===pages} onClick={()=>setPage(page+1)}>→</button></nav>}
       </div>
     </section>
-    <HelpMeChooseModal isOpen={helpOpen} onClose={()=>setHelpOpen(false)} astrologers={ALL_ASTROLOGERS}/>
+    <HelpMeChooseModal isOpen={helpOpen} onClose={()=>setHelpOpen(false)} astrologers={all}/>
   </div>
 }
 
-function AstrologerCard({a,saved,toggle,navigate}){const online=a.availability==='online',slug=a.slug||a.id;return <article className="dirv2-card"><button className={`dirv2-save ${saved?'saved':''}`} onClick={toggle} aria-label={saved?'Remove bookmark':'Save astrologer'}>{saved?'♥':'♡'}</button><div className="dirv2-card-top"><Link to={`/astrologers/${slug}`} className="dirv2-avatar"><img src={a.avatar} alt={a.name} width="96" height="96" loading="lazy" decoding="async" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=a.fallbackAvatar||'/assets/portraits/default-avatar.svg'}}/><i className={online?'online':''}/></Link><div><h3><Link to={`/astrologers/${slug}`}>{a.name}</Link>{a.is_ai?<span className="dirv2-ai" title="AI astrologer">AI</span>:<svg className="dirv2-verified" viewBox="0 0 20 20" role="img" aria-label="Verified astrologer"><circle cx="10" cy="10" r="10"/><path d="m5.6 10.4 2.9 2.9 5.9-6.2" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}</h3><p>{a.title}</p><span>{(a.languages||[]).slice(0,2).join(', ')} <em/> {a.experience_years} yrs</span></div></div><div className="dirv2-card-meta"><span>★ {Number(a.rating).toFixed(1)} <small>({(Number(a.review_count)||0).toLocaleString('en-IN')})</small></span><b>{a.is_ai?'Free chat':(a.price_per_minute?`₹${a.price_per_minute}/min`:'Fee on request')}</b></div><div className={`dirv2-status ${online?'online':''}`}>● {online?'Available now':a.statusLabel||'View schedule'}</div><div className="dirv2-card-actions"><button onClick={()=>navigate(`/consultation/${slug}`)}>▢ Chat</button><button onClick={()=>navigate(`/consultation/${slug}?call=true`)}>☎ Call</button><Link className="dirv2-profile-link" to={`/astrologers/${slug}`}>View profile →</Link></div></article>}
+function AstrologerCard({a,saved,toggle,navigate}){const online=a.availability==='online',slug=a.slug||a.id;return <article className="dirv2-card"><button className={`dirv2-save ${saved?'saved':''}`} onClick={toggle} aria-label={saved?'Remove bookmark':'Save astrologer'}>{saved?'♥':'♡'}</button><div className="dirv2-card-top"><Link to={`/astrologers/${slug}`} className="dirv2-avatar"><img src={a.avatar} alt={a.name} width="96" height="96" loading="lazy" decoding="async" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=a.fallbackAvatar||'/assets/portraits/default-avatar.svg'}}/><i className={online?'online':''}/></Link><div><h3><Link to={`/astrologers/${slug}`}>{a.name}</Link>{a.is_ai?<span className="dirv2-ai" title="AI astrologer">AI</span>:<svg className="dirv2-verified" viewBox="0 0 20 20" role="img" aria-label="Verified astrologer"><circle cx="10" cy="10" r="10"/><path d="m5.6 10.4 2.9 2.9 5.9-6.2" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}</h3><p>{a.title}</p><span>{(a.languages||[]).slice(0,2).join(', ')} <em/> {a.experience_years} yrs</span></div></div><div className="dirv2-card-meta">{Number(a.review_count)>0?<span>★ {Number(a.rating).toFixed(1)} <small>({Number(a.review_count).toLocaleString('en-IN')})</small></span>:<span className="dirv2-new">New</span>}<b>{a.is_ai?'Free chat':(a.price_per_minute?`₹${a.price_per_minute}/min`:'Fee on request')}</b></div><div className={`dirv2-status ${online?'online':''}`}>● {online?'Available now':a.statusLabel||'View schedule'}</div><div className="dirv2-card-actions"><button onClick={()=>navigate(`/consultation/${slug}`)}>▢ Chat</button><button onClick={()=>navigate(`/consultation/${slug}?call=true`)}>☎ Call</button><Link className="dirv2-profile-link" to={`/astrologers/${slug}`}>View profile →</Link></div></article>}
 function Select({label,value,set,options}){return <select aria-label={label} value={value} onChange={e=>set(e.target.value)}><option value="">{label}</option>{options.map(o=>{const [v,l]=Array.isArray(o)?o:[o,o];return <option value={v} key={v}>{l}</option>})}</select>}
 function FilterGroup({title,children}){return <div className="dirv2-filter-group"><h3>{title}</h3>{children}</div>}
 function Check({label,checked,onChange}){return <label className="dirv2-check"><input type="checkbox" checked={checked} onChange={onChange}/><span>{label}</span></label>}

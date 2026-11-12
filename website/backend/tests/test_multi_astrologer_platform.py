@@ -60,8 +60,10 @@ def test_astrologer_profile_by_slug(client):
     data = res.json()
     assert data["slug"] == "acharya-shastri"
     assert "Acharya Shastri" in data["name"]
-    assert data["rating"] >= 4.0
-    assert len(data["reviews"]) >= 1
+    # ratings come only from real reviews, so a profile with none shows 0 and a matching count
+    assert (data["rating"] > 0) == (data["review_count"] > 0)
+    assert data["review_count"] == len(data["reviews"])
+    assert isinstance(data["reviews"], list)
 
     # Non-existent slug returns 404
     res_404 = client.get("/api/v1/astrologers/non-existent-astrologer-xyz")

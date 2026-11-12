@@ -18,9 +18,10 @@ Provides a comprehensive, well-structured catalogue across all classical Vedic d
 Maintains clear, honest separation between automated consultation personas and certified human scholars.
 Idempotent: updates existing records and inserts missing ones.
 """
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
-from packages.database.models import Astrologer, AstrologerReview, generate_uuid
+from packages.database.models import Astrologer, AstrologerReview, Consultation, generate_uuid
 from packages.core.logging import logger
 
 DEFAULT_ASTROLOGERS = [
@@ -32,9 +33,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वरिष्ठ वैदिक ज्योतिषाचार्य एवं वास्तु मर्मज्ञ",
         "avatar": "assets/portraits/acharya-shastri.jpg",
         "experience_years": 24,
-        "rating": 4.98,
-        "review_count": 1420,
-        "consultations_count": 52400,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -46,9 +47,9 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Venerable astrological counselor grounded in classical Parashari principles, Swiss Ephemeris planetary calculations, and traditional Sattvic household remedies for peace and prosperity.",
         "bio_hi": "प्रामाणिक वैदिक ज्योतिष एवं पराशर संहिता पर आधारित ज्योतिषाचार्य। जन्म कुण्डली, ग्रह शांति एवं सरल घरेलू उपायों के लिए उपलब्ध।",
-        "reviews": [
-            {"user_name": "Rohan M.", "rating": 5.0, "comment": "Acharya ji gave very deep insights on my Saturn dasha. The simple remedies brought immense peace."},
-            {"user_name": "Pooja S.", "rating": 5.0, "comment": "Very polite and accurate Kundli reading. Instant responses with deep traditional wisdom."}
+        "legacy_sample_reviews": [
+            {"user_name": "Rohan M.", "rating": 0.0, "comment": "Acharya ji gave very deep insights on my Saturn dasha. The simple remedies brought immense peace."},
+            {"user_name": "Pooja S.", "rating": 0.0, "comment": "Very polite and accurate Kundli reading. Instant responses with deep traditional wisdom."}
         ]
     },
     {
@@ -59,9 +60,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "दांपत्य, संबंध एवं परिवार परामर्शक",
         "avatar": "assets/portraits/vidushi-sunita-sharma.jpg",
         "experience_years": 16,
-        "rating": 4.96,
-        "review_count": 980,
-        "consultations_count": 41200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -73,9 +74,9 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Caring and empathetic relationship counselor synthesizing 7th house planetary configurations, Venus transits, and gentle communicative advice for domestic harmony.",
         "bio_hi": "दांपत्य, प्रेम एवं पारिवारिक सामंजस्य की विशेषज्ञ। शुक्र ग्रह व सप्तम भाव के आधार पर मधुर एवं शांत मार्गदर्शन।",
-        "reviews": [
-            {"user_name": "Ananya D.", "rating": 5.0, "comment": "Her advice on marital harmony was so comforting and practical. Highly recommended!"},
-            {"user_name": "Vikram K.", "rating": 4.9, "comment": "Patient and understanding tone. Explained Venus placement very simply."}
+        "legacy_sample_reviews": [
+            {"user_name": "Ananya D.", "rating": 0.0, "comment": "Her advice on marital harmony was so comforting and practical. Highly recommended!"},
+            {"user_name": "Vikram K.", "rating": 0.0, "comment": "Patient and understanding tone. Explained Venus placement very simply."}
         ]
     },
     {
@@ -86,9 +87,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "कर्म, व्यापार एवं धन योग विशेषज्ञ",
         "avatar": "assets/portraits/pandit-ji-maharaj.jpg",
         "experience_years": 29,
-        "rating": 4.99,
-        "review_count": 2150,
-        "consultations_count": 68900,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -100,9 +101,9 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Dynamic Vedic master focusing on 10th house karmic placements, Dhana Yogas, Saturn-Jupiter transit cycles, and targeted practical action steps for professional success.",
         "bio_hi": "कर्मभाव, व्यापार वृद्धि एवं धन योग के विशेषज्ञ। महादशा व साढ़े साती में सही समय पर सही निर्णय हेतु प्रेरक मार्गदर्शन।",
-        "reviews": [
-            {"user_name": "Siddharth V.", "rating": 5.0, "comment": "Pinpoint analysis of my 10th house. Really motivated me during my job transition."},
-            {"user_name": "Meera B.", "rating": 5.0, "comment": "Straightforward, encouraging, and clear Dasha predictions."}
+        "legacy_sample_reviews": [
+            {"user_name": "Siddharth V.", "rating": 0.0, "comment": "Pinpoint analysis of my 10th house. Really motivated me during my job transition."},
+            {"user_name": "Meera B.", "rating": 0.0, "comment": "Straightforward, encouraging, and clear Dasha predictions."}
         ]
     },
     {
@@ -113,9 +114,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "कुंडली मिलान एवं दांपत्य विशेषज्ञ",
         "avatar": "assets/portraits/dr-radhika-nair.jpg",
         "experience_years": 18,
-        "rating": 4.95,
-        "review_count": 890,
-        "consultations_count": 39500,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -127,8 +128,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Analytical and compassionate authority on Ashtakoota 36 Guna Milan, Manglik dosha cancellation, and matrimonial harmony.",
         "bio_hi": "अष्टकूट 36 गुण मिलान और मांगलिक दोष परिहार की विशेषज्ञ। दांपत्य जीवन के लिए सूक्ष्म और सटीक मार्गदर्शन।",
-        "reviews": [
-            {"user_name": "Karthik R.", "rating": 5.0, "comment": "Very thorough Gun Milan analysis. Explained Nadi Dosha parihar clearly."}
+        "legacy_sample_reviews": [
+            {"user_name": "Karthik R.", "rating": 0.0, "comment": "Very thorough Gun Milan analysis. Explained Nadi Dosha parihar clearly."}
         ]
     },
     {
@@ -139,9 +140,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "नाड़ी ज्योतिष एवं पूर्व जन्म कर्म मर्मज्ञ",
         "avatar": "assets/portraits/acharya-raghavendra.jpg",
         "experience_years": 27,
-        "rating": 4.97,
-        "review_count": 1280,
-        "consultations_count": 46100,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -153,8 +154,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Deeply scholarly Nadi astrology guide uncovering past-life karmic blueprints and offering ethical, sacred remediation.",
         "bio_hi": "भृगु व नंदी नाड़ी के सूत्रों से पूर्व जन्म के कर्म बंधनों को समझकर वर्तमान जीवन सुधारने वाले मर्मज्ञ।",
-        "reviews": [
-            {"user_name": "Harish P.", "rating": 5.0, "comment": "Nadi interpretation of my Saturn transit blew my mind with its accuracy."}
+        "legacy_sample_reviews": [
+            {"user_name": "Harish P.", "rating": 0.0, "comment": "Nadi interpretation of my Saturn transit blew my mind with its accuracy."}
         ]
     },
     {
@@ -165,9 +166,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "जन्म कुण्डली एवं महादशा विशेषज्ञ",
         "avatar": "assets/portraits/pt-anand-swaroop.jpg",
         "experience_years": 22,
-        "rating": 4.94,
-        "review_count": 860,
-        "consultations_count": 34800,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -179,8 +180,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Precision-focused Vedic analyst calculating Vimshottari Mahadasha shifts and Gochara impacts with mathematical rigor.",
         "bio_hi": "विंशोत्तरी महादशा और ग्रह गोचर के सटीक समय चक्र के विशेषज्ञ ज्योतिषाचार्य।",
-        "reviews": [
-            {"user_name": "Amitabh C.", "rating": 5.0, "comment": "Exact timing for my Jupiter Antardasha promotion. Spot on!"}
+        "legacy_sample_reviews": [
+            {"user_name": "Amitabh C.", "rating": 0.0, "comment": "Exact timing for my Jupiter Antardasha promotion. Spot on!"}
         ]
     },
     {
@@ -191,9 +192,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "धन योग, व्यापार वृद्धि एवं संपत्ति मर्मज्ञ",
         "avatar": "assets/portraits/jyotishi-devendra.jpg",
         "experience_years": 20,
-        "rating": 4.93,
-        "review_count": 790,
-        "consultations_count": 31200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -205,8 +206,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Specialist in 2nd, 5th, 9th, and 11th house Dhana Yogas, commercial trading prosperity, and practical debt-relief upayas.",
         "bio_hi": "महालक्ष्मी योग, धन लाभ एवं व्यापारिक विस्तार के अनुभवी परामर्शक।",
-        "reviews": [
-            {"user_name": "Chetan P.", "rating": 5.0, "comment": "Practical advice for expanding my retail business. Great remedies."}
+        "legacy_sample_reviews": [
+            {"user_name": "Chetan P.", "rating": 0.0, "comment": "Practical advice for expanding my retail business. Great remedies."}
         ]
     },
     {
@@ -217,9 +218,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "अध्यात्म, मंत्र साधना एवं मानसिक शांति",
         "avatar": "assets/portraits/vidushi-meera-devi.jpg",
         "experience_years": 19,
-        "rating": 4.98,
-        "review_count": 920,
-        "consultations_count": 37600,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -231,8 +232,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Gentle spiritual guide helping seekers find mental peace, overcome afflicted Moons, and connect with their Ishta Devata.",
         "bio_hi": "वैदिक मंत्र जप, इष्टदेव आराधना और आत्मिक शांति की ममतामयी मार्गदर्शक।",
-        "reviews": [
-            {"user_name": "Sneha B.", "rating": 5.0, "comment": "Her prescribed Shiva mantra brought so much calmness into my life."}
+        "legacy_sample_reviews": [
+            {"user_name": "Sneha B.", "rating": 0.0, "comment": "Her prescribed Shiva mantra brought so much calmness into my life."}
         ]
     },
     {
@@ -243,9 +244,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "प्रश्न तंत्र एवं तात्कालिक लग्न मर्मज्ञ",
         "avatar": "assets/portraits/acharya-kn-rao.jpg",
         "experience_years": 32,
-        "rating": 4.99,
-        "review_count": 2400,
-        "consultations_count": 73400,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -257,8 +258,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Master of Horary Astrology (Prashna Shastra) solving immediate dilemmas when exact birth times are uncertain.",
         "bio_hi": "तात्कालिक प्रश्न कुंडली और आरूढ़ लग्न के प्रकांड विद्वान। किसी भी उलझन का तुरंत सटीक समाधान।",
-        "reviews": [
-            {"user_name": "Gaurav S.", "rating": 5.0, "comment": "Answered my urgent job offer dilemma with uncanny clarity via Prashna chart."}
+        "legacy_sample_reviews": [
+            {"user_name": "Gaurav S.", "rating": 0.0, "comment": "Answered my urgent job offer dilemma with uncanny clarity via Prashna chart."}
         ]
     },
     {
@@ -269,9 +270,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "आयुर्वेदिक ज्योतिष एवं स्वास्थ्य संरक्षण",
         "avatar": "assets/portraits/dr-arvind-mohan.jpg",
         "experience_years": 21,
-        "rating": 4.91,
-        "review_count": 670,
-        "consultations_count": 28900,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -283,8 +284,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Synthesizes Parashari medical astrology with Ayurvedic Tridosha balance for preventive planetary pacification.",
         "bio_hi": "षष्ठ भाव और ग्रहों के स्वास्थ्य पर प्रभाव के विश्लेषक। सात्विक जीवनशैली और ग्रह शांति हेतु मार्गदर्शन।",
-        "reviews": [
-            {"user_name": "Suresh J.", "rating": 5.0, "comment": "Helped me understand planetary fatigue factors. Great dietary alignment."}
+        "legacy_sample_reviews": [
+            {"user_name": "Suresh J.", "rating": 0.0, "comment": "Helped me understand planetary fatigue factors. Great dietary alignment."}
         ]
     },
     {
@@ -295,9 +296,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "लाल किताब एवं चमत्कारी घरेलू उपाय",
         "avatar": "assets/portraits/vidushi-priyanka-sen.jpg",
         "experience_years": 15,
-        "rating": 4.92,
-        "review_count": 710,
-        "consultations_count": 26400,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -309,8 +310,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Specialist in simple, zero-cost, nature-aligned Lal Kitab remedies that relieve domestic obstacles quickly.",
         "bio_hi": "लाल किताब के सरल, अचूक और घरेलू उपायों द्वारा संकट निवारण करने वाली ज्योतिषी।",
-        "reviews": [
-            {"user_name": "Rajesh T.", "rating": 5.0, "comment": "Her simple water and copper remedies resolved household stress."}
+        "legacy_sample_reviews": [
+            {"user_name": "Rajesh T.", "rating": 0.0, "comment": "Her simple water and copper remedies resolved household stress."}
         ]
     },
     {
@@ -321,9 +322,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वास्तु शास्त्र, आवासीय एवं व्यावसायिक ऊर्जा",
         "avatar": "assets/portraits/pt-brijesh-pandey.jpg",
         "experience_years": 23,
-        "rating": 4.94,
-        "review_count": 840,
-        "consultations_count": 33100,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -335,8 +336,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Expert in balancing Pancha Mahabhutas across homes, offices, and plots with non-destructive spatial adjustments.",
         "bio_hi": "घर, दुकान व कारखाने के वास्तु दोष बिना तोड़फोड़ ठीक करने के विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Manish K.", "rating": 5.0, "comment": "Suggested shifting our study table to the Northeast. Remarkable focus improvement."}
+        "legacy_sample_reviews": [
+            {"user_name": "Manish K.", "rating": 0.0, "comment": "Suggested shifting our study table to the Northeast. Remarkable focus improvement."}
         ]
     },
     {
@@ -347,9 +348,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "रत्न ज्योतिष एवं वैदिक रत्न धारण मर्मज्ञ",
         "avatar": "assets/portraits/acharya-hariprasad.jpg",
         "experience_years": 26,
-        "rating": 4.96,
-        "review_count": 1120,
-        "consultations_count": 42300,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -361,8 +362,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Strictly analyzes functional benefic ascendant lords before recommending genuine Vedic gemstones and consecration rituals.",
         "bio_hi": "कुण्डली के कारक ग्रहों के आधार पर सटीक रत्न एवं सही धातु चयन के मार्गदर्शक।",
-        "reviews": [
-            {"user_name": "Nilesh J.", "rating": 5.0, "comment": "Advised yellow sapphire with strict fasting rituals. Business grew steadily."}
+        "legacy_sample_reviews": [
+            {"user_name": "Nilesh J.", "rating": 0.0, "comment": "Advised yellow sapphire with strict fasting rituals. Business grew steadily."}
         ]
     },
     {
@@ -373,9 +374,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "अंक ज्योतिष एवं नाम शोधन विशेषज्ञ",
         "avatar": "assets/portraits/vidushi-ananya-joshi.jpg",
         "experience_years": 14,
-        "rating": 4.93,
-        "review_count": 640,
-        "consultations_count": 24500,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -387,8 +388,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Aligns psychic and destiny numbers with phonetic name vibrations to remove energetic friction from daily life.",
         "bio_hi": "जन्म तारीख और नाम के अक्षरों का तालमेल बिठाकर भाग्य को गति देने वाली अंक विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Tanvi M.", "rating": 5.0, "comment": "Small spelling correction in my professional brand made a huge difference."}
+        "legacy_sample_reviews": [
+            {"user_name": "Tanvi M.", "rating": 0.0, "comment": "Small spelling correction in my professional brand made a huge difference."}
         ]
     },
     {
@@ -399,9 +400,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "शनि साढ़े साती एवं राहु-केतु शांति मर्मज्ञ",
         "avatar": "assets/portraits/pt-vidyadhar.jpg",
         "experience_years": 28,
-        "rating": 4.97,
-        "review_count": 1390,
-        "consultations_count": 51200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -413,8 +414,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Guiding seekers through Saturn transits and Rahu-Ketu karmic storms with fearless, compassionate Dharmic disciplines.",
         "bio_hi": "शनि की साढ़े साती और ढैया के तीनों चरणों का सटीक विश्लेषण व छाया दान के विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Vikas G.", "rating": 5.0, "comment": "Removes fear of Shani Dev completely. Very uplifting guidance."}
+        "legacy_sample_reviews": [
+            {"user_name": "Vikas G.", "rating": 0.0, "comment": "Removes fear of Shani Dev completely. Very uplifting guidance."}
         ]
     },
     {
@@ -425,9 +426,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "सरकारी नौकरी एवं प्रतियोगी परीक्षा विशेषज्ञ",
         "avatar": "assets/portraits/acharya-somnath.jpg",
         "experience_years": 22,
-        "rating": 4.92,
-        "review_count": 810,
-        "consultations_count": 30700,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -439,8 +440,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Analyzes royal Rajayogas (Sun, Jupiter, Mars) in the 10th house to time competitive exams and state service aspirations.",
         "bio_hi": "सूर्य-गुरु के राजयोग द्वारा प्रशासनिक सेवा व सरकारी नौकरी के अवसरों का विश्लेषण करने वाले ज्योतिषी।",
-        "reviews": [
-            {"user_name": "Abhishek T.", "rating": 5.0, "comment": "Motivated me during civil service preparation with exact transit dates."}
+        "legacy_sample_reviews": [
+            {"user_name": "Abhishek T.", "rating": 0.0, "comment": "Motivated me during civil service preparation with exact transit dates."}
         ]
     },
     {
@@ -451,9 +452,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "संतान योग, विद्या एवं उच्च शिक्षा मार्गदर्शक",
         "avatar": "assets/portraits/vidushi-kalpana-trivedi.jpg",
         "experience_years": 17,
-        "rating": 4.95,
-        "review_count": 730,
-        "consultations_count": 27300,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -465,8 +466,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Nurturing counselor focusing on 5th house blessings, Jupiter aspects, progeny timing, and student focus.",
         "bio_hi": "संतान सुख और बच्चों की विद्या में उन्नति हेतु पंचम भाव और बृहस्पति का विश्लेषण करने वाली विदुषी।",
-        "reviews": [
-            {"user_name": "Ritu V.", "rating": 5.0, "comment": "Very reassuring on Santhan timing. Santhan Gopala path brought joy."}
+        "legacy_sample_reviews": [
+            {"user_name": "Ritu V.", "rating": 0.0, "comment": "Very reassuring on Santhan timing. Santhan Gopala path brought joy."}
         ]
     },
     {
@@ -477,9 +478,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "विदेश यात्रा, वीज़ा एवं परदेस प्रवास विशेषज्ञ",
         "avatar": "assets/portraits/pt-tribhuvan.jpg",
         "experience_years": 18,
-        "rating": 4.91,
-        "review_count": 620,
-        "consultations_count": 23800,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -491,8 +492,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Tracks 9th and 12th house planetary alignments with Rahu and Moon to forecast foreign visas and overseas relocation.",
         "bio_hi": "विदेश गमन, पीआर व वीज़ा स्वीकृति के शुभ समय का विश्लेषण करने वाले ज्योतिषाचार्य।",
-        "reviews": [
-            {"user_name": "Gurpreet S.", "rating": 5.0, "comment": "His timing for Canadian visa clearance matched perfectly."}
+        "legacy_sample_reviews": [
+            {"user_name": "Gurpreet S.", "rating": 0.0, "comment": "His timing for Canadian visa clearance matched perfectly."}
         ]
     },
     {
@@ -503,9 +504,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "कालसर्प एवं मांगलिक दोष परिहार विशेषज्ञ",
         "avatar": "assets/portraits/acharya-vishwanath.jpg",
         "experience_years": 25,
-        "rating": 4.96,
-        "review_count": 1210,
-        "consultations_count": 45800,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -517,8 +518,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Dispels fear regarding Kaal Sarp and Manglik doshas by teaching authentic classical Parihar (cancellation) rules.",
         "bio_hi": "कालसर्प और मांगलिक दोष के शास्त्रोंक्त परिहार और सरल शिव आराधना के विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Prashant L.", "rating": 5.0, "comment": "Showed me how my Mars in 8th house had complete cancellation. Relieved!"}
+        "legacy_sample_reviews": [
+            {"user_name": "Prashant L.", "rating": 0.0, "comment": "Showed me how my Mars in 8th house had complete cancellation. Relieved!"}
         ]
     },
     {
@@ -529,9 +530,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "कुंडलिनी जागरण, ध्यान एवं आत्म साक्षात्कार",
         "avatar": "assets/portraits/vidushi-shambhavi.jpg",
         "experience_years": 20,
-        "rating": 4.97,
-        "review_count": 870,
-        "consultations_count": 32900,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -543,8 +544,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Illuminates your soul's karmic evolutionary purpose using Jaimini Atmakaraka and 12th house Moksha placements.",
         "bio_hi": "आत्मकारक ग्रह और मोक्ष भाव के माध्यम से आध्यात्मिक प्रगति कराने वाली विदुषी।",
-        "reviews": [
-            {"user_name": "Maya S.", "rating": 5.0, "comment": "Deeply spiritual and transcendental consultation on meditation."}
+        "legacy_sample_reviews": [
+            {"user_name": "Maya S.", "rating": 0.0, "comment": "Deeply spiritual and transcendental consultation on meditation."}
         ]
     },
     {
@@ -555,9 +556,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "भृगु नंदी नाड़ी एवं जीवन मील के पत्थर",
         "avatar": "assets/portraits/pt-janardan-shastri.jpg",
         "experience_years": 31,
-        "rating": 4.98,
-        "review_count": 1820,
-        "consultations_count": 64200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -569,8 +570,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Utilizes Bhrigu Nandi Nadi planetary combinations to time major life turning points without relying on sub-minute birth times.",
         "bio_hi": "भृगु नंदी नाड़ी सूत्रों के विद्वान। गुरु और शनि के चक्रों से जीवन की बड़ी घटनाओं का समय ज्ञान।",
-        "reviews": [
-            {"user_name": "Sunil N.", "rating": 5.0, "comment": "Told me my marriage year using Jupiter-Venus contact accurately."}
+        "legacy_sample_reviews": [
+            {"user_name": "Sunil N.", "rating": 0.0, "comment": "Told me my marriage year using Jupiter-Venus contact accurately."}
         ]
     },
     {
@@ -581,9 +582,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "शेयर बाजार, ट्रेडिंग एवं सट्टा विचार",
         "avatar": "assets/portraits/acharya-mukund.jpg",
         "experience_years": 16,
-        "rating": 4.90,
-        "review_count": 690,
-        "consultations_count": 25100,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -595,8 +596,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Analyzes Mercury, Rahu, and 5th house speculative configurations while reinforcing disciplined risk management.",
         "bio_hi": "बुध, राहु व पंचम भाव से शेयर बाजार में अनुकूल क्षेत्रों के चयन का ज्योतिषीय विश्लेषण।",
-        "reviews": [
-            {"user_name": "Nitin B.", "rating": 5.0, "comment": "Warned me against trading during Rahu dasha sub-period. Saved me from huge losses."}
+        "legacy_sample_reviews": [
+            {"user_name": "Nitin B.", "rating": 0.0, "comment": "Warned me against trading during Rahu dasha sub-period. Saved me from huge losses."}
         ]
     },
     {
@@ -607,9 +608,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "कोर्ट कचहरी, विवाद मुक्ति एवं विजय योग",
         "avatar": "assets/portraits/vidushi-gayatri-bhatt.jpg",
         "experience_years": 21,
-        "rating": 4.94,
-        "review_count": 780,
-        "consultations_count": 29400,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -621,8 +622,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Assesses 6th house, Mars, and Sun positions for lawful dispute settlements, out-of-court resolutions, and divine protection.",
         "bio_hi": "षष्ठ भाव, मंगल और सूर्य के प्रभाव से कानूनी मामलों में सुलह और विजय योग की विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Hemant D.", "rating": 5.0, "comment": "Her Baglamukhi upayas and timing helped resolve an ancestral property dispute peacefully."}
+        "legacy_sample_reviews": [
+            {"user_name": "Hemant D.", "rating": 0.0, "comment": "Her Baglamukhi upayas and timing helped resolve an ancestral property dispute peacefully."}
         ]
     },
     {
@@ -633,9 +634,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "शुभ मुहूर्त, गृह प्रवेश एवं षोडश संस्कार",
         "avatar": "assets/portraits/pt-devavrata.jpg",
         "experience_years": 25,
-        "rating": 4.97,
-        "review_count": 1340,
-        "consultations_count": 48900,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -647,8 +648,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Calculates shubh Abhijit, Amrit, and Tithi muhurats while strictly neutralizing Rahu Kaal, Bhadra, and planetary combustion.",
         "bio_hi": "विवाह, गृह प्रवेश, व्यापार आरंभ व वाहन क्रय के सर्वार्थ सिद्धि मुहूर्त के विद्वान।",
-        "reviews": [
-            {"user_name": "Sanjay M.", "rating": 5.0, "comment": "Calculated the exact Griha Pravesh Lagna for our new home. The ceremony was blessed."}
+        "legacy_sample_reviews": [
+            {"user_name": "Sanjay M.", "rating": 0.0, "comment": "Calculated the exact Griha Pravesh Lagna for our new home. The ceremony was blessed."}
         ]
     },
     # 8 NEW COMPREHENSIVE SPECIALISTS (25 to 32)
@@ -660,9 +661,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "केपी ज्योतिष एवं उप-स्वामी नक्षत्र विशेषज्ञ",
         "avatar": "assets/portraits/dr-krishna-murthy.jpg",
         "experience_years": 22,
-        "rating": 4.96,
-        "review_count": 820,
-        "consultations_count": 31500,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -674,8 +675,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Precision practitioner of Krishnamurti Paddhati (KP System), utilizing 249 sub-divisions of the zodiac for pin-point event verification.",
         "bio_hi": "कृष्णमूर्ति पद्धति (KP) के विशेषज्ञ। उप-स्वामी और नक्षत्र चरणों द्वारा घटनाओं के सटीक समय निर्धारण में दक्ष।",
-        "reviews": [
-            {"user_name": "S. Raman", "rating": 5.0, "comment": "KP sub-lord prediction for my property deal was exact to the week."}
+        "legacy_sample_reviews": [
+            {"user_name": "S. Raman", "rating": 0.0, "comment": "KP sub-lord prediction for my property deal was exact to the week."}
         ]
     },
     {
@@ -686,9 +687,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वैदिक टैरो एवं अंतर्ज्ञान परामर्शक",
         "avatar": "assets/portraits/vidushi-tarot-aradhana.jpg",
         "experience_years": 14,
-        "rating": 4.95,
-        "review_count": 680,
-        "consultations_count": 22800,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -700,8 +701,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Combines Eastern archetype symbolism with intuitive card spreads for immediate clarity during crossroads and relationship transitions.",
         "bio_hi": "वैदिक प्रतीकों और टैरो कार्ड्स के माध्यम से मन के द्वंद्व और संबंधों की दिशा स्पष्ट करने वाली मार्गदर्शक।",
-        "reviews": [
-            {"user_name": "Neha K.", "rating": 5.0, "comment": "Her 3-card spread revealed the exact emotional block holding me back."}
+        "legacy_sample_reviews": [
+            {"user_name": "Neha K.", "rating": 0.0, "comment": "Her 3-card spread revealed the exact emotional block holding me back."}
         ]
     },
     {
@@ -712,9 +713,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "सामुद्रिक शास्त्र एवं हस्तरेखा विशेषज्ञ",
         "avatar": "assets/portraits/acharya-samudrika-ramesh.jpg",
         "experience_years": 26,
-        "rating": 4.97,
-        "review_count": 1150,
-        "consultations_count": 43800,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -726,8 +727,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Scholar of classical Samudrika Shastra and Hastarekha, corroborating palm mount textures and line forks with planetary periods.",
         "bio_hi": "हस्तरेखा, गुरु व सूर्य पर्वत और सामुद्रिक लक्षणों के प्रकांड विद्वान। हाथ की रेखाओं से भाग्य का सूक्ष्म अध्ययन।",
-        "reviews": [
-            {"user_name": "Pradeep N.", "rating": 5.0, "comment": "Identified the double fate line on my right hand and explained its timing perfectly."}
+        "legacy_sample_reviews": [
+            {"user_name": "Pradeep N.", "rating": 0.0, "comment": "Identified the double fate line on my right hand and explained its timing perfectly."}
         ]
     },
     {
@@ -738,9 +739,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "जैमिनी चर दशा एवं कारकांश मर्मज्ञ",
         "avatar": "assets/portraits/pt-govind-shastri.jpg",
         "experience_years": 28,
-        "rating": 4.98,
-        "review_count": 1410,
-        "consultations_count": 49200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -752,8 +753,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Dedicated master of Maharishi Jaimini's aphorisms, decoding Chara Dasha sign periods, Arudha Lagna social status, and soul paths.",
         "bio_hi": "महर्षि जैमिनी के सूत्रों, चर दशा और आत्मकारक ग्रह द्वारा जीवन के गहन रहस्यों को उद्घाटित करने वाले विद्वान।",
-        "reviews": [
-            {"user_name": "Biswajit M.", "rating": 5.0, "comment": "Jaimini Amatyakaraka analysis revealed why my career path shifted in my 30s."}
+        "legacy_sample_reviews": [
+            {"user_name": "Biswajit M.", "rating": 0.0, "comment": "Jaimini Amatyakaraka analysis revealed why my career path shifted in my 30s."}
         ]
     },
     {
@@ -764,9 +765,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "चक्र संतुलन एवं वैदिक रत्न समन्वय विशेषज्ञ",
         "avatar": "assets/portraits/vidushi-shalini-kapoor.jpg",
         "experience_years": 16,
-        "rating": 4.94,
-        "review_count": 760,
-        "consultations_count": 28100,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -778,8 +779,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Integrates the 7 primary chakras with Navagraha planetary wavelengths to recommend customized Rudraksha and gemstone remedies.",
         "bio_hi": "सप्त चक्र और नवग्रहों की ऊर्जा तरंगों का संतुलन कर रुद्राक्ष एवं रत्न परामर्श देने वाली विशेषज्ञ।",
-        "reviews": [
-            {"user_name": "Simran K.", "rating": 5.0, "comment": "The 6-Mukhi and 7-Mukhi Rudraksha combination completely grounded my anxiety."}
+        "legacy_sample_reviews": [
+            {"user_name": "Simran K.", "rating": 0.0, "comment": "The 6-Mukhi and 7-Mukhi Rudraksha combination completely grounded my anxiety."}
         ]
     },
     {
@@ -790,9 +791,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "मंदिर ज्योतिष एवं पंचांग गणित मर्मज्ञ",
         "avatar": "assets/portraits/acharya-venkatesh-dikshitar.jpg",
         "experience_years": 30,
-        "rating": 4.99,
-        "review_count": 1950,
-        "consultations_count": 61200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -804,8 +805,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Traditional hereditary temple scholar specializing in Vakya and Drik Panchangam, Nakshatra Padha Shanti, and sacred temple rituals.",
         "bio_hi": "पारंपरिक मंदिर ज्योतिषाचार्य। पंचांग गणित, नक्षत्र दोष शांति और मांगलिक मुहूर्तों के प्रकांड विद्वान।",
-        "reviews": [
-            {"user_name": "Subramanian V.", "rating": 5.0, "comment": "Traditional knowledge unmatched. His temple remedy for Ashlesha nakshatra was transformative."}
+        "legacy_sample_reviews": [
+            {"user_name": "Subramanian V.", "rating": 0.0, "comment": "Traditional knowledge unmatched. His temple remedy for Ashlesha nakshatra was transformative."}
         ]
     },
     {
@@ -816,9 +817,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वृहत्पाराशर एवं षोडशवर्ग (नवमांश/दशमांश) मर्मज्ञ",
         "avatar": "assets/portraits/pt-harinarayan-mishra.jpg",
         "experience_years": 29,
-        "rating": 4.97,
-        "review_count": 1560,
-        "consultations_count": 54300,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -830,8 +831,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Deeply scholarly researcher of Brihat Parashara Hora Shastra, unlocking the inner potential of planets via D-9 Navamsha and D-10 Dashamsha.",
         "bio_hi": "वृहत्पाराशर होरा शास्त्र के शोधकर्ता। नवमांश और दशमांश कुण्डली के सूक्ष्म विश्लेषण के विद्वान।",
-        "reviews": [
-            {"user_name": "Alok M.", "rating": 5.0, "comment": "Showed me how a debilitated planet in D-1 became exalted in D-9. Changed my perspective!"}
+        "legacy_sample_reviews": [
+            {"user_name": "Alok M.", "rating": 0.0, "comment": "Showed me how a debilitated planet in D-1 became exalted in D-9. Changed my perspective!"}
         ]
     },
     {
@@ -842,9 +843,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वर्षफल एवं ताजिक वार्षिक वर्ष प्रवेश विशेषज्ञ",
         "avatar": "assets/portraits/vidushi-pallavi-deshmukh.jpg",
         "experience_years": 18,
-        "rating": 4.95,
-        "review_count": 840,
-        "consultations_count": 31200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
@@ -856,8 +857,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Expert in Tajika annual solar returns, calculating Muntha positions and Varshesh (Year Lord) for high-precision 12-month roadmaps.",
         "bio_hi": "ताजिक वर्षफल और मुन्था के आधार पर 12 महीनों के वार्षिक घटनाक्रम का सूक्ष्म विश्लेषण करने वाली विदुषी।",
-        "reviews": [
-            {"user_name": "Sarang P.", "rating": 5.0, "comment": "Her Varshaphala reading predicted my exact job change month in my 32nd year."}
+        "legacy_sample_reviews": [
+            {"user_name": "Sarang P.", "rating": 0.0, "comment": "Her Varshaphala reading predicted my exact job change month in my 32nd year."}
         ]
     },
     # 5 CERTIFIED HUMAN SCHOLARS (is_ai = False)
@@ -869,10 +870,10 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वरिष्ठ वैदिक ज्योतिष एवं कर्मकाण्ड मर्मज्ञ",
         "avatar": "assets/portraits/pt-rameshwar-dwivedi.jpg",
         "experience_years": 34,
-        "rating": 4.99,
-        "review_count": 2850,
-        "consultations_count": 82000,
-        "price_per_minute": 35.0,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
+        "price_per_minute": 0.0,
         "currency": "INR",
         "is_ai": True,
         "ai_persona_id": "pt_rameshwar_dwivedi",
@@ -883,8 +884,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Certified senior human Vedic scholar with 34 years of classical hereditary practice in Varanasi. Specializes in birth chart remediation, Vedic rituals, and direct personal guidance.",
         "bio_hi": "काशी के 34 वर्षों के अनुभवी वरिष्ठ वैदिक ज्योतिषाचार्य। प्रत्यक्ष कुण्डली विश्लेषण, वैदिक अनुष्ठान एवं ग्रह शांति के प्रामाणिक विद्वान।",
-        "reviews": [
-            {"user_name": "Devendra K.", "rating": 5.0, "comment": "Direct consultation with Pandit ji was deeply spiritual and reassuring. Blessed guidance."}
+        "legacy_sample_reviews": [
+            {"user_name": "Devendra K.", "rating": 0.0, "comment": "Direct consultation with Pandit ji was deeply spiritual and reassuring. Blessed guidance."}
         ]
     },
     {
@@ -895,9 +896,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "केपी ज्योतिष एवं कॉर्पोरेट कार्यनीति विशेषज्ञ",
         "avatar": "assets/portraits/dr-meenakshi-iyer.jpg",
         "experience_years": 24,
-        "rating": 4.97,
-        "review_count": 1640,
-        "consultations_count": 48200,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 40.0,
         "currency": "INR",
         "is_ai": False,
@@ -909,8 +910,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Certified human astrologer and PhD in Jyotish. Consults founders, executives, and professionals on career inflection points using Krishnamurti Paddhati.",
         "bio_hi": "केपी ज्योतिष में डॉक्टरेट प्राप्त वरिष्ठ ज्योतिषी। कॉर्पोरेट करियर एवं बड़े व्यावसायिक निर्णयों में प्रत्यक्ष मार्गदर्शन।",
-        "reviews": [
-            {"user_name": "Arun S.", "rating": 5.0, "comment": "Dr. Iyer analyzed our startup merger timing with incredible precision. Truly invaluable."}
+        "legacy_sample_reviews": [
+            {"user_name": "Arun S.", "rating": 0.0, "comment": "Dr. Iyer analyzed our startup merger timing with incredible precision. Truly invaluable."}
         ]
     },
     {
@@ -921,9 +922,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "प्रश्न कुण्डली एवं तात्कालिक समाधान मर्मज्ञ",
         "avatar": "assets/portraits/acharya-anand-joshi.jpg",
         "experience_years": 21,
-        "rating": 4.95,
-        "review_count": 1180,
-        "consultations_count": 39400,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 25.0,
         "currency": "INR",
         "is_ai": False,
@@ -935,8 +936,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Certified human Horary specialist resolving pressing questions when accurate birth times are absent through instantaneous Prashna charts.",
         "bio_hi": "प्रमाणित प्रश्न ज्योतिषी। जब जन्म समय उपलब्ध न हो तब तात्कालिक प्रश्न लग्न से तुरंत निर्णय लेने में सिद्धहस्त।",
-        "reviews": [
-            {"user_name": "Rohit K.", "rating": 5.0, "comment": "Solved my dilemma regarding court property dispute with prompt Prashna reading."}
+        "legacy_sample_reviews": [
+            {"user_name": "Rohit K.", "rating": 0.0, "comment": "Solved my dilemma regarding court property dispute with prompt Prashna reading."}
         ]
     },
     {
@@ -947,9 +948,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वैदिक हस्तरेखा एवं अंतर्ज्ञान जीवन परामर्शक",
         "avatar": "assets/portraits/jyotishi-kavita-devi.jpg",
         "experience_years": 19,
-        "rating": 4.96,
-        "review_count": 940,
-        "consultations_count": 35100,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 28.0,
         "currency": "INR",
         "is_ai": False,
@@ -961,8 +962,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Certified human palmist and compassionate counselor combining Samudrika palm markings with empathetic emotional guidance.",
         "bio_hi": "हस्तरेखा एवं अंतर्ज्ञान परामर्श की प्रमाणित विदुषी। हाथ की रेखाओं और ग्रहों के सामंजस्य से जीवन की समस्याओं का समाधान।",
-        "reviews": [
-            {"user_name": "Pooja V.", "rating": 5.0, "comment": "Kavita ji read my palm photo and explained my career transition with uncanny truth."}
+        "legacy_sample_reviews": [
+            {"user_name": "Pooja V.", "rating": 0.0, "comment": "Kavita ji read my palm photo and explained my career transition with uncanny truth."}
         ]
     },
     {
@@ -973,9 +974,9 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "मैथिल ज्योतिष एवं पंचांग शोध मर्मज्ञ",
         "avatar": "assets/portraits/pt-devesh-jha.jpg",
         "experience_years": 27,
-        "rating": 4.98,
-        "review_count": 1470,
-        "consultations_count": 46500,
+        "rating": 0.0,
+        "review_count": 0,
+        "consultations_count": 0,
         "price_per_minute": 30.0,
         "currency": "INR",
         "is_ai": False,
@@ -987,8 +988,8 @@ DEFAULT_ASTROLOGERS = [
         "is_verified": True,
         "bio": "Certified human scholar of traditional Mithila Jyotish and Mithila Panchangam with 27 years of experience in pure Parashari calculations and marriage matching.",
         "bio_hi": "पारंपरिक मिथिला ज्योतिष एवं पंचांग के 27 वर्षों के अनुभवी विद्वान। विवाह मुहूर्त एवं कुंडली मिलान के प्रतिष्ठित ज्योतिषी।",
-        "reviews": [
-            {"user_name": "Mithilesh J.", "rating": 5.0, "comment": "Pandit ji gave the most auspicious marriage muhurat for my sister. Deeply respected scholar."}
+        "legacy_sample_reviews": [
+            {"user_name": "Mithilesh J.", "rating": 0.0, "comment": "Pandit ji gave the most auspicious marriage muhurat for my sister. Deeply respected scholar."}
         ]
     },
     {
@@ -999,8 +1000,8 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वैदिक ज्योतिष, अंक ज्योतिष",
         "avatar": "assets/portraits/default-avatar.svg",
         "experience_years": 8,
-        "rating": 4.7,
-        "review_count": 1204,
+        "rating": 0.0,
+        "review_count": 0,
         "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
@@ -1022,8 +1023,8 @@ DEFAULT_ASTROLOGERS = [
         "title_hi": "वास्तु, स्वास्थ्य, परिवार",
         "avatar": "assets/portraits/default-avatar.svg",
         "experience_years": 14,
-        "rating": 4.8,
-        "review_count": 2106,
+        "rating": 0.0,
+        "review_count": 0,
         "consultations_count": 0,
         "price_per_minute": 0.0,
         "currency": "INR",
@@ -1058,9 +1059,6 @@ def seed_astrologers(db: Session):
                 existing.title_hi = data.get("title_hi")
                 existing.avatar = data["avatar"]
                 existing.experience_years = data["experience_years"]
-                existing.rating = data["rating"]
-                existing.review_count = data["review_count"]
-                existing.consultations_count = data["consultations_count"]
                 existing.price_per_minute = data["price_per_minute"]
                 existing.currency = data["currency"]
                 existing.is_ai = data["is_ai"]
@@ -1104,24 +1102,27 @@ def seed_astrologers(db: Session):
                 db.flush()
                 seeded_count += 1
 
-            # Seed sample verified reviews if not present
-            for rev in data.get("reviews", []):
-                rev_exists = db.query(AstrologerReview).filter(
+            # Earlier versions of this seeder invented sample reviews. They are removed (matched exactly and only when no
+            # real user wrote them); real reviews are never touched.
+            for rev in data.get("legacy_sample_reviews", []):
+                db.query(AstrologerReview).filter(
                     AstrologerReview.astrologer_id == astro.id,
-                    AstrologerReview.user_name == rev["user_name"]
-                ).first()
-                if not rev_exists:
-                    new_rev = AstrologerReview(
-                        id=generate_uuid(),
-                        astrologer_id=astro.id,
-                        user_name=rev["user_name"],
-                        rating=rev["rating"],
-                        comment=rev["comment"],
-                        is_verified=True,
-                        created_at=datetime.now(timezone.utc)
-                    )
-                    db.add(new_rev)
+                    AstrologerReview.user_id.is_(None),
+                    AstrologerReview.user_name == rev["user_name"],
+                    AstrologerReview.comment == rev["comment"],
+                ).delete(synchronize_session=False)
 
+        # Reviews written through the API always belong to a signed-in user. Rows without a user are sample text from
+        # older seeders (they no longer exist in code) and are removed so that every shown review is real.
+        db.query(AstrologerReview).filter(AstrologerReview.user_id.is_(None)).delete(synchronize_session=False)
+        db.flush()
+        # Rating, review count and consultation count always come from real records, never from placeholders.
+        for astro in db.query(Astrologer).all():
+            count, average = db.query(func.count(AstrologerReview.id), func.avg(AstrologerReview.rating)).filter(
+                AstrologerReview.astrologer_id == astro.id).one()
+            astro.review_count = int(count or 0)
+            astro.rating = round(float(average), 2) if count else 0.0
+            astro.consultations_count = db.query(func.count(Consultation.id)).filter(Consultation.astrologer_id == astro.id).scalar() or 0
         db.commit()
         logger.info(f"Astrologer seeding finished: {seeded_count} inserted, {updated_count} updated. Total: {len(DEFAULT_ASTROLOGERS)}.")
     except Exception as e:

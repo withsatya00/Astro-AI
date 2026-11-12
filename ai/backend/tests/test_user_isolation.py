@@ -11,7 +11,7 @@ BIRTH = {
     "name": "Private Person", "date_of_birth": "2004-03-02", "time_of_birth": "12:00", "city": "Maharajganj",
     "country": "India", "latitude": 27.14, "longitude": 83.56, "timezone_offset": 5.5,
 }
-SLUG = "acharya-kn-rao"
+SLUG = "pt-devesh-jha"
 
 
 def _guest():
@@ -118,6 +118,8 @@ def test_chat_sessions_are_private(pair):
 
 def test_bookings_and_wallet_are_private():
     a, b = _user("carol"), _user("dave")
+    # appointments are with human astrologers and are paid from the wallet
+    assert a.post("/api/v1/wallet/recharge", json={"amount": 500}).status_code == 200
     r = a.post("/api/v1/wallet/bookings", json={
         "astrologer_id": SLUG, "user_name": "Carol", "scheduled_at": "2030-01-01 10:00", "duration_minutes": 10})
     assert r.status_code == 200, r.text

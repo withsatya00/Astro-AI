@@ -5,7 +5,7 @@ profile detail pages, and intelligent recommendation matching.
 """
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, desc, asc
+from sqlalchemy import or_, desc, asc, func
 from typing import List, Optional
 import re
 from packages.database.session import get_db
@@ -489,11 +489,12 @@ def add_astrologer_review(
     )
     db.add(new_review)
 
-    # Recalculate average rating & review count
-    total_reviews = db.query(AstrologerReview).filter(AstrologerReview.astrologer_id == astro.id).count() + 1
-    current_sum = (astro.rating * astro.review_count) + payload.rating
-    astro.review_count = total_reviews
-    astro.rating = round(current_sum / total_reviews, 2)
+    # The rating and count are always worked out from the stored reviews.
+    db.flush()
+    count, average = db.query(func.count(AstrologerReview.id), func.avg(AstrologerReview.rating)).filter(
+        AstrologerReview.astrologer_id == astro.id).one()
+    astro.review_count = int(count or 0)
+    astro.rating = round(float(average), 2) if count else 0.0
 
     db.commit()
     db.refresh(new_review)

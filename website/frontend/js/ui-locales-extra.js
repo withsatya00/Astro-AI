@@ -543,7 +543,18 @@
     ["Any type", "Any type", "कोई भी प्रकार"],
     ["AI astrologer", "AI astrologer", "AI ज्योतिषी"],
     ["Human astrologer", "Human astrologer", "मानव ज्योतिषी"],
-    ["AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI ज्योतिषी चैट में तुरंत उत्तर देते हैं। कॉल और वीडियो सत्यापित मानव ज्योतिषियों के साथ उपलब्ध हैं।"]
+    ["AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI astrologers answer instantly in chat. Calls and video are available with verified human astrologers.", "AI ज्योतिषी चैट में तुरंत उत्तर देते हैं। कॉल और वीडियो सत्यापित मानव ज्योतिषियों के साथ उपलब्ध हैं।"],
+    ["New", "New", "नया"],
+    ["Write a review", "Write a review", "समीक्षा लिखें"],
+    ["Your rating", "Your rating", "आपकी रेटिंग"],
+    ["Your experience", "Your experience", "आपका अनुभव"],
+    ["Submit review", "Submit review", "समीक्षा भेजें"],
+    ["No ratings yet", "No ratings yet", "अभी कोई रेटिंग नहीं"],
+    ["No reviews yet. Reviews can be written by people who have consulted this astrologer.", "No reviews yet. Reviews can be written by people who have consulted this astrologer.", "अभी कोई समीक्षा नहीं। समीक्षा वही लिख सकते हैं जिन्होंने इस ज्योतिषी से परामर्श लिया है।"],
+    ["Thank you! Your review has been added.", "Thank you! Your review has been added.", "धन्यवाद! आपकी समीक्षा जोड़ दी गई है।"],
+    ["Please sign in to write a review.", "Please sign in to write a review.", "समीक्षा लिखने के लिए कृपया साइन इन करें।"],
+    ["You have already reviewed this astrologer.", "You have already reviewed this astrologer.", "आप इस ज्योतिषी की समीक्षा पहले ही कर चुके हैं।"],
+    ["Please write a few words about your experience.", "Please write a few words about your experience.", "कृपया अपने अनुभव के बारे में कुछ शब्द लिखें।"]
   ];
 
   var mine = {};

@@ -20,7 +20,7 @@ PORTRAITS = ROOT / 'website/frontend/assets/portraits'
 OUT = ROOT / 'website/frontend/src/pages/DirectoryPage/astrologersData.js'
 
 # Astrologers shown in the directory, in display order, with the gender the "Help me choose" filter uses.
-# Real astrologers that are in the backend but not listed here can be added by appending their slug.
+# Every astrologer in the backend seed is listed; append a slug here when a new one is added to the seed.
 DIRECTORY = [
     ('pt-rameshwar-dwivedi', 'male'), ('vidushi-meera-devi', 'female'), ('acharya-kn-rao', 'male'),
     ('acharya-vaibhav-nath', 'male'), ('dr-meenakshi-sharma', 'female'), ('acharya-vishwanath', 'male'),
@@ -32,6 +32,11 @@ DIRECTORY = [
     ('dr-krishna-murthy', 'male'), ('vidushi-kalpana-trivedi', 'female'), ('pt-govind-shastri', 'male'),
     ('vidushi-ananya-joshi', 'female'), ('pt-vidyadhar', 'male'), ('vidushi-pallavi-deshmukh', 'female'),
     ('pt-anand-swaroop', 'male'),
+    # the rest of the astrologers in the backend
+    ('jyotishi-kavita-devi', 'female'), ('acharya-anand-joshi', 'male'), ('dr-meenakshi-iyer', 'female'),
+    ('pandit-ji-maharaj', 'male'), ('jyotishi-devendra', 'male'), ('acharya-hariprasad', 'male'),
+    ('acharya-somnath', 'male'), ('pt-tribhuvan', 'male'), ('pt-janardan-shastri', 'male'),
+    ('acharya-samudrika-ramesh', 'male'), ('acharya-venkatesh-dikshitar', 'male'),
 ]
 
 STATUS = {'online': 'Online', 'busy': 'Busy right now', 'offline': 'Offline'}

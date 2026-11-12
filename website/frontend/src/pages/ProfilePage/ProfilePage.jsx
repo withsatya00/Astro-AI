@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ALL_ASTROLOGERS } from '../DirectoryPage/astrologersData.js';
 import { useWallet } from '../../components/WalletModal/walletApi.js';
+import { refreshLive } from '../../utils/liveAstrologers.js';
 import './profile-v2.css';
 
 // One source of truth: the same astrologer dataset the directory uses, overlaid with the live record
@@ -83,6 +84,46 @@ function Portrait({ p, className }) {
   );
 }
 
+function ReviewForm({ astrologerId, name, onDone }) {
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const submit = async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    if (comment.trim().length < 3) { setMsg({ ok: false, text: 'Please write a few words about your experience.' }); return; }
+    setBusy(true); setMsg(null);
+    try {
+      const r = await fetch(`${API}/${encodeURIComponent(astrologerId)}/reviews`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rating, comment: comment.trim() }),
+      });
+      if (r.ok) { setComment(''); setMsg({ ok: true, text: 'Thank you! Your review has been added.' }); onDone && onDone(); }
+      else {
+        const known = { 401: 'Please sign in to write a review.', 403: 'You can write a review after you have consulted ' + name + '.', 409: 'You have already reviewed this astrologer.', 422: 'Please write a few words about your experience.' };
+        let detail = ''; try { const j = await r.json(); detail = typeof j.detail === 'string' ? j.detail : ''; } catch (err) { /* ignore */ }
+        setMsg({ ok: false, text: known[r.status] || detail || 'Could not save your review. Please try again.' });
+      }
+    } catch (err) { setMsg({ ok: false, text: 'Could not reach the server. Please try again.' }); }
+    setBusy(false);
+  };
+  return (
+    <form className="apf-review-form" onSubmit={submit}>
+      <h3>Write a review</h3>
+      <fieldset className="apf-rate">
+        <legend>Your rating</legend>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button type="button" key={n} className={n <= rating ? 'on' : ''} aria-label={`${n} out of 5`} aria-pressed={n === rating} onClick={() => setRating(n)}>★</button>
+        ))}
+      </fieldset>
+      <label htmlFor="apf-review-text">Your experience</label>
+      <textarea id="apf-review-text" rows={3} maxLength={1000} value={comment} onChange={(e) => setComment(e.target.value)} placeholder="How was your consultation?" />
+      <button type="submit" className="apf-review-send" disabled={busy}>{busy ? 'Saving…' : 'Submit review'}</button>
+      {msg && <p role="status" className={msg.ok ? 'apf-review-ok' : 'apf-review-err'}>{msg.text}</p>}
+    </form>
+  );
+}
+
 export default function ProfilePage() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -99,18 +140,23 @@ export default function ProfilePage() {
     return () => window.removeEventListener('astro:languagechange', onLang);
   }, []);
 
+  const [reloadKey, setReloadKey] = useState(0);
+  const reloadRemote = () => { refreshLive(); setReloadKey((k) => k + 1); };
   useEffect(() => {
     window.scrollTo({ top: 0 });
     setTab('about');
     setRemote(null);
     setLoading(!local);
+  }, [slug, local]);
+
+  useEffect(() => {
     const controller = new AbortController();
     fetch(`${API}/${encodeURIComponent(slug)}`, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((data) => { setRemote(data); setLoading(false); })
       .catch(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [slug, local]);
+  }, [slug, reloadKey]);
 
   const p = useMemo(() => mergeProfile(local, remote), [local, remote]);
 
@@ -177,7 +223,7 @@ export default function ProfilePage() {
   const why = [
     `${p.experience_years}+ years of experience in ${specialties.slice(0, 3).join(', ') || 'Vedic astrology'}`,
     `Consults in ${languages.join(', ')}`,
-    `Rated ${Number(p.rating).toFixed(1)} out of 5${p.review_count ? ` from ${Number(p.review_count).toLocaleString('en-IN')} ratings` : ''}`,
+    (Number(p.review_count) > 0 ? `Rated ${Number(p.rating).toFixed(1)} out of 5 from ${Number(p.review_count).toLocaleString('en-IN')} ${Number(p.review_count) === 1 ? 'rating' : 'ratings'}` : 'New on AstroTalk · no reviews yet'),
     'Private and confidential consultation',
     `Pay per minute (${money(p.price_per_minute)}/min) from your wallet — you decide how long to talk`,
   ];
@@ -226,7 +272,7 @@ export default function ProfilePage() {
               <dl className="apf-stats">
                 <div><dt>Languages</dt><dd>{languages.join(', ')}</dd></div>
                 <div><dt>Experience</dt><dd>{p.experience_years}+ years</dd></div>
-                <div><dt>Rating</dt><dd>★ {Number(p.rating).toFixed(1)} <small>({Number(p.review_count || 0).toLocaleString('en-IN')})</small></dd></div>
+                <div><dt>Rating</dt><dd>{Number(p.review_count) > 0 ? <>★ {Number(p.rating).toFixed(1)} <small>({Number(p.review_count).toLocaleString('en-IN')})</small></> : 'New'}</dd></div>
                 {p.consultations_count > 0 && <div><dt>Consultations</dt><dd>{Number(p.consultations_count).toLocaleString('en-IN')}+</dd></div>}
               </dl>
             </div>
@@ -261,11 +307,14 @@ export default function ProfilePage() {
           {tab === 'reviews' && (
             <div className="apf-card" role="tabpanel" id="apf-panel-reviews" aria-labelledby="apf-tab-reviews">
               <h2>Reviews &amp; ratings</h2>
-              <p className="apf-rating-line">
-                <span className="apf-stars" aria-hidden="true">{stars(p.rating)}</span>
-                <strong>{Number(p.rating).toFixed(1)} out of 5</strong>
-                <span>({Number(p.review_count || 0).toLocaleString('en-IN')} ratings)</span>
-              </p>
+              {Number(p.review_count) > 0 ? (
+                <p className="apf-rating-line">
+                  <span className="apf-stars" aria-hidden="true">{stars(p.rating)}</span>
+                  <strong>{Number(p.rating).toFixed(1)} out of 5</strong>
+                  <span>({Number(p.review_count).toLocaleString('en-IN')} {Number(p.review_count) === 1 ? 'rating' : 'ratings'})</span>
+                </p>
+              ) : <p className="apf-rating-line"><strong>New</strong><span>No ratings yet</span></p>}
+              {p.id && <ReviewForm astrologerId={p.id} name={name} onDone={reloadRemote} />}
               {reviews.length ? (
                 <ul className="apf-reviews">
                   {reviews.map((r) => (
@@ -277,7 +326,7 @@ export default function ProfilePage() {
                   ))}
                 </ul>
               ) : (
-                <p className="apf-empty">Written reviews from completed consultations will appear here.</p>
+                <p className="apf-empty">No reviews yet. Reviews can be written by people who have consulted this astrologer.</p>
               )}
             </div>
           )}
@@ -292,7 +341,7 @@ export default function ProfilePage() {
                     <div>
                       <strong>{a.name}</strong>
                       <span>{(a.specialties || []).slice(0, 2).join(' · ')}</span>
-                      <small>★ {Number(a.rating).toFixed(1)} · {a.is_ai ? 'Free chat' : `${money(a.price_per_minute)}/min`}</small>
+                      <small>{Number(a.review_count) > 0 ? `★ ${Number(a.rating).toFixed(1)} · ` : ''}{a.is_ai ? 'Free chat' : `${money(a.price_per_minute)}/min`}</small>
                     </div>
                   </Link>
                 ))}
