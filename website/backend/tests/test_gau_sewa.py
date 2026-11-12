@@ -408,3 +408,26 @@ def test_receipt_email_only_sent_when_smtp_configured(client, rzp, gaushala, mon
     assert len(sent) == 1 and sent[0][0] == "mail2@example.com" and "tax exemption" in sent[0][2]
     client.post("/api/v1/gau-sewa/donations/verify", json=verify2)  # duplicate callback must not email again
     assert len(sent) == 1
+
+
+def test_wallet_donation_flow(client):
+    """The page's flow: sign in, enough balance, valid amount; the donation debits the wallet and yields a receipt."""
+    gaushala_id = next(g["id"] for g in client.get("/api/v1/gau-sewa/gaushalas").json()["gaushalas"] if g["accepting_donations"])
+    body = {"amount": 101, "purpose": "chaara", "donor_name": "Gita Devi", "gaushala_id": gaushala_id}
+    assert client.post("/api/v1/gau-sewa/donations/wallet", json=body).status_code == 401
+    headers, email = _register(client, "walletdonor")
+    assert client.post("/api/v1/gau-sewa/donations/wallet", headers=headers, json=body).status_code == 402   # empty wallet
+    with SessionLocal() as db:   # recharging needs a live payment provider, so the balance is set directly
+        db.query(User).filter(User.email == email).update({"wallet_balance": 500.0})
+        db.commit()
+    assert client.post("/api/v1/gau-sewa/donations/wallet", headers=headers, json={**body, "amount": 5}).status_code == 422
+    assert client.post("/api/v1/gau-sewa/donations/wallet", headers=headers, json={**body, "donor_name": " "}).status_code == 422
+    done = client.post("/api/v1/gau-sewa/donations/wallet", headers=headers, json=body)
+    assert done.status_code == 200, done.text
+    out = done.json()
+    assert out["amount"] == 101 and out["new_balance"] == 399
+    receipt = client.get(f"/api/v1/gau-sewa/donations/receipt/{out['receipt_token']}").json()
+    assert receipt["status"] == "SUCCESS" and receipt["receipt_available"] and receipt["amount"] == 101
+    dl = client.get(f"/api/v1/gau-sewa/donations/receipt/{out['receipt_token']}/download")
+    assert dl.status_code == 200 and "attachment" in dl.headers["content-disposition"]
+    assert client.get("/api/v1/gau-sewa/donations/receipt/not-a-real-token-not-a-real-token").status_code == 404

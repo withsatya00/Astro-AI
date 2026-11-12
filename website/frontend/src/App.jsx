@@ -10,7 +10,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage.jsx';
 import MandirSevaPage from './pages/MandirSevaPage/MandirSevaPage.jsx';
 import TempleDetailPage from './pages/TemplePage/TempleDetailPage.jsx';
 import PujaDetailPage from './pages/PujaDetailPage/PujaDetailPage.jsx';
-import GauSewaPage from './pages/GauSewaPage/GauSewaPage.jsx';
+import GauSewaPage, { GauSewaReceiptPage } from './pages/GauSewaPage/GauSewaPage.jsx';
 import AstroMallPage from './pages/AstroMallPage/AstroMallPage.jsx';
 import ProductDetailPage from './pages/ProductPage/ProductDetailPage.jsx';
 import CalculatorsPage from './pages/CalculatorsPage/CalculatorsPage.jsx';
@@ -66,6 +66,7 @@ export default function App() {
           <Route path="/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/mandir-seva/chadhava/:slug" element={<TempleDetailPage />} />
           <Route path="/gau-sewa" element={<GauSewaPage />} />
+          <Route path="/gau-sewa/receipt/:token" element={<GauSewaReceiptPage />} />
           <Route path="/astro-mall" element={<AstroMallPage />} />
           <Route path="/astro-mall/checkout" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><CheckoutPage /></Suspense>} />
           <Route path="/my-orders" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><MyOrdersPage /></Suspense>} />
