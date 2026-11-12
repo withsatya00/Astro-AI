@@ -41,6 +41,7 @@ async function main() {
   console.log('PASS FAQ: all seven answers open/close; category + search combine.');
 
   if (fs.existsSync('website/frontend/js/ui-locales.js')) run('website/frontend/js/ui-locales.js');
+  if (fs.existsSync('website/frontend/js/ui-locales-extra.js')) run('website/frontend/js/ui-locales-extra.js');
   run('website/frontend/js/i18n.js');
   context.I18n = window.I18n;
   window.I18n.sourceText = new WeakMap(); window.I18n.sourceAttributes = new WeakMap();

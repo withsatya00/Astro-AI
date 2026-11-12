@@ -9,7 +9,9 @@ export default function Navbar() {
   const [mandirDropdownOpen, setMandirDropdownOpen] = useState(false);
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
   const [isAmbiencePlaying, setIsAmbiencePlaying] = useState(false);
-  const [currentLang, setCurrentLang] = useState('en');
+  const [currentLang, setCurrentLang] = useState(() => {
+    try { return localStorage.getItem('astro_preferred_lang') || 'en'; } catch (e) { return 'en'; }
+  });
   const [walletBalance, setWalletBalance] = useState('₹0.00');
   const { currentUser, openAuthModal, openUserAccountModal } = useAuth();
 
