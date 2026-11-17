@@ -3,7 +3,7 @@ const path = require('path');
 
 (async () => {
   const userImgPath = 'C:/Users/og/.gemini/antigravity/brain/00a78fb2-1be1-4dbe-8148-844b57e1517e/.user_uploaded/media_1793699059650_9b8dc47e.jpg';
-  const outDir = path.resolve(__dirname, '../website/frontend/assets/img');
+  const outDir = path.resolve(__dirname, '../website/frontend/public/assets/img');
 
   const metadata = await sharp(userImgPath).metadata();
   const w = metadata.width;

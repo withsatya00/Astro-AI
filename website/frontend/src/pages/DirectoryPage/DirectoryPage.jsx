@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { ALL_ASTROLOGERS } from './astrologersData.js';
+import { ALL_ASTROLOGERS } from '../../data/astrologers.js';
 import HelpMeChooseModal from './HelpMeChooseModal.jsx';
 
 export default function DirectoryPage() {

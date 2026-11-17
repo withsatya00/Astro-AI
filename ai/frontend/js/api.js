@@ -21,8 +21,10 @@ const getApiBase = () => {
     const hostname = window.location.hostname;
     const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
     
-    if (isLocalhost && port && port !== '8005' && port !== '80' && port !== '443') {
-      return `http://${hostname}:8005/api/v1`;
+    // The website backend on 8002 is the local gateway: it serves astrologers, charts and wallet
+    // alongside the AI routes, which the AI backend on 8001 does not.
+    if (isLocalhost && port && !['8002', '80', '443'].includes(port)) {
+      return `http://${hostname}:8002/api/v1`;
     }
   }
 

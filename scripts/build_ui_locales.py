@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / '.env')
-OUT = ROOT / 'website/frontend/js/ui-locales.js'
+OUT = ROOT / 'website/frontend/public/legacy/ui-locales.js'
 CACHE = ROOT / 'scratch/ui-locale-cache.json'
 
 def public_profiles():
@@ -84,7 +84,7 @@ def collect():
                         add(node.value)
         except (SyntaxError, UnicodeError):
             pass
-    js = "const vm=require('vm'),fs=require('fs');const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('website/frontend/js/i18n.js','utf8'),c);console.log(JSON.stringify(c.window.ASTRO_I18N));"
+    js = "const vm=require('vm'),fs=require('fs');const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('website/frontend/public/legacy/i18n.js','utf8'),c);console.log(JSON.stringify(c.window.ASTRO_I18N));"
     dictionaries = json.loads(subprocess.check_output(['node', '-e', js], cwd=ROOT))
     for lang in ('en', 'hi'):
         for value in dictionaries[lang].values():

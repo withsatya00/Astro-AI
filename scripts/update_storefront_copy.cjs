@@ -1,6 +1,6 @@
 const fs = require('fs');
 const vm = require('vm');
-const file = 'website/frontend/js/ui-locales.js';
+const file = 'website/frontend/public/legacy/ui-locales.js';
 const context = {window: {}};
 vm.runInNewContext(fs.readFileSync(file, 'utf8'), context);
 const data = context.window.ASTRO_UI_LOCALES;

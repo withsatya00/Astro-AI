@@ -1,7 +1,7 @@
 // Recompresses oversized photos in place (same file name and format, so no references change).
 // Usage: node scripts/optimize_images.cjs [maxKB=250]
 const fs = require('fs'), path = require('path'), sharp = require('sharp');
-const ROOT = path.resolve(__dirname, '..', 'website', 'frontend', 'assets');
+const ROOT = path.resolve(__dirname, '..', 'website', 'frontend', 'public', 'assets');
 const LIMIT = (Number(process.argv[2]) || 250) * 1024;
 const walk = (d, out = []) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); e.isDirectory() ? walk(p, out) : out.push(p); } return out; };
 sharp.cache(false);

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { api } from './bhaktiApi.js';
-import { useJaap, useSignedIn, openLogin } from './useJaap.js';
-import { eventIdFor, repetitionsFromResult, speechRecognitionCtor } from './jaapVoice.mjs';
+import { api } from '../../services/bhaktiApi.js';
+import { useJaap } from '../../hooks/useJaap.js';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { eventIdFor, repetitionsFromResult, speechRecognitionCtor } from '../../utils/jaapVoice.mjs';
 
 const MALA = 108;
 const MODES = [['manual', 'Manual'], ['voice', 'Voice'], ['mala', 'Digital Mala']];
@@ -104,7 +105,8 @@ function VoicePanel({ jaap, mantra }) {
 }
 
 export default function NaamJaap() {
-  const signedIn = useSignedIn();
+  const { isSignedIn: signedIn, openAuth } = useAuth();
+  const openLogin = () => openAuth('login');
   const jaap = useJaap(signedIn);
   const { session: s } = jaap;
   const [mantras, setMantras] = useState([]);

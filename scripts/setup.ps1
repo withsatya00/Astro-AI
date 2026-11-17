@@ -29,7 +29,7 @@ $directories = @(
     "website/frontend",
     "website/frontend/css",
     "website/frontend/js",
-    "website/frontend/assets",
+    "website/frontend/public/assets",
     "website/backend/app",
     "website/backend/tests",
     "ai/frontend",

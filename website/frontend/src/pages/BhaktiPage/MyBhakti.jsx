@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from './bhaktiApi.js';
-import { useSignedIn, openLogin } from './useJaap.js';
+import { api } from '../../services/bhaktiApi.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const lvl = (c, max) => (c <= 0 ? 0 : Math.min(4, Math.ceil((c / Math.max(max, 1)) * 4)));
 const fmt = (n) => Number(n || 0).toLocaleString('en-IN');
@@ -23,7 +23,8 @@ function Heatmap({ daily }) {
 }
 
 export default function MyBhakti() {
-  const signedIn = useSignedIn();
+  const { isSignedIn: signedIn, openAuth } = useAuth();
+  const openLogin = () => openAuth('login');
   const [a, setA] = useState(null);
   const [hist, setHist] = useState(null);
   const [err, setErr] = useState('');

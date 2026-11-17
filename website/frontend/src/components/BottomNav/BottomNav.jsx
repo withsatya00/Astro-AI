@@ -1,9 +1,11 @@
 import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function BottomNav() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isSignedIn, openAuth } = useAuth();
   const currentPath = location.pathname;
 
   // Hide tabbar in consultation chat room
@@ -19,15 +21,8 @@ export default function BottomNav() {
 
   const handleProfileClick = (e) => {
     e.preventDefault();
-    if (window.App) {
-      if (window.App.currentUser) {
-        window.App.openUserAccountModal();
-      } else {
-        window.App.openAuthModal('login');
-      }
-    } else {
-      navigate('/profile');
-    }
+    if (isSignedIn) navigate('/profile');
+    else openAuth('login');
   };
 
   return (

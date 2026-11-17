@@ -75,6 +75,6 @@ const svg = `
 
 sharp(Buffer.from(svg))
   .webp({ quality: 90 })
-  .toFile(path.join(__dirname, '..', 'website', 'frontend', 'assets', 'img', 'horoscope-banner.webp'))
+  .toFile(path.join(__dirname, '..', 'website', 'frontend', 'public', 'assets', 'img', 'horoscope-banner.webp'))
   .then(info => console.log('Successfully created horoscope-banner.webp:', info));
 

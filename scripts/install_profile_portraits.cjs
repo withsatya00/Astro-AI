@@ -6,7 +6,7 @@ const sharp = require('sharp');
 
 async function main() {
   const records = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-  const roots = ['website/frontend/assets/portraits', 'ai/frontend/assets/portraits'];
+  const roots = ['website/frontend/public/assets/portraits', 'ai/frontend/assets/portraits'];
   const hashes = new Set();
   for (const {slug, source} of records) {
     if (!/^[a-z0-9-]+$/.test(slug)) throw new Error('Invalid profile slug');

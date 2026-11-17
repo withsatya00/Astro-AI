@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useWallet } from '../../context/WalletContext.jsx';
 
 const ALL_PROFILES = [
   {
@@ -60,7 +61,7 @@ export default function ProfilePage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('about');
-  const [walletBalance, setWalletBalance] = useState('₹0.00');
+  const { formattedBalance: walletBalance, openWallet } = useWallet();
 
   // Find matching profile
   const profile =
@@ -68,25 +69,14 @@ export default function ProfilePage() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (window.App && window.App.walletBalance !== undefined) {
-      setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
-    }
   }, [slug]);
 
   const handleStartConsultation = () => {
-    if (window.App && typeof window.App.startConsultationWith === 'function') {
-      window.App.startConsultationWith(profile.slug || profile.id);
-    } else {
-      navigate(`/consultation/${profile.slug || profile.id}`);
-    }
+    navigate(`/consultation/${profile.slug || profile.id}`);
   };
 
   const handleStartCall = () => {
-    if (window.App && typeof window.App.startCallWith === 'function') {
-      window.App.startCallWith(profile.slug || profile.id);
-    } else {
-      navigate(`/consultation/${profile.slug || profile.id}`);
-    }
+    navigate(`/consultation/${profile.slug || profile.id}`);
   };
 
   const reviews = [
@@ -336,13 +326,7 @@ export default function ProfilePage() {
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  if (window.App && typeof window.App.openWalletModal === 'function') {
-                    window.App.openWalletModal();
-                  } else {
-                    navigate('/wallet');
-                  }
-                }}
+                onClick={openWallet}
                 className="text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer bg-transparent border-0"
               >
                 + Recharge

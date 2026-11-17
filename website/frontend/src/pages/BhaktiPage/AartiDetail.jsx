@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { api, ApiError } from './bhaktiApi.js';
-import { useSignedIn, openLogin } from './useJaap.js';
+import { api, ApiError } from '../../services/bhaktiApi.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
 const loadPrefs = () => { try { return { size: 22, ...(JSON.parse(localStorage.getItem(PREF_KEY) || '{}')) }; } catch (e) { return { size: 22 }; } };
 
 export default function AartiDetail() {
   const { slug } = useParams();
-  const signedIn = useSignedIn();
+  const { isSignedIn: signedIn, openAuth } = useAuth();
+  const openLogin = () => openAuth('login');
   const [c, setC] = useState(null);
   const [err, setErr] = useState('');
   const [tab, setTab] = useState('hi');

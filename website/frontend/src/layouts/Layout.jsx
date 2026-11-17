@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar/Navbar.jsx';
 import BottomNav from '../components/BottomNav/BottomNav.jsx';
 import GlobalFooter from '../components/GlobalFooter/GlobalFooter.jsx';
+import { usePageMeta } from '../hooks/usePageMeta.js';
 
 export default function Layout({ children }) {
   const location = useLocation();
+  usePageMeta();
   const isChatroom = location.pathname.startsWith('/consultation') || location.pathname.startsWith('/consult');
 
   useEffect(() => {

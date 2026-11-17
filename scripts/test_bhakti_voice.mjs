@@ -1,7 +1,7 @@
 // Run: node --test scripts/test_bhakti_voice.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalize, countRepetitions, repetitionsFromResult, eventIdFor } from '../website/frontend/src/pages/BhaktiPage/jaapVoice.mjs';
+import { normalize, countRepetitions, repetitionsFromResult, eventIdFor } from '../website/frontend/src/utils/jaapVoice.mjs';
 
 const RADHE = ['radhe radhe', 'राधे राधे'];
 const JSR = ['jai shri ram', 'जय श्री राम'];

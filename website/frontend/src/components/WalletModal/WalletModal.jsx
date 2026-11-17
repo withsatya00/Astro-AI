@@ -1,92 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useWallet } from '../../context/WalletContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
+import TransactionItem from './TransactionItem.jsx';
+
+const RECHARGE_PACKS = [
+  { amount: 100, tag: '' },
+  { amount: 250, tag: 'Most Popular' },
+  { amount: 500, tag: 'Best Value' },
+  { amount: 1000, tag: '' },
+  { amount: 2100, tag: '' },
+];
+
+const PAYMENT_METHOD_LABELS = { upi: 'UPI', cards: 'Card', netbanking: 'Net Banking' };
 
 export default function WalletModal({ isOpen, onClose }) {
-  const [balance, setBalance] = useState(0);
+  const { balance, transactions, isTestMode, recharge } = useWallet();
+  const { showToast } = useToast();
   const [selectedPack, setSelectedPack] = useState(250);
   const [customAmount, setCustomAmount] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('upi');
-  const [transactions, setTransactions] = useState([]);
   const [activeTab, setActiveTab] = useState('recharge');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  useEffect(() => {
-    // Load balance from localStorage
-    const saved = localStorage.getItem('astro_wallet_balance');
-    if (saved !== null) {
-      setBalance(Number(saved));
-    } else {
-      setBalance(150); // Default welcome test balance
-      localStorage.setItem('astro_wallet_balance', '150');
-    }
-
-    // Load transactions
-    const savedTx = localStorage.getItem('astro_wallet_transactions');
-    if (savedTx) {
-      try {
-        setTransactions(JSON.parse(savedTx));
-      } catch (_) {}
-    } else {
-      const defaultTx = [
-        {
-          id: 'TXN-101',
-          date: 'Today, 10:30 AM',
-          type: 'credit',
-          title: 'Welcome Bonus Credits',
-          amount: 150,
-        },
-      ];
-      setTransactions(defaultTx);
-      localStorage.setItem('astro_wallet_transactions', JSON.stringify(defaultTx));
-    }
-  }, [isOpen]);
-
   if (!isOpen) return null;
 
-  const rechargePacks = [
-    { amount: 100, bonus: 0, tag: '' },
-    { amount: 250, bonus: 25, tag: 'Most Popular' },
-    { amount: 500, bonus: 75, tag: 'Best Value' },
-    { amount: 1000, bonus: 200, tag: 'Mega Offer' },
-    { amount: 2100, bonus: 500, tag: 'VIP Pack' },
-  ];
-
+  const rechargePacks = RECHARGE_PACKS;
   const effectiveAmount = customAmount ? Number(customAmount) : selectedPack;
-  const packBonus = rechargePacks.find((p) => p.amount === effectiveAmount)?.bonus || 0;
 
-  const handleRecharge = (e) => {
+  const handleRecharge = async (e) => {
     e.preventDefault();
     if (!effectiveAmount || effectiveAmount < 50) {
-      alert('Minimum recharge amount is ₹50.');
+      showToast('Minimum recharge amount is ₹50.', 'error');
       return;
     }
 
     setIsProcessing(true);
-    setTimeout(() => {
-      const totalCredit = effectiveAmount + packBonus;
-      const newBalance = balance + totalCredit;
-      setBalance(newBalance);
-      localStorage.setItem('astro_wallet_balance', String(newBalance));
-
-      // Add to transactions
-      const newTx = {
-        id: `TXN-${Math.floor(100000 + Math.random() * 900000)}`,
-        date: 'Just now',
-        type: 'credit',
-        title: `Wallet Top-Up (${paymentMethod.toUpperCase()})`,
-        amount: totalCredit,
-      };
-      const updatedTx = [newTx, ...transactions];
-      setTransactions(updatedTx);
-      localStorage.setItem('astro_wallet_transactions', JSON.stringify(updatedTx));
-
-      // Dispatch global event for other components
-      window.dispatchEvent(new CustomEvent('astro:wallet-updated', { detail: { balance: newBalance } }));
-      if (window.App) window.App.walletBalance = newBalance;
-
-      setIsProcessing(false);
-      alert(`Success! ₹${totalCredit} added to your Astro Jyotish wallet. New balance: ₹${newBalance.toFixed(2)}.`);
+    try {
+      await recharge(effectiveAmount, `${PAYMENT_METHOD_LABELS[paymentMethod]}${isTestMode ? ' (Test Mode)' : ''}`);
+      showToast(`₹${effectiveAmount} added to your wallet.`, 'success');
       onClose();
-    }, 800);
+    } catch (err) {
+      showToast(err.message || 'Wallet recharge failed.', 'error');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -199,11 +156,6 @@ export default function WalletModal({ isOpen, onClose }) {
                           </span>
                         )}
                         <span className="font-serif text-sm font-bold text-[#1E1B4B] block leading-tight">₹{pack.amount}</span>
-                        {pack.bonus > 0 ? (
-                          <span className="text-[10px] text-emerald-700 font-bold block mt-0.5">+₹{pack.bonus} Extra</span>
-                        ) : (
-                          <span className="text-[10px] text-slate-400 block mt-0.5">Standard</span>
-                        )}
                       </div>
                     );
                   })}
@@ -262,24 +214,7 @@ export default function WalletModal({ isOpen, onClose }) {
               {transactions.length === 0 ? (
                 <p className="text-center text-xs text-slate-400 py-6">No transactions recorded yet.</p>
               ) : (
-                transactions.map((tx) => (
-                  <div
-                    key={tx.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-[#FFFDF7] border border-[#E7E2D8] text-xs"
-                  >
-                    <div>
-                      <strong className="text-[#1E1B4B] block text-xs">{tx.title}</strong>
-                      <small className="text-slate-400 text-[10px]">{tx.date} • {tx.id}</small>
-                    </div>
-                    <span
-                      className={`font-extrabold text-sm ${
-                        tx.type === 'credit' ? 'text-emerald-700' : 'text-rose-600'
-                      }`}
-                    >
-                      {tx.type === 'credit' ? `+₹${tx.amount}` : `-₹${tx.amount}`}
-                    </span>
-                  </div>
-                ))
+                transactions.map((tx) => <TransactionItem key={tx.id} tx={tx} />)
               )}
             </div>
           )}

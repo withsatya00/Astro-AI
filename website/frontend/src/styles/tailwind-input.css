@@ -1,8 +1,9 @@
+@import "./components/CalculatorsModal.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "../components/Calculators/CalculatorsModal.css";
 
 /* Astro Jyotish Design System - Critical Layout Foundations */
 @layer base {

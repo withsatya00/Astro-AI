@@ -8,7 +8,7 @@ const path = require('path');
 const url = require('url');
 
 const PORT = process.env.PORT || 3000;
-const ROOT = path.resolve(__dirname, '..', 'website', 'frontend');
+const ROOT = path.resolve(__dirname, '..', 'website', 'frontend', 'dist');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',

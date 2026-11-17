@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import WalletModal from '../../components/WalletModal/WalletModal.jsx';
+import React, { useEffect } from 'react';
+import TransactionItem from '../../components/WalletModal/TransactionItem.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useWallet } from '../../context/WalletContext.jsx';
 
 export default function WalletPage() {
-  const [balance, setBalance] = useState(150);
-  const [transactions, setTransactions] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isSignedIn, openAuth } = useAuth();
+  const { formattedBalance, transactions, openWallet } = useWallet();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    const saved = localStorage.getItem('astro_wallet_balance');
-    if (saved !== null) {
-      setBalance(Number(saved));
-    }
-    const savedTx = localStorage.getItem('astro_wallet_transactions');
-    if (savedTx) {
-      try {
-        setTransactions(JSON.parse(savedTx));
-      } catch (_) {}
-    }
-  }, [isModalOpen]);
+  }, []);
 
   return (
     <div className="w-full min-w-0 max-w-full overflow-x-hidden bg-[#FAF7F2] min-h-screen py-10 px-4">
@@ -30,7 +21,7 @@ export default function WalletPage() {
           </div>
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
+            onClick={openWallet}
             className="px-5 py-2.5 rounded-full bg-[#3E0B18] text-[#FFF9EF] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:brightness-110"
           >
             + Add Funds
@@ -47,7 +38,7 @@ export default function WalletPage() {
         >
           <span className="text-xs font-extrabold uppercase tracking-widest text-[#EFD4A0]">Available Balance</span>
           <div className="text-4xl sm:text-5xl font-serif font-extrabold mt-2 mb-2 text-[#FFFDF8]">
-            ₹{balance.toFixed(2)}
+            {formattedBalance}
           </div>
           <p className="text-xs text-amber-200/80">100% Secure &amp; Encrypted • Instant live balance update</p>
         </div>
@@ -55,35 +46,26 @@ export default function WalletPage() {
         {/* Transaction History */}
         <div className="bg-white p-6 rounded-3xl border border-[#E7E2D8] shadow-sm">
           <h2 className="font-serif text-lg font-bold text-[#1E1B4B] mb-4">Transaction History</h2>
-          <div className="space-y-3">
-            {transactions.length === 0 ? (
-              <p className="text-center text-xs text-slate-400 py-8">No recent transactions found.</p>
-            ) : (
-              transactions.map((tx) => (
-                <div
-                  key={tx.id}
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-[#FFFDF7] border border-[#E7E2D8] text-xs"
-                >
-                  <div>
-                    <strong className="text-[#1E1B4B] block text-xs">{tx.title}</strong>
-                    <small className="text-slate-400 text-[10px]">{tx.date} • {tx.id}</small>
-                  </div>
-                  <span
-                    className={`font-extrabold text-sm ${
-                      tx.type === 'credit' ? 'text-emerald-700' : 'text-rose-600'
-                    }`}
-                  >
-                    {tx.type === 'credit' ? `+₹${tx.amount}` : `-₹${tx.amount}`}
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
+          {!isSignedIn ? (
+            <div className="text-center py-8">
+              <p className="text-xs text-slate-500 mb-3">Sign in to see your wallet balance and transactions.</p>
+              <button
+                type="button"
+                onClick={() => openAuth('login')}
+                className="px-5 py-2 rounded-full bg-[#3E0B18] text-white font-bold text-xs cursor-pointer border-0"
+              >
+                Sign in
+              </button>
+            </div>
+          ) : transactions.length === 0 ? (
+            <p className="text-center text-xs text-slate-400 py-8">No recent transactions found.</p>
+          ) : (
+            <div className="space-y-3">
+              {transactions.map((tx) => <TransactionItem key={tx.id} tx={tx} className="rounded-2xl p-3.5" />)}
+            </div>
+          )}
         </div>
       </div>
-
-      <WalletModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
-

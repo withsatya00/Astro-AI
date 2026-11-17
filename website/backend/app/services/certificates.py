@@ -7,7 +7,7 @@ from typing import Optional
 import fitz  # PyMuPDF: shapes Devanagari correctly through its HTML layout engine
 import segno
 
-FONT_DIR = Path(__file__).resolve().parents[3] / "frontend" / "assets" / "fonts"
+FONT_DIR = Path(__file__).resolve().parents[3] / "frontend" / "public" / "assets" / "fonts"
 
 LABELS = {
     "en": {

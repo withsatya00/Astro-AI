@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
+import { useWallet } from '../../context/WalletContext.jsx';
+import { useVedicAmbience } from '../../hooks/useVedicAmbience.js';
 
 export default function Navbar() {
   const [promoDismissed, setPromoDismissed] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [mandirDropdownOpen, setMandirDropdownOpen] = useState(false);
   const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
-  const [isAmbiencePlaying, setIsAmbiencePlaying] = useState(false);
-  const [currentLang, setCurrentLang] = useState('en');
-  const [walletBalance, setWalletBalance] = useState('₹0.00');
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentLang, setCurrentLang] = useState(() => (window.I18n && window.I18n.currentLang) || 'en');
+  const { user: currentUser, displayName, openAuth } = useAuth();
+  const { formattedBalance: walletBalance, openWallet } = useWallet();
+  const { showToast } = useToast();
+  const { isPlaying: isAmbiencePlaying, toggle: handleToggleAmbience } = useVedicAmbience();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,25 +28,6 @@ export default function Navbar() {
         setPromoDismissed(true);
       }
     } catch (e) {}
-
-    // Check user & wallet from state / localStorage
-    const savedBal = localStorage.getItem('astro_wallet_balance');
-    if (savedBal !== null) {
-      setWalletBalance(`₹${Number(savedBal).toFixed(2)}`);
-    } else if (window.App && window.App.walletBalance !== undefined) {
-      setWalletBalance(`₹${Number(window.App.walletBalance).toFixed(2)}`);
-    }
-    if (window.App && window.App.currentUser) {
-      setCurrentUser(window.App.currentUser);
-    }
-
-    // Wallet balance live event listener
-    const handleWalletUpdated = (e) => {
-      if (e.detail?.balance !== undefined) {
-        setWalletBalance(`₹${Number(e.detail.balance).toFixed(2)}`);
-      }
-    };
-    window.addEventListener('astro:wallet-updated', handleWalletUpdated);
 
     // Language change listener
     const handleLangChange = (e) => {
@@ -61,7 +47,6 @@ export default function Navbar() {
     document.addEventListener('click', handleClickOutside);
 
     return () => {
-      window.removeEventListener('astro:wallet-updated', handleWalletUpdated);
       window.removeEventListener('astro:languagechange', handleLangChange);
       document.removeEventListener('click', handleClickOutside);
     };
@@ -88,33 +73,11 @@ export default function Navbar() {
     }
   };
 
-  const handleToggleAmbience = () => {
-    if (window.App && typeof window.App.toggleVedicAmbience === 'function') {
-      const active = window.App.toggleVedicAmbience();
-      setIsAmbiencePlaying(!!active);
-    } else {
-      setIsAmbiencePlaying(!isAmbiencePlaying);
-    }
-  };
-
-  const handleWalletClick = () => {
-    if (window.App && typeof window.App.openWalletModal === 'function') {
-      window.App.openWalletModal();
-    } else {
-      navigate('/wallet');
-    }
-  };
+  const handleWalletClick = openWallet;
 
   const handleAuthClick = (mode = 'login') => {
-    if (window.App) {
-      if (window.App.currentUser) {
-        window.App.openUserAccountModal();
-      } else {
-        window.App.openAuthModal(mode);
-      }
-    } else {
-      navigate('/profile');
-    }
+    if (currentUser) navigate('/profile');
+    else openAuth(mode);
   };
 
   return (
@@ -151,10 +114,7 @@ export default function Navbar() {
                   <span className="text-white/30 hidden sm:inline">|</span>
                   <button
                     type="button"
-                    onClick={() => {
-                      if (window.App && window.App.openContactModal) window.App.openContactModal();
-                      else navigate('/help');
-                    }}
+                    onClick={() => showToast('Help & support page is being prepared. Please check back soon.', 'info')}
                     className="cursor-pointer hover:text-[#F8D882] hidden sm:flex items-center gap-1 bg-transparent border-0 text-[#FFFDF8] text-xs font-normal"
                   >
                     🎧 Need Help?
@@ -495,7 +455,7 @@ export default function Navbar() {
                   className="btn-nav-auth inline-flex items-center gap-1.5 bg-white hover:bg-[#FAF8F2] border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0"
                 >
                   <span>👤</span>
-                  <span>{currentUser.name || 'Account'}</span>
+                  <span>{displayName || 'Account'}</span>
                 </button>
               ) : (
                 <>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { getChadhavaEvent, DHANTERAS_CHADHAVA_EVENT } from './chadhavaData.js';
+import { getChadhavaEvent, DHANTERAS_CHADHAVA_EVENT } from '../../data/chadhava.js';
 
 export default function TempleDetailPage() {
   const { slug } = useParams();

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { api } from './bhaktiApi.js';
+import { api } from '../../services/bhaktiApi.js';
 
 const KINDS = [['', 'All'], ['aarti', 'Aarti'], ['chalisa', 'Chalisa'], ['stotra', 'Stotra']];
 

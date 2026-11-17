@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useToast } from '../../context/ToastContext.jsx';
 import './GlobalFooter.css';
 
 export default function GlobalFooter() {
+  const { showToast } = useToast();
   // Mobile accordion states (default collapsed on mobile to avoid endless scrolling)
   const [openSections, setOpenSections] = useState({
     quickLinks: false,
@@ -17,18 +19,9 @@ export default function GlobalFooter() {
     }));
   };
 
-  const handleServiceInfo = (key) => {
-    if (window.App && typeof window.App.openInfoModal === 'function') {
-      window.App.openInfoModal(key);
-    } else if (window.App && typeof window.App.showToast === 'function') {
-      window.App.showToast(`Information: ${key}`, 'info');
-    }
-  };
-
-  const handleCalculatorModal = (type) => {
-    if (window.App && typeof window.App.openCalculatorsModal === 'function') {
-      window.App.openCalculatorsModal(type);
-    }
+  // About, contact, policy and help pages are not written yet.
+  const handleServiceInfo = () => {
+    showToast('This page is being prepared. Please check back soon.', 'info');
   };
 
   return (
@@ -96,12 +89,12 @@ export default function GlobalFooter() {
             </button>
             <ul className={`footer-links space-y-2 text-xs text-slate-400 mt-3 ${openSections.services ? 'block' : 'hidden md:block'}`}>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('kundali-milan')} className="hover:text-white transition-colors">
+                <Link to="/calculators/kundali-milan" className="hover:text-white transition-colors">
                   Kundli Milan &amp; Matching
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('numerology')} className="hover:text-white transition-colors">
+                <Link to="/calculators/numerology" className="hover:text-white transition-colors">
                   Vedic Numerology
                 </Link>
               </li>
@@ -111,12 +104,12 @@ export default function GlobalFooter() {
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('love-compat')} className="hover:text-white transition-colors">
+                <Link to="/calculators/love-compatibility" className="hover:text-white transition-colors">
                   Love &amp; Marriage Compatibility
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('gemstone')} className="hover:text-white transition-colors">
+                <Link to="/calculators/gemstone" className="hover:text-white transition-colors">
                   Gemstone &amp; Shanti Remedies
                 </Link>
               </li>

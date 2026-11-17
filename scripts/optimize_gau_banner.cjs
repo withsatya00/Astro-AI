@@ -53,7 +53,7 @@ async function createGauHero() {
       { input: Buffer.from(overlaySvg), left: 0, top: 0 }
     ])
     .webp({ quality: 90 })
-    .toFile(path.join(__dirname, '..', 'website', 'frontend', 'assets', 'img', 'gau-sewa-hero-v2.webp'));
+    .toFile(path.join(__dirname, '..', 'website', 'frontend', 'public', 'assets', 'img', 'gau-sewa-hero-v2.webp'));
 
   console.log('Successfully updated gau-sewa-hero-v2.webp:', finalBuffer);
 }

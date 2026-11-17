@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const CALCULATORS_LIST = [
   {
@@ -152,9 +152,20 @@ export default function CalculatorsPage() {
   const [tob, setTob] = useState('14:30');
   const [place, setPlace] = useState('New Delhi');
 
+  const { slug } = useParams();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  // /calculators/:slug opens that calculator directly (footer and deep links).
+  useEffect(() => {
+    const calc = slug && CALCULATORS_LIST.find((c) => c.id === slug);
+    if (calc) {
+      setActiveModalCalc(calc);
+      setCalculationResult(null);
+    }
+  }, [slug]);
 
   const categories = [
     { id: 'all', label: 'All Calculators (17)', icon: '🪷' },

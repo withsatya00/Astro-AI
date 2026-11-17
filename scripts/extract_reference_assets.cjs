@@ -4,8 +4,8 @@ const fs = require('fs');
 
 (async () => {
   const userImgPath = 'C:/Users/og/.gemini/antigravity/brain/00a78fb2-1be1-4dbe-8148-844b57e1517e/.user_uploaded/media_1793698129212_1b6ead21.jpg';
-  const outDir = path.resolve(__dirname, '../website/frontend/assets/img');
-  const portraitsDir = path.resolve(__dirname, '../website/frontend/assets/portraits');
+  const outDir = path.resolve(__dirname, '../website/frontend/public/assets/img');
+  const portraitsDir = path.resolve(__dirname, '../website/frontend/public/assets/portraits');
 
   const metadata = await sharp(userImgPath).metadata();
   console.log(`Image size: ${metadata.width}x${metadata.height}`);

@@ -38,11 +38,14 @@ async def add_timing_and_security(request: Request, call_next):
     response.headers["X-Process-Time"] = f"{time.time() - start:.4f}s"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
-    # Frontend code and the page shell are revalidated on every load (ETag keeps that cheap), so an update is visible
-    # immediately instead of after the browser's heuristic cache expires. Images and fonts under /assets stay cacheable.
+    # The page shell and unhashed scripts are revalidated on every load (ETag keeps that cheap), so an update is visible
+    # immediately. Vite bundles under /static have content hashes in their names, so they never change and are cached
+    # for a year. Images and fonts under /assets keep the browser's default caching.
     path = request.url.path
-    if not path.startswith(("/api/", "/assets/", "/uploads/", "/docs", "/redoc", "/openapi")) and response.status_code in (200, 304):
-        if path.startswith(("/js/", "/css/", "/src/")) or path in ("/sw.js", "/index.html", "/manifest.webmanifest") or "." not in path.rsplit("/", 1)[-1]:
+    if path.startswith("/static/") and response.status_code in (200, 304):
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+    elif not path.startswith(("/api/", "/assets/", "/uploads/", "/docs", "/redoc", "/openapi")) and response.status_code in (200, 304):
+        if path.startswith("/legacy/") or path in ("/sw.js", "/index.html", "/manifest.webmanifest") or "." not in path.rsplit("/", 1)[-1]:
             response.headers["Cache-Control"] = "no-cache"
     return response
 
@@ -109,44 +112,43 @@ try:
 except Exception as e:
     logger.warning(f"AI backend routes not mounted on website gateway: {e}")
 
-# Frontend Static Serving from website/frontend
+# Frontend Static Serving: the React website is built by Vite into website/frontend/dist
+# (`npm run build:react`). During development run `npm run dev` (port 3000) instead.
 frontend_dir = Path(__file__).resolve().parent.parent.parent.parent / "website" / "frontend"
-if frontend_dir.exists():
-    css_dir = frontend_dir / "css"
-    js_dir = frontend_dir / "js"
-    assets_dir = frontend_dir / "assets"
+dist_dir = frontend_dir / "dist"
+public_dir = frontend_dir / "public"
+# Built output when present, otherwise the raw public folder so images and the manifest still load.
+static_root = dist_dir if (dist_dir / "index.html").exists() else public_dir
 
-    if css_dir.exists():
-        app.mount("/css", StaticFiles(directory=str(css_dir)), name="css")
-    if js_dir.exists():
-        app.mount("/js", StaticFiles(directory=str(js_dir)), name="js")
-    if assets_dir.exists():
-        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
-    uploads_dir = Path(__file__).resolve().parents[3] / "storage" / "uploads"
-    uploads_dir.mkdir(parents=True, exist_ok=True)
-    app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
-    src_dir = frontend_dir / "src"
-    if src_dir.exists():
-        app.mount("/src", StaticFiles(directory=str(src_dir)), name="src")
+uploads_dir = Path(__file__).resolve().parents[3] / "storage" / "uploads"
+uploads_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
+
+if static_root.exists():
+    for folder in ("assets", "static", "legacy"):
+        if (static_root / folder).exists():
+            app.mount(f"/{folder}", StaticFiles(directory=str(static_root / folder)), name=f"site-{folder}")
+
+    def _site_index():
+        index_file = dist_dir / "index.html"
+        if index_file.exists():
+            return FileResponse(str(index_file))
+        return JSONResponse(
+            {"message": "Astro Jyotish Website Backend is running. Build the React site with `npm run build:react`, or use `npm run dev` on port 3000."}
+        )
 
     @app.get("/", include_in_schema=False)
     async def serve_index():
-        index_file = frontend_dir / "index.html"
-        if index_file.exists():
-            return FileResponse(str(index_file))
-        return JSONResponse({"message": "Astro Jyotish Website Backend is running."})
+        return _site_index()
 
     @app.get("/{full_path:path}", include_in_schema=False)
     async def serve_spa_clean_routes(full_path: str):
         if full_path.startswith("api/") or full_path in ("docs", "redoc", "openapi.json"):
             return JSONResponse({"detail": "Not Found"}, status_code=404)
-        target_file = frontend_dir / full_path
-        if target_file.is_file():
+        target_file = (static_root / full_path).resolve()
+        if target_file.is_file() and static_root.resolve() in target_file.parents:
             return FileResponse(str(target_file))
-        index_file = frontend_dir / "index.html"
-        if index_file.exists():
-            return FileResponse(str(index_file))
-        return JSONResponse({"detail": "Website frontend index.html not found"}, status_code=404)
+        return _site_index()
 
 async def _reminder_loop():
     """Scheduled reminders every minute; existing occasion reminders every six hours."""

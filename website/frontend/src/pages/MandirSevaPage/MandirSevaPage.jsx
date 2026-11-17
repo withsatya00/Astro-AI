@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const MOCK_EVENTS = [
   {
@@ -515,6 +516,7 @@ export default function MandirSevaPage({ section = 'all' }) {
   const [events, setEvents] = useState(MOCK_EVENTS);
   const [secondsTick, setSecondsTick] = useState(0);
   const navigate = useNavigate();
+  const { isSignedIn, openAuth } = useAuth();
 
   useEffect(() => {
     const nextTab = section === 'puja' ? 'puja' : section === 'chadhava' ? 'chadhava' : 'all';
@@ -609,13 +611,7 @@ export default function MandirSevaPage({ section = 'all' }) {
             <button
               type="button"
               className="shop-btn shop-btn--ghost cursor-pointer"
-              onClick={() => {
-                if (window.App && typeof window.App.openBookingsModal === 'function') {
-                  window.App.openBookingsModal();
-                } else {
-                  alert('Your booked sevas and videos will appear in your account profile.');
-                }
-              }}
+              onClick={() => (isSignedIn ? navigate('/profile') : openAuth('login'))}
             >
               <span>📜</span>
               <span>My Bookings &amp; Video Proof</span>

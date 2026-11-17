@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from './bhaktiApi.js';
-import { useSignedIn, openLogin } from './useJaap.js';
+import { api } from '../../services/bhaktiApi.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const DEITIES = [
   ['ram', 'Shri Ram', 'रा', 'linear-gradient(135deg,#9a4a1c,#3E0B18)'], ['shiva', 'Shiva', 'शि', 'linear-gradient(135deg,#2f4a6b,#1b2a40)'],
@@ -40,7 +40,8 @@ const Mandala = () => (
 );
 
 export default function BhaktiHome() {
-  const signedIn = useSignedIn();
+  const { isSignedIn: signedIn, openAuth } = useAuth();
+  const openLogin = () => openAuth('login');
   const [mantras, setMantras] = useState([]);
   const [stats, setStats] = useState(null);
 
