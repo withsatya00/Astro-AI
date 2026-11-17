@@ -46,7 +46,7 @@ const fill = async (page, { wallet = false } = {}) => {
   await step('adding a plain product twice merges into one cart line', async () => {
     const card = page.locator('.ml-products-grid article', { hasText: 'Tulsi Kanthi' }).first();
     await card.getByRole('button', { name: /Add to Cart/ }).click();
-    await page.getByRole('button', { name: '✕' }).click(); // the cart drawer opens on add and covers the grid
+    await page.getByRole('button', { name: 'Close cart' }).click(); // the cart drawer opens on add and covers the grid
     await card.getByRole('button', { name: /Add to Cart/ }).click();
     const cart = await page.evaluate(() => JSON.parse(localStorage.getItem('astro_mall_cart_v1')));
     assert.strictEqual(cart.length, 1);
@@ -150,8 +150,8 @@ const fill = async (page, { wallet = false } = {}) => {
     await wallet.locator('.mo-steps li').first().waitFor();
     assert.ok((await wallet.locator('.mo-steps li').count()) >= 2, 'placed and paid steps');
     const before = (await api('/api/v1/wallet', { token })).json.balance;
-    page.once('dialog', (d) => d.accept());
     await wallet.getByRole('button', { name: 'Cancel order' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'Yes, cancel order' }).click(); // the confirmation is an in-page dialog
     await page.getByText('Order cancelled.').waitFor();
     assert.strictEqual((await api('/api/v1/wallet', { token })).json.balance - before, 299);
     await wallet.getByText('Cancelled', { exact: true }).waitFor();

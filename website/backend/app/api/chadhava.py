@@ -134,6 +134,27 @@ def event_offerings(db, event):
         or_(TempleOffering.id.in_(listed), TempleOffering.category == "item")).all()
     if event.kind != "puja":
         rows = [o for o in rows if o.category != "puja_tier"]
+
+    # Deduplicate offerings by core sacred root word to avoid duplicate rows
+    deduped = []
+    seen_roots = set()
+    roots = ["gangajal", "गंगाजल", "milk", "दूध", "bhasma", "भस्म", "panchamrit", "पंचामृत", "belpatra", "बेलपत्र", "dhatura", "धतूरा", "ghee", "घी", "dhoop", "धूप", "chandan", "चंदन", "shringar", "श्रृंगार", "bhog", "भोग", "vastra", "वस्त्र", "dhwaja", "ध्वजा", "oil", "तेल", "sindoor", "सिंदूर", "durva", "दूर्वा", "mishri", "मिश्री", "flower", "फूल", "mala", "माला"]
+    for o in rows:
+        if o.category == "puja_tier":
+            deduped.append(o)
+            continue
+        title_lower = (o.title or "").strip().lower()
+        matched_root = None
+        for r in roots:
+            if r in title_lower:
+                matched_root = r
+                break
+        dedupe_key = matched_root or title_lower
+        if dedupe_key not in seen_roots:
+            seen_roots.add(dedupe_key)
+            deduped.append(o)
+
+    rows = deduped
     group = lambda o: 0 if o.category == "puja_tier" else 2 if o.category == "item" else 1
     rows.sort(key=lambda o: (group(o), listed.index(o.id) if o.id in listed else 0, not o.popular, o.sort_order or 0, o.price))
     return rows

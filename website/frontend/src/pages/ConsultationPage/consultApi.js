@@ -1,6 +1,21 @@
 // API client for the consultation room. Identity (guest client id or the signed-in token) is added to every
-// /api/v1 request by the site's fetch wrapper in js/api.js, so a visitor's chats stay private to them.
+// /api/v1 request so a visitor's chats stay private and authenticated sessions connect seamlessly.
 const BASE = '/api/v1';
+
+const getToken = () => {
+  try { return localStorage.getItem('astro_access_token') || ''; } catch (e) { return ''; }
+};
+
+const getClientId = () => {
+  try {
+    let cid = localStorage.getItem('astro_client_id');
+    if (!cid) {
+      cid = 'client_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+      localStorage.setItem('astro_client_id', cid);
+    }
+    return cid;
+  } catch (e) { return 'client_anonymous_default'; }
+};
 
 export class ApiError extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -9,6 +24,11 @@ export class ApiError extends Error {
 async function call(path, { method = 'GET', body, signal } = {}) {
   const headers = { Accept: 'application/json' };
   if (body !== undefined) headers['Content-Type'] = 'application/json';
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const clientId = getClientId();
+  if (clientId) headers['X-Client-Id'] = clientId;
+
   let res;
   try {
     res = await fetch(BASE + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal });
@@ -67,3 +87,5 @@ export const sendFeedback = (consultationId, rating, text) =>
 export const busySlots = (astrologerId) => call(`/wallet/bookings/busy?astrologer_id=${encodeURIComponent(astrologerId)}`);
 
 export const createBooking = (payload) => call('/wallet/bookings', { method: 'POST', body: payload });
+
+export const debitMinute = (consultationId) => call(`/consultations/${consultationId}/debit-minute`, { method: 'POST' });

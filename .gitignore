@@ -70,3 +70,8 @@ website/.cache/tts/
 # Admin-uploaded sankalp proof videos
 storage/uploads/
 storage/private/
+
+# Root test screenshots and temp html
+/*.png
+/*.html
+

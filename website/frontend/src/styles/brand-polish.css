@@ -37,7 +37,7 @@ html[data-theme="dark"] .mt-today__cta .shop-btn { color: #fff; }
 /* ---------------------------------------------------------------- icon tiles: brand colours instead of pink / blue rainbow */
 [class*="bg-[#FDF2F8]"], [class*="bg-[#EFF6FF]"] { background: var(--brand-soft) !important; border-color: var(--color-purple-subtle) !important; color: var(--brand-primary) !important; }
 [class*="text-[#64748B]"] { color: #526074; }
-.service-banner { background-color: var(--brand-deep); }
+/* .service-banner uses Sage Green + Ivory + Antique Gold theme */
 
 /* ---------------------------------------------------------------- dark theme: hard-coded light surfaces follow the theme */
 html[data-theme="dark"] :is([class*="bg-[#FDF2F8]"], [class*="bg-[#EFF6FF]"], .gs-home-banner, [class*="from-[#faf6fb]"]) { background: var(--exp-soft, #2d2638) !important; border-color: var(--exp-line, #493c52) !important; color: #e8dcef !important; }

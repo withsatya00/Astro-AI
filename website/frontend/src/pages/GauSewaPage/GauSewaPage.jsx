@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { announceBalance } from '../../components/WalletModal/walletApi.js';
+import WalletModal from '../../components/WalletModal/WalletModal.jsx';
+import { useLang } from '../BhaktiPage/lang.js';
 
 // Gau Sewa: a one-time donation to a gaushala, paid from the Astro Jyotish wallet. Everything shown here comes from the
 // backend (/api/v1/gau-sewa): the recipient, the amount rules, the published updates and the receipt.
@@ -17,8 +19,13 @@ const PURPOSE_NAME = { chaara: 'Daily Green Fodder Seva', chikitsa: 'Medical Car
 const DEFAULT_RULES = { presets: [101, 501, 1100], min_amount: 11, max_amount: 100000 };
 const money = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
 
-async function getJson(path, init) {
-  const res = await fetch(`${API}${path}`, init);
+async function getJson(path, init = {}) {
+  const token = localStorage.getItem('astro_access_token');
+  const headers = {
+    ...(init.headers || {}),
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+  const res = await fetch(`${API}${path}`, { ...init, headers });
   let data = null;
   try { data = await res.json(); } catch (e) { /* not json */ }
   if (!res.ok) {
@@ -138,6 +145,7 @@ export default function GauSewaPage() {
   const [formMessage, setFormMessage] = useState(null); // { text, needsFunds }
   const [busy, setBusy] = useState(false);
   const [receipt, setReceipt] = useState(null);
+  const [walletOpen, setWalletOpen] = useState(false);
 
   useEffect(() => { window.scrollTo({ top: 0 }); }, []);
 
@@ -158,8 +166,8 @@ export default function GauSewaPage() {
   const amount = customText ? Number(customText) : preset;
   const amountOk = Number.isInteger(amount) && amount >= rules.min_amount && amount <= rules.max_amount;
   const accepting = !!gaushala;
-  let hindi = false;
-  try { hindi = localStorage.getItem('astro_preferred_lang') === 'hi'; } catch (e) { /* default English */ }
+  const lang = useLang();
+  const hindi = lang === 'hi';
 
   const validate = () => {
     const e = {};
@@ -210,7 +218,7 @@ export default function GauSewaPage() {
     <div className="gs-reference-page w-full min-w-0 max-w-full overflow-x-hidden bg-[#FAF7F2] min-h-screen pb-20">
       <header className="service-banner service-banner--gausewa gs-ref-hero max-w-7xl mx-auto mt-4 px-4">
         <figure className="service-banner__art">
-          <img src="/assets/img/gau-sewa-hero-v2.webp" alt="Gau Seva Cow and Calf" fetchPriority="high" />
+          <img src="/assets/img/gau-sewa-hero-v2.webp?v=hero_v4" alt="Sacred Gau Seva Gomata and Calf" fetchPriority="high" />
           <figcaption>Illustrative image</figcaption>
         </figure>
         <div className="mandir-hero__copy service-banner__copy">
@@ -223,11 +231,47 @@ export default function GauSewaPage() {
             <a href="#gs-updates-section" className="shop-btn shop-btn--ghost cursor-pointer no-underline"
               onClick={(e) => { e.preventDefault(); document.getElementById('gs-updates-section')?.scrollIntoView({ behavior: 'smooth' }); }}>Gaushala Updates</a>
           </div>
-        </div>
-        <div className="shop-trust service-benefits">
-          <div><span>🛡️</span><p><b>Published Updates</b><small>Posted by the gaushala</small></p></div>
-          <div><span>🪷</span><p><b>Named Recipient</b><small>Shown before you give</small></p></div>
-          <div><span>📜</span><p><b>Receipt at once</b><small>Right after you give</small></p></div>
+          <div className="gs-hero-trust-grid">
+            <div className="gs-trust-badge-card">
+              <div className="gs-trust-badge-card__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8D882" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+              </div>
+              <div className="gs-trust-badge-card__info">
+                <b className="gs-trust-badge-card__title">Published Updates</b>
+                <small className="gs-trust-badge-card__sub">Posted by the gaushala</small>
+              </div>
+            </div>
+            <div className="gs-trust-badge-card">
+              <div className="gs-trust-badge-card__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8D882" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div className="gs-trust-badge-card__info">
+                <b className="gs-trust-badge-card__title">Named Recipient</b>
+                <small className="gs-trust-badge-card__sub">Shown before you give</small>
+              </div>
+            </div>
+            <div className="gs-trust-badge-card">
+              <div className="gs-trust-badge-card__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8D882" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div className="gs-trust-badge-card__info">
+                <b className="gs-trust-badge-card__title">Receipt at once</b>
+                <small className="gs-trust-badge-card__sub">Right after you give</small>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -346,7 +390,7 @@ export default function GauSewaPage() {
                   <div role="alert" className="text-xs text-rose-800 bg-rose-50 border border-rose-200 rounded-xl p-3">
                     {formMessage.text}
                     {formMessage.needsFunds && (
-                      <button type="button" onClick={() => window.App?.openWalletModal?.()} className="block mt-2 px-4 py-2 rounded-full bg-[#3E0B18] text-[#FFF9EF] font-bold cursor-pointer border-0" style={{ minHeight: 40 }}>Add money to wallet</button>
+                      <button type="button" onClick={() => setWalletOpen(true)} className="block mt-2 px-4 py-2 rounded-full bg-[#3E0B18] text-[#FFF9EF] font-bold cursor-pointer border-0" style={{ minHeight: 40 }}>Add money to wallet</button>
                     )}
                   </div>
                 )}
@@ -397,6 +441,8 @@ export default function GauSewaPage() {
           <Link to={`/gau-sewa/receipt/${receipt.token}`} onClick={closeReceipt} className="block text-center text-xs font-bold text-[#3E0B18] mt-3">Open receipt page</Link>
         </Dialog>
       )}
+
+      <WalletModal isOpen={walletOpen} onClose={() => setWalletOpen(false)} />
     </div>
   );
 }

@@ -120,31 +120,29 @@ export default function Navbar() {
     <>
       {/* 1. Top Promo Announcement Bar (Exact Match to Reference Design) */}
       {!promoDismissed && (
-        <div className="top-promo-bar bg-[#3E0B18] text-[#FFFDF8] text-[12px] py-1.5 px-3 font-semibold shadow-inner flex items-center justify-between z-50 relative overflow-hidden w-full max-w-full border-b border-[#D9A441]/20">
+        <div className="top-promo-bar bg-[#0E4023] text-[#FFFDF8] text-[12px] py-1.5 px-3 font-semibold shadow-inner flex items-center justify-between z-50 relative overflow-hidden w-full max-w-full border-b border-[#C49A3A]/20">
           <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-2 px-2 sm:px-6 min-w-0">
             {location.pathname.startsWith('/astrologers') ? (
               <>
                 <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
                   <span
-                    className="font-extrabold uppercase tracking-wider shrink-0 shadow-xs"
+                    className="font-extrabold uppercase tracking-wider shrink-0 shadow-xs flex items-center gap-1"
                     style={{
-                      background: '#F8D882',
-                      color: '#3E0B18',
-                      fontSize: '12px',
-                      padding: '2px 9px',
+                      background: '#C49A3A',
+                      color: '#103B29',
+                      fontSize: '11px',
+                      padding: '2px 8px',
                       borderRadius: '999px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
                     }}
                   >
-                    New
+                    <span>⭐</span> NEW
                   </span>
                   <span className="truncate block text-xs text-[#FFFDF8] font-medium">
                     Consult Verified Astrologers 24x7 · Chat | Call | Remedies | Kundli
                   </span>
                 </div>
                 <div className="flex items-center gap-3.5 shrink-0 text-xs text-[#FFFDF8]">
-                  <span className="cursor-pointer hover:text-[#F8D882] flex items-center gap-1 font-normal">
+                  <span className="cursor-pointer hover:text-[#C49A3A] flex items-center gap-1 font-normal">
                     Download App <span className="text-[13px]">📱</span> <span className="text-[13px]">🍎</span>
                   </span>
                   <span className="text-white/30 hidden sm:inline">|</span>
@@ -154,7 +152,7 @@ export default function Navbar() {
                       if (window.App && window.App.openContactModal) window.App.openContactModal();
                       else navigate('/help');
                     }}
-                    className="cursor-pointer hover:text-[#F8D882] hidden sm:flex items-center gap-1 bg-transparent border-0 text-[#FFFDF8] text-xs font-normal"
+                    className="cursor-pointer hover:text-[#C49A3A] hidden sm:flex items-center gap-1 bg-transparent border-0 text-[#FFFDF8] text-xs font-normal"
                   >
                     🎧 Need Help?
                   </button>
@@ -164,35 +162,35 @@ export default function Navbar() {
               <>
                 <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden">
                   <span
-                    className="font-extrabold uppercase tracking-wider shrink-0"
+                    className="font-extrabold uppercase tracking-wider shrink-0 flex items-center gap-1 shadow-xs"
                     style={{
-                      background: '#E5A83B',
-                      color: '#3E0B18',
-                      fontSize: '12px',
-                      padding: '2px 9px',
+                      background: '#C49A3A',
+                      color: '#103B29',
+                      fontSize: '11px',
+                      padding: '2px 8px',
                       borderRadius: '999px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
                     }}
                   >
-                    OFFER
+                    <span>⭐</span> OFFER
                   </span>
-                  <span className="truncate block text-xs text-[#FFFDF8]">
-                    First Consultation Free · Code: <strong className="text-[#FDE68A] font-bold">FIRSTFREE</strong>
+                  <span className="truncate block text-xs text-[#FFFDF8] font-medium">
+                    First Consultation Free - Code: <strong className="text-[#E7D39B] font-bold">FIRSTFREE</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-2.5 shrink-0">
                   <button
                     type="button"
                     onClick={() => navigate('/astrologers')}
-                    className="bg-white text-[#3E0B18] hover:bg-[#FAF7F2] font-extrabold text-xs px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 border-0 active:scale-95"
+                    style={{ backgroundColor: '#FBF3DA', color: '#103B29', border: '1px solid #E7D39B' }}
+                    className="font-extrabold text-xs px-3.5 py-1 rounded-full transition-all shadow-xs cursor-pointer shrink-0 active:scale-95 flex items-center gap-1 hover:brightness-105"
                   >
-                    Claim now →
+                    <span>Claim now</span>
+                    <span>→</span>
                   </button>
                   <button
                     type="button"
                     onClick={handleDismissPromo}
-                    className="promo-dismiss text-white/80 hover:text-white text-sm leading-none px-1 cursor-pointer bg-transparent border-0"
+                    className="promo-dismiss text-white/80 hover:text-white text-xs leading-none w-5 h-5 rounded-full hover:bg-white/10 flex items-center justify-center cursor-pointer bg-transparent border-0"
                     aria-label="Dismiss offer"
                   >
                     ✕
@@ -206,9 +204,9 @@ export default function Navbar() {
 
       {/* 2. Live Planetary Ephemeris Ticker */}
       {!location.pathname.startsWith('/astrologers') && (
-      <div className="ephemeris-ticker-bar bg-[#1E1B4B] text-amber-100 text-[11px] py-1 px-3 border-b border-[#D97706]/30 overflow-hidden relative shadow-xs z-40 select-none w-full max-w-full">
+      <div className="ephemeris-ticker-bar bg-[#103B29] text-amber-100 text-[11px] py-1 px-3 border-b border-[#D97706]/30 overflow-hidden relative shadow-xs z-40 select-none w-full max-w-full">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 min-w-0">
-          <div className="ephemeris-title-tag shrink-0 hidden sm:flex items-center gap-1.5 font-bold text-[#FCD34D] text-[10px] tracking-wider uppercase bg-[#1e0b44] px-2 py-0.5 rounded border border-[#D97706]/40">
+          <div className="ephemeris-title-tag shrink-0 hidden sm:flex items-center gap-1.5 font-bold text-[#C49A3A] text-[10px] tracking-wider uppercase bg-[#164B32] px-2 py-0.5 rounded border border-[#D97706]/40">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
             <span>लाहिरी अयनांश 24°10' • ग्रह गोचर</span>
           </div>
@@ -235,7 +233,7 @@ export default function Navbar() {
       )}
 
       {/* 3. Sticky Site Navbar */}
-      <header className="site-navbar sticky top-0 z-50 bg-[#FFFDF7]/95 backdrop-blur-md border-b border-[#E7E2D8] shadow-xs w-full max-w-full" id="site-navbar">
+      <header className="site-navbar sticky top-0 z-50 bg-[#FFFDF5]/95 backdrop-blur-md border-b border-[#DDEBD5] shadow-xs w-full max-w-full" id="site-navbar">
         <div className="site-navbar-inner max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-3 sm:gap-4 w-full">
           
           {/* Brand Logo */}
@@ -252,10 +250,10 @@ export default function Navbar() {
               />
             </div>
             <div className="site-brand-text flex flex-col">
-              <span className="brand-title font-serif font-extrabold text-[15px] sm:text-[17px] leading-tight tracking-tight text-[#1E1B4B]">
+              <span className="brand-title font-serif font-extrabold text-[15px] sm:text-[17px] leading-tight tracking-tight text-[#183C2B]">
                 Astro Jyotish
               </span>
-              <span className="brand-subtitle text-[8px] sm:text-[8.5px] font-bold text-[#B45309] tracking-wider uppercase leading-tight">
+              <span className="brand-subtitle text-[8px] sm:text-[8.5px] font-bold text-[#A77B25] tracking-wider uppercase leading-tight">
                 Guidance Beyond Boundaries
               </span>
             </div>
@@ -265,21 +263,21 @@ export default function Navbar() {
           <nav className="site-nav-links items-center gap-5" id="site-nav-links">
             <NavLink
               to="/"
-              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+              className={({ isActive }) => `site-nav-link hover:text-[#164B32] transition-colors py-1.5 ${isActive ? 'active text-[#164B32]' : ''}`}
             >
               Home
             </NavLink>
 
             <NavLink
               to="/astrologers"
-              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+              className={({ isActive }) => `site-nav-link hover:text-[#164B32] transition-colors py-1.5 ${isActive ? 'active text-[#164B32]' : ''}`}
             >
               Astrologers
             </NavLink>
 
             <NavLink
               to="/bhakti"
-              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+              className={({ isActive }) => `site-nav-link hover:text-[#164B32] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#164B32]' : ''}`}
             >
               <span>Bhakti</span>
             </NavLink>
@@ -288,7 +286,7 @@ export default function Navbar() {
             <div className={`site-nav-dropdown-wrapper relative py-1.5 ${mandirDropdownOpen ? 'is-open' : ''}`} ref={mandirDropdownRef}>
               <button
                 type="button"
-                className="site-nav-link flex items-center gap-1.5 hover:text-[#4a1b9a] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit font-bold"
+                className="site-nav-link flex items-center gap-1.5 hover:text-[#164B32] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit font-bold"
                 onClick={(e) => {
                   e.stopPropagation();
                   setMandirDropdownOpen(!mandirDropdownOpen);
@@ -298,8 +296,8 @@ export default function Navbar() {
                 aria-expanded={mandirDropdownOpen}
               >
                 <span>Mandir Seva</span>
-                <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-                  Puja
+                <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#FBF3DA] text-[#A77B25] border border-[#E7D39B]">
+                  PUJA
                 </span>
                 <span className={`dropdown-chevron text-[10px] transition-transform duration-200 ${mandirDropdownOpen ? 'rotate-180' : ''}`}>
                   ▾
@@ -307,33 +305,33 @@ export default function Navbar() {
               </button>
 
               {mandirDropdownOpen && (
-                <div className="nav-dropdown-menu absolute top-full left-0 w-72 bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
+                <div className="nav-dropdown-menu absolute top-full left-0 w-72 bg-white rounded-2xl shadow-2xl border border-[#DDEBD5] p-2.5 z-50">
                   <div className="px-2 py-1 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 rounded-lg flex items-center gap-1.5">
                     <span>🏛️</span> <span>Mandir Seva</span>
                   </div>
                   <Link
                     to="/mandir-seva/puja"
                     onClick={() => setMandirDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
-                    <span className="w-8 h-8 rounded-lg bg-amber-50 text-[#D97706] border-amber-100 flex items-center justify-center text-sm font-bold border group-hover/item:scale-110 transition-transform shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-amber-50 text-[#A77B25] border-amber-100 flex items-center justify-center text-sm font-bold border group-hover/item:scale-110 transition-transform shrink-0">
                       🛕
                     </span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Puja</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Puja</span>
                       <span className="text-[10px] text-slate-500 block">Book a temple puja for you and your family</span>
                     </div>
                   </Link>
                   <Link
                     to="/mandir-seva/chadhava"
                     onClick={() => setMandirDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
-                    <span className="w-8 h-8 rounded-lg bg-purple-50 text-[#4a1b9a] border-purple-100 flex items-center justify-center text-sm font-bold border group-hover/item:scale-110 transition-transform shrink-0">
+                    <span className="w-8 h-8 rounded-lg bg-purple-50 text-[#164B32] border-purple-100 flex items-center justify-center text-sm font-bold border group-hover/item:scale-110 transition-transform shrink-0">
                       🪔
                     </span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Chadhava</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Chadhava</span>
                       <span className="text-[10px] text-slate-500 block">Explore temple events and listed offerings</span>
                     </div>
                   </Link>
@@ -343,18 +341,18 @@ export default function Navbar() {
 
             <NavLink
               to="/gau-sewa"
-              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+              className={({ isActive }) => `site-nav-link hover:text-[#164B32] transition-colors py-1.5 flex items-center gap-1.5 font-bold ${isActive ? 'active text-[#164B32]' : ''}`}
             >
               <span>Gau Sewa</span>
             </NavLink>
 
             <NavLink
               to="/astro-mall"
-              className={({ isActive }) => `site-nav-link hover:text-[#4a1b9a] transition-colors py-1.5 flex items-center gap-1.5 group font-bold ${isActive ? 'active text-[#4a1b9a]' : ''}`}
+              className={({ isActive }) => `site-nav-link hover:text-[#164B32] transition-colors py-1.5 flex items-center gap-1.5 group font-bold ${isActive ? 'active text-[#164B32]' : ''}`}
             >
               <span>Astro Mall</span>
-              <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800 border border-purple-300 group-hover:bg-purple-200 transition-colors">
-                Siddh
+              <span className="nav-badge text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#EDF4E8] text-[#164B32] border border-[#DDEBD5]">
+                SIDDHI
               </span>
             </NavLink>
 
@@ -362,7 +360,7 @@ export default function Navbar() {
             <div className={`site-nav-dropdown-wrapper relative py-1.5 ${toolsDropdownOpen ? 'is-open' : ''}`} ref={toolsDropdownRef}>
               <button
                 type="button"
-                className="site-nav-link flex items-center gap-1 hover:text-[#4a1b9a] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
+                className="site-nav-link flex items-center gap-1 hover:text-[#164B32] transition-colors cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
                 onClick={(e) => {
                   e.stopPropagation();
                   setToolsDropdownOpen(!toolsDropdownOpen);
@@ -378,51 +376,51 @@ export default function Navbar() {
               </button>
 
               {toolsDropdownOpen && (
-                <div className="nav-dropdown-menu nav-dropdown-menu--tools absolute top-full right-0 w-80 max-h-[75vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#E7E2D8] p-2.5 z-50">
+                <div className="nav-dropdown-menu nav-dropdown-menu--tools absolute top-full right-0 w-80 max-h-[75vh] overflow-y-auto bg-white rounded-2xl shadow-2xl border border-[#DDEBD5] p-2.5 z-50">
                   <div className="px-2 py-1 mb-1 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 rounded-lg flex items-center gap-1.5">
                     <span>✨</span> <span>Vedic Astrology Tools</span>
                   </div>
                   <Link
                     to="/rashiphal"
                     onClick={() => setToolsDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
-                    <span className="w-8 h-8 rounded-lg bg-purple-50 text-[#4a1b9a] flex items-center justify-center text-sm font-bold border border-purple-100 group-hover/item:scale-110 transition-transform shrink-0">♈</span>
+                    <span className="w-8 h-8 rounded-lg bg-purple-50 text-[#164B32] flex items-center justify-center text-sm font-bold border border-purple-100 group-hover/item:scale-110 transition-transform shrink-0">♈</span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Daily Horoscope</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Daily Horoscope</span>
                       <span className="text-[10px] text-slate-500 block">Predictions for all 12 Zodiac signs</span>
                     </div>
                   </Link>
                   <Link
                     to="/panchang"
                     onClick={() => setToolsDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
-                    <span className="w-8 h-8 rounded-lg bg-amber-50 text-[#D97706] flex items-center justify-center text-sm font-bold border border-amber-100 group-hover/item:scale-110 transition-transform shrink-0">📅</span>
+                    <span className="w-8 h-8 rounded-lg bg-amber-50 text-[#A77B25] flex items-center justify-center text-sm font-bold border border-amber-100 group-hover/item:scale-110 transition-transform shrink-0">📅</span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Today's Panchang</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Today's Panchang</span>
                       <span className="text-[10px] text-slate-500 block">Tithi, Nakshatra, Shubh Muhurat &amp; Rahukaal</span>
                     </div>
                   </Link>
                   <Link
                     to="/calculators"
                     onClick={() => setToolsDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
                     <span className="w-8 h-8 rounded-lg bg-pink-50 text-[#DB2777] flex items-center justify-center text-sm font-bold border border-pink-100 group-hover/item:scale-110 transition-transform shrink-0">💖</span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Kundli Matching (Gun Milan)</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Kundli Matching (Gun Milan)</span>
                       <span className="text-[10px] text-slate-500 block">36 Gunas, Ashtakoot &amp; Manglik analysis</span>
                     </div>
                   </Link>
                   <Link
                     to="/calculators"
                     onClick={() => setToolsDropdownOpen(false)}
-                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF8F2] transition-colors text-slate-800 no-underline group/item"
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-[#FAF9F2] transition-colors text-slate-800 no-underline group/item"
                   >
-                    <span className="w-8 h-8 rounded-lg bg-indigo-50 text-[#4a1b9a] flex items-center justify-center text-sm font-bold border border-indigo-100 group-hover/item:scale-110 transition-transform shrink-0">🪐</span>
+                    <span className="w-8 h-8 rounded-lg bg-indigo-50 text-[#164B32] flex items-center justify-center text-sm font-bold border border-indigo-100 group-hover/item:scale-110 transition-transform shrink-0">🪐</span>
                     <div>
-                      <span className="font-bold text-xs block text-[#1E1B4B]">Shani Sade Sati &amp; Dosha</span>
+                      <span className="font-bold text-xs block text-[#183C2B]">Shani Sade Sati &amp; Dosha</span>
                       <span className="text-[10px] text-slate-500 block">Kaal Sarp, Pitra Dosha &amp; Vedic remedies</span>
                     </div>
                   </Link>
@@ -431,7 +429,7 @@ export default function Navbar() {
                     onClick={() => setToolsDropdownOpen(false)}
                     className="nav-tools-toggle flex items-center justify-between p-2 mt-1 rounded-xl bg-amber-50/60 hover:bg-amber-100/80 text-amber-900 font-bold text-xs transition-colors"
                   >
-                    <span>View all 17 Vedic Tools</span>
+                    <span>View all Vedic Tools</span>
                     <i aria-hidden="true">→</i>
                   </Link>
                 </div>
@@ -440,47 +438,53 @@ export default function Navbar() {
           </nav>
 
           {/* Right Action Group */}
-          <div className="site-nav-actions flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Vedic Ambience 432Hz Soundscape Toggle Button */}
+          <div className="site-nav-actions flex items-center gap-2 sm:gap-2.5 shrink-0">
+            {/* App Grid Icon Button */}
             <button
               type="button"
-              className={`btn-nav-ambience items-center gap-1.5 ${isAmbiencePlaying ? 'bg-amber-200 border-amber-500' : 'bg-[#FFFBEB] border-[#FCD34D]'} border text-[#B45309] font-bold text-xs px-3 py-1.5 rounded-full hover:bg-[#FEF3C7] transition-all cursor-pointer shadow-2xs shrink-0`}
-              title="वैदिक वातावरण नाद (432Hz Soundscape Drone)"
-              onClick={handleToggleAmbience}
+              onClick={() => {
+                if (window.App && window.App.openAppDownloadModal) {
+                  window.App.openAppDownloadModal();
+                } else {
+                  alert("Download Astro Jyotish for Android & iOS! Available on Play Store & App Store.");
+                }
+              }}
+              className="btn-nav-grid"
+              title="Astro Jyotish App"
+              aria-label="Apps"
             >
-              <span className="text-sm" aria-hidden="true">🕉️</span>
-              <span className="ambience-label text-xs whitespace-nowrap font-bold">432Hz नाद</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
             </button>
 
-            {/* Language Picker (Desktop) */}
-            <div className="global-lang-picker-wrapper items-center gap-1.5 bg-white border border-[#E7E2D8] rounded-full px-3 py-1 text-xs text-[#1E1B4B] shadow-2xs hover:border-[#4a1b9a] transition-all shrink-0">
-              <span className="global-lang-icon text-xs">🌐</span>
-              <select
-                value={currentLang}
-                onChange={(e) => handleLanguageChange(e.target.value)}
-                className="global-lang-select bg-transparent font-semibold border-none outline-none cursor-pointer text-xs pr-1 text-[#1E1B4B]"
-                aria-label="Select Language"
-              >
-                <option value="en">English (Global)</option>
-                <option value="hi">हिन्दी (Hindi)</option>
-                <option value="sa">संस्कृतम् (Sanskrit)</option>
-                <option value="mr">मराठी (Marathi)</option>
-                <option value="gu">ગુજરાતી (Gujarati)</option>
-                <option value="bn">বাংলা (Bengali)</option>
-                <option value="ta">தமிழ் (Tamil)</option>
-                <option value="te">తెలుగు (Telugu)</option>
-              </select>
-            </div>
+            {/* WhatsApp Direct Help Button */}
+            <a
+              href="https://wa.me/919999999999?text=Namaste%20Astro%20Jyotish%2C%20I%20would%20like%20to%20consult%20an%20astrologer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-nav-whatsapp"
+              title="Chat on WhatsApp"
+              aria-label="WhatsApp"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+              </svg>
+            </a>
 
             {/* Wallet Balance Pill */}
             <button
               type="button"
               onClick={handleWalletClick}
-              className="btn-nav-wallet inline-flex items-center gap-1.5 bg-[#FFFBEB] border border-[#FCD34D] text-[#B45309] font-bold text-xs px-3 py-1.5 rounded-full hover:bg-[#FEF3C7] transition-all cursor-pointer shadow-2xs shrink-0"
+              className="btn-nav-wallet inline-flex items-center gap-1.5 bg-[#FFFDF5] border border-[#E7D39B] text-[#A77B25] font-bold text-xs px-3 py-1.5 rounded-full hover:bg-[#FBF3DA] transition-all cursor-pointer shadow-2xs shrink-0"
               title="Wallet & Bookings"
             >
               <span className="wallet-icon text-xs">🪙</span>
               <span id="nav-wallet-balance">{walletBalance}</span>
+              <span className="text-[10px] text-[#A77B25]">▾</span>
             </button>
 
             {/* Sign In & Register Buttons */}
@@ -489,7 +493,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => handleAuthClick('profile')}
-                  className="btn-nav-auth inline-flex items-center gap-1.5 bg-white hover:bg-[#FAF8F2] border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0"
+                  className="btn-nav-auth inline-flex items-center gap-1.5 bg-white hover:bg-[#FAF9F2] border border-[#DDEBD5] hover:border-[#164B32] text-[#183C2B] font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0"
                 >
                   <span>👤</span>
                   <span>{currentUser.name || 'Account'}</span>
@@ -499,7 +503,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => handleAuthClick('login')}
-                    className="btn-nav-auth inline-flex items-center gap-1.5 bg-white hover:bg-[#FAF8F2] border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-semibold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-2xs shrink-0"
+                    className="btn-nav-auth inline-flex items-center gap-1 bg-transparent hover:bg-[#FAF9F2] text-[#183C2B] font-semibold text-xs px-3 py-1.5 rounded-full transition-all cursor-pointer shrink-0"
                     title="Sign In"
                   >
                     <span>Sign In</span>
@@ -507,7 +511,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => handleAuthClick('register')}
-                    className="btn-nav-register inline-flex items-center gap-1.5 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] hover:from-[#1e0b44] hover:to-[#1e0b44] text-white font-bold text-xs px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-xs hover:shadow-md shrink-0"
+                    className="btn-nav-register inline-flex items-center gap-1.5 bg-[#103B29] hover:bg-[#164B32] text-[#FFF9EF] font-bold text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer shadow-xs hover:shadow-md shrink-0"
                     title="Create Free Account"
                   >
                     <span>Register</span>
@@ -519,7 +523,7 @@ export default function Navbar() {
             {/* Mobile Hamburger Button */}
             <button
               type="button"
-              className="btn-mobile-menu items-center justify-center w-9 h-9 rounded-xl border border-[#E7E2D8] bg-white hover:bg-[#FAF8F2] text-[#1E1B4B] text-lg font-bold shadow-2xs cursor-pointer shrink-0 transition-colors"
+              className="btn-mobile-menu items-center justify-center w-9 h-9 rounded-xl border border-[#DDEBD5] bg-white hover:bg-[#FAF9F2] text-[#183C2B] text-lg font-bold shadow-2xs cursor-pointer shrink-0 transition-colors"
               aria-label="Toggle navigation menu"
               title="Menu"
               onClick={() => setMobileDrawerOpen(true)}
@@ -545,8 +549,8 @@ export default function Navbar() {
         id="mobile-nav-drawer"
       >
         <div>
-          <div className="mobile-nav-header flex items-center justify-between pb-4 border-b border-[#E7E2D8] mb-4">
-            <div className="mobile-nav-brand flex items-center gap-2 font-serif font-bold text-[#1E1B4B]">
+          <div className="mobile-nav-header flex items-center justify-between pb-4 border-b border-[#DDEBD5] mb-4">
+            <div className="mobile-nav-brand flex items-center gap-2 font-serif font-bold text-[#183C2B]">
               <div className="brand-mark brand-mark-sm">
                 <img
                   src="/assets/brand/logo-mark-v3-96.png"
@@ -570,14 +574,14 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Language Selector */}
-          <div className="mb-4 p-2.5 bg-[#FAF8F2] rounded-xl border border-[#E7E2D8] flex items-center justify-between gap-2">
-            <span className="text-xs font-bold text-[#1E1B4B] flex items-center gap-1.5">
+          <div className="mb-4 p-2.5 bg-[#FAF9F2] rounded-xl border border-[#DDEBD5] flex items-center justify-between gap-2">
+            <span className="text-xs font-bold text-[#183C2B] flex items-center gap-1.5">
               <span>🌐</span> <span>भाषा / Lang:</span>
             </span>
             <select
               value={currentLang}
               onChange={(e) => handleLanguageChange(e.target.value)}
-              className="bg-white border border-[#E7E2D8] rounded-lg px-2 py-1 text-xs font-semibold text-[#1E1B4B] outline-none cursor-pointer"
+              className="bg-white border border-[#DDEBD5] rounded-lg px-2 py-1 text-xs font-semibold text-[#183C2B] outline-none cursor-pointer"
             >
               <option value="en">English (Global)</option>
               <option value="hi">हिन्दी (Hindi)</option>
@@ -594,7 +598,7 @@ export default function Navbar() {
           <div className="mb-4 flex gap-2">
             <button
               type="button"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#E7E2D8] hover:border-[#4a1b9a] text-[#1E1B4B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-white border border-[#DDEBD5] hover:border-[#164B32] text-[#183C2B] font-bold text-xs rounded-xl shadow-2xs cursor-pointer"
               onClick={() => {
                 setMobileDrawerOpen(false);
                 handleAuthClick('login');
@@ -605,7 +609,8 @@ export default function Navbar() {
             </button>
             <button
               type="button"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 bg-gradient-to-r from-[#4a1b9a] to-[#1e0b44] text-white font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer"
+              style={{ backgroundColor: '#103B29', color: '#FFFDF5' }}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 font-bold text-xs rounded-xl shadow-sm hover:opacity-95 cursor-pointer border-0"
               onClick={() => {
                 setMobileDrawerOpen(false);
                 handleAuthClick('register');
@@ -617,14 +622,14 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Wallet Balance */}
-          <div className="flex items-center justify-between gap-2 p-3 bg-[#FAF8F2] rounded-xl border border-[#E7E2D8] mb-4">
+          <div className="flex items-center justify-between gap-2 p-3 bg-[#FAF9F2] rounded-xl border border-[#DDEBD5] mb-4">
             <div className="flex items-center gap-2">
               <span>🪙</span>
-              <span className="text-xs font-bold text-[#B45309]">{walletBalance}</span>
+              <span className="text-xs font-bold text-[#A77B25]">{walletBalance}</span>
             </div>
             <button
               type="button"
-              className="text-xs font-bold text-[#4a1b9a] hover:underline cursor-pointer bg-transparent border-0"
+              className="text-xs font-bold text-[#164B32] hover:underline cursor-pointer bg-transparent border-0"
               onClick={() => {
                 setMobileDrawerOpen(false);
                 handleWalletClick();
@@ -638,78 +643,78 @@ export default function Navbar() {
           <nav className="mobile-nav-list flex flex-col gap-1.5">
             <Link
               to="/"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🏠</span> <span>Home</span>
             </Link>
             <Link
               to="/astrologers"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🔮</span> <span>Astrologers</span>
             </Link>
             <Link
               to="/mandir-seva/puja"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🛕</span> <span>Puja (मंदिर सेवा)</span>
             </Link>
             <Link
               to="/mandir-seva/chadhava"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🪔</span> <span>Chadhava (चढ़ावा)</span>
             </Link>
             <Link
               to="/bhakti"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🪷</span> <span>Bhakti (भक्ति)</span>
             </Link>
             <Link
               to="/gau-sewa"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>🐄</span> <span>Gau Sewa</span>
             </Link>
             <Link
               to="/astro-mall"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>📿</span> <span>Astro Mall (एस्ट्रो मॉल)</span>
             </Link>
             <Link
               to="/rashiphal"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>♈</span> <span>Rashiphal (दैनिक राशिफल)</span>
             </Link>
             <Link
               to="/panchang"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
               <span>📅</span> <span>Aaj Ka Panchang</span>
             </Link>
             <Link
               to="/calculators"
-              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1E1B4B] hover:bg-[#f4eefb] hover:text-[#4a1b9a] transition-colors"
+              className="mobile-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#183C2B] hover:bg-[#EDF4E8] hover:text-[#164B32] transition-colors"
               onClick={() => setMobileDrawerOpen(false)}
             >
-              <span>📐</span> <span>Calculators (17 वैदिक साधन)</span>
+              <span>📐</span> <span>Calculators (वैदिक साधन)</span>
             </Link>
           </nav>
         </div>
 
-        <div className="pt-4 border-t border-[#E7E2D8] flex items-center justify-between text-xs text-slate-400">
+        <div className="pt-4 border-t border-[#DDEBD5] flex items-center justify-between text-xs text-slate-400">
           <span>Astro Jyotish • Vedic Science</span>
           <span>🇮🇳 India</span>
         </div>

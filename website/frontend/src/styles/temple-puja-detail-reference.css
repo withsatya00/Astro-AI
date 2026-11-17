@@ -37,12 +37,12 @@
 }
 .tp-breadcrumb a:hover,
 .pd-breadcrumb a:hover {
-  color: #3E0B18;
+  color: #103B29;
   text-decoration: underline;
 }
 .tp-breadcrumb span.current,
 .pd-breadcrumb span.current {
-  color: #3E0B18;
+  color: #103B29;
   font-weight: 600;
 }
 
@@ -124,7 +124,7 @@
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(6px);
   border: 1px solid rgba(212, 175, 55, 0.4);
-  color: #3E0B18;
+  color: #103B29;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -148,7 +148,7 @@
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(6px);
   border: 1px solid #E5D9C7;
-  color: #3E0B18;
+  color: #103B29;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -306,7 +306,7 @@
   padding: 6px 13px;
   font-size: 12px;
   font-weight: 600;
-  color: #3E0B18;
+  color: #103B29;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -322,7 +322,7 @@
 }
 
 .btn-primary-maroon {
-  background: #3E0B18;
+  background: #103B29;
   color: #FFFDF8 !important;
   border: none;
   border-radius: 999px;
@@ -346,7 +346,7 @@
 
 .btn-secondary-white {
   background: #FFFFFF;
-  color: #650F23 !important;
+  color: #164B32 !important;
   border: 1.5px solid #D4AF37;
   border-radius: 999px;
   padding: 11px 24px;
@@ -540,7 +540,7 @@
   color: #2D0810;
 }
 .tp-add-btn {
-  background: #3E0B18;
+  background: #103B29;
   color: #FFFDF8;
   border: none;
   border-radius: 6px;
@@ -661,7 +661,7 @@
 
 /* Live Darshan Maroon Strip */
 .tp-livedarshan-strip {
-  background: linear-gradient(100deg, #3E0B18 0%, #5E0F24 100%);
+  background: linear-gradient(100deg, #103B29 0%, #5E0F24 100%);
   border-radius: 14px;
   padding: 16px 20px;
   display: flex;
@@ -713,7 +713,7 @@
 }
 .tp-live-btn {
   background: #F1CF8B;
-  color: #3E0B18;
+  color: #103B29;
   border: none;
   border-radius: 999px;
   padding: 8px 20px;
@@ -885,7 +885,7 @@
 .pd-tab-btn {
   background: #FAF7F2;
   border: 1px solid #E5D9C7;
-  color: #3E0B18;
+  color: #103B29;
   border-radius: 8px;
   padding: 8px 18px;
   font-size: 13px;
@@ -903,8 +903,8 @@
   border-color: #D4AF37;
 }
 .pd-tab-btn.active {
-  background: #3E0B18 !important;
-  border-color: #3E0B18 !important;
+  background: #103B29 !important;
+  border-color: #103B29 !important;
   color: #FFFDF8 !important;
   font-weight: 700;
 }
@@ -1015,7 +1015,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #3E0B18;
+  background: #103B29;
   color: #FFFDF8;
   font-size: 12px;
   font-weight: 800;
@@ -1057,7 +1057,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #3E0B18;
+  background: #103B29;
   color: #FFFDF8;
   display: grid;
   place-items: center;
@@ -1119,7 +1119,7 @@
   margin-bottom: 12px;
 }
 .pd-package-btn {
-  background: #3E0B18;
+  background: #103B29;
   color: #FFFDF8;
   border: none;
   border-radius: 8px;

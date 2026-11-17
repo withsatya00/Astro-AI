@@ -27,7 +27,7 @@ export default function FourStepJourney() {
           <span className="home-ref-journey-num" aria-hidden="true">2</span>
           <div className="home-ref-journey-icon" aria-hidden="true">📜</div>
           <h3 className="home-ref-journey-title">Kundli &amp; Vedic tools</h3>
-          <p className="home-ref-journey-desc">Match kundli, check doshas, run Panchang, Dasha and 17 Vedic calculators.</p>
+          <p className="home-ref-journey-desc">Match kundli, check doshas, run Panchang, Dasha and authentic Vedic calculators.</p>
           <span className="home-ref-journey-link">Open Tools <span>→</span></span>
         </Link>
 

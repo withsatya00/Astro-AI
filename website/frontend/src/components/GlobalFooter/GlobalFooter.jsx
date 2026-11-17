@@ -32,11 +32,11 @@ export default function GlobalFooter() {
   };
 
   return (
-    <footer className="site-global-footer bg-[#1a060d] text-slate-300 pt-10 pb-8 border-t border-[#3B0612]" id="site-global-footer">
+    <footer className="site-global-footer bg-[#FFFDF5] text-[#56675B] pt-10 pb-8 border-t border-[#DDEBD5]" id="site-global-footer">
       <div className="site-footer-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Brand Banner at Top of Footer */}
-        <div className="footer-brand-strip flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-white/10">
+        <div className="footer-brand-strip flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 mb-6 border-b border-[#DDEBD5]">
           <Link to="/" aria-label="Astro Jyotish home" className="footer-brand flex items-center gap-2.5 no-underline">
             <img
               src="/assets/brand/logo-full-v2-720.webp"
@@ -48,7 +48,7 @@ export default function GlobalFooter() {
               decoding="async"
             />
           </Link>
-          <p className="footer-brand-desc text-slate-400 text-xs sm:text-sm text-center sm:text-right max-w-md m-0">
+          <p className="footer-brand-desc text-[#56675B] text-xs sm:text-sm text-center sm:text-right max-w-md m-0">
             Authentic Vedic Astrology &amp; Kundli Platform. Guiding your life with wisdom, precision, and sacred tradition.
           </p>
         </div>
@@ -57,71 +57,71 @@ export default function GlobalFooter() {
         <div className="footer-columns-grid grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           
           {/* Col 1: Quick Links */}
-          <div className="footer-col-section border-b border-white/5 md:border-b-0 pb-3 md:pb-0">
+          <div className="footer-col-section border-b border-[#DDEBD5] md:border-b-0 pb-3 md:pb-0">
             <button
               type="button"
               className="footer-accordion-header flex items-center justify-between w-full text-left md:pointer-events-none cursor-pointer bg-transparent border-0 p-0"
               onClick={() => toggleSection('quickLinks')}
               aria-expanded={openSections.quickLinks}
             >
-              <h4 className="footer-heading font-semibold text-sm text-[#F8D882] tracking-wide m-0">Quick Links</h4>
-              <span className="footer-accordion-chevron md:hidden text-xs text-[#F8D882]">
+              <h4 className="footer-heading font-semibold text-sm text-[#183C2B] tracking-wide m-0">Quick Links</h4>
+              <span className="footer-accordion-chevron md:hidden text-xs text-[#183C2B]">
                 {openSections.quickLinks ? '▲' : '▼'}
               </span>
             </button>
-            <ul className={`footer-links space-y-2 text-xs text-slate-400 mt-3 ${openSections.quickLinks ? 'block' : 'hidden md:block'}`}>
-              <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/astrologers" className="hover:text-white transition-colors">Astrologers</Link></li>
-              <li><Link to="/rashiphal" className="hover:text-white transition-colors">Rashiphal (Daily Horoscope)</Link></li>
-              <li><Link to="/calculators" className="hover:text-white transition-colors">17 Vedic Calculators</Link></li>
-              <li><Link to="/panchang" className="hover:text-white transition-colors">Aaj Ka Panchang</Link></li>
-              <li><Link to="/mall" className="hover:text-white transition-colors">Astro Mall &amp; Remedies</Link></li>
-              <li><Link to="/mandir-seva" className="hover:text-white transition-colors">Mandir Seva &amp; Pujas</Link></li>
-              <li><Link to="/gau-sewa" className="hover:text-white transition-colors">Gau Sewa Support</Link></li>
+            <ul className={`footer-links space-y-2 text-xs text-[#56675B] mt-3 ${openSections.quickLinks ? 'block' : 'hidden md:block'}`}>
+              <li><Link to="/" className="hover:text-[#164B32] transition-colors">Home</Link></li>
+              <li><Link to="/astrologers" className="hover:text-[#164B32] transition-colors">Astrologers</Link></li>
+              <li><Link to="/rashiphal" className="hover:text-[#164B32] transition-colors">Rashiphal (Daily Horoscope)</Link></li>
+              <li><Link to="/calculators" className="hover:text-[#164B32] transition-colors">Vedic Calculators</Link></li>
+              <li><Link to="/panchang" className="hover:text-[#164B32] transition-colors">Aaj Ka Panchang</Link></li>
+              <li><Link to="/mall" className="hover:text-[#164B32] transition-colors">Astro Mall &amp; Remedies</Link></li>
+              <li><Link to="/mandir-seva" className="hover:text-[#164B32] transition-colors">Mandir Seva &amp; Pujas</Link></li>
+              <li><Link to="/gau-sewa" className="hover:text-[#164B32] transition-colors">Gau Sewa Support</Link></li>
             </ul>
           </div>
 
           {/* Col 2: Our Services */}
-          <div className="footer-col-section border-b border-white/5 md:border-b-0 pb-3 md:pb-0">
+          <div className="footer-col-section border-b border-[#DDEBD5] md:border-b-0 pb-3 md:pb-0">
             <button
               type="button"
               className="footer-accordion-header flex items-center justify-between w-full text-left md:pointer-events-none cursor-pointer bg-transparent border-0 p-0"
               onClick={() => toggleSection('services')}
               aria-expanded={openSections.services}
             >
-              <h4 className="footer-heading font-semibold text-sm text-[#F8D882] tracking-wide m-0">Our Services</h4>
-              <span className="footer-accordion-chevron md:hidden text-xs text-[#F8D882]">
+              <h4 className="footer-heading font-semibold text-sm text-[#183C2B] tracking-wide m-0">Our Services</h4>
+              <span className="footer-accordion-chevron md:hidden text-xs text-[#183C2B]">
                 {openSections.services ? '▲' : '▼'}
               </span>
             </button>
-            <ul className={`footer-links space-y-2 text-xs text-slate-400 mt-3 ${openSections.services ? 'block' : 'hidden md:block'}`}>
+            <ul className={`footer-links space-y-2 text-xs text-[#56675B] mt-3 ${openSections.services ? 'block' : 'hidden md:block'}`}>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('kundali-milan')} className="hover:text-white transition-colors">
+                <Link to="/calculators" onClick={() => handleCalculatorModal('kundali-milan')} className="hover:text-[#164B32] transition-colors">
                   Kundli Milan &amp; Matching
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('numerology')} className="hover:text-white transition-colors">
+                <Link to="/calculators" onClick={() => handleCalculatorModal('numerology')} className="hover:text-[#164B32] transition-colors">
                   Vedic Numerology
                 </Link>
               </li>
               <li>
-                <Link to="/astrologers" className="hover:text-white transition-colors">
+                <Link to="/astrologers" className="hover:text-[#164B32] transition-colors">
                   Career &amp; Business Guidance
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('love-compat')} className="hover:text-white transition-colors">
+                <Link to="/calculators" onClick={() => handleCalculatorModal('love-compat')} className="hover:text-[#164B32] transition-colors">
                   Love &amp; Marriage Compatibility
                 </Link>
               </li>
               <li>
-                <Link to="/calculators" onClick={() => handleCalculatorModal('gemstone')} className="hover:text-white transition-colors">
+                <Link to="/calculators" onClick={() => handleCalculatorModal('gemstone')} className="hover:text-[#164B32] transition-colors">
                   Gemstone &amp; Shanti Remedies
                 </Link>
               </li>
               <li>
-                <Link to="/mandir-seva/temple/mahakaleshwar-ujjain" className="hover:text-white transition-colors">
+                <Link to="/mandir-seva/temple/mahakaleshwar-ujjain" className="hover:text-[#164B32] transition-colors">
                   Mahakaleshwar Bhasma Aarti Puja
                 </Link>
               </li>
@@ -136,12 +136,12 @@ export default function GlobalFooter() {
               onClick={() => toggleSection('support')}
               aria-expanded={openSections.support}
             >
-              <h4 className="footer-heading font-semibold text-sm text-[#F8D882] tracking-wide m-0">Support &amp; Legal</h4>
-              <span className="footer-accordion-chevron md:hidden text-xs text-[#F8D882]">
+              <h4 className="footer-heading font-semibold text-sm text-[#183C2B] tracking-wide m-0">Support &amp; Legal</h4>
+              <span className="footer-accordion-chevron md:hidden text-xs text-[#183C2B]">
                 {openSections.support ? '▲' : '▼'}
               </span>
             </button>
-            <ul className={`footer-links space-y-2 text-xs text-slate-400 mt-3 ${openSections.support ? 'block' : 'hidden md:block'}`}>
+            <ul className={`footer-links space-y-2 text-xs text-[#56675B] mt-3 ${openSections.support ? 'block' : 'hidden md:block'}`}>
               <li>
                 <button type="button" className="footer-info-link" onClick={() => handleServiceInfo('about')}>
                   About Astro Jyotish
@@ -202,11 +202,11 @@ export default function GlobalFooter() {
         </div>
 
         {/* Bottom Copyright & Made in India Bar */}
-        <div className="footer-bottom-bar pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+        <div className="footer-bottom-bar pt-4 border-t border-[#DDEBD5] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#56675B]">
           <div className="footer-copyright text-center sm:text-left">
             © 2026 Astro Jyotish. All rights reserved.
           </div>
-          <div className="footer-made-in-india flex items-center gap-1.5 text-slate-300">
+          <div className="footer-made-in-india flex items-center gap-1.5 text-[#56675B]">
             <span>Made with</span>
             <span className="text-rose-500">❤️</span>
             <span>in India</span>

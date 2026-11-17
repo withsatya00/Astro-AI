@@ -17,6 +17,8 @@ import ProductDetailPage from './pages/ProductPage/ProductDetailPage.jsx';
 import CalculatorsPage from './pages/CalculatorsPage/CalculatorsPage.jsx';
 import ConsultationRoom from './pages/ConsultationPage/ConsultationRoom.jsx';
 import WalletPage from './pages/WalletPage/WalletPage.jsx';
+import UserProfilePage from './pages/ProfilePage/UserProfilePage.jsx';
+import AuthPage from './pages/AuthPage/AuthPage.jsx';
 import PanchangAndHoroscope from './pages/HomePage/PanchangAndHoroscope.jsx';
 const BhaktiLayout = lazy(() => import('./pages/BhaktiPage/BhaktiLayout.jsx'));
 const BhaktiHome = lazy(() => import('./pages/BhaktiPage/BhaktiHome.jsx'));
@@ -40,15 +42,50 @@ const PujaDetail = lazy(() => import('./pages/BhaktiPage/PujaDetail.jsx'));
 const Festivals = lazy(() => import('./pages/BhaktiPage/Festivals.jsx'));
 const Sadhana = lazy(() => import('./pages/BhaktiPage/Sadhana.jsx'));
 const TrustCenterPage = lazy(() => import('./pages/TrustCenterPage/TrustCenterPage.jsx'));
+const UnifiedAdminPage = lazy(() => import('./pages/AdminPage/UnifiedAdminPage.jsx'));
 const ComingSoon = lazy(() => import('./pages/BhaktiPage/ComingSoon.jsx'));
+
+class GlobalErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error('App Global Error Boundary caught:', error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', textAlign: 'center', backgroundColor: '#FAF7F2', fontFamily: 'serif' }}>
+          <span style={{ fontSize: '48px', marginBottom: '16px' }}>🕉️</span>
+          <h2 style={{ fontSize: '24px', color: '#1E1B4B', margin: '0 0 12px' }}>सेवा लोड करने में समस्या आई</h2>
+          <p style={{ fontSize: '14px', color: '#64748B', maxWidth: '440px', lineHeight: 1.6, margin: '0 0 24px' }}>
+            कृपया पृष्ठ को पुनः लोड करें अथवा कुछ समय पश्चात पुनः प्रयास करें।
+          </p>
+          <button
+            onClick={() => { this.setState({ hasError: false }); window.location.reload(); }}
+            style={{ padding: '12px 28px', backgroundColor: '#3E0B18', color: '#FFF9EF', border: 'none', borderRadius: '9999px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(62,11,24,0.15)' }}
+          >
+            पृष्ठ पुनः लोड करें (Reload)
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Analytics />
-      <Layout>
-        <CartSync />
-        <Routes>
+    <GlobalErrorBoundary>
+      <BrowserRouter>
+        <Analytics />
+        <Layout>
+          <CartSync />
+          <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/astrologers" element={<DirectoryPage />} />
           <Route path="/astrologers/:slug" element={<ProfilePage />} />
@@ -101,19 +138,24 @@ export default function App() {
             <Route path="sadhana" element={<Sadhana />} />
           </Route>
           <Route path="/wallet" element={<WalletPage />} />
-          <Route path="/profile" element={<ProfileView />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/admin" element={<Suspense fallback={<div style={{ minHeight: '60vh' }} />}><UnifiedAdminPage /></Suspense>} />
+          <Route path="/login" element={<AuthPage initialMode="login" />} />
+          <Route path="/register" element={<AuthPage initialMode="register" />} />
+          <Route path="/signup" element={<AuthPage initialMode="register" />} />
           <Route path="/trust-center" element={<Suspense fallback={<div style={{ minHeight: '50vh' }} />}><TrustCenterPage /></Suspense>} />
           <Route path="*" element={<NotFoundView />} />
         </Routes>
       </Layout>
     </BrowserRouter>
+  </GlobalErrorBoundary>
   );
 }
 
 function RashiphalDedicatedPage() {
   return (
     <div className="w-full min-w-0 max-w-full overflow-x-hidden bg-[#FAF7F2] py-8">
-      <div className="max-w-7xl mx-auto px-4 mb-6">
+      <div className="premium-page-banner max-w-7xl mx-auto px-4 mb-6">
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#3E0B18]">Daily Rashifal (दैनिक राशिफल)</h1>
         <p className="text-xs sm:text-sm text-slate-600">Daily planetary transits, lucky numbers, colors, and astrological advice for all 12 signs.</p>
       </div>
@@ -125,7 +167,7 @@ function RashiphalDedicatedPage() {
 function PanchangDedicatedPage() {
   return (
     <div className="w-full min-w-0 max-w-full overflow-x-hidden bg-[#FAF7F2] py-8">
-      <div className="max-w-7xl mx-auto px-4 mb-6">
+      <div className="premium-page-banner max-w-7xl mx-auto px-4 mb-6">
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#3E0B18]">Aaj Ka Panchang (दैनिक पंचांग)</h1>
         <p className="text-xs sm:text-sm text-slate-600">Accurate Vedic calendar timings: Tithi, Nakshatra, Yoga, Karana, Shubh Muhurat &amp; Rahukaal.</p>
       </div>
@@ -181,7 +223,7 @@ function HomeView() {
           { label: 'Call Astrologer', icon: '📞', to: '/astrologers', desc: 'Direct call' },
           { label: 'Daily Horoscope', icon: '♈', to: '/rashiphal', desc: 'All 12 signs' },
           { label: 'Kundli Milan', icon: '💖', to: '/calculators/kundali-milan', desc: 'Gun matching' },
-          { label: '17 Calculators', icon: '📐', to: '/calculators', desc: 'Vedic tools' },
+          { label: 'Calculators', icon: '📐', to: '/calculators', desc: 'Vedic tools' },
           { label: 'Astro Mall', icon: '📿', to: '/astro-mall', desc: 'Siddh items' },
           { label: 'Trust Center', icon: '✓', to: '/trust-center', desc: 'Verify guidance' },
         ].map((card, i) => (
@@ -288,7 +330,7 @@ function PanchangView() {
 function CalculatorsView() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">17 Vedic Astrology Calculators</h2>
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E1B4B] mb-2">Vedic Astrology Calculators</h2>
       <p className="text-slate-600 text-sm mb-6">Kundli Milan, Shani Sade Sati, Mangal Dosha, Gemstone recommendation, and more.</p>
     </div>
   );

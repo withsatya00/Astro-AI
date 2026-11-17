@@ -756,3 +756,23 @@ class PaymentWebhookEvent(Base):
     received_at = Column(DateTime(timezone=True), default=utc_now)
 
     __table_args__ = (UniqueConstraint("provider", "event_id", name="uq_webhook_provider_event"),)
+
+
+class VedicCompanionSubscription(Base):
+    """WhatsApp & Telegram Daily Vedic Companion subscriptions for proactive Brahmamuhurta digests."""
+    __tablename__ = "vedic_companion_subscriptions"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=True, index=True)
+    owner_key = Column(String(80), nullable=True, index=True)
+    channel = Column(String(20), default="whatsapp")  # whatsapp, telegram, push, email
+    phone_or_handle = Column(String(100), nullable=False)
+    delivery_time = Column(String(10), default="05:30")  # '05:30' (Brahmamuhurta), '07:00' (Morning)
+    language = Column(String(5), default="hi")  # hi, en
+    rashi = Column(String(50), default="Singh (Leo)")
+    nakshatra = Column(String(50), nullable=True)
+    is_active = Column(Boolean, default=True)
+    last_sent_at = Column(DateTime(timezone=True), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=utc_now)
+    updated_at = Column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
+

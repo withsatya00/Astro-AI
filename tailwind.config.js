@@ -7,43 +7,78 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Brand Primary Forest & Sage Colors
+        forest: {
+          DEFAULT: '#164B32',
+          deep: '#103B29',
+          light: '#1F6343'
+        },
+        sage: {
+          DEFAULT: '#DDEBD5',
+          light: '#EDF4E8',
+          mint: '#E6F0DF',
+          dark: '#B8D1AB'
+        },
+        // Surfaces & Backgrounds
+        ivory: {
+          DEFAULT: '#FFFDF5',
+          main: '#FAF9F2',
+          card: '#FFFFFF',
+          secondary: '#F2F5EA'
+        },
+        // Antique Gold Accents
+        gold: {
+          DEFAULT: '#C49A3A',
+          antique: '#A77B25',
+          light: '#E7D39B',
+          bg: '#FBF3DA',
+          border: '#D8C28A'
+        },
+        // Typography Colors
+        'forest-text': {
+          DEFAULT: '#183C2B',
+          secondary: '#56675B',
+          muted: '#849087',
+          white: '#FFFFFF'
+        },
+        // Legacy Aliases mapped to new Sage Green + Antique Gold system
         'astro-navy': {
-          DEFAULT: '#34251F',
-          dark: '#3E0B18',
-          light: '#59463E'
+          DEFAULT: '#183C2B',
+          dark: '#103B29',
+          light: '#56675B'
         },
         'astro-purple': {
-          DEFAULT: '#650F23',
-          dark: '#4E0B1B',
-          light: '#FAEEF0',
-          subtle: '#EDD9DC'
+          DEFAULT: '#164B32',
+          dark: '#103B29',
+          light: '#EDF4E8',
+          subtle: '#DDEBD5'
         },
         'astro-gold': {
-          DEFAULT: '#D5AA51',
-          dark: '#87601F',
-          light: '#FFF9EF',
-          border: '#E8D7BA'
+          DEFAULT: '#C49A3A',
+          dark: '#A77B25',
+          light: '#FFFDF5',
+          border: '#E7D39B'
         },
-        'astro-surface': '#FFFAF2',
-        'astro-cream': '#FFF9EF',
-        'astro-border': '#E8D7BA',
-        'astro-border-subtle': '#F1ECE1',
+        'astro-surface': '#FAF9F2',
+        'astro-cream': '#FFFDF5',
+        'astro-border': '#DDEBD5',
+        'astro-border-subtle': '#EDF4E8',
         'astro-text': {
-          DEFAULT: '#34251F',
-          muted: '#64748B',
-          secondary: '#475569'
+          DEFAULT: '#183C2B',
+          muted: '#849087',
+          secondary: '#56675B'
         }
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Noto Serif Devanagari', 'Georgia', 'serif'],
-        sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['Playfair Display', 'Cormorant Garamond', 'Noto Serif Devanagari', 'Georgia', 'serif'],
+        sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
         devanagari: ['Noto Sans Devanagari', 'sans-serif']
       },
       boxShadow: {
-        'astro-sm': '0 2px 6px rgba(33, 29, 80, 0.06)',
-        'astro-md': '0 4px 16px rgba(33, 29, 80, 0.08)',
-        'astro-lg': '0 10px 28px rgba(33, 29, 80, 0.12)',
-        'astro-purple': '0 4px 14px rgba(116, 57, 234, 0.28)'
+        'astro-sm': '0 2px 6px rgba(22, 75, 50, 0.05)',
+        'astro-md': '0 4px 16px rgba(22, 75, 50, 0.08)',
+        'astro-lg': '0 10px 28px rgba(22, 75, 50, 0.12)',
+        'astro-gold': '0 4px 14px rgba(196, 154, 58, 0.22)'
       },
       maxWidth: {
         'content': '1280px',

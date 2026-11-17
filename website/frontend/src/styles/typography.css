@@ -20,8 +20,8 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif, 'Cinzel', 'Playfair Display', Georgia, serif);
-  color: var(--color-navy-main, #34251f);
+  font-family: var(--font-serif, 'Playfair Display', 'Cormorant Garamond', Georgia, serif);
+  color: var(--color-navy-main, #183C2B);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -40,22 +40,22 @@ h3 {
 }
 
 p {
-  color: var(--text-secondary, #53627A);
+  color: var(--text-secondary, #56675B);
   font-size: var(--font-body, 1rem);
   line-height: 1.6;
 }
 
 .text-sanskrit {
-  font-family: 'Noto Serif Devanagari', 'Rozha One', Georgia, serif;
+  font-family: 'Noto Serif Devanagari', 'Playfair Display', Georgia, serif;
   letter-spacing: 0.02em;
 }
 
 .text-gold {
-  color: var(--color-gold-dark, #B45309);
+  color: var(--color-gold-primary, #C49A3A);
 }
 
 .text-purple {
-  color: var(--color-purple-primary, #650f23);
+  color: var(--brand-primary, #164B32);
 }
 
 .text-muted {

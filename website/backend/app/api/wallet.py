@@ -17,6 +17,7 @@ from packages.database.models import (
     User, Astrologer, WalletTransaction, Booking, PaymentWebhookEvent, generate_uuid, utc_now
 )
 from website.backend.app.api.auth import get_current_user_optional
+from website.backend.app.api.mandir import require_admin
 from packages.core.identity import Owner, optional_owner
 from packages.core.notify import notify
 from packages.core.config import settings
@@ -497,3 +498,101 @@ def cancel_booking(
         "booking_id": booking.id,
         "message": "Booking has been cancelled and full refund credited to your wallet."
     }
+
+
+# ----------------- Admin Wallet & User Endpoints -----------------
+class WalletAdjustRequest(BaseModel):
+    user_id: str
+    amount: float = Field(..., description="Positive for credit, negative for debit")
+    reason: Optional[str] = "Admin manual balance adjustment"
+
+
+@router.get("/admin/users")
+def admin_list_users(
+    q: Optional[str] = None,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
+):
+    """Admin endpoint to list all devotees with their real-time wallet balances."""
+    query = db.query(User)
+    if q and q.strip():
+        term = f"%{q.strip().lower()}%"
+        query = query.filter((User.email.ilike(term)) | (User.full_name.ilike(term)))
+    users = query.order_by(User.created_at.desc()).limit(limit).all()
+    return [
+        {
+            "id": u.id,
+            "email": u.email,
+            "full_name": u.full_name or u.email.split("@")[0],
+            "phone": u.phone,
+            "role": u.role,
+            "wallet_balance": float(u.wallet_balance or 0.0),
+            "loyalty_points": u.loyalty_points or 0,
+            "created_at": u.created_at.isoformat() if u.created_at else None
+        }
+        for u in users
+    ]
+
+
+@router.post("/admin/adjust")
+def admin_adjust_wallet(
+    payload: WalletAdjustRequest,
+    db: Session = Depends(get_db),
+    admin: User = Depends(require_admin)
+):
+    """Admin endpoint to manually credit or debit any user's wallet with an audit trail."""
+    user = db.query(User).filter(User.id == payload.user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    prev_balance = float(user.wallet_balance or 0.0)
+    new_balance = prev_balance + payload.amount
+    if new_balance < 0:
+        raise HTTPException(status_code=400, detail="Wallet balance cannot be adjusted below zero")
+
+    user.wallet_balance = new_balance
+    tx_type = "admin_credit" if payload.amount >= 0 else "admin_debit"
+    tx = WalletTransaction(
+        id=generate_uuid(),
+        user_id=user.id,
+        amount=abs(payload.amount),
+        transaction_type=tx_type,
+        description=f"{payload.reason} (by Admin: {admin.email})",
+        reference_id=f"ADM_{generate_uuid()[:8].upper()}",
+        created_at=utc_now()
+    )
+    db.add(tx)
+    db.commit()
+    return {
+        "success": True,
+        "user_id": user.id,
+        "previous_balance": prev_balance,
+        "new_balance": new_balance,
+        "transaction_id": tx.id,
+        "message": f"Successfully updated wallet balance to ₹{new_balance:.2f}"
+    }
+
+
+@router.get("/admin/transactions")
+def admin_list_transactions(
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
+):
+    """Admin endpoint to inspect recent wallet transactions across all devotees."""
+    txs = db.query(WalletTransaction).order_by(WalletTransaction.created_at.desc()).limit(limit).all()
+    results = []
+    for t in txs:
+        u = db.query(User).filter(User.id == t.user_id).first()
+        results.append({
+            "id": t.id,
+            "user_id": t.user_id,
+            "user_email": u.email if u else "Unknown",
+            "amount": float(t.amount or 0.0),
+            "transaction_type": t.transaction_type,
+            "description": t.description,
+            "reference_id": t.reference_id,
+            "created_at": t.created_at.isoformat() if t.created_at else None
+        })
+    return results

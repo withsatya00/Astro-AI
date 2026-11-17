@@ -6,6 +6,7 @@ import UserAccountModal from '../components/UserAccountModal/UserAccountModal.js
 import Navbar from '../components/Navbar/Navbar.jsx';
 import BottomNav from '../components/BottomNav/BottomNav.jsx';
 import GlobalFooter from '../components/GlobalFooter/GlobalFooter.jsx';
+import BackToTop from '../components/BackToTop/BackToTop.jsx';
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -32,6 +33,7 @@ export default function Layout({ children }) {
         </main>
         {!isChatroom && <GlobalFooter />}
         {!isChatroom && <BottomNav />}
+        <BackToTop />
         <AuthModal />
         <UserAccountModal />
       </div>

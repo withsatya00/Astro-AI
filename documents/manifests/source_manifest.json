@@ -179,7 +179,67 @@
       "checksum": "d686ff26a3a7d6977e764130b9bed34538609d16edb3b39d60310965cd7b8391",
       "file_size": 9845,
       "topic": "remedies"
+    },
+    {
+      "source_id": "bphs-classical-shlokas",
+      "title": "Brihat Parashara Hora Shastra: Classical Sanskrit Shlokas & Bhava Syntheses",
+      "author": "Maharishi Parashara",
+      "publisher": "Classical Vedic Shastra Sansthan",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "documents/sources/classical_shastras/bphs_classical_shlokas_compendium.md",
+      "checksum": "b1437fc0a5a017fe2b7387e4f31b97145e80d399759211c49051e97b8caacecb",
+      "file_size": 8091,
+      "topic": "classical_shastras"
+    },
+    {
+      "source_id": "phaladeepika-dasha-bhukti-matrix",
+      "title": "Mantreswara's Phaladeepika: Classical Dasha-Bhukti and Planetary Dignity Matrix",
+      "author": "Mantreswara",
+      "publisher": "Classical Vedic Shastra Sansthan",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "documents/sources/classical_shastras/phaladeepika_dasha_bhukti_matrix.md",
+      "checksum": "ea5fe7c9df29988297c807b1a52322d37482dfabf59d38628f9e9bb29e0352d3",
+      "file_size": 7450,
+      "topic": "classical_shastras"
+    },
+    {
+      "source_id": "jaimini-karaka-chara-dasha",
+      "title": "Jaimini Upadesha Sutras: Sapta Karakas, Arudha Lagna, and Chara Dasha",
+      "author": "Maharishi Jaimini",
+      "publisher": "Classical Vedic Shastra Sansthan",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "documents/sources/classical_shastras/jaimini_karaka_chara_dasha.md",
+      "checksum": "605c3912e8b8be7b040a976480f0d8c5a603d02cd1e0f656e52d82d8c05a38f6",
+      "file_size": 5290,
+      "topic": "classical_shastras"
+    },
+    {
+      "source_id": "lal-kitab-ethical-remedies",
+      "title": "Authentic Lal Kitab (1952 Edition): Ethical Karmic Remedies & Positive Remedial Principles",
+      "author": "Pandit Roop Chand Joshi Heritage",
+      "publisher": "Open Knowledge Archive",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "documents/sources/remedies/lal_kitab_ethical_remedies.md",
+      "checksum": "12f7347ffe5d221ebf9ae52a6c88db097f86a9ef2f0e5f4b02f10d3936fb3870",
+      "file_size": 6500,
+      "topic": "remedies"
+    },
+    {
+      "source_id": "muhurta-chintamani-compendium",
+      "title": "Muhurta Chintamani & Classical Electional Astrology Compendium",
+      "author": "Acharya Ramadaivajna",
+      "publisher": "Classical Heritage Text Archive",
+      "license": "Public Domain / Open Educational Resource",
+      "permission_status": "PERMITTED",
+      "file_path": "documents/sources/panchang_and_muhurta/muhurta_chintamani_compendium.md",
+      "checksum": "e88d86ddc9d00bfb4076a677b3bd8d637403ba2be8fe09f33e1af2c52786923e",
+      "file_size": 6569,
+      "topic": "panchang_and_muhurta"
     }
   ],
-  "last_updated": 1792135000
+  "last_updated": 1794815000
 }

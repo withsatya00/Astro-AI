@@ -19,13 +19,28 @@ export function useLang() {
   return lang;
 }
 
+const getToken = () => {
+  try { return localStorage.getItem('astro_access_token') || ''; } catch (e) { return ''; }
+};
+
 export class ApiError extends Error {
   constructor(status, message) { super(message); this.status = status; }
 }
 
-export async function call(path, init) {
+export async function call(path, init = {}) {
   let res;
-  try { res = await fetch(`${API}${path}`, init); } catch (e) { throw new ApiError(0, 'Could not reach the server. Please try again.'); }
+  const headers = { Accept: 'application/json', ...((init && init.headers) || {}) };
+  const t = getToken();
+  if (t && !headers.Authorization && !headers.authorization) {
+    headers.Authorization = `Bearer ${t}`;
+  }
+  const fullInit = { ...init, headers };
+
+  try {
+    res = await fetch(`${API}${path}`, fullInit);
+  } catch (e) {
+    throw new ApiError(0, 'Could not reach the server. Please try again.');
+  }
   let data = null;
   try { data = await res.json(); } catch (e) { /* not json */ }
   if (!res.ok) {

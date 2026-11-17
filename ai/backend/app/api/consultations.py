@@ -375,7 +375,39 @@ def send_consultation_message(
                     "created_at": last_asst.created_at.isoformat()
                 }
 
-    # 1. Record User Message
+    # 1. Check Wallet Balance & Authorization for Billed Consultation
+    rate = float(astro.price_per_minute or 0.0)
+    if rate > 0:
+        if not owner.user_id:
+            raise HTTPException(
+                status_code=401,
+                detail="Please sign in to chat with astrologers."
+            )
+        user = db.query(User).filter(User.id == owner.user_id).first()
+        meta = dict(consultation.consultation_metadata or {})
+        minutes_debited = meta.get("minutes_debited", 0)
+        bal = (user.wallet_balance or 0.0) if user else 0.0
+
+        if minutes_debited == 0:
+            if not user or bal < rate:
+                raise HTTPException(
+                    status_code=402,
+                    detail=f"Insufficient wallet balance (₹{bal:.2f}). Minimum ₹{rate:.2f} required to start consultation. Please recharge your wallet."
+                )
+            from packages.core.wallet_pay import charge_wallet
+            charge_wallet(db, owner.user_id, rate, f"1 min consultation with {astro.name}", "CHAT")
+            meta["minutes_debited"] = 1
+            consultation.consultation_metadata = meta
+            consultation.total_amount = rate
+            consultation.duration_seconds = 60
+        else:
+            if not user or bal < 0:
+                raise HTTPException(
+                    status_code=402,
+                    detail=f"Insufficient wallet balance (₹{bal:.2f}). Please recharge your wallet to continue."
+                )
+
+    # 2. Record User Message
     user_msg = ChatMessage(
         id=generate_uuid(),
         session_id=consultation.id,
@@ -726,6 +758,61 @@ async def stream_consultation_message(
             "X-Accel-Buffering": "no"
         }
     )
+
+@router.post("/{consultation_id}/debit-minute")
+def debit_consultation_minute(
+    consultation_id: str,
+    db: Session = Depends(get_db),
+    owner: Owner = Depends(require_owner)
+):
+    """
+    Debits 1 minute fee from the user's wallet for the ongoing consultation session.
+    Verifies that the caller owns the consultation and has sufficient balance.
+    """
+    if not owner.user_id:
+        raise HTTPException(status_code=401, detail="Please sign in to continue consultation.")
+    consultation = db.query(Consultation).filter(
+        Consultation.id == consultation_id,
+        Consultation.owner_key == owner.key
+    ).first()
+    if not consultation:
+        raise HTTPException(status_code=404, detail="Consultation not found.")
+
+    astro = db.query(Astrologer).filter(Astrologer.id == consultation.astrologer_id).first()
+    rate = float(astro.price_per_minute or consultation.price_per_minute or 0.0) if astro else float(consultation.price_per_minute or 0.0)
+
+    user = db.query(User).filter(User.id == owner.user_id).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found.")
+
+    current_bal = float(user.wallet_balance or 0.0)
+    if rate > 0:
+        if current_bal < rate:
+            raise HTTPException(
+                status_code=402,
+                detail=f"Insufficient wallet balance (₹{current_bal:.2f}). Minimum ₹{rate:.2f} required for 1 minute."
+            )
+        from packages.core.wallet_pay import charge_wallet
+        meta = dict(consultation.consultation_metadata or {})
+        mins = meta.get("minutes_debited", 0) + 1
+        meta["minutes_debited"] = mins
+        consultation.consultation_metadata = meta
+        consultation.total_amount = round(mins * rate, 2)
+        consultation.duration_seconds = mins * 60
+
+        charge_wallet(db, owner.user_id, rate, f"Minute {mins} consultation with {astro.name if astro else 'Astrologer'}", "CHAT")
+        db.commit()
+        db.refresh(user)
+
+    new_bal = float(user.wallet_balance or 0.0)
+    remaining_secs = int((new_bal / rate) * 60) if rate > 0 else 3600
+    return {
+        "success": True,
+        "rate_per_minute": rate,
+        "debited_amount": rate,
+        "new_balance": round(new_bal, 2),
+        "remaining_seconds": remaining_secs
+    }
 
 @router.post("/{consultation_id}/end", response_model=ConsultationSummaryResponse)
 def end_consultation(

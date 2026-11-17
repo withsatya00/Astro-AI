@@ -1,4 +1,4 @@
-/* One compact photographic banner across all service pages (1:1 Chadhava Blueprint). */
+/* One compact photographic banner across all service pages (Sage Green + Ivory + Antique Gold). */
 .directory-masthead .service-banner,
 .shop-page .service-banner,
 .gs-page .service-banner,
@@ -6,12 +6,13 @@
 .calc-reference-page .service-banner,
 .service-banner {
  position:relative; display:flex; align-items:center; isolation:isolate; overflow:hidden;
- min-height:340px; padding:30px 36px; gap:0; margin-bottom:24px;
- border:1px solid #e5d9c7; border-radius:22px; background-color:#3e0b18; background-image:var(--brand-banner);
- box-shadow:0 16px 38px -30px #281a3c70;
+ min-height:300px; padding:34px 44px; gap:0; margin-bottom:24px;
+ border:1.5px solid #DDEBD5 !important; border-radius:26px !important;
+ background: linear-gradient(135deg, #FAF7E8 0%, #F2F6EA 45%, #EBF3E3 100%) !important;
+ box-shadow: 0 12px 36px rgba(22, 75, 50, 0.08) !important;
 }
 .service-banner .service-banner__art,
-.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:1; background:#3e0b18; }
+.service-banner .gs-hero-art { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; margin:0; border-radius:0; z-index:1; background:#FAF7E8 !important; }
 .service-banner .service-banner__art img,
 .service-banner .gs-hero-art img { display:block; width:100%; height:100%; min-height:0; max-height:none; object-fit:cover; object-position:right center; }
 .directory-masthead .service-banner::after,
@@ -19,17 +20,24 @@
 .gs-page .service-banner::after,
 .gs-reference-page .service-banner::after,
 .service-banner--gausewa::after,
+.sacred-hero-banner::after,
+.service-banner--mandir::after,
 .service-banner::after {
  content:'' !important; position:absolute !important; inset:0 !important; width:auto !important; height:auto !important; border:0 !important; border-radius:0 !important; z-index:2 !important; pointer-events:none !important;
- background:linear-gradient(90deg, #200308 0%, #26040C 36%, rgba(38, 4, 12, 0.96) 50%, rgba(38, 4, 12, 0.65) 66%, rgba(38, 4, 12, 0.15) 80%, transparent 100%) !important;
+ background: linear-gradient(90deg, #F2F6EA 0%, rgba(242, 246, 234, 0.95) 42%, rgba(242, 246, 234, 0.55) 65%, rgba(242, 246, 234, 0.1) 85%, transparent 100%) !important;
 }
 .service-banner::before,.service-banner .gs-hero-art::after { display:none; }
 .service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:58%; max-width:680px; padding:0; min-width:0; }
-.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#f7eedf; background:#3e0b1880; font-size: 11.5px; line-height:1.5; backdrop-filter:blur(6px); }
+.service-banner figcaption { position:absolute; bottom:12px; right:14px; z-index:1; padding:4px 8px; border:1px solid #ffffff40; border-radius:5px; color:#FFFDF5; background:#103B2980; font-size: 11.5px; line-height:1.5; backdrop-filter:blur(6px); }
 .service-banner .gs-illustration { position:relative; width:100%; height:100%; margin:0; }
 .service-banner .directory-eyebrow,
 .service-banner .mandir-hero__eyebrow,
-.service-banner .gs-eyebrow { color:#efd4a0 !important; font-size: 11.5px; font-weight:700; letter-spacing:.15em; line-height:1.6; margin:0 0 14px; text-transform:uppercase; }
+.service-banner .gs-eyebrow {
+ background: #FBF3DA !important; border: 1.2px solid #E7D39B !important; color: #A77B25 !important;
+ border-radius: 999px !important; padding: 4px 14px !important; font-size: 11px !important;
+ font-weight: 800 !important; letter-spacing: 0.08em !important; display: inline-flex !important;
+ width: fit-content !important; margin: 0 0 14px !important; text-transform: uppercase !important;
+}
 .gs-page .service-banner .gs-eyebrow { margin-bottom:10px; }
 .service-banner .gs-hero-name { font-size: 11.5px; letter-spacing:.17em; margin-bottom:8px; }
 .service-banner h1,
@@ -39,8 +47,17 @@
 .mall-page .service-banner h1,
 .gs-page .service-banner h1,
 .gs-reference-page .service-banner h1,
-.service-banner--gausewa h1 { font-family:'Cinzel', 'Playfair Display', Georgia, serif !important; font-size:clamp(1.65rem,2.65vw,2.25rem) !important; font-weight:700 !important; letter-spacing:-.035em !important; line-height:1.18 !important; margin:0 0 14px !important; color:#fffdf8 !important; }
-.service-banner h1 em { font-style:normal !important; color:#efd4a0 !important; -webkit-text-fill-color:#efd4a0 !important; }
+.service-banner--gausewa h1 {
+ font-family: 'Playfair Display', Georgia, serif !important;
+ font-size: clamp(28px, 3vw, 42px) !important;
+ font-weight: 700 !important;
+ letter-spacing: -0.02em !important;
+ line-height: 1.15 !important;
+ margin: 0 0 14px !important;
+ color: #103B29 !important;
+ -webkit-text-fill-color: #103B29 !important;
+}
+.service-banner h1 em { font-style:italic !important; color:#C49A3A !important; -webkit-text-fill-color:#C49A3A !important; }
 .service-banner .directory-title-row { gap:10px; margin-bottom:12px; }
 .service-banner .directory-title-row h1 { margin-bottom:0; }
 .service-banner .directory-badge { font-size: 11.5px; min-height:25px; padding:4px 9px; }
@@ -53,15 +70,16 @@
 .gs-page .service-banner .gs-hero-copy > p,
 .gs-reference-page .service-banner .service-banner__copy > p,
 .service-banner--gausewa .service-banner__copy > p,
-.service-banner .service-banner__copy p { max-width:540px !important; color:#e6dcea !important; font-size:.85rem !important; line-height:1.8 !important; margin:0 0 18px !important; opacity:1 !important; }
-.service-banner .shop-hero__actions { display:flex; flex-wrap:wrap; gap:8px; margin:0; }
-.service-banner .shop-btn,.gs-page .service-banner .gs-btn { min-height:42px; padding:10px 15px; font-size:.73rem; border-radius:9px; width:auto; }
-.service-banner .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
-.service-banner .shop-btn--gold:hover { background:#ffe4a9; border-color:#ffe4a9; }
-.service-banner .shop-btn--ghost { color:#f7eedf; background:#ffffff0d; border-color:#ffffff35; }
-.gs-page .service-banner .gs-hero-caption { color:#dacbe3; margin-top:14px; font-size: 11.5px; line-height:1.6; }
+.service-banner .service-banner__copy p { max-width:540px !important; color:#56675B !important; font-size:14px !important; line-height:1.6 !important; margin:0 0 18px !important; opacity:1 !important; }
+.service-banner .shop-hero__actions { display:flex; flex-wrap:wrap; gap:12px; margin:0; }
+.service-banner .shop-btn,.gs-page .service-banner .gs-btn { min-height:44px; padding:10px 22px; font-size:13px; border-radius:999px; width:auto; font-weight:700; }
+.service-banner .shop-btn--gold { color:#FFFDF5 !important; background:#103B29 !important; border:1px solid #103B29 !important; box-shadow: 0 4px 14px rgba(16, 59, 41, 0.25) !important; }
+.service-banner .shop-btn--gold:hover { background:#164B32 !important; }
+.service-banner .shop-btn--ghost { color:#183C2B !important; background:#FFFDF5 !important; border:1.5px solid #C49A3A !important; box-shadow: 0 2px 8px rgba(196, 154, 58, 0.12) !important; }
+.service-banner .shop-btn--ghost:hover { background:#FBF3DA !important; }
+.gs-page .service-banner .gs-hero-caption { color:#EDF4E8; margin-top:14px; font-size: 11.5px; line-height:1.6; }
 .directory-masthead .service-benefits,
-.shop-page .service-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:14px 0 22px; padding:4px 0; border:1px solid var(--exp-line); border-radius:14px; background:var(--exp-card); box-shadow:0 8px 20px -20px #3e0b1870; }
+.shop-page .service-benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:14px 0 22px; padding:4px 0; border:1px solid var(--exp-line); border-radius:14px; background:var(--exp-card); box-shadow:0 8px 20px -20px #103B2970; }
 .directory-masthead .service-benefits > div,
 .shop-page .service-benefits > div { display:flex; align-items:center; gap:11px; min-width:0; padding:12px 18px; border:0; border-radius:0; background:transparent; backdrop-filter:none; }
 .service-benefits > div + div { border-left:1px solid var(--exp-line) !important; }
@@ -70,16 +88,113 @@
 .service-benefits p { display:grid; gap:3px; margin:0; line-height:1.5; }
 .directory-masthead .service-benefits b,.shop-page .service-benefits b { font-size:.73rem; color:var(--exp-ink); }
 .directory-masthead .service-benefits small,.shop-page .service-benefits small { font-size:.64rem; color:var(--exp-muted); line-height:1.5; }
+.gs-hero-trust-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin-top: 22px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+.gs-trust-badge-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 12px !important;
+  background: rgba(16, 59, 41, 0.78) !important;
+  border: 1px solid rgba(196, 154, 58, 0.45) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s ease !important;
+  min-width: 0 !important;
+}
+
+.gs-trust-badge-card:hover {
+  background: rgba(22, 75, 50, 0.92) !important;
+  border-color: rgba(196, 154, 58, 0.75) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+.gs-trust-badge-card__icon {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 50% !important;
+  background: rgba(196, 154, 58, 0.15) !important;
+  border: 1px solid rgba(196, 154, 58, 0.55) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.gs-trust-badge-card__icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  display: block !important;
+  stroke: #C49A3A !important;
+}
+
+.gs-trust-badge-card__info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.gs-trust-badge-card__title {
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+  display: block !important;
+  letter-spacing: -0.01em !important;
+}
+
+.gs-trust-badge-card__sub {
+  color: #C49A3A !important;
+  font-size: 0.66rem !important;
+  line-height: 1.2 !important;
+  font-weight: 500 !important;
+  white-space: normal !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .gs-hero-trust-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+    max-width: 100% !important;
+  }
+  .gs-trust-badge-card {
+    padding: 8px 12px !important;
+  }
+  .gs-trust-badge-card__title {
+    font-size: 0.76rem !important;
+  }
+  .gs-trust-badge-card__sub {
+    font-size: 0.64rem !important;
+  }
+}
 .directory-masthead:has(.service-banner) { padding-top:24px; padding-bottom:0; }
 .gs-page { padding-top:24px; }
 .gs-content-grid { margin-top:32px; gap:34px; }
 .gs-page h2 { font-size:clamp(1.5rem,2vw,1.8rem); font-weight:600; }
 .gs-section-kicker { font-size: 11.5px; letter-spacing:.16em; }
-.gs-purpose { border-radius:15px; padding:24px; box-shadow:0 6px 22px -22px #650f2360; }
-.gs-purpose.is-on { border-color:#b79ac6; background:linear-gradient(115deg,#f7f1fa,#fffdf8); box-shadow:inset 3px 0 var(--brand-primary),0 10px 24px -24px #650f23; }
+.gs-purpose { border-radius:15px; padding:24px; box-shadow:0 6px 22px -22px #164B3260; }
+.gs-purpose.is-on { border-color:#b79ac6; background:linear-gradient(115deg,#f7f1fa,#fffdf8); box-shadow:inset 3px 0 var(--brand-primary),0 10px 24px -24px #164B32; }
 .gs-purpose-number { color:var(--exp-gold); }
 .gs-purpose strong { font-size:1.1rem; }
-.gs-form { border-top:3px solid #c9a468; box-shadow:0 16px 42px -28px #650f234d; }
+.gs-form { border-top:3px solid #c9a468; box-shadow:0 16px 42px -28px #164B324d; }
 .gs-form-heading { padding-bottom:18px; }
 .gs-page .gs-form-heading h2 { font-size:1.6rem; }
 .gs-donation-summary { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:16px; padding:16px 0; border-top:1px solid var(--gs-line); border-bottom:1px solid var(--gs-line); }
@@ -102,11 +217,11 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .directory-masthead .service-benefits > div,.shop-page .service-benefits > div { padding:12px; gap:8px; }
 }
 @media(max-width:640px) {
- .service-banner { display:flex !important; flex-direction:column !important; align-items:stretch !important; min-height:0 !important; padding:0 !important; border-radius:16px !important; margin-bottom:12px !important; background-color:#3e0b18 !important; border:1px solid #e5d9c7 !important; overflow:hidden !important; max-height:none !important; }
+ .service-banner { display:flex !important; flex-direction:column !important; align-items:stretch !important; min-height:0 !important; padding:0 !important; border-radius:16px !important; margin-bottom:12px !important; background-color:#103B29 !important; border:1px solid #DDEBD5 !important; overflow:hidden !important; max-height:none !important; }
  .service-banner .service-banner__art,.service-banner .gs-hero-art { position:relative !important; inset:auto !important; z-index:1 !important; order:-1 !important; width:100% !important; height:168px !important; flex:none !important; min-height:0 !important; max-height:none !important; overflow:hidden !important; }
  .service-banner .service-banner__art img,.service-banner .gs-hero-art img { width:100% !important; height:100% !important; object-fit:cover !important; object-position:75% 42% !important; display:block !important; }
- .service-banner::after { content:'' !important; position:absolute !important; top:0 !important; left:0 !important; right:0 !important; height:168px !important; background:linear-gradient(0deg,#3e0b18 0%,rgba(62,11,24,.08) 68%) !important; pointer-events:none !important; z-index:2 !important; display:block !important; }
- .service-banner figcaption { position:absolute !important; top:6px !important; right:8px !important; bottom:auto !important; z-index:3 !important; padding:2px 6px !important; border:1px solid rgba(255,255,255,0.35) !important; border-radius:4px !important; color:#f7eedf !important; background:rgba(62,11,24,0.65) !important; font-size: 11.5px !important; backdrop-filter:blur(4px) !important; }
+ .service-banner::after { content:'' !important; position:absolute !important; top:0 !important; left:0 !important; right:0 !important; height:168px !important; background:linear-gradient(0deg,#103B29 0%,rgba(16,59,41,.08) 68%) !important; pointer-events:none !important; z-index:2 !important; display:block !important; }
+ .service-banner figcaption { position:absolute !important; top:6px !important; right:8px !important; bottom:auto !important; z-index:3 !important; padding:2px 6px !important; border:1px solid rgba(255,255,255,0.35) !important; border-radius:4px !important; color:#FFFDF5 !important; background:rgba(16,59,41,0.65) !important; font-size: 11.5px !important; backdrop-filter:blur(4px) !important; }
  .service-banner .service-banner__copy { position:relative !important; z-index:3 !important; width:100% !important; max-width:none !important; padding:6px 12px 8px !important; box-sizing:border-box !important; }
  .service-banner h1,
  .directory-masthead .service-banner h1,
@@ -117,22 +232,22 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
  .mandir-page .service-banner h1,
  .mall-page .service-banner h1,
  .service-banner--mall h1 { font-family:'Playfair Display', Georgia, serif !important; font-size:1.15rem !important; line-height:1.15 !important; margin:0 0 3px !important; color:#fffdf8 !important; }
- .service-banner h1 em { color:#efd4a0 !important; font-style:normal !important; }
+ .service-banner h1 em { color:#C49A3A !important; font-style:normal !important; }
  .service-banner .directory-title-row,.service-banner .mandir-hero__titlerow { display:none !important; }
  .service-banner .gs-hero-name { display:none !important; }
- .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size: 11.5px !important; margin:0 0 2px !important; letter-spacing:.12em !important; color:#efd4a0 !important; font-weight:700 !important; text-transform:uppercase !important; line-height:1.2 !important; }
+ .service-banner .directory-eyebrow,.service-banner .mandir-hero__eyebrow,.service-banner .gs-eyebrow { font-size: 11.5px !important; margin:0 0 2px !important; letter-spacing:.12em !important; color:#C49A3A !important; font-weight:700 !important; text-transform:uppercase !important; line-height:1.2 !important; }
  .service-banner .service-banner__copy > p:not(.mandir-hero__eyebrow),
  .directory-masthead .service-banner .directory-subtitle,
  .gs-page .service-banner .gs-hero-copy > p,
  .gs-reference-page .service-banner .service-banner__copy > p,
- .service-banner--gausewa .service-banner__copy > p { font-size: 0.75rem !important; line-height:1.3 !important; margin:0 0 6px !important; color:#e6dcea !important; display:-webkit-box !important; -webkit-line-clamp:2 !important; -webkit-box-orient:vertical !important; overflow:hidden !important; }
+ .service-banner--gausewa .service-banner__copy > p { font-size: 0.75rem !important; line-height:1.3 !important; margin:0 0 6px !important; color:#EDF4E8 !important; display:-webkit-box !important; -webkit-line-clamp:2 !important; -webkit-box-orient:vertical !important; overflow:hidden !important; }
  .service-banner .shop-hero__actions { display:flex !important; flex-direction:row !important; gap:8px !important; width:100% !important; margin:0 0 2px !important; }
  .service-banner .shop-hero__actions .shop-btn,.service-banner .shop-hero__actions a,.service-banner .shop-hero__actions button { display:flex !important; align-items:center !important; justify-content:center !important; flex:1 !important; width:auto !important; min-height:36px !important; padding:6px 12px !important; border-radius:9999px !important; font-size:.78rem !important; font-weight:700 !important; text-decoration:none !important; text-align:center !important; box-sizing:border-box !important; white-space:nowrap !important; }
- .service-banner .shop-hero__actions .shop-btn--gold,.service-banner .shop-hero__actions a.shop-btn--gold { background:#f1cf8b !important; color:#3e0b18 !important; border:none !important; box-shadow:0 2px 8px rgba(0,0,0,0.2) !important; }
+ .service-banner .shop-hero__actions .shop-btn--gold,.service-banner .shop-hero__actions a.shop-btn--gold { background:#C49A3A !important; color:#103B29 !important; border:none !important; box-shadow:0 2px 8px rgba(0,0,0,0.2) !important; }
  .service-banner .shop-hero__actions .shop-btn--ghost,.service-banner .shop-hero__actions button.shop-btn--ghost,.service-banner .shop-hero__actions a.shop-btn--ghost,.service-banner .shop-hero__actions .shop-btn--white { background:rgba(255,255,255,0.08) !important; border:1px solid rgba(255,255,255,0.25) !important; color:#fffdf8 !important; }
- .service-banner > .service-benefits { position:relative !important; z-index:3 !important; width:auto !important; margin:2px 8px 6px !important; padding-top:4px !important; border-top:1px solid rgba(239,212,160,0.25) !important; display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:4px !important; }
+ .service-banner > .service-benefits { position:relative !important; z-index:3 !important; width:auto !important; margin:2px 8px 6px !important; padding-top:4px !important; border-top:1px solid rgba(196,154,58,0.25) !important; display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)) !important; gap:4px !important; }
  .service-banner > .service-benefits > div { display:flex !important; flex-direction:column !important; align-items:center !important; text-align:center !important; gap:3px !important; padding:1px 2px !important; border:0 !important; }
- .service-banner > .service-benefits > div > span { display:flex !important; align-items:center !important; justify-content:center !important; width:22px !important; height:22px !important; border:1px solid rgba(239,212,160,0.4) !important; border-radius:50% !important; background:rgba(239,212,160,0.12) !important; color:#efd4a0 !important; font-size:11.5px !important; margin:0 auto !important; }
+ .service-banner > .service-benefits > div > span { display:flex !important; align-items:center !important; justify-content:center !important; width:22px !important; height:22px !important; border:1px solid rgba(196,154,58,0.4) !important; border-radius:50% !important; background:rgba(196,154,58,0.12) !important; color:#C49A3A !important; font-size:11.5px !important; margin:0 auto !important; }
  .service-banner > .service-benefits b { font-size: 11.5px !important; color:#fffdf8 !important; font-weight:600 !important; text-align:center !important; line-height:1.1 !important; }
  .service-banner > .service-benefits small { display:none !important; }
  .gs-content-grid { margin-top:26px; gap:28px; }
@@ -143,16 +258,16 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 }
 /* Dashboard, Gifts and Profile heroes use the same maroon / gold / serif look as the service banners. */
 .exp-dashboard-hero,.pf-hero,.pv-hero {
- border:1px solid #e5d9c7; border-radius:22px; color:#f7eedf; background:#3e0b18; background-image:linear-gradient(110deg,#3e0b18 0%,#3e0b18f5 45%,#650f2399 100%);
+ border:1px solid #DDEBD5; border-radius:22px; color:#FFFDF5; background:#103B29; background-image:linear-gradient(110deg,#103B29 0%,#103B29f5 45%,#164B3299 100%);
  box-shadow:0 16px 38px -30px #281a3c70;
 }
-.pv-hero::after { border-color:#efd4a033; box-shadow:0 0 0 32px #efd4a010,0 0 0 64px #efd4a008; }
-.exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { color:#efd4a0; font-size: 11.5px; font-weight:700; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
+.pv-hero::after { border-color:#C49A3A33; box-shadow:0 0 0 32px #C49A3A10,0 0 0 64px #C49A3A08; }
+.exp-dashboard-hero .exp-eyebrow,.pf-hero .pf-eyebrow,.pv-hero .pv-eyebrow { color:#C49A3A; font-size: 11.5px; font-weight:700; letter-spacing:.15em; line-height:1.6; text-transform:uppercase; }
 .exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-family:var(--font-serif); font-size:clamp(1.65rem,2.65vw,2.25rem); font-weight:600; letter-spacing:-.035em; line-height:1.18; color:#fffdf8 !important; }
-.exp-dashboard-hero h1 em,.pf-hero h1 em,.pv-hero h1 em { font-style:normal; color:#efd4a0; -webkit-text-fill-color:#efd4a0; }
-.exp-dashboard-hero p,.pf-hero p,.pv-title { color:#e6dcea; font-size:.83rem; line-height:1.8; }
-.pv-pill { color:#f7eedf; background:#ffffff0d; border-color:#ffffff35; }
-.exp-dashboard-hero .shop-btn--gold,.pf-hero .shop-btn--gold { color:#3e0b18; background:#f1cf8b; border-color:#f1cf8b; }
+.exp-dashboard-hero h1 em,.pf-hero h1 em,.pv-hero h1 em { font-style:normal; color:#C49A3A; -webkit-text-fill-color:#C49A3A; }
+.exp-dashboard-hero p,.pf-hero p,.pv-title { color:#EDF4E8; font-size:.83rem; line-height:1.8; }
+.pv-pill { color:#FFFDF5; background:#ffffff0d; border-color:#ffffff35; }
+.exp-dashboard-hero .shop-btn--gold,.pf-hero .shop-btn--gold { color:#103B29; background:#C49A3A; border-color:#C49A3A; }
 @media(max-width:640px) {
  .exp-dashboard-hero,.pf-hero,.pv-hero { border-radius:17px; }
  .exp-dashboard-hero h1,.pf-hero h1,.pv-hero h1 { font-size:clamp(1.35rem,5.9vw,1.65rem); }
@@ -163,14 +278,37 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 .service-banner > .service-benefits,
 .directory-masthead .service-banner > .service-benefits,
 .shop-page .service-banner > .service-benefits,
-.mandir-page .service-banner > .service-benefits { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; max-width:760px; width:100%; margin:0; padding:16px 0 0; border:0; border-top:1px solid #efd4a040; border-radius:0; background:none; box-shadow:none; backdrop-filter:none; }
+.mandir-page .service-banner > .service-benefits { position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; max-width:760px; width:100%; margin:0; padding:16px 0 0; border:0; border-top:1px solid #C49A3A40; border-radius:0; background:none; box-shadow:none; backdrop-filter:none; }
 .service-banner > .service-benefits.service-benefits--4col { grid-template-columns:repeat(4,minmax(0,1fr)) !important; max-width:960px !important; }
 .service-banner > .service-benefits > div { display:flex; align-items:center; gap:11px; min-width:0; margin:0; padding:2px 14px; border:0 !important; border-radius:0; background:none; }
 .service-banner > .service-benefits > div:first-child { padding-left:0; }
-.service-banner > .service-benefits > div + div { border-left:1px solid #efd4a02e !important; }
-.service-banner > .service-benefits > div > span { display:grid; place-items:center; flex:none; width:32px; height:32px; border:1px solid #efd4a066; border-radius:50%; background:#efd4a01f; color:#efd4a0; font-size:.8rem; }
+.service-banner > .service-benefits > div + div { border-left:1px solid #C49A3A2e !important; }
+.service-banner > .service-benefits > div > span { display:grid; place-items:center; flex:none; width:32px; height:32px; border:1px solid #C49A3A66; border-radius:50%; background:#C49A3A1f; color:#C49A3A; font-size:.8rem; }
 .service-banner > .service-benefits b { font-size:.75rem; color:#fffdf8; }
-.service-banner > .service-benefits small { text-shadow:0 1px 6px #3e0b18; font-size:.66rem; color:#e6dcea; line-height:1.5; }
+.service-banner > .service-benefits small { text-shadow:0 1px 6px #103B29; font-size:.66rem; color:#EDF4E8; line-height:1.5; }
+
+/* Premium banner finishing shared by the React routes. Keep the first viewport
+   useful on phones: artwork is a compact scene, never a full-screen poster. */
+:is(.service-banner,.hv2-hero,.dirv2-hero,.bh-hero,.tc-hero,.apf-hero) {
+  border:1px solid rgba(216,180,104,.34);
+  box-shadow:0 22px 55px -38px rgba(16,59,41,.72), inset 0 1px rgba(255,255,255,.08);
+  isolation:isolate;
+}
+:is(.service-banner,.hv2-hero,.dirv2-hero,.bh-hero) img {
+  filter:saturate(.94) contrast(1.03);
+}
+.hv2-hero-image img { object-position:64% center; }
+.dirv2-hero > img { object-position:68% 36%; }
+
+@media (max-width:760px) {
+  .hv2-hero-image { height:clamp(150px,43vw,190px) !important; min-height:0 !important; }
+  .hv2-hero-image img { object-position:67% 36%; }
+  .dirv2-hero { height:clamp(136px,38vw,160px) !important; min-height:0 !important; }
+  .dirv2-hero > img { object-position:64% 34%; }
+  .bh-hero { min-height:0 !important; max-height:none !important; }
+  .bh-hero-art { height:clamp(145px,42vw,180px) !important; min-height:0 !important; }
+  .tc-hero { min-height:0 !important; padding:20px 16px !important; }
+}
 @media(max-width:1000px) and (min-width:641px) {
  .directory-masthead .service-banner > .service-benefits,
  .shop-page .service-banner > .service-benefits { max-width:68%; }
@@ -181,7 +319,7 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
 .nav-dropdown-menu--tools{width:21rem;max-width:calc(100vw - 24px);max-height:75vh;overflow-y:auto;overscroll-behavior:contain}
 .nav-dropdown-menu--tools .nav-tool-link{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;color:#34251f;text-decoration:none}
 .nav-dropdown-menu--tools .nav-tool-link:hover{background:#faf8f2}
-.nav-tools-toggle{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;padding:9px 12px;border:1px solid #ad865055;border-radius:10px;background:#fffdf7;color:#650f23;font:700 .78rem/1 var(--font-body,'Segoe UI',sans-serif);cursor:pointer}.nav-tools-toggle:hover{background:#faeef0}#nav-tools-more[hidden]{display:none}#nav-tools-more{margin-top:6px}
+.nav-tools-toggle{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:6px;padding:9px 12px;border:1px solid #ad865055;border-radius:10px;background:#fffdf7;color:#164B32;font:700 .78rem/1 var(--font-body,'Segoe UI',sans-serif);cursor:pointer}.nav-tools-toggle:hover{background:#faeef0}#nav-tools-more[hidden]{display:none}#nav-tools-more{margin-top:6px}
 /* Narrow phones: keep the brand name readable next to the header icons instead of running underneath them. */
 @media (max-width: 480px) {
   .site-brand { min-width: 0; flex: 1 1 auto; gap: 8px; }
@@ -195,4 +333,154 @@ html[data-theme="dark"] .gs-purpose.is-on { background:linear-gradient(115deg,#3
   .site-nav-actions .btn-mobile-menu { width: 44px !important; height: 44px !important; min-width: 44px !important; min-height: 44px !important; padding: 0 !important; }
   .site-nav-actions .btn-nav-wallet { padding: 5px 8px !important; font-size: 12px !important; }
   .site-nav-actions .btn-nav-wallet .wallet-icon { display: none; }
+}
+
+.premium-page-banner,
+.bh-sec-title {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(196, 154, 58, 0.42);
+  border-radius: 18px;
+  background: radial-gradient(circle at 88% 10%, rgba(196, 154, 58, 0.18), transparent 28%), linear-gradient(118deg, #103B29, #164B32 62%, #103B29);
+  box-shadow: 0 18px 42px -32px rgba(16, 59, 41, 0.7);
+  color: #FFFDF5;
+  padding: 18px 20px;
+  margin: 18px 0 14px !important;
+}
+
+.premium-page-banner {
+  padding: 24px 28px !important;
+}
+
+.premium-page-banner h1,
+.premium-page-banner h2,
+.premium-page-banner h3,
+.bh-sec-title h1,
+.bh-sec-title h2,
+.bh-sec-title h3,
+.bh-sec-title h4,
+.bh-sec-title .bh-title,
+.bh .bh-sec-title h1,
+.bh .bh-sec-title h2,
+.bh .bh-sec-title h3,
+.bh .bh-sec-title h4,
+.bh .bh-sec-title .bh-title {
+  color: #FFFDF5 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.premium-page-banner p,
+.bh-sec-title p,
+.bh-sec-title span,
+.bh-sec-title .bh-small,
+.bh .bh-sec-title p,
+.bh .bh-sec-title span,
+.bh .bh-sec-title .bh-small {
+  color: #EDF4E8 !important;
+}
+
+.bh-sec-title a,
+.bh-sec-title a.bh-small,
+.bh .bh-sec-title a,
+.bh .bh-sec-title a.bh-small {
+  color: #C49A3A !important;
+  font-weight: 700 !important;
+  text-decoration: none;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.bh-sec-title a:hover,
+.bh-sec-title a.bh-small:hover,
+.bh .bh-sec-title a:hover,
+.bh .bh-sec-title a.bh-small:hover {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 10px rgba(196, 154, 58, 0.7);
+  text-decoration: underline;
+}
+
+.bh-sec-title .bh-btn-ghost,
+.bh .bh-sec-title .bh-btn-ghost {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(196, 154, 58, 0.55) !important;
+  color: #FFFDF5 !important;
+}
+
+.bh-sec-title .bh-btn-ghost:hover,
+.bh .bh-sec-title .bh-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  color: #FFFFFF !important;
+}
+
+/* Reset .bh-sec-title when nested inside white/cream panels (e.g. Panchang, Gita chapter verses) */
+.bh-panel .bh-sec-title,
+.bh .bh-panel .bh-sec-title {
+  position: static !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 10px !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+}
+
+.bh-panel .bh-sec-title h1,
+.bh-panel .bh-sec-title h2,
+.bh-panel .bh-sec-title h3,
+.bh .bh-panel .bh-sec-title h1,
+.bh .bh-panel .bh-sec-title h2,
+.bh .bh-panel .bh-sec-title h3 {
+  color: var(--bh-maroon) !important;
+  text-shadow: none !important;
+}
+
+.bh-panel .bh-sec-title p,
+.bh-panel .bh-sec-title span,
+.bh-panel .bh-sec-title .bh-small,
+.bh .bh-panel .bh-sec-title p,
+.bh .bh-panel .bh-sec-title span,
+.bh .bh-panel .bh-sec-title .bh-small {
+  color: var(--bh-mute) !important;
+}
+
+.bh-panel .bh-sec-title a,
+.bh-panel .bh-sec-title a.bh-small,
+.bh .bh-panel .bh-sec-title a,
+.bh .bh-panel .bh-sec-title a.bh-small {
+  color: var(--bh-maroon2) !important;
+  text-shadow: none !important;
+}
+
+.bh-panel .bh-sec-title a:hover,
+.bh-panel .bh-sec-title a.bh-small:hover,
+.bh .bh-panel .bh-sec-title a:hover,
+.bh .bh-panel .bh-sec-title a.bh-small:hover {
+  color: var(--bh-gold-d) !important;
+}
+
+.bh-panel .bh-sec-title .bh-btn-ghost,
+.bh .bh-panel .bh-sec-title .bh-btn-ghost {
+  background: #fff !important;
+  border-color: var(--bh-line) !important;
+  color: var(--bh-maroon2) !important;
+}
+/* High-Contrast Mandir & Sacred Hero Headings Override */
+.mandir-page .sacred-hero-banner h1,
+.mandir-page [style*="3E0B18"] h1,
+.mandir-page [style*="#103B29"] h1,
+.sacred-hero-banner h1,
+.sacred-hero-title,
+html body .mandir-page h1.sacred-hero-title,
+html body .mandir-page .sacred-hero-banner h1 {
+  color: #FFFDF5 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+@media(max-width:760px){
+ .service-banner{max-height:330px!important;min-height:0!important}.service-banner .service-banner__art,.service-banner .gs-hero-art{height:130px!important}.service-banner::after{height:130px!important}.service-banner .service-banner__copy{padding:7px 12px 5px!important}
+ .service-banner h1,.directory-masthead .service-banner h1,.shop-page .service-banner h1,.gs-page .service-banner h1,.mandir-page .service-banner h1,.mall-page .service-banner h1{font-size:1.08rem!important;margin-bottom:2px!important;line-height:1.12!important}
+ .service-banner .service-banner__copy>p:not(.mandir-hero__eyebrow),.service-banner--gausewa .service-banner__copy>p{font-size:.72rem!important;line-height:1.25!important;margin-bottom:5px!important;-webkit-line-clamp:2!important}
+ .service-banner .shop-hero__actions .shop-btn,.service-banner .shop-hero__actions a,.service-banner .shop-hero__actions button{min-height:34px!important;padding:5px 9px!important;font-size:.7rem!important}
+ .service-banner>.service-benefits{margin:0 8px 5px!important;padding-top:3px!important}.service-banner>.service-benefits>div>span{display:none!important}.service-banner>.service-benefits b{font-size:11.5px!important}
+ .premium-page-banner{margin-inline:12px!important;padding:18px!important;border-radius:16px}.premium-page-banner h1{font-size:1.35rem!important;margin:0 0 5px!important}.premium-page-banner p{font-size:.75rem!important;line-height:1.4!important;margin:0!important}.bh-sec-title{padding:15px 16px}
 }

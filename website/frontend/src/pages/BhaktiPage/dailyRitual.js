@@ -4,13 +4,13 @@ import { track } from '../../analytics.jsx';
 
 // Traditional weekday association. index = Date#getDay() (0 = Sunday).
 export const WEEKDAY = [
-  { slug: 'ram', day: 'Ravivaar', name: 'Shri Ram', line: 'Ravivaar Surya aur Shri Ram ka din hai', mall: 'mala' },
-  { slug: 'shiva', day: 'Somvaar', name: 'Bhole Nath', line: 'Somvaar Bhagwan Shiv ka din hai', mall: 'rudraksha' },
-  { slug: 'hanuman', day: 'Mangalvaar', name: 'Hanuman Ji', line: 'Mangalvaar Hanuman Ji ka din hai', mall: 'puja_essentials' },
-  { slug: 'ganesh', day: 'Budhvaar', name: 'Ganesh Ji', line: 'Budhvaar Shri Ganesh ka din hai', mall: 'puja_essentials' },
-  { slug: 'krishna', day: 'Guruvaar', name: 'Vishnu · Krishna', line: 'Guruvaar Bhagwan Vishnu ka din hai', mall: 'mala' },
-  { slug: 'durga', day: 'Shukravaar', name: 'Maa Durga · Lakshmi', line: 'Shukravaar Devi Maa ka din hai', mall: 'yantra' },
-  { slug: 'hanuman', day: 'Shanivaar', name: 'Hanuman Ji', line: 'Shanivaar Hanuman Ji aur Shani Dev ka din hai', mall: 'puja_essentials' },
+  { slug: 'ram', day: 'Sunday', day_hi: 'रविवार', name: 'Shri Ram', name_hi: 'श्री राम', line_en: 'Sunday is dedicated to Surya Dev and Shri Ram', line_hi: 'रविवार — भगवान सूर्य देव एवं श्री राम का पावन दिन', mall: 'mala' },
+  { slug: 'shiva', day: 'Monday', day_hi: 'सोमवार', name: 'Lord Shiva', name_hi: 'भोलेनाथ शिव', line_en: 'Monday is dedicated to Lord Shiva', line_hi: 'सोमवार — देवाधिदेव महादेव शिव का पावन दिन', mall: 'rudraksha' },
+  { slug: 'hanuman', day: 'Tuesday', day_hi: 'मंगलवार', name: 'Hanuman Ji', name_hi: 'हनुमान जी', line_en: 'Tuesday is dedicated to Lord Hanuman', line_hi: 'मंगलवार — संकटमोचन श्री हनुमान जी का पावन दिन', mall: 'puja_essentials' },
+  { slug: 'ganesh', day: 'Wednesday', day_hi: 'बुधवार', name: 'Lord Ganesha', name_hi: 'श्री गणेश', line_en: 'Wednesday is dedicated to Lord Ganesha', line_hi: 'बुधवार — विघ्नहर्ता श्री गणेश जी का पावन दिन', mall: 'puja_essentials' },
+  { slug: 'krishna', day: 'Thursday', day_hi: 'गुरुवार', name: 'Lord Vishnu & Krishna', name_hi: 'भगवान विष्णु व श्रीकृष्ण', line_en: 'Thursday is dedicated to Lord Vishnu and Krishna', line_hi: 'गुरुवार — जगतपालक भगवान विष्णु व श्री कृष्ण का पावन दिन', mall: 'mala' },
+  { slug: 'durga', day: 'Friday', day_hi: 'शुक्रवार', name: 'Maa Durga & Lakshmi', name_hi: 'माँ दुर्गा व लक्ष्मी जी', line_en: 'Friday is dedicated to Divine Mother Durga and Lakshmi', line_hi: 'शुक्रवार — जगदम्बा माँ दुर्गा व महालक्ष्मी का पावन दिन', mall: 'yantra' },
+  { slug: 'hanuman', day: 'Saturday', day_hi: 'शनिवार', name: 'Hanuman Ji & Shani Dev', name_hi: 'हनुमान जी व शनि देव', line_en: 'Saturday is dedicated to Lord Hanuman and Shani Dev', line_hi: 'शनिवार — श्री हनुमान जी एवं शनि देव का पावन दिन', mall: 'puja_essentials' },
 ];
 
 export const MALL_FOR_DEITY = { shiva: 'rudraksha', hanuman: 'puja_essentials', ganesh: 'puja_essentials', durga: 'yantra', krishna: 'mala', vishnu: 'mala', ram: 'mala' };

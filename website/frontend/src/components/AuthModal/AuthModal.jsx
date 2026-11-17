@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { useLang } from '../../pages/BhaktiPage/lang.js';
 
 export default function AuthModal() {
   const { isAuthModalOpen, authModalMode, closeAuthModal, openAuthModal, login, register } = useAuth();
+  const lang = useLang();
+  const isHi = lang === 'hi';
 
   // Tab State ('login' | 'register')
   const [tab, setTab] = useState(authModalMode || 'login');
@@ -35,7 +38,7 @@ export default function AuthModal() {
     e.preventDefault();
     setErrorMessage('');
     if (!loginEmail.trim() || !loginPassword) {
-      setErrorMessage('Please fill in both Email and Password.');
+      setErrorMessage(isHi ? 'कृपया ईमेल और पासवर्ड दोनों दर्ज करें।' : 'Please fill in both Email and Password.');
       return;
     }
 
@@ -43,7 +46,7 @@ export default function AuthModal() {
     try {
       await login({ email: loginEmail, password: loginPassword });
     } catch (err) {
-      setErrorMessage(err.message || 'Login failed. Please check your credentials.');
+      setErrorMessage(err.message || (isHi ? 'लॉगिन असफल रहा। कृपया अपने विवरण जाँचें।' : 'Login failed. Please check your credentials.'));
     } finally {
       setIsLoading(false);
     }
@@ -53,15 +56,15 @@ export default function AuthModal() {
     e.preventDefault();
     setErrorMessage('');
     if (!regName.trim()) {
-      setErrorMessage('Please enter your Full Name.');
+      setErrorMessage(isHi ? 'कृपया अपना पूरा नाम दर्ज करें।' : 'Please enter your Full Name.');
       return;
     }
     if (!regEmail.trim()) {
-      setErrorMessage('Please enter your Email address.');
+      setErrorMessage(isHi ? 'कृपया अपना ईमेल पता दर्ज करें।' : 'Please enter your Email address.');
       return;
     }
     if (regPassword.length < 6) {
-      setErrorMessage('Password must be at least 6 characters long.');
+      setErrorMessage(isHi ? 'पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।' : 'Password must be at least 6 characters long.');
       return;
     }
 
@@ -74,34 +77,7 @@ export default function AuthModal() {
         phone: regPhone,
       });
     } catch (err) {
-      setErrorMessage(err.message || 'Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // 1-Click Instant Demo Login for Testing & Instant Access
-  const handleQuickDemoLogin = async () => {
-    setErrorMessage('');
-    setIsLoading(true);
-    const demoEmail = 'devotee@astrojyotish.com';
-    const demoPass = 'OmNamahShivaya108!';
-
-    try {
-      // Try login first
-      await login({ email: demoEmail, password: demoPass });
-    } catch {
-      // If demo user does not exist in db, automatically register it and log in!
-      try {
-        await register({
-          email: demoEmail,
-          password: demoPass,
-          full_name: 'Satya Devotee',
-          phone: '9876543210',
-        });
-      } catch (regErr) {
-        setErrorMessage('Quick access failed: ' + regErr.message);
-      }
+      setErrorMessage(err.message || (isHi ? 'पंजीकरण असफल रहा। कृपया पुनः प्रयास करें।' : 'Registration failed. Please try again.'));
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +85,8 @@ export default function AuthModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
+      style={{ zIndex: 9999 }}
+      className="fixed inset-0 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
       onClick={(e) => {
         if (e.target === e.currentTarget) closeAuthModal();
       }}
@@ -117,39 +94,45 @@ export default function AuthModal() {
       aria-modal="true"
       aria-labelledby="auth-modal-title"
     >
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#E7E2D8] overflow-hidden my-auto max-h-[95vh] flex flex-col">
+      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#DDEBD5] overflow-hidden my-auto max-h-[95vh] flex flex-col">
         {/* Close Button */}
         <button
           type="button"
           onClick={closeAuthModal}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-[#FAF7F2] hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm font-bold cursor-pointer border-0 transition-colors"
+          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-[#FAF9F2] hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm font-bold cursor-pointer border-0 transition-colors"
           aria-label="Close"
         >
           ✕
         </button>
 
         {/* Modal Header */}
-        <div className="bg-gradient-to-b from-[#3E0B18] to-[#25050C] text-[#FFFDF8] pt-6 pb-5 px-6 text-center shrink-0">
-          <div className="w-12 h-12 rounded-full bg-[#FAF7F2]/10 border border-[#D4AF37]/40 text-[#D4AF37] mx-auto flex items-center justify-center text-2xl font-serif mb-2 shadow-inner">
+        <div className="bg-gradient-to-b from-[#164B32] to-[#25050C] text-[#FFFDF8] pt-6 pb-5 px-6 text-center shrink-0">
+          <div className="w-12 h-12 rounded-full bg-[#FAF9F2]/10 border border-[#C49A3A]/40 text-[#C49A3A] mx-auto flex items-center justify-center text-2xl font-serif mb-2 shadow-inner">
             ॐ
           </div>
           <h2 id="auth-modal-title" className="font-serif text-xl sm:text-2xl font-extrabold text-[#FFFDF8] tracking-wide">
             Astro Jyotish
           </h2>
           <p className="text-xs text-[#FDE68A] font-medium mt-0.5">
-            प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श
+            {isHi ? 'प्रामाणिक वैदिक ज्योतिष एवं कुण्डली परामर्श' : 'Authentic Vedic Astrology & Kundli Guidance'}
           </p>
         </div>
 
         {/* Welcome Promotion Banner */}
         <div className="bg-[#FFF8E7] px-4 py-2 border-b border-[#EEDFB8] text-center shrink-0">
           <span className="text-[11px] font-bold text-[#8C5800] flex items-center justify-center gap-1.5">
-            <span>🎁</span> First Consultation Free (5 Min) · Code: <strong className="text-[#3E0B18]">FIRSTFREE</strong>
+            <span>🎁</span>
+            <span>
+              {isHi
+                ? 'प्रथम परामर्श 5 मिनट निःशुल्क · कोड: '
+                : 'First Consultation Free (5 Min) · Code: '}
+              <strong className="text-[#164B32]">FIRSTFREE</strong>
+            </span>
           </span>
         </div>
 
         {/* Tabs Switcher: Sign In vs Register */}
-        <div className="flex border-b border-[#E7E2D8] bg-[#FAF7F2] shrink-0">
+        <div className="flex border-b border-[#DDEBD5] bg-[#FAF9F2] shrink-0">
           <button
             type="button"
             onClick={() => {
@@ -158,11 +141,11 @@ export default function AuthModal() {
             }}
             className={`flex-1 py-3 text-xs font-bold transition-all cursor-pointer border-b-2 ${
               tab === 'login'
-                ? 'border-[#3E0B18] text-[#3E0B18] bg-white'
+                ? 'border-[#164B32] text-[#164B32] bg-white'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            Sign In (लॉग इन)
+            {isHi ? 'साइन इन करें' : 'Sign In'}
           </button>
           <button
             type="button"
@@ -172,11 +155,11 @@ export default function AuthModal() {
             }}
             className={`flex-1 py-3 text-xs font-bold transition-all cursor-pointer border-b-2 ${
               tab === 'register'
-                ? 'border-[#3E0B18] text-[#3E0B18] bg-white'
+                ? 'border-[#164B32] text-[#164B32] bg-white'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            Register (खाता बनाएं)
+            {isHi ? 'नया खाता बनाएं' : 'Register Account'}
           </button>
         </div>
 
@@ -194,8 +177,8 @@ export default function AuthModal() {
           {tab === 'login' ? (
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-[#1E1B4B] mb-1">
-                  Email Address <span className="text-rose-600">*</span>
+                <label className="block text-xs font-bold text-[#183C2B] mb-1">
+                  {isHi ? 'ईमेल पता' : 'Email Address'} <span className="text-rose-600">*</span>
                 </label>
                 <input
                   type="email"
@@ -204,31 +187,31 @@ export default function AuthModal() {
                   placeholder="name@example.com"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-[#1E1B4B]">
-                    Password <span className="text-rose-600">*</span>
+                  <label className="text-xs font-bold text-[#183C2B]">
+                    {isHi ? 'पासवर्ड' : 'Password'} <span className="text-rose-600">*</span>
                   </label>
                   <button
                     type="button"
-                    onClick={() => alert('Password reset link sent to your registered email.')}
-                    className="text-[11px] font-semibold text-[#B45309] hover:underline cursor-pointer bg-transparent border-0 p-0"
+                    onClick={() => alert(isHi ? 'पासवर्ड रीसेट लिंक आपके ईमेल पर भेजा गया है।' : 'Password reset link sent to your registered email.')}
+                    className="text-[11px] font-semibold text-[#A77B25] hover:underline cursor-pointer bg-transparent border-0 p-0"
                   >
-                    Forgot Password?
+                    {isHi ? 'पासवर्ड भूल गए?' : 'Forgot Password?'}
                   </button>
                 </div>
                 <div className="relative">
                   <input
                     type={showLoginPassword ? 'text' : 'password'}
                     required
-                    placeholder="Enter your password"
+                    placeholder={isHi ? 'अपना पासवर्ड दर्ज करें' : 'Enter your password'}
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none pr-10"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none pr-10"
                   />
                   <button
                     type="button"
@@ -245,42 +228,30 @@ export default function AuthModal() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 rounded-xl bg-[#3E0B18] hover:bg-[#520F20] text-[#FFF9EF] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+                className="w-full py-3 rounded-xl bg-[#164B32] hover:bg-[#520F20] text-[#FFFDF5] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {isLoading ? (
                   <>
                     <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Signing in...</span>
+                    <span>{isHi ? 'साइन इन हो रहा है...' : 'Signing in...'}</span>
                   </>
                 ) : (
-                  <span>Sign In ➔</span>
+                  <span>{isHi ? 'साइन इन करें ➔' : 'Sign In ➔'}</span>
                 )}
               </button>
 
-              {/* Quick 1-Click Demo Login Button */}
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={handleQuickDemoLogin}
-                  disabled={isLoading}
-                  className="w-full py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#8C5800] border border-amber-300/80 font-bold text-xs cursor-pointer transition-all flex items-center justify-center gap-2"
-                >
-                  <span>⚡ 1-Click Demo Devotee Login</span>
-                </button>
-              </div>
-
               {/* Switch to Register */}
               <p className="text-center text-xs text-slate-500 pt-2">
-                Don't have an account yet?{' '}
+                {isHi ? 'खाता नहीं है?' : "Don't have an account yet?"}{' '}
                 <button
                   type="button"
                   onClick={() => {
                     setTab('register');
                     setErrorMessage('');
                   }}
-                  className="font-bold text-[#3E0B18] hover:underline cursor-pointer bg-transparent border-0 p-0"
+                  className="font-bold text-[#164B32] hover:underline cursor-pointer bg-transparent border-0 p-0"
                 >
-                  Register Free
+                  {isHi ? 'निःशुल्क रजिस्टर करें' : 'Register Free'}
                 </button>
               </p>
             </form>
@@ -288,38 +259,40 @@ export default function AuthModal() {
             /* TAB 2: REGISTER */
             <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
               <div>
-                <label className="block text-xs font-bold text-[#1E1B4B] mb-1">
-                  Full Name (पूरा नाम) <span className="text-rose-600">*</span>
+                <label className="block text-xs font-bold text-[#183C2B] mb-1">
+                  {isHi ? 'पूरा नाम' : 'Full Name'} <span className="text-rose-600">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   autoFocus
-                  placeholder="e.g. Ramesh Kumar Sharma"
+                  placeholder={isHi ? 'उदा. रमेश कुमार शर्मा' : 'e.g. Ramesh Kumar Sharma'}
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1E1B4B] mb-1">
-                  WhatsApp Mobile Number (व्हाट्सएप नंबर)
+                <label className="block text-xs font-bold text-[#183C2B] mb-1">
+                  {isHi ? 'व्हाट्सएप मोबाइल नंबर' : 'WhatsApp Mobile Number'}
                 </label>
                 <input
                   type="tel"
                   maxLength={10}
-                  placeholder="10-digit mobile number"
+                  placeholder={isHi ? '10 अंकों का मोबाइल नंबर' : '10-digit mobile number'}
                   value={regPhone}
                   onChange={(e) => setRegPhone(e.target.value.replace(/\D/g, ''))}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none font-mono"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none font-mono"
                 />
-                <span className="text-[10px] text-slate-400 block mt-0.5">Used for consultation alerts &amp; puja video delivery.</span>
+                <span className="text-[10px] text-slate-400 block mt-0.5">
+                  {isHi ? 'परामर्श अलर्ट एवं पूजा वीडियो प्राप्ति हेतु उपयोग होगा।' : 'Used for consultation alerts & puja video delivery.'}
+                </span>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1E1B4B] mb-1">
-                  Email Address <span className="text-rose-600">*</span>
+                <label className="block text-xs font-bold text-[#183C2B] mb-1">
+                  {isHi ? 'ईमेल पता' : 'Email Address'} <span className="text-rose-600">*</span>
                 </label>
                 <input
                   type="email"
@@ -327,23 +300,23 @@ export default function AuthModal() {
                   placeholder="name@example.com"
                   value={regEmail}
                   onChange={(e) => setRegEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1E1B4B] mb-1">
-                  Password <span className="text-rose-600">*</span>
+                <label className="block text-xs font-bold text-[#183C2B] mb-1">
+                  {isHi ? 'पासवर्ड' : 'Password'} <span className="text-rose-600">*</span>
                 </label>
                 <div className="relative">
                   <input
                     type={showRegPassword ? 'text' : 'password'}
                     required
                     minLength={6}
-                    placeholder="Min 6 characters"
+                    placeholder={isHi ? 'न्यूनतम 6 अक्षर' : 'Min 6 characters'}
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#3E0B18] focus:ring-1 focus:ring-[#3E0B18] outline-none pr-10"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:border-[#164B32] focus:ring-1 focus:ring-[#164B32] outline-none pr-10"
                   />
                   <button
                     type="button"
@@ -360,30 +333,30 @@ export default function AuthModal() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#4a1b9a] to-[#25050C] hover:opacity-95 text-white font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-60"
+                className="w-full py-3 rounded-xl bg-[#164B32] hover:bg-[#520F20] text-[#FFFDF5] font-bold text-xs uppercase tracking-wider cursor-pointer border-0 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-60"
               >
                 {isLoading ? (
                   <>
                     <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Creating Account...</span>
+                    <span>{isHi ? 'खाता बन रहा है...' : 'Creating Account...'}</span>
                   </>
                 ) : (
-                  <span>Create Account &amp; Claim Offer ➔</span>
+                  <span>{isHi ? 'खाता बनाएं एवं ऑफर प्राप्त करें ➔' : 'Create Account & Claim Offer ➔'}</span>
                 )}
               </button>
 
               {/* Switch to Login */}
               <p className="text-center text-xs text-slate-500 pt-2">
-                Already registered?{' '}
+                {isHi ? 'पहले से पंजीकृत हैं?' : 'Already registered?'}{' '}
                 <button
                   type="button"
                   onClick={() => {
                     setTab('login');
                     setErrorMessage('');
                   }}
-                  className="font-bold text-[#3E0B18] hover:underline cursor-pointer bg-transparent border-0 p-0"
+                  className="font-bold text-[#164B32] hover:underline cursor-pointer bg-transparent border-0 p-0"
                 >
-                  Sign In
+                  {isHi ? 'साइन इन करें' : 'Sign In'}
                 </button>
               </p>
             </form>

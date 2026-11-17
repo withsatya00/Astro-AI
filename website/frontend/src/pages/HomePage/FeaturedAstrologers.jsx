@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 export default function FeaturedAstrologers() {
   const navigate = useNavigate();
+  const { currentUser, openAuthModal } = useAuth();
 
   const astrologers = [
     {
@@ -51,12 +53,12 @@ export default function FeaturedAstrologers() {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#1E1B4B]">
+        <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#183C2B]">
           Featured Astrologers
         </h2>
         <Link
           to="/astrologers"
-          className="min-h-11 px-2 text-xs sm:text-sm font-bold text-[#3E0B18] hover:text-[#B45309] no-underline flex items-center gap-1 transition-colors"
+          className="min-h-11 px-2 text-xs sm:text-sm font-bold text-[#164B32] hover:text-[#C49A3A] no-underline flex items-center gap-1 transition-colors"
           style={{ minHeight: 44 }}
         >
           View All Astrologers →
@@ -68,13 +70,20 @@ export default function FeaturedAstrologers() {
         {astrologers.map((astro) => (
           <article
             key={astro.id}
-            onClick={() => navigate(`/consultation/${astro.slug || astro.id}`)}
-            className="bg-white rounded-2xl border border-[#E7E2D8] p-3 sm:p-4 shadow-2xs hover:shadow-md hover:border-[#D9A441] transition-all cursor-pointer flex flex-col justify-between group active:scale-98"
+            onClick={() => {
+              if (!currentUser && !localStorage.getItem('astro_access_token')) {
+                if (typeof openAuthModal === 'function') openAuthModal('login');
+                else navigate('/login');
+              } else {
+                navigate(`/consultation/${astro.slug || astro.id}`);
+              }
+            }}
+            className="bg-white rounded-2xl border border-[#DDEBD5] p-3 sm:p-4 shadow-2xs hover:shadow-md hover:border-[#C49A3A] transition-all cursor-pointer flex flex-col justify-between group active:scale-98"
           >
             <div>
               {/* Top Row: Avatar & Status */}
               <div className="flex items-start justify-between mb-2.5">
-                <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden bg-amber-50 border border-[#EADBCA] shrink-0">
+                <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden bg-amber-50 border border-[#DDEBD5] shrink-0">
                   <img
                     src={astro.avatar}
                     alt={astro.name}
@@ -90,10 +99,10 @@ export default function FeaturedAstrologers() {
 
               {/* Astrologer Name & Verified Tick */}
               <div className="flex items-center gap-1 mb-1">
-                <h3 className="font-serif text-xs sm:text-sm font-bold text-[#1E1B4B] group-hover:text-[#B45309] transition-colors truncate">
+                <h3 className="font-serif text-xs sm:text-sm font-bold text-[#183C2B] group-hover:text-[#C49A3A] transition-colors truncate">
                   {astro.name}
                 </h3>
-                <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white text-[8px] font-bold flex items-center justify-center shrink-0">
+                <span className="w-3.5 h-3.5 rounded-full bg-[#164B32] text-white text-[8px] font-bold flex items-center justify-center shrink-0">
                   ✓
                 </span>
               </div>
@@ -105,9 +114,9 @@ export default function FeaturedAstrologers() {
             </div>
 
             {/* Rating & Experience Foot */}
-            <div className="pt-2 border-t border-[#F2ECE1] flex items-center justify-between text-[11px] sm:text-xs">
-              <span className="font-bold text-[#1E1B4B] flex items-center gap-1">
-                <span className="text-amber-500">★</span>
+            <div className="pt-2 border-t border-[#DDEBD5] flex items-center justify-between text-[11px] sm:text-xs">
+              <span className="font-bold text-[#183C2B] flex items-center gap-1">
+                <span className="text-[#C49A3A]">★</span>
                 <span>{astro.rating}</span>
               </span>
               <span className="text-slate-500 font-semibold">{astro.exp}</span>

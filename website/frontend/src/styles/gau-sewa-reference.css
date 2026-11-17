@@ -109,6 +109,104 @@
   gap: 12px;
 }
 
+.gs-hero-trust-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin-top: 22px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  z-index: 4 !important;
+}
+
+.gs-trust-badge-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 12px !important;
+  background: rgba(30, 4, 10, 0.78) !important;
+  border: 1px solid rgba(248, 216, 130, 0.45) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s ease !important;
+  min-width: 0 !important;
+}
+
+.gs-trust-badge-card:hover {
+  background: rgba(45, 6, 16, 0.92) !important;
+  border-color: rgba(248, 216, 130, 0.75) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+.gs-trust-badge-card__icon {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 50% !important;
+  background: rgba(248, 216, 130, 0.15) !important;
+  border: 1px solid rgba(248, 216, 130, 0.55) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.gs-trust-badge-card__icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  display: block !important;
+  stroke: #f8d882 !important;
+}
+
+.gs-trust-badge-card__info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.gs-trust-badge-card__title {
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  white-space: normal !important;
+  display: block !important;
+  letter-spacing: -0.01em !important;
+}
+
+.gs-trust-badge-card__sub {
+  color: #f1cf8b !important;
+  font-size: 0.66rem !important;
+  line-height: 1.2 !important;
+  font-weight: 500 !important;
+  white-space: normal !important;
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .gs-hero-trust-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+    max-width: 100% !important;
+  }
+  .gs-trust-badge-card {
+    padding: 8px 12px !important;
+  }
+  .gs-trust-badge-card__title {
+    font-size: 0.76rem !important;
+  }
+  .gs-trust-badge-card__sub {
+    font-size: 0.64rem !important;
+  }
+}
+
 .gs-ref-hero-art {
   position: relative;
   width: 100%;

@@ -1,6 +1,6 @@
 /* Consultation room: a full-screen, app-like chat with the astrologer. */
-.cr-shell{--wine:#720720;--wine2:#3d030f;--gold:#e4ad48;--ink:#36141c;--muted:#6a5c57;--line:#e6d6c3;
-  position:fixed;inset:0;z-index:100;height:100vh;height:100dvh;display:flex;flex-direction:column;background:#fff9f1;color:var(--ink);
+.cr-shell{--wine:#164B32;--wine2:#103B29;--gold:#C49A3A;--ink:#183C2B;--muted:#56675B;--line:#DDEBD5;
+  position:fixed;inset:0;z-index:100;height:100vh;height:100dvh;display:flex;flex-direction:column;background:#FAF9F2;color:var(--ink);
   font-family:Inter,"Segoe UI","Nirmala UI",Arial,sans-serif;font-size:15px}
 .cr-shell *{box-sizing:border-box}
 .cr-shell button{font:inherit;cursor:pointer}
@@ -8,12 +8,12 @@
 .cr-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* top bar */
-.cr-topbar{flex:none;display:flex;align-items:center;gap:10px;min-height:64px;padding:8px 16px;background:#fffdf9;border-bottom:1px solid #edc77d;box-shadow:0 3px 18px #6c30100b}
+.cr-topbar{flex:none;display:flex;align-items:center;gap:10px;min-height:64px;padding:8px 16px;background:#FFFDF5;border-bottom:1px solid #DDEBD5;box-shadow:0 3px 18px #6c30100b}
 .cr-iconbtn{width:44px;height:44px;flex:none;border:0;border-radius:50%;background:none;font-size:24px;color:#32171a}
 .cr-iconbtn:hover{background:#f6ead7}
 .cr-who{display:flex;align-items:center;gap:10px;min-width:0;border:0;background:none;padding:2px 6px 2px 2px;border-radius:14px;text-align:left;color:inherit}
 .cr-who:hover{background:#f9f0e2}
-.cr-top-avatar{width:44px;height:44px;flex:none;border-radius:50%;object-fit:cover;border:2px solid #efb94f;background:#f4e8d3}
+.cr-top-avatar{width:44px;height:44px;flex:none;border-radius:50%;object-fit:cover;border:2px solid #C49A3A;background:#f4e8d3}
 .cr-top-person{display:grid;min-width:0}
 .cr-name{font:700 18px/1.2 Georgia,"Nirmala UI",serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cr-status{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted)}
@@ -29,9 +29,9 @@
 
 /* layout */
 .cr-workspace{flex:1;min-height:0;display:grid;grid-template-columns:320px minmax(0,1fr);gap:12px;padding:12px}
-.cr-profile{min-height:0;overflow:auto;border:1px solid #d89a35;border-radius:22px;background:radial-gradient(circle at 50% 12%,#7b0a21,#4b030f 58%,#310107);color:#fff8ed;padding:20px 18px}
+.cr-profile{min-height:0;overflow:auto;border:1px solid #DDEBD5;border-radius:22px;background:linear-gradient(145deg,#103B29,#164B32);color:#fff8ed;padding:20px 18px}
 .cr-profile-card{display:grid;justify-items:center;text-align:center;gap:8px}
-.cr-profile-card>img{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #f1c65b;background:#4b030f}
+.cr-profile-card>img{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #C49A3A;background:#4b030f}
 .cr-profile-card h2{margin:4px 0 0;font:700 21px/1.25 Georgia,"Nirmala UI",serif;color:#fff8ed}
 .cr-shell .cr-profile-card h2,.cr-shell .cr-dialog h2,.cr-shell .cr-center h1{font-family:Georgia,"Nirmala UI",serif!important}
 .cr-role{margin:0;font-size:14px;color:#f3dfc4}
@@ -43,7 +43,7 @@
 .cr-chips-static{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .cr-chips-static li{padding:4px 10px;border-radius:999px;font-size:12.5px;background:#ffffff1f;border:1px solid #d9a44199}
 .cr-bio{margin:0;font-size:13.5px;line-height:1.6;color:#fbefdd}
-.cr-private{display:flex;gap:10px;align-items:center;text-align:left;width:100%;margin-top:6px;padding:12px;border:1px solid #ba7c2d;border-radius:14px;background:#5b0717}
+.cr-private{display:flex;gap:10px;align-items:center;text-align:left;width:100%;margin-top:6px;padding:12px;border:1px solid #C49A3A;border-radius:14px;background:#103B29}
 .cr-private b{display:block;color:#ffd05c;font-size:13px}.cr-private small{display:block;font-size:12px;color:#f3dfc4}
 .cr-fine{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
 .cr-profile .cr-fine{color:#f3dfc4}
@@ -54,8 +54,8 @@
 .cr-badge svg{width:14px;height:14px;fill:#0fab66}
 
 /* chat panel */
-.cr-chat{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid #efdec9;border-radius:22px;background:#fffbf6}
-.cr-notice{flex:none;border-bottom:1px solid #f0e2cd;background:#fffdf9;padding:0 14px}
+.cr-chat{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid #DDEBD5;border-radius:22px;background:#FFFDF5}
+.cr-notice{flex:none;border-bottom:1px solid #DDEBD5;background:#FFFDF5;padding:0 14px}
 .cr-notice summary{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;font-weight:600;cursor:pointer;list-style:none}
 .cr-notice summary::-webkit-details-marker{display:none}
 .cr-notice summary::after{content:"▾";margin-left:auto;color:var(--muted)}
@@ -76,12 +76,12 @@
 
 .cr-row{display:flex;align-items:flex-end;gap:8px;margin:2px 0}
 .cr-row.is-user{justify-content:flex-end}
-.cr-row-avatar{width:36px;height:36px;flex:none;border-radius:50%;object-fit:cover;border:2px solid #efb94f;background:#f4e8d3;align-self:flex-start}
+.cr-row-avatar{width:36px;height:36px;flex:none;border-radius:50%;object-fit:cover;border:2px solid #C49A3A;background:#f4e8d3;align-self:flex-start}
 .cr-row-avatar-gap{width:36px;flex:none}
 .cr-bubble{position:relative;max-width:min(78%,640px);padding:8px 12px 6px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 2px 8px #713e1d0a;min-width:64px}
-.cr-bubble.mine{background:#fff1de;border-color:#e8b875;border-bottom-right-radius:5px}
+.cr-bubble.mine{background:#DDEBD5;border-color:#B8D1AB;border-bottom-right-radius:5px}
 .cr-bubble.failed{border-color:#d9808e;background:#fff5f6}
-.cr-bubble-name{display:block;font:700 13px Georgia,"Nirmala UI",serif;color:#701225;margin-bottom:2px}
+.cr-bubble-name{display:block;font:700 13px Georgia,"Nirmala UI",serif;color:#164B32;margin-bottom:2px}
 .cr-bubble p{margin:0;font-size:15px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
 .cr-meta{display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:3px;font-size:11.5px;color:#6a5c57}
 .cr-meta time{white-space:nowrap}
@@ -99,21 +99,27 @@
 .cr-jump{position:absolute;right:16px;bottom:12px;min-width:44px;height:44px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;background:var(--wine);color:#fff;font-size:20px;box-shadow:0 6px 18px #0004}
 .cr-jump b{font-size:12px;font-weight:700}
 
+/* Voice & Microphone dictation button */
+.cr-mic-btn{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid #C49A3A;border-radius:50%;background:#fff8eb;color:#164B32;font-size:18px;transition:all .2s ease;cursor:pointer}
+.cr-mic-btn:hover{background:#fcefd6;border-color:#b58022}
+.cr-mic-btn.listening{background:#164B32;color:#ffd05c;border-color:#ff5a79;animation:crPulse 1.2s infinite alternate}
+.cr-mic-btn:disabled{opacity:.5;cursor:not-allowed}
+
 /* composer */
 .cr-composer-wrap{flex:none;padding:6px 12px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid #f0e2cd;background:#fffdf9}
 .cr-chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
 .cr-chips::-webkit-scrollbar{display:none}
-.cr-chips button{flex:none;min-height:40px;padding:0 14px;border:1px solid #e9b76d;border-radius:999px;background:#fffaf3;color:#462129;font-size:13px;font-weight:700}
+.cr-chips button{flex:none;min-height:40px;padding:0 14px;border:1px solid #DDEBD5;border-radius:999px;background:#FFFDF5;color:#183C2B;font-size:13px;font-weight:700}
 .cr-chips button:disabled{opacity:.5}
 .cr-composer{display:flex;align-items:flex-end;gap:8px}
 .cr-composer textarea{flex:1;min-width:0;min-height:44px;max-height:120px;resize:none;padding:11px 16px;border:1px solid #d6b590;border-radius:22px;background:#fff;font:inherit;font-size:16px;line-height:1.4;color:var(--ink)}
-.cr-send{width:44px;height:44px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:linear-gradient(145deg,#90193a,#660720);color:#fff;font-size:18px}
+.cr-send{width:44px;height:44px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:#164B32;color:#fff;font-size:18px}
 .cr-send:disabled{background:#cdb6b9;cursor:not-allowed}
 .cr-ended{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:6px 4px;font-weight:600}
 
 /* dialogs */
 .cr-modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;background:#21050dbd;backdrop-filter:blur(6px)}
-.cr-dialog{position:relative;width:min(440px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:26px 22px 22px;border:1px solid #d7a44b;border-radius:22px;background:#fffaf3;box-shadow:0 30px 80px #0005}
+.cr-dialog{position:relative;width:min(440px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:26px 22px 22px;border:1px solid #d7a44b;border-radius:22px;background:#FFFDF5;box-shadow:0 30px 80px #0005}
 .cr-dialog-wide{width:min(580px,100%)}
 .cr-dialog h2{margin:0 0 8px;padding-right:34px;font:700 21px/1.3 Georgia,"Nirmala UI",serif;color:#33121b}
 .cr-dialog h3{margin:14px 0 6px;font:800 12.5px Inter,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#8a4a12}
@@ -193,3 +199,30 @@
 }
 @media(max-width:360px){.cr-pill.wallet .cr-pill-text{display:none}}
 @media(prefers-reduced-motion:reduce){.cr-dots i{animation:none}.cr-thread{scroll-behavior:auto}}
+
+/* Live Session Timer Pill */
+.cr-timer-pill{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;background:#103B29;color:#ffd05c;border:1px solid #C49A3A;font-size:13.5px;font-weight:800;white-space:nowrap}
+.cr-timer-time{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:14.5px;letter-spacing:0.04em}
+.cr-timer-rate{font-size:11px;font-weight:600;opacity:0.85;padding-left:4px;border-left:1px solid rgba(255,208,92,0.4)}
+.cr-timer-pill.warning-pulse{background:#791223;color:#fff;border-color:#ff5a79;animation:crPulse 1.2s infinite alternate}
+
+@keyframes crPulse{
+  from{box-shadow:0 0 2px #ff4965}
+  to{box-shadow:0 0 12px #ff4965, 0 0 20px #ff2a4d}
+}
+
+/* Consultation Gating & Low Balance Overlays */
+.cr-gate-overlay{position:absolute;inset:0;background:rgba(16,59,41,0.85);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:10;padding:20px}
+.cr-gate-card{max-width:440px;width:100%;background:#FFFDF5;border:2px solid #e0aa42;border-radius:22px;padding:28px 24px;text-align:center;box-shadow:0 12px 36px rgba(0,0,0,0.4);animation:crSlideUp 0.25s ease-out}
+.cr-gate-card.alert{border-color:#d93850}
+.cr-gate-icon{font-size:42px;line-height:1;margin-bottom:12px}
+.cr-gate-card h2{margin:0 0 8px;font:700 22px Georgia,"Nirmala UI",serif;color:#183C2B}
+.cr-gate-card p{margin:0 0 12px;font-size:14px;line-height:1.55;color:#493c39}
+.cr-gate-sub{background:#fff3dd;border:1px solid #edd39e;border-radius:12px;padding:12px;font-size:13px;color:#5a3200;margin-bottom:18px!important}
+.cr-gate-card.alert .cr-gate-sub{background:#fdebed;border-color:#f8b4be;color:#791223}
+
+@keyframes crSlideUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+

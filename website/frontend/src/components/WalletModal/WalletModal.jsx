@@ -9,9 +9,9 @@ const money = (n) => `₹${Number(n || 0).toLocaleString('en-IN', { minimumFract
 export function TransactionList({ rows, empty, roomy }) {
   if (!rows.length) return <p className="text-center text-xs text-slate-400 py-6">{empty}</p>;
   return rows.map((tx) => (
-    <div key={tx.id} className={`flex items-center justify-between ${roomy ? 'p-3.5 rounded-2xl' : 'p-3 rounded-xl'} bg-[#FFFDF7] border border-[#E7E2D8] text-xs`}>
+    <div key={tx.id} className={`flex items-center justify-between ${roomy ? 'p-3.5 rounded-2xl' : 'p-3 rounded-xl'} bg-[#FFFDF7] border border-[#DDEBD5] text-xs`}>
       <div>
-        <strong className="text-[#1E1B4B] block text-xs">{tx.title}</strong>
+        <strong className="text-[#183C2B] block text-xs">{tx.title}</strong>
         <small className="text-slate-500 text-[11.5px]">{tx.date} • {tx.ref}</small>
       </div>
       <span className={`font-extrabold text-sm ${tx.type === 'credit' ? 'text-emerald-700' : 'text-rose-600'}`}>
@@ -54,13 +54,13 @@ export default function WalletModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-label="Astro Wallet">
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#E7E2D8] overflow-hidden max-h-[92vh] overflow-y-auto" style={{ animation: 'fadeInScale 0.2s ease-out' }}>
+    <div style={{ zIndex: 9999 }} className="fixed inset-0 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs" role="dialog" aria-modal="true" aria-label="Astro Wallet">
+      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-[#DDEBD5] overflow-hidden max-h-[92vh] overflow-y-auto" style={{ animation: 'fadeInScale 0.2s ease-out' }}>
         <div className="p-6 pb-4 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="w-8 h-8 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm" aria-hidden="true">🪙</span>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#1E1B4B] leading-none">Astro Wallet</h3>
+              <h3 className="font-serif text-lg font-bold text-[#183C2B] leading-none">Astro Wallet</h3>
               <small className="text-slate-500 text-[11.5px]">Consultations, sevas and Astro Mall</small>
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function WalletModal({ isOpen, onClose }) {
         </div>
 
         <div className="p-6 pt-4">
-          <div className="p-5 rounded-2xl border border-amber-300 text-white relative overflow-hidden mb-5" style={{ background: 'linear-gradient(135deg, #3E0B18 0%, #5B1024 60%, #20040A 100%)' }}>
+          <div className="p-5 rounded-2xl border border-amber-300 text-white relative overflow-hidden mb-5" style={{ background: 'linear-gradient(135deg, #164B32 0%, #5B1024 60%, #20040A 100%)' }}>
             <span className="text-xs uppercase font-extrabold tracking-wider text-[#EFD4A0]/90 block mb-2">Available balance</span>
             <div className="text-3xl sm:text-4xl font-extrabold font-serif text-[#FFFDF8] tracking-tight" aria-live="polite">
               {wallet.loading ? '…' : money(wallet.balance)}
@@ -79,7 +79,7 @@ export default function WalletModal({ isOpen, onClose }) {
           {!wallet.signedIn ? (
             <div className="text-center py-4">
               <p className="text-sm text-slate-600 mb-3">Sign in to see your balance and add money.</p>
-              <button type="button" onClick={signIn} className="px-6 py-3 rounded-xl bg-[#3E0B18] text-[#FFF9EF] font-bold text-xs uppercase tracking-wider cursor-pointer border-0">Sign in</button>
+              <button type="button" onClick={signIn} className="px-6 py-3 rounded-xl bg-[#164B32] text-[#FFFDF5] font-bold text-xs uppercase tracking-wider cursor-pointer border-0">Sign in</button>
             </div>
           ) : (
             <>
@@ -89,7 +89,7 @@ export default function WalletModal({ isOpen, onClose }) {
               <div className="flex border-b border-slate-200 mb-4" role="tablist">
                 {[['recharge', 'Add money'], ['history', 'Transaction history']].map(([id, label]) => (
                   <button key={id} type="button" role="tab" aria-selected={activeTab === id} onClick={() => setActiveTab(id)}
-                    className={`flex-1 pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer bg-transparent border-0 ${activeTab === id ? 'border-[#3E0B18] text-[#3E0B18]' : 'border-transparent text-slate-500'}`}
+                    className={`flex-1 pb-2 text-xs font-bold border-b-2 transition-all cursor-pointer bg-transparent border-0 ${activeTab === id ? 'border-[#164B32] text-[#164B32]' : 'border-transparent text-slate-500'}`}
                     style={{ minHeight: 40 }}>{label}</button>
                 ))}
               </div>
@@ -97,13 +97,13 @@ export default function WalletModal({ isOpen, onClose }) {
               {activeTab === 'recharge' ? (
                 <form onSubmit={handleRecharge} className="space-y-4">
                   <fieldset className="border-0 p-0 m-0">
-                    <legend className="block text-xs font-bold text-[#1E1B4B] mb-2">Choose an amount</legend>
+                    <legend className="block text-xs font-bold text-[#183C2B] mb-2">Choose an amount</legend>
                     <div className="grid grid-cols-3 gap-2">
                       {PACKS.map((p) => {
                         const on = amount === p && !customAmount;
                         return (
                           <button key={p} type="button" aria-pressed={on} onClick={() => { setSelectedPack(p); setCustomAmount(''); }}
-                            className={`py-3 px-1 rounded-xl border text-center font-serif text-sm font-bold cursor-pointer ${on ? 'bg-amber-50 border-[#3E0B18] text-[#3E0B18]' : 'bg-white border-slate-200 text-[#1E1B4B] hover:border-amber-300'}`}
+                            className={`py-3 px-1 rounded-xl border text-center font-serif text-sm font-bold cursor-pointer ${on ? 'bg-amber-50 border-[#164B32] text-[#164B32]' : 'bg-white border-slate-200 text-[#183C2B] hover:border-amber-300'}`}
                             style={{ minHeight: 44 }}>₹{p}</button>
                         );
                       })}
@@ -116,7 +116,7 @@ export default function WalletModal({ isOpen, onClose }) {
                   {msg && <p role={msg.ok ? 'status' : 'alert'} className={`text-xs rounded-xl px-3 py-2 border ${msg.ok ? 'text-emerald-800 bg-emerald-50 border-emerald-200' : 'text-rose-700 bg-rose-50 border-rose-200'}`}>{msg.text}</p>}
 
                   <button type="submit" disabled={busy || invalid || !wallet.available}
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B3832B] text-[#1E1B4B] font-extrabold text-xs uppercase tracking-wider mt-2 cursor-pointer border-0 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B3832B] text-[#183C2B] font-extrabold text-xs uppercase tracking-wider mt-2 cursor-pointer border-0 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
                     {busy ? 'Processing…' : `Add ₹${Number.isFinite(amount) ? amount : 0} →`}
                   </button>
                   <p className="text-[11.5px] text-slate-500 text-center">Payments are handled by Razorpay (UPI, cards, net banking). Your wallet is credited only after the payment is confirmed.</p>

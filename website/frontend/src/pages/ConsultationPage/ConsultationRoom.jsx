@@ -5,12 +5,14 @@ import WalletModal from '../../components/WalletModal/WalletModal.jsx';
 import { useWallet } from '../../components/WalletModal/walletApi.js';
 import { useLang } from '../BhaktiPage/lang.js';
 import {
-  ApiError, endConsultation, getAstrologer, getMessages, listConsultations, openConsultation, parseUtc, sendFeedback, sendMessage,
+  ApiError, debitMinute, endConsultation, getAstrologer, getMessages, listConsultations, openConsultation, parseUtc, sendFeedback, sendMessage,
 } from './consultApi.js';
 import { copy, errorText } from './consultCopy.js';
 import ChatThread from './ChatThread.jsx';
 import BookingModal from './BookingModal.jsx';
-import { AstrologerList, Badge, CallAiDialog, EndDialog, InfoSheet, ProfileCard, SummaryDialog, nameOf } from './Panels.jsx';
+import VoiceCallModal from './VoiceCallModal.jsx';
+import { createSpeechRecognizer } from './voiceAcharya.js';
+import { AstrologerList, Badge, EndDialog, InfoSheet, ProfileCard, SummaryDialog, nameOf } from './Panels.jsx';
 import './consultation-room.css';
 
 const money = (n) => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
@@ -71,6 +73,9 @@ export default function ConsultationRoom() {
   const [walletOpen, setWalletOpen] = useState(false);
   const [startingNew, setStartingNew] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [voiceCallOpen, setVoiceCallOpen] = useState(false);
+  const [isDictating, setIsDictating] = useState(false);
+  const dictationRecRef = useRef(null);
 
   const messagesRef = useRef([]); messagesRef.current = messages;
   const consultRef = useRef(null); consultRef.current = consult;
@@ -80,12 +85,80 @@ export default function ConsultationRoom() {
   const pg = useRef({ activeId: null, curId: null, sessionMore: false, sessions: null, next: 0, exhausted: false, busy: false });
   const composer = useRef(null);
 
-  const signedIn = wallet.signedIn;
+  const pricePerMin = Number(astro?.price_per_minute || 20);
+  const signedIn = wallet.signedIn || !!currentUser;
+  const balance = Number(wallet.balance || 0);
+  const hasMinimumBalance = balance >= pricePerMin;
   const name = astro ? nameOf(astro, lang) : '';
+
+  const [remainingSeconds, setRemainingSeconds] = useState(null);
+  const [balanceExhausted, setBalanceExhausted] = useState(false);
+
+  // Initialize and sync remainingSeconds whenever wallet balance or rate updates
+  useEffect(() => {
+    if (signedIn && !wallet.loading && pricePerMin > 0) {
+      const allowedSecs = Math.floor((balance / pricePerMin) * 60);
+      if (allowedSecs > 0) {
+        setRemainingSeconds(allowedSecs);
+        setBalanceExhausted(false);
+      } else {
+        setRemainingSeconds(0);
+        setBalanceExhausted(true);
+      }
+    } else if (!signedIn) {
+      setRemainingSeconds(null);
+      setBalanceExhausted(false);
+    }
+  }, [signedIn, wallet.loading, balance, pricePerMin]);
+
+  // Live countdown timer & per-minute billing heartbeat: ticks every 1 second when active
+  const elapsedSecs = useRef(0);
+  useEffect(() => {
+    if (phase !== 'ready' || !signedIn || ended || balanceExhausted || remainingSeconds === null || remainingSeconds <= 0) {
+      return undefined;
+    }
+    const timer = setInterval(() => {
+      elapsedSecs.current += 1;
+
+      // Every 60 seconds (1 minute elapsed), trigger per-minute billing
+      if (elapsedSecs.current % 60 === 0 && consultRef.current && consultRef.current.id && pricePerMin > 0) {
+        debitMinute(consultRef.current.id)
+          .then((res) => {
+            if (res && res.new_balance !== undefined) {
+              wallet.refresh();
+            }
+          })
+          .catch((err) => {
+            if (err && (err.status === 402 || err.status === 401)) {
+              setBalanceExhausted(true);
+              setRemainingSeconds(0);
+              wallet.refresh();
+            }
+          });
+      }
+
+      setRemainingSeconds((prev) => {
+        if (prev === null || prev <= 1) {
+          setBalanceExhausted(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [phase, signedIn, ended, balanceExhausted, remainingSeconds, pricePerMin, wallet]);
+
+  const formatTime = (secs) => {
+    if (secs === null || secs === undefined) return '--:--';
+    const m = Math.floor(Math.max(0, secs) / 60);
+    const s = Math.max(0, secs) % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  };
 
   // ---- open the room ---------------------------------------------------------------------------------------------
   useEffect(() => {
     setAstro(null); setConsult(null); setMessages([]); setHasMore(true); setHistoryError(false); setEnded(false); setDialog(null); setTyping(false); setDraft('');
+    elapsedSecs.current = 0;
     pg.current = { activeId: null, curId: null, sessionMore: false, sessions: null, next: 0, exhausted: false, busy: false };
     if (!slug) { setPhase('choose'); return undefined; }
     setPhase('loading');
@@ -93,11 +166,19 @@ export default function ConsultationRoom() {
     (async () => {
       try {
         const a = await getAstrologer(slug, ac.signal);
+        setAstro(a);
+
+        // Strict Login Barrier: Do not open room or create session in DB if user is not signed in
+        if (!signedIn) {
+          setPhase('auth_required');
+          return;
+        }
+
         const cons = await openConsultation(a.id, langRef.current);
         const r = await getMessages(cons.id, { limit: 30 }, ac.signal);
         if (ac.signal.aborted) return;
         pg.current = { activeId: cons.id, curId: cons.id, sessionMore: !!r.has_more, sessions: null, next: 0, exhausted: false, busy: false };
-        setAstro(a); setConsult(cons);
+        setConsult(cons);
         setMessages((r.messages || []).filter((m) => m.role === 'user' || m.role === 'assistant').map((m) => norm(m, cons.id)).sort(byTime));
         setHasMore(true);
         setPhase('ready');
@@ -107,7 +188,7 @@ export default function ConsultationRoom() {
       }
     })();
     return () => ac.abort();
-  }, [slug, reloadKey]);
+  }, [slug, reloadKey, signedIn]);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -118,7 +199,11 @@ export default function ConsultationRoom() {
   // A call link from the directory opens the call dialog once the room is ready.
   useEffect(() => {
     if (phase === 'ready' && astro && params.get('call') === 'true') {
-      setDialog(astro.is_ai ? 'call' : 'book');
+      if (astro.is_ai) {
+        setVoiceCallOpen(true);
+      } else {
+        setDialog('book');
+      }
       const next = new URLSearchParams(params); next.delete('call'); setParams(next, { replace: true });
     }
   }, [phase, astro, params, setParams]);
@@ -176,20 +261,62 @@ export default function ConsultationRoom() {
     if (a.is_ai) setTyping(true);
     try {
       const res = await sendMessage(cons.id, { message: text, language: langRef.current, userName: currentUser && currentUser.full_name });
+      wallet.refresh();
       setMessages((m) => m.map((x) => (x.id === id ? { ...x, status: 'sent' } : x)));
       if (res && res.role === 'assistant') setMessages((m) => mergeServer(m, [norm(res, cons.id)]));
       else if (res && res.status_note) setMessages((m) => m.map((x) => (x.id === id ? { ...x, systemNote: res.status_note } : x)));
       refreshLatest();
+      return res;
     } catch (e) {
+      if (e instanceof ApiError && (e.status === 402 || e.status === 401)) {
+        if (e.status === 402) {
+          setBalanceExhausted(true);
+          setRemainingSeconds(0);
+          wallet.refresh();
+        } else {
+          openAuthModal('login');
+        }
+      }
       setMessages((m) => m.map((x) => (x.id === id ? { ...x, status: 'failed', error: errorText(copy(langRef.current), e) } : x)));
     } finally {
       setTyping(false);
     }
-  }, [currentUser, refreshLatest]);
+  }, [currentUser, refreshLatest, wallet, openAuthModal]);
+
+  const toggleDictation = () => {
+    if (isDictating) {
+      if (dictationRecRef.current) {
+        try { dictationRecRef.current.abort(); } catch {}
+      }
+      setIsDictating(false);
+      return;
+    }
+
+    const rec = createSpeechRecognizer({
+      lang: lang === 'hi' ? 'hi-IN' : 'en-IN',
+      onResult: ({ text, final }) => {
+        setDraft((prev) => {
+          const trimmed = prev.trim();
+          return trimmed ? `${trimmed} ${text}` : text;
+        });
+        if (final) {
+          setIsDictating(false);
+        }
+      },
+      onError: () => setIsDictating(false),
+      onEnd: () => setIsDictating(false),
+    });
+
+    if (rec) {
+      dictationRecRef.current = rec;
+      setIsDictating(true);
+      try { rec.start(); } catch { setIsDictating(false); }
+    }
+  };
 
   const send = (text) => {
     const value = (text !== undefined ? text : draft).trim();
-    if (!value || ended || !consult || (astro && astro.is_ai && typing)) return;
+    if (!value || ended || !consult || (astro && astro.is_ai && typing) || !signedIn || !hasMinimumBalance || balanceExhausted) return;
     if (text === undefined) setDraft('');
     deliver(value);
     if (composer.current) composer.current.style.height = 'auto';
@@ -228,15 +355,21 @@ export default function ConsultationRoom() {
     setStartingNew(false);
   };
 
-  const onCall = () => setDialog(astro && astro.is_ai ? 'call' : 'book');
+  const onCall = () => {
+    if (astro?.is_ai) {
+      setVoiceCallOpen(true);
+    } else {
+      setDialog('book');
+    }
+  };
   const onWallet = () => (signedIn ? setWalletOpen(true) : openAuthModal('login'));
   const goBack = () => (window.history.length > 1 ? navigate(-1) : navigate('/astrologers'));
   const walletText = !signedIn ? c.signIn : wallet.loading ? '…' : wallet.error ? c.balanceUnavailable : money(wallet.balance);
 
-  const quickShown = !messages.some((m) => m.role === 'user') && !ended;
+  const quickShown = !messages.some((m) => m.role === 'user') && !ended && signedIn && hasMinimumBalance && !balanceExhausted;
   const statusKey = astro ? (astro.availability === 'online' ? 'online' : astro.availability === 'busy' ? 'busy' : 'offline') : 'offline';
   const intro = astro ? (astro.is_ai ? c.greetingAi : c.greetingHuman) : '';
-  const sendDisabled = !draft.trim() || !consult || ended || (astro && astro.is_ai && typing);
+  const sendDisabled = !draft.trim() || !consult || ended || (astro && astro.is_ai && typing) || !signedIn || !hasMinimumBalance || balanceExhausted;
 
   // ---- screens that are not the chat ----------------------------------------------------------------------------
   if (phase === 'loading') {
@@ -264,6 +397,35 @@ export default function ConsultationRoom() {
     );
   }
 
+  if (phase === 'auth_required') {
+    return (
+      <div className="cr-shell" translate="no">
+        <div className="cr-center cr-wide" style={{ maxWidth: 520, margin: '60px auto', padding: '0 16px' }}>
+          <div className="cr-gate-card" style={{ padding: '36px 28px', textAlign: 'center', background: '#FFFFFF', borderRadius: '24px', border: '1px solid #E7E2D8', boxShadow: '0 12px 36px rgba(62,11,24,0.08)' }}>
+            <div className="cr-gate-icon" style={{ fontSize: '48px', marginBottom: '16px', lineHeight: 1 }}>🔒</div>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E1B4B', margin: '0 0 12px', fontFamily: 'serif' }}>
+              {c.authRequiredTitle}
+            </h1>
+            <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: 1.5, margin: '0 0 8px' }}>
+              {c.authRequiredBody(name || (lang === 'hi' ? 'ज्योतिषी' : 'the astrologer'), pricePerMin)}
+            </p>
+            <p style={{ fontSize: '0.825rem', color: '#64748B', margin: '0 0 24px', lineHeight: 1.4 }}>
+              {c.authRequiredSub}
+            </p>
+            <div className="cr-btnrow" style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+              <button type="button" className="cr-btn ghost" onClick={goBack}>
+                {c.back}
+              </button>
+              <button type="button" className="cr-btn primary" onClick={() => openAuthModal('login')}>
+                {c.authRequiredBtn}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cr-shell" translate="no">
       <header className="cr-topbar">
@@ -277,6 +439,13 @@ export default function ConsultationRoom() {
           </span>
         </button>
         <div className="cr-actions">
+          {signedIn && !wallet.loading && (
+            <div className={`cr-timer-pill ${remainingSeconds !== null && remainingSeconds <= 60 ? 'warning-pulse' : ''}`} title={`Session duration based on wallet balance (₹${pricePerMin}/min)`}>
+              <span aria-hidden="true">⏱️</span>
+              <span className="cr-timer-time">{formatTime(remainingSeconds)}</span>
+              <span className="cr-timer-rate">₹{pricePerMin}/m</span>
+            </div>
+          )}
           <button type="button" className="cr-pill wallet" onClick={onWallet} aria-label={`${c.wallet}: ${walletText}`}><span aria-hidden="true">👛</span><span className="cr-pill-text">{walletText}</span></button>
           <button type="button" className="cr-pill call" onClick={onCall} aria-label={c.call}><span aria-hidden="true">☎</span><span className="cr-pill-text">{c.call}</span></button>
           <button type="button" className="cr-pill end" onClick={() => { setEndError(''); setDialog('end'); }} disabled={ended} aria-label={c.end}><span aria-hidden="true">■</span><span className="cr-pill-text">{c.end}</span></button>
@@ -285,16 +454,63 @@ export default function ConsultationRoom() {
 
       <div className="cr-workspace">
         <aside className="cr-profile" aria-label={c.info}><ProfileCard astro={astro} lang={lang} /></aside>
-        <main className="cr-chat">
+        <main className="cr-chat" style={{ position: 'relative' }}>
           <details className="cr-notice">
-            <summary><Badge astro={astro} lang={lang} /><span>{astro.is_ai ? c.aiShort : c.humanShort}</span></summary>
-            <p>{astro.is_ai ? c.aiNotice : c.humanNotice}</p>
+            <summary><Badge astro={astro} lang={lang} /><span>{c.aiShort}</span></summary>
+            <p>{c.aiNotice}</p>
           </details>
           {!online && <div className="cr-offline" role="status">{c.offlineBanner}</div>}
           <ChatThread
             lang={lang} astro={astro} name={name} messages={messages} hasMore={hasMore} loadingOlder={loadingOlder}
             historyError={historyError} onLoadOlder={loadOlder} onRetry={(m) => deliver(m.content, m.id)} typing={typing} intro={intro}
           />
+
+          {/* Gating: Not signed in fallback */}
+          {!signedIn && (
+            <div className="cr-gate-overlay">
+              <div className="cr-gate-card">
+                <div className="cr-gate-icon">🔒</div>
+                <h2>{c.authRequiredTitle}</h2>
+                <p>{c.authRequiredBody(name, pricePerMin)}</p>
+                <div className="cr-btnrow">
+                  <button type="button" className="cr-btn ghost" onClick={goBack}>{c.back}</button>
+                  <button type="button" className="cr-btn primary" onClick={() => openAuthModal('login')}>{c.authRequiredBtn}</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Gating: Insufficient balance */}
+          {signedIn && !hasMinimumBalance && (
+            <div className="cr-gate-overlay">
+              <div className="cr-gate-card">
+                <div className="cr-gate-icon">👛</div>
+                <h2>{c.insufficientTitle}</h2>
+                <p>{c.insufficientBody(pricePerMin, money(balance))}</p>
+                <div className="cr-btnrow">
+                  <button type="button" className="cr-btn ghost" onClick={goBack}>{c.back}</button>
+                  <button type="button" className="cr-btn primary" onClick={() => setWalletOpen(true)}>{c.rechargeWalletNow}</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Gating: Balance exhausted during active session */}
+          {signedIn && hasMinimumBalance && balanceExhausted && (
+            <div className="cr-gate-overlay">
+              <div className="cr-gate-card alert">
+                <div className="cr-gate-icon">⌛</div>
+                <h2>{c.exhaustedTitle}</h2>
+                <p>{c.exhaustedBody}</p>
+                <p className="cr-gate-sub">{c.exhaustedSub}</p>
+                <div className="cr-btnrow">
+                  <button type="button" className="cr-btn ghost" onClick={finish}>{c.endConsultationBtn}</button>
+                  <button type="button" className="cr-btn primary" onClick={() => setWalletOpen(true)}>{c.rechargeToContinue}</button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <footer className="cr-composer-wrap">
             {ended ? (
               <div className="cr-ended"><span>{c.endedBanner}</span><button type="button" className="cr-btn primary" onClick={startNew} disabled={startingNew}>{c.startNew}</button></div>
@@ -302,12 +518,24 @@ export default function ConsultationRoom() {
               <>
                 {quickShown && <div className="cr-chips" aria-label={c.composerLabel}>{c.quick.map(([icon, q]) => <button key={q} type="button" onClick={() => send(q)} disabled={astro.is_ai && typing}><span aria-hidden="true">{icon}</span> {q}</button>)}</div>}
                 <form className="cr-composer" onSubmit={(e) => { e.preventDefault(); send(); }}>
+                  <button
+                    type="button"
+                    className={`cr-mic-btn ${isDictating ? 'listening' : ''}`}
+                    onClick={toggleDictation}
+                    disabled={!signedIn || !hasMinimumBalance || balanceExhausted || (astro && astro.is_ai && typing)}
+                    title={isDictating ? (lang === 'hi' ? 'बोलना बंद करें' : 'Stop voice typing') : (lang === 'hi' ? 'बोलकर प्रश्न पूछें' : 'Speak your question')}
+                    aria-label={isDictating ? 'Listening...' : 'Voice typing'}
+                  >
+                    🎙️
+                  </button>
                   <textarea
-                    ref={composer} rows={1} value={draft} maxLength={1000} aria-label={c.composerLabel} placeholder={c.composerPlaceholder}
+                    ref={composer} rows={1} value={draft} maxLength={1000} aria-label={c.composerLabel}
+                    disabled={!signedIn || !hasMinimumBalance || balanceExhausted}
+                    placeholder={!signedIn ? (lang === 'hi' ? 'चैट करने के लिए साइन इन करें' : 'Please sign in to chat') : (!hasMinimumBalance || balanceExhausted) ? (lang === 'hi' ? 'संदेश भेजने के लिए वॉलेट रिचार्ज करें' : 'Recharge wallet to send message') : c.composerPlaceholder}
                     onChange={(e) => { setDraft(e.target.value); e.target.style.height = 'auto'; e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`; }}
                     onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); send(); } }}
                   />
-                  <button type="submit" className="cr-send" disabled={sendDisabled} aria-label={astro.is_ai && typing ? c.sendWaiting : c.send}>➤</button>
+                  <button type="submit" className="cr-send" disabled={sendDisabled} aria-label={astro && astro.is_ai && typing ? c.sendWaiting : c.send}>➤</button>
                 </form>
               </>
             )}
@@ -318,13 +546,24 @@ export default function ConsultationRoom() {
       {dialog === 'info' && <InfoSheet astro={astro} lang={lang} onClose={() => setDialog(null)} />}
       {dialog === 'end' && <EndDialog lang={lang} ending={ending} error={endError} onConfirm={finish} onClose={() => setDialog(null)} />}
       {dialog === 'summary' && summary && <SummaryDialog lang={lang} summary={summary} onRate={(stars, text) => sendFeedback(consult.id, stars, text)} onClose={() => setDialog(null)} />}
-      {dialog === 'call' && <CallAiDialog lang={lang} onClose={() => setDialog(null)} />}
       {dialog === 'book' && (
         <BookingModal
           lang={lang} astro={astro} name={name} signedIn={signedIn} user={currentUser}
           balance={wallet.balance} balanceReady={signedIn && !wallet.loading && !wallet.error}
           onClose={() => setDialog(null)} onRecharge={() => { setDialog(null); setWalletOpen(true); }}
           onSignIn={() => { setDialog(null); openAuthModal('login'); }} onBooked={() => wallet.refresh()}
+        />
+      )}
+      {voiceCallOpen && (
+        <VoiceCallModal
+          isOpen={voiceCallOpen}
+          onClose={() => setVoiceCallOpen(false)}
+          astro={astro}
+          consult={consult}
+          lang={lang}
+          onSendMessage={(text) => deliver(text)}
+          remainingSeconds={remainingSeconds}
+          pricePerMin={pricePerMin}
         />
       )}
       <WalletModal isOpen={walletOpen} onClose={() => { setWalletOpen(false); wallet.refresh(); }} />

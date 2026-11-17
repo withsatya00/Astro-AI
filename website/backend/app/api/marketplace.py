@@ -616,6 +616,11 @@ def related_products(product_id: str, lang: Optional[str] = None, db: Session = 
         raise HTTPException(status_code=404, detail="Product not found")
     rows = (db.query(MarketplaceProduct).filter(MarketplaceProduct.category == prod.category, MarketplaceProduct.id != prod.id,
                                                 MarketplaceProduct.is_active == True).limit(4).all())  # noqa: E712
+    if len(rows) < 4:
+        exclude_ids = [prod.id] + [p.id for p in rows]
+        fallback = (db.query(MarketplaceProduct).filter(~MarketplaceProduct.id.in_(exclude_ids),
+                                                        MarketplaceProduct.is_active == True).limit(4 - len(rows)).all())
+        rows.extend(fallback)
     stats = _review_stats(db, [p.id for p in rows])
     return {"products": [_product_dict(p, stats, lang) for p in rows]}
 
@@ -1117,3 +1122,76 @@ def admin_list_products(
     return {"products": [dict(_product_dict(p, None, lang), is_active=p.is_active, seller_id=p.seller_id, listing_status=p.listing_status,
                               certificate_status=p.certificate_status) for p in prods],
             "total": len(prods)}
+
+
+class AdminProductIn(BaseModel):
+    title: str = Field(..., min_length=2, max_length=255)
+    category: str = Field("rudraksha", max_length=50)
+    description: str = Field(...)
+    price: float = Field(..., gt=0)
+    original_price: Optional[float] = None
+    stock: int = Field(50, ge=0)
+    image_url: Optional[str] = None
+    material: Optional[str] = None
+    origin: Optional[str] = None
+    is_active: bool = True
+
+
+class AdminProductPatch(BaseModel):
+    title: Optional[str] = None
+    category: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    original_price: Optional[float] = None
+    stock: Optional[int] = None
+    image_url: Optional[str] = None
+    material: Optional[str] = None
+    origin: Optional[str] = None
+    is_active: Optional[bool] = None
+
+
+@router.post("/admin/products")
+def admin_create_product(
+    req: AdminProductIn,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
+):
+    prod = MarketplaceProduct(
+        title=req.title,
+        category=req.category,
+        description=req.description,
+        price=req.price,
+        original_price=req.original_price or round(req.price * 1.3),
+        stock=req.stock,
+        image_url=req.image_url or "/assets/img/products/rudraksha-5.jpg",
+        material=req.material or "Natural Sacred Material",
+        origin=req.origin or "Himalayas, India",
+        seller_name="Astro Jyotish Certified Trust",
+        seller_id=_admin.id,
+        listing_status="APPROVED",
+        certificate_status="VERIFIED",
+        is_active=req.is_active,
+    )
+    db.add(prod)
+    db.commit()
+    db.refresh(prod)
+    return {"success": True, "product": _product_dict(prod)}
+
+
+@router.patch("/admin/products/{product_id}")
+def admin_edit_product(
+    product_id: str,
+    req: AdminProductPatch,
+    db: Session = Depends(get_db),
+    _admin: User = Depends(require_admin)
+):
+    prod = db.query(MarketplaceProduct).filter(MarketplaceProduct.id == product_id).first()
+    if not prod:
+        raise HTTPException(status_code=404, detail="Product not found")
+    data = req.model_dump(exclude_unset=True)
+    for k, v in data.items():
+        if v is not None:
+            setattr(prod, k, v)
+    db.commit()
+    return {"success": True, "product": _product_dict(prod)}
+

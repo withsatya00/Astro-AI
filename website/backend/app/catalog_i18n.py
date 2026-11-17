@@ -9,37 +9,48 @@ from typing import Dict, List, Optional, Tuple
 TEMPLES_EN: Dict[str, Dict[str, str]] = {
     "mahakaleshwar-ujjain": {
         "name": "Shri Mahakaleshwar Jyotirlinga, Ujjain", "deity": "Lord Shiva (Mahakal)", "city": "Ujjain", "state": "Madhya Pradesh",
-        "description": "The only south-facing Jyotirlinga among the twelve. Darshan and the Bhasma Aarti of Mahakal, the lord of time, are believed to remove the fear of untimely death."},
+        "description": "The only south-facing Jyotirlinga among the twelve. Darshan and the Bhasma Aarti of Mahakal, the lord of time, are believed to remove the fear of untimely death.",
+        "history_significance": "Situated in the ancient holy city of Avantika (Ujjain), Mahakaleshwar is revered as the supreme seat of Tantra, Yoga and liberation (Moksha). It is the only south-facing self-manifested Jyotirlinga where the sacred Bhasma Aarti has been celebrated continuously since antiquity."},
     "kashi-vishwanath-varanasi": {
         "name": "Shri Kashi Vishwanath Dham, Varanasi", "deity": "Lord Shiva (Vishweshwar)", "city": "Varanasi", "state": "Uttar Pradesh",
-        "description": "Lord Mahadev, ruler of moksha-granting Kashi. Gangajal and Rudrabhishek here are believed to pacify sins and planetary afflictions."},
+        "description": "Lord Mahadev, ruler of moksha-granting Kashi. Gangajal and Rudrabhishek here are believed to pacify sins and planetary afflictions.",
+        "history_significance": "Revered as the spiritual capital of Bharat, Kashi is the eternal abode of Lord Shiva where holy Gangajal and Bilva offerings grant freedom from the cycle of birth and death."},
     "somnath-jyotirlinga-gujarat": {
         "name": "Shri Somnath Jyotirlinga Dham, Gujarat", "deity": "Lord Somnath (Chandramauli Shiva)", "city": "Prabhas Patan / Veraval", "state": "Gujarat",
-        "description": "The first of the twelve Jyotirlingas and an ancient pilgrimage, where the Moon god was freed from his affliction. Revered for peace of mind and relief from Moon-related doshas."},
+        "description": "The first of the twelve Jyotirlingas and an ancient pilgrimage, where the Moon god was freed from his affliction. Revered for peace of mind and relief from Moon-related doshas.",
+        "history_significance": "The foremost of the twelve Jyotirlingas, situated at the sacred confluence on the Saurashtra coast where Chandra Dev regained his celestial luster."},
     "kedarnath-dham-uttarakhand": {
         "name": "Shri Kedarnath Dham, Himalayas", "deity": "Lord Kedarnath (Sadashiva)", "city": "Rudraprayag", "state": "Uttarakhand",
-        "description": "Foremost of the Panch Kedars, on the banks of the Mandakini in the lap of the Himalayas. Darshan is believed to free one from the cycle of birth and death."},
+        "description": "Foremost of the Panch Kedars, on the banks of the Mandakini in the lap of the Himalayas. Darshan is believed to free one from the cycle of birth and death.",
+        "history_significance": "Foremost of the Panch Kedars nestled in the snow-capped Garhwal Himalayas near the Mandakini river, consecrated since the Mahabharata era."},
     "tirupati-balaji-andhra": {
         "name": "Shri Tirupati Balaji (Venkateswara Swami), Tirumala", "deity": "Lord Sri Venkateswara (Vishnu)", "city": "Tirumala / Tirupati", "state": "Andhra Pradesh",
-        "description": "The living Vaikuntha of Kali Yuga, revered as the giver of prosperity, freedom from debt, business success and protection of the family."},
+        "description": "The living Vaikuntha of Kali Yuga, revered as the giver of prosperity, freedom from debt, business success and protection of the family.",
+        "history_significance": "The premier living Vaikuntha of Kali Yuga on Venkatadri hill, where Lord Venkateswara fulfills the prayers of millions of devotees."},
     "vaishno-devi-katra": {
         "name": "Mata Vaishno Devi Dham, Katra", "deity": "Goddess Mahalakshmi, Mahakali, Mahasaraswati (in Pindi form)", "city": "Katra", "state": "Jammu & Kashmir",
-        "description": "A powerful Shakti Peeth in the sacred cave on Trikuta mountain. Devotees believe every heartfelt wish is fulfilled at the Mother's court."},
+        "description": "A powerful Shakti Peeth in the sacred cave on Trikuta mountain. Devotees believe every heartfelt wish is fulfilled at the Mother's court.",
+        "history_significance": "The ancient sanctum on Trikuta mountain where the three divine energies Mahakali, Mahalakshmi and Mahasaraswati reside in eternal Pindi form."},
     "kamakhya-devi-assam": {
         "name": "Maa Kamakhya Shaktipeeth, Guwahati", "deity": "Goddess Bhagwati Kamakhya", "city": "Guwahati", "state": "Assam",
-        "description": "The supreme tantric Shakti Peeth among the 51. Devotees seek the Mother's blessings for the fulfilment of wishes and protection from the evil eye."},
+        "description": "The supreme tantric Shakti Peeth among the 51. Devotees seek the Mother's blessings for the fulfilment of wishes and protection from the evil eye.",
+        "history_significance": "The crown of 51 Shakti Peeths atop Nilachal Hill, Kamakhya represents the divine feminine creative energy granting fulfillment of heartfelt prayers and protection."},
     "siddhivinayak-mumbai": {
         "name": "Shri Siddhivinayak Temple, Prabhadevi", "deity": "Lord Shri Ganesh", "city": "Mumbai", "state": "Maharashtra",
-        "description": "Siddhivinayak with the right-turned trunk, giver of Riddhi-Siddhi. A shrine of faith for new ventures, housewarming and career success."},
+        "description": "Siddhivinayak with the right-turned trunk, giver of Riddhi-Siddhi. A shrine of faith for new ventures, housewarming and career success.",
+        "history_significance": "Established in 1801, this sacred shrine houses Lord Ganesha with his trunk to the right, revered as the supreme wish-fulfiller and obstacle-remover."},
     "shani-shingnapur": {
         "name": "Shri Shani Shingnapur Dham, Maharashtra", "deity": "Lord Shani Dev", "city": "Newasa / Ahmednagar", "state": "Maharashtra",
-        "description": "The shrine of the self-manifested stone Shani Dev. Devotees offer oil in devotion to ease Sade Sati, Dhaiya and Shani-related hardships."},
+        "description": "The shrine of the self-manifested stone Shani Dev. Devotees offer oil in devotion to ease Sade Sati, Dhaiya and Shani-related hardships.",
+        "history_significance": "World-famous open-air shrine where Lord Shani is enshrined in an austere, self-manifested black stone slab. Mustard oil dedication eases planetary hardships."},
     "jagannath-temple-puri": {
         "name": "Shri Jagannath Temple, Puri", "deity": "Lord Jagannath, Balabhadra, Subhadra", "city": "Puri", "state": "Odisha",
-        "description": "One of the four Dhams and the Vaikuntha of Lord Jagannath. Revered for removing poverty and giving lasting merit."},
+        "description": "One of the four Dhams and the Vaikuntha of Lord Jagannath. Revered for removing poverty and giving lasting merit.",
+        "history_significance": "The divine realm of Lord Jagannath on the eastern coast, celebrated for the eternal Mahaprasad and Ratha Yatra."},
     "ram-janmabhoomi-ayodhya": {
         "name": "Shri Ram Janmabhoomi Temple, Ayodhya", "deity": "Lord Shri Ramlala Sarkar", "city": "Ayodhya", "state": "Uttar Pradesh",
-        "description": "The sacred birthplace of Maryada Purushottam Shri Ram. Ramlala's blessings are believed to bring family prosperity, truth, dharma and protection from hardship."},
+        "description": "The sacred birthplace of Maryada Purushottam Shri Ram. Ramlala's blessings are believed to bring family prosperity, truth, dharma and protection from hardship.",
+        "history_significance": "The eternal birthplace of Maryada Purushottam Lord Shri Ram on the banks of holy Sarayu river, symbolizing Dharma, truth and righteous victory."},
 }
 
 # English (title, description) of each seva, in the same order as the offerings of each temple in INITIAL_TEMPLES.

@@ -11,7 +11,7 @@ from pathlib import Path
 import time
 from packages.core.logging import logger
 from packages.database.session import init_db
-from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa, bhakti, bhakti_content, bhakti_gita, bhakti_radio, bhakti_temples, bhakti_vedanta, bhakti_guide, bhakti_calendar, events
+from website.backend.app.api import health, astrologers, calculators, horoscope, charts, auth, wallet, reports, voice, mandir, marketplace, notifications, rewards, cart, seller, shop_admin, verify, experience, gau_sewa, bhakti, bhakti_content, bhakti_gita, bhakti_radio, bhakti_temples, bhakti_vedanta, bhakti_guide, bhakti_calendar, events, companion
 
 app = FastAPI(
     title="Astro Jyotish Website Backend",
@@ -104,6 +104,7 @@ app.include_router(voice.router, prefix=API_V1_PREFIX)
 app.include_router(mandir.router, prefix=API_V1_PREFIX)
 app.include_router(marketplace.router, prefix=API_V1_PREFIX)
 app.include_router(notifications.router, prefix=API_V1_PREFIX)
+app.include_router(companion.router, prefix=API_V1_PREFIX)
 for _router in (rewards.router, cart.router, seller.router, shop_admin.router, verify.router, experience.router, gau_sewa.router, bhakti.router, bhakti_content.router, bhakti_gita.router, bhakti_radio.router, bhakti_temples.router, bhakti_vedanta.router, bhakti_guide.router, bhakti_calendar.router, bhakti_calendar.puja_router, events.router):
     app.include_router(_router, prefix=API_V1_PREFIX)
 

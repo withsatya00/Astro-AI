@@ -35,6 +35,15 @@ PUJAS = {
                          ["Relief during Sade Sati and Dhaiya", "Removes Shani-related hardship"], ["साढ़ेसाती और ढैय्या में राहत", "शनि कष्ट निवारण"]),
     "siddhivinayak-mumbai": ("Ganpati Karya Siddhi Puja", "गणपति कार्य सिद्धि पूजा",
                              ["Removes obstacles in new ventures", "Success in career and business"], ["नए कार्यों में बाधा निवारण", "करियर और व्यापार में सफलता"]),
+    "kamakhya-devi-assam": ("Maa Kamakhya Sarv Rog Dosh Nivaran Puja", "माँ कामाख्या सर्व रोग दोष निवारण पूजा",
+                            ["Protection from negative energies & evil eye", "Blessings of Maa Bhagwati Kamakhya", "Fulfillment of cherished wishes"],
+                            ["नकारात्मक ऊर्जा व बुरी नजर से सुरक्षा", "माँ कामाख्या का वरदान", "मनोकामना पूर्ति"]),
+    "somnath-jyotirlinga-gujarat": ("Somnath Mahamrityunjaya Puja", "सोमनाथ महामृत्युंजय शांति पूजा",
+                                    ["Relief from chronic ailments", "Inner peace and mental clarity"], ["दीर्घकालीन कष्टों से मुक्ति", "मानसिक शांति व शिव कृपा"]),
+    "kedarnath-dham-uttarakhand": ("Kedarnath Sadashiva Rudrabhishek", "केदारनाथ सदाशिव रुद्राभिषेक पूजा",
+                                   ["Supreme spiritual elevation", "Liberation from planetary afflictions"], ["आध्यात्मिक उन्नति", "समस्त ग्रह दोषों का शमन"]),
+    "vaishno-devi-katra": ("Maa Vaishno Devi Maha Aarti & Sankalp", "माँ वैष्णो देवी महाआरती एवं संकल्प पूजा",
+                           ["Family prosperity and good fortune", "Shield from obstacles"], ["सुख-समृद्धि एवं सौभाग्य", "सर्व संकट निवारण"]),
 }
 
 

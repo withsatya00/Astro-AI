@@ -9,6 +9,24 @@ const MODES = [['manual', 'Manual'], ['voice', 'Voice'], ['mala', 'Digital Mala'
 
 function vibrate(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* unsupported */ } }
 
+function playDevotionalChime() {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(528, ctx.currentTime); // 528Hz Solfeggio frequency
+    gain.gain.setValueAtTime(0.14, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.7);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.75);
+  } catch (e) { /* audio playback prevented */ }
+}
+
 function MalaRing({ count, onTap, disabled, celebrate }) {
   const inMala = count === 0 ? 0 : ((count - 1) % MALA) + 1;
   const beads = useMemo(() => Array.from({ length: MALA }, (_, i) => {
@@ -78,8 +96,11 @@ function VoicePanel({ jaap, mantra }) {
         done.current = i + 1;
         let chosen = res[0].transcript;
         let total = 0;
+        const phrases = (mantra?.match_phrases && mantra.match_phrases.length)
+          ? mantra.match_phrases
+          : [mantra?.text_roman, mantra?.text_hi, mantra?.text_devanagari, mantra?.text].filter(Boolean);
         for (let a = 0; a < res.length; a += 1) {
-          const candidateTotal = countRepetitions(`${finalSpeech.current} ${res[a].transcript}`, mantra.match_phrases, 1000000);
+          const candidateTotal = countRepetitions(`${finalSpeech.current} ${res[a].transcript}`, phrases, 1000000);
           if (candidateTotal > total) { total = candidateTotal; chosen = res[a].transcript; }
         }
         finalSpeech.current = `${finalSpeech.current} ${chosen}`.trim();
@@ -90,7 +111,10 @@ function VoicePanel({ jaap, mantra }) {
           const s = jaapRef.current.session;
           if (!s || !jaapRef.current.add(1, 'voice', eventIdFor(s.id, runId, i, k))) break;
         }
-        if (n > 0) vibrate(8);
+        if (n > 0) {
+          vibrate(15);
+          playDevotionalChime();
+        }
       }
     };
     r.onerror = (e) => {

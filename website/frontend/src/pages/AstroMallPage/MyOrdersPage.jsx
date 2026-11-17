@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { fetchMyOrders, fetchTracking, cancelOrder, requestReturn, isSignedIn } from './mallApi.js';
 import { fetchWallet } from '../../components/WalletModal/walletApi.js';
+import SimpleDialog from '../../components/SimpleDialog/SimpleDialog.jsx';
 import './mall-checkout.css';
 
 const money = (n) => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
@@ -45,6 +46,7 @@ function OrderCard({ o, onChanged }) {
   const [reason, setReason] = useState('');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
+  const [confirming, setConfirming] = useState(false);
 
   const toggle = async () => {
     const next = !open;
@@ -60,7 +62,7 @@ function OrderCard({ o, onChanged }) {
     try { await fn(); setMsg(okMsg); setTrack(null); setReturning(false); await onChanged(); } catch (e) { setMsg(e.message); } finally { setBusy(false); }
   };
   const cancel = () => {
-    if (!window.confirm(`Cancel order ${o.order_number}? ${o.payment_method === 'WALLET' ? 'The amount will be refunded to your wallet.' : ''}`)) return;
+    setConfirming(false);
     act(() => cancelOrder(o.id).then(() => fetchWallet().catch(() => {})), 'Order cancelled.');
   };
 
@@ -80,7 +82,7 @@ function OrderCard({ o, onChanged }) {
       </div>
       <div className="mo-actions">
         <button type="button" className="mc-btn mc-btn-ghost" onClick={toggle} aria-expanded={open}>{open ? 'Hide tracking' : 'Track order'}</button>
-        {canCancel && <button type="button" className="mc-btn mc-btn-ghost" onClick={cancel} disabled={busy}>Cancel order</button>}
+        {canCancel && <button type="button" className="mc-btn mc-btn-ghost" onClick={() => setConfirming(true)} disabled={busy}>Cancel order</button>}
         {canReturn && !returning && <button type="button" className="mc-btn mc-btn-ghost" onClick={() => setReturning(true)}>Request return</button>}
       </div>
       {returning && (
@@ -93,6 +95,16 @@ function OrderCard({ o, onChanged }) {
         </form>
       )}
       {msg && <p className="mc-msg" role="status">{msg}</p>}
+      {confirming && (
+        <SimpleDialog label="Cancel order" onClose={() => setConfirming(false)}>
+          <h3 className="font-serif text-lg font-bold text-[#1E1B4B] mt-0 pr-10">Cancel this order?</h3>
+          <p className="text-xs text-slate-600">{o.product_title} · {o.order_number}.{o.payment_method === 'WALLET' ? ' The amount will be refunded to your wallet.' : ''}</p>
+          <div className="mo-actions" style={{ marginTop: 16 }}>
+            <button type="button" className="mc-btn mc-btn-primary" onClick={cancel} disabled={busy}>Yes, cancel order</button>
+            <button type="button" className="mc-btn mc-btn-ghost" onClick={() => setConfirming(false)}>Keep order</button>
+          </div>
+        </SimpleDialog>
+      )}
       {open && (track ? <Timeline data={track} /> : trackErr ? <p className="mc-msg mc-bad" role="alert">{trackErr}</p> : <div className="mc-skel" aria-hidden="true" style={{ height: 60 }} />)}
     </li>
   );

@@ -41,10 +41,25 @@ function useServiceStatus() {
   return { problem, check };
 }
 
-const HI_NAMES = { shankaracharya: 'शंकराचार्य' };
+const HI_NAMES = {
+  'naam-jaap': 'नाम जाप',
+  'my-bhakti': 'मेरी भक्ति',
+  'aarti-chalisa': 'आरती व चालीसा',
+  'shankaracharya': 'शंकराचार्य',
+  'vedanta': 'वेदांत दर्शन',
+  'bhagavad-gita': 'श्रीमद्भगवद्गीता',
+  'bhajan-radio': 'भजन रेडियो',
+  'mandir-darshan': 'मंदिर दर्शन',
+  'puja-vidhi': 'पूजा विधि',
+  'festivals': 'त्योहार व व्रत',
+  'guide': 'आध्यात्मिक मार्गदर्शक',
+  'admin': 'व्यवस्थापक',
+  'sadhana': 'मेरी साधना',
+};
 
 function Shell() {
   const lang = useLang();
+  const isHi = lang === 'hi';
   const { pathname } = useLocation();
   const radio = useRadio();
   const { problem, check } = useServiceStatus();
@@ -56,13 +71,26 @@ function Shell() {
     <div className="bh">
       <div className={`bh-wrap${radio.current ? ' bh-wrap--playing' : ''}`}>
         <nav className="bh-crumbs" aria-label="Breadcrumb">
-          <Link to="/">Home</Link><span aria-hidden="true">›</span>
-          {sub ? <><Link to="/bhakti">Bhakti</Link><span aria-hidden="true">›</span><b>{(lang === 'hi' && HI_NAMES[sub]) || NAMES[sub] || sub}</b></> : <b>Bhakti</b>}
+          <Link to="/">{isHi ? 'होम' : 'Home'}</Link><span aria-hidden="true">›</span>
+          {sub ? (
+            <>
+              <Link to="/bhakti">{isHi ? 'भक्ति' : 'Bhakti'}</Link><span aria-hidden="true">›</span>
+              <b translate="no">{(isHi ? HI_NAMES[sub] : NAMES[sub]) || NAMES[sub] || sub}</b>
+            </>
+          ) : (
+            <b>{isHi ? 'भक्ति' : 'Bhakti'}</b>
+          )}
         </nav>
         {problem && (
           <div className="bh-msg bh-service-msg" role="alert" data-detail={problem}>
-            <span>Bhakti content abhi load nahi ho pa raha. Kuch hissa dikhai na de to thodi der baad dobara koshish karein.</span>
-            <button type="button" className="bh-btn bh-btn-ghost" onClick={retry}>Retry</button>
+            <span>
+              {isHi
+                ? 'भक्ति सामग्री लोड करने में समस्या आई। कृपया कुछ समय पश्चात पुनः प्रयास करें।'
+                : 'Bhakti content could not be loaded at this moment. Please try again in a while.'}
+            </span>
+            <button type="button" className="bh-btn bh-btn-ghost" onClick={retry}>
+              {isHi ? 'पुनः प्रयास करें' : 'Retry'}
+            </button>
           </div>
         )}
         <React.Fragment key={nonce}><Outlet /></React.Fragment>

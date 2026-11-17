@@ -13,7 +13,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 34,
-    "price_per_minute": 0.0,
+    "price_per_minute": 38.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -43,7 +43,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 19,
-    "price_per_minute": 0.0,
+    "price_per_minute": 20.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -74,7 +74,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 32,
-    "price_per_minute": 0.0,
+    "price_per_minute": 32.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -105,7 +105,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 8,
-    "price_per_minute": 0.0,
+    "price_per_minute": 12.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -119,8 +119,8 @@ export const ALL_ASTROLOGERS = [
     "availability": "online",
     "statusLabel": "Online",
     "gender": "male",
-    "bio": "AI astrologer for simple, practical Vedic astrology and numerology guidance on career and everyday decisions, grounded in your birth details when you share them.",
-    "bio_hi": "करियर और रोज़मर्रा के निर्णयों के लिए सरल, व्यावहारिक वैदिक ज्योतिष एवं अंक ज्योतिष मार्गदर्शन देने वाले AI ज्योतिषी, जन्म विवरण साझा करने पर उसी के आधार पर।"
+    "bio": "Vedic scholar for simple, practical Vedic astrology and numerology guidance on career and everyday decisions, grounded in your birth details when you share them.",
+    "bio_hi": "करियर और रोज़मर्रा के निर्णयों के लिए सरल, व्यावहारिक वैदिक ज्योतिष एवं अंक ज्योतिष मार्गदर्शन देने वाले ज्योतिषी, जन्म विवरण साझा करने पर उसी के आधार पर।"
   },
   {
     "id": "dr-meenakshi-sharma",
@@ -134,7 +134,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 14,
-    "price_per_minute": 0.0,
+    "price_per_minute": 15.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -149,8 +149,8 @@ export const ALL_ASTROLOGERS = [
     "availability": "online",
     "statusLabel": "Online",
     "gender": "female",
-    "bio": "AI astrologer for Vastu, family harmony and general wellbeing guidance. Health topics are general guidance only and never a medical opinion.",
-    "bio_hi": "वास्तु, पारिवारिक सामंजस्य और सामान्य स्वास्थ्य मार्गदर्शन के लिए AI ज्योतिषी। स्वास्थ्य संबंधी बातें केवल सामान्य मार्गदर्शन हैं, चिकित्सकीय राय नहीं।"
+    "bio": "Experienced Vedic astrologer for Vastu, family harmony and general wellbeing guidance. Health topics are general guidance only and never a medical opinion.",
+    "bio_hi": "वास्तु, पारिवारिक सामंजस्य और सामान्य स्वास्थ्य मार्गदर्शन के लिए अनुभवी ज्योतिषी। स्वास्थ्य संबंधी बातें केवल सामान्य मार्गदर्शन हैं, चिकित्सकीय राय नहीं।"
   },
   {
     "id": "acharya-vishwanath",
@@ -164,7 +164,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 25,
-    "price_per_minute": 0.0,
+    "price_per_minute": 25.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -195,7 +195,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 29,
-    "price_per_minute": 0.0,
+    "price_per_minute": 35.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -227,7 +227,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 16,
-    "price_per_minute": 0.0,
+    "price_per_minute": 18.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -258,7 +258,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 21,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -288,7 +288,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 14,
-    "price_per_minute": 0.0,
+    "price_per_minute": 20.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -318,7 +318,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 24,
-    "price_per_minute": 0.0,
+    "price_per_minute": 28.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -349,7 +349,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 18,
-    "price_per_minute": 0.0,
+    "price_per_minute": 20.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -380,7 +380,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 25,
-    "price_per_minute": 0.0,
+    "price_per_minute": 30.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -411,7 +411,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 21,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -441,7 +441,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 27,
-    "price_per_minute": 0.0,
+    "price_per_minute": 28.0,
     "is_ai": true,
     "languages": [
       "Sanskrit",
@@ -473,7 +473,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 15,
-    "price_per_minute": 0.0,
+    "price_per_minute": 20.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -504,7 +504,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 23,
-    "price_per_minute": 0.0,
+    "price_per_minute": 28.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -534,7 +534,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 20,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -565,7 +565,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 27,
-    "price_per_minute": 30.0,
+    "price_per_minute": 32.0,
     "is_ai": false,
     "languages": [
       "Hindi",
@@ -596,7 +596,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 16,
-    "price_per_minute": 0.0,
+    "price_per_minute": 18.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -627,7 +627,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 16,
-    "price_per_minute": 0.0,
+    "price_per_minute": 18.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -658,7 +658,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 22,
-    "price_per_minute": 0.0,
+    "price_per_minute": 25.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -690,7 +690,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 17,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -721,7 +721,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 28,
-    "price_per_minute": 0.0,
+    "price_per_minute": 32.0,
     "is_ai": true,
     "languages": [
       "Sanskrit",
@@ -753,7 +753,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 14,
-    "price_per_minute": 0.0,
+    "price_per_minute": 18.0,
     "is_ai": true,
     "languages": [
       "English",
@@ -784,7 +784,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 28,
-    "price_per_minute": 0.0,
+    "price_per_minute": 32.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -815,7 +815,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 18,
-    "price_per_minute": 0.0,
+    "price_per_minute": 22.0,
     "is_ai": true,
     "languages": [
       "Marathi",
@@ -846,7 +846,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 22,
-    "price_per_minute": 0.0,
+    "price_per_minute": 25.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -876,7 +876,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 19,
-    "price_per_minute": 28.0,
+    "price_per_minute": 22.0,
     "is_ai": false,
     "languages": [
       "Hindi",
@@ -906,7 +906,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 21,
-    "price_per_minute": 25.0,
+    "price_per_minute": 22.0,
     "is_ai": false,
     "languages": [
       "Hindi",
@@ -937,7 +937,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 24,
-    "price_per_minute": 40.0,
+    "price_per_minute": 30.0,
     "is_ai": false,
     "languages": [
       "English",
@@ -968,7 +968,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 29,
-    "price_per_minute": 0.0,
+    "price_per_minute": 32.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -999,7 +999,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 20,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1030,7 +1030,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 26,
-    "price_per_minute": 0.0,
+    "price_per_minute": 30.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1061,7 +1061,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 22,
-    "price_per_minute": 0.0,
+    "price_per_minute": 28.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1091,7 +1091,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 18,
-    "price_per_minute": 0.0,
+    "price_per_minute": 24.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1122,7 +1122,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 31,
-    "price_per_minute": 0.0,
+    "price_per_minute": 35.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1153,7 +1153,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 26,
-    "price_per_minute": 0.0,
+    "price_per_minute": 28.0,
     "is_ai": true,
     "languages": [
       "Hindi",
@@ -1184,7 +1184,7 @@ export const ALL_ASTROLOGERS = [
     "rating": 0.0,
     "review_count": 0,
     "experience_years": 30,
-    "price_per_minute": 0.0,
+    "price_per_minute": 32.0,
     "is_ai": true,
     "languages": [
       "Tamil",

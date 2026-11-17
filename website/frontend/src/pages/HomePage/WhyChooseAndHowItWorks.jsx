@@ -53,7 +53,7 @@ export default function WhyChooseAndHowItWorks() {
             <div className="home-ref-how-checklist">
               <div className="home-ref-how-item">
                 <span className="home-ref-how-check">✔</span>
-                <span>17+ authentic Vedic tools &amp; birth chart analysis.</span>
+                <span>Authentic Vedic tools &amp; birth chart analysis.</span>
               </div>
               <div className="home-ref-how-item">
                 <span className="home-ref-how-check">✔</span>

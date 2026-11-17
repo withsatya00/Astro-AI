@@ -1,8 +1,8 @@
 /* Global Footer Styles */
 .site-global-footer {
-  background-color: #1a060d;
-  color: #CBD5E1;
-  border-top: 1px solid #3B0612;
+  background-color: #FFFDF5;
+  color: #56675B;
+  border-top: 1px solid #DDEBD5;
   padding: 3rem 1.5rem 2.5rem;
   width: 100%;
   box-sizing: border-box;
@@ -26,7 +26,7 @@
   text-decoration: none;
   background: transparent;
   border: none;
-  color: #94A3B8;
+  color: #56675B;
   font: inherit;
   font-size: 13px;
   padding: 0.25rem 0;
@@ -38,7 +38,7 @@
 
 .footer-links a:hover,
 .footer-info-link:hover {
-  color: #F8D882;
+  color: #164B32;
 }
 
 /* Trust row */
@@ -49,8 +49,8 @@
   gap: 16px;
   margin: 1.5rem 0 1.25rem;
   padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #F2F5EA;
+  border: 1px solid #DDEBD5;
   border-radius: 14px;
 }
 
@@ -66,7 +66,7 @@
   height: 36px;
   min-width: 36px;
   border-radius: 50%;
-  background: rgba(248, 216, 130, 0.1);
+  background: #FBF3DA;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,14 +78,14 @@
   display: block;
   font-size: 13px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #183C2B;
   margin-bottom: 1px;
 }
 
 .footer-trust-copy small {
   display: block;
   font-size: 11px;
-  color: #94A3B8;
+  color: #56675B;
   line-height: 1.3;
 }
 

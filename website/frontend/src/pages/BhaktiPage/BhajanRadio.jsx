@@ -44,7 +44,16 @@ export default function BhajanRadio() {
   useEffect(() => { api('/radio/categories').then(setCats).catch(() => {}); }, []);
   useEffect(() => {
     if (!signedIn) { setIsAdmin(false); return; }
-    api('/radio/admin/tracks').then(() => setIsAdmin(true)).catch((e) => { if (!(e instanceof ApiError)) setIsAdmin(false); else setIsAdmin(false); });
+    try {
+      const u = JSON.parse(localStorage.getItem('astro_user') || '{}');
+      if (u.role === 'admin' || u.is_admin) {
+        api('/radio/admin/tracks').then(() => setIsAdmin(true)).catch(() => setIsAdmin(false));
+      } else {
+        setIsAdmin(false);
+      }
+    } catch {
+      setIsAdmin(false);
+    }
   }, [signedIn]);
 
   const load = useCallback(() => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { copy, timeLabel, dayKey, dayLabel } from './consultCopy.js';
+import { speakVedicText, stopVedicSpeech } from './voiceAcharya.js';
 
 // A chat history that works like a messaging app: it opens at the newest message, and scrolling up loads earlier
 // messages in place without the view jumping. Day separators group the history, and a button appears to jump back
@@ -12,6 +13,7 @@ export default function ChatThread({ lang, astro, name, messages, hasMore, loadi
   const stick = useRef(true);   // true while the reader is at (or near) the bottom
   const [atBottom, setAtBottom] = useState(true);
   const [unseen, setUnseen] = useState(0);
+  const [playingId, setPlayingId] = useState(null);
 
   const toBottom = (smooth) => {
     const el = box.current; if (!el) return;
@@ -85,11 +87,42 @@ export default function ChatThread({ lang, astro, name, messages, hasMore, loadi
         <div className={`cr-bubble ${mine ? 'mine' : ''} ${failed ? 'failed' : ''}`}>
           {!mine && showAvatar && <strong className="cr-bubble-name">{name}</strong>}
           <p>{m.content}</p>
-          <span className="cr-meta">
-            {m.is_demo_mode && <em className="cr-demo" title={c.demoReply}>{c.demoReply}</em>}
-            <time dateTime={m.created_at}>{timeLabel(m.created_at, lang)}</time>
-            {mine && <i className={`cr-tick ${m.status || 'sent'}`} aria-label={m.status === 'sending' ? c.sending : failed ? c.failed : c.sent}>{m.status === 'sending' ? '◷' : failed ? '!' : '✓'}</i>}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 4 }}>
+            {!mine && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (playingId === m.id) {
+                    stopVedicSpeech();
+                    setPlayingId(null);
+                  } else {
+                    setPlayingId(m.id);
+                    speakVedicText(m.content, {
+                      lang: lang === 'hi' ? 'hi' : 'en',
+                      onEnd: () => setPlayingId(null),
+                      onError: () => setPlayingId(null)
+                    });
+                  }
+                }}
+                style={{
+                  background: playingId === m.id ? '#3E0B18' : 'rgba(212,175,55,0.15)',
+                  border: '1px solid #D4AF37',
+                  color: playingId === m.id ? '#F8D882' : '#650F23',
+                  padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 700,
+                  cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4
+                }}
+                title={lang === 'hi' ? 'आचार्य जी की आवाज़ में सुनें' : 'Listen to Acharya voice'}
+              >
+                <span>{playingId === m.id ? '⏹️' : '🔊'}</span>
+                <span>{playingId === m.id ? (lang === 'hi' ? 'रोकें' : 'Stop') : (lang === 'hi' ? 'वैदिक वाणी सुनें' : 'Listen')}</span>
+              </button>
+            )}
+            <span className="cr-meta" style={{ marginLeft: mine ? 'auto' : undefined }}>
+              {m.is_demo_mode && <em className="cr-demo" title={c.demoReply}>{c.demoReply}</em>}
+              <time dateTime={m.created_at}>{timeLabel(m.created_at, lang)}</time>
+              {mine && <i className={`cr-tick ${m.status || 'sent'}`} aria-label={m.status === 'sending' ? c.sending : failed ? c.failed : c.sent}>{m.status === 'sending' ? '◷' : failed ? '!' : '✓'}</i>}
+            </span>
+          </div>
           {failed && <button type="button" className="cr-retry" onClick={() => onRetry(m)}>{m.error ? `${m.error} · ` : ''}{c.retry}</button>}
         </div>
       </div>

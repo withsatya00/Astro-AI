@@ -5,7 +5,7 @@ import { SkelPage } from './Skeleton.jsx';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { api, ApiError } from './bhaktiApi.js';
 import { useSignedIn, openLogin } from './useJaap.js';
-import { useLang, pick, other } from './lang.js';
+import { useLang, pick } from './lang.js';
 
 const PREF_KEY = 'bhakti_reader_prefs_v1';
 const loadSize = () => { try { return JSON.parse(localStorage.getItem(PREF_KEY) || '{}').size || 22; } catch (e) { return 22; } };
@@ -48,14 +48,14 @@ export default function GitaChapter() {
   };
 
   usePageMeta(data && `Bhagavad Gita Chapter ${data.number}: ${data.name_en}`, data && data.summary_en);
-  if (err) return <div className="bh-panel bh-signin"><h1 className="bh-title">{err}</h1><Link className="bh-btn bh-btn-maroon" to="/bhakti/bhagavad-gita">All chapters</Link></div>;
-  if (!data) return <SkelPage label="Loading chapter" />;
+  if (err) return <div className="bh-panel bh-signin"><h1 className="bh-title">{err}</h1><Link className="bh-btn bh-btn-maroon" to="/bhakti/bhagavad-gita">{site === 'hi' ? 'सभी अध्याय' : 'All chapters'}</Link></div>;
+  if (!data) return <SkelPage label={site === 'hi' ? 'अध्याय लोड हो रहा है' : 'Loading chapter'} />;
 
   const readCount = data.verses.filter((v) => v.read).length;
   return (
     <div>
       <div className="bh-sec-title">
-        <div translate="no"><h1 className="bh-title">{data.number}. {pick(site, data.name_en, data.name_hi)}</h1><div className="bh-small">{pick(other(site), data.name_en, data.name_hi)} · {site === 'hi' ? `${data.verse_count} में से ${data.verses.length} श्लोक प्रकाशित` : `${data.verses.length} of ${data.verse_count} verses published`}</div></div>
+        <div translate="no"><h1 className="bh-title">{data.number}. {pick(site, data.name_en, data.name_hi)}</h1><div className="bh-small">{site === 'hi' ? `${data.verse_count} में से ${data.verses.length} श्लोक प्रकाशित` : `${data.verses.length} of ${data.verse_count} verses published`}</div></div>
         <div className="bh-row" style={{ margin: 0 }}>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={() => resize(-2)} aria-label="Smaller text">A−</button>
           <button type="button" className="bh-btn bh-btn-ghost" onClick={() => resize(2)} aria-label="Larger text">A+</button>
@@ -68,25 +68,25 @@ export default function GitaChapter() {
         {[['en', 'English'], ['hi', 'हिन्दी']].map(([k, l]) => <button key={k} role="tab" type="button" className="bh-tab" aria-selected={lang === k} onClick={() => setLang(k)}>{l}</button>)}
       </div>
 
-      {data.verses.length === 0 && <div className="bh-panel bh-signin"><p>No verses from this chapter are published yet.</p></div>}
+      {data.verses.length === 0 && <div className="bh-panel bh-signin"><p>{site === 'hi' ? 'इस अध्याय के कोई श्लोक अभी प्रकाशित नहीं हैं।' : 'No verses from this chapter are published yet.'}</p></div>}
       {data.verses.map((v) => (
         <article key={v.id} id={`v${v.verse}`} className="bh-panel">
           <div className="bh-sec-title" style={{ margin: '0 0 6px' }}><h3>{v.chapter}.{v.verse}</h3>
             <div className="bh-row" style={{ margin: 0 }}>
-              <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!v.bookmarked} onClick={() => toggle(v, 'bookmark')}>{v.bookmarked ? '♥ Saved' : '♡ Save'}</button>
-              <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!v.read} onClick={() => toggle(v, 'read')}>{v.read ? '✓ Read' : 'Mark read'}</button>
+              <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!v.bookmarked} onClick={() => toggle(v, 'bookmark')}>{v.bookmarked ? (site === 'hi' ? '♥ सहेजा गया' : '♥ Saved') : (site === 'hi' ? '♡ सहेजें' : '♡ Save')}</button>
+              <button type="button" className="bh-btn bh-btn-ghost" aria-pressed={!!v.read} onClick={() => toggle(v, 'read')}>{v.read ? (site === 'hi' ? '✓ पढ़ा गया' : '✓ Read') : (site === 'hi' ? 'पढ़ा हुआ चिन्हित करें' : 'Mark read')}</button>
             </div>
           </div>
           <div className="bh-reader" lang="sa" translate="no" style={{ fontSize: size, margin: '6px 0' }}>{v.text_sa}</div>
           {v.transliteration && <p className="bh-small" translate="no" style={{ whiteSpace: 'pre-line', fontStyle: 'italic' }}>{v.transliteration}</p>}
           <p style={{ fontSize: Math.max(14, size - 6), lineHeight: 1.7, margin: '8px 0' }} lang={lang === 'hi' ? 'hi' : 'en'} translate="no">{lang === 'hi' ? v.meaning_hi : v.meaning_en}</p>
-          <p className="bh-small">Source: <span translate="no">{v.source}</span> · Licence: <span translate="no">{v.license}</span>{v.is_verified ? ' · Verified' : ' · Not yet verified against the source'}</p>
+          <p className="bh-small">{site === 'hi' ? 'स्रोत' : 'Source'}: <span translate="no">{v.source}</span> · {site === 'hi' ? 'लाइसेंस' : 'Licence'}: <span translate="no">{v.license}</span>{v.is_verified ? (site === 'hi' ? ' · प्रमाणित' : ' · Verified') : (site === 'hi' ? ' · समीक्षाधीन' : ' · Under review')}</p>
         </article>
       ))}
       <div className="bh-row">
-        <button type="button" className="bh-btn bh-btn-ghost" disabled={n <= 1} onClick={() => nav(`/bhakti/bhagavad-gita/${n - 1}`)}>← Chapter {n - 1}</button>
-        <Link className="bh-btn bh-btn-ghost" to="/bhakti/bhagavad-gita">All chapters</Link>
-        <button type="button" className="bh-btn bh-btn-ghost" disabled={n >= 18} onClick={() => nav(`/bhakti/bhagavad-gita/${n + 1}`)}>Chapter {n + 1} →</button>
+        <button type="button" className="bh-btn bh-btn-ghost" disabled={n <= 1} onClick={() => nav(`/bhakti/bhagavad-gita/${n - 1}`)}>{site === 'hi' ? `← अध्याय ${n - 1}` : `← Chapter ${n - 1}`}</button>
+        <Link className="bh-btn bh-btn-ghost" to="/bhakti/bhagavad-gita">{site === 'hi' ? 'सभी अध्याय' : 'All chapters'}</Link>
+        <button type="button" className="bh-btn bh-btn-ghost" disabled={n >= 18} onClick={() => nav(`/bhakti/bhagavad-gita/${n + 1}`)}>{site === 'hi' ? `अध्याय ${n + 1} →` : `Chapter ${n + 1} →`}</button>
       </div>
     </div>
   );

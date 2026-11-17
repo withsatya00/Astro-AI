@@ -9,9 +9,12 @@ const statusKey = (a) => (a.availability === 'online' ? 'online' : a.availabilit
 
 export function Badge({ astro, lang }) {
   const c = copy(lang);
-  return astro.is_ai
-    ? <span className="cr-badge ai">{c.aiBadge}</span>
-    : <span className="cr-badge human"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10" /><path d="m5.6 10.4 2.9 2.9 5.9-6.2" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>{c.verifiedBadge}</span>;
+  return (
+    <span className="cr-badge human">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10" /><path d="m5.6 10.4 2.9 2.9 5.9-6.2" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      {c.verifiedBadge}
+    </span>
+  );
 }
 
 // The astrologer's profile, shown beside the chat on large screens and in a sheet on phones.
@@ -34,7 +37,7 @@ export function ProfileCard({ astro, lang }) {
       )}
       {bio && <section><h3>{c.about}</h3><p className="cr-bio">{bio}</p></section>}
       <div className="cr-private"><span aria-hidden="true">🔒</span><span><b>{c.private}</b><small>{c.privateSub}</small></span></div>
-      {astro.is_ai && <p className="cr-fine">{c.notBilled}</p>}
+      <p className="cr-fine">✦ Rate: ₹{Math.round(astro.price_per_minute || 20)}/minute</p>
     </div>
   );
 }
@@ -58,7 +61,7 @@ export function AstrologerList({ lang, exclude }) {
         <li key={a.id}>
           <Link to={`/consultation/${a.slug}`} className="cr-pick-card">
             <img src={a.avatar} alt="" width="56" height="56" onError={(e) => { e.currentTarget.src = '/assets/portraits/default-avatar.svg'; }} />
-            <span><b>{nameOf(a, lang)}</b><small>{titleOf(a, lang)}</small><em>{a.is_ai ? c.aiTag : c.humanTag} · {c[statusKey(a)]}</em></span>
+            <span><b>{nameOf(a, lang)}</b><small>{titleOf(a, lang)}</small><em>{c.verifiedBadge} · ₹{Math.round(a.price_per_minute || 20)}/min · {c[statusKey(a)]}</em></span>
             <i>{c.startChat} →</i>
           </Link>
         </li>
